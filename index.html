@@ -1,0 +1,1127 @@
+?<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דף ניהול · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --todo:#94a3b8; --doing:#F5A623; --done:#22b573;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+    --shadow-lg:0 12px 40px rgba(43,43,51,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit}
+  a{color:var(--pink-dark)}
+
+  /* Header */
+  header.app{background:linear-gradient(120deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:16px 0;box-shadow:var(--shadow);position:sticky;top:0;z-index:40}
+  .head-in{max-width:1240px;margin:0 auto;padding:0 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;flex:1;min-width:200px}
+  .logo{width:44px;height:44px;border-radius:13px;background:var(--yellow);display:grid;place-items:center;font-weight:800;color:var(--pink-dark);font-size:19px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .brand h1{margin:0;font-size:21px;font-weight:800;letter-spacing:-.3px}
+  .brand .sub{font-size:12.5px;opacity:.9;font-weight:500}
+  .head-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .user-switch{display:flex;background:rgba(255,255,255,.16);border-radius:999px;padding:3px}
+  .user-switch button{padding:6px 13px;border-radius:999px;font-weight:600;font-size:13px;color:#fff;opacity:.85}
+  .user-switch button.active{background:#fff;color:var(--pink-dark);opacity:1}
+  .icon-btn{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:17px;transition:.15s}
+  .icon-btn:hover{background:rgba(255,255,255,.3)}
+  .sync-pill{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;background:rgba(255,255,255,.16);padding:7px 11px;border-radius:999px}
+  .sync-dot{width:9px;height:9px;border-radius:50%;background:#9be7c4}
+  .sync-pill.off .sync-dot{background:#ffd27f}.sync-pill.err .sync-dot{background:#ff9a9a}
+  .sync-pill.busy .sync-dot{background:var(--yellow);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+
+  /* Layout */
+  .shell{max-width:1240px;margin:0 auto;display:flex;gap:22px;padding:20px 18px 80px;align-items:flex-start}
+  nav.side{width:210px;flex:none;position:sticky;top:84px;background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:10px;display:flex;flex-direction:column;gap:2px}
+  nav.side button{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;font-size:14.5px;font-weight:600;color:#55555f;text-align:start;transition:.14s}
+  nav.side button .ic{font-size:17px;width:22px;text-align:center}
+  nav.side button:hover{background:var(--pink-soft)}
+  nav.side button.active{background:var(--pink);color:#fff}
+  nav.side .navsep{height:1px;background:var(--line);margin:6px 8px}
+  main.content{flex:1;min-width:0}
+  .view{display:none;animation:fade .25s ease}
+  .view.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+  h2.vh{margin:2px 0 4px;font-size:24px;font-weight:800}
+  .vsub{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .btn{background:var(--pink);color:#fff;border-radius:11px;padding:10px 17px;font-weight:700;font-size:14px;box-shadow:0 3px 10px rgba(232,52,138,.28);transition:.15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.ghost{background:#fff;color:var(--pink-dark);box-shadow:none;border:1.5px solid var(--pink-soft)}
+  .btn.grey{background:#eef0f3;color:#55555f;box-shadow:none}
+  .btn.small{padding:7px 12px;font-size:13px}
+
+  /* Cards grid */
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  .box{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px}
+  .box h3{margin:0 0 10px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .box.accent{border-inline-start:5px solid var(--pink)}
+
+  /* Overview tiles */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+  .tile{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;position:relative;overflow:hidden;cursor:pointer;transition:.15s}
+  .tile:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .tile .n{font-size:30px;font-weight:800;line-height:1}
+  .tile .l{font-size:13px;font-weight:600;color:var(--muted);margin-top:4px}
+  .tile .edge{position:absolute;inset-inline-start:0;top:0;bottom:0;width:6px}
+  .tile.todo .n{color:var(--todo)}.tile.todo .edge{background:var(--todo)}
+  .tile.doing .n{color:var(--doing)}.tile.doing .edge{background:var(--doing)}
+  .tile.done .n{color:var(--done)}.tile.done .edge{background:var(--done)}
+  .tile.total .n{color:var(--pink)}.tile.total .edge{background:var(--pink)}
+
+  /* Stats (tasks) */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 6px}
+  .stat{background:var(--card);border-radius:16px;padding:15px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .stat .n{font-size:32px;font-weight:800;line-height:1}.stat .l{font-size:13px;font-weight:600;color:var(--muted);margin-top:4px}
+  .stat .edge{position:absolute;inset-inline-start:0;top:0;bottom:0;width:6px}
+  .stat.todo .edge{background:var(--todo)}.stat.todo .n{color:var(--todo)}
+  .stat.doing .edge{background:var(--doing)}.stat.doing .n{color:var(--doing)}
+  .stat.done .edge{background:var(--done)}.stat.done .n{color:var(--done)}
+  .stat.total .edge{background:var(--pink)}.stat.total .n{color:var(--pink)}
+  .stat.total .prog{height:8px;border-radius:99px;background:#f0eef2;margin-top:10px;overflow:hidden}
+  .stat.total .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:99px;transition:width .5s}
+  .stat.total .pct{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
+
+  /* Toolbar + chips + list (tasks) */
+  .toolbar{display:flex;gap:12px;align-items:center;margin:20px 0 8px;flex-wrap:wrap}
+  .search{flex:1;min-width:180px;position:relative}
+  .search input{width:100%;padding:11px 40px 11px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:14px;outline:none}
+  .search input:focus{border-color:var(--pink)}
+  .search .mag{position:absolute;inset-inline-end:13px;top:50%;transform:translateY(-50%);opacity:.4}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+  .chip{padding:7px 13px;border-radius:999px;font-size:13px;font-weight:600;background:#fff;border:1.5px solid var(--line);color:#55555f;display:flex;align-items:center;gap:7px}
+  .chip.active{background:var(--pink);color:#fff;border-color:var(--pink)}
+  .chip .dot{width:9px;height:9px;border-radius:50%}.chip .cnt{font-size:11px;opacity:.7;font-weight:700}
+  .schoolinfo{background:var(--pink-soft);border-radius:12px;padding:10px 15px;font-size:13.5px;color:var(--pink-dark);font-weight:500;margin:2px 0 8px;display:none}
+  .schoolinfo.show{display:block}
+  .list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:15px 18px;border-inline-start:5px solid var(--pink);transition:.15s;animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(-6px)}}
+  .card:hover{box-shadow:var(--shadow-lg)}.card.done-card{opacity:.72}
+  .card-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;color:#fff;white-space:nowrap}
+  .owner{font-size:12.5px;color:var(--muted);font-weight:600}
+  .spacer{flex:1}
+  .statusbtns{display:flex;gap:5px;background:#f4f2f6;border-radius:999px;padding:3px}
+  .statusbtns button{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;color:#75757f}
+  .statusbtns button.on-todo{background:var(--todo);color:#fff}
+  .statusbtns button.on-doing{background:var(--doing);color:#fff}
+  .statusbtns button.on-done{background:var(--done);color:#fff}
+  .card h3.tt{margin:0;font-size:16.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .card h3.tt .pen{opacity:0;font-size:13px;color:var(--muted)}
+  .card:hover h3.tt .pen{opacity:.6}
+  .card h3.tt.done-txt{text-decoration:line-through;color:var(--muted)}
+  .notes{width:100%;border:1.5px solid transparent;background:#faf9fb;border-radius:10px;padding:9px 12px;font-size:13.5px;resize:vertical;min-height:36px;margin-top:8px;outline:none;color:#4a4a55}
+  .notes:focus{border-color:var(--pink-soft);background:#fff}
+  .card-foot{display:flex;align-items:center;gap:14px;margin-top:9px;flex-wrap:wrap}
+  .meta{font-size:11.5px;color:var(--muted)}
+  .due{font-size:12px;font-weight:600;color:#6b6b76;background:#f2f0f5;padding:3px 10px;border-radius:8px}
+  .due.over{background:#ffe6e6;color:#d9534f}
+  .del{font-size:12.5px;color:#c9a0ad;font-weight:600;margin-inline-start:auto}.del:hover{color:#d9534f}
+  .empty{text-align:center;padding:50px 20px;color:var(--muted)}.empty .big{font-size:40px;margin-bottom:8px}
+  .prio{font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .card.urgent{border-inline-start-color:#e5484d!important;box-shadow:0 4px 20px rgba(229,72,77,.20)}
+  .rem{font-size:14px}
+  .tbtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:5px 11px;border-radius:8px;text-decoration:none;color:#fff}
+  .tbtn.wa{background:#25D366}.tbtn.gm{background:#EA4335}
+  .tbtn:hover{filter:brightness(1.05)}
+  .remindrow{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#55555f;background:#faf9fb;border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;margin-bottom:13px}
+  .remindrow input{width:19px;height:19px;accent-color:var(--pink);cursor:pointer;flex:none}
+
+  /* editable ref */
+  .refbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .localnote{font-size:12px;color:var(--muted)}
+  .cardacts{display:flex;gap:14px;margin-top:11px;border-top:1px solid var(--line);padding-top:9px}
+  .cardacts button{font-size:12.5px;font-weight:600;color:#8a8a95}
+  .cardacts button:hover{color:var(--pink-dark)}
+  .toollink{display:inline-flex;align-items:center;gap:5px;background:var(--pink-soft);color:var(--pink-dark);font-weight:700;padding:4px 11px;border-radius:8px;font-size:12.5px;text-decoration:none;margin-top:8px}
+
+  /* school dossier */
+  .schooltabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .schooltab{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:700;color:#55555f;cursor:pointer;transition:.15s}
+  .schooltab:hover{border-color:var(--pink)}
+  .schooltab.active{color:#fff;border-color:transparent}
+  .schooltab .dot{width:9px;height:9px;border-radius:50%}
+  .schooltab.active .dot{background:#fff!important}
+  .sc-head{border-radius:18px;padding:20px 22px;color:#fff;margin-bottom:16px;box-shadow:0 8px 22px rgba(0,0,0,.10)}
+  .sc-head h3{font-size:23px;font-weight:800;margin-bottom:4px}
+  .sc-head .sub{font-size:13.5px;opacity:.95;line-height:1.7}
+  .sc-head .chips2{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+  .sc-head .chips2 span{background:rgba(255,255,255,.22);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600}
+  .sc-block{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+  .sc-block h4{font-size:15.5px;font-weight:800;color:var(--pink-dark);margin-bottom:11px;display:flex;align-items:center;gap:7px}
+  .sc-block .warnmini{background:#fff8e6;border:1px solid #ffe08a;color:#8a6d00;font-size:12px;border-radius:9px;padding:7px 11px;margin-bottom:11px}
+  .rc{display:grid;grid-template-columns:1fr;gap:9px}
+  .rc-row{border:1px solid var(--line);border-radius:12px;padding:10px 13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .rc-row .g{font-weight:800;color:#333;font-size:14px}
+  .rc-row .t{font-size:12.5px;color:var(--muted)}
+  .rc-row .nm{font-size:13px;color:#444;font-weight:600}
+  .rc-row .ph{margin-inline-start:auto}
+  .rc-row .note{flex-basis:100%;font-size:12px;color:#7a7a85;border-top:1px dashed var(--line);padding-top:6px;margin-top:2px}
+  .wa-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .wa{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:11px;padding:9px 12px;font-size:13px}
+  .wa .lbl{font-weight:600;color:#444}
+  .wa a{margin-inline-start:auto;background:#25D366;color:#fff;font-weight:700;font-size:12px;padding:4px 12px;border-radius:8px;text-decoration:none;white-space:nowrap}
+  .wa .none{margin-inline-start:auto;font-size:11.5px;color:#b0b0b8}
+  .filelist{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .filelist li{font-size:13px;color:#555;display:flex;gap:8px;align-items:flex-start}
+  .filelist li b{color:#333}
+  @media(max-width:640px){.wa-list{grid-template-columns:1fr}}
+
+  /* joining schools */
+  .proto{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .proto-stage{border:1px solid var(--line);border-radius:14px;padding:6px 4px 10px;background:#fff}
+  .ps-h{font-size:13.5px;font-weight:800;color:#fff;border-radius:10px;padding:8px 13px;margin:0 8px 8px}
+  .ps-h.a{background:var(--doing)}.ps-h.b{background:var(--pink)}
+  .proto-stage ol{margin:0;padding-inline-start:30px;padding-inline-end:8px}
+  .proto-stage li{font-size:13.5px;color:#44444d;margin-bottom:6px;line-height:1.5}
+  .tpls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tpl{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:#fff}
+  .tpl .th{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .tpl .th .tt2{font-weight:800;font-size:14px;color:var(--pink-dark);flex:1}
+  .tpl .copy{font-size:12px;font-weight:700;background:var(--pink-soft);color:var(--pink-dark);padding:5px 12px;border-radius:8px;white-space:nowrap}
+  .tpl .copy:hover{background:#fbd4e8}
+  .tpl .body{font-size:12.8px;color:#55555f;line-height:1.65;white-space:pre-wrap;background:#faf9fb;border-radius:9px;padding:9px 11px}
+  .joinlegend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;font-size:12px;color:var(--muted)}
+  .joinlegend span{display:inline-flex;align-items:center;gap:6px}
+  .joinlegend i{width:10px;height:10px;border-radius:50%}
+  .join-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:4px}
+  .join-meta .mi{border:1px solid var(--line);border-radius:11px;padding:9px 12px;font-size:13px}
+  .join-meta .mi .k{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:2px}
+  .join-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .wabtn{display:inline-flex;align-items:center;gap:5px;background:#25D366;color:#fff;font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:9px;text-decoration:none}
+  .statussel{border:1.5px solid var(--line);border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;background:#fff;color:var(--ink)}
+  .jf{width:100%;border:1.5px solid var(--line);background:#faf9fb;border-radius:10px;padding:10px 12px;font-size:13.5px;resize:vertical;min-height:52px;outline:none;color:#44444d;line-height:1.6}
+  .jf:focus{border-color:var(--pink);background:#fff}
+  .progwrap{height:9px;border-radius:99px;background:#f0eef2;overflow:hidden;margin:10px 0 4px}
+  .progwrap i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:99px;transition:width .4s}
+  @media(max-width:760px){.proto,.tpls,.join-meta{grid-template-columns:1fr}}
+  /* joining picker — search + list */
+  .joinsearch{width:100%;border:1.5px solid var(--line);background:#faf9fb;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;margin-bottom:10px}
+  .joinsearch:focus{border-color:var(--pink);background:#fff}
+  .joinlist{display:flex;flex-direction:column;gap:6px;max-height:360px;overflow:auto;padding-inline-end:2px}
+  .jrow{display:flex;align-items:center;gap:11px;border:1.5px solid var(--line);border-radius:12px;padding:10px 13px;cursor:pointer;transition:.12s;background:#fff}
+  .jrow:hover{border-color:var(--pink);background:#fffdfe}
+  .jrow.active{border-color:transparent}
+  .jrow .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .jrow .jn{font-weight:700;font-size:14px;line-height:1.3}
+  .jrow .jc{font-size:12px;color:var(--muted);margin-top:1px}
+  .jrow.active .jn,.jrow.active .jc{color:#fff}
+  .jrow .jst{margin-inline-start:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;flex:none}
+  .jempty{font-size:13.5px;color:var(--muted);padding:16px;text-align:center}
+  .joinhelp{background:#fff;border:1px solid var(--line);border-radius:14px;padding:2px 16px;margin-bottom:12px}
+  .joinhelp summary{cursor:pointer;font-weight:800;color:var(--pink-dark);font-size:14.5px;padding:12px 0;list-style:none;display:flex;align-items:center;gap:8px}
+  .joinhelp summary::-webkit-details-marker{display:none}
+  .joinhelp summary::before{content:'▸';font-size:12px}
+  .joinhelp[open] summary::before{content:'▾'}
+  .joinhelp[open] summary{border-bottom:1px solid var(--line);margin-bottom:12px}
+  .joinhelp>*:not(summary){margin-bottom:14px}
+  .linkrow{display:flex;gap:8px;align-items:center}
+  .jlink{flex:1;min-height:0!important;resize:none}
+  .wabtn2{background:#25D366;color:#fff;font-weight:700;font-size:12px;padding:4px 10px;border-radius:8px;text-decoration:none;margin-inline-start:4px;white-space:nowrap}
+
+  /* suggested tasks */
+  .suggest{border:1.5px dashed var(--pink);border-radius:16px;padding:14px 18px;margin-bottom:16px;background:#fffdfe}
+  .suggest .sh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+  .suggest .sh .tl{font-size:15px;font-weight:800;color:var(--pink-dark)}
+  .srow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .srow:last-child{border:none}
+  .srow .st{flex:1;font-size:14px;font-weight:600}
+  .srow .named{font-size:10.5px;font-weight:700;background:var(--yellow-soft);color:#8a7a00;padding:2px 9px;border-radius:999px;flex:none}
+  .srow .add1{font-size:13px;font-weight:700;color:#fff;background:var(--pink);padding:6px 13px;border-radius:9px;flex:none}
+  .srow .add1:hover{background:var(--pink-dark)}
+
+  /* Reference tables/cards */
+  .people{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .person{background:var(--card);border-radius:15px;box-shadow:var(--shadow);padding:15px 17px;border-inline-start:5px solid var(--pink)}
+  .person .nm{font-size:16px;font-weight:800}
+  .person .rl{font-size:13px;color:var(--pink-dark);font-weight:600;margin-top:1px}
+  .person .meta2{font-size:13px;color:#55555f;margin-top:7px;line-height:1.7}
+  .person .meta2 b{color:var(--ink)}
+  .tel{display:inline-flex;align-items:center;gap:5px;background:var(--pink-soft);color:var(--pink-dark);font-weight:700;padding:3px 10px;border-radius:8px;font-size:13px;text-decoration:none}
+  .tagp{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--yellow-soft);color:#8a7a00;margin-inline-start:6px}
+  .warn{background:#fff5d6;border:1px solid #f0e08a;border-radius:12px;padding:12px 15px;font-size:13.5px;color:#6b5a00;margin-bottom:16px}
+  .warn b{color:#5a4a00}
+
+  .rowitem{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 17px;display:flex;gap:14px;align-items:flex-start;margin-bottom:11px;border-inline-start:5px solid var(--pink)}
+  .rowitem .freq{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--pink-soft);color:var(--pink-dark);white-space:nowrap;flex:none;margin-top:2px}
+  .rowitem .freq.daily{background:#e2f7ec;color:#1c7a4d}
+  .rowitem .freq.weekly{background:#e6efff;color:#2760c4}
+  .rowitem .freq.month{background:#fff0e0;color:#b5701a}
+  .rowitem .freq.flow{background:#f0eef2;color:#666}
+  .rowitem .bd{flex:1}
+  .rowitem .ti{font-weight:700;font-size:15px}
+  .rowitem .de{font-size:13.5px;color:#55555f;margin-top:3px}
+  .addmini{font-size:12px;font-weight:700;color:var(--pink-dark);background:var(--pink-soft);padding:6px 11px;border-radius:9px;white-space:nowrap;flex:none;align-self:center}
+  .addmini:hover{background:#fbd4e8}
+
+  .gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .gitem{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 17px}
+  .gitem .t{font-weight:800;font-size:15px;color:var(--pink-dark)}
+  .gitem .d{font-size:13.5px;color:#55555f;margin-top:4px}
+  .checkrow{display:flex;align-items:center;gap:11px;padding:10px 4px;border-bottom:1px solid var(--line)}
+  .checkrow:last-child{border:none}
+  .checkrow input{width:20px;height:20px;accent-color:var(--pink);flex:none;cursor:pointer}
+  .checkrow.done label{text-decoration:line-through;color:var(--muted)}
+  .checkrow label{font-size:14.5px;cursor:pointer;flex:1}
+  .checkrow .fq{font-size:11px;color:var(--muted);font-weight:600}
+
+  /* Modal */
+  .overlay{position:fixed;inset:0;background:rgba(43,43,51,.45);backdrop-filter:blur(3px);z-index:70;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:20px;box-shadow:var(--shadow-lg);width:100%;max-width:520px;padding:24px 26px;animation:pop .2s ease}
+  .modal h2{margin:0 0 4px;font-size:20px;font-weight:800}.modal .hint{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .field{margin-bottom:13px}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#55555f}
+  .field input,.field select,.field textarea{width:100%;padding:11px 13px;border-radius:11px;border:1.5px solid var(--line);font-size:14.5px;outline:none;background:#fff}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--pink)}
+  .field textarea{resize:vertical;min-height:70px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .modal-foot{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .steps{font-size:13.5px;color:#55555f;padding-inline-start:20px;margin:8px 0}.steps li{margin-bottom:6px}
+
+  .toast{position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);z-index:90;transition:.3s;opacity:0}
+  .toast.show{transform:translateX(50%) translateY(0);opacity:1}
+  .toast.ok{background:#22b573}.toast.bad{background:#d9534f}
+
+  @media(max-width:920px){
+    .shell{flex-direction:column}
+    nav.side{width:100%;position:static;flex-direction:row;overflow-x:auto}
+    nav.side button{white-space:nowrap}.navsep{display:none}
+    .tiles,.stats{grid-template-columns:repeat(2,1fr)}
+    .people,.gloss,.g2,.g3,.g4{grid-template-columns:1fr}
+    .row2{grid-template-columns:1fr}
+  }
+  @media print{header.app,nav.side,.toolbar,.icon-btn,.head-tools,.addmini,.del,.statusbtns,.tbtn{display:none!important}.shell{display:block}.view{display:block!important}}
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="head-in">
+    <div class="brand">
+      <div class="logo">ה</div>
+      <div><h1>דף ניהול · הופה</h1><div class="sub">מרכז השליטה של מיטל · בשיתוף לירון</div></div>
+    </div>
+    <div class="head-tools">
+      <div class="user-switch" id="userSwitch"><button data-u="מיטל">מיטל</button><button data-u="לירון">לירון</button></div>
+      <div class="sync-pill off" id="syncPill" title="מצב סנכרון"><span class="sync-dot"></span><span id="syncTxt">לא מחובר</span></div>
+      <button class="icon-btn" id="printBtn" title="הדפסה / PDF">🖨️</button>
+      <button class="icon-btn" id="settingsBtn" title="הגדרות וסנכרון">⚙️</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="side" id="nav">
+    <button data-v="overview" class="active"><span class="ic">🏠</span> סקירה</button>
+    <button data-v="tasks"><span class="ic">✅</span> משימות</button>
+    <div class="navsep"></div>
+    <button data-v="coordinators"><span class="ic">👥</span> רכזים ובתי ספר</button>
+    <button data-v="schools"><span class="ic">🏫</span> תיק בית ספר</button>
+    <button data-v="joining"><span class="ic">🌱</span> בתי ספר מצטרפים</button>
+    <button data-v="volunteers"><span class="ic">🙋</span> מתנדבים</button>
+    <button data-v="routines"><span class="ic">🔁</span> שגרות</button>
+    <button data-v="projects"><span class="ic">🚀</span> תוכניות בתהליך</button>
+    <button data-v="challenges"><span class="ic">⚠️</span> אתגרים</button>
+    <button data-v="messages"><span class="ic">📣</span> שליחת הודעות</button>
+    <div class="navsep"></div>
+    <button data-v="tools"><span class="ic">🧰</span> כלים וקישורים</button>
+    <button data-v="glossary"><span class="ic">📖</span> מילון מונחים</button>
+    <button data-v="contacts"><span class="ic">📇</span> קשרים חשובים</button>
+  </nav>
+
+  <main class="content">
+
+    <!-- OVERVIEW -->
+    <section class="view show" id="v-overview">
+      <h2 class="vh" id="greet">סקירה כללית</h2>
+      <div class="vsub">מבט מהיר על היום — משימות, שגרות ומה חשוב עכשיו.</div>
+      <div class="tiles" id="ovTiles"></div>
+      <div class="grid g2" style="align-items:start">
+        <div class="box accent">
+          <h3>🔁 שגרת היום</h3>
+          <div id="ovRoutines"></div>
+        </div>
+        <div class="box accent">
+          <h3>🚀 במוקד עכשיו</h3>
+          <div id="ovFocus" style="font-size:14px;color:#55555f;line-height:1.9"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TASKS -->
+    <section class="view" id="v-tasks">
+      <h2 class="vh">משימות</h2>
+      <div class="vsub">משותף עם לירון בזמן אמת · משימה חדשה נכנסת תמיד לראש הלוח.</div>
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <button class="btn" id="addBtn">＋ משימה חדשה</button>
+        <div class="search"><input id="search" placeholder="חיפוש משימה, הערה או אחראי…"><span class="mag">🔍</span></div>
+        <button class="btn grey small" id="refreshBtn">↻ רענון</button>
+      </div>
+      <div id="suggestPanel"></div>
+      <div class="chips" id="chips"></div>
+      <div class="schoolinfo" id="schoolInfo"></div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <!-- COORDINATORS -->
+    <section class="view" id="v-coordinators">
+      <h2 class="vh">רכזים ובתי ספר</h2>
+      <div class="vsub">אנשי הקשר בשטח — רכזי בוגרים/נשירה, מנהלים וטלפונים.</div>
+      <div class="warn">⚠️ <b>לאימות מול לירון:</b> במסמך החפיפה של טל שמות בתי הספר שונים ממה שמסרת — לפי טל <b>בית שאן = "אורט מגשימים"</b> ו<b>עכו = "אורט מרום"</b> (מסרת "עכו אורט מגשימים"). כמו כן טל מציינת ש<b>לירון היא מנכ"לית + רכזת בית הערבה</b>, ושאדיבי באשקלון. סימנתי בכרטיסים.</div>
+      <div class="refbar"><button class="btn small" data-add="coords">➕ הוסף רכז/ת</button><span class="localnote">✎ עריכות בלשונית זו נשמרות במחשב זה</span></div>
+      <div class="people" id="coordList"></div>
+    </section>
+
+    <!-- SCHOOLS -->
+    <section class="view" id="v-schools">
+      <h2 class="vh">תיק בית ספר</h2>
+      <div class="vsub">כל מה שנאסף מהדרייב לכל בי"ס — אנשי קשר אזוריים, קבוצות וואטסאפ עם קישורי הצטרפות, רשימות בוגרים וחומרים. בחרו בית ספר:</div>
+      <div class="schooltabs" id="schoolTabs"></div>
+      <div id="schoolPanel"></div>
+    </section>
+
+    <!-- JOINING SCHOOLS -->
+    <section class="view" id="v-joining">
+      <h2 class="vh">בתי ספר מצטרפים</h2>
+      <div class="vsub">בתי הספר שנרשמו להצטרפות לתוכנית (מתוך גיליון הרישום). לכל בי"ס: פרטי הנהלה, אנשי קשר בקהילה, תוכנית עבודה, רשימות בוגרים, צ'ק ליסט קליטה ותזכורות.</div>
+      <div class="sc-block" style="margin-bottom:14px">
+        <h4>🏫 בחרו בית ספר מצטרף <span id="joinCount" style="font-weight:600;color:var(--muted);font-size:12px"></span><button class="btn small" data-jadd style="margin-inline-start:auto">➕ הוסף</button></h4>
+        <input id="joinSearch" class="joinsearch" placeholder="🔍 חיפוש לפי שם בית ספר או עיר…">
+        <div class="joinlegend" id="joinLegend"></div>
+        <div class="joinlist" id="joinTabs"></div>
+      </div>
+      <div id="joinPanel"></div>
+      <div id="joinProtocol"></div>
+      <div id="joinTemplates"></div>
+    </section>
+
+    <!-- VOLUNTEERS -->
+    <section class="view" id="v-volunteers">
+      <h2 class="vh">מתנדבים</h2>
+      <div class="vsub">התפקיד: ליצור קשר עם בוגרים שלא ענו לטפסים, לאסוף פרטים ולזהות צרכים. לשלוח עדכון לקבוצה מדי פעם; מי שלא מעדכן — לבדוק בפרטי.</div>
+      <div class="refbar"><button class="btn small" data-add="vols">➕ הוסף מתנדב/ת</button><span class="localnote">✎ עריכות נשמרות במחשב זה</span></div>
+      <div class="people" id="volList"></div>
+    </section>
+
+    <!-- ROUTINES -->
+    <section class="view" id="v-routines">
+      <h2 class="vh">שגרות שוטפות</h2>
+      <div class="vsub">מה שחוזר על עצמו — יומי, שבועי, חודשי. לחיצה על "➕ למשימות" הופכת שגרה למשימה בלוח המשותף.</div>
+      <div id="routineList"></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="view" id="v-projects">
+      <h2 class="vh">תוכניות בתהליך</h2>
+      <div class="vsub">יוזמות שטל התחילה וצריך להוציא לפועל.</div>
+      <div id="projectList"></div>
+    </section>
+
+    <!-- CHALLENGES -->
+    <section class="view" id="v-challenges">
+      <h2 class="vh">אתגרים פעילים</h2>
+      <div class="vsub">הנושאים שדורשים תשומת לב ואנרגיה.</div>
+      <div id="challengeList"></div>
+    </section>
+
+    <!-- MESSAGES -->
+    <section class="view" id="v-messages">
+      <h2 class="vh">שליחת הודעות לקבוצות</h2>
+      <div class="vsub">שליחה נוחה לקבוצות הצוות והבוגרים. ההודעה נשלחת מהווטסאפ שלך, עם תצוגה מקדימה ואישור לפני שליחה.</div>
+
+      <div id="msgSetup" class="box accent" style="margin-bottom:14px">
+        <h3>⚙️ חיבור חד-פעמי</h3>
+        <div class="vsub" style="margin:0 0 10px">הדביקי את כתובת ה-Web App ואת הסיסמה (SEND_SECRET) מ-Apps Script. נשמר במחשב הזה.</div>
+        <div class="field"><label>כתובת Web App</label><input id="m_url" placeholder="https://script.google.com/macros/s/.../exec"></div>
+        <div class="field"><label>סיסמה (SEND_SECRET)</label><input id="m_secret" placeholder="הסיסמה שהגדרת ב-Script Properties"></div>
+        <button class="btn" id="m_connect">התחבר וטען קבוצות</button>
+        <span id="m_status" class="localnote"></span>
+      </div>
+
+      <div id="msgMain" style="display:none">
+        <div class="grid g2" style="align-items:start">
+          <div class="box">
+            <h3>1. בחרי קבוצות</h3>
+            <div class="refbar" style="margin-bottom:8px">
+              <button class="btn small ghost" id="m_all">בחר הכל</button>
+              <button class="btn small ghost" id="m_none">נקה</button>
+              <button class="btn small ghost" id="m_reload">↻ רענן רשימה</button>
+            </div>
+            <div id="m_groups"></div>
+          </div>
+          <div class="box">
+            <h3>2. כתבי הודעה</h3>
+            <textarea id="m_text" rows="10" style="width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px;font:inherit;resize:vertical" placeholder="ההודעה שתישלח לקבוצות שנבחרו…"></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+              <span class="localnote" id="m_count">נבחרו 0 קבוצות</span>
+              <button class="btn" id="m_send">📣 שלח</button>
+            </div>
+          </div>
+        </div>
+        <div id="m_results" style="margin-top:14px"></div>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="view" id="v-tools">
+      <h2 class="vh">כלים וקישורים</h2>
+      <div class="vsub">איפה הכול נמצא. אפשר להוסיף קישור אמיתי (Monday, וואטסאפ, דרייב, אתר) לכל כלי.</div>
+      <div class="refbar"><button class="btn small" data-add="tools">➕ הוסף כלי/קישור</button><span class="localnote">✎ עריכות נשמרות במחשב זה</span></div>
+      <div class="grid g2" id="toolList"></div>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section class="view" id="v-glossary">
+      <h2 class="vh">מילון מונחים</h2>
+      <div class="vsub">השפה הפנימית של הופה.</div>
+      <div class="gloss" id="glossList"></div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="view" id="v-contacts">
+      <h2 class="vh">קשרים חשובים</h2>
+      <div class="vsub">אנשי קשר חיצוניים שכדאי להכיר.</div>
+      <div class="people" id="contactList"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Task modal -->
+<div class="overlay" id="taskOverlay"><div class="modal">
+  <h2 id="taskModalTitle">משימה חדשה</h2>
+  <div class="hint">משימות חדשות מופיעות תמיד בראש הלוח.</div>
+  <div class="field"><label>שם המשימה</label><input id="f_title" placeholder="לדוגמה: לתאם פגישה עם הרכז"></div>
+  <div class="row2">
+    <div class="field"><label>שיוך</label><select id="f_category"></select></div>
+    <div class="field"><label>דחיפות</label><select id="f_priority"><option value="high">🔴 דחוף</option><option value="normal">🔵 רגיל</option><option value="low">⚪ נמוך</option></select></div>
+  </div>
+  <div class="field"><label>סטטוס</label><select id="f_status"><option value="todo">טרם התחיל</option><option value="doing">בביצוע</option><option value="done">הושלם</option></select></div>
+  <div class="row2">
+    <div class="field"><label>אחראי/ת</label><input id="f_owner" placeholder="שם"></div>
+    <div class="field"><label>תאריך יעד (לא חובה)</label><input id="f_due" type="date"></div>
+  </div>
+  <div class="field"><label>הערות</label><textarea id="f_notes" placeholder="פרטים, סטטוס, מה נותר…"></textarea></div>
+  <label class="remindrow"><input type="checkbox" id="f_remind"> 🔔 הזכר לי במייל אם לא הושלמה תוך יומיים (גם אם היא "בביצוע")</label>
+  <div class="modal-foot"><button class="btn" id="saveTask">שמירה</button><button class="btn grey" id="cancelTask">ביטול</button></div>
+</div></div>
+
+<!-- Settings modal -->
+<div class="overlay" id="setOverlay"><div class="modal">
+  <h2>הגדרות</h2>
+  <div class="hint">הדף מוגן בסיסמה ומחובר לגיליון. הסיסמה נשמרת בדפדפן הזה — מקלידים אותה פעם אחת.</div>
+  <div class="field" style="background:var(--done-soft);border-radius:11px;padding:11px 13px;color:#1c7a4d;font-weight:600;font-size:14px">🔒 מוגן בסיסמה · מסונכרן עם הגיליון</div>
+  <div class="modal-foot" style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px">
+    <button class="btn ghost small" id="secretBtn">🔑 שינוי סיסמה</button>
+    <button class="btn grey small" id="exportBtn">ייצוא גיבוי</button>
+    <button class="btn grey small" id="closeSet">סגירה</button>
+  </div>
+</div></div>
+
+<!-- Reference edit modal -->
+<div class="overlay" id="refOverlay"><div class="modal">
+  <h2 id="refModalTitle">עריכה</h2>
+  <div class="hint" id="refModalHint"></div>
+  <div id="refBody"></div>
+  <div class="modal-foot"><button class="btn" id="saveRef">שמירה</button><button class="btn grey" id="cancelRef">ביטול</button><button class="btn grey small" id="deleteRef" style="margin-inline-start:auto;color:#d9534f">מחיקה 🗑️</button></div>
+</div></div>
+
+<!-- Joining school edit modal -->
+<div class="overlay" id="joinOverlay"><div class="modal">
+  <h2 id="joinModalTitle">בית ספר מצטרף</h2>
+  <div class="hint">הפרטים נשמרים בגיליון ומשותפים עם לירון — בלי צורך לפרסם מחדש.</div>
+  <div class="field"><label>שם בית הספר *</label><input id="j_name"></div>
+  <div class="field"><label>עיר</label><input id="j_city"></div>
+  <div class="field"><label>מנהל/ת</label><input id="j_principal"></div>
+  <div class="field"><label>טלפון</label><input id="j_phone"></div>
+  <div class="field"><label>מייל</label><input id="j_email"></div>
+  <div class="field"><label>מספר תלמידים</label><input id="j_students"></div>
+  <div class="modal-foot"><button class="btn" id="j_save">שמירה</button><button class="btn grey" id="j_cancel">ביטול</button><button class="btn grey small" id="j_delete" style="margin-inline-start:auto;color:#d9534f">מחיקה 🗑️</button></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+window.onerror=function(msg,src,line,col,err){try{alert('⚠️ שגיאה בטעינת הדף:\n'+msg+'\n(שורה '+line+')');}catch(e){}return false;};
+/* ================= נתוני ייחוס (מתוך מסמך החפיפה של טל + מה שמסרה מיטל) ================= */
+const SCHOOLS = [
+  {name:'כללי',            color:'#E8348A', info:'משימות כלליות שלא משויכות לבית ספר מסוים'},
+  {name:'עתיד מוצקין',      color:'#7B61FF', info:'תוכנית: רק בוגרים'},
+  {name:'בית שאן',          color:'#F5A623', info:'נשירה + בוגרים'},
+  {name:'עכו אורט מגשימים', color:'#00B8A9', info:'נשירה + בוגרים'},
+  {name:'אורט אדיבי',       color:'#22b573', info:'נשירה + בוגרים'},
+  {name:'אורט בית הערבה',   color:'#3B82F6', info:'בוגרים + נשירה'},
+  {name:'אורט צור ברק',     color:'#EF476F', info:'בוגרים'},
+];
+const colorOf=n=>(SCHOOLS.find(s=>s.name===n)||{}).color||'#E8348A';
+const infoOf =n=>(SCHOOLS.find(s=>s.name===n)||{}).info||'';
+
+let COORDS_DEFAULT = [];
+
+let VOLUNTEERS_DEFAULT = [];
+
+const ROUTINES = [
+  {freq:'יומי', cls:'daily', title:'מעבר על בקשות בוגרים', detail:'לעבור על הבורדים במנדיי, לזהות בקשות סיוע חדשות/ישנות שלא טופלו, ליצור קשר ולבדוק רלוונטיות.', cat:'כללי'},
+  {freq:'שבועי', cls:'weekly', title:'עדכון מנדיי', detail:'לבדוק שהמתנדבים עדכנו את הבורדים; לעקוב אחרי בוגרים שנפתחו להם פניות.', cat:'כללי'},
+  {freq:'שבועי', cls:'weekly', title:'תוכן לקבוצות בוגרים', detail:'לשלוח תוכן/מענה מוכן לקבוצת הרכזים כדי שיעבירו לקבוצות הבוגרים (עדיף שהרכז ישלח). מקור: "בנק הודעות לרכזי הופה" בדרייב.', cat:'כללי'},
+  {freq:'שוטף', cls:'flow', title:'חיפוש והפצת מענים', detail:'לחפש מענים רלוונטיים (ארצי/עירוני), להכניס לבורד המענים לפי קטגוריה, ליצור טופס פנימי במנדיי ולשלוח לקבוצות.', cat:'כללי'},
+  {freq:'שוטף', cls:'flow', title:'מעקב מתנדבים', detail:'לשלוח עדכון לקבוצת המתנדבים; מי שלא מעדכן — לבדוק בפרטי איך מתקדם.', cat:'כללי'},
+  {freq:'חודשי', cls:'month', title:'אוטומציית ימי הולדת', detail:'בתחילת חודש — לעדכן את טבלת האקסל ולשלוח לצוות ההנהלה למי המערכת תשלח ברכה.', cat:'כללי'},
+  {freq:'חודשי', cls:'month', title:'דו"ח לצוות ההנהלה', detail:'סוף חודש — כמה מענים נשלחו, כמה נרשמו, עם כמה נוצר קשר, לכמה ניתן סיוע.', cat:'כללי'},
+];
+
+let PROJECTS = [];
+
+const CHALLENGES = [
+  {title:'רכזים לא פעילים', detail:'חלק מהרכזים לא מנהלים קבוצות בוגרים ולא שולחים תוכן. עוזר (חלקית): פנייה אישית + ספציפית + הודעה מוכנה. לא עבד: פניות כלליות. לחשוב על דרכים יצירתיות להניע.'},
+  {title:'מתנדבים לא פעילים', detail:'הקבוצה שקטה ברובה. "אין זמן, מחר אתחיל". צריך מבנה ברור לתפקיד המתנדב: מה מצפים, כמה שעות, מה מרוויח.'},
+  {title:'טיפול בבוגרים', detail:'לקדם יותר בקשות סיוע פתוחות ולחפש להן מענה.'},
+];
+
+const TOOLS_DEFAULT = [
+  {name:'Monday.com', role:'ה-CRM המרכזי', detail:'וורקספייס נפרד לכל בי"ס + בורד בוגרים + טופס קלט. וורקספייס מענים למעקב הרשמות/אימפקט (כמה נשלח, כמה נרשמו לפי מענה/בי"ס). רכזים ומתנדבים בצפייה.', link:''},
+  {name:'וואטסאפ', role:'ערוץ התקשורת העיקרי', detail:'קבוצת רכזים (תוכן שבועי) · קבוצת מתנדבים · קבוצות בוגרים לכל בי"ס · קבוצות הנהלה · קבוצת מענים 14-18 · מענים פנימיים.', link:''},
+  {name:'אתר הופה', role:'מאגר מענים', detail:'600+ מענים לגילאי 14–26: מלגות, סיוע כלכלי, בריאות נפש, דיור, שירות לאומי ועוד. בהתפתחות מתמשכת.', link:'https://hopa.org.il/'},
+  {name:'האתר הפנימי לרכזות/מנהלות', role:'תוכנית עבודה + קבוצות + יוזמות', detail:'האתר הפנימי שנשלח לרכזות (מתוך מכתב הפתיחה של לירון): תוכנית עבודה מלאה, קבוצות מומלצות ורעיונות לקידום.', link:'https://6891aa282e89a.site123.me/'},
+  {name:'Google Drive', role:'ניהול אישי + חומרים', detail:'רעיונות + "בנק הודעות לרכזי הופה" (תוכן שבועי מוכן) + תיקיית בתי ספר תשפ"ו + תסריטי שיחה למתנדבים.', link:''},
+];
+
+/* משימות שנגזרו ממסמך החפיפה — מוצעות בלשונית "משימות" */
+const DERIVED = [
+  {title:'השלמת בוגרים בקבוצות בוגרים דרך הרכזות', cat:'כללי', named:true, notes:'לוודא שכל הבוגרים מצורפים לקבוצות הווצאפ של כל בי"ס — בעבודה מול הרכזות, ולקדם שהרכזות מנהלות את הקבוצות בעצמן.'},
+  {title:'בניית תוכנית עבודה מסודרת לכל המצטרפים החדשים של משרד העבודה', cat:'כללי', named:true, notes:'תוכנית עבודה מובנית לכל בתי הספר/הרכזים החדשים שנכנסים במסגרת משרד העבודה — יעדים, שלבים ואבני דרך.'},
+  {title:'מעבר יומי על בקשות בוגרים במנדיי', cat:'כללי', notes:'לזהות בקשות סיוע פתוחות/חדשות, ליצור קשר ולבדוק רלוונטיות.'},
+  {title:'שליחת תוכן שבועי לקבוצת הרכזים', cat:'כללי', notes:'מ"בנק ההודעות לרכזי הופה" — כדי שהרכזות יעבירו לקבוצות הבוגרים.'},
+  {title:'תזכורת לטופס "בוגרים בעסקים"', cat:'כללי', notes:'מעט נענו — לשלוח תזכורת ולאסוף פרטי בוגרים בעלי עסקים.'},
+  {title:'קידום פוסטים של סיפורי הצלחה', cat:'כללי', notes:'לערוך ולעלות לאינסטגרם/פייסבוק; לעדכן כשהפוסט עולה.'},
+  {title:'פנייה אישית לרכזים לא פעילים', cat:'כללי', notes:'הודעה מוכנה + ספציפית להנעת הרכזים.'},
+  {title:'הגדרת מבנה תפקיד למתנדבים', cat:'כללי', notes:'ציפיות, שעות ותמורה — מבנה ברור לתפקיד המתנדב.'},
+];
+
+const GLOSSARY = [
+  {t:'מענה', d:'משאב/פתרון לצורך של בוגר: מכינה, מלגה, טיפול נפשי, עזרה כספית, הכשרה מקצועית ועוד. עדיף איש קשר שיוצר קשר ישיר עם הבוגר.'},
+  {t:'מענה פנימי', d:'אנשי קשר עבורנו שיכולים לעזור במקרים מסוימים.'},
+  {t:'רכז/ת בוגרים', d:'איש סגל בית ספר שמונה לתפקיד — דמות מוכרת לתלמיד, "אחראי" על הקשר עם הבוגרים ומנהל את קבוצת הווצאפ שלהם.'},
+  {t:'בוגרים', d:'בוגרי בית הספר, גיל 18–26. תוכנית הזדמנויות: חיבור למענים, הכשרות, מלגות, תמיכה.'},
+  {t:'נשירה', d:'מניעת נשירה ממסגרות חינוך — עבודה עם תלמידים בסיכון (גיל 14 עד סוף תיכון) בתוך בית הספר.'},
+];
+
+let CONTACTS = [];
+
+const SEED = [
+  {category:'עתיד מוצקין', title:'תוכנית בוגרים', owner:''},
+  {category:'בית שאן', title:'מניעת נשירה', owner:''},
+  {category:'בית שאן', title:'תוכנית בוגרים', owner:''},
+  {category:'עכו אורט מגשימים', title:'מניעת נשירה', owner:''},
+  {category:'עכו אורט מגשימים', title:'תוכנית בוגרים', owner:''},
+  {category:'אורט אדיבי', title:'מניעת נשירה', owner:''},
+  {category:'אורט אדיבי', title:'תוכנית בוגרים', owner:''},
+  {category:'אורט בית הערבה', title:'מניעת נשירה', owner:''},
+  {category:'אורט בית הערבה', title:'תוכנית בוגרים', owner:''},
+  {category:'אורט צור ברק', title:'תוכנית בוגרים', owner:''},
+];
+
+/* ===== תיק בית ספר — נאסף מהדרייב "בתי ספר לשנת תשפ״ו" ===== */
+let SCHOOL_DETAILS = {};
+
+/* ===== בתי ספר מצטרפים — מתוך גיליון הרישום (יולי 2026) ===== */
+/* מיפוי גורמים קהילתיים לכל יישוב — נאסף במחקר רשת (יולי 2026). ph מאומת = נמצא בעמוד רשמי; ריק/„לאמת" = נדרש אימות טלפוני. */
+let JOINING_SCHOOLS=[];
+
+const STAGE_A=[
+  'שליחת הודעת קבלת התעניינות להצטרפות לתוכנית',
+  'קביעת פגישה לקראת תחילת עבודה משותפת',
+];
+const STAGE_B=[
+  'איסוף פרטי הרכז/מנהלת',
+  'פתיחת קבוצת ווטסאפ צוות',
+  'טופס רישום לפרטי בית הספר וצירוף רשימות בוגרים',
+  'פתיחת קבוצת ווטסאפ לבוגרים',
+  'ניסוח הודעות היכרות לקבוצות הבוגרים',
+  'פגישה אישית עם רכזת הבוגרים — הסבר על האתר ושליחת הודעות',
+  'הכנת טופס פנימי למתן מענים וסיוע לבוגרים',
+  'שליחת שאלון מיפוי לבוגרים להכנסה לנתונים',
+];
+
+const JOIN_STATUS={interest:{l:'התעניינות',c:'#94a3b8'},meeting:{l:'נקבעה פגישה',c:'#F5A623'},accepted:{l:'התקבל לתוכנית',c:'#3B82F6'},active:{l:'בעבודה',c:'#22b573'}};
+
+const JOIN_TEMPLATES=[
+  {t:'הודעת קבלת התעניינות',
+   body:'שלום רב,\nשמחנו מאוד לקבל את פנייתכם להצטרף לתוכנית הבוגרים של הופה.\nהתוכנית מלווה את בוגרי בית הספר ברצף מתמשך אחרי הלימודים: חיבור למענים, מלגות, הכשרות, תעסוקה ותמיכה אישית.\nנשמח לתאם פגישת היכרות קצרה כדי להכיר את הצוות ולהתאים יחד את העבודה המשותפת לבית הספר שלכם.\nמתי נוח לכם השבוע?\nבברכה,\nצוות הופה'},
+  {t:'הזמנה לפגישת היכרות',
+   body:'שלום,\nתודה על ההתעניינות בתוכנית הבוגרים של הופה.\nנשמח לקבוע פגישה קצרה (כ-30 דקות) כדי להכיר, להסביר איך התוכנית עובדת ולבנות יחד תוכנית עבודה מותאמת לבית הספר.\nאשמח לקבל 2-3 מועדים שנוחים לכם ואתאם בהתאם.\nתודה,\nצוות הופה'},
+  {t:'הודעת היכרות לקבוצת הבוגרים',
+   body:'שלום לכולם וברוכים הבאים לקהילת הבוגרים של הופה 🧡\nאנחנו כאן כדי ללוות אתכם בצעדים הבאים אחרי בית הספר: לימודים, תעסוקה, מלגות, שירות ועוד.\nבקבוצה נשתף מענים והזדמנויות שרלוונטיים אליכם, ותמיד אפשר לפנות אלינו בפרטי לכל שאלה או בקשה.\nשמחים שאתם איתנו, ומזמינים אתכם להיות חלק פעיל.'},
+  {t:'הודעה מלווה לשאלון מיפוי',
+   body:'היי,\nכדי שנוכל להתאים לכם בדיוק את המענים וההזדמנויות שמתאימים לכם, נשמח שתמלאו שאלון קצר (2-3 דקות).\nכל מה שתשתפו עוזר לנו להכיר אתכם ולחבר אתכם לדברים הנכונים בשבילכם.\nתודה רבה!\n[קישור לשאלון]'},
+];
+
+const STATUS={todo:'טרם התחיל',doing:'בביצוע',done:'הושלם'};
+const PRIORITY={high:{l:'דחוף',c:'#e5484d',ic:'🔴'},normal:{l:'רגיל',c:'#3B82F6',ic:'🔵'},low:{l:'נמוך',c:'#94a3b8',ic:'⚪'}};
+const PRANK={high:0,normal:1,low:2};
+
+/* ================= סטייט ================= */
+const LS={url:'hopa_sync_url',user:'hopa_user',cache:'hopa_tasks_cache',checks:'hopa_routine_checks',coords:'hopa_ref_coords',vols:'hopa_ref_vols',tools:'hopa_ref_tools'};
+/* כתובת המנוע (Apps Script /exec של גיליון "ניהול משימות"). אם תשתנה — מעדכנים כאן בלבד. */
+const EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const CONFIG={url:localStorage.getItem(LS.url)||EXEC_URL,user:localStorage.getItem(LS.user)||'מיטל'};
+let API_SECRET=localStorage.getItem('hopa_api_secret')||'';
+function ensureSecret(force){if(force)API_SECRET='';if(!API_SECRET){const v=window.prompt('🔒 סיסמת גישה ללוח הופה:');API_SECRET=(v||'').trim();if(API_SECRET)localStorage.setItem('hopa_api_secret',API_SECRET);}return !!API_SECRET;}
+let state={tasks:[],filter:'all',search:''};
+let editingId=null,jsonpN=0,pollTimer=null,currentView='overview';
+let refEditing=null; // {type,id|null}
+let STORE={}; // מאגר נתונים חי מהגיליון (רכזים/מתנדבים/כלים/בתי ספר מצטרפים)
+const STORE_CACHE='hopa_store_cache';
+
+/* ----- נתוני ייחוס ניתנים לעריכה (נשמרים מקומית) ----- */
+function withIds(arr){return arr.map(o=>Object.assign({id:o.id||uid()},o));}
+function loadRefFrom(arr,def){return withIds((arr&&arr.length!==undefined)?arr:def);}
+function saveRef(){storeSave('ref',{coords:ref.coords,vols:ref.vols,tools:ref.tools});}
+const ref={coords:[],vols:[],tools:[]};
+const REF_META={
+  coords:{title:'רכז/ת',fields:[['school','בית ספר'],['prog','תוכנית'],['name','שם הרכז/ת'],['role','תפקיד'],['phone','טלפון'],['principal','מנהל/ת'],['note','הערה','area']]},
+  vols:{title:'מתנדב/ת',fields:[['name','שם'],['assign','שיוך'],['note','הערה','area']]},
+  tools:{title:'כלי / קישור',fields:[['name','שם הכלי'],['role','תיאור קצר'],['link','קישור (URL)'],['detail','פירוט','area']]},
+};
+
+const $=s=>document.querySelector(s);
+const esc=s=>(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m,k){const t=$('#toast');t.textContent=m;t.className='toast show '+(k||'');setTimeout(()=>t.className='toast',2200);}
+function relTime(ms){if(!ms)return'';const d=Date.now()-Number(ms),m=Math.floor(d/60000);if(m<1)return'עכשיו';if(m<60)return'לפני '+m+' דק׳';const h=Math.floor(m/60);if(h<24)return'לפני '+h+' שע׳';const dd=Math.floor(h/24);if(dd<7)return'לפני '+dd+' ימים';return new Date(Number(ms)).toLocaleDateString('he-IL');}
+function uid(){return'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+const telHref=p=>p?('tel:'+p.replace(/[^0-9+]/g,'')):'#';
+
+/* ================= סנכרון ================= */
+function setSync(cls,txt){$('#syncPill').className='sync-pill '+cls;$('#syncTxt').textContent=txt;}
+/* ----- תקשורת עם הגיליון (דף מתארח בחוץ): קריאה=JSONP GET, כתיבה=POST no-cors ----- */
+let jsonpN2=0;
+function jsonp(params){return new Promise((res,rej)=>{if(!CONFIG.url){rej(new Error('no-url'));return;}const cb='hcb_'+(jsonpN2++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},25000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:API_SECRET,callback:cb})).toString();s.src=CONFIG.url+(CONFIG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+function postWrite(params){if(!CONFIG.url)return Promise.reject(new Error('no-url'));const body=new URLSearchParams(Object.assign({},params,{secret:API_SECRET})).toString();return fetch(CONFIG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body});}
+/* ----- מאגר נתונים חי: נטען פעם אחת מהגיליון, נשמר בכל עריכה (משותף עם לירון) ----- */
+async function loadStore(){let s=null;try{let r=await jsonp({action:'storeAll'});let tries=0;while(r&&r.ok===false&&/unauth/i.test(r.error||'')&&tries<3){toast('סיסמה שגויה — נסי שוב','bad');if(!ensureSecret(true))break;r=await jsonp({action:'storeAll'});tries++;}if(r&&r.ok){s=r.store||{};localStorage.setItem(STORE_CACHE,JSON.stringify(s));}}catch(e){try{s=JSON.parse(localStorage.getItem(STORE_CACHE));}catch(_){}}STORE=s||{};}
+function storeSave(key,val){STORE[key]=val;try{localStorage.setItem(STORE_CACHE,JSON.stringify(STORE));}catch(e){}postWrite({action:'storeSet',key,json:JSON.stringify(val)}).catch(()=>toast('נשמר מקומית — יסונכרן כשהחיבור יחזור','bad'));}
+async function api(action,extra){setSync('busy','שומר…');try{await postWrite(Object.assign({action},extra||{}));const r=await jsonp({action:'list'});if(r&&r.ok){state.tasks=(r.tasks||[]).map(normalize);saveCache();}setSync('','מסונכרן');return true;}catch(e){setSync('err','שגיאת סנכרון');toast('הסנכרון נכשל — נסי שוב','bad');return false;}}
+function normalize(t){return{id:t.id||uid(),category:t.category||'כללי',title:t.title||'',status:(t.status in STATUS)?t.status:'todo',notes:t.notes||'',owner:t.owner||'',due:t.due||'',createdAt:Number(t.createdAt)||Date.now(),updatedAt:Number(t.updatedAt)||Date.now(),updatedBy:t.updatedBy||'',order:Number(t.order)||Number(t.createdAt)||Date.now(),priority:(t.priority in PRIORITY)?t.priority:'normal',remind:(t.remind===true||t.remind==='true'||t.remind==='TRUE'||t.remind===1),remindedAt:Number(t.remindedAt)||0};}
+function saveCache(){localStorage.setItem(LS.cache,JSON.stringify(state.tasks));}
+function loadCache(){try{state.tasks=(JSON.parse(localStorage.getItem(LS.cache))||[]).map(normalize);}catch(e){state.tasks=[];}}
+async function refresh(silent,reconcile){if(!CONFIG.url){setSync('off','לא מחובר');return;}if(!silent)setSync('busy','טוען…');try{const r=await jsonp({action:'list'});if(!r||!r.ok)throw 0;const server=(r.tasks||[]).map(normalize);if(reconcile&&server.length===0&&state.tasks.length>0){await api('bulk',{tasks:JSON.stringify(state.tasks)});}else{state.tasks=server;saveCache();setSync('','מסונכרן');}renderTasks();renderOverview();}catch(e){setSync('err','שגיאת סנכרון');}}
+
+async function upsertTask(t,isNew){t.updatedAt=Date.now();t.updatedBy=CONFIG.user;const i=state.tasks.findIndex(x=>x.id===t.id);if(i>=0)state.tasks[i]=t;else state.tasks.unshift(t);saveCache();renderTasks();renderOverview();await api(isNew?'add':'update',{task:JSON.stringify(t)});renderTasks();renderOverview();}
+async function deleteTask(id){state.tasks=state.tasks.filter(x=>x.id!==id);saveCache();renderTasks();renderOverview();await api('delete',{id});renderTasks();renderOverview();}
+async function setStatus(id,st){const t=state.tasks.find(x=>x.id===id);if(!t)return;t.status=st;await upsertTask(t,false);}
+async function seedBoard(){let base=Date.now();const rows=SEED.map((s,i)=>normalize({id:uid(),category:s.category,title:s.title,owner:s.owner,status:'todo',createdAt:base+i,updatedAt:base+i,updatedBy:CONFIG.user,order:base+i}));state.tasks=rows.concat(state.tasks);saveCache();renderTasks();renderOverview();const ok=await api('bulk',{tasks:JSON.stringify(state.tasks)});renderTasks();renderOverview();toast(ok?'הלוח אותחל וסונכרן ✔':'הלוח אותחל מקומית — הסנכרון נכשל',ok?'ok':'bad');}
+
+/* הוספת משימה מהיר (משגרה/תוכנית) */
+function quickAddTask(title,cat,notes){const now=Date.now();const t=normalize({id:uid(),category:cat||'כללי',title,notes:notes||'',status:'todo',owner:'',createdAt:now,order:now});upsertTask(t,true);toast('נוסף למשימות ✔','ok');}
+
+/* ================= תצוגת משימות ================= */
+const SRANK={todo:0,doing:1,done:2}; /* טרם התחיל → בביצוע → הושלם (בביצוע והושלם יורדות בתור) */
+function visibleTasks(){let a=state.tasks.slice().sort((x,y)=>{
+    const ds=(SRANK[x.status]??0)-(SRANK[y.status]??0);if(ds)return ds;
+    const dp=(PRANK[x.priority]??1)-(PRANK[y.priority]??1);if(dp)return dp;
+    return y.order-x.order;
+  });if(state.filter!=='all')a=a.filter(t=>t.category===state.filter);const q=state.search.trim();if(q)a=a.filter(t=>(t.title+' '+t.notes+' '+t.owner+' '+t.category).includes(q));return a;}
+function renderTasks(){renderStats();renderChips();renderList();renderSuggestions();const info=state.filter!=='all'?infoOf(state.filter):'';const si=$('#schoolInfo');si.textContent=info;si.className='schoolinfo'+(info?' show':'');}
+function pendingSuggestions(){const have=new Set(state.tasks.map(t=>(t.title||'').trim()));return DERIVED.filter(d=>!have.has(d.title.trim()));}
+function renderSuggestions(){const items=pendingSuggestions();const p=$('#suggestPanel');if(!items.length){p.innerHTML='';return;}
+  p.innerHTML=`<div class="suggest"><div class="sh"><span class="tl">💡 משימות מומלצות מהחפיפה (${items.length})</span><button class="btn small" id="addAllSug">הוסף הכל</button></div>`+
+  items.map(d=>`<div class="srow">${d.named?'<span class="named">ביקשת</span>':''}<span class="st">${esc(d.title)}</span><button class="add1" data-sug="${esc(d.title)}">➕ הוסף</button></div>`).join('')+`</div>`;}
+function addManyTasks(items){if(!items.length)return;const now=Date.now();const created=items.map((it,i)=>normalize({id:uid(),category:it.cat||'כללי',title:it.title,notes:it.notes||'',status:'todo',owner:'',createdAt:now+i,updatedAt:now+i,updatedBy:CONFIG.user,order:now+i}));created.forEach(t=>state.tasks.unshift(t));saveCache();renderTasks();renderOverview();api('bulk',{tasks:JSON.stringify(state.tasks)}).then(()=>{renderTasks();renderOverview();});toast((items.length>1?items.length+' משימות נוספו':'המשימה נוספה')+' ✔','ok');}
+function statusCounts(arr){const c={todo:0,doing:0,done:0};arr.forEach(t=>c[t.status]++);return c;}
+function renderStats(){const base=state.filter==='all'?state.tasks:state.tasks.filter(t=>t.category===state.filter);const c=statusCounts(base);const total=base.length,pct=total?Math.round(c.done/total*100):0;$('#stats').innerHTML=`
+  <div class="stat todo"><span class="edge"></span><div class="n">${c.todo}</div><div class="l">טרם התחיל</div></div>
+  <div class="stat doing"><span class="edge"></span><div class="n">${c.doing}</div><div class="l">בביצוע</div></div>
+  <div class="stat done"><span class="edge"></span><div class="n">${c.done}</div><div class="l">הושלם</div></div>
+  <div class="stat total"><span class="edge"></span><div class="n">${total}</div><div class="l">סה״כ</div><div class="prog"><i style="width:${pct}%"></i></div><div class="pct">${pct}% הושלמו</div></div>`;}
+function renderChips(){const counts={};state.tasks.forEach(t=>counts[t.category]=(counts[t.category]||0)+1);let h=`<button class="chip ${state.filter==='all'?'active':''}" data-f="all">הכל <span class="cnt">${state.tasks.length}</span></button>`;SCHOOLS.forEach(s=>{const n=counts[s.name]||0;h+=`<button class="chip ${state.filter===s.name?'active':''}" data-f="${esc(s.name)}"><span class="dot" style="background:${s.color}"></span>${esc(s.name)} <span class="cnt">${n}</span></button>`;});$('#chips').innerHTML=h;}
+function prBadge(t){if(!t.priority||t.priority==='low')return'';const p=PRIORITY[t.priority];const solid=t.priority==='high';return`<span class="prio" style="${solid?`background:${p.c};color:#fff`:`background:${p.c}1f;color:${p.c}`}">${p.ic} ${esc(p.l)}</span>`;}
+function renderList(){const arr=visibleTasks();if(!arr.length){$('#list').innerHTML=`<div class="empty"><div class="big">🗒️</div>אין משימות להצגה.<br>לחצו “＋ משימה חדשה”${!state.tasks.length?' או ⚙️ → “אתחול לוח”.':'.'}</div>`;return;}$('#list').innerHTML=arr.map(t=>{const col=colorOf(t.category);const overdue=t.due&&t.status!=='done'&&t.due<new Date().toISOString().slice(0,10);const dueHtml=t.due?`<span class="due ${overdue?'over':''}">📅 ${esc(new Date(t.due).toLocaleDateString('he-IL'))}</span>`:'';const by=t.updatedBy?`עודכן ע״י ${esc(t.updatedBy)} · ${relTime(t.updatedAt)}`:relTime(t.updatedAt);
+  const msg=(t.title||'')+(t.notes?('\n\n'+t.notes):'');
+  const waU='https://wa.me/?text='+encodeURIComponent(msg);
+  const gmU='https://mail.google.com/mail/?view=cm&fs=1&su='+encodeURIComponent(t.title||'')+'&body='+encodeURIComponent(t.notes||'');
+  return`<div class="card ${t.status==='done'?'done-card':''} ${t.priority==='high'&&t.status!=='done'?'urgent':''}" style="border-inline-start-color:${col}">
+  <div class="card-top"><span class="badge" style="background:${col}">${esc(t.category)}</span>${prBadge(t)}${t.remind&&t.status!=='done'?'<span class="rem" title="תזכורת מייל פעילה — אם לא תושלם תוך יומיים">🔔</span>':''}${t.owner?`<span class="owner">👤 ${esc(t.owner)}</span>`:''}<span class="spacer"></span>
+    <div class="statusbtns" data-id="${t.id}"><button class="${t.status==='todo'?'on-todo':''}" data-s="todo">טרם</button><button class="${t.status==='doing'?'on-doing':''}" data-s="doing">בביצוע</button><button class="${t.status==='done'?'on-done':''}" data-s="done">הושלם</button></div></div>
+  <h3 class="tt ${t.status==='done'?'done-txt':''}" data-edit="${t.id}">${esc(t.title)||'(ללא שם)'} <span class="pen">✏️</span></h3>
+  <textarea class="notes" data-notes="${t.id}" placeholder="הוספת הערה…">${esc(t.notes)}</textarea>
+  <div class="card-foot">${dueHtml}<a class="tbtn wa" href="${waU}" target="_blank" rel="noopener" title="שליחה בוואטסאפ">💬 וואטסאפ</a><a class="tbtn gm" href="${gmU}" target="_blank" rel="noopener" title="שליחה במייל (Gmail)">✉️ מייל</a><span class="meta">🕘 ${esc(by)}</span><button class="del" data-del="${t.id}">מחיקה 🗑️</button></div></div>`;}).join('');}
+
+/* ================= מודאל משימה ================= */
+function openTaskModal(task){editingId=task?task.id:null;$('#taskModalTitle').textContent=task?'עריכת משימה':'משימה חדשה';$('#f_category').innerHTML=SCHOOLS.map(s=>`<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');$('#f_title').value=task?task.title:'';$('#f_category').value=task?task.category:(state.filter!=='all'?state.filter:'כללי');$('#f_status').value=task?task.status:'todo';$('#f_priority').value=task?(task.priority||'normal'):'normal';$('#f_remind').checked=task?!!task.remind:false;$('#f_owner').value=task?task.owner:'';$('#f_due').value=task?task.due:'';$('#f_notes').value=task?task.notes:'';$('#taskOverlay').classList.add('show');setTimeout(()=>$('#f_title').focus(),50);}
+function closeTaskModal(){$('#taskOverlay').classList.remove('show');editingId=null;}
+function saveFromModal(){const title=$('#f_title').value.trim();if(!title){toast('צריך שם למשימה','bad');$('#f_title').focus();return;}const ex=editingId?state.tasks.find(x=>x.id===editingId):null;const now=Date.now();const t=normalize({id:ex?ex.id:uid(),category:$('#f_category').value,title,status:$('#f_status').value,priority:$('#f_priority').value,remind:$('#f_remind').checked,remindedAt:ex?ex.remindedAt:0,owner:$('#f_owner').value.trim(),due:$('#f_due').value,notes:$('#f_notes').value.trim(),createdAt:ex?ex.createdAt:now,order:ex?ex.order:now});closeTaskModal();upsertTask(t,!ex);}
+
+/* ================= עריכת נתוני ייחוס ================= */
+function openRefEdit(type,id){
+  refEditing={type,id};const meta=REF_META[type];const item=id?ref[type].find(x=>x.id===id):{};
+  $('#refModalTitle').textContent=(id?'עריכת ':'הוספת ')+meta.title;
+  $('#refModalHint').textContent='הפרטים נשמרים בגיליון ומשותפים עם לירון.';
+  $('#refBody').innerHTML=meta.fields.map(f=>{const[k,label,type2]=f;const val=esc(item[k]||'');
+    return`<div class="field"><label>${esc(label)}</label>${type2==='area'?`<textarea data-rf="${k}">${val}</textarea>`:`<input data-rf="${k}" value="${val}">`}</div>`;}).join('');
+  $('#deleteRef').style.display=id?'inline-block':'none';
+  $('#refOverlay').classList.add('show');
+  setTimeout(()=>{const el=$('#refBody [data-rf]');if(el)el.focus();},50);
+}
+function closeRefEdit(){$('#refOverlay').classList.remove('show');refEditing=null;}
+function saveRefEdit(){
+  if(!refEditing)return;const{type,id}=refEditing;const obj={};
+  $('#refBody').querySelectorAll('[data-rf]').forEach(el=>obj[el.dataset.rf]=el.value.trim());
+  if(id){const i=ref[type].findIndex(x=>x.id===id);ref[type][i]=Object.assign({id},obj);}
+  else ref[type].unshift(Object.assign({id:uid()},obj));
+  saveRef();closeRefEdit();
+  if(type==='coords')renderCoords();else if(type==='vols')renderVols();else renderTools();
+  toast('נשמר ✔','ok');
+}
+function deleteRefItem(){
+  if(!refEditing||!refEditing.id)return;const{type,id}=refEditing;
+  if(!confirm('למחוק את הרשומה?'))return;
+  ref[type]=ref[type].filter(x=>x.id!==id);saveRef();closeRefEdit();
+  if(type==='coords')renderCoords();else if(type==='vols')renderVols();else renderTools();
+}
+
+/* ================= תצוגות ייחוס ================= */
+function refActs(type,id){return`<div class="cardacts"><button data-edit-ref="${type}:${id}">✏️ עריכה</button><button data-del-ref="${type}:${id}">🗑️ מחיקה</button></div>`;}
+function renderCoords(){$('#coordList').innerHTML=ref.coords.map(c=>`<div class="person">
+  <div class="nm">${esc(c.school)} ${c.prog?`<span class="tagp">${esc(c.prog)}</span>`:''}</div>
+  <div class="rl">${esc(c.role)}${c.name?': '+esc(c.name):''}</div>
+  <div class="meta2">${c.phone?`<a class="tel" href="${telHref(c.phone)}">📞 ${esc(c.phone)}</a><br>`:''}
+    <b>מנהל/ת:</b> ${esc(c.principal)||'—'}${c.note?`<br><span style="color:#8a7a00">${esc(c.note)}</span>`:''}</div>${refActs('coords',c.id)}</div>`).join('')||'<div class="empty">אין רשומות. לחצו “➕ הוסף רכז/ת”.</div>';}
+function renderVols(){$('#volList').innerHTML=ref.vols.map(v=>`<div class="person"><div class="nm">${esc(v.name)}</div><div class="rl">שיוך: ${esc(v.assign)||'—'}</div>${v.note?`<div class="meta2">${esc(v.note)}</div>`:''}${refActs('vols',v.id)}</div>`).join('')||'<div class="empty">אין רשומות. לחצו “➕ הוסף מתנדב/ת”.</div>';}
+function renderRoutines(){$('#routineList').innerHTML=ROUTINES.map((r,i)=>`<div class="rowitem"><span class="freq ${r.cls}">${esc(r.freq)}</span><div class="bd"><div class="ti">${esc(r.title)}</div><div class="de">${esc(r.detail)}</div></div><button class="addmini" data-routine="${i}">➕ למשימות</button></div>`).join('');}
+function renderProjects(){$('#projectList').innerHTML=PROJECTS.map((p,i)=>`<div class="rowitem"><span class="freq flow">בתהליך</span><div class="bd"><div class="ti">${esc(p.title)}</div><div class="de">${esc(p.detail)}</div>${p.extra?`<div class="de" style="color:var(--pink-dark);font-weight:600;margin-top:5px">${esc(p.extra)}</div>`:''}</div><button class="addmini" data-project="${i}">➕ למשימות</button></div>`).join('');}
+function renderChallenges(){$('#challengeList').innerHTML=CHALLENGES.map(c=>`<div class="rowitem" style="border-inline-start-color:#F5A623"><span class="freq month">אתגר</span><div class="bd"><div class="ti">${esc(c.title)}</div><div class="de">${esc(c.detail)}</div></div></div>`).join('');}
+function renderTools(){$('#toolList').innerHTML=ref.tools.map(t=>`<div class="box accent"><h3>${esc(t.name)}</h3><div style="font-size:13px;color:var(--pink-dark);font-weight:600;margin:-6px 0 8px">${esc(t.role)}</div><div style="font-size:13.5px;color:#55555f">${esc(t.detail)}</div>${t.link?`<a class="toollink" href="${esc(t.link)}" target="_blank" rel="noopener">↗ פתיחה</a>`:''}${refActs('tools',t.id)}</div>`).join('')||'<div class="empty">אין כלים. לחצו “➕ הוסף כלי/קישור”.</div>';}
+function renderGloss(){$('#glossList').innerHTML=GLOSSARY.map(g=>`<div class="gitem"><div class="t">${esc(g.t)}</div><div class="d">${esc(g.d)}</div></div>`).join('');}
+function renderContacts(){$('#contactList').innerHTML=CONTACTS.map(c=>`<div class="person"><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div><div class="meta2"><a class="tel" href="${telHref(c.phone)}">📞 ${esc(c.phone)}</a><br>${esc(c.detail)}</div></div>`).join('');}
+
+/* ================= תיק בית ספר ================= */
+let schoolKey=null;
+let SCHOOL_LIST=[];
+function coordOf(name){return ref.coords.find(c=>c.school===name)||COORDS_DEFAULT.find(c=>c.school===name)||{};}
+function renderSchoolTabs(){
+  $('#schoolTabs').innerHTML=SCHOOL_LIST.map(s=>{
+    const active=s.name===schoolKey;
+    return `<button class="schooltab ${active?'active':''}" data-sk="${esc(s.name)}" style="${active?`background:${s.color}`:''}"><span class="dot" style="background:${s.color}"></span>${esc(s.name)}</button>`;
+  }).join('');
+}
+function renderSchoolPanel(){
+  const s=SCHOOLS.find(x=>x.name===schoolKey);const d=SCHOOL_DETAILS[schoolKey];const c=coordOf(schoolKey);
+  if(!s||!d){$('#schoolPanel').innerHTML='';return;}
+  const chips=[];
+  if(d.city)chips.push('📍 '+d.city);
+  if(s.info)s.info.split('·').forEach(p=>{p=p.trim();if(p)chips.push(p);});
+  const head=`<div class="sc-head" style="background:linear-gradient(135deg,${s.color},${s.color}cc)">
+    <h3>🏫 ${esc(s.name)}</h3>
+    <div class="sub">${esc(d.folder?('תיקיית דרייב: '+d.folder):'')}</div>
+    <div class="chips2">${chips.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>`;
+
+  let coordBlock='';
+  if(c&&c.name){coordBlock=`<div class="sc-block"><h4>👤 רכז/ת ביה"ס</h4>
+    <div class="rc-row"><span class="g">${esc(c.name)}</span><span class="t">${esc(c.role||'')}</span>
+    ${c.phone?`<a class="tel ph" href="${telHref(c.phone)}">📞 ${esc(c.phone)}</a>${waBtn(c.phone)}`:'<span class="ph t">אין טלפון</span>'}
+    ${c.principal?`<span class="note">מנהל/ת: ${esc(c.principal)}</span>`:''}${c.note?`<span class="note">${esc(c.note)}</span>`:''}</div></div>`;}
+
+  let regBlock='';
+  if(d.regional&&d.regional.length){
+    regBlock=`<div class="sc-block"><h4>☎️ אנשי קשר אזוריים</h4>
+      ${d.note?`<div class="warnmini">${esc(d.note)}</div>`:''}
+      <div class="rc">${d.regional.map(r=>`<div class="rc-row">
+        <span class="g">${esc(r.g)}</span><span class="t">${esc(r.t)}</span>
+        ${r.nm?`<span class="nm">${esc(r.nm)}</span>`:''}
+        ${r.ph?`<a class="tel ph" href="${telHref(r.ph)}">📞 ${esc(r.ph)}</a>${waBtn(r.ph)}`:'<span class="ph t">—</span>'}
+        ${r.note?`<span class="note">${esc(r.note)}</span>`:''}</div>`).join('')}</div></div>`;
+  } else if(d.note){
+    regBlock=`<div class="sc-block"><h4>☎️ אנשי קשר אזוריים</h4><div class="warnmini">${esc(d.note)}</div></div>`;
+  }
+
+  const waCount=d.wa.filter(w=>w.link).length;
+  const waBlock=`<div class="sc-block"><h4>💬 קבוצות וואטסאפ אזוריות <span style="font-weight:600;color:var(--muted);font-size:12px">(${waCount}/${d.wa.length} עם קישור)</span></h4>
+    ${d.waNote?`<div class="warnmini">${esc(d.waNote)}</div>`:''}
+    <div class="wa-list">${d.wa.map(w=>`<div class="wa"><span class="lbl">${esc(w.lbl)}</span>${w.link?`<a href="${esc(w.link)}" target="_blank" rel="noopener">הצטרפות ↗</a>`:'<span class="none">אין קישור</span>'}</div>`).join('')}</div></div>`;
+
+  const filesBlock=d.files&&d.files.length?`<div class="sc-block"><h4>📁 חומרים בתיקייה</h4>
+    <ul class="filelist">${d.files.map(f=>{const i=f.indexOf('—');return `<li>📄 ${i>0?`<b>${esc(f.slice(0,i))}</b>${esc(f.slice(i))}`:esc(f)}</li>`;}).join('')}</ul></div>`:'';
+
+  $('#schoolPanel').innerHTML=head+coordBlock+regBlock+waBlock+filesBlock;
+}
+function renderSchools(){if(!schoolKey&&SCHOOL_LIST.length)schoolKey=SCHOOL_LIST[0].name;renderSchoolTabs();renderSchoolPanel();}
+$('#schoolTabs').addEventListener('click',e=>{const b=e.target.closest('[data-sk]');if(b){schoolKey=b.dataset.sk;renderSchools();}});
+
+/* ================= בתי ספר מצטרפים ================= */
+let joinKey=null;
+const waHref=p=>{const d=(p||'').replace(/[^0-9]/g,'').replace(/^0/,'');return d?('https://wa.me/972'+d):'#';};
+const isCell=p=>{const d=(p||'').replace(/[^0-9]/g,'').replace(/^0/,'');return /^5\d{8}$/.test(d);}; /* נייד ישראלי 05x בלבד — לקווי נייח אין וואטסאפ */
+const waBtn=p=>isCell(p)?`<a class="wabtn2" href="${waHref(p)}" target="_blank" rel="noopener" title="וואטסאפ">💬</a>`:'';
+const mailOk=e=>/@.+\.[a-z]{2,}$/i.test(e||'');
+function loadJoin(){return STORE.joining||{};}
+function saveJoin(o){storeSave('joining',o);}
+function joinData(name){return loadJoin()[name]||{};}
+function setJoinField(name,field,val){const all=loadJoin();all[name]=Object.assign({},all[name],{[field]:val});saveJoin(all);}
+
+function renderJoinProtocol(){
+  $('#joinProtocol').innerHTML=`<details class="joinhelp"><summary>📋 נוהל כניסה לבית ספר חדש</summary>
+    <div class="proto">
+      <div class="proto-stage"><div class="ps-h a">שלב א׳ · יצירת קשר ראשוני</div>
+        <ol>${STAGE_A.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></div>
+      <div class="proto-stage"><div class="ps-h b">שלב ב׳ · בית הספר התקבל לתוכנית</div>
+        <ol>${STAGE_B.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></div>
+    </div></details>`;
+}
+function renderJoinTemplates(){
+  $('#joinTemplates').innerHTML=`<details class="joinhelp"><summary>✍️ ניסוחים להודעות <span style="font-weight:600;color:var(--muted);font-size:12px">(לחיצה על "העתקה")</span></summary>
+    <div class="tpls">${JOIN_TEMPLATES.map((t,i)=>`<div class="tpl">
+      <div class="th"><span class="tt2">${esc(t.t)}</span><button class="copy" data-copy="${i}">📋 העתקה</button></div>
+      <div class="body">${esc(t.body)}</div></div>`).join('')}</div></details>`;
+}
+let joinSearch='';
+function renderJoinTabs(){
+  const all=loadJoin();
+  const counts={};JOINING_SCHOOLS.forEach(s=>{const st=(all[s.name]||{}).status||'interest';counts[st]=(counts[st]||0)+1;});
+  $('#joinCount').textContent='· '+JOINING_SCHOOLS.length+' בתי ספר';
+  $('#joinLegend').innerHTML=Object.entries(JOIN_STATUS).map(([k,v])=>`<span><i style="background:${v.c}"></i>${esc(v.l)} (${counts[k]||0})</span>`).join('');
+  const q=joinSearch.trim();
+  const list=JOINING_SCHOOLS.filter(s=>!q||((s.name||'')+' '+(s.city||'')).includes(q));
+  if(!list.length){$('#joinTabs').innerHTML='<div class="jempty">לא נמצא בית ספר בשם/עיר כאלה. נסי חיפוש אחר, או ➕ הוסף.</div>';return;}
+  $('#joinTabs').innerHTML=list.map(s=>{
+    const st=(all[s.name]||{}).status||'interest';const v=JOIN_STATUS[st];const active=s.name===joinKey;
+    return `<div class="jrow ${active?'active':''}" data-jk="${esc(s.name)}" style="${active?`background:${v.c}`:''}">
+      <span class="dot" style="background:${active?'#fff':v.c}"></span>
+      <div><div class="jn">${esc(s.name)}</div>${s.city?`<div class="jc">📍 ${esc(s.city)}</div>`:''}</div>
+      <span class="jst" style="${active?'background:rgba(255,255,255,.25);color:#fff':`background:${v.c}22;color:${v.c}`}">${esc(v.l)}</span>
+    </div>`;
+  }).join('');
+}
+function renderJoinPanel(){
+  if(!joinKey&&JOINING_SCHOOLS.length)joinKey=JOINING_SCHOOLS[0].name;
+  const s=JOINING_SCHOOLS.find(x=>x.name===joinKey);if(!s){$('#joinPanel').innerHTML='';return;}
+  const d=joinData(s.name);const status=d.status||'interest';const col=JOIN_STATUS[status].c;
+  const cA=d.checksA||{},cB=d.checksB||{};
+  const done=STAGE_A.filter((_,i)=>cA[i]).length+STAGE_B.filter((_,i)=>cB[i]).length;
+  const total=STAGE_A.length+STAGE_B.length,pct=Math.round(done/total*100);
+  const head=`<div class="sc-head" style="background:linear-gradient(135deg,${col},${col}cc)">
+    <h3>🌱 ${esc(s.name)}</h3>
+    <div class="sub">${s.city?('📍 '+esc(s.city)+' · '):''}${s.principal?('מנהל/ת: '+esc(s.principal)):'מנהל/ת: —'} · ${esc(String(s.students||''))} תלמידים</div>
+    <div class="progwrap" style="background:rgba(255,255,255,.35)"><i style="width:${pct}%;background:#fff"></i></div>
+    <div style="font-size:12px;opacity:.95;margin-top:2px">${done}/${total} שלבי קליטה הושלמו · ${pct}%</div></div>`;
+
+  const metaBlock=`<div class="sc-block"><h4>👤 הנהלה ופרטי קשר <button class="btn grey small" data-jedit style="margin-inline-start:auto">✏️ עריכת פרטים</button></h4>
+    <div class="join-meta">
+      <div class="mi"><div class="k">מנהל/ת</div>${esc(s.principal)||'—'}</div>
+      <div class="mi"><div class="k">טלפון</div>${esc(s.phone)||'—'}</div>
+      <div class="mi"><div class="k">מייל</div>${s.email?(mailOk(s.email)?`<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>`:esc(s.email)+' <span style="color:var(--muted);font-size:11px">(חלקי — במלואו בגיליון)</span>'):'—'}</div>
+      <div class="mi"><div class="k">כמות תלמידים</div>${esc(String(s.students||'—'))}</div>
+    </div>
+    <div class="join-actions">
+      ${s.phone?`<a class="tel" href="${telHref(s.phone)}">📞 חיוג</a>`:''}
+      ${s.phone?`<a class="wabtn" href="${waHref(s.phone)}" target="_blank" rel="noopener">💬 וואטסאפ</a>`:''}
+      <div style="margin-inline-start:auto;display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted);font-weight:700">סטטוס:</span>
+      <select class="statussel" data-jstatus style="border-color:${col}">${Object.entries(JOIN_STATUS).map(([k,v])=>`<option value="${k}" ${k===status?'selected':''}>${esc(v.l)}</option>`).join('')}</select></div>
+    </div></div>`;
+
+  const checkBlock=`<div class="sc-block"><h4>✅ צ'ק ליסט קליטה</h4>
+    <div class="ps-h a" style="display:inline-block;margin:0 0 6px">שלב א׳ · יצירת קשר ראשוני</div>
+    ${STAGE_A.map((t,i)=>`<div class="checkrow ${cA[i]?'done':''}"><input type="checkbox" data-jcheck="A:${i}" ${cA[i]?'checked':''}><label>${esc(t)}</label></div>`).join('')}
+    <div class="ps-h b" style="display:inline-block;margin:12px 0 6px">שלב ב׳ · התקבל לתוכנית</div>
+    ${STAGE_B.map((t,i)=>`<div class="checkrow ${cB[i]?'done':''}"><input type="checkbox" data-jcheck="B:${i}" ${cB[i]?'checked':''}><label>${esc(t)}</label></div>`).join('')}
+  </div>`;
+
+  let regBlock='';
+  if((s.regional&&s.regional.length)||s.regNote){
+    const verified=(s.regional||[]).filter(r=>r.ph).length,tot=(s.regional||[]).length;
+    regBlock=`<div class="sc-block"><h4>🤝 גורמים קהילתיים באזור ${tot?`<span style="font-weight:600;color:var(--muted);font-size:12px">(${verified}/${tot} עם טלפון מאומת · שאר הפרטים לאימות טלפוני)</span>`:''}</h4>
+      ${s.regNote?`<div class="warnmini">${esc(s.regNote)}</div>`:''}
+      ${(s.regional&&s.regional.length)?`<div class="rc">${s.regional.map(r=>`<div class="rc-row">
+        <span class="g">${esc(r.g)}</span><span class="t">${esc(r.t)}</span>
+        ${r.nm?`<span class="nm">${esc(r.nm)}</span>`:''}
+        ${r.ph?`<a class="tel ph" href="${telHref(r.ph)}">📞 ${esc(r.ph)}</a>${waBtn(r.ph)}`:'<span class="ph t">— לאמת</span>'}
+        ${r.note?`<span class="note">${esc(r.note)}</span>`:''}</div>`).join('')}</div>`:''}</div>`;
+  }
+
+  const field=(k,label,ph)=>`<div class="sc-block"><h4>${label}</h4><textarea class="jf" data-jf="${k}" placeholder="${esc(ph)}">${esc(d[k]||'')}</textarea></div>`;
+  const bl=d.bogrimLink||'';
+  const bogrimBlock=`<div class="sc-block"><h4>🎓 רשימות בוגרים</h4>
+    <div class="linkrow">
+      <input class="jf jlink" data-jf="bogrimLink" placeholder="🔗 קישור לרשימה (Drive / Sheets / טופס)…" value="${esc(bl)}">
+      ${bl?`<a class="btn small" href="${esc(bl)}" target="_blank" rel="noopener">↗ פתיחה</a>`:''}
+    </div>
+    <textarea class="jf" data-jf="bogrim" placeholder="סטטוס איסוף הרשימה, מי הרכז/ת האחראי/ת, הערות…" style="margin-top:8px">${esc(d.bogrim||'')}</textarea></div>`;
+  const editable=field('community','📝 אנשי קשר בקהילה — הערות ועדכונים','אימות טלפונים, אנשי קשר נוספים, מי דיברנו איתו, סיכומי שיחות…')
+    +field('workplan','🗺️ תוכנית עבודה','יעדים, שלבים ואבני דרך לעבודה המשותפת עם בית הספר')
+    +bogrimBlock
+    +field('notes','🔔 תזכורות והערות','מה נותר, תאריכי מעקב, סיכומי שיחות');
+
+  $('#joinPanel').innerHTML=head+metaBlock+regBlock+checkBlock+editable;
+}
+function renderJoining(){renderJoinProtocol();renderJoinTemplates();renderJoinTabs();renderJoinPanel();}
+$('#v-joining').addEventListener('click',e=>{
+  const add=e.target.closest('[data-jadd]');if(add){openJoinEdit(null);return;}
+  const ed=e.target.closest('[data-jedit]');if(ed){openJoinEdit(joinKey);return;}
+  const tab=e.target.closest('[data-jk]');if(tab){joinKey=tab.dataset.jk;renderJoinTabs();renderJoinPanel();$('#joinPanel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const cp=e.target.closest('[data-copy]');if(cp){const b=JOIN_TEMPLATES[+cp.dataset.copy].body;
+    (navigator.clipboard?navigator.clipboard.writeText(b):Promise.reject()).then(()=>toast('ההודעה הועתקה ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=b;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('ההודעה הועתקה ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});return;}
+});
+$('#v-joining').addEventListener('change',e=>{
+  const st=e.target.closest('[data-jstatus]');if(st){setJoinField(joinKey,'status',st.value);renderJoinTabs();renderJoinPanel();return;}
+  const ck=e.target.closest('[data-jcheck]');if(ck){const[g,i]=ck.dataset.jcheck.split(':');const all=loadJoin();const rec=Object.assign({},all[joinKey]);const key=g==='A'?'checksA':'checksB';rec[key]=Object.assign({},rec[key],{[i]:ck.checked});all[joinKey]=rec;saveJoin(all);renderJoinPanel();return;}
+});
+$('#v-joining').addEventListener('blur',e=>{const f=e.target.closest('[data-jf]');if(f){setJoinField(joinKey,f.dataset.jf,f.value);if(f.dataset.jf==='bogrimLink')renderJoinPanel();}},true);
+$('#joinSearch').addEventListener('input',e=>{joinSearch=e.target.value;renderJoinTabs();});
+
+/* ----- הוספה/עריכה/מחיקה של בית ספר מצטרף (נשמר בגיליון, בלי פרסום מחדש) ----- */
+let joinEditKey=null;
+function openJoinEdit(name){
+  joinEditKey=name||null;const s=(name&&JOINING_SCHOOLS.find(x=>x.name===name))||{};
+  $('#joinModalTitle').textContent=name?'עריכת בית ספר מצטרף':'הוספת בית ספר מצטרף';
+  $('#j_name').value=s.name||'';$('#j_city').value=s.city||'';$('#j_principal').value=s.principal||'';
+  $('#j_phone').value=s.phone||'';$('#j_email').value=s.email||'';$('#j_students').value=s.students!=null?String(s.students):'';
+  $('#j_delete').style.display=name?'inline-block':'none';
+  $('#joinOverlay').classList.add('show');setTimeout(()=>$('#j_name').focus(),50);
+}
+function closeJoinEdit(){$('#joinOverlay').classList.remove('show');joinEditKey=null;}
+function saveJoinEdit(){
+  const name=$('#j_name').value.trim();if(!name){toast('צריך שם לבית הספר','bad');$('#j_name').focus();return;}
+  const rec={name,city:$('#j_city').value.trim(),principal:$('#j_principal').value.trim(),phone:$('#j_phone').value.trim(),email:$('#j_email').value.trim(),students:$('#j_students').value.trim()};
+  if(joinEditKey){
+    const i=JOINING_SCHOOLS.findIndex(x=>x.name===joinEditKey);const prev=(i>=0?JOINING_SCHOOLS[i]:{})||{};
+    if(prev.regional)rec.regional=prev.regional;if(prev.regNote)rec.regNote=prev.regNote;
+    if(i>=0)JOINING_SCHOOLS[i]=rec;else JOINING_SCHOOLS.unshift(rec);
+    if(joinEditKey!==name){const all=Object.assign({},loadJoin());if(all[joinEditKey]){all[name]=all[joinEditKey];delete all[joinEditKey];saveJoin(all);}if(joinKey===joinEditKey)joinKey=name;}
+  }else{
+    if(JOINING_SCHOOLS.some(x=>x.name===name)){toast('כבר קיים בית ספר בשם הזה','bad');return;}
+    JOINING_SCHOOLS.unshift(rec);joinKey=name;
+  }
+  storeSave('joiningList',JOINING_SCHOOLS);closeJoinEdit();renderJoining();toast('נשמר ✔','ok');
+}
+function deleteJoinItem(){
+  if(!joinEditKey)return;if(!confirm('למחוק את בית הספר "'+joinEditKey+'" מהרשימה?'))return;
+  JOINING_SCHOOLS=JOINING_SCHOOLS.filter(x=>x.name!==joinEditKey);
+  const all=Object.assign({},loadJoin());if(all[joinEditKey]){delete all[joinEditKey];saveJoin(all);}
+  if(joinKey===joinEditKey)joinKey=JOINING_SCHOOLS.length?JOINING_SCHOOLS[0].name:null;
+  storeSave('joiningList',JOINING_SCHOOLS);closeJoinEdit();renderJoining();toast('נמחק','ok');
+}
+$('#j_save').onclick=saveJoinEdit;$('#j_cancel').onclick=closeJoinEdit;$('#j_delete').onclick=deleteJoinItem;
+$('#joinOverlay').onclick=e=>{if(e.target.id==='joinOverlay')closeJoinEdit();};
+
+/* ================= סקירה ================= */
+function getChecks(){try{return JSON.parse(localStorage.getItem(LS.checks))||{};}catch(e){return{};}}
+function setChecks(o){localStorage.setItem(LS.checks,JSON.stringify(o));}
+function renderOverview(){
+  const c=statusCounts(state.tasks),total=state.tasks.length;
+  $('#greet').textContent=`שלום ${CONFIG.user} 👋`;
+  $('#ovTiles').innerHTML=`
+    <div class="tile todo" data-goto="tasks"><span class="edge"></span><div class="n">${c.todo}</div><div class="l">טרם התחיל</div></div>
+    <div class="tile doing" data-goto="tasks"><span class="edge"></span><div class="n">${c.doing}</div><div class="l">בביצוע</div></div>
+    <div class="tile done" data-goto="tasks"><span class="edge"></span><div class="n">${c.done}</div><div class="l">הושלם</div></div>
+    <div class="tile total" data-goto="tasks"><span class="edge"></span><div class="n">${total}</div><div class="l">סה״כ משימות</div></div>`;
+  const checks=getChecks();
+  $('#ovRoutines').innerHTML=ROUTINES.filter(r=>r.freq==='יומי'||r.freq==='שוטף').map((r)=>{const id='rt_'+ROUTINES.indexOf(r);const on=checks[id];return`<div class="checkrow ${on?'done':''}"><input type="checkbox" data-check="${id}" ${on?'checked':''}><label>${esc(r.title)} <span class="fq">· ${esc(r.freq)}</span></label></div>`;}).join('')+`<button class="btn grey small" id="resetChecks" style="margin-top:10px">איפוס סימונים</button>`;
+  $('#ovFocus').innerHTML=`
+    • <b>סיפורי הצלחה</b> — לערוך פוסטים ולעלות לרשתות.<br>
+    • <b>בוגרים בעסקים</b> — לשלוח תזכורת לטופס.<br>
+    • <b>רכזים לא פעילים</b> — פנייה אישית + הודעה מוכנה.<br>
+    • <b>בקשות בוגרים</b> — מעבר יומי על הבורדים במנדיי.<br>
+    <span style="color:var(--muted)">(מתוך מסמך החפיפה — פירוט בלשוניות “תוכניות” ו“אתגרים”.)</span>`;
+}
+
+/* ================= ניווט ================= */
+function show(view){currentView=view;document.querySelectorAll('.view').forEach(v=>v.classList.remove('show'));$('#v-'+view).classList.add('show');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.v===view));window.scrollTo({top:0,behavior:'smooth'});if(view==='tasks')renderTasks();if(view==='overview')renderOverview();if(view==='schools')renderSchools();if(view==='joining')renderJoining();if(view==='messages')initMessages();}
+
+/* ================= אירועים ================= */
+$('#nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)show(b.dataset.v);});
+
+/* ================= שליחת הודעות לקבוצות ================= */
+const MLS={url:'hopa_send_url',secret:'hopa_send_secret'};
+const MSG={url:localStorage.getItem(MLS.url)||'',secret:localStorage.getItem(MLS.secret)||'',groups:[],sel:new Set()};
+function msgJsonp(params){return new Promise((res,rej)=>{if(!MSG.url){rej(new Error('no-url'));return;}const cb='msgcb_'+(jsonpN++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},30000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:MSG.secret,callback:cb})).toString();s.src=MSG.url+(MSG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+function initMessages(){$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
+async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.groups=r.groups||[];$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
+function renderMsgGroups(){const order={'פורום':0,'צוות':1,'בוגרים':2};const byType={};MSG.groups.forEach((g,i)=>{(byType[g.type]=byType[g.type]||[]).push(Object.assign({i},g));});const html=Object.keys(byType).sort((a,b)=>(order[a]??9)-(order[b]??9)).map(t=>`<div class="sc-block" style="margin-bottom:10px"><h4>${esc(t)}</h4>${byType[t].map(g=>`<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}</span></label>`).join('')}</div>`).join('');$('#m_groups').innerHTML=html||'<div class="vsub">לא נמצאו קבוצות. הרצי listManagementGroups ב-Apps Script.</div>';updMsgCount();}
+function updMsgCount(){$('#m_count').textContent='נבחרו '+MSG.sel.size+' קבוצות';}
+async function sendMsg(){const text=$('#m_text').value.trim();if(!text){toast('כתבי הודעה קודם','bad');return;}if(!MSG.sel.size){toast('בחרי לפחות קבוצה אחת','bad');return;}const picked=[...MSG.sel].map(i=>MSG.groups[i]);if(!confirm('לשלוח את ההודעה ל-'+picked.length+' קבוצות?\n\n'+picked.map(g=>'• '+g.label).join('\n')))return;$('#m_send').disabled=true;$('#m_results').innerHTML='<div class="box">שולח… זה עשוי לקחת כמה שניות</div>';try{const chatIds=picked.map(g=>g.chatId).join(',');const r=await msgJsonp({action:'send',chatIds,message:text});if(!r||!r.ok)throw new Error(r&&r.error||'err');$('#m_results').innerHTML='<div class="box accent">✅ נשלח ל-'+r.sent+' מתוך '+r.total+' קבוצות.</div>';toast('נשלח ל-'+r.sent+' קבוצות','good');}catch(e){$('#m_results').innerHTML='<div class="box" style="border-inline-start-color:#e33">❌ שגיאה: '+esc(e.message)+'</div>';toast('השליחה נכשלה','bad');}$('#m_send').disabled=false;}
+$('#m_connect').onclick=()=>{MSG.url=$('#m_url').value.trim();MSG.secret=$('#m_secret').value.trim();localStorage.setItem(MLS.url,MSG.url);localStorage.setItem(MLS.secret,MSG.secret);MSG.groups=[];loadMsgGroups();};
+$('#m_reload').onclick=()=>{MSG.groups=[];MSG.sel.clear();loadMsgGroups();};
+$('#m_all').onclick=()=>{MSG.groups.forEach((g,i)=>MSG.sel.add(i));renderMsgGroups();};
+$('#m_none').onclick=()=>{MSG.sel.clear();renderMsgGroups();};
+$('#m_groups').addEventListener('change',e=>{const cb=e.target.closest('[data-g]');if(!cb)return;const i=+cb.dataset.g;if(cb.checked)MSG.sel.add(i);else MSG.sel.delete(i);updMsgCount();});
+$('#m_send').onclick=sendMsg;
+$('#ovTiles').addEventListener('click',e=>{const t=e.target.closest('[data-goto]');if(t)show(t.dataset.goto);});
+$('#addBtn').onclick=()=>openTaskModal(null);
+$('#saveTask').onclick=saveFromModal;$('#cancelTask').onclick=closeTaskModal;
+$('#taskOverlay').onclick=e=>{if(e.target.id==='taskOverlay')closeTaskModal();};
+$('#f_title').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveFromModal();}});
+$('#search').addEventListener('input',e=>{state.search=e.target.value;renderList();});
+$('#refreshBtn').onclick=()=>refresh(false);
+$('#printBtn').onclick=()=>window.print();
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;state.filter=b.dataset.f;renderTasks();});
+$('#list').addEventListener('click',e=>{const s=e.target.closest('[data-s]');if(s){setStatus(s.closest('[data-id]').dataset.id,s.dataset.s);return;}const d=e.target.closest('[data-del]');if(d){if(confirm('למחוק את המשימה?'))deleteTask(d.dataset.del);return;}const ed=e.target.closest('[data-edit]');if(ed){openTaskModal(state.tasks.find(x=>x.id===ed.dataset.edit));return;}});
+$('#list').addEventListener('blur',e=>{const n=e.target.closest('[data-notes]');if(n){const t=state.tasks.find(x=>x.id===n.dataset.notes);if(t&&t.notes!==n.value){t.notes=n.value;upsertTask(t,false);}}},true);
+$('#routineList').addEventListener('click',e=>{const b=e.target.closest('[data-routine]');if(!b)return;const r=ROUTINES[+b.dataset.routine];quickAddTask(r.title,r.cat,r.detail);});
+$('#projectList').addEventListener('click',e=>{const b=e.target.closest('[data-project]');if(!b)return;const p=PROJECTS[+b.dataset.project];quickAddTask(p.title,p.cat,p.detail+(p.extra?'\n'+p.extra:''));});
+document.addEventListener('click',e=>{
+  const chk=e.target.closest('[data-check]');if(chk){const o=getChecks();o[chk.dataset.check]=chk.checked;setChecks(o);chk.closest('.checkrow').classList.toggle('done',chk.checked);return;}
+  if(e.target.id==='resetChecks'){setChecks({});renderOverview();return;}
+  const add=e.target.closest('[data-add]');if(add){openRefEdit(add.dataset.add,null);return;}
+  const er=e.target.closest('[data-edit-ref]');if(er){const[t,id]=er.dataset.editRef.split(':');openRefEdit(t,id);return;}
+  const dr=e.target.closest('[data-del-ref]');if(dr){const[t,id]=dr.dataset.delRef.split(':');refEditing={type:t,id};deleteRefItem();return;}
+  if(e.target.id==='addAllSug'){addManyTasks(pendingSuggestions());return;}
+  const sg=e.target.closest('[data-sug]');if(sg){const d=DERIVED.find(x=>x.title===sg.dataset.sug);if(d)addManyTasks([d]);return;}
+});
+$('#saveRef').onclick=saveRefEdit;$('#cancelRef').onclick=closeRefEdit;$('#deleteRef').onclick=deleteRefItem;
+$('#refOverlay').onclick=e=>{if(e.target.id==='refOverlay')closeRefEdit();};
+
+/* user switch */
+function paintUser(){document.querySelectorAll('#userSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.u===CONFIG.user));}
+$('#userSwitch').addEventListener('click',e=>{const b=e.target.closest('[data-u]');if(!b)return;CONFIG.user=b.dataset.u;localStorage.setItem(LS.user,CONFIG.user);paintUser();renderOverview();toast('מחוברת כ'+CONFIG.user);});
+
+/* settings */
+function openSettings(){$('#setOverlay').classList.add('show');}
+$('#settingsBtn').onclick=openSettings;$('#closeSet').onclick=()=>$('#setOverlay').classList.remove('show');
+$('#setOverlay').onclick=e=>{if(e.target.id==='setOverlay')$('#setOverlay').classList.remove('show');};
+/* בגרסה המתארחת אין הגדרת קישור — הסנכרון אוטומטי */
+$('#secretBtn').onclick=()=>{$('#setOverlay').classList.remove('show');ensureSecret(true);location.reload();};
+$('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state.tasks,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='hopa-tasks-backup.json';a.click();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeTaskModal();closeRefEdit();closeJoinEdit();$('#setOverlay').classList.remove('show');}});
+
+/* ================= אתחול ================= */
+function applyStore(){
+  const R=STORE.ref||{};
+  ref.coords=loadRefFrom(R.coords,COORDS_DEFAULT);ref.vols=loadRefFrom(R.vols,VOLUNTEERS_DEFAULT);ref.tools=loadRefFrom(R.tools,TOOLS_DEFAULT);
+  if(STORE.joiningList&&STORE.joiningList.length)JOINING_SCHOOLS=STORE.joiningList;
+  if(STORE.schoolDetails)SCHOOL_DETAILS=STORE.schoolDetails;
+  if(STORE.contacts&&STORE.contacts.length)CONTACTS=STORE.contacts;
+  if(STORE.projects&&STORE.projects.length)PROJECTS=STORE.projects;
+  SCHOOL_LIST=SCHOOLS.filter(s=>s.name!=='כללי'&&SCHOOL_DETAILS[s.name]);
+}
+function busyOrEditing(){return $('#taskOverlay').classList.contains('show')||$('#refOverlay').classList.contains('show')||$('#joinOverlay').classList.contains('show')||document.activeElement.tagName==='TEXTAREA'||document.activeElement.tagName==='INPUT';}
+async function boot(){
+  paintUser();loadCache();renderTasks();renderOverview();   // תצוגה מיידית מהמטמון
+  ensureSecret();                                             // 🔒 סיסמת גישה (פעם אחת בדפדפן)
+  setSync('busy','טוען…');
+  await loadStore();
+  applyStore();
+  renderCoords();renderVols();renderRoutines();renderProjects();renderChallenges();renderTools();renderGloss();renderContacts();renderSchools();renderJoining();
+  refresh(false,true);
+  pollTimer=setInterval(()=>{if(!busyOrEditing())refresh(true,false);},15000);
+  /* רענון מאגר הנתונים החי (רכזים/מתנדבים/כלים/בתי ספר) — כדי שעדכונים של לירון יופיעו */
+  setInterval(async()=>{if(busyOrEditing())return;try{await loadStore();}catch(e){return;}applyStore();renderCoords();renderVols();renderTools();renderSchools();renderJoining();},60000);
+}
+boot();
+</script>
+</body>
+</html>
