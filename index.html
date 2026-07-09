@@ -445,6 +445,12 @@
       <h2 class="vh">שליחת הודעות לקבוצות</h2>
       <div class="vsub">שליחה נוחה לקבוצות הצוות והבוגרים. ההודעה נשלחת מהווטסאפ שלך, עם תצוגה מקדימה ואישור לפני שליחה.</div>
 
+      <div class="box accent" style="margin-bottom:14px">
+        <h3>📋 טפסי מיפוי לבוגרים — קישור קבוע לכל בי"ס</h3>
+        <div class="vsub" style="margin:0 0 10px">בחרי את בית הספר, לחצי “העתק קישור” — והדביקי בהודעה לקבוצת הבוגרים. הקישורים קבועים ולא משתנים.</div>
+        <div class="wa-list" id="mapFormsList"></div>
+      </div>
+
       <div id="msgSetup" class="box accent" style="margin-bottom:14px">
         <h3>⚙️ חיבור חד-פעמי</h3>
         <div class="vsub" style="margin:0 0 10px">הדביקי את כתובת ה-Web App ואת הסיסמה (SEND_SECRET) מ-Apps Script. נשמר במחשב הזה.</div>
@@ -459,6 +465,7 @@
           <div class="box">
             <h3>1. בחרי קבוצות</h3>
             <div class="refbar" style="margin-bottom:8px">
+              <button class="btn small" id="m_teamalumni">👥 צוות + בוגרים</button>
               <button class="btn small ghost" id="m_all">בחר הכל</button>
               <button class="btn small ghost" id="m_none">נקה</button>
               <button class="btn small ghost" id="m_reload">↻ רענן רשימה</button>
@@ -670,6 +677,16 @@ const JOIN_TEMPLATES=[
    body:'שלום לכולם וברוכים הבאים לקהילת הבוגרים של הופה 🧡\nאנחנו כאן כדי ללוות אתכם בצעדים הבאים אחרי בית הספר: לימודים, תעסוקה, מלגות, שירות ועוד.\nבקבוצה נשתף מענים והזדמנויות שרלוונטיים אליכם, ותמיד אפשר לפנות אלינו בפרטי לכל שאלה או בקשה.\nשמחים שאתם איתנו, ומזמינים אתכם להיות חלק פעיל.'},
   {t:'הודעה מלווה לשאלון מיפוי',
    body:'היי,\nכדי שנוכל להתאים לכם בדיוק את המענים וההזדמנויות שמתאימים לכם, נשמח שתמלאו שאלון קצר (2-3 דקות).\nכל מה שתשתפו עוזר לנו להכיר אתכם ולחבר אתכם לדברים הנכונים בשבילכם.\nתודה רבה!\n[קישור לשאלון]'},
+];
+
+/* ===== טפסי מיפוי לבוגרים — קישור Fillout קבוע לכל בי"ס (מתוך תיאור הוורקספייס במונדיי) ===== */
+const MAPPING_FORMS=[
+  {school:'אורט בית הערבה · ירושלים', url:'https://forms12grade.fillout.com/t/fNhxNpBj26us'},
+  {school:'אורט אדיבי · אשקלון',      url:'https://forms12grade.fillout.com/t/4yqCmdoFBDus'},
+  {school:'מגשימים · בית שאן',        url:'https://forms12grade.fillout.com/t/bBWnRDYD2nus'},
+  {school:'עתיד · מוצקין',            url:'https://forms12grade.fillout.com/t/wbcapmr8RZus'},
+  {school:'אורט מרום · עכו',          url:'https://forms12grade.fillout.com/t/2oEYozRRNLus'},
+  {school:'תיכון · צור ברק',          url:'https://forms12grade.fillout.com/t/ki3biGmocKus'},
 ];
 
 const STATUS={todo:'טרם התחיל',doing:'בביצוע',done:'הושלם'};
@@ -1049,13 +1066,16 @@ $('#nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b
 const MLS={url:'hopa_send_url',secret:'hopa_send_secret'};
 const MSG={url:localStorage.getItem(MLS.url)||'',secret:localStorage.getItem(MLS.secret)||'',groups:[],sel:new Set()};
 function msgJsonp(params){return new Promise((res,rej)=>{if(!MSG.url){rej(new Error('no-url'));return;}const cb='msgcb_'+(jsonpN++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},30000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:MSG.secret,callback:cb})).toString();s.src=MSG.url+(MSG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
-function initMessages(){$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
+function renderMapForms(){const el=$('#mapFormsList');if(!el)return;el.innerHTML=MAPPING_FORMS.map((f,i)=>`<div class="wa"><span class="lbl">🏫 ${esc(f.school)}</span><a href="${esc(f.url)}" target="_blank" rel="noopener" style="color:var(--pink-dark);text-decoration:none;font-weight:700;margin-inline-start:auto;font-size:12px">↗ פתיחה</a><button class="wabtn2" data-mapcopy="${i}" style="background:var(--pink);border:none;cursor:pointer">📋 העתקה</button></div>`).join('');}
+function initMessages(){renderMapForms();$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
+$('#mapFormsList').addEventListener('click',e=>{const b=e.target.closest('[data-mapcopy]');if(!b)return;const url=MAPPING_FORMS[+b.dataset.mapcopy].url;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>toast('הקישור הועתק ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('הקישור הועתק ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});});
 async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.groups=r.groups||[];$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
 function renderMsgGroups(){const order={'פורום':0,'צוות':1,'בוגרים':2};const byType={};MSG.groups.forEach((g,i)=>{(byType[g.type]=byType[g.type]||[]).push(Object.assign({i},g));});const html=Object.keys(byType).sort((a,b)=>(order[a]??9)-(order[b]??9)).map(t=>`<div class="sc-block" style="margin-bottom:10px"><h4>${esc(t)}</h4>${byType[t].map(g=>`<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}</span></label>`).join('')}</div>`).join('');$('#m_groups').innerHTML=html||'<div class="vsub">לא נמצאו קבוצות. הרצי listManagementGroups ב-Apps Script.</div>';updMsgCount();}
 function updMsgCount(){$('#m_count').textContent='נבחרו '+MSG.sel.size+' קבוצות';}
 async function sendMsg(){const text=$('#m_text').value.trim();if(!text){toast('כתבי הודעה קודם','bad');return;}if(!MSG.sel.size){toast('בחרי לפחות קבוצה אחת','bad');return;}const picked=[...MSG.sel].map(i=>MSG.groups[i]);if(!confirm('לשלוח את ההודעה ל-'+picked.length+' קבוצות?\n\n'+picked.map(g=>'• '+g.label).join('\n')))return;$('#m_send').disabled=true;$('#m_results').innerHTML='<div class="box">שולח… זה עשוי לקחת כמה שניות</div>';try{const chatIds=picked.map(g=>g.chatId).join(',');const r=await msgJsonp({action:'send',chatIds,message:text});if(!r||!r.ok)throw new Error(r&&r.error||'err');$('#m_results').innerHTML='<div class="box accent">✅ נשלח ל-'+r.sent+' מתוך '+r.total+' קבוצות.</div>';toast('נשלח ל-'+r.sent+' קבוצות','good');}catch(e){$('#m_results').innerHTML='<div class="box" style="border-inline-start-color:#e33">❌ שגיאה: '+esc(e.message)+'</div>';toast('השליחה נכשלה','bad');}$('#m_send').disabled=false;}
 $('#m_connect').onclick=()=>{MSG.url=$('#m_url').value.trim();MSG.secret=$('#m_secret').value.trim();localStorage.setItem(MLS.url,MSG.url);localStorage.setItem(MLS.secret,MSG.secret);MSG.groups=[];loadMsgGroups();};
 $('#m_reload').onclick=()=>{MSG.groups=[];MSG.sel.clear();loadMsgGroups();};
+$('#m_teamalumni').onclick=()=>{MSG.sel.clear();MSG.groups.forEach((g,i)=>{if(g.type==='צוות'||g.type==='בוגרים')MSG.sel.add(i);});renderMsgGroups();toast('נבחרו כל קבוצות הצוות והבוגרים','ok');};
 $('#m_all').onclick=()=>{MSG.groups.forEach((g,i)=>MSG.sel.add(i));renderMsgGroups();};
 $('#m_none').onclick=()=>{MSG.sel.clear();renderMsgGroups();};
 $('#m_groups').addEventListener('change',e=>{const cb=e.target.closest('[data-g]');if(!cb)return;const i=+cb.dataset.g;if(cb.checked)MSG.sel.add(i);else MSG.sel.delete(i);updMsgCount();});
