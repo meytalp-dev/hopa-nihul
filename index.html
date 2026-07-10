@@ -983,13 +983,38 @@ function renderJoinPanel(){
     +bogrimBlock
     +field('notes','🔔 תזכורות והערות','מה נותר, תאריכי מעקב, סיכומי שיחות');
 
-  $('#joinPanel').innerHTML=head+metaBlock+regBlock+checkBlock+editable;
+  const intake=(typeof STORE!=='undefined'&&STORE['intake_'+s.name])?STORE['intake_'+s.name]:null;
+  const intakeUrl='https://meytalp-dev.github.io/hopa-nihul/intake.html?school='+encodeURIComponent(s.name)+(s.city?('&city='+encodeURIComponent(s.city)):'');
+  const iLine=(l,v)=>v?`<div style="padding:7px 0;border-top:1px solid var(--line)"><span style="font-weight:700;font-size:13px">${esc(l)}:</span> <span style="font-size:13.5px;color:#44444d">${esc(String(v))}</span></div>`:'';
+  let intakeBlock;
+  if(intake){
+    const dt=intake.submittedAt?new Date(intake.submittedAt).toLocaleDateString('he-IL'):'';
+    const mi=(k,v)=>v?`<div class="mi"><div class="k">${esc(k)}</div>${esc(String(v))}</div>`:'';
+    intakeBlock=`<div class="sc-block" style="border:1.5px solid var(--pink);background:#fffdfe"><h4>📋 שאלון היכרות של המנהל/ת ${dt?`<span style="font-weight:600;color:var(--muted);font-size:12px">· התקבל ${esc(dt)}</span>`:''}<button class="btn grey small" data-copyintake="${esc(intakeUrl)}" style="margin-inline-start:auto">🔗 העתק קישור שאלון</button></h4>
+      <div class="join-meta" style="margin-bottom:6px">${mi('ממלא/ת',(intake.fullname||'')+(intake.role?(' · '+intake.role):''))}${mi('טלפון',intake.phone)}${mi('מייל',intake.email)}${mi('בוגרים בשנה',intake.alumni_year)}</div>
+      ${iLine('שומרים קשר עם בוגרים',(intake.keepcontact||'')+(intake.how?(' · '+intake.how):''))}
+      ${iLine('מידע על הבוגרים אחרי ביה"ס',intake.info)}
+      ${iLine('האתגר המרכזי',intake.challenge)}
+      ${iLine('הכי חשוב שהתוכנית תיתן',intake.prio)}
+      ${iLine('מי יהיה מעורב בביה"ס',intake.who)}
+      ${iLine('יעד להצלחה בסוף השנה',intake.goal)}
+      ${iLine('למה הצטרפו דווקא עכשיו',intake.why)}
+      ${iLine('החשש/השאלה הגדולים',intake.concern)}
+      ${iLine('פגישה',intake.meeting)}</div>`;
+  }else{
+    intakeBlock=`<div class="sc-block" style="border:1.5px dashed var(--pink)"><h4>📋 שאלון היכרות של המנהל/ת</h4>
+      <div style="font-size:13.5px;color:var(--muted);margin-bottom:10px">טרם התקבל שאלון. שלחו למנהל/ת את הקישור הממותג — התשובות יופיעו כאן אוטומטית.</div>
+      <button class="btn small" data-copyintake="${esc(intakeUrl)}">🔗 העתק קישור שאלון</button></div>`;
+  }
+  $('#joinPanel').innerHTML=head+intakeBlock+metaBlock+regBlock+checkBlock+editable;
 }
 function renderJoining(){renderJoinProtocol();renderJoinTemplates();renderJoinTabs();renderJoinPanel();}
 $('#v-joining').addEventListener('click',e=>{
   const add=e.target.closest('[data-jadd]');if(add){openJoinEdit(null);return;}
   const ed=e.target.closest('[data-jedit]');if(ed){openJoinEdit(joinKey);return;}
   const tab=e.target.closest('[data-jk]');if(tab){joinKey=tab.dataset.jk;renderJoinTabs();renderJoinPanel();$('#joinPanel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ci=e.target.closest('[data-copyintake]');if(ci){const u=ci.dataset.copyintake;
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast('קישור השאלון הועתק ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('קישור השאלון הועתק ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});return;}
   const cp=e.target.closest('[data-copy]');if(cp){const b=JOIN_TEMPLATES[+cp.dataset.copy].body;
     (navigator.clipboard?navigator.clipboard.writeText(b):Promise.reject()).then(()=>toast('ההודעה הועתקה ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=b;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('ההודעה הועתקה ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});return;}
 });
