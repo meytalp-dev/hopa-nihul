@@ -699,7 +699,29 @@ const LS={url:'hopa_sync_url',user:'hopa_user',cache:'hopa_tasks_cache',checks:'
 const EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 const CONFIG={url:localStorage.getItem(LS.url)||EXEC_URL,user:localStorage.getItem(LS.user)||'מיטל'};
 let API_SECRET=localStorage.getItem('hopa_api_secret')||'';
-function ensureSecret(force){if(force)API_SECRET='';if(!API_SECRET){const v=window.prompt('🔒 סיסמת גישה ללוח הופה:');API_SECRET=(v||'').trim();if(API_SECRET)localStorage.setItem('hopa_api_secret',API_SECRET);}return !!API_SECRET;}
+/* תיבת סיסמה בתוך הדף (במקום window.prompt) — קלט מסוג password לא עושה אוטו-קפיטליזציה/תיקון בנייד */
+function askSecretDialog(){return new Promise(res=>{
+  let ov=document.getElementById('secretOverlay');
+  if(!ov){
+    ov=document.createElement('div');ov.id='secretOverlay';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px';
+    ov.innerHTML='<div dir="rtl" style="background:#fff;border-radius:18px;padding:26px 22px;max-width:340px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.35);font-family:inherit">'
+      +'<div style="font-size:36px;text-align:center;margin-bottom:6px">🔒</div>'
+      +'<div style="font-weight:800;font-size:18px;text-align:center;margin-bottom:4px">סיסמת גישה ללוח הופה</div>'
+      +'<div style="font-size:13px;color:#777;text-align:center;margin-bottom:16px">נשמרת במכשיר הזה בלבד</div>'
+      +'<input id="secretInput" type="password" inputmode="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" '
+      +'style="width:100%;padding:13px 14px;border:2px solid #E8348A;border-radius:12px;font-size:16px;text-align:center;box-sizing:border-box;direction:ltr" placeholder="סיסמה">'
+      +'<button id="secretOk" style="width:100%;margin-top:14px;padding:13px;background:#E8348A;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>'
+      +'</div>';
+    document.body.appendChild(ov);
+  }
+  const inp=ov.querySelector('#secretInput'),btn=ov.querySelector('#secretOk');
+  inp.value='';ov.style.display='flex';setTimeout(()=>{try{inp.focus();}catch(e){}},60);
+  const finish=()=>{const v=(inp.value||'').trim();ov.style.display='none';btn.removeEventListener('click',finish);inp.removeEventListener('keydown',onKey);res(v);};
+  const onKey=e=>{if(e.key==='Enter'){e.preventDefault();finish();}};
+  btn.addEventListener('click',finish);inp.addEventListener('keydown',onKey);
+});}
+async function ensureSecret(force){if(force)API_SECRET='';if(!API_SECRET){const v=await askSecretDialog();API_SECRET=(v||'').trim();if(API_SECRET)localStorage.setItem('hopa_api_secret',API_SECRET);}return !!API_SECRET;}
 let state={tasks:[],filter:'all',search:''};
 let editingId=null,jsonpN=0,pollTimer=null,currentView='overview';
 let refEditing=null; // {type,id|null}
@@ -728,16 +750,16 @@ const telHref=p=>p?('tel:'+p.replace(/[^0-9+]/g,'')):'#';
 function setSync(cls,txt){$('#syncPill').className='sync-pill '+cls;$('#syncTxt').textContent=txt;}
 /* ----- תקשורת עם הגיליון (דף מתארח בחוץ): קריאה=JSONP GET, כתיבה=POST no-cors ----- */
 let jsonpN2=0;
-function jsonp(params){return new Promise((res,rej)=>{if(!CONFIG.url){rej(new Error('no-url'));return;}const cb='hcb_'+(jsonpN2++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},25000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:API_SECRET,callback:cb})).toString();s.src=CONFIG.url+(CONFIG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+function jsonp(params){return new Promise((res,rej)=>{if(!CONFIG.url){rej(new Error('no-url'));return;}const cb='hcb_'+(jsonpN2++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},40000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:API_SECRET,callback:cb})).toString();s.src=CONFIG.url+(CONFIG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
 function postWrite(params){if(!CONFIG.url)return Promise.reject(new Error('no-url'));const body=new URLSearchParams(Object.assign({},params,{secret:API_SECRET})).toString();return fetch(CONFIG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body});}
 /* ----- מאגר נתונים חי: נטען פעם אחת מהגיליון, נשמר בכל עריכה (משותף עם לירון) ----- */
-async function loadStore(){let s=null;try{let r=await jsonp({action:'storeAll'});let tries=0;while(r&&r.ok===false&&/unauth/i.test(r.error||'')&&tries<3){toast('סיסמה שגויה — נסי שוב','bad');if(!ensureSecret(true))break;r=await jsonp({action:'storeAll'});tries++;}if(r&&r.ok){s=r.store||{};localStorage.setItem(STORE_CACHE,JSON.stringify(s));}}catch(e){try{s=JSON.parse(localStorage.getItem(STORE_CACHE));}catch(_){}}STORE=s||{};}
+async function loadStore(){let s=null;try{let r=await jsonp({action:'storeAll'});let tries=0;while(r&&r.ok===false&&/unauth/i.test(r.error||'')&&tries<3){toast('סיסמה שגויה — נסי שוב','bad');if(!(await ensureSecret(true)))break;r=await jsonp({action:'storeAll'});tries++;}if(r&&r.ok){s=r.store||{};localStorage.setItem(STORE_CACHE,JSON.stringify(s));}}catch(e){try{s=JSON.parse(localStorage.getItem(STORE_CACHE));}catch(_){}}STORE=s||{};}
 function storeSave(key,val){STORE[key]=val;try{localStorage.setItem(STORE_CACHE,JSON.stringify(STORE));}catch(e){}postWrite({action:'storeSet',key,json:JSON.stringify(val)}).catch(()=>toast('נשמר מקומית — יסונכרן כשהחיבור יחזור','bad'));}
 async function api(action,extra){setSync('busy','שומר…');try{await postWrite(Object.assign({action},extra||{}));const r=await jsonp({action:'list'});if(r&&r.ok){state.tasks=(r.tasks||[]).map(normalize);saveCache();}setSync('','מסונכרן');return true;}catch(e){setSync('err','שגיאת סנכרון');toast('הסנכרון נכשל — נסי שוב','bad');return false;}}
 function normalize(t){return{id:t.id||uid(),category:t.category||'כללי',title:t.title||'',status:(t.status in STATUS)?t.status:'todo',notes:t.notes||'',owner:t.owner||'',due:t.due||'',createdAt:Number(t.createdAt)||Date.now(),updatedAt:Number(t.updatedAt)||Date.now(),updatedBy:t.updatedBy||'',order:Number(t.order)||Number(t.createdAt)||Date.now(),priority:(t.priority in PRIORITY)?t.priority:'normal',remind:(t.remind===true||t.remind==='true'||t.remind==='TRUE'||t.remind===1),remindedAt:Number(t.remindedAt)||0};}
 function saveCache(){localStorage.setItem(LS.cache,JSON.stringify(state.tasks));}
 function loadCache(){try{state.tasks=(JSON.parse(localStorage.getItem(LS.cache))||[]).map(normalize);}catch(e){state.tasks=[];}}
-async function refresh(silent,reconcile){if(!CONFIG.url){setSync('off','לא מחובר');return;}if(!silent)setSync('busy','טוען…');try{const r=await jsonp({action:'list'});if(!r||!r.ok)throw 0;const server=(r.tasks||[]).map(normalize);if(reconcile&&server.length===0&&state.tasks.length>0){await api('bulk',{tasks:JSON.stringify(state.tasks)});}else{state.tasks=server;saveCache();setSync('','מסונכרן');}renderTasks();renderOverview();}catch(e){setSync('err','שגיאת סנכרון');}}
+async function refresh(silent,reconcile){if(!CONFIG.url){setSync('off','לא מחובר');return;}if(!silent)setSync('busy','טוען…');try{let r=await jsonp({action:'list'});let tries=0;while(r&&r.ok===false&&/unauth/i.test(r.error||'')&&tries<3){toast('סיסמה שגויה — נסי שוב','bad');if(!(await ensureSecret(true)))break;r=await jsonp({action:'list'});tries++;}if(!r||!r.ok)throw 0;const server=(r.tasks||[]).map(normalize);if(reconcile&&server.length===0&&state.tasks.length>0){await api('bulk',{tasks:JSON.stringify(state.tasks)});}else{state.tasks=server;saveCache();setSync('','מסונכרן');}renderTasks();renderOverview();}catch(e){setSync('err','שגיאת סנכרון');}}
 
 async function upsertTask(t,isNew){t.updatedAt=Date.now();t.updatedBy=CONFIG.user;const i=state.tasks.findIndex(x=>x.id===t.id);if(i>=0)state.tasks[i]=t;else state.tasks.unshift(t);saveCache();renderTasks();renderOverview();await api(isNew?'add':'update',{task:JSON.stringify(t)});renderTasks();renderOverview();}
 async function deleteTask(id){state.tasks=state.tasks.filter(x=>x.id!==id);saveCache();renderTasks();renderOverview();await api('delete',{id});renderTasks();renderOverview();}
@@ -1139,7 +1161,7 @@ function openSettings(){$('#setOverlay').classList.add('show');}
 $('#settingsBtn').onclick=openSettings;$('#closeSet').onclick=()=>$('#setOverlay').classList.remove('show');
 $('#setOverlay').onclick=e=>{if(e.target.id==='setOverlay')$('#setOverlay').classList.remove('show');};
 /* בגרסה המתארחת אין הגדרת קישור — הסנכרון אוטומטי */
-$('#secretBtn').onclick=()=>{$('#setOverlay').classList.remove('show');ensureSecret(true);location.reload();};
+$('#secretBtn').onclick=async()=>{$('#setOverlay').classList.remove('show');await ensureSecret(true);location.reload();};
 $('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state.tasks,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='hopa-tasks-backup.json';a.click();};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeTaskModal();closeRefEdit();closeJoinEdit();$('#setOverlay').classList.remove('show');}});
 
@@ -1156,7 +1178,7 @@ function applyStore(){
 function busyOrEditing(){return $('#taskOverlay').classList.contains('show')||$('#refOverlay').classList.contains('show')||$('#joinOverlay').classList.contains('show')||document.activeElement.tagName==='TEXTAREA'||document.activeElement.tagName==='INPUT';}
 async function boot(){
   paintUser();loadCache();renderTasks();renderOverview();   // תצוגה מיידית מהמטמון
-  ensureSecret();                                             // 🔒 סיסמת גישה (פעם אחת בדפדפן)
+  await ensureSecret();                                       // 🔒 סיסמת גישה (פעם אחת בדפדפן)
   setSync('busy','טוען…');
   await loadStore();
   applyStore();
