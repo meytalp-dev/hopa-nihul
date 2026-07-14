@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>גורמים קהילתיים — דף מרוכז לאימות אנשי קשר · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap');
+:root{
+  --pink:#E8348A; --pink-d:#c81f72; --yellow:#FFF200;
+  --ink:#1d2130; --muted:#6b7280; --line:#e9ecf2; --bg:#f6f7fb;
+  --card:#fff; --green:#22b573; --green-d:#1a9460; --amber:#F5A623; --blue:#3B82F6; --blue-d:#2563eb;
+  --shadow:0 2px 10px rgba(20,25,50,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 18px 80px}
+header{background:linear-gradient(120deg,var(--pink),#ff5aa7);color:#fff;border-radius:20px;padding:26px 26px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:-40px;top:-40px;width:180px;height:180px;background:var(--yellow);opacity:.18;border-radius:50%}
+header h1{margin:0 0 6px;font-size:26px;font-weight:800}
+header p{margin:0;font-size:14.5px;opacity:.95;max-width:780px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stat{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:8px 14px;font-size:13px;font-weight:600}
+.stat b{font-size:19px;display:block;font-weight:800}
+
+.fix{background:#fff7fb;border:1.5px solid var(--pink);border-radius:16px;padding:14px 16px;margin:16px 0;box-shadow:var(--shadow);font-size:14px}
+.fix h3{margin:0 0 6px;color:var(--pink-d);font-size:15px}
+.fix table{border-collapse:collapse;margin-top:8px;font-size:13.5px;width:100%;max-width:560px}
+.fix td{border:1px solid var(--line);padding:6px 10px}
+.fix .old{color:var(--muted);text-decoration:line-through}
+.fix .new{color:var(--pink-d);font-weight:700}
+
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;margin:16px 0 8px}
+.msgbox{flex:1;min-width:320px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
+.msgbox label{font-size:13px;font-weight:700;color:var(--pink-d);display:block;margin-bottom:6px}
+.msgbox textarea{width:100%;min-height:118px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:inherit;font-size:13.5px;resize:vertical;color:var(--ink)}
+.msgbox .hint{font-size:12px;color:var(--muted);margin-top:6px}
+.searchbox{min-width:220px;flex:0 0 260px}
+.searchbox input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14px;box-shadow:var(--shadow)}
+.legend{font-size:12.5px;color:var(--muted);margin:4px 2px 18px;display:flex;gap:16px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+.region{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.region>h2{margin:0 0 2px;font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.reghead{cursor:pointer;user-select:none}
+.reghead:hover .chev{color:var(--pink)}
+.chev{font-size:13px;color:var(--muted);width:15px;display:inline-block;flex:none}
+.rcount{font-size:12px;font-weight:600;color:var(--muted);margin-inline-start:auto;background:#f3f4f8;padding:2px 11px;border-radius:20px;white-space:nowrap}
+.region.collapsed{padding-bottom:14px}
+.region.collapsed .school{margin-bottom:0}
+.picker{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);cursor:pointer}
+.picker:focus{border-color:var(--pink);outline:none}
+.bulkbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 2px 16px}
+.bulkbar button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 13px;font-family:inherit;font-weight:600;font-size:12.5px;color:var(--muted);cursor:pointer;transition:.12s}
+.bulkbar button:hover{border-color:var(--pink);color:var(--pink-d)}
+.bulkbar .bulknote{font-size:12px;color:var(--muted)}
+.rowmain{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}
+.track{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;border-top:1px dashed var(--line);padding-top:9px;width:100%}
+.track .sentchk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap;cursor:pointer}
+.track .sentchk input{width:18px;height:18px;accent-color:var(--green);cursor:pointer}
+.track .respin{flex:1;min-width:180px;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--ink)}
+.track .respin:focus{border-color:var(--pink);outline:none}
+.row.sent{background:#f2fbf6;border-color:#bfe6d0}
+.row.sent .sentchk{color:var(--green-d)}
+.region .school{font-size:13px;color:var(--muted);font-weight:600;margin:0 0 12px}
+.region .school b{color:var(--ink)}
+.pill{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px;background:#f0f2f7;color:var(--muted)}
+.pill.act{background:#eafaf1;color:var(--green-d)}
+.pill.join{background:#eef3ff;color:#3B82F6}
+.regnote{background:#fffaf0;border:1px solid #f5d98a;border-radius:10px;padding:8px 11px;font-size:12.5px;color:#8a6d1f;margin:0 0 12px}
+
+.g{display:grid;grid-template-columns:1fr;gap:10px}
+.row{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column}
+.row.dead{opacity:.7;background:#fbfbfd}
+.row .info{flex:1;min-width:230px}
+.row .org{font-weight:700;font-size:15px}
+.row .role{font-size:12.5px;color:var(--muted);margin-top:1px}
+.row .who{font-size:12.5px;margin-top:3px}
+.row .who b{color:var(--pink-d)}
+.row .note{font-size:11.5px;color:#8a6d1f;background:#fffaf0;border-radius:7px;padding:3px 7px;margin-top:5px;display:inline-block}
+.row .mailrow{font-size:12px;margin-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.row .mailrow .addr{direction:ltr;font-weight:600;color:var(--blue-d);background:#eef3ff;border-radius:7px;padding:2px 8px}
+.row .actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.tel{font-weight:700;font-size:14px;direction:ltr;background:#f3f4f8;border-radius:9px;padding:7px 11px;white-space:nowrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:12.5px;border-radius:9px;padding:8px 12px;display:inline-flex;align-items:center;gap:5px;transition:.12s;text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.btn.wa{background:var(--green);color:#fff}
+.btn.wa:hover{background:var(--green-d)}
+.btn.mail{background:var(--blue);color:#fff}
+.btn.mail:hover{background:var(--blue-d)}
+.btn.call{background:#eef3ff;color:#3B82F6}
+.btn.copy{background:#f3f4f8;color:var(--muted);padding:6px 9px}
+.no-ph{font-size:12px;color:var(--muted);font-style:italic;background:#f3f4f8;border-radius:8px;padding:6px 10px}
+.landline{font-size:11px;color:var(--amber);font-weight:600}
+footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:30px;line-height:1.8}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:30px;font-size:13.5px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:560px){.rowmain{flex-direction:column;align-items:stretch}.row .actions{justify-content:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🤝 גורמים קהילתיים — דף מרוכז לאימות אנשי קשר</h1>
+  <p>כל הגורמים הקהילתיים שנאספו לבתי הספר של הופה, מרוכזים לפי עיר/אזור. לכל גורם — טלפון, מייל (היכן שנמצא), וכפתורי חיוג / וואטסאפ / שליחת מייל עם הודעת אימות מוכנה. המטרה: לוודא שהם הכתובת הנכונה לשיתוף פעולה.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="fix">
+  <h3>⚠️ תיקון שמות בתי ספר (לפי מסמך החפיפה של טל)</h3>
+  <div>סימנת שיש בלבול בשמות. עדכנתי אותם גם בדף הזה וגם בכל עותקי דף הניהול:</div>
+  <table>
+    <tr><td>עכו</td><td class="old">אורט מגשימים</td><td class="new">✔ אורט מרום</td></tr>
+    <tr><td>בית שאן</td><td class="old">— (ללא שם רשת)</td><td class="new">✔ אורט מגשימים</td></tr>
+  </table>
+  <div style="font-size:12.5px;color:var(--muted);margin-top:8px">כדאי לאמת סופית מול לירון.</div>
+</div>
+
+<div class="toolbar">
+  <div class="msgbox">
+    <label>✍️ הודעת אימות (ניתן לערוך — משתלבת אוטומטית בכפתורי וואטסאפ ומייל)</label>
+    <textarea id="tmpl">שלום 🙂
+שמי מיטל מעמותת הופה. אנחנו מלווים את בוגרי בית הספר (גילאי 18–26) מ{עיר}, ומחברים אותם למענים, הכשרות, מלגות ותעסוקה בקהילה.
+רצינו לוודא שאתם הכתובת הנכונה לשיתוף פעולה מול {גורם} בכל הנוגע לליווי הבוגרים שלנו. נשמח לתאם שיחה קצרה — תודה!</textarea>
+    <div class="hint">📌 <b>{עיר}</b> ו-<b>{גורם}</b> מתמלאים אוטומטית לפי הגורם. במייל תתווסף גם שורת נושא.</div>
+  </div>
+  <div class="searchbox">
+    <div class="msgbox" style="padding:14px 16px">
+      <label>🏫 בחירת בית ספר</label>
+      <select id="schoolPick" class="picker"></select>
+      <label style="margin-top:10px">🔎 חיפוש חופשי</label>
+      <input id="search" placeholder="עיר, שם גורם, איש קשר, מייל…">
+      <div class="hint" style="margin-top:8px">בחרי בי"ס מהרשימה, או חפשי לפי עיר / מרכז צעירים / יתד / שם / מייל.</div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--green)"></i> נייד — וואטסאפ</span>
+  <span><i class="dot" style="background:var(--amber)"></i> קו נייח — חיוג</span>
+  <span><i class="dot" style="background:var(--blue)"></i> יש מייל — שליחת מייל</span>
+  <span><i class="dot" style="background:#cbd0da"></i> אין קשר — לאמת</span>
+</div>
+
+<div class="bulkbar">
+  <button id="expandAll">⊕ הרחב הכל</button>
+  <button id="collapseAll">⊖ כווץ הכל</button>
+  <span class="bulknote">בתי הספר הוותיקים (פעילים) מקופלים כברירת מחדל — לחצי על שם אזור כדי לפתוח/לסגור.</span>
+</div>
+
+<div id="list"></div>
+
+<footer>
+  נבנה מדף ניהול הופה · טלפונים נאספו במחקר רשת (יולי 2026) · מיילים אומתו מול מקורות רשמיים (אתרי מועצות/עיריות, כל-זכות, gov.il) — עדיין כדאי לאמת בשיחה.<br>
+  קווי נייח לא תמיד מקבלים וואטסאפ · גורמים המסומנים „לאמת" דורשים בירור טלפוני.
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== הנתונים: מרוכזים לפי עיר/אזור. em = מייל רשמי שנמצא במחקר (יולי 2026). ===== */
+const DATA=[
+  {region:'קריית מוצקין', status:'active', schools:'עתיד מוצקין (תוכנית בוגרים)',
+   items:[
+     {g:'מרכז הצעירים', t:'מלגות, חיילים בודדים, סיוע במהלך הצבא', nm:'ירדן — רכזת צעירים', ph:'052-670-8915', em:'dlampel@motzkin.org', note:'הטלפון לשימוש רכזי התוכנית בלבד — לא להפצה לבוגרים. המייל = מחלקת צעירים וקהילה, עיריית מוצקין'},
+     {g:'מרכז הזדמנות', t:'מציאת עבודות וקריירה', nm:'מיטל', ph:'052-6276262'},
+     {g:'קריית ים', t:'הכשרות, לימודים ותעסוקה (אזור קריית ים)', nm:'הודיה', ph:'054-3059881'},
+     {g:'קריית ביאליק — חיילים ומשוחררים', t:'מענה וזכויות למשוחררים', nm:'עדי', ph:'052-5372070'},
+     {g:'יתד', t:'ליווי עו״ס — תכנית יתד', nm:'טדלה לגלם', ph:'052-8853662', note:'לדבר איתה'},
+     {g:'מכללת קריית אתא', t:'השלמת בגרויות', nm:'אורה', ph:'073-3236873'},
+     {g:'מתנ״ס נווה יוסף, חיפה', t:'תעודת 12 שנות לימוד (ללא בגרות) — 10 חודשים', nm:'אינה (מנהלת)', ph:'054-4812060', ph2:'04-8129200', em:'neveyosef@matnasny.org.il'},
+   ]},
+  {region:'בית שאן', status:'active', schools:'אורט מגשימים (בית שאן)',
+   items:[
+     {g:'מרכז הצעירים', t:'מלגות, חיילים בודדים, סיוע במהלך הצבא', nm:'', ph:'04-6060068', em:'ezra@bet-shean.org.il', note:'המייל = עיריית בית שאן (כללי) — לא נמצא מייל ייעודי למרכז הצעירים'},
+     {g:'מרכז הזדמנות / מת״ר קידום תעסוקה', t:'מציאת עבודות וקריירה', nm:'אוסנת חמו', ph:'04-6580135'},
+     {g:'רכז הישגים — השכלה גבוהה', t:'פסיכומטרי, קורסים וכו׳', nm:'דודו כהן', ph:'04-6580131'},
+     {g:'רכז חיילים משוחררים', t:'מענה וזכויות למשוחררים', nm:'חגי סידו', ph:'04-6580132'},
+   ]},
+  {region:'עכו', status:'active', schools:'אורט מרום (עכו)',
+   items:[
+     {g:'מרכז הצעירים', t:'מלגות, תעסוקה, השכלה, הכשרות, זכויות משוחררים', nm:'', ph:'04-9917477', em:'tzeirim_acco@walla.com', em2:'eli_h@akko.muni.il', note:'מזכירה מעבירה לגורם המטפל; אפשר להשאיר טלפון של צעיר + המענה הנדרש. em2 = אגף נוער וצעירים בעירייה'},
+     {g:'מרכז הזדמנות / קידום תעסוקה', t:'מציאת עבודות וקריירה', nm:'', ph:'', em:'tamam-a@akko.muni.il'},
+     {g:'יתד', t:'ליווי עו״ס — תכנית יתד', nm:'עובדת סוציאלית יתד', ph:'', em:'gitit@akko.muni.il'},
+   ]},
+  {region:'אשקלון', status:'active', schools:'אורט אדיבי',
+   note:'⚠️ טבלת אנשי הקשר האזוריים במסמך המקור נלקחה מקריית ביאליק — כדאי לאמת שהיא אכן רלוונטית לאשקלון. לא נמצא מייל רשמי למרכזי הצעירים/הזדמנות באשקלון.',
+   items:[
+     {g:'מרכז הצעירים', t:'מלגות, חיילים בודדים, סיוע במהלך הצבא', nm:'', ph:'08-6213762'},
+     {g:'מרכז הזדמנות', t:'מציאת עבודות וקריירה', nm:'', ph:''},
+   ]},
+  {region:'קריית מלאכי', status:'active', schools:'אורט צור ברק',
+   note:'מיפוי קהילתי לקריית מלאכי — נמצאו כתובות מייל למרכז הצעירים (טרם נמצאו טלפונים ישירים).',
+   items:[
+     {g:'מרכז צעירים — השכלה / הישגים', t:'השכלה גבוהה, מלגות, הכוון (מופעל ע״י עלומה)', nm:'', ph:'', em:'hesegim.k-m@aluma.org.il'},
+     {g:'מרכז צעירים — תעסוקה', t:'ליווי והשמה תעסוקתית', nm:'רבקה שיוביץ', ph:'', em:'taasuka.km@gmail.com'},
+     {g:'יתד / קידום נוער', t:'צעירים בסיכון 18–25 / נוער 14–18', nm:'', ph:'', note:'לאמת מול מחלקת הרווחה בעירייה'},
+   ]},
+
+  {region:'ירושלים', status:'active', schools:'אורט בית הערבה · תיכון חושן',
+   note:'עמודי העירייה חסומים — הפרטים למטה אומתו ממקורות רשמיים חלופיים.',
+   items:[
+     {g:'רשות הצעירים ירושלים', t:'מרכז צעירים (בית קנדה מוסררה; סניפים רוממה/שועפאט)', nm:'', ph:'', em:'connect@young-jerusalem.org.il'},
+     {g:'תוכנית יתד ירושלים', t:'ליווי צעירים 18–25', nm:'הדס בן אליהו (רכזת אזור)', ph:'', em:'haddasben@molsa.gov.il'},
+     {g:'מרכז הזדמנות ירושלים', t:'הכוון תעסוקתי (בן יהודה 34 ק.8)', nm:'', ph:'02-5468223', em:'hizdamnutjlm@gmail.com'},
+     {g:'קידום נוער ירושלים', t:'מניעת נשירה 14–18 + היל״ה', nm:'', ph:'', note:'לאמת — עמוד העירייה חסום'},
+   ]},
+
+  {region:'נחלים · חבל מודיעין', status:'join', schools:'מרכז תורני טכנולוגי נחלים',
+   items:[
+     {g:'מרכז צעירים חבל מודיעין', t:'מלגות, קריירה 18–26, זכויות, חיילים משוחררים', nm:'ליאת מועלם · עומר אייל (משוחררים)', ph:'052-2818472', note:'מוקד המועצה *3106'},
+     {g:'תוכנית יתד — חבל מודיעין', t:'ליווי צעירים בסיכון 18–25', nm:'תהילה חתוכה (עו״ס)', ph:'03-9722860'},
+     {g:'קידום נוער „מרו״ם"', t:'מניעת נשירה 13–18 (היל״ה)', nm:'אודיה שרוני', ph:'03-9773656', note:'גם 03-9773693. לבדוק מענה ספציפי לנחלים'},
+     {g:'הכוון תעסוקתי', t:'קריירה 18–26 דרך מרכז הצעירים', nm:'', ph:'', note:'אין מרכז הזדמנות עצמאי בחבל מודיעין'},
+   ]},
+  {region:'טורעאן · גליל תחתון', status:'join', schools:'מנאראת טוראען',
+   items:[
+     {g:'קידום נוער (14–18) טורעאן', t:'יחידה לקידום נוער', nm:'מגדה בדר (מנהלת)', ph:'050-8720406', em:'majeda@turan.muni.il'},
+     {g:'יחידת הנוער טורעאן', t:'חינוך בלתי-פורמלי', nm:'סאלח דחלה (מנהל)', ph:'074-7676216', em:'salih@turan.muni.il'},
+     {g:'מחלקת חינוך', t:'כניסה לקידום נוער/פסיכולוגים', nm:'סאמי עדאוי · אמל זרעיני 074-7676209', ph:'054-7708556', em:'sami@turan.muni.il'},
+     {g:'תוכנית יתד / רווחה (18–25)', t:'צעירים בסיכון', nm:'תגריד אבו דיבה (מנהלת רווחה)', ph:'', em:'tagred@turan.muni.il', note:'מרכזיית רווחה 04-6414005'},
+     {g:'מרכז ריאן נצרת (אזורי)', t:'הכוון תעסוקתי חברה ערבית 18+', nm:'', ph:'', note:'אין ריאן פיזי בטורעאן — לאמת'},
+   ]},
+  {region:'אשדוד', status:'join', schools:'תיכון יוצר עמל טכנולוגי אשדוד',
+   items:[
+     {g:'מרכז הצעירים „כיוונים" אשדוד', t:'צעירים 18–35: תעסוקה, השכלה, מעורבות', nm:'הציונות 4, רובע הסיטי', ph:'08-8604024', em:'kivoonim@ashdod.muni.il', note:'גם 08-8604028/9'},
+     {g:'מרכז הזדמנות אשדוד', t:'ליווי תעסוקתי, הכשרות, מעסיקים (18–60+)', nm:'הרצל 1, יוניטרייד', ph:'08-9238535'},
+     {g:'קידום נוער (14–18)', t:'נוער מנותק/נשירה + היל״ה', nm:'', ph:'', note:'לאמת ישיר. מוקד 08-8545454'},
+     {g:'תוכנית יתד (18–25)', t:'ליווי צעירים בסיכון', nm:'', ph:'', note:'לאמת מפעיל מקומי'},
+   ]},
+  {region:'עמק יזרעאל (רמת דוד)', status:'join', schools:'עמל רמת דוד',
+   items:[
+     {g:'מרכז צעירים + יתד עמק יזרעאל', t:'תעסוקה, השכלה, השלמת בגרות, דיור 18–25', nm:'שיר חזיזה (עו״ס)', ph:'04-6520066', em:'adim@eyz.org.il', note:'מרכזים בגניגר וכפר מנדא'},
+     {g:'מחלקת צעירים ומלגות', t:'חיילים משוחררים, מלגות, השכלה', nm:'נועה שמרון', ph:'04-6520640', em:'adim@eyz.org.il'},
+     {g:'קידום נוער (12–18)', t:'נוער בסיכון, היל״ה', nm:'מרכז הנוער רובע יזרעאל, שוהם 10', ph:'', em:'Noar1@eyz.org.il', note:'04-6520317 — לאמת; מנהלת חדשה'},
+     {g:'מרכז הון אנושי מגדל העמק', t:'השלמת בגרות, הכוון, פסיכומטרי', nm:'עצמון 23', ph:'04-6443025', em:'viki@migdal-haemeq.muni.il', note:'בעיקר תושבי מגדל העמק'},
+   ]},
+  {region:'נווה מדבר (בדואי, נגב)', status:'join', schools:'דרור נווה מדבר',
+   items:[
+     {g:'אגף חינוך / מחלקת חינוך', t:'כניסה לקידום נוער ויחידות נוער', nm:'דינה (איש קשר)', ph:'', em:'dina@nevemidbar.org.il', note:'לאמת דרך מוקד המועצה'},
+     {g:'אגף הרווחה / יתד (18–25)', t:'ליווי צעירים בסיכון דרך הרווחה', nm:'לין חוארי (מנהלת רווחה)', ph:'', em:'lynh@nevemidbar.org.il'},
+     {g:'מרכז ריאן (ביר הדאג׳)', t:'הכוון תעסוקתי בדואי 18+', nm:'', ph:'', note:'מוקד ארצי *6584 / 2119; לאתר סניף ביר הדאג׳/אבו תלול'},
+     {g:'מרכז צעירי רהט (אזורי)', t:'עוגן בדואי אזורי', nm:'', ph:'08-6529020', note:'לתושבי רהט בלבד — כהפניה/מודל'},
+   ]},
+  {region:'סחנין', status:'join', schools:'תיכון אלאמאני סחנין (2 מוסדות)',
+   items:[
+     {g:'מרכז הצעירים / תרבות סחנין', t:'18–40, קריירה, סטודנטים', nm:'דלאל אבו ריא · מופק חלאילה (מנהל)', ph:'04-6787495', em:'Mofak_kh@014.net'},
+     {g:'יחידת קידום נוער (14–18)', t:'נוער מנותק/נושר, היל״ה', nm:'אחמד חלאילה · תמהיד שלאעטה (מנהל)', ph:'04-6788807', em:'tamheed@sakhnin.muni.il', note:'תואם מניעת נשירה'},
+     {g:'מרכז ריאן סחנין', t:'הכוון תעסוקתי חברה ערבית 18+ (בניין בנק הפועלים ק.2)', nm:'', ph:'04-6659600', note:'מקור צד ג׳ — לאמת'},
+     {g:'תוכנית יתד / אגף רווחה (18–25)', t:'צעירים בסיכון', nm:'פתחי אבו יונס (מנהל רווחה)', ph:'', em:'sakhnin_revaha@yahoo.com', em2:'fathi.a@sakhnin.muni.il'},
+   ]},
+  {region:'לקייה (בדואי, נגב)', status:'join', schools:'טכנולוגי לקייה',
+   items:[
+     {g:'מחלקת רווחה לקיה', t:'רווחה — כניסה ליתד/קידום נוער', nm:'שיפאא אל-סאנע (מנהלת) · קות׳ר אל-סאנע (עו״ס)', ph:'08-6512368', em:'shifa@laqye.muni.il', note:'מוקד מועצה 08-6512370'},
+     {g:'מחלקת נוער / מתנ״ס', t:'נוער 14–18 ומתנ״ס', nm:'פארס אבו עוביד (נוער) · הוד (מתנ״ס)', ph:'', em:'fares@laqye.muni.il', em2:'hod@laqye.muni.il'},
+     {g:'אגף חינוך', t:'השלמת השכלה / היל״ה', nm:'טאלב אלאסד (מנהל)', ph:'', em:'taleb@laqye.muni.il'},
+     {g:'מרכז ריאן (בדואי)', t:'הכוון תעסוקתי', nm:'', ph:'', note:'מוקד ארצי *6584 — לאמת סניף מקומי'},
+   ]},
+  {region:"ג'וליס (דרוזי, גליל)", status:'join', schools:"תיכון יוצר עתיד בנות ג'וליס",
+   items:[
+     {g:"מרכז צעירים ג'וליס", t:'18–40, השכלה, תעסוקה, שירות אזרחי לבנות', nm:'שוקי עאמר', ph:'', note:'054-3113414 ממדריך לא רשמי — לאמת; פייסבוק Julis.Youth.Center'},
+     {g:'מחלקה לשירותים חברתיים', t:'רווחה, השמה, כניסה ליתד/קידום נוער', nm:'', ph:'04-8837225', em:'leshka.julis@gmail.com'},
+     {g:'מחלקת ילדים ונוער / מתנ״ס', t:'נוער 14–18', nm:'', ph:'', note:'אינסטגרם noar.julis — לאמת'},
+     {g:'מועצה מקומית', t:'מרכזייה — לאיתור רכז יתד/קידום נוער', nm:'', ph:'04-8837200', note:'גם 04-9963423'},
+   ]},
+  {region:'ביר אל-מכסור (בדואי, גליל)', status:'join', schools:'עתיד אבדאע ביר אלמכסור',
+   items:[
+     {g:'מחלקת נוער + מרכז צעירים', t:'מרכז צעירים + תוכניות נוער בסיכון', nm:'רמלי גדיר (מנהל) · עבדאללה ג׳נדאווי', ph:'04-9862714', note:'גם 04-9504751. א׳–ה׳ 8–18'},
+     {g:'מחלקת חינוך / השלמת השכלה', t:'כניסה להיל״ה/קידום נוער', nm:'הית׳אם גדיר · סולימאן חמאד', ph:'04-9058918', em:'haytham@mksor.org.il', em2:'soli85@mksor.org.il', note:'גם 04-9058922'},
+     {g:'מחלקת רווחה / יתד (18–25)', t:'ליווי צעירים בסיכון', nm:'סלמא גדיר (מנהלת רווחה)', ph:'', em:'maksourrevaha@mksor.org.il', em2:'salmah@mksor.org.il'},
+     {g:'מרכז ריאן ביר אל-מכסור', t:'הכוון תעסוקתי בדואי', nm:'אלפנאר', ph:'04-8605742', note:'מספר אלפנאר כללי — לאמת ישיר'},
+   ]},
+  {region:'נצרת (הערבית)', status:'join', schools:'בוטו נאיף ממלכתי | עמל נצרת',
+   note:'שים לב: „מרכז צעירים נצרת"/„יתד נצרת" בחיפושים מפנים לרוב לנוף הגליל (עיר יהודית נפרדת). למטה — נצרת הערבית בלבד.',
+   items:[
+     {g:'אגף התרבות, הספורט והנוער', t:'תוכניות נוער וצעירים', nm:'ח׳אלד בטו · מזכ׳ דוניא סלאם', ph:'04-6406472', em:'khaled.bu@nazareth.muni.il', em2:'donia.s@nazareth.muni.il', note:'גם 04-6406470'},
+     {g:'אגף שירותים חברתיים', t:'רווחה + כניסה ליתד 18–25', nm:'אמל אלפאר · מזכ׳ לינא נסר', ph:'04-6459801', em:'social@nazareth.muni.il', em2:'amal.f@nazareth.muni.il', note:'גם 04-6459802; רכז יתד ספציפי — לאמת'},
+     {g:'מרכז למשפחה וילד', t:'', nm:'', ph:'04-6406401'},
+     {g:'מרכז ריאן נצרת', t:'הכוון תעסוקתי חברה ערבית', nm:'', ph:'', note:'*6584/2119 ארצי; סניף נצרת קיים — לאמת'},
+   ]},
+  {region:'עמקה · מטה אשר (גליל מערבי)', status:'join', schools:'תיכון שיח',
+   items:[
+     {g:'מרכז הצעירים מטה אשר', t:'18–40, השכלה, כולל צעירים בסיכון', nm:'כרמית פלג · אופיר רומשקנו (השכלה)', ph:'04-9005245', ph2:'050-6952123', em:'zeirim@mta.org.il', em2:'carmitp@mta.org.il'},
+     {g:'מעברים גליל מערבי', t:'מרכז תעסוקה קהילתי (הזדמנות)', nm:'', ph:'04-9109046', em:'office@mwg.org.il', note:'משרת מטה אשר + מעלה יוסף'},
+     {g:'תוכנית יתד', t:'18–25 דרך מרכז הצעירים', nm:'', ph:'', note:'לאמת רכז ייעודי'},
+     {g:'קידום נוער (14–18)', t:'היל״ה', nm:'', ph:'', note:'לא אותר ייעודי — לאמת מול מחלקת חינוך'},
+     {g:'מכללה אקדמית גליל מערבי (עכו)', t:'השלמת בגרות/מכינות', nm:'', ph:'', note:'לאמת'},
+   ]},
+  {region:'פלמחים · חבל יבנה', status:'join', schools:'תיכון יוצר עתיד פלמחים',
+   items:[
+     {g:'מרכז צעירים חבל יבנה', t:'18–40, קריירה, הכוון, מלגות, הורות צעירה', nm:'ליאור גלפרין', ph:'08-8622615', em:'tzeirim@hy.matnasim.co.il'},
+     {g:'תוכנית יתד', t:'צעירים 18–25 בסיכון', nm:'', ph:'', note:'לאמת — דרך מתנ״ס 08-8622101'},
+     {g:'קידום נוער (14–18)', t:'נוער בסיכון (תוכנית 360)', nm:'אורלי אהרון (שירותים חברתיים)', ph:'', note:'לאמת — מוקד 08-8622100'},
+     {g:'מרכז הזדמנות', t:'הכוון תעסוקתי', nm:'', ph:'', note:'אין ייעודי; הקרוב אשדוד — לאמת זכאות'},
+   ]},
+  {region:'תל אביב–יפו (יפו)', status:'join', schools:'התיכון החברתי תל אביב יפו',
+   items:[
+     {g:'יפת 83 — בית הצעירים של יפו', t:'מרכז צעירים ~18–35; כניסה גם ליתד/תעסוקה', nm:'יפת 83, יפו', ph:'03-5084123', em:'yefet83@gmail.com', note:'מקור כל-זכות — לאמת'},
+     {g:'„אכפת" — קידום נוער', t:'נוער בסיכון/נשירה + היל״ה', nm:'', ph:'052-9025000', em:'ichpatlv1@gmail.com', note:'עמוד עירוני רשמי'},
+     {g:'מרכז הזדמנות ת״א', t:'הכוון תעסוקתי 18–75', nm:'', ph:'', note:'כתובת סותרת במקורות — לאמת'},
+     {g:'תוכנית יתד ת״א-יפו', t:'18–25 בסיכון', nm:'', ph:'', note:'דרך יפת 83 — לאמת'},
+     {g:'חינוך מבוגרים + תיכון מוזה יפו', t:'השלמת בגרות (תג״ת) 17+', nm:'נווה צדק, לילינבלום 7', ph:'', note:'לאמת'},
+   ]},
+  {region:'רהט (בדואי, נגב)', status:'join', schools:'עמל טכנולוגי רהט',
+   items:[
+     {g:'מרכז צעירי רהט', t:'18–40, השכלה, תעסוקה, יזמות (שכונה 4 בית 98)', nm:'', ph:'08-6529020'},
+     {g:'אגף החינוך עיריית רהט', t:'כניסה לקידום נוער / השלמת השכלה', nm:'ד״ר עלי אלהוזייל (מנהל)', ph:'', em:'edurht@ladpc.gov.il'},
+     {g:'מרכז ריאן רהט', t:'הכוון תעסוקתי חברה בדואית', nm:'', ph:'', note:'קו ארצי *6584 — לאמת סניף רהט'},
+     {g:'תוכנית יתד רהט', t:'18–25 בסיכון', nm:'', ph:'', note:'דרך רווחה עירונית — לאמת'},
+   ]},
+  {region:'חיפה', status:'join', schools:'אורט כרמל חיפה',
+   items:[
+     {g:'רשות הצעירים חיפה', t:'מרכזי צעירים 18–35, קריירה (חורי 2 / בורלא 17)', nm:'', ph:'04-8355775', em:'Haifa.projects@gmail.com', note:'גם 04-8354088'},
+     {g:'תוכנית יתד חיפה', t:'18–25 בסיכון (בתים חמים, דיור)', nm:'י.ל. פרץ 32', ph:'04-8354254', em:'zivah@haifa.muni.il', note:'אגף הרווחה'},
+     {g:'קידום נוער (13–25)', t:'נוער מנותק + היל״ה', nm:'', ph:'04-8354256', note:'היל״ה 04-8642914; מחלקה 04-8354255'},
+     {g:'מרכז כיוון חיפה', t:'הכוון והשמה תעסוקתית (ספיר 7 ק.4)', nm:'', ph:'04-8314041', em:'jobs-h@kivun.org.il'},
+     {g:'מתנ״ס נווה יוסף', t:'השלמת 12 שנ״ל (תג״ת) 18+ (הרב משאש 1)', nm:'', ph:'04-8129200', em:'neveyosef@matnasny.org.il', note:'מוכר לנו כבר'},
+   ]},
+  {region:'תל שבע (בדואי, נגב)', status:'join', schools:'טכנולוגי אלמוסתקבל תל שבע',
+   items:[
+     {g:'מחלקת רווחה / לשכת המועצה', t:'רווחה + כניסה ליתד 18–25', nm:'', ph:'08-6293900', em:'lishka@tel-sheva.muni.il', note:'לבקש הפניה לרכז יתד'},
+     {g:'מרכז ריאן תל שבע', t:'הכוון תעסוקתי בדואי 18+', nm:'', ph:'', note:'פועל מ-2013; לאמת טלפון ישיר'},
+     {g:'קידום נוער (14–18) + היל״ה', t:'נוער נושר, השלמת השכלה', nm:'', ph:'', note:'לאמת מול מחלקת חינוך'},
+     {g:'מרכז צעירים אזורי (ב״ש)', t:'סטארט-אפ מרכז הזדמנויות ב״ש', nm:'', ph:'', note:'אין מרכז ייעודי בתל שבע — עוגן אזורי בב״ש'},
+   ]},
+  {region:'כרמיאל', status:'join', schools:'עתיד יוצר מגשימים (קמפוס מגשימים — לא המושב ליד פ״ת)',
+   items:[
+     {g:'מרכז הצעירים כרמיאל', t:'קריירה, מלגות, השמה, חיילים משוחררים (אילנות 7)', nm:'„מועדון קריירה"', ph:'04-6662381'},
+     {g:'יעדים לצפון / הזדמנות', t:'תעסוקה נתמכת, הכוון', nm:'', ph:'', em:'office@yeadim.org'},
+     {g:'תוכנית יתד כרמיאל', t:'18–25 בסיכון', nm:'', ph:'', note:'דרך נוצ״צ — לאמת; קו 118'},
+     {g:'קידום נוער כרמיאל', t:'14–18', nm:'', ph:'', note:'לאמת — עמוד עירייה חסום'},
+   ]},
+];
+
+/* ===== עזרים ===== */
+function digits(p){return (p||'').replace(/[^0-9]/g,'');}
+function isMobile(p){const d=digits(p);return /^05\d{8}$/.test(d);}
+function isStar(p){return /^\*/.test((p||'').trim());}
+function waNumber(p){let d=digits(p);if(d.startsWith('0'))d='972'+d.slice(1);return d;}
+function telHref(p){return 'tel:'+ (isStar(p)? (p||'').trim() : '+'+ (digits(p).startsWith('0')?'972'+digits(p).slice(1):digits(p)) );}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fillMsg(region,g){
+  const t=document.getElementById('tmpl').value;
+  // מסירים טווחי גיל משם הגורם (למשל "קידום נוער (14–18)") כדי שלא ישתלו בהודעה — הפנייה על בוגרים 18–26
+  const gClean=(g||'').replace(/\s*\(\s*\d{1,2}\s*[–-]\s*\d{1,2}[^)]*\)/g,'').replace(/\s{2,}/g,' ').trim();
+  return t.replace(/\{עיר\}/g,region).replace(/\{גורם\}/g,gClean);
+}
+function waHref(p,region,g){
+  return 'https://wa.me/'+waNumber(p)+'?text='+encodeURIComponent(fillMsg(region,g));
+}
+function mailHref(em,region,g){
+  const subj='הופה — אימות איש קשר לשיתוף פעולה';
+  return 'https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(em)
+    +'&su='+encodeURIComponent(subj)+'&body='+encodeURIComponent(fillMsg(region,g));
+}
+
+/* ===== מעקב „נשלח / תגובה" (נשמר בדפדפן) ===== */
+const TRACK_KEY='hopa_kehila_track_v1';
+function loadTrack(){try{return JSON.parse(localStorage.getItem(TRACK_KEY))||{};}catch(e){return{};}}
+function saveTrack(){localStorage.setItem(TRACK_KEY,JSON.stringify(track));}
+let track=loadTrack();
+const itemId=(region,idx)=>region+'#'+idx;
+
+/* ===== מצב קיפול + סינון ===== */
+const expanded={};
+DATA.forEach(r=>{expanded[r.region]=(r.status!=='active');}); /* ותיקים (פעילים) מקופלים, מצטרפים פתוחים */
+let curFilter='', curPick='';
+function matchItem(reg,it){
+  if(!curFilter)return true;
+  const hay=(reg.region+' '+reg.schools+' '+it.g+' '+(it.t||'')+' '+(it.nm||'')+' '+(it.ph||'')+' '+(it.em||'')+' '+(it.em2||'')).toLowerCase();
+  return hay.includes(curFilter);
+}
+
+/* ===== בניית שורת גורם ===== */
+function rowHtml(reg,it,idx){
+  const hasPh=it.ph&&!isStar(it.ph), mob=isMobile(it.ph), hasMail=!!it.em;
+  let phoneActions='';
+  if(hasPh){
+    const extra=it.ph2?`<span class="landline" title="מספר נוסף">+ ${esc(it.ph2)}</span>`:'';
+    phoneActions=`<span class="tel">📞 ${esc(it.ph)}</span>${extra}
+      ${mob?`<a class="btn wa" href="${waHref(it.ph,reg.region,it.g)}" target="_blank" rel="noopener">💬 וואטסאפ</a>`:'<span class="landline">קו נייח</span>'}
+      <a class="btn call" href="${telHref(it.ph)}">חיוג</a>
+      <button class="btn copy" onclick="copyTxt('${esc(digits(it.ph))}')">העתק</button>`;
+  } else if(isStar(it.ph)){
+    phoneActions=`<span class="tel">📞 ${esc(it.ph)}</span><a class="btn call" href="${telHref(it.ph)}">חיוג</a>`;
+  } else if(!hasMail){
+    phoneActions=`<span class="no-ph">אין קשר ישיר — לאמת</span>`;
+  }
+  const mailAction=hasMail?`<a class="btn mail" href="${mailHref(it.em,reg.region,it.g)}" target="_blank" rel="noopener">✉️ מייל</a>`:'';
+  const actions=(phoneActions||mailAction)?`<div class="actions">${phoneActions}${mailAction}</div>`:'';
+  const mailLine=hasMail?`<div class="mailrow">✉️ <span class="addr">${esc(it.em)}</span>
+       <button class="btn copy" onclick="copyTxt('${esc(it.em)}')">העתק</button>
+       ${it.em2?`<span class="addr">${esc(it.em2)}</span><button class="btn copy" onclick="copyTxt('${esc(it.em2)}')">העתק</button>`:''}</div>`:'';
+  const dot=mob?'var(--green)':(hasPh?'var(--amber)':(hasMail?'var(--blue)':'#cbd0da'));
+  const dead=!hasPh&&!hasMail&&!isStar(it.ph);
+  const tid=itemId(reg.region,idx), tr=track[tid]||{};
+  const trackBar=`<div class="track">
+    <label class="sentchk"><input type="checkbox" data-sent="${tid}" ${tr.sent?'checked':''}> ✓ נשלח</label>
+    <input class="respin" data-resp="${tid}" placeholder="תגובה / סטטוס — מה ענו, מתי, מה הלאה…" value="${esc(tr.resp||'')}">
+  </div>`;
+  return `<div class="row ${dead?'dead':''} ${tr.sent?'sent':''}">
+    <div class="rowmain">
+      <div class="info">
+        <div class="org"><span class="dot" style="background:${dot};margin-left:6px"></span>${esc(it.g)}</div>
+        ${it.t?`<div class="role">${esc(it.t)}</div>`:''}
+        ${it.nm?`<div class="who">👤 <b>${esc(it.nm)}</b></div>`:''}
+        ${mailLine}
+        ${it.note?`<div class="note">📌 ${esc(it.note)}</div>`:''}
+      </div>
+      ${actions}
+    </div>
+    ${trackBar}
+  </div>`;
+}
+
+/* ===== רינדור ===== */
+function render(){
+  const host=document.getElementById('list');
+  host.innerHTML='';
+  let totItems=0,totPhones=0,totMobile=0,totMail=0,totSent=0;
+  DATA.forEach(reg=>reg.items.forEach((it,idx)=>{
+    totItems++;
+    if(it.ph&&!isStar(it.ph)){totPhones++;if(isMobile(it.ph))totMobile++;}
+    if(it.em)totMail++;
+    if((track[itemId(reg.region,idx)]||{}).sent)totSent++;
+  }));
+  let shown=0;
+  DATA.forEach(reg=>{
+    if(curPick&&reg.region!==curPick)return;
+    const items=reg.items.map((it,idx)=>({it,idx})).filter(o=>matchItem(reg,o.it));
+    if(!items.length)return;
+    shown++;
+    const isOpen=expanded[reg.region]||!!curFilter||!!curPick;
+    const sentCount=reg.items.reduce((n,_,idx)=>n+(((track[itemId(reg.region,idx)]||{}).sent)?1:0),0);
+    const pill=reg.status==='active'?'<span class="pill act">בי״ס פעיל</span>':'<span class="pill join">מצטרף (משרד העבודה)</span>';
+    const body=isOpen?`${reg.note?`<div class="regnote">${esc(reg.note)}</div>`:''}<div class="g">${items.map(o=>rowHtml(reg,o.it,o.idx)).join('')}</div>`:'';
+    host.insertAdjacentHTML('beforeend',
+      `<div class="region ${isOpen?'':'collapsed'}">
+        <h2 class="reghead" data-toggle="${esc(reg.region)}"><span class="chev">${isOpen?'▾':'▸'}</span>📍 ${esc(reg.region)} ${pill}<span class="rcount">${reg.items.length} גורמים${sentCount?` · ${sentCount} נשלחו`:''}</span></h2>
+        <div class="school">🏫 <b>${esc(reg.schools)}</b></div>
+        ${body}
+      </div>`);
+  });
+  if(!shown)host.innerHTML='<div class="region" style="text-align:center;color:var(--muted)">לא נמצאו תוצאות לחיפוש.</div>';
+  document.getElementById('stats').innerHTML=
+    `<div class="stat"><b>${DATA.length}</b> ערים/אזורים</div>
+     <div class="stat"><b>${totItems}</b> גורמים קהילתיים</div>
+     <div class="stat"><b>${totMobile}</b> ניידים (וואטסאפ)</div>
+     <div class="stat"><b>${totMail}</b> עם מייל</div>
+     <div class="stat"><b>${totSent}</b> נשלחו</div>`;
+}
+
+/* ===== בורר בתי ספר ===== */
+function fillPicker(){
+  const sel=document.getElementById('schoolPick');
+  sel.innerHTML='<option value="">— כל בתי הספר —</option>'
+    +'<optgroup label="בתי ספר ותיקים (פעילים)">'
+    +DATA.filter(r=>r.status==='active').map(r=>`<option value="${esc(r.region)}">${esc(r.region)} — ${esc(r.schools)}</option>`).join('')
+    +'</optgroup><optgroup label="בתי ספר מצטרפים">'
+    +DATA.filter(r=>r.status!=='active').map(r=>`<option value="${esc(r.region)}">${esc(r.region)} — ${esc(r.schools)}</option>`).join('')
+    +'</optgroup>';
+}
+
+/* ===== עזרים ===== */
+function copyTxt(d){navigator.clipboard.writeText(d).then(()=>toast('הועתק: '+d));}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),1600);}
+
+/* ===== אירועים ===== */
+document.getElementById('search').addEventListener('input',e=>{curFilter=e.target.value.trim().toLowerCase();render();});
+document.getElementById('schoolPick').addEventListener('change',e=>{
+  curPick=e.target.value;render();
+  if(curPick){const r=[...document.querySelectorAll('.region')].find(el=>el.querySelector('[data-toggle]')?.dataset.toggle===curPick);if(r)r.scrollIntoView({behavior:'smooth',block:'start'});}
+});
+document.getElementById('expandAll').addEventListener('click',()=>{DATA.forEach(r=>expanded[r.region]=true);render();});
+document.getElementById('collapseAll').addEventListener('click',()=>{DATA.forEach(r=>expanded[r.region]=false);render();});
+document.getElementById('list').addEventListener('click',e=>{
+  const h=e.target.closest('[data-toggle]');
+  if(h){const reg=h.dataset.toggle;expanded[reg]=!(expanded[reg]||!!curFilter||!!curPick);render();}
+});
+document.getElementById('list').addEventListener('change',e=>{
+  const c=e.target.closest('[data-sent]');
+  if(c){const id=c.dataset.sent;track[id]=Object.assign({},track[id],{sent:c.checked});saveTrack();render();}
+});
+document.getElementById('list').addEventListener('input',e=>{
+  const r=e.target.closest('[data-resp]');
+  if(r){const id=r.dataset.resp;track[id]=Object.assign({},track[id],{resp:r.value});saveTrack();}
+});
+
+fillPicker();
+render();
+</script>
+</body>
+</html>
