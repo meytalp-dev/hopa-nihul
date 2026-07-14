@@ -57,6 +57,9 @@ header p{margin:0;font-size:14.5px;opacity:.95;max-width:780px}
 .bulkbar button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 13px;font-family:inherit;font-weight:600;font-size:12.5px;color:var(--muted);cursor:pointer;transition:.12s}
 .bulkbar button:hover{border-color:var(--pink);color:var(--pink-d)}
 .bulkbar .bulknote{font-size:12px;color:var(--muted)}
+.syncst{font-size:12px;font-weight:700;color:var(--muted);background:#f3f4f8;border-radius:20px;padding:6px 12px;white-space:nowrap}
+.syncst.ok{background:#eafaf1;color:var(--green-d)}
+.syncst.off{background:#fff4f4;color:#c0392b}
 .rowmain{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}
 .track{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;border-top:1px dashed var(--line);padding-top:9px;width:100%}
 .track .sentchk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap;cursor:pointer}
@@ -148,7 +151,9 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:30px;lin
 <div class="bulkbar">
   <button id="expandAll">⊕ הרחב הכל</button>
   <button id="collapseAll">⊖ כווץ הכל</button>
-  <span class="bulknote">בתי הספר הוותיקים (פעילים) מקופלים כברירת מחדל — לחצי על שם אזור כדי לפתוח/לסגור.</span>
+  <button id="refreshBtn">🔄 רענן מהענן</button>
+  <span class="syncst" id="syncst">☁️ מסנכרן…</span>
+  <span class="bulknote">בתי הספר הוותיקים (פעילים) מקופלים כברירת מחדל — לחצי על שם אזור כדי לפתוח/לסגור. המעקב מסונכרן בין כל המכשירים.</span>
 </div>
 
 <div id="list"></div>
@@ -364,6 +369,35 @@ function saveTrack(){localStorage.setItem(TRACK_KEY,JSON.stringify(track));}
 let track=loadTrack();
 const itemId=(region,idx)=>region+'#'+idx;
 
+/* ===== סנכרון ענן (Supabase — טבלה משותפת לכל המכשירים) ===== */
+const SB_URL='https://vhmwijzcrqjjquxomccq.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZobXdpanpjcnFqanF1eG9tY2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1Nzk0MDgsImV4cCI6MjA4OTE1NTQwOH0.rMnAcdMiPddUAoap63tMiqeQQanJoF-HDmzra7P-5Cc';
+const SB_TABLE='kehila_track';
+const SB_HEAD={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'};
+const respTimers={};
+function setSync(msg,cls){const el=document.getElementById('syncst');if(!el)return;el.textContent=msg;el.className='syncst'+(cls?' '+cls:'');}
+async function pullTrack(){
+  // לא לרמוס תגובה שמקלידים ממש עכשיו
+  const ae=document.activeElement;
+  if(ae&&ae.classList&&ae.classList.contains('respin'))return;
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?select=item_id,sent,resp`,{headers:SB_HEAD});
+    if(!r.ok){setSync('☁️ לא זמין — מקומי','off');return;}
+    const rows=await r.json();
+    rows.forEach(row=>{track[row.item_id]=Object.assign({},track[row.item_id],{sent:!!row.sent,resp:row.resp||''});});
+    saveTrack();render();
+    setSync('☁️ מסונכרן ✓','ok');
+  }catch(e){setSync('☁️ לא מקוון — מקומי','off');}
+}
+async function pushTrack(id){
+  const t=track[id]||{};
+  const body=[{item_id:id,sent:!!t.sent,resp:t.resp||'',updated_at:new Date().toISOString()}];
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}`,{method:'POST',headers:Object.assign({},SB_HEAD,{Prefer:'resolution=merge-duplicates'}),body:JSON.stringify(body)});
+    setSync(r.ok?'☁️ נשמר בענן ✓':'☁️ שגיאת שמירה','ok');
+  }catch(e){setSync('☁️ לא מקוון — יסונכרן בהמשך','off');}
+}
+
 /* ===== מצב קיפול + סינון ===== */
 const expanded={};
 DATA.forEach(r=>{expanded[r.region]=(r.status!=='active');}); /* ותיקים (פעילים) מקופלים, מצטרפים פתוחים */
@@ -482,15 +516,20 @@ document.getElementById('list').addEventListener('click',e=>{
 });
 document.getElementById('list').addEventListener('change',e=>{
   const c=e.target.closest('[data-sent]');
-  if(c){const id=c.dataset.sent;track[id]=Object.assign({},track[id],{sent:c.checked});saveTrack();render();}
+  if(c){const id=c.dataset.sent;track[id]=Object.assign({},track[id],{sent:c.checked});saveTrack();render();pushTrack(id);}
 });
 document.getElementById('list').addEventListener('input',e=>{
   const r=e.target.closest('[data-resp]');
-  if(r){const id=r.dataset.resp;track[id]=Object.assign({},track[id],{resp:r.value});saveTrack();}
+  if(r){const id=r.dataset.resp;track[id]=Object.assign({},track[id],{resp:r.value});saveTrack();
+    clearTimeout(respTimers[id]);respTimers[id]=setTimeout(()=>pushTrack(id),700);}
 });
+document.getElementById('refreshBtn').addEventListener('click',pullTrack);
+window.addEventListener('focus',pullTrack);
 
 fillPicker();
 render();
+pullTrack();
+setInterval(pullTrack,25000);
 </script>
 </body>
 </html>
