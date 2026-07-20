@@ -309,6 +309,36 @@
     .row2{grid-template-columns:1fr}
   }
   @media print{header.app,nav.side,.toolbar,.icon-btn,.head-tools,.addmini,.del,.statusbtns,.tbtn{display:none!important}.shell{display:block}.view{display:block!important}}
+
+  /* ===== לוח שנה תשפ"ז (גאנט רכזים) ===== */
+  .gt-board{background:#fff;border:1px solid var(--line,#ece7ef);border-radius:14px;padding:6px 14px 16px;overflow-x:auto}
+  .gt-grid{min-width:780px}
+  .gt-row{display:grid;grid-template-columns:74px 190px 1fr;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f4f2f6}
+  .gt-row:last-child{border-bottom:none}
+  .gt-date{font-size:11.5px;font-weight:800;color:var(--pink-dark);text-align:center;background:var(--pink-soft);border-radius:7px;padding:4px 2px;white-space:nowrap}
+  .gt-date.soft{background:#f4f2f6;color:#6f6f7a}
+  .gt-name{font-size:13.5px;font-weight:600;line-height:1.35;color:#2b2b33}
+  .gt-name small{display:block;font-size:11.5px;color:#8a8a95;font-weight:500}
+  .gt-track{display:grid;grid-template-columns:repeat(12,1fr);align-items:center;position:relative;height:22px}
+  .gt-track::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to left,transparent 0,transparent calc(100%/12 - 1px),#f1eff4 calc(100%/12 - 1px),#f1eff4 calc(100%/12))}
+  .gt-b{height:14px;border-radius:7px;position:relative;z-index:1;margin:0 2px;background:var(--pink)}
+  .gt-b.mark{background:#FFD500;height:16px;border-radius:8px}
+  .gt-b.flow{background:#f0edf3;border:1px dashed #d9d3e0;height:12px}
+  .gt-head{border-bottom:1px solid var(--line,#ece7ef);padding-bottom:6px}
+  .gt-months{display:grid;grid-template-columns:repeat(12,1fr);text-align:center}
+  .gt-months span{font-size:10.5px;font-weight:700;color:#8a8a95;letter-spacing:-.2px}
+  .gt-months span.y{color:#c9c5d0}
+  .gt-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:#6f6f7a;font-weight:500}
+  .gt-legend b{display:inline-block;width:22px;height:8px;border-radius:5px;vertical-align:middle;margin-inline-end:5px}
+  .gt-list{background:#fff;border:1px solid var(--line,#ece7ef);border-radius:14px;overflow:hidden;margin-top:18px}
+  .gt-item{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:13px 16px;border-bottom:1px solid #f4f2f6}
+  .gt-item:last-child{border-bottom:none}
+  .gt-item .w{font-size:12px;font-weight:800;color:var(--pink-dark)}
+  .gt-item .w small{display:block;font-weight:600;color:#8a8a95;font-size:11px}
+  .gt-item h4{margin:0 0 2px;font-size:14px;font-weight:700;color:#2b2b33}
+  .gt-item p{margin:0;font-size:12.8px;color:#5f5f6a;line-height:1.5}
+  .gt-item.hl{background:#FFFBE0}
+  @media (max-width:700px){ .gt-row{grid-template-columns:64px 130px 1fr} }
 </style>
 </head>
 <body>
@@ -332,6 +362,7 @@
   <nav class="side" id="nav">
     <button data-v="overview" class="active"><span class="ic">🏠</span> סקירה</button>
     <button data-v="tasks"><span class="ic">✅</span> משימות</button>
+    <button data-v="calendar"><span class="ic">📅</span> לוח שנה תשפ"ז</button>
     <div class="navsep"></div>
     <button data-v="coordinators"><span class="ic">👥</span> רכזים ובתי ספר</button>
     <button data-v="schools"><span class="ic">🏫</span> תיק בית ספר</button>
@@ -380,6 +411,118 @@
       <div class="chips" id="chips"></div>
       <div class="schoolinfo" id="schoolInfo"></div>
       <div class="list" id="list"></div>
+    </section>
+
+    <!-- CALENDAR / GANTT -->
+    <section class="view" id="v-calendar">
+      <h2 class="vh">לוח שנה תשפ"ז — תוכנית הבוגרים</h2>
+      <div class="vsub">ציר הזמן לרכזי הבוגרים ולמנהלי בתי הספר · יולי 2026 – יוני 2027</div>
+      <div class="gt-board">
+        <div class="gt-grid">
+          <div class="gt-row gt-head">
+            <div></div><div></div>
+            <div class="gt-months">
+              <span>יולי</span><span>אוג׳</span><span>ספט׳</span><span>אוק׳</span><span>נוב׳</span><span>דצמ׳</span>
+              <span class="y">ינו׳</span><span class="y">פבר׳</span><span class="y">מרץ</span><span class="y">אפר׳</span><span class="y">מאי</span><span class="y">יוני</span>
+            </div>
+          </div>
+      <div class="gt-row">
+        <div class="gt-date">עכשיו</div>
+        <div class="gt-name">העברת רשימות בוגרים</div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:1 / span 2"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">30/8</div>
+        <div class="gt-name">תוכנית עבודה בית־ספרית</div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:2"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">עד 7/9</div>
+        <div class="gt-name">פתיחת קבוצת ווטסאפ לבוגרים</div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:2 / span 2"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">7/9</div>
+        <div class="gt-name">הכשרת רכזי בוגרים <small>זום · 13:30</small></div>
+        <div class="gt-track"><div class="gt-b mark" style="grid-column:3"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date soft">כל השנה</div>
+        <div class="gt-name">עבודה שוטפת עם הבוגרים <small>קשר · תיעוד · מענים</small></div>
+        <div class="gt-track"><div class="gt-b flow" style="grid-column:3 / span 10"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">16/12</div>
+        <div class="gt-name">מפגש רכזים — אמצע שנה <small>זום · רביעי 13:30</small></div>
+        <div class="gt-track"><div class="gt-b mark" style="grid-column:6"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">פברואר</div>
+        <div class="gt-name">חודש חשיפה — תלמידי י"ב והורים</div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:8"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">פברואר</div>
+        <div class="gt-name">פגישה אישית — מנהל.ת + רכז.ת</div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:8"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">14/4</div>
+        <div class="gt-name">מפגש רכזים <small>זום · 13:30</small></div>
+        <div class="gt-track"><div class="gt-b mark" style="grid-column:10"></div></div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-date">28–30/6</div>
+        <div class="gt-name">פגישות סיום שנה <small>אישיות · מנהל.ת + רכז.ת</small></div>
+        <div class="gt-track"><div class="gt-b " style="grid-column:12"></div></div>
+      </div>
+        </div>
+        <div class="gt-legend">
+          <span><b style="background:var(--pink)"></b>משימה של בית הספר</span>
+          <span><b style="background:#FFD500"></b>מפגש בזום</span>
+          <span><b style="background:#f0edf3;border:1px dashed #d9d3e0"></b>לאורך כל השנה</span>
+        </div>
+      </div>
+
+      <h3 style="margin:22px 0 10px;font-size:16px">מה נדרש בכל תחנה</h3>
+      <div class="gt-list">
+    <div class="gt-item">
+      <div class="w">עכשיו<small>יולי–אוגוסט</small></div>
+      <div><h4>העברת רשימות בוגרים</h4><p>שם, טלפון, שנת סיום ומסלול. בלי הרשימות אי אפשר לבנות תוכנית ולא ליצור קשר.</p></div>
+    </div>
+    <div class="gt-item">
+      <div class="w">עד 30/8</div>
+      <div><h4>תוכנית עבודה למנהלים</h4><p>יעדים, קהל הבוגרים, תדירות הקשר, שיבוץ הרכז.ת ושעות — מוגש להופה.</p></div>
+    </div>
+    <div class="gt-item">
+      <div class="w">עד 7/9</div>
+      <div><h4>פתיחת קבוצת ווטסאפ</h4><p>ערוץ הקשר השוטף עם הבוגרים — מענים, הזדמנויות ועדכונים.</p></div>
+    </div>
+    <div class="gt-item hl">
+      <div class="w">7/9<small>זום 13:30</small></div>
+      <div><h4>הכשרת רכזי בוגרים</h4><p>תפקיד הרכז.ת, מודל ההפעלה, כלי העבודה ומאגר המענים. פתיחת שנת העבודה.</p></div>
+    </div>
+    <div class="gt-item hl">
+      <div class="w">16/12<small>זום 13:30</small></div>
+      <div><h4>מפגש רכזים — אמצע שנה</h4><p>מה עובד, איפה נתקעים, שיתוף בין בתי הספר וחידוד יעדים לסמסטר ב'.</p></div>
+    </div>
+    <div class="gt-item">
+      <div class="w">פברואר</div>
+      <div><h4>חודש חשיפה — תלמידי י"ב והורים</h4><p>מפגש בשכבת י"ב + חשיפה להורים בערב הורים — כדי שהבוגרים יגיעו לתוכנית מוכרים ומחוברים.</p></div>
+    </div>
+    <div class="gt-item">
+      <div class="w">פברואר</div>
+      <div><h4>פגישה אישית — מנהל.ת + רכז.ת</h4><p>מעקב אחרי תוכנית העבודה, נתוני הקשר עם הבוגרים והתאמות להמשך השנה.</p></div>
+    </div>
+    <div class="gt-item hl">
+      <div class="w">14/4<small>זום 13:30</small></div>
+      <div><h4>מפגש רכזים</h4><p>היערכות לסיום שנה, טיפול בבוגרים שטרם נוצר איתם קשר והכנה לאיסוף הנתונים.</p></div>
+    </div>
+    <div class="gt-item">
+      <div class="w">28–30/6</div>
+      <div><h4>פגישות סיום שנה</h4><p>סיכום פרטני מול כל בית ספר: תמונת מצב, הישגים, לקחים והיערכות לשנה הבאה.</p></div>
+    </div>
+      </div>
     </section>
 
     <!-- COORDINATORS -->
