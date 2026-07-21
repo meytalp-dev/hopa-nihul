@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תיקי בתי הספר · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --blue:#3b82f6; --blue-d:#1d4ed8;
+    --green:#22b573; --green-soft:#e6f8ef;
+    --amber:#F5A623; --red:#e5484d;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+    --shadow-lg:0 12px 40px rgba(43,43,51,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit}
+  a{color:var(--pink-dark);text-decoration:none}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#d9d2de;border-radius:20px}
+
+  /* ===== Gate ===== */
+  #gate{position:fixed;inset:0;background:linear-gradient(135deg,var(--pink),var(--pink-dark));z-index:200;display:grid;place-items:center;padding:20px}
+  .gatebox{background:#fff;border-radius:22px;padding:30px 26px;width:100%;max-width:380px;box-shadow:var(--shadow-lg);text-align:center}
+  .gatebox .lg{width:64px;height:64px;border-radius:18px;margin:0 auto 14px;display:block;object-fit:contain;background:var(--yellow);padding:8px}
+  .gatebox h1{margin:0 0 4px;font-size:22px;font-weight:800}
+  .gatebox p{margin:0 0 18px;color:var(--muted);font-size:14px}
+  .gatebox input{width:100%;padding:14px;border:2px solid var(--pink);border-radius:13px;font-size:17px;text-align:center;direction:ltr;outline:none}
+  .gatebox button{width:100%;margin-top:12px;background:var(--pink);color:#fff;font-weight:800;font-size:16px;padding:13px;border-radius:13px}
+  .gatebox .err{color:var(--red);font-size:13px;font-weight:700;height:18px;margin-top:8px}
+
+  /* ===== Header ===== */
+  header.app{background:linear-gradient(120deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:12px 0;box-shadow:var(--shadow);position:sticky;top:0;z-index:40}
+  .head-in{max-width:1300px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;flex:1;min-width:180px}
+  .logo{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+  .brand h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .brand .sub{font-size:12px;opacity:.9;font-weight:500}
+  .syncst{font-size:12px;font-weight:700;background:rgba(255,255,255,.18);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .syncst.ok{background:rgba(34,181,115,.9)}
+  .syncst.off{background:rgba(0,0,0,.22)}
+  .syncst.busy{background:rgba(245,166,35,.9)}
+  .menubtn{background:rgba(255,255,255,.16);border-radius:11px;padding:8px 12px;font-weight:800;font-size:14px;display:none}
+
+  .shell{max-width:1300px;margin:0 auto;display:flex;gap:20px;padding:18px 16px 90px;align-items:flex-start}
+
+  /* ===== Sidebar ===== */
+  aside.schools{width:270px;flex:none;position:sticky;top:78px;background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:13px;display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 96px)}
+  aside .stitle{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+  aside .stitle .cnt{margin-inline-start:auto;font-size:12px;font-weight:700;color:var(--muted)}
+  .ssearch{position:relative}
+  .ssearch input{width:100%;padding:9px 34px 9px 12px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-size:13.5px;outline:none}
+  .ssearch input:focus{border-color:var(--pink)}
+  .ssearch .mag{position:absolute;inset-inline-end:11px;top:50%;transform:translateY(-50%);opacity:.4;font-size:13px}
+  .sfilters{display:flex;gap:5px;flex-wrap:wrap}
+  .sfilters button{font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;background:#f4f2f6;color:#75757f;border:1.5px solid transparent}
+  .sfilters button.active{background:var(--pink);color:#fff}
+  .slist{display:flex;flex-direction:column;gap:4px;overflow-y:auto;margin-inline-end:-6px;padding-inline-end:6px}
+  .srow{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:12px;transition:.13s;text-align:start;width:100%}
+  .srow:hover{background:var(--pink-soft)}
+  .srow.active{background:var(--pink);color:#fff}
+  .srow .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .srow .nm{font-weight:700;font-size:13.5px;line-height:1.2}
+  .srow .cy{font-size:11px;color:var(--muted);font-weight:500}
+  .srow.active .cy{color:rgba(255,255,255,.85)}
+  .srow .st{margin-inline-start:auto;font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;white-space:nowrap;background:#f0edf3;color:#75757f}
+  .srow.active .st{background:rgba(255,255,255,.25)!important;color:#fff!important}
+
+  main.content{flex:1;min-width:0}
+
+  /* ===== School header ===== */
+  .sc-head{border-radius:20px;padding:20px 22px;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+  .sc-head::after{content:"";position:absolute;inset-inline-start:-40px;bottom:-60px;width:200px;height:200px;background:rgba(255,255,255,.09);border-radius:50%}
+  .sc-head .row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:relative}
+  .sc-head h2{margin:0;font-size:25px;font-weight:800;letter-spacing:-.4px}
+  .sc-head .badge-st{font-size:12.5px;font-weight:800;padding:5px 13px;border-radius:999px;background:rgba(255,255,255,.22)}
+  .sc-head .meta{font-size:13.5px;opacity:.95;font-weight:500;margin-top:5px;position:relative}
+  .sc-head .share{margin-inline-start:auto;display:flex;gap:8px;position:relative;flex-wrap:wrap}
+  .sharebtn{background:#fff;color:var(--pink-dark);font-weight:800;font-size:13px;padding:9px 14px;border-radius:12px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.15);transition:.14s}
+  .sharebtn:hover{transform:translateY(-1px)}
+  .sharebtn.ghost{background:rgba(255,255,255,.18);color:#fff;box-shadow:none}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0 2px;position:relative}
+  .kpi{background:rgba(255,255,255,.16);border-radius:14px;padding:11px 13px}
+  .kpi .n{font-size:22px;font-weight:800;line-height:1}
+  .kpi .l{font-size:11.5px;font-weight:600;opacity:.92;margin-top:3px}
+
+  /* ===== Tabs ===== */
+  .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 12px}
+  .tabs button{background:var(--card);border-radius:12px;padding:9px 14px;font-weight:700;font-size:13.5px;box-shadow:var(--shadow);display:flex;align-items:center;gap:7px;transition:.13s;border:1.5px solid transparent}
+  .tabs button:hover{border-color:var(--pink-soft)}
+  .tabs button.active{background:linear-gradient(120deg,var(--pink),var(--pink-dark));color:#fff}
+  .tabs button .cnt{font-size:11px;font-weight:800;background:rgba(0,0,0,.08);border-radius:999px;padding:1px 7px}
+  .tabs button.active .cnt{background:rgba(255,255,255,.25)}
+
+  .pane{animation:fade .28s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+  /* ===== Cards ===== */
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:14px}
+  .card h3{margin:0 0 12px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h3 .sub{font-size:12px;font-weight:600;color:var(--muted);margin-inline-start:auto}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+  .field label{font-size:12px;font-weight:700;color:var(--muted)}
+  .field input,.field textarea,.field select{padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;outline:none;background:#fff;width:100%}
+  .field input:focus,.field textarea:focus{border-color:var(--pink)}
+  .field textarea{resize:vertical;min-height:64px}
+  .detail-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .detail-row:last-child{border-bottom:none}
+  .detail-row .k{color:var(--muted);font-weight:600}
+  .detail-row .v{font-weight:700;text-align:end}
+
+  .btn{padding:9px 14px;border-radius:11px;font-weight:800;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;transition:.13s}
+  .btn.primary{background:var(--pink);color:#fff}
+  .btn.primary:hover{background:var(--pink-dark)}
+  .btn.ghost{background:#f4f2f6;color:#5a5a63}
+  .btn.ghost:hover{background:#ece7ef}
+  .btn.wa{background:#25D366;color:#fff}
+  .btn.mail{background:var(--blue);color:#fff}
+  .btn.call{background:#eef3ff;color:var(--blue-d)}
+  .btn.small{padding:6px 11px;font-size:12.5px;border-radius:9px}
+  .btn.danger{background:#fdecec;color:var(--red)}
+
+  /* Contacts */
+  .contact{border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;margin-bottom:10px}
+  .contact .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .contact .g{font-weight:800;font-size:14.5px}
+  .contact .t{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .contact .nm{font-size:13px;font-weight:600;margin-top:6px}
+  .contact .note{font-size:12px;background:var(--yellow-soft);border-radius:8px;padding:6px 9px;margin-top:7px;color:#7a6a00}
+  .contact .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .addr{direction:ltr;font-weight:600;background:#eef3ff;border-radius:7px;padding:2px 8px;font-size:12px;color:var(--blue-d)}
+  .lead-card{border:1.5px solid var(--pink-soft);background:var(--pink-soft);border-radius:13px;padding:12px 14px;margin-bottom:10px}
+  .grouplink{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border-radius:9px;margin-top:6px;font-size:13px;font-weight:600}
+
+  /* List items (non-responders / issues / manim / docs) */
+  .litem{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:11px;margin-bottom:8px;background:#fff}
+  .litem .x{margin-inline-start:auto;color:var(--muted);font-size:16px;flex:none}
+  .litem .meta{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .litem.flag{border-color:#f6d5a8;background:#fff9ef}
+  .addline{display:flex;gap:8px;margin-top:8px}
+  .addline input,.addline textarea{flex:1;padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;font-size:13.5px;outline:none}
+  .addline input:focus{border-color:var(--pink)}
+
+  .empty{text-align:center;color:var(--muted);font-size:13.5px;padding:22px 10px}
+  .filerow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:11px;margin-bottom:8px}
+  .filerow .ic{width:34px;height:34px;border-radius:9px;background:var(--pink-soft);display:grid;place-items:center;flex:none;font-size:16px}
+  .filerow .fn{font-weight:700;font-size:13.5px;word-break:break-word}
+  .filerow .fm{font-size:11.5px;color:var(--muted)}
+  .drop{border:2px dashed var(--pink);border-radius:14px;padding:20px;text-align:center;background:var(--pink-soft);cursor:pointer;transition:.15s}
+  .drop:hover{background:#fbd9ea}
+  .drop.over{background:#f9c9e2}
+  .bar{height:9px;border-radius:99px;background:#eee;overflow:hidden;margin-top:6px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-dark));border-radius:99px}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#2b2b33;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;box-shadow:var(--shadow-lg);opacity:0;transition:.28s;z-index:120}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .toast.bad{background:var(--red)}
+  .toast.good{background:var(--green)}
+
+  .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:none}
+  .backdrop.show{display:block}
+
+  @media(max-width:880px){
+    .shell{flex-direction:column;padding:14px 12px 90px}
+    aside.schools{width:100%;position:relative;top:0;max-height:none;order:-1}
+    .slist{max-height:280px}
+    .grid2{grid-template-columns:1fr}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .menubtn{display:block}
+    aside.schools.collapsed .slist,aside.schools.collapsed .ssearch,aside.schools.collapsed .sfilters{display:none}
+    .sc-head .share{width:100%;margin-top:8px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Password gate ===== -->
+<div id="gate">
+  <div class="gatebox">
+    <img class="lg" src="hopa-logo.png" alt="הופה" onerror="this.style.display='none'">
+    <h1>תיקי בתי הספר</h1>
+    <p>כלי ניהול פנימי · תוכנית הבוגרים הופה</p>
+    <input id="gpass" type="password" inputmode="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="סיסמה" onkeydown="if(event.key==='Enter')tryGate()">
+    <div class="err" id="gerr"></div>
+    <button onclick="tryGate()">כניסה</button>
+  </div>
+</div>
+
+<header class="app" style="display:none" id="appHead">
+  <div class="head-in">
+    <button class="menubtn" onclick="document.querySelector('aside.schools').classList.toggle('collapsed')">☰ בתי ספר</button>
+    <div class="brand">
+      <div class="logo"><img src="hopa-logo.png" alt="הופה" onerror="this.parentElement.textContent='ה'"></div>
+      <div>
+        <h1>תיקי בתי הספר</h1>
+        <div class="sub">כל תיק בית ספר במקום אחד · הופה תשפ״ז</div>
+      </div>
+    </div>
+    <div class="syncst" id="syncst">☁️ מתחבר…</div>
+  </div>
+</header>
+
+<div class="shell" id="shell" style="display:none">
+  <aside class="schools">
+    <div class="stitle">🏫 בתי ספר <span class="cnt" id="scount"></span></div>
+    <div class="ssearch"><input id="ssearch" placeholder="חיפוש בי״ס / עיר…" oninput="onSearch(this.value)"><span class="mag">🔍</span></div>
+    <div class="sfilters" id="sfilters">
+      <button class="active" data-f="all" onclick="setFilter('all',this)">הכל</button>
+      <button data-f="vet" onclick="setFilter('vet',this)">ותיקים</button>
+      <button data-f="join" onclick="setFilter('join',this)">מצטרפים</button>
+    </div>
+    <div class="slist" id="slist"></div>
+  </aside>
+  <main class="content" id="content"></main>
+</div>
+
+<div class="backdrop" id="backdrop" onclick="closeSheet()"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======================================================================
+   תיקי בתי הספר — הופה · אתר ניהול מסונכרן (Supabase)
+   ====================================================================== */
+
+/* ---------- Supabase ---------- */
+const SB_URL='https://vhmwijzcrqjjquxomccq.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZobXdpanpjcnFqanF1eG9tY2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1Nzk0MDgsImV4cCI6MjA4OTE1NTQwOH0.rMnAcdMiPddUAoap63tMiqeQQanJoF-HDmzra7P-5Cc';
+const SB_HEAD={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'};
+const TABLE='dossier_store';
+const BUCKET='hopa-dossier-files';
+const GATE_PASS='hopa2027';          /* סיסמת כניסה — ניתן לשנות כאן */
+
+const HOPA_SITE='https://hopa.org.il';
+const HOPA_CONTACT={name:'מיטל פלג', role:'מנהלת תוכנית הבוגרים · הופה', mail:'meytalp@bethaarava.ort.org.il'};
+
+/* ---------- בתי הספר (מקור: מיפוי-קבוצות) ---------- */
+const SCHOOLS=[
+  {id:"beterava",  school:"אורט בית הערבה", city:"ירושלים",     area:"ארנונה / דרום העיר", track:"vet",  sector:"יהודי", color:"#00B8A9"},
+  {id:"tzurbarak", school:"אורט צור ברק",   city:"קריית מלאכי",  area:"מחנה עמונאל",        track:"vet",  sector:"יהודי", color:"#7C6BF5"},
+  {id:"motzkin",   school:"אורט קריית מוצקין", city:"קריית מוצקין", area:"קריות",           track:"vet",  sector:"יהודי", color:"#F5A623"},
+  {id:"akko",      school:"אורט מרום עכו",   city:"עכו",         area:"",                   track:"vet",  sector:"יהודי/מעורב", color:"#E8348A"},
+  {id:"beitshean", school:"אורט בית שאן",    city:"בית שאן",     area:"עמק המעיינות",       track:"vet",  sector:"יהודי", color:"#22b573"},
+  {id:"ashkelon",  school:"אורט אשקלון",     city:"אשקלון",      area:"",                   track:"vet",  sector:"יהודי", color:"#3b82f6"},
+  {id:"nachalim",  school:"מרכז תורני טכנולוגי נחלים", city:"מושב נחלים", area:"מרכז / פ\"ת", track:"join", sector:"יהודי דתי", color:"#8b5cf6"},
+  {id:"turan",     school:"מנאראת טוראען",   city:"טורעאן",      area:"גליל תחתון",         track:"join", sector:"ערבי", color:"#0ea5e9"},
+  {id:"ashdod",    school:"יוצר עמל טכנולוגי אשדוד", city:"אשדוד", area:"",                 track:"join", sector:"יהודי", color:"#f59e0b"},
+  {id:"ramatdavid",school:"עמל רמת דוד",     city:"עמק יזרעאל",  area:"מ.א. עמק יזרעאל",     track:"join", sector:"יהודי", color:"#10b981"},
+  {id:"nevemidbar",school:"דרור נווה מדבר",  city:"מ.א. נווה מדבר", area:"נגב",             track:"join", sector:"בדואי", color:"#ef4444"},
+  {id:"sakhnin",   school:"טכנולוגי אלאמאני סחנין", city:"סחנין", area:"גליל",              track:"join", sector:"ערבי", color:"#06b6d4"},
+  {id:"choshen",   school:"תיכון חושן",      city:"ירושלים",     area:"",                   track:"join", sector:"יהודי", color:"#d946ef"},
+  {id:"lakiya",    school:"טכנולוגי לקייה",  city:"לקיה",        area:"נגב",                track:"join", sector:"בדואי", color:"#f97316"},
+  {id:"julis",     school:"יוצר עתיד בנות ג'וליס", city:"ג'וליס", area:"גליל מערבי",        track:"join", sector:"דרוזי", color:"#84cc16"},
+  {id:"birmaksur", school:"עתיד אבדאע ביר אלמכסור", city:"ביר אלמכסור", area:"גליל תחתון",  track:"join", sector:"בדואי/ערבי", color:"#14b8a6"},
+  {id:"nazareth",  school:"בוטרוס נאיף / עמל נצרת", city:"נצרת", area:"",                   track:"join", sector:"ערבי", color:"#6366f1"},
+  {id:"amka",      school:"תיכון שיח'",       city:"מושב עמקה",   area:"מטה אשר",            track:"join", sector:"יהודי", color:"#eab308"},
+  {id:"palmachim", school:"יוצר עתיד פלמחים", city:"מ.א. גן רווה", area:"פלמחים",           track:"join", sector:"יהודי", color:"#0891b2"},
+  {id:"tlv",       school:"התיכון החברתי תל אביב-יפו", city:"תל אביב-יפו", area:"",         track:"join", sector:"יהודי/מעורב", color:"#ec4899"},
+  {id:"rahat",     school:"עמל טכנולוגי רהט", city:"רהט",        area:"נגב",                track:"join", sector:"בדואי", color:"#dc2626"},
+  {id:"batami",    school:"אולפנת עתידי בת עמי", city:"בת עמי",  area:"",                   track:"join", sector:"יהודי דתי", color:"#a855f7"},
+  {id:"carmel",    school:"אורט כרמל חיפה",  city:"חיפה",        area:"",                   track:"join", sector:"יהודי/מעורב", color:"#2563eb"},
+  {id:"telsheva",  school:"אלמוסתקבל תל שבע", city:"תל שבע",     area:"נגב",                track:"join", sector:"בדואי", color:"#e11d48"},
+  {id:"karmiel",   school:"עתיד יוצר מגשימים", city:"כרמיאל",    area:"",                   track:"join", sector:"יהודי", color:"#059669"},
+];
+
+/* ---------- לידים קהילתיים: מרכז צעירים + קבוצות עבודה (פייסבוק) ---------- */
+const LEADS={
+  beterava:{youth:{name:"מרכז צעירים ירושלים (young-jerusalem)",u:"https://www.facebook.com/youngJLM/"},groups:[{name:"דרושים עבודה בירושלים והסביבה",u:"https://www.facebook.com/groups/845200752357548/"},{name:"משרות מיידיות בירושלים",u:"https://www.facebook.com/groups/369495146523312/"}]},
+  choshen:{youth:{name:"מרכז צעירים ירושלים (young-jerusalem)",u:"https://www.facebook.com/youngJLM/"},groups:[{name:"עבודות/דרושים בירושלים",u:"https://www.facebook.com/groups/220626524643990/"}]},
+  tzurbarak:{youth:{name:"מרכז צעירים קריית מלאכי",u:"https://www.facebook.com/100067526256173/"},groups:[{name:"דרושים קריית מלאכי והסביבה",u:"https://www.facebook.com/groups/271503932355471/"},{name:"Beejobs קריית מלאכי",u:"https://www.facebook.com/groups/398914143965481/"}]},
+  ashkelon:{youth:{name:"מרכז הצעירים אשקלון (+טלגרם)",u:"https://www.facebook.com/ashkelonyc/"},groups:[{name:"דרושים אשקלון והסביבה",u:"https://www.facebook.com/groups/795828537842106/"}]},
+  ashdod:{youth:{name:'מרכז הצעירים "כיוונים" אשדוד',u:"https://www.facebook.com/kivoonim/"},groups:[{name:"משרות לצעירים – כיוונים אשדוד",u:"https://www.facebook.com/groups/101054424058434/"},{name:"דרושים אשדוד והסביבה",u:"https://www.facebook.com/groups/JOBS.ASHDOD/"}]},
+  tlv:{youth:{name:'מזא"ה 9 — בית הצעירים ת"א',u:"https://www.facebook.com/mazeh9/"},groups:[{name:"דרושים – עבודות",u:"https://www.facebook.com/groups/avodot/"},{name:"משרות חברתיות",u:"https://www.facebook.com/groups/misrot.hevratiot/"}]},
+  nachalim:{youth:{name:"מרכז צעירים דרום השרון",u:"https://www.facebook.com/m.z.Dsharon"},groups:[]},
+  palmachim:{youth:{name:"מ.א. גן רווה (דף המועצה)",u:"https://www.facebook.com/p/מועצה-אזורית-גן-רווה-100063567010722/"},groups:[]},
+  julis:{youth:{name:"מרכז צעירים ג'וליס",u:"https://www.facebook.com/Julis.Youth.Center/"},groups:[{name:"רשת ריאן/אלפנאר (הכוון תעסוקתי ערבי)",u:"https://alfanar.org.il/he/ריאן/"}]},
+  ramatdavid:{youth:{name:"מחלקת צעירים ומלגות — עמק יזרעאל",u:"https://www.emekyizrael.org.il/צעירים-ומלגות/"},groups:[{name:"דרושים - עמק יזרעאל והסביבה",u:"https://www.facebook.com/Drushim.Emek.Izrael/"}]},
+  amka:{youth:{name:"מרכז צעירים מטה אשר",u:"https://www.facebook.com/1750303038388473"},groups:[]},
+  akko:{youth:{name:"מרכז צעירים עכו (עיריית עכו)",u:"https://www.akko.muni.il/198/"},groups:[{name:"לוח דרושים צפון (חיפה/קריות/עכו/נהריה)",u:"https://www.facebook.com/groups/extrajob6/"},{name:"דרושים עכו, נהריה, חיפה, כרמיאל והצפון",u:"https://www.facebook.com/groups/601081493428684/"}]},
+  beitshean:{youth:{name:"מרכז צעירים בית שאן (חוסן ושיא)",u:"https://www.facebook.com/honenoshibeitsean/"},groups:[{name:"דרושים בית שאן והסביבה",u:"https://www.facebook.com/groups/1916027555350592/"},{name:"לוח דרושים עמק המעיינות והסביבה",u:"https://www.facebook.com/groups/587807991370527/"}]},
+  motzkin:{youth:{name:"מרכז צעירים קריית מוצקין",u:"https://www.facebook.com/MotzkinCenter/"},groups:[{name:"לוח דרושים קריות והסביבה",u:"https://www.facebook.com/groups/1600115756918049/"},{name:"דרושים חיפה קריות (הרשמית)",u:"https://www.facebook.com/groups/2890746707851987/"}]},
+  karmiel:{youth:{name:"מרכז צעירים כרמיאל",u:"https://www.facebook.com/mzkarmiel/"},groups:[{name:"מוצאים עבודה עם מרכז צעירים כרמיאל",u:"https://www.facebook.com/karmiel.hon/"},{name:"לוח עבודה כרמיאל",u:"https://www.facebook.com/groups/carmielwork/"}]},
+  carmel:{youth:{name:"רשות הצעירים חיפה (~16.8K)",u:"https://www.facebook.com/rashut.hatzeirim/"},groups:[{name:"All-In דרושים חיפה/עוספייה/דלית",u:"https://www.facebook.com/groups/152716828484224/"}]},
+  nazareth:{youth:{name:"مركز الشباب الناصرة (אינסטגרם)",u:"https://www.instagram.com/nazareth.shabab/"},groups:[{name:"עיריית נצרת (רשמי)",u:"https://www.facebook.com/Naz.muni.official/"}]},
+  sakhnin:{youth:{name:"עיריית סח'נין + מרכז ריאן",u:"https://www.facebook.com/sakhnin.muni/"},groups:[{name:"مطلوب للعمل سخنين، عرابة، دير حنا",u:"https://www.facebook.com/groups/140266318978538/"}]},
+  turan:{youth:{name:"المركز الجماهيري طرعان (מתנ\"ס)",u:"https://www.facebook.com/MatnasTuraan/"},groups:[{name:"המועצה המקומית טורעאן (רשמי)",u:"https://www.facebook.com/turan.Village/"}]},
+  birmaksur:{youth:{name:"المركز الجماهيري بئر المكسور",u:"https://www.facebook.com/birMaksourMatnas/"},groups:[]},
+  rahat:{youth:{name:"מרכז צעירי רהט (+ריאן +רוואד)",u:"https://www.facebook.com/rahatyouthcenter/"},groups:[{name:"وظائف — רהט, שגב שלום, תל שבע, לקייה",u:"https://www.facebook.com/groups/621639419051377/"}]},
+};
+
+/* ---------- גורמים קהילתיים מפורטים (טלפונים/מיילים · מקור: גורמים-קהילתיים-מרוכז) ---------- */
+const DATA=[
+  {region:'קריית מוצקין',items:[
+    {g:'מרכז הצעירים',t:'מלגות, חיילים בודדים, סיוע במהלך הצבא',nm:'ירדן — רכזת צעירים',ph:'052-670-8915',em:'dlampel@motzkin.org',note:'הטלפון לשימוש רכזי התוכנית בלבד — לא להפצה לבוגרים.'},
+    {g:'מרכז הזדמנות',t:'מציאת עבודות וקריירה',nm:'מיטל',ph:'052-6276262'},
+    {g:'קריית ים',t:'הכשרות, לימודים ותעסוקה',nm:'הודיה',ph:'054-3059881'},
+    {g:'קריית ביאליק — חיילים משוחררים',t:'מענה וזכויות למשוחררים',nm:'עדי',ph:'052-5372070'},
+    {g:'יתד',t:'ליווי עו״ס — תכנית יתד',nm:'טדלה לגלם',ph:'052-8853662'},
+    {g:'מתנ״ס נווה יוסף, חיפה',t:'תעודת 12 שנ״ל (ללא בגרות)',nm:'אינה (מנהלת)',ph:'054-4812060',em:'neveyosef@matnasny.org.il'},
+  ]},
+  {region:'בית שאן',items:[
+    {g:'מרכז הצעירים',t:'מלגות, חיילים בודדים',nm:'',ph:'04-6060068',em:'ezra@bet-shean.org.il',note:'המייל = עיריית בית שאן (כללי)'},
+    {g:'מרכז הזדמנות / מת״ר קידום תעסוקה',t:'עבודות וקריירה',nm:'אוסנת חמו',ph:'04-6580135'},
+    {g:'רכז הישגים — השכלה גבוהה',t:'פסיכומטרי, קורסים',nm:'דודו כהן',ph:'04-6580131'},
+    {g:'רכז חיילים משוחררים',t:'מענה וזכויות',nm:'חגי סידו',ph:'04-6580132'},
+  ]},
+  {region:'עכו',items:[
+    {g:'מרכז הצעירים',t:'מלגות, תעסוקה, השכלה, משוחררים',nm:'אלי חביב — מנהל אגף נוער וצעירים',ph:'04-9917477',em:'eli_h@akko.muni.il',em2:'tzeirim_acco@walla.com',note:'✔ אומת יולי 2026: eli_h = המייל הרשמי. walla = גיבוי בלבד.'},
+    {g:'מרכז הזדמנות / קידום תעסוקה',t:'עבודות וקריירה',nm:'גלית שמואל-ינקו',ph:'',em:'galit-s@akko.muni.il',em2:'tamam-a@akko.muni.il',note:'galit-s = תעסוקה. tamam-a = השכלה גבוהה מגזר ערבי.'},
+    {g:'יתד',t:'ליווי עו״ס',nm:'עו״ס יתד',ph:'',em:'gitit@akko.muni.il',note:'⚠️ gitit@ לא הופיע ברשימה הרשמית — לאמת 04-9917477.'},
+  ]},
+  {region:'אשקלון',note:'⚠️ טבלת אנשי הקשר במקור נלקחה מקריית ביאליק — כדאי לאמת רלוונטיות לאשקלון.',items:[
+    {g:'מרכז הצעירים',t:'מלגות, חיילים בודדים',nm:'',ph:'08-6213762',em:'nisimbd@ashkelon.muni.il',note:'🆕 יולי 2026 (ביטחון בינוני) — לאמת.'},
+    {g:'מרכז הזדמנות',t:'עבודות וקריירה',nm:'',ph:'',note:'לא נמצא מייל ייעודי — לאמת.'},
+  ]},
+  {region:'קריית מלאכי',note:'נמצאו מיילים למרכז הצעירים (טרם נמצאו טלפונים ישירים).',items:[
+    {g:'מרכז צעירים — השכלה / הישגים',t:'השכלה גבוהה, מלגות (עלומה)',nm:'',ph:'',em:'hesegim.k-m@aluma.org.il'},
+    {g:'מרכז צעירים — תעסוקה',t:'ליווי והשמה',nm:'רבקה שיוביץ',ph:'',em:'taasuka.km@gmail.com'},
+    {g:'יתד / קידום נוער',t:'צעירים בסיכון 18–25',nm:'אושרת אשור-שפירא (מנהלת)',ph:'',em:'oshishap@gmail.com',note:'חלופה: hayalime.km@gmail.com. לאמת.'},
+  ]},
+  {region:'ירושלים',note:'עמודי העירייה חסומים — אומת ממקורות חלופיים.',items:[
+    {g:'רשות הצעירים ירושלים',t:'מרכז צעירים (בית קנדה)',nm:'',ph:'',em:'youngJLM@young-jerusalem.org.il',note:'חלופה: maydale@young-jerusalem.org.il.'},
+    {g:'תוכנית יתד ירושלים',t:'ליווי 18–25',nm:'הדס בן אליהו',ph:'',em:'hadasben@molsa.gov.il',note:'⚠️ לאמת איות לפני שליחה.'},
+    {g:'מרכז הזדמנות ירושלים',t:'הכוון תעסוקתי',nm:'',ph:'02-5468223',em:'hizdamnutjlm@gmail.com'},
+    {g:'קידום נוער ירושלים',t:'מניעת נשירה 14–18 + היל״ה',nm:'',ph:'',note:'לאמת.'},
+  ]},
+  {region:'נחלים · חבל מודיעין',items:[
+    {g:'מרכז צעירים חבל מודיעין',t:'מלגות, קריירה 18–26, משוחררים',nm:'ליאת מועלם · עומר אייל',ph:'052-2818472',note:'מוקד המועצה *3106'},
+    {g:'תוכנית יתד — חבל מודיעין',t:'ליווי 18–25',nm:'תהילה ווילף חתוכה',ph:'03-9722860',ph2:'054-7598553',em:'tehilah@modiin-region.muni.il'},
+    {g:'קידום נוער „מרו״ם"',t:'מניעת נשירה 13–18',nm:'אודיה שרוני',ph:'03-9773656'},
+  ]},
+  {region:'טורעאן · גליל תחתון',items:[
+    {g:'קידום נוער (14–18)',t:'יחידה לקידום נוער',nm:'מגדה בדר (מנהלת)',ph:'050-8720406',em:'majeda@turan.muni.il'},
+    {g:'יחידת הנוער',t:'חינוך בלתי-פורמלי',nm:'סאלח דחלה (מנהל)',ph:'074-7676216',em:'salih@turan.muni.il'},
+    {g:'מחלקת חינוך',t:'כניסה לקידום נוער',nm:'סאמי עדאוי',ph:'054-7708556',em:'sami@turan.muni.il'},
+    {g:'יתד / רווחה (18–25)',t:'צעירים בסיכון',nm:'תגריד אבו דיבה',ph:'',em:'tagred@turan.muni.il',note:'מרכזיית רווחה 04-6414005'},
+  ]},
+  {region:'אשדוד',items:[
+    {g:'מרכז הצעירים „כיוונים"',t:'תעסוקה, השכלה 18–35',nm:'הציונות 4, רובע הסיטי',ph:'08-8604024',em:'kivoonim@ashdod.muni.il'},
+    {g:'מרכז הזדמנות אשדוד',t:'ליווי תעסוקתי, הכשרות',nm:'הרצל 1',ph:'08-9238535'},
+    {g:'קידום נוער (14–18)',t:'נוער מנותק + היל״ה',nm:'',ph:'',note:'מוקד 08-8545454'},
+  ]},
+  {region:'עמק יזרעאל (רמת דוד)',items:[
+    {g:'מרכז צעירים + יתד',t:'תעסוקה, השכלה, דיור 18–25',nm:'שיר חזיזה (עו״ס)',ph:'04-6520066',em:'adim@eyz.org.il'},
+    {g:'מחלקת צעירים ומלגות',t:'משוחררים, מלגות',nm:'נועה שמרון',ph:'04-6520640',em:'adim@eyz.org.il'},
+    {g:'קידום נוער (12–18)',t:'נוער בסיכון, היל״ה',nm:'',ph:'',em:'asnat@eyz.org.il',note:'אסנת דוד 04-6520078'},
+  ]},
+  {region:'נווה מדבר (בדואי, נגב)',items:[
+    {g:'מחלקת חינוך',t:'כניסה לקידום נוער',nm:'דינה',ph:'',em:'dina@nevemidbar.org.il'},
+    {g:'אגף הרווחה / יתד',t:'ליווי צעירים בסיכון',nm:'לין חוארי (מנהלת רווחה)',ph:'',em:'lynh@nevemidbar.org.il'},
+    {g:'מרכז ריאן (ביר הדאג׳)',t:'הכוון תעסוקתי בדואי 18+',nm:'',ph:'',note:'מוקד ארצי *6584'},
+  ]},
+  {region:'סחנין',items:[
+    {g:'מרכז הצעירים / תרבות',t:'18–40, קריירה, סטודנטים',nm:'מופק חלאילה (מנהל)',ph:'04-6787495',note:'לבקש מייל עירוני — 04-6788861.'},
+    {g:'קידום נוער (14–18)',t:'נוער נושר, היל״ה',nm:'תמהיד שלאעטה (מנהל)',ph:'04-6788807',em:'tamheed@sakhnin.muni.il',note:'תואם מניעת נשירה.'},
+    {g:'מרכז ריאן סחנין',t:'הכוון תעסוקתי ערבי 18+',nm:'',ph:'04-6659600',note:'מוקד ריאן *6584.'},
+    {g:'יתד / רווחה',t:'צעירים בסיכון',nm:'פתחי אבו יונס',ph:'',em:'fathi.a@sakhnin.muni.il'},
+  ]},
+  {region:'לקייה (בדואי, נגב)',items:[
+    {g:'מחלקת רווחה',t:'כניסה ליתד/קידום נוער',nm:'שיפאא אל-סאנע',ph:'08-6512368',em:'shifa@laqye.muni.il'},
+    {g:'מחלקת נוער / מתנ״ס',t:'נוער 14–18',nm:'פארס אבו עוביד',ph:'',em:'fares@laqye.muni.il'},
+    {g:'אגף חינוך',t:'השלמת השכלה / היל״ה',nm:'טאלב אלאסד',ph:'',em:'taleb@laqye.muni.il'},
+  ]},
+  {region:"ג'וליס (דרוזי, גליל)",items:[
+    {g:"מרכז צעירים ג'וליס",t:'18–40, השכלה, תעסוקה',nm:'שוקי עאמר',ph:'',note:'054-3113414 — לאמת.'},
+    {g:'שירותים חברתיים',t:'רווחה, כניסה ליתד',nm:'',ph:'04-8837225',em:'leshka.julis@gmail.com'},
+    {g:'מועצה מקומית',t:'לאיתור רכז יתד',nm:'',ph:'04-8837200'},
+  ]},
+  {region:'ביר אל-מכסור (בדואי, גליל)',items:[
+    {g:'מחלקת נוער + מרכז צעירים',t:'תוכניות נוער בסיכון',nm:'רמלי גדיר (מנהל)',ph:'04-9862714'},
+    {g:'מחלקת חינוך',t:'כניסה להיל״ה',nm:'הית׳אם גדיר',ph:'04-9058918',em:'haytham@mksor.org.il'},
+    {g:'רווחה / יתד',t:'ליווי בסיכון',nm:'סלמא גדיר',ph:'',em:'salmah@mksor.org.il'},
+  ]},
+  {region:'נצרת (הערבית)',note:'„מרכז צעירים נצרת" בחיפושים מפנה לרוב לנוף הגליל — למטה נצרת הערבית בלבד.',items:[
+    {g:'אגף התרבות, הספורט והנוער',t:'תוכניות נוער וצעירים',nm:'ח׳אלד בטו',ph:'04-6406472',em:'khaled.bu@nazareth.muni.il'},
+    {g:'שירותים חברתיים',t:'רווחה + יתד 18–25',nm:'אמל אלפאר',ph:'04-6459801',em:'amal.f@nazareth.muni.il'},
+    {g:'מרכז ריאן נצרת',t:'הכוון תעסוקתי ערבי',nm:'',ph:'',note:'*6584 ארצי — לאמת סניף.'},
+  ]},
+  {region:'עמקה · מטה אשר',items:[
+    {g:'מרכז הצעירים מטה אשר',t:'18–40, השכלה, בסיכון',nm:'כרמית פלג',ph:'04-9005245',ph2:'050-6952123',em:'zeirim@mta.org.il'},
+    {g:'מעברים גליל מערבי',t:'מרכז תעסוקה קהילתי',nm:'',ph:'04-9109046',em:'office@mwg.org.il'},
+  ]},
+  {region:'פלמחים · חבל יבנה',items:[
+    {g:'מרכז צעירים חבל יבנה',t:'18–40, קריירה, מלגות',nm:'ליאור גלפרין',ph:'08-8622615',em:'misrad@hy.matnasim.co.il',note:'misrad@ = מייל המשרד המאומת.'},
+    {g:'קידום נוער (14–18)',t:'נוער בסיכון (360)',nm:'אורלי אהרון',ph:'',note:'מוקד 08-8622100'},
+  ]},
+  {region:'תל אביב–יפו (יפו)',items:[
+    {g:'יפת 83 — בית הצעירים של יפו',t:'מרכז צעירים ~18–35',nm:'יפת 83, יפו',ph:'03-5084123',em:'yefet83@gmail.com'},
+    {g:'„אכפת" — קידום נוער',t:'נוער בסיכון + היל״ה',nm:'',ph:'052-9025000',em:'ichpatlv1@gmail.com'},
+  ]},
+  {region:'רהט (בדואי, נגב)',items:[
+    {g:'מרכז צעירי רהט',t:'18–40, השכלה, תעסוקה, יזמות',nm:'',ph:'08-6529020',note:'פייסבוק: rahatyouthcenter.'},
+    {g:'אגף החינוך',t:'כניסה לקידום נוער',nm:'ד״ר עלי אלהוזייל',ph:'',em:'edurht@ladpc.gov.il'},
+    {g:'מרכז ריאן רהט',t:'הכוון תעסוקתי בדואי',nm:'',ph:'',note:'*6584 — לאמת סניף.'},
+  ]},
+  {region:'חיפה',items:[
+    {g:'רשות הצעירים חיפה',t:'קריירה 18–35',nm:'חורי 2 / בורלא 17',ph:'04-8355775',em:'Haifa.projects@gmail.com'},
+    {g:'תוכנית יתד חיפה',t:'18–25 בסיכון',nm:'י.ל. פרץ 32',ph:'04-8354254',em:'zivah@haifa.muni.il',note:'⚠️ לאמת.'},
+    {g:'מרכז כיוון חיפה',t:'הכוון והשמה תעסוקתית',nm:'ספיר 7',ph:'04-8314041',em:'jobs-h@kivun.org.il'},
+  ]},
+  {region:'תל שבע (בדואי, נגב)',items:[
+    {g:'מחלקת רווחה / לשכה',t:'רווחה + יתד 18–25',nm:'',ph:'08-6293900',em:'lishka@tel-sheva.muni.il'},
+    {g:'מרכז ריאן תל שבע',t:'הכוון תעסוקתי בדואי',nm:'',ph:'',note:'לאמת טלפון ישיר.'},
+  ]},
+  {region:'כרמיאל',items:[
+    {g:'מרכז הצעירים כרמיאל',t:'קריירה, מלגות, משוחררים',nm:'„מועדון קריירה"',ph:'04-6662381',em:'hon@mzk-hon.org.il'},
+    {g:'יעדים לצפון / הזדמנות',t:'תעסוקה נתמכת',nm:'',ph:'',em:'office@yeadim.org'},
+  ]},
+];
+/* מיפוי בית ספר → אינדקס ב-DATA (גורמים קהילתיים אזוריים) */
+const CONTACTS_FOR={motzkin:0,beitshean:1,akko:2,ashkelon:3,tzurbarak:4,beterava:5,choshen:5,nachalim:6,turan:7,ashdod:8,ramatdavid:9,nevemidbar:10,sakhnin:11,lakiya:12,julis:13,birmaksur:14,nazareth:15,amka:16,palmachim:17,tlv:18,rahat:19,carmel:20,telsheva:21,karmiel:22};
+
+/* ---------- חומרים כלליים לתוכנית (מתיקיית ההורדות) ---------- */
+const GENERAL_FILES=[
+  {n:'ברוכים הבאים לתוכנית הבוגרים.pdf', f:'ברוכים הבאים לתוכנית הבוגרים של הופה!! .pdf', ic:'📘'},
+  {n:'בנק הודעות לרכזי הופה.docx',       f:'בנק הודעות לרכזיי הופה.docx', ic:'💬'},
+  {n:'לוח גאנט הופה תשפ״ז.pdf',          f:'לוח גאנט הופה תשפז.pdf', ic:'📅'},
+  {n:'מצגת היכרות הופה.pdf',             f:'_הופה מצגת היכרות- עותק סופי .pdf', ic:'📊'},
+  {n:'מצגת חשיפה — תלמידי יב׳ והורים.pdf', f:'מצגת חשיפה לתוכנית הבוגרים תלמידי יב\' הורים.pdf', ic:'📊'},
+  {n:'נוהל קליטת בית ספר חדש.docx',      f:'נוהל קליטת בית ספר חדש- אבי אבירם.docx', ic:'📋'},
+  {n:'נרטיב הופה (להגשות).docx',         f:'נרטיב הופה- עבור הגשת בקשות.docx', ic:'📝'},
+  {n:'מסמך חשיבה — מניעת נשירה.pdf',     f:'מסמך-חשיבה-הופה-מניעת-נשירה-תשפז.pdf', ic:'📄'},
+  {n:'טופס הערכת מנהל בית ספר.docx',     f:'טופס הערכת מנהל בית ספר.docx', ic:'✅'},
+  {n:'ערכת הכשרת רכזי בוגרים (zip).zip', f:'ערכת-הכשרת-רכזי-בוגרים-הופה.zip', ic:'🎓'},
+];
+const DL_BASE='file:///C:/Users/meyta/Downloads/';
+
+/* ======================================================================
+   מצב + סנכרון ענן (dossier_store)
+   ====================================================================== */
+let STORE={};                 /* school_key -> data{} */
+let curKey=SCHOOLS[0].id, curTab='details', filter='all', search='';
+const $=s=>document.querySelector(s);
+const cur=()=>SCHOOLS.find(s=>s.id===curKey);
+const esc=s=>(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>'x'+Math.random().toString(36).slice(2,9);
+function nowStr(){const d=new Date();return d.toLocaleDateString('he-IL')+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});}
+
+/* מבנה ברירת מחדל לתיק */
+function blank(){return{coord:{name:'',role:'רכז/ת בוגרים',phone:'',mail:''},mapping:{total:'',responded:''},nonResp:[],issues:[],docs:[],manim:[],files:[],msgs:[]};}
+function D(){ if(!STORE[curKey]) STORE[curKey]=blank(); const d=STORE[curKey];
+  d.coord=d.coord||blank().coord; ['nonResp','issues','docs','manim','files','msgs'].forEach(k=>d[k]=d[k]||[]); d.mapping=d.mapping||{total:'',responded:''}; return d; }
+
+function setSync(msg,cls){const el=$('#syncst');if(el){el.textContent=msg;el.className='syncst'+(cls?' '+cls:'');}}
+
+async function pullAll(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${TABLE}?select=school_key,data`,{headers:SB_HEAD});
+    if(!r.ok){setSync('☁️ לא זמין — מקומי','off');return;}
+    const rows=await r.json();
+    rows.forEach(row=>{STORE[row.school_key]=Object.assign(blank(),row.data||{});});
+    localStorage.setItem('hopa_dossier',JSON.stringify(STORE));
+    setSync('☁️ מסונכרן ✓','ok');
+  }catch(e){setSync('☁️ לא מקוון — מקומי','off');
+    try{STORE=JSON.parse(localStorage.getItem('hopa_dossier'))||{};}catch(_){}}
+}
+const pushTimers={};
+function save(){ localStorage.setItem('hopa_dossier',JSON.stringify(STORE)); const key=curKey;
+  clearTimeout(pushTimers[key]); pushTimers[key]=setTimeout(()=>push(key),700); }
+async function push(key){
+  const body=[{school_key:key,data:STORE[key]||blank(),updated_at:new Date().toISOString()}];
+  setSync('☁️ שומר…','busy');
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${TABLE}?on_conflict=school_key`,{method:'POST',
+      headers:Object.assign({},SB_HEAD,{Prefer:'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(body)});
+    if(!r.ok) throw 0; setSync('☁️ מסונכרן ✓','ok');
+  }catch(e){setSync('☁️ נשמר מקומית','off');}
+}
+
+/* ======================================================================
+   שער כניסה
+   ====================================================================== */
+function tryGate(){
+  const v=$('#gpass').value.trim();
+  if(v===GATE_PASS || localStorage.getItem('hopa_gate')==='1'){
+    localStorage.setItem('hopa_gate','1');
+    $('#gate').style.display='none';
+    $('#appHead').style.display=''; $('#shell').style.display='';
+    boot();
+  }else{ $('#gerr').textContent='סיסמה שגויה — נסי שוב'; $('#gpass').select(); }
+}
+
+/* ======================================================================
+   סרגל בתי ספר
+   ====================================================================== */
+function statLabel(s){ return s.track==='vet'?'ותיק':'מצטרף'; }
+function matchFilter(s){ return filter==='all' || s.track===filter; }
+function renderList(){
+  const q=search.trim();
+  const list=SCHOOLS.filter(s=>matchFilter(s) && (!q || (s.school+' '+s.city).includes(q)));
+  $('#scount').textContent=list.length+' / '+SCHOOLS.length;
+  $('#slist').innerHTML=list.map(s=>`
+    <button class="srow ${s.id===curKey?'active':''}" onclick="pick('${s.id}')">
+      <span class="dot" style="background:${s.color}"></span>
+      <span><span class="nm">${esc(s.school)}</span><br><span class="cy">${esc(s.city)}</span></span>
+      <span class="st">${statLabel(s)}</span>
+    </button>`).join('') || '<div class="empty">לא נמצא</div>';
+}
+function onSearch(v){ search=v; renderList(); }
+function setFilter(f,btn){ filter=f; document.querySelectorAll('#sfilters button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderList(); }
+function pick(id){ curKey=id; curTab='details'; location.hash=id; renderList(); renderSchool(); if(window.innerWidth<=880){document.querySelector('aside.schools').classList.add('collapsed'); window.scrollTo({top:0,behavior:'smooth'});} }
+
+/* ======================================================================
+   כותרת בית ספר + KPI + טאבים
+   ====================================================================== */
+function mapPct(d){ const t=+d.mapping.total||0, r=+d.mapping.responded||0; return t>0?Math.round(r/t*100):0; }
+function renderSchool(){
+  const s=cur(), d=D();
+  const pct=mapPct(d), notResp=(+d.mapping.total||0)-(+d.mapping.responded||0);
+  const tabs=[
+    ['details','📋','פרטים ורכז',''],
+    ['mapping','📊','מיפוי בוגרים', pct?pct+'%':''],
+    ['community','🤝','גורמים וקבוצות',''],
+    ['files','📎','קבצים', d.files.length||''],
+    ['docs','🗂️','תיעוד פניות', d.docs.length||''],
+    ['manim','✨','מענים', d.manim.length||''],
+    ['msg','📣','הודעות',''],
+  ];
+  $('#content').innerHTML=`
+    <div class="sc-head" style="background:linear-gradient(120deg,${s.color},${shade(s.color)})">
+      <div class="row1">
+        <h2>${esc(s.school)}</h2>
+        <span class="badge-st">${statLabel(s)}</span>
+        <div class="share">
+          <button class="sharebtn" onclick="shareDossier()">📤 שליחת התיק</button>
+          <button class="sharebtn ghost" onclick="printDossier()">🖨️ הדפסה / PDF</button>
+        </div>
+      </div>
+      <div class="meta">📍 ${esc(s.city)}${s.area?' · '+esc(s.area):''} &nbsp;·&nbsp; אוכלוסייה: ${esc(s.sector)}</div>
+      <div class="kpis">
+        <div class="kpi"><div class="n">${pct}%</div><div class="l">מיפוי בוגרים שהושלם</div></div>
+        <div class="kpi"><div class="n">${notResp>0?notResp:0}</div><div class="l">בוגרים שטרם ענו</div></div>
+        <div class="kpi"><div class="n">${d.issues.length}</div><div class="l">בעיות / בקשות פתוחות</div></div>
+        <div class="kpi"><div class="n">${d.manim.length}</div><div class="l">מענים לבית הספר</div></div>
+      </div>
+    </div>
+    <div class="tabs">
+      ${tabs.map(t=>`<button class="${curTab===t[0]?'active':''}" onclick="setTab('${t[0]}')">${t[1]} ${t[2]} ${t[3]!==''?`<span class="cnt">${t[3]}</span>`:''}</button>`).join('')}
+    </div>
+    <div class="pane" id="pane"></div>`;
+  renderTab();
+}
+function setTab(t){ curTab=t; document.querySelectorAll('.tabs button').forEach((b,i)=>{}); renderSchool(); }
+function shade(hex){ /* מכהה צבע לכותרת */ try{let n=parseInt(hex.slice(1),16),r=(n>>16)-30,g=((n>>8)&255)-30,b=(n&255)-30; r=Math.max(0,r);g=Math.max(0,g);b=Math.max(0,b); return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}catch(e){return hex;} }
+
+/* ======================================================================
+   רינדור הטאב הנבחר
+   ====================================================================== */
+function renderTab(){
+  const s=cur(),d=D(),p=$('#pane'); if(!p)return;
+  if(curTab==='details')   p.innerHTML=tabDetails(s,d);
+  else if(curTab==='mapping')  p.innerHTML=tabMapping(s,d);
+  else if(curTab==='community') p.innerHTML=tabCommunity(s,d);
+  else if(curTab==='files')    p.innerHTML=tabFiles(s,d);
+  else if(curTab==='docs')     p.innerHTML=tabDocs(s,d);
+  else if(curTab==='manim')    p.innerHTML=tabManim(s,d);
+  else if(curTab==='msg')      p.innerHTML=tabMsg(s,d);
+}
+
+/* ---------- 1) פרטים ורכז ---------- */
+function tabDetails(s,d){
+  const c=d.coord;
+  return `
+  <div class="card">
+    <h3>🏫 פרטי בית הספר</h3>
+    <div class="detail-row"><span class="k">שם בית הספר</span><span class="v">${esc(s.school)}</span></div>
+    <div class="detail-row"><span class="k">יישוב</span><span class="v">${esc(s.city)}</span></div>
+    ${s.area?`<div class="detail-row"><span class="k">אזור</span><span class="v">${esc(s.area)}</span></div>`:''}
+    <div class="detail-row"><span class="k">אוכלוסייה</span><span class="v">${esc(s.sector)}</span></div>
+    <div class="detail-row"><span class="k">מסלול בתוכנית</span><span class="v">${s.track==='vet'?'בית ספר ותיק':'בית ספר מצטרף'}</span></div>
+  </div>
+
+  <div class="card">
+    <h3>👤 רכז/ת הבוגרים בבית הספר <span class="sub">נערך ונשמר בענן</span></h3>
+    <div class="grid2">
+      <div class="field"><label>שם הרכז/ת</label><input value="${esc(c.name)}" placeholder="שם מלא" oninput="editCoord('name',this.value)"></div>
+      <div class="field"><label>תפקיד</label><input value="${esc(c.role)}" oninput="editCoord('role',this.value)"></div>
+      <div class="field"><label>טלפון</label><input value="${esc(c.phone)}" placeholder="05X-XXXXXXX" inputmode="tel" oninput="editCoord('phone',this.value)"></div>
+      <div class="field"><label>אימייל</label><input value="${esc(c.mail)}" placeholder="name@example.com" style="direction:ltr;text-align:left" oninput="editCoord('mail',this.value)"></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      ${c.phone?`<a class="btn call" href="tel:${esc(c.phone)}">📞 חיוג</a>
+      <a class="btn wa" target="_blank" href="https://wa.me/${waNum(c.phone)}">🟢 וואטסאפ</a>`:''}
+      ${c.mail?`<a class="btn mail" href="mailto:${esc(c.mail)}">✉️ מייל</a>`:''}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💗 איש קשר בהופה</h3>
+    <div class="detail-row"><span class="k">${esc(HOPA_CONTACT.name)}</span><span class="v">${esc(HOPA_CONTACT.role)}</span></div>
+    <div style="margin-top:8px"><a class="btn mail" href="mailto:${HOPA_CONTACT.mail}">✉️ ${HOPA_CONTACT.mail}</a>
+      <a class="btn ghost" target="_blank" href="${HOPA_SITE}">🌐 hopa.org.il</a></div>
+  </div>`;
+}
+function editCoord(k,v){ D().coord[k]=v; save(); }
+
+/* ---------- 2) מיפוי בוגרים ---------- */
+function tabMapping(s,d){
+  const pct=mapPct(d), t=+d.mapping.total||0, r=+d.mapping.responded||0, left=t-r;
+  return `
+  <div class="card">
+    <h3>📊 סטטוס מיפוי הבוגרים <span class="sub">${s.track==='vet'?'בית ספר ותיק':'מצטרף — עדיין באיסוף'}</span></h3>
+    <div class="grid2">
+      <div class="field"><label>סה״כ בוגרים ברשימה</label><input type="number" min="0" value="${esc(d.mapping.total)}" placeholder="0" oninput="editMap('total',this.value)"></div>
+      <div class="field"><label>מספר שענו על המיפוי</label><input type="number" min="0" value="${esc(d.mapping.responded)}" placeholder="0" oninput="editMap('responded',this.value)"></div>
+    </div>
+    <div style="font-weight:800;font-size:15px;margin-top:4px">${pct}% הושלמו · ${r} ענו · ${left>0?left:0} טרם ענו</div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+  </div>
+
+  <div class="card">
+    <h3>📵 בוגרים שטרם ענו על המיפוי <span class="sub">${d.nonResp.length} ברשימה</span></h3>
+    <div class="addline">
+      <input id="nrIn" placeholder="שם בוגר/ת + טלפון (רשות)" onkeydown="if(event.key==='Enter')addNonResp()">
+      <button class="btn primary" onclick="addNonResp()">＋ הוסף</button>
+    </div>
+    <div style="margin-top:10px">
+      ${d.nonResp.length?d.nonResp.map(x=>`<div class="litem">
+        <span>👤 <b>${esc(x.name)}</b>${x.phone?` · <span dir="ltr">${esc(x.phone)}</span>`:''}
+          <div class="meta">נוסף ${esc(x.at||'')}</div></span>
+        ${x.phone?`<a class="btn wa small" target="_blank" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent('היי, זו מיטל מתוכנית הבוגרים הופה 💗 נשמח שתמלא/י את מיפוי הבוגרים — זה לוקח דקה')}">וואטסאפ</a>`:''}
+        <span class="x" onclick="delItem('nonResp','${x.id}')">✕</span></div>`).join('')
+        :'<div class="empty">אין רשומות — הוסיפי בוגרים שלא ענו, או ייבאי מרשימה בלשונית „קבצים".</div>'}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ בעיות ובקשות שעלו במיפוי <span class="sub">${d.issues.length} פתוחות</span></h3>
+    <div class="addline">
+      <input id="isIn" placeholder="תיאור הבעיה/בקשה של בוגר מסוים" onkeydown="if(event.key==='Enter')addIssue()">
+      <button class="btn primary" onclick="addIssue()">＋ הוסף</button>
+    </div>
+    <div style="margin-top:10px">
+      ${d.issues.length?d.issues.map(x=>`<div class="litem flag">
+        <span>🔸 ${esc(x.text)}<div class="meta">${esc(x.at||'')}${x.done?' · ✅ טופל':''}</div></span>
+        <button class="btn ghost small" onclick="toggleIssue('${x.id}')">${x.done?'החזר':'✔ טופל'}</button>
+        <span class="x" onclick="delItem('issues','${x.id}')">✕</span></div>`).join('')
+        :'<div class="empty">לא נרשמו בעיות/בקשות.</div>'}
+    </div>
+  </div>`;
+}
+function editMap(k,v){ D().mapping[k]=v; save(); renderSchool(); }
+function addNonResp(){ const el=$('#nrIn'),v=el.value.trim(); if(!v)return; const m=v.match(/(0\d[\d\-\s]{7,})/); const phone=m?m[1].replace(/[\s]/g,''):''; const name=phone?v.replace(phone,'').replace(/[·,\-]\s*$/,'').trim():v; D().nonResp.unshift({id:uid(),name:name||v,phone,at:nowStr()}); save(); renderSchool(); toast('נוסף'); }
+function addIssue(){ const el=$('#isIn'),v=el.value.trim(); if(!v)return; D().issues.unshift({id:uid(),text:v,at:nowStr(),done:false}); save(); renderSchool(); toast('נוסף'); }
+function toggleIssue(id){ const x=D().issues.find(i=>i.id===id); if(x){x.done=!x.done; save(); renderSchool();} }
+function delItem(list,id){ const d=D(); d[list]=d[list].filter(x=>x.id!==id); save(); renderSchool(); }
+
+/* ---------- 3) גורמים קהילתיים + קבוצות ---------- */
+function tabCommunity(s,d){
+  const lead=LEADS[s.id]; const di=CONTACTS_FOR[s.id]; const reg=(di!=null)?DATA[di]:null;
+  let html='';
+  /* מרכז צעירים + קבוצות עבודה */
+  if(lead){
+    html+=`<div class="card"><h3>🎯 מרכז הצעירים וקבוצות עבודה</h3>`;
+    if(lead.youth) html+=`<div class="lead-card"><b>🏢 ${esc(lead.youth.name)}</b>
+      <a class="btn ghost small" target="_blank" href="${esc(lead.youth.u)}" style="margin-inline-start:8px">פתיחה ↗</a></div>`;
+    (lead.groups||[]).forEach(g=>html+=`<div class="grouplink">📢 <span style="flex:1">${esc(g.name)}</span><a class="btn ghost small" target="_blank" href="${esc(g.u)}">↗</a></div>`);
+    html+=`<div class="grouplink" style="background:var(--yellow-soft)">🔎 <span style="flex:1">חיפוש קבוצות וואטסאפ נוספות ל${esc(s.city)}</span>
+      <a class="btn ghost small" target="_blank" href="https://www.google.com/search?q=${encodeURIComponent('chat.whatsapp.com דרושים "'+s.city+'"')}">חפש ↗</a></div>`;
+    html+=`</div>`;
+  }
+  /* גורמים אזוריים מפורטים */
+  if(reg){
+    html+=`<div class="card"><h3>📇 גורמים קהילתיים באזור <span class="sub">${esc(reg.region)}</span></h3>`;
+    if(reg.note) html+=`<div class="contact note" style="margin-bottom:10px">${esc(reg.note)}</div>`;
+    reg.items.forEach(it=>{
+      html+=`<div class="contact"><div class="top"><span class="g">${esc(it.g)}</span></div>
+        ${it.t?`<div class="t">${esc(it.t)}</div>`:''}
+        ${it.nm?`<div class="nm">👤 ${esc(it.nm)}</div>`:''}
+        ${it.em?`<div style="margin-top:6px"><span class="addr">${esc(it.em)}</span>${it.em2?` <span class="addr">${esc(it.em2)}</span>`:''}</div>`:''}
+        ${it.note?`<div class="note">${esc(it.note)}</div>`:''}
+        <div class="acts">
+          ${it.ph?`<a class="btn call small" href="tel:${esc(it.ph)}">📞 ${esc(it.ph)}</a>
+            <a class="btn wa small" target="_blank" href="https://wa.me/${waNum(it.ph)}?text=${encodeURIComponent('שלום, מדברת מיטל פלג מתוכנית הבוגרים הופה (רשת אורט). אנחנו מלווים בוגרי '+s.school+' ב'+s.city+' ומחפשים שיתוף פעולה מול '+it.g+'.')}">🟢 וואטסאפ</a>`:''}
+          ${it.ph2?`<a class="btn call small" href="tel:${esc(it.ph2)}">📞 ${esc(it.ph2)}</a>`:''}
+          ${it.em?`<a class="btn mail small" href="mailto:${esc(it.em)}?subject=${encodeURIComponent('תוכנית הבוגרים הופה — '+s.school)}">✉️ מייל</a>`:''}
+        </div></div>`;
+    });
+    html+=`</div>`;
+  }
+  if(!lead && !reg) html=`<div class="card"><div class="empty">טרם מופו גורמים קהילתיים לבית ספר זה.<br>אפשר להוסיף ידנית בלשונית „תיעוד פניות".</div></div>`;
+  return html;
+}
+
+/* ---------- 4) קבצים ---------- */
+function tabFiles(s,d){
+  return `
+  <div class="card">
+    <h3>⬆️ העלאת קבצים לתיק <span class="sub">רשימות בוגרים · תיעוד · מסמכים</span></h3>
+    <div class="drop" id="drop" onclick="$('#fileIn').click()"
+      ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')"
+      ondrop="event.preventDefault();this.classList.remove('over');handleFiles(event.dataTransfer.files)">
+      📤 <b>גררי לכאן</b> או לחצי לבחירת קובץ<br>
+      <span style="font-size:12px;color:var(--muted)">רשימת בוגרים (Excel), תיעוד פנייה, כל מסמך — נשמר בענן ומשותף</span>
+    </div>
+    <input id="fileIn" type="file" multiple style="display:none" onchange="handleFiles(this.files)">
+    <div id="upBar" style="margin-top:10px"></div>
+    <div style="margin-top:12px">
+      ${d.files.length?d.files.map(f=>`<div class="filerow">
+        <div class="ic">${fileIcon(f.name)}</div>
+        <div style="flex:1;min-width:0"><div class="fn">${esc(f.name)}</div><div class="fm">${esc(f.at||'')}${f.size?' · '+fmtSize(f.size):''}</div></div>
+        <a class="btn ghost small" target="_blank" href="${esc(f.url)}">פתיחה ↗</a>
+        <span class="x" onclick="delFile('${f.id}')" style="cursor:pointer;color:var(--muted)">✕</span></div>`).join('')
+        :'<div class="empty">עדיין לא הועלו קבצים לתיק זה.</div>'}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📚 חומרים כלליים של התוכנית <span class="sub">מתיקיית ההורדות</span></h3>
+    <div style="font-size:12.5px;color:var(--muted);margin-bottom:10px">קישורים נפתחים מהמחשב שלך (כשהאתר מופעל מקומית). כדי שיהיו זמינים גם בנייד — העלי אותם דרך האזור למעלה.</div>
+    ${GENERAL_FILES.map(f=>`<div class="filerow">
+      <div class="ic">${f.ic}</div>
+      <div style="flex:1;min-width:0"><div class="fn">${esc(f.n)}</div></div>
+      <a class="btn ghost small" href="${DL_BASE}${encodeURIComponent(f.f)}" target="_blank">פתיחה ↗</a></div>`).join('')}
+  </div>`;
+}
+function fileIcon(n){ n=(n||'').toLowerCase(); if(/\.(xlsx?|csv)$/.test(n))return'📊'; if(/\.pdf$/.test(n))return'📕'; if(/\.docx?$/.test(n))return'📄'; if(/\.(png|jpe?g|gif|webp)$/.test(n))return'🖼️'; if(/\.zip$/.test(n))return'🗜️'; return'📎'; }
+function fmtSize(b){ return b>1e6?(b/1e6).toFixed(1)+'MB':Math.max(1,Math.round(b/1024))+'KB'; }
+
+/* ---------- 5) תיעוד פניות ---------- */
+function tabDocs(s,d){
+  return `
+  <div class="card">
+    <h3>🗂️ תיעוד פניות וטיפול מול בית הספר <span class="sub">${d.docs.length} רשומות</span></h3>
+    <div class="addline">
+      <textarea id="docIn" rows="2" placeholder="מה נעשה / סוכם / נדרש להמשך? (שיחה עם מנהל, פנייה של בוגר, מעקב…)"></textarea>
+    </div>
+    <div style="margin-top:6px"><button class="btn primary" onclick="addDoc()">＋ הוספת רשומת תיעוד</button></div>
+    <div style="margin-top:12px">
+      ${d.docs.length?d.docs.map(x=>`<div class="litem">
+        <span style="flex:1">📝 ${esc(x.text).replace(/\n/g,'<br>')}<div class="meta">${esc(x.at||'')}</div></span>
+        <span class="x" onclick="delItem('docs','${x.id}')">✕</span></div>`).join('')
+        :'<div class="empty">אין תיעוד עדיין — כל פנייה, שיחה או טיפול יתועדו כאן וישמרו בענן.</div>'}
+    </div>
+  </div>`;
+}
+function addDoc(){ const el=$('#docIn'),v=el.value.trim(); if(!v)return; D().docs.unshift({id:uid(),text:v,at:nowStr()}); save(); renderSchool(); toast('תועד'); }
+
+/* ---------- 6) מענים ---------- */
+function tabManim(s,d){
+  return `
+  <div class="card">
+    <h3>✨ מענים לבית הספר <span class="sub">${d.manim.length} מענים</span></h3>
+    <div class="field"><label>שם המענה</label><input id="mnName" placeholder="למשל: מרכז הזדמנות / קורס פסיכומטרי"></div>
+    <div class="grid2">
+      <div class="field"><label>קטגוריה</label>
+        <select id="mnCat"><option>תעסוקה</option><option>השכלה גבוהה</option><option>מלגות</option><option>חיילים משוחררים</option><option>רווחה / יתד</option><option>הכשרות מקצועיות</option><option>אחר</option></select></div>
+      <div class="field"><label>קישור / טלפון (רשות)</label><input id="mnLink" placeholder="https:// או טלפון" style="direction:ltr;text-align:left"></div>
+    </div>
+    <div class="field"><label>הערה</label><input id="mnNote" placeholder="פרטים / איש קשר"></div>
+    <button class="btn primary" onclick="addManeh()">＋ הוספת מענה</button>
+    <div style="margin-top:14px">
+      ${d.manim.length?d.manim.map(x=>`<div class="litem">
+        <span style="flex:1">✨ <b>${esc(x.name)}</b> · <span style="color:var(--pink-dark);font-weight:700">${esc(x.cat)}</span>
+          ${x.note?`<div class="meta">${esc(x.note)}</div>`:''}
+          ${x.link?`<div class="meta"><a href="${/^https?:/.test(x.link)?esc(x.link):'tel:'+esc(x.link)}" target="_blank" dir="ltr">${esc(x.link)}</a></div>`:''}
+        </span>
+        <span class="x" onclick="delItem('manim','${x.id}')">✕</span></div>`).join('')
+        :'<div class="empty">עדיין לא נוספו מענים ייעודיים לבית ספר זה.</div>'}
+    </div>
+  </div>`;
+}
+function addManeh(){ const name=$('#mnName').value.trim(); if(!name){toast('חסר שם מענה','bad');return;} D().manim.unshift({id:uid(),name,cat:$('#mnCat').value,link:$('#mnLink').value.trim(),note:$('#mnNote').value.trim(),at:nowStr()}); save(); renderSchool(); toast('המענה נוסף'); }
+
+/* ---------- 7) הודעות ---------- */
+function tabMsg(s,d){
+  const c=d.coord;
+  return `
+  <div class="card">
+    <h3>📣 שליחת הודעה <span class="sub">לצוות בית הספר או לבוגרים</span></h3>
+    <div class="field"><label>נמען</label>
+      <select id="msgTo" onchange="msgToChanged()">
+        <option value="coord">רכז/ת הבוגרים${c.name?' · '+esc(c.name):''}</option>
+        <option value="alumni">בוגר/ת (הזיני מספר)</option>
+        <option value="broadcast">קבוצת בוגרים (וואטסאפ)</option>
+      </select></div>
+    <div class="field" id="msgNumWrap" style="display:none"><label>מספר טלפון</label><input id="msgNum" placeholder="05X-XXXXXXX" inputmode="tel" style="direction:ltr;text-align:left"></div>
+    <div class="field"><label>תוכן ההודעה</label>
+      <textarea id="msgTxt" rows="4">${esc(defaultMsg(s))}</textarea></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn wa" onclick="sendWa()">🟢 שליחה בוואטסאפ</button>
+      <button class="btn mail" onclick="sendMail()">✉️ שליחה במייל</button>
+      <button class="btn ghost" onclick="copyMsg()">📋 העתקה</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🕓 יומן הודעות שנשלחו <span class="sub">${d.msgs.length}</span></h3>
+    ${d.msgs.length?d.msgs.map(x=>`<div class="litem"><span style="flex:1">${x.via==='wa'?'🟢':'✉️'} <b>${esc(x.to)}</b><div class="meta">${esc(x.at)} · ${esc(x.text).slice(0,70)}…</div></span>
+      <span class="x" onclick="delItem('msgs','${x.id}')">✕</span></div>`).join(''):'<div class="empty">טרם נשלחו הודעות מהתיק.</div>'}
+  </div>`;
+}
+function defaultMsg(s){ return 'היי 💗 כאן מיטל מתוכנית הבוגרים של הופה ('+s.school+'). '; }
+function msgToChanged(){ const v=$('#msgTo').value; $('#msgNumWrap').style.display=(v==='coord')?'none':''; }
+function msgTarget(){ const v=$('#msgTo').value,d=D(); if(v==='coord')return d.coord.phone||''; return ($('#msgNum').value||'').trim(); }
+function logMsg(via,to,text){ D().msgs.unshift({id:uid(),via,to,text,at:nowStr()}); save(); }
+function sendWa(){ const num=msgTarget(),txt=$('#msgTxt').value; const to=$('#msgTo').value==='coord'?(D().coord.name||'רכז'):(num||'קבוצה');
+  if($('#msgTo').value==='broadcast'||!num){ window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank'); }
+  else window.open('https://wa.me/'+waNum(num)+'?text='+encodeURIComponent(txt),'_blank');
+  logMsg('wa',to,txt); renderSchool(); toast('נפתח וואטסאפ'); }
+function sendMail(){ const txt=$('#msgTxt').value,to=D().coord.mail||''; window.open('mailto:'+to+'?subject='+encodeURIComponent('הופה · '+cur().school)+'&body='+encodeURIComponent(txt)); logMsg('mail',to||'מייל',txt); renderSchool(); }
+function copyMsg(){ navigator.clipboard.writeText($('#msgTxt').value).then(()=>toast('הועתק ✓','good')); }
+
+/* ======================================================================
+   העלאת קבצים ל-Supabase Storage
+   ====================================================================== */
+async function handleFiles(fileList){
+  const files=[...fileList]; if(!files.length)return;
+  for(const file of files){ await uploadOne(file); }
+  $('#fileIn').value='';
+}
+async function uploadOne(file){
+  const bar=$('#upBar'); const rid=uid();
+  bar.insertAdjacentHTML('beforeend',`<div id="${rid}" style="font-size:12.5px;font-weight:700;margin-bottom:4px">⏳ מעלה ${esc(file.name)}…</div>`);
+  const safe=file.name.replace(/[^\w.\-֐-׿]/g,'_');
+  const path=`${curKey}/${Date.now()}_${safe}`;
+  try{
+    const r=await fetch(`${SB_URL}/storage/v1/object/${BUCKET}/${encodeURI(path)}`,{
+      method:'POST', headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'x-upsert':'true'}, body:file});
+    if(!r.ok) throw new Error(await r.text());
+    const url=`${SB_URL}/storage/v1/object/public/${BUCKET}/${encodeURI(path)}`;
+    D().files.unshift({id:uid(),name:file.name,url,path,size:file.size,at:nowStr()});
+    save(); document.getElementById(rid).remove(); renderSchool(); toast('הקובץ הועלה ✓','good');
+  }catch(e){ document.getElementById(rid).innerHTML='❌ נכשלה העלאת '+esc(file.name)+' — ודאי שהרצת את קובץ ה-SQL להקמה'; }
+}
+async function delFile(id){ const f=D().files.find(x=>x.id===id); if(!f)return; if(!confirm('למחוק את הקובץ "'+f.name+'"?'))return;
+  try{ if(f.path) await fetch(`${SB_URL}/storage/v1/object/${BUCKET}/${encodeURI(f.path)}`,{method:'DELETE',headers:SB_HEAD}); }catch(e){}
+  D().files=D().files.filter(x=>x.id!==id); save(); renderSchool(); }
+
+/* ======================================================================
+   שיתוף / הדפסת תיק בודד
+   ====================================================================== */
+function shareDossier(){
+  const s=cur(),d=D(),pct=mapPct(d);
+  const link=location.origin+location.pathname+'#'+s.id;
+  let txt=`📁 תיק בית ספר · ${s.school} (${s.city})\n`;
+  txt+=`מסלול: ${s.track==='vet'?'ותיק':'מצטרף'} · אוכלוסייה: ${s.sector}\n`;
+  if(d.coord.name) txt+=`רכז/ת בוגרים: ${d.coord.name}${d.coord.phone?' · '+d.coord.phone:''}\n`;
+  if(+d.mapping.total) txt+=`מיפוי בוגרים: ${pct}% הושלם (${d.mapping.responded||0}/${d.mapping.total})\n`;
+  if(d.issues.length) txt+=`בעיות פתוחות: ${d.issues.length}\n`;
+  if(d.manim.length) txt+=`מענים: ${d.manim.length}\n`;
+  txt+=`\n🔗 לתיק המלא: ${link}\n— תוכנית הבוגרים הופה · ${HOPA_SITE}`;
+  if(navigator.share){ navigator.share({title:'תיק '+s.school,text:txt}).catch(()=>{}); }
+  else { window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank'); }
+  try{navigator.clipboard.writeText(txt);}catch(e){}
+  toast('סיכום התיק מוכן לשיתוף ✓','good');
+}
+function printDossier(){
+  const s=cur(),d=D(),pct=mapPct(d),di=CONTACTS_FOR[s.id],reg=(di!=null)?DATA[di]:null,lead=LEADS[s.id];
+  const w=window.open('','_blank');
+  const sec=(t,h)=>h?`<h2 style="color:#c02673;border-bottom:2px solid #fde7f2;padding-bottom:4px">${t}</h2>${h}`:'';
+  let contacts='';
+  if(reg) contacts=reg.items.map(it=>`<p><b>${it.g}</b>${it.nm?' · '+it.nm:''}${it.ph?' · '+it.ph:''}${it.em?' · '+it.em:''}</p>`).join('');
+  let groups=''; if(lead){ if(lead.youth)groups+=`<p>🏢 ${lead.youth.name}</p>`; (lead.groups||[]).forEach(g=>groups+=`<p>📢 ${g.name}</p>`);}
+  w.document.write(`<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><title>תיק ${s.school}</title>
+    <style>body{font-family:Arial,sans-serif;max-width:800px;margin:24px auto;padding:0 18px;color:#2b2b33;line-height:1.6}
+    h1{color:#E8348A} h2{margin-top:22px;font-size:18px} p{margin:4px 0} .box{background:#fde7f2;border-radius:10px;padding:12px 16px;margin:10px 0}</style></head><body>
+    <h1>📁 תיק בית ספר · ${s.school}</h1>
+    <div class="box"><b>${s.city}</b>${s.area?' · '+s.area:''} · ${s.sector} · ${s.track==='vet'?'ותיק':'מצטרף'}</div>
+    ${sec('רכז/ת בוגרים', d.coord.name?`<p><b>${d.coord.name}</b> · ${d.coord.role}</p><p>${d.coord.phone||''} ${d.coord.mail||''}</p>`:'<p>—</p>')}
+    ${sec('מיפוי בוגרים', +d.mapping.total?`<p>${pct}% הושלם · ${d.mapping.responded||0} מתוך ${d.mapping.total} ענו · ${(d.mapping.total-d.mapping.responded)||0} טרם ענו</p>`:'')}
+    ${sec('בוגרים שטרם ענו', d.nonResp.length?d.nonResp.map(x=>`<p>👤 ${x.name} ${x.phone||''}</p>`).join(''):'')}
+    ${sec('בעיות ובקשות', d.issues.length?d.issues.map(x=>`<p>🔸 ${x.text}${x.done?' (טופל)':''}</p>`).join(''):'')}
+    ${sec('מרכז צעירים וקבוצות', groups)}
+    ${sec('גורמים קהילתיים', contacts)}
+    ${sec('מענים', d.manim.length?d.manim.map(x=>`<p>✨ ${x.name} · ${x.cat}${x.note?' · '+x.note:''}</p>`).join(''):'')}
+    ${sec('תיעוד פניות', d.docs.length?d.docs.map(x=>`<p>📝 ${x.at}: ${x.text}</p>`).join(''):'')}
+    <hr><p style="color:#888">תוכנית הבוגרים הופה · ${HOPA_SITE}</p>
+    <script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+
+/* ======================================================================
+   עזרי תצוגה + אתחול
+   ====================================================================== */
+function waNum(ph){ let n=(ph||'').replace(/\D/g,''); if(n.startsWith('0'))n='972'+n.slice(1); else if(!n.startsWith('972')&&n.length<=10)n='972'+n; return n; }
+let toastT;
+function toast(msg,cls){ const el=$('#toast'); el.textContent=msg; el.className='toast show'+(cls?' '+cls:''); clearTimeout(toastT); toastT=setTimeout(()=>el.className='toast',1900); }
+function closeSheet(){ $('#backdrop').classList.remove('show'); }
+
+async function boot(){
+  await pullAll();
+  const h=location.hash.replace('#',''); if(h && SCHOOLS.find(s=>s.id===h)) curKey=h;
+  renderList(); renderSchool();
+  /* רענון עדין כשחוזרים לטאב */
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ pullAll().then(()=>renderSchool()); } });
+  setInterval(()=>{ if(!document.hidden) pullAll(); }, 20000);
+}
+
+/* אם כבר נכנסת בעבר במכשיר הזה — דלגי על השער */
+if(localStorage.getItem('hopa_gate')==='1'){
+  $('#gate').style.display='none'; $('#appHead').style.display=''; $('#shell').style.display=''; boot();
+}
+</script>
+</body>
+</html>
