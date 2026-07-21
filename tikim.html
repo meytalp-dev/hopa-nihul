@@ -244,6 +244,13 @@ const TABLE='dossier_store';
 const BUCKET='hopa-dossier-files';
 const GATE_PASS='hopa2027';          /* סיסמת כניסה — ניתן לשנות כאן */
 
+/* ---------- סנכרון דרך ה-Apps Script של הופה (גיליון „נתונים") ---------- */
+/* נתוני התיקים נשמרים בגיליון הניהול של מיטל תחת מפתחות dossier_<בית ספר>.
+   כשתהיה גישה ל-Supabase של הופה — נעביר את כל שהצטבר לשם. */
+const GS_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET='hopa-nihul-2026';
+const GS_PREFIX='dossier_';
+
 const HOPA_SITE='https://hopa.org.il';
 const HOPA_CONTACT={name:'מיטל פלג', role:'מנהלת תוכנית הבוגרים · הופה', mail:'meytalp@bethaarava.ort.org.il'};
 
@@ -456,27 +463,42 @@ function D(){ if(!STORE[curKey]) STORE[curKey]=blank(); const d=STORE[curKey];
 
 function setSync(msg,cls){const el=$('#syncst');if(el){el.textContent=msg;el.className='syncst'+(cls?' '+cls:'');}}
 
+/* JSONP GET ל-Apps Script (קריאה) */
+function jsonp(params){
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const q=Object.entries(params).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
+    let done=false;
+    window[cb]=data=>{done=true;resolve(data);try{delete window[cb];}catch(e){}s.remove();};
+    s.onerror=()=>{if(!done){reject(new Error('net'));try{delete window[cb];}catch(e){}s.remove();}};
+    s.src=GS_URL+'?'+q+'&callback='+cb;
+    document.body.appendChild(s);
+    setTimeout(()=>{if(!done){reject(new Error('timeout'));try{delete window[cb];}catch(e){}s.remove();}},15000);
+  });
+}
 async function pullAll(){
   try{
-    const r=await fetch(`${SB_URL}/rest/v1/${TABLE}?select=school_key,data`,{headers:SB_HEAD});
-    if(!r.ok){setSync('☁️ לא זמין — מקומי','off');return;}
-    const rows=await r.json();
-    rows.forEach(row=>{STORE[row.school_key]=Object.assign(blank(),row.data||{});});
+    const r=await jsonp({action:'storeAll',secret:GS_SECRET});
+    if(!r||!r.ok) throw 0;
+    const st=r.store||{};
+    Object.keys(st).forEach(k=>{
+      if(k.indexOf(GS_PREFIX)===0){ const id=k.slice(GS_PREFIX.length); STORE[id]=Object.assign(blank(),st[k]||{}); }
+    });
     localStorage.setItem('hopa_dossier',JSON.stringify(STORE));
     setSync('☁️ מסונכרן ✓','ok');
   }catch(e){setSync('☁️ לא מקוון — מקומי','off');
-    try{STORE=JSON.parse(localStorage.getItem('hopa_dossier'))||{};}catch(_){}}
+    try{STORE=Object.assign(STORE,JSON.parse(localStorage.getItem('hopa_dossier'))||{});}catch(_){}}
 }
 const pushTimers={};
 function save(){ localStorage.setItem('hopa_dossier',JSON.stringify(STORE)); const key=curKey;
-  clearTimeout(pushTimers[key]); pushTimers[key]=setTimeout(()=>push(key),700); }
+  clearTimeout(pushTimers[key]); pushTimers[key]=setTimeout(()=>push(key),800); }
 async function push(key){
-  const body=[{school_key:key,data:STORE[key]||blank(),updated_at:new Date().toISOString()}];
   setSync('☁️ שומר…','busy');
   try{
-    const r=await fetch(`${SB_URL}/rest/v1/${TABLE}?on_conflict=school_key`,{method:'POST',
-      headers:Object.assign({},SB_HEAD,{Prefer:'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(body)});
-    if(!r.ok) throw 0; setSync('☁️ מסונכרן ✓','ok');
+    const body=new URLSearchParams({action:'storeSet',secret:GS_SECRET,key:GS_PREFIX+key,json:JSON.stringify(STORE[key]||blank())});
+    await fetch(GS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+    setSync('☁️ מסונכרן ✓','ok');
   }catch(e){setSync('☁️ נשמר מקומית','off');}
 }
 
@@ -738,14 +760,24 @@ function tabCommunity(s,d){
 function tabFiles(s,d){
   return `
   <div class="card">
-    <h3>⬆️ העלאת קבצים לתיק <span class="sub">רשימות בוגרים · תיעוד · מסמכים</span></h3>
-    <div class="drop" id="drop" onclick="$('#fileIn').click()"
-      ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')"
-      ondrop="event.preventDefault();this.classList.remove('over');handleFiles(event.dataTransfer.files)">
-      📤 <b>גררי לכאן</b> או לחצי לבחירת קובץ<br>
-      <span style="font-size:12px;color:var(--muted)">רשימת בוגרים (Excel), תיעוד פנייה, כל מסמך — נשמר בענן ומשותף</span>
+    <h3>📎 קבצים לתיק <span class="sub">רשימות בוגרים · תיעוד · מסמכים</span></h3>
+    <div class="field"><label>➕ הוספת קובץ לפי קישור (Google Drive / כל קישור) — עובד עכשיו ומסונכרן</label>
+      <div class="addline" style="flex-wrap:wrap">
+        <input id="flName" placeholder="שם הקובץ (למשל: רשימת בוגרים 2026)" style="min-width:160px">
+        <input id="flUrl" placeholder="הדביקי קישור…" style="direction:ltr;text-align:left;min-width:160px" onkeydown="if(event.key==='Enter')addFileLink()">
+        <button class="btn primary" onclick="addFileLink()">＋ הוסף</button>
+      </div>
     </div>
-    <input id="fileIn" type="file" multiple style="display:none" onchange="handleFiles(this.files)">
+    <details style="margin-top:2px">
+      <summary style="cursor:pointer;font-size:12.5px;color:var(--muted);font-weight:600">📤 העלאה ישירה מהמחשב (תופעל עם חיבור ה-Supabase של הופה)</summary>
+      <div class="drop" id="drop" style="margin-top:8px" onclick="$('#fileIn').click()"
+        ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')"
+        ondrop="event.preventDefault();this.classList.remove('over');handleFiles(event.dataTransfer.files)">
+        📤 <b>גררי לכאן</b> או לחצי לבחירת קובץ<br>
+        <span style="font-size:12px;color:var(--muted)">כרגע: הוסיפי קובץ לפי קישור למעלה. העלאה ישירה תיפתח עם ה-Supabase.</span>
+      </div>
+      <input id="fileIn" type="file" multiple style="display:none" onchange="handleFiles(this.files)">
+    </details>
     <div id="upBar" style="margin-top:10px"></div>
     <div style="margin-top:12px">
       ${d.files.length?d.files.map(f=>`<div class="filerow">
@@ -766,6 +798,10 @@ function tabFiles(s,d){
       <a class="btn ghost small" href="${DL_BASE}${encodeURIComponent(f.f)}" target="_blank">פתיחה ↗</a></div>`).join('')}
   </div>`;
 }
+function addFileLink(){ const name=($('#flName').value||'').trim(), url=($('#flUrl').value||'').trim();
+  if(!url){toast('חסר קישור','bad');return;}
+  const u=/^https?:\/\//.test(url)?url:'https://'+url;
+  D().files.unshift({id:uid(),name:name||u,url:u,path:'',at:nowStr(),link:true}); save(); renderSchool(); toast('הקובץ נוסף ✓','good'); }
 function fileIcon(n){ n=(n||'').toLowerCase(); if(/\.(xlsx?|csv)$/.test(n))return'📊'; if(/\.pdf$/.test(n))return'📕'; if(/\.docx?$/.test(n))return'📄'; if(/\.(png|jpe?g|gif|webp)$/.test(n))return'🖼️'; if(/\.zip$/.test(n))return'🗜️'; return'📎'; }
 function fmtSize(b){ return b>1e6?(b/1e6).toFixed(1)+'MB':Math.max(1,Math.round(b/1024))+'KB'; }
 
@@ -872,7 +908,7 @@ async function uploadOne(file){
     const url=`${SB_URL}/storage/v1/object/public/${BUCKET}/${encodeURI(path)}`;
     D().files.unshift({id:uid(),name:file.name,url,path,size:file.size,at:nowStr()});
     save(); document.getElementById(rid).remove(); renderSchool(); toast('הקובץ הועלה ✓','good');
-  }catch(e){ document.getElementById(rid).innerHTML='❌ נכשלה העלאת '+esc(file.name)+' — ודאי שהרצת את קובץ ה-SQL להקמה'; }
+  }catch(e){ document.getElementById(rid).innerHTML='⏳ העלאה ישירה תיפתח עם חיבור ה-Supabase של הופה. בינתיים הוסיפי את הקובץ לפי קישור (Google Drive) למעלה.'; }
 }
 async function delFile(id){ const f=D().files.find(x=>x.id===id); if(!f)return; if(!confirm('למחוק את הקובץ "'+f.name+'"?'))return;
   try{ if(f.path) await fetch(`${SB_URL}/storage/v1/object/${BUCKET}/${encodeURI(f.path)}`,{method:'DELETE',headers:SB_HEAD}); }catch(e){}
@@ -929,13 +965,14 @@ let toastT;
 function toast(msg,cls){ const el=$('#toast'); el.textContent=msg; el.className='toast show'+(cls?' '+cls:''); clearTimeout(toastT); toastT=setTimeout(()=>el.className='toast',1900); }
 function closeSheet(){ $('#backdrop').classList.remove('show'); }
 
+function isEditing(){ const a=document.activeElement; return a && (a.tagName==='INPUT'||a.tagName==='TEXTAREA'); }
 async function boot(){
   await pullAll();
   const h=location.hash.replace('#',''); if(h && SCHOOLS.find(s=>s.id===h)) curKey=h;
   renderList(); renderSchool();
-  /* רענון עדין כשחוזרים לטאב */
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ pullAll().then(()=>renderSchool()); } });
-  setInterval(()=>{ if(!document.hidden) pullAll(); }, 20000);
+  /* רענון עדין כשחוזרים לטאב — לא בזמן הקלדה */
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && !isEditing()){ pullAll().then(()=>{ if(!isEditing()) renderSchool(); }); } });
+  setInterval(()=>{ if(!document.hidden && !isEditing()) pullAll(); }, 20000);
 }
 
 /* אם כבר נכנסת בעבר במכשיר הזה — דלגי על השער */
