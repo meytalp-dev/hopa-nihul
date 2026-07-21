@@ -229,6 +229,8 @@
 <div class="backdrop" id="backdrop" onclick="closeSheet()"></div>
 <div class="toast" id="toast"></div>
 
+<!-- קובץ נתוני בוגרים אמיתי — נטען רק אם קיים מקומית (לא קיים בגרסה הציבורית) -->
+<script src="בוגרים-נתונים.js" onerror="void 0"></script>
 <script>
 /* ======================================================================
    תיקי בתי הספר — הופה · אתר ניהול מסונכרן (Supabase)
@@ -514,10 +516,15 @@ function pick(id){ curKey=id; curTab='details'; location.hash=id; renderList(); 
 /* ======================================================================
    כותרת בית ספר + KPI + טאבים
    ====================================================================== */
-function mapPct(d){ const t=+d.mapping.total||0, r=+d.mapping.responded||0; return t>0?Math.round(r/t*100):0; }
+function alumniOf(id){ return (window.ALUMNI&&window.ALUMNI[id])||null; }
+/* מעדיף נתונים חיים (window.ALUMNI, מקומי) על פני הזנה ידנית (dossier_store) */
+function mapStats(id,d){ const a=alumniOf(id);
+  if(a) return {total:a.total, responded:a.responded, live:true};
+  return {total:+d.mapping.total||0, responded:+d.mapping.responded||0, live:false}; }
+function mapPct(d){ const st=mapStats(curKey,d); return st.total>0?Math.round(st.responded/st.total*100):0; }
 function renderSchool(){
   const s=cur(), d=D();
-  const pct=mapPct(d), notResp=(+d.mapping.total||0)-(+d.mapping.responded||0);
+  const st=mapStats(s.id,d), pct=st.total>0?Math.round(st.responded/st.total*100):0, notResp=st.total-st.responded;
   const tabs=[
     ['details','📋','פרטים ורכז',''],
     ['mapping','📊','מיפוי בוגרים', pct?pct+'%':''],
@@ -606,34 +613,68 @@ function tabDetails(s,d){
 function editCoord(k,v){ D().coord[k]=v; save(); }
 
 /* ---------- 2) מיפוי בוגרים ---------- */
+let nrSearch='';
 function tabMapping(s,d){
-  const pct=mapPct(d), t=+d.mapping.total||0, r=+d.mapping.responded||0, left=t-r;
-  return `
-  <div class="card">
-    <h3>📊 סטטוס מיפוי הבוגרים <span class="sub">${s.track==='vet'?'בית ספר ותיק':'מצטרף — עדיין באיסוף'}</span></h3>
-    <div class="grid2">
-      <div class="field"><label>סה״כ בוגרים ברשימה</label><input type="number" min="0" value="${esc(d.mapping.total)}" placeholder="0" oninput="editMap('total',this.value)"></div>
-      <div class="field"><label>מספר שענו על המיפוי</label><input type="number" min="0" value="${esc(d.mapping.responded)}" placeholder="0" oninput="editMap('responded',this.value)"></div>
-    </div>
-    <div style="font-weight:800;font-size:15px;margin-top:4px">${pct}% הושלמו · ${r} ענו · ${left>0?left:0} טרם ענו</div>
-    <div class="bar"><i style="width:${pct}%"></i></div>
-  </div>
+  const st=mapStats(s.id,d), pct=st.total>0?Math.round(st.responded/st.total*100):0, left=st.total-st.responded;
+  const a=alumniOf(s.id);
+  let head;
+  if(st.live){
+    head=`<div class="card">
+      <h3>📊 סטטוס מיפוי הבוגרים <span class="sub" style="color:var(--green)">● נתונים חיים ממונדיי (מקומי)</span></h3>
+      <div style="font-weight:800;font-size:16px;margin:2px 0 2px">${pct}% הושלמו · ${st.responded} ענו · ${left} טרם ענו · ${st.total} סה״כ</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">🔒 הרשימה השמית נטענת מקובץ מקומי במחשב שלך בלבד — לא מסונכרנת לענן ולא מופיעה בגרסה המקוונת.</div>
+    </div>`;
+  }else{
+    head=`<div class="card">
+      <h3>📊 סטטוס מיפוי הבוגרים <span class="sub">${s.track==='vet'?'בית ספר ותיק':'מצטרף — עדיין באיסוף'}</span></h3>
+      <div class="grid2">
+        <div class="field"><label>סה״כ בוגרים ברשימה</label><input type="number" min="0" value="${esc(d.mapping.total)}" placeholder="0" oninput="editMap('total',this.value)"></div>
+        <div class="field"><label>מספר שענו על המיפוי</label><input type="number" min="0" value="${esc(d.mapping.responded)}" placeholder="0" oninput="editMap('responded',this.value)"></div>
+      </div>
+      <div style="font-weight:800;font-size:15px;margin-top:4px">${pct}% הושלמו · ${st.responded} ענו · ${left>0?left:0} טרם ענו</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">אין עדיין רשימת בוגרים חיה לבי״ס זה — אפשר להזין ידנית או להוסיף למטה.</div>
+    </div>`;
+  }
 
-  <div class="card">
-    <h3>📵 בוגרים שטרם ענו על המיפוי <span class="sub">${d.nonResp.length} ברשימה</span></h3>
-    <div class="addline">
-      <input id="nrIn" placeholder="שם בוגר/ת + טלפון (רשות)" onkeydown="if(event.key==='Enter')addNonResp()">
-      <button class="btn primary" onclick="addNonResp()">＋ הוסף</button>
-    </div>
-    <div style="margin-top:10px">
-      ${d.nonResp.length?d.nonResp.map(x=>`<div class="litem">
-        <span>👤 <b>${esc(x.name)}</b>${x.phone?` · <span dir="ltr">${esc(x.phone)}</span>`:''}
-          <div class="meta">נוסף ${esc(x.at||'')}</div></span>
-        ${x.phone?`<a class="btn wa small" target="_blank" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent('היי, זו מיטל מתוכנית הבוגרים הופה 💗 נשמח שתמלא/י את מיפוי הבוגרים — זה לוקח דקה')}">וואטסאפ</a>`:''}
-        <span class="x" onclick="delItem('nonResp','${x.id}')">✕</span></div>`).join('')
-        :'<div class="empty">אין רשומות — הוסיפי בוגרים שלא ענו, או ייבאי מרשימה בלשונית „קבצים".</div>'}
-    </div>
-  </div>
+  /* בוגרים שטרם ענו */
+  let nonRespCard;
+  if(a){
+    const notList=a.roster.filter(x=>!x.responded);
+    const q=nrSearch.trim();
+    const shown=(q?notList.filter(x=>(x.name+' '+x.phone+' '+x.megama).includes(q)):notList);
+    const cap=shown.slice(0,120);
+    nonRespCard=`<div class="card">
+      <h3>📵 בוגרים שטרם ענו על המיפוי <span class="sub">${notList.length} מתוך ${a.total}</span></h3>
+      <div class="ssearch" style="margin-bottom:10px"><input placeholder="חיפוש שם / טלפון / מגמה…" value="${esc(nrSearch)}" oninput="nrSearch=this.value;renderTab()"><span class="mag">🔍</span></div>
+      ${cap.map(x=>`<div class="litem">
+        <span style="flex:1">👤 <b>${esc(x.name)}</b>${x.megama?` · <span style="color:var(--muted)">${esc(x.megama)}</span>`:''}
+          <div class="meta">${esc(x.city)}${x.year?' · '+esc(x.year):''}${x.phone?' · '+esc(x.phone):''}</div></span>
+        ${x.phone?`<a class="btn call small" href="tel:${esc(x.phone)}">📞</a>
+          <a class="btn wa small" target="_blank" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent('היי '+x.name.split(' ')[0]+' 💗 כאן מיטל מתוכנית הבוגרים הופה. נשמח שתמלא/י את מיפוי הבוגרים — דקה וזה עוזר לנו להתאים לך מענים.')}">וואטסאפ</a>`:''}
+        </div>`).join('')}
+      ${shown.length>cap.length?`<div class="empty">מוצגים 120 מתוך ${shown.length} — צמצמי עם חיפוש.</div>`:''}
+      ${!shown.length?'<div class="empty">אין תוצאות לחיפוש.</div>':''}
+    </div>`;
+  }else{
+    nonRespCard=`<div class="card">
+      <h3>📵 בוגרים שטרם ענו על המיפוי <span class="sub">${d.nonResp.length} ברשימה</span></h3>
+      <div class="addline">
+        <input id="nrIn" placeholder="שם בוגר/ת + טלפון (רשות)" onkeydown="if(event.key==='Enter')addNonResp()">
+        <button class="btn primary" onclick="addNonResp()">＋ הוסף</button>
+      </div>
+      <div style="margin-top:10px">
+        ${d.nonResp.length?d.nonResp.map(x=>`<div class="litem">
+          <span>👤 <b>${esc(x.name)}</b>${x.phone?` · <span dir="ltr">${esc(x.phone)}</span>`:''}
+            <div class="meta">נוסף ${esc(x.at||'')}</div></span>
+          ${x.phone?`<a class="btn wa small" target="_blank" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent('היי, זו מיטל מתוכנית הבוגרים הופה 💗 נשמח שתמלא/י את מיפוי הבוגרים — זה לוקח דקה')}">וואטסאפ</a>`:''}
+          <span class="x" onclick="delItem('nonResp','${x.id}')">✕</span></div>`).join('')
+          :'<div class="empty">אין רשומות — הוסיפי בוגרים שלא ענו, או ייבאי מרשימה בלשונית „קבצים".</div>'}
+      </div>
+    </div>`;
+  }
+  return head+nonRespCard+`
 
   <div class="card">
     <h3>⚠️ בעיות ובקשות שעלו במיפוי <span class="sub">${d.issues.length} פתוחות</span></h3>
