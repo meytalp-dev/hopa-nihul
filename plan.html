@@ -78,6 +78,7 @@
   .quick .qb{border:1px solid var(--line);background:#fafafd;border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:600;color:#555}
   .quick .qb:hover{border-color:var(--pink);color:var(--pink-dark)}
   .rbody textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;font-size:14.5px;min-height:62px;resize:vertical;line-height:1.5}
+  .rbody .cname{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:9px 12px;font-size:14.5px;font-weight:600;margin-bottom:8px;background:#fff}
   .goalwarn{font-size:12.5px;color:var(--warn);margin-top:5px;font-weight:600;display:none}
   .row.nogoal .goalwarn{display:block}
 
@@ -242,11 +243,6 @@
     </div>
 
     <div id="rows"></div>
-
-    <div class="f" id="f_otherName" style="display:none;margin-top:2px">
-      <label>סעיף ״אחר״ — מהות ההוצאה</label>
-      <input id="otherName" type="text" placeholder="במה מדובר">
-    </div>
   </section>
 
   <!-- 4 · מסביב -->
@@ -398,18 +394,22 @@ var CATS = [
     hint:'ליווי לראיון, הסעות, קורס קצר, חיבור למרכז צעירים או למעסיק',
     ph:'למשל: 15 בוגרים יחוברו למרכז הצעירים ביישוב, 6 מהם ילוו עד השמה בעבודה.',
     ex:'{m} בוגרים יחוברו למענה חיצוני (מרכז צעירים, קורס, מעסיק), עם ליווי אישי עד סגירת המעגל.' },
-  { id:'other', title:'אחר', color:'#757575',
+  { id:'other', title:'אחר', color:'#757575', custom:true,
     hint:'רק אם יש סעיף שלא נכנס לארבעת הקודמים',
+    ph:'מה ייעשה ומה היעד המספרי',
+    ex:'' },
+  { id:'other2', title:'אחר נוסף', color:'#8d8d99', custom:true,
+    hint:'סעיף ״אחר״ נוסף, אם צריך',
     ph:'מה ייעשה ומה היעד המספרי',
     ex:'' }
 ];
 
 /* התחלות מהירות — סכומים לפי סדר הסעיפים */
 var PRESETS = {
-  direct:    [5000,1500,2000,1500,0],
-  community: [2000,2000,4500,1500,0],
-  mapping:   [2000,4000,2500,1500,0],
-  clear:     [0,0,0,0,0]
+  direct:    [5000,1500,2000,1500,0,0],
+  community: [2000,2000,4500,1500,0,0],
+  mapping:   [2000,4000,2500,1500,0,0],
+  clear:     [0,0,0,0,0,0]
 };
 
 /* ═══════ עזרים ═══════ */
@@ -446,6 +446,7 @@ CATS.forEach(function(c, i){
         }).join('') +
         (c.ex ? '<button type="button" class="qb" data-ex="' + c.id + '">נסחו לי משפט</button>' : '') +
       '</div>' +
+      (c.custom ? '<input class="cname" id="n_' + c.id + '" type="text" placeholder="מהות ההוצאה — במה מדובר">' : '') +
       '<textarea id="t_' + c.id + '" placeholder="' + c.ph + '"></textarea>' +
       '<div class="goalwarn">חסר יעד במספרים — כמה בוגרים, כמה מפגשים, כמה שקלים לבוגר.</div>' +
     '</div>';
@@ -456,7 +457,7 @@ CATS.forEach(function(c, i){
 function collect(){
   var school = sel.value === '__other__' ? $('schoolOther').value.trim() : sel.value;
   var lines = CATS.map(function(c){
-    return { id:c.id, title:c.id === 'other' ? ($('otherName').value.trim() || 'אחר') : c.title,
+    return { id:c.id, title: c.custom ? ($('n_' + c.id).value.trim() || c.title) : c.title,
              amount: Number($('a_' + c.id).value) || 0, text: $('t_' + c.id).value.trim() };
   });
   return {
@@ -485,7 +486,8 @@ function apply(d){
     if (!$('a_' + l.id)) return;
     if (l.amount) $('a_' + l.id).value = l.amount;
     if (l.text) $('t_' + l.id).value = l.text;
-    if (l.id === 'other' && l.title && l.title !== 'אחר') $('otherName').value = l.title;
+    var cat = CATS.filter(function(x){ return x.id === l.id; })[0];
+    if (cat && cat.custom && l.title && l.title !== cat.title) $('n_' + l.id).value = l.title;
   });
   refresh();
 }
@@ -508,7 +510,6 @@ function refresh(){
     r.classList.toggle('nogoal', a > 0 && t !== '' && !digits(t));
     if (a === 0) r.classList.remove('bad');
   });
-  $('f_otherName').style.display = (Number($('a_other').value) || 0) > 0 ? '' : 'none';
 
   var left = CONFIG.BUDGET - sum, st = $('tState'), bar = $('tBar');
   $('tTotal').textContent = fmt(sum) + ' ₪';
@@ -598,6 +599,10 @@ function validate(){
       : 'חסרים ' + fmt(CONFIG.BUDGET - d.total) + ' ₪ כדי להשלים ל-10,000 ₪');
   }
   d.lines.forEach(function(l){
+    var cat = CATS.filter(function(x){ return x.id === l.id; })[0];
+    if (l.amount > 0 && cat && cat.custom && !$('n_' + l.id).value.trim()){
+      $('row_' + l.id).classList.add('bad'); errs.push('סעיף ״' + cat.title + '״ — צריך לציין במה מדובר');
+    }
     if (l.amount > 0 && !l.text){ $('row_' + l.id).classList.add('bad'); errs.push('סעיף ״' + l.title + '״ — צריך לפרט מה ייעשה'); }
     else if (l.amount > 0 && !digits(l.text)){ $('row_' + l.id).classList.add('bad'); errs.push('סעיף ״' + l.title + '״ — צריך יעד במספרים'); }
   });
