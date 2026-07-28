@@ -747,7 +747,8 @@ function renderAdmin(){
   var got = PLANS.map(function(p){ return p.school; });
   var miss = SCHOOLS.map(function(s){ return s[0]; }).filter(function(n){ return got.indexOf(n) === -1; });
   $('missing').innerHTML = miss.length
-    ? '<b>טרם הגישו (' + miss.length + '):</b> ' + miss.join(' · ')
+    ? '<b>טרם הגישו (' + miss.length + ')</b> — לחיצה מעתיקה קישור אישי לבית הספר:<div class="chips" style="margin-top:9px">' +
+        miss.map(function(n){ return '<button type="button" class="chip" data-link="' + esc(n) + '">' + esc(n) + '</button>'; }).join('') + '</div>'
     : '<b>כל בתי הספר הגישו.</b>';
 
   $('cards').innerHTML = PLANS.length ? PLANS.map(function(p){
@@ -792,6 +793,18 @@ function toCsv(){
   a.download = 'תוכניות-עבודה-בוגרים-תשפז.csv';
   a.click();
 }
+
+/* לחיצה על שם בי״ס שטרם הגיש — מעתיקה קישור אישי לשליחה בוואטסאפ */
+$('missing').addEventListener('click', function(e){
+  var b = e.target.closest('[data-link]');
+  if (!b) return;
+  var url = location.origin + location.pathname + '?school=' + encodeURIComponent(b.dataset.link);
+  var name = b.textContent;
+  navigator.clipboard.writeText(url).then(function(){
+    b.textContent = 'הקישור הועתק';
+    setTimeout(function(){ b.textContent = name; }, 1600);
+  });
+});
 
 $('pwBtn').addEventListener('click', function(){
   localStorage.setItem('hopa_sync_pw', $('pw').value.trim());
