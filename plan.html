@@ -636,11 +636,15 @@ $('sendBtn').addEventListener('click', function(){
     school: 'תוכנית · ' + d.school,
     json: JSON.stringify(d)
   }).toString();
+  /* השליחה היא no-cors — אין תשובה לקרוא ממנה. מציגים סיום גם אם Apps Script איטי,
+     כדי שהמנהל/ת לא יישאר תקוע מול ״שולח…״. הבקשה ממשיכה ברקע. */
+  var done = false, wrap = function(){ if (!done){ done = true; finish(d); } };
   fetch(CONFIG.EXEC_URL, {
     method: 'POST', mode: 'no-cors',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     body: body
-  }).catch(function(){}).then(function(){ finish(d); });
+  }).catch(function(){}).then(wrap);
+  setTimeout(wrap, 6000);
 });
 
 function finish(d){
@@ -671,16 +675,29 @@ $('draftBtn').addEventListener('click', function(){
 var KEY_PREFIX = 'תוכנית · ';   /* המפתח בגיליון: intake_תוכנית · <בית ספר> */
 var PLANS = [];
 
-function jsonp(params, cb){
+/* Apps Script מחזיר לפעמים דף HTML במקום התשובה בקריאה ראשונה — לכן ניסיון חוזר */
+function jsonp(params, cb, tries){
+  tries = tries == null ? 3 : tries;
   var name = '__hcb' + Math.random().toString(36).slice(2);
   var s = document.createElement('script');
-  var done = false;
-  window[name] = function(r){ done = true; cb(r); try{ delete window[name]; }catch(e){} s.remove(); };
-  params.callback = name;
-  s.onerror = function(){ if (!done) cb({ ok:false, error:'network' }); s.remove(); };
-  s.src = CONFIG.EXEC_URL + '?' + new URLSearchParams(params).toString();
+  var settled = false;
+  function fail(err){
+    if (settled) return; settled = true;
+    try{ s.remove(); }catch(e){}
+    if (tries > 1) setTimeout(function(){ jsonp(params, cb, tries - 1); }, 800);
+    else cb({ ok:false, error:err });
+  }
+  window[name] = function(r){
+    if (settled) return; settled = true;
+    try{ delete window[name]; }catch(e){}
+    try{ s.remove(); }catch(e){}
+    cb(r);
+  };
+  var p = {}; Object.keys(params).forEach(function(k){ p[k] = params[k]; }); p.callback = name;
+  s.onerror = function(){ fail('network'); };
+  s.src = CONFIG.EXEC_URL + '?' + new URLSearchParams(p).toString();
   document.body.appendChild(s);
-  setTimeout(function(){ if (!done) cb({ ok:false, error:'timeout' }); }, 20000);
+  setTimeout(function(){ fail('timeout'); }, 15000);
 }
 
 function adminLoad(){
