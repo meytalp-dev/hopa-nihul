@@ -202,9 +202,11 @@ h2.sec{font-size:clamp(27px,4.4vw,40px);font-weight:900;letter-spacing:-.03em;ma
 .israel{fill:#F1EFEA;stroke:#DAD6CE;stroke-width:1.6;stroke-linejoin:round}
 .pin{cursor:pointer}
 .pin circle.core{stroke:#fff;stroke-width:2}
-.pin.old circle.core{fill:var(--yellow-deep)}
+/* ותיק = עיגול צהוב מלא עם טבעת שחורה, הגדול והבולט ביותר */
+.pin.old circle.core{fill:var(--yellow);stroke:var(--ink);stroke-width:2.2}
 .pin.joined circle.core{fill:var(--pink)}
-.pin.process circle.core{fill:#fff;stroke:var(--orange);stroke-width:2.6}
+/* בתהליך = עיגול חלול, קריא מיד כ"עוד לא סגור" */
+.pin.process circle.core{fill:#fff;stroke:var(--orange);stroke-width:2.4;stroke-dasharray:2.6 2.2}
 .pin circle.halo{fill:var(--pink);opacity:0;transform-origin:center}
 .pin.joined circle.halo{animation:halo 3.4s ease-out infinite}
 @keyframes halo{0%{opacity:.45;r:4}70%{opacity:0;r:13}100%{opacity:0;r:13}}
@@ -212,9 +214,9 @@ h2.sec{font-size:clamp(27px,4.4vw,40px);font-weight:900;letter-spacing:-.03em;ma
 .maplegend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px}
 .lg{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
 .lg i{width:11px;height:11px;border-radius:50%;display:inline-block}
-.lg i.o{background:var(--yellow-deep)}
+.lg i.o{background:var(--yellow);box-shadow:inset 0 0 0 2px var(--ink);width:13px;height:13px}
 .lg i.j{background:var(--pink)}
-.lg i.w{background:#fff;box-shadow:inset 0 0 0 2.4px var(--orange)}
+.lg i.w{background:#fff;box-shadow:inset 0 0 0 2.2px var(--orange)}
 
 .schoolcols{display:grid;gap:20px}
 .schoolgroup h4{font-size:14px;font-weight:800;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
@@ -484,23 +486,23 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
           </svg>
         </div>
         <div class="maplegend">
-          <span class="lg"><i class="o"></i> ותיק</span>
+          <span class="lg"><i class="o"></i> ותיק, פעיל שנים</span>
           <span class="lg"><i class="j"></i> הצטרף השנה</span>
-          <span class="lg"><i class="w"></i> בתהליך</span>
+          <span class="lg"><i class="w"></i> בתהליך הצטרפות</span>
         </div>
       </div>
 
       <div class="schoolcols">
         <div class="schoolgroup">
-          <h4>בתי ספר ותיקים · 6</h4>
+          <h4>ותיקים, פעילים כבר שנים · 6</h4>
           <div class="chips" id="chips-old"></div>
         </div>
         <div class="schoolgroup">
-          <h4>הצטרפו השנה · 12</h4>
+          <h4>הצטרפו השנה · 14</h4>
           <div class="chips" id="chips-joined"></div>
         </div>
         <div class="schoolgroup">
-          <h4>בתהליך הצטרפות · 11</h4>
+          <h4>בתהליך הצטרפות · 9</h4>
           <div class="chips" id="chips-process"></div>
         </div>
       </div>
@@ -831,12 +833,12 @@ const DATA = {
       {n:"הזהיר טכנולוגי",                   c:"רהט",          x:55,  y:196},
       {n:"עתיד יוצר מגשימים",                c:"כרמיאל",       x:110, y:43},
       {n:"תיכון ח׳סוואת",                    c:"ירכא אבו סנאן",x:100, y:40},
-      {n:"התיכון החברתי",                    c:"מצפה רמון",    x:60,  y:274}
+      {n:"התיכון החברתי",                    c:"מצפה רמון",    x:60,  y:274},
+      {n:"תיכון טכנולוגי אלאמאני",           c:"סחנין",        x:108, y:46},
+      {n:"טכנולוגי לקייה",                   c:"לקייה",        x:67,  y:202}
     ],
     process: [
       {n:"עמל רמת דוד",                      c:"רמת דוד",      x:98,  y:67},
-      {n:"תיכון טכנולוגי אלאמאני",           c:"סחנין",        x:108, y:47},
-      {n:"טכנולוגי לקייה",                   c:"לקייה",        x:67,  y:202},
       {n:"תיכון יוצר עתיד בנות",             c:"ג׳וליס",       x:95,  y:44},
       {n:"עתיד אבדאע",                       c:"ביר אלמכסור",  x:99,  y:57},
       {n:"עמל נצרת",                         c:"נצרת",         x:110, y:65},
