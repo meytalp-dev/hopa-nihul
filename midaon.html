@@ -202,17 +202,19 @@ h2.sec{font-size:clamp(27px,4.4vw,40px);font-weight:900;letter-spacing:-.03em;ma
 .israel{fill:#F1EFEA;stroke:#DAD6CE;stroke-width:1.6;stroke-linejoin:round}
 .pin{cursor:pointer}
 .pin circle.core{stroke:#fff;stroke-width:2}
-.pin.vet circle.core{fill:var(--pink)}
-.pin.new circle.core{fill:var(--orange)}
+.pin.old circle.core{fill:var(--yellow-deep)}
+.pin.joined circle.core{fill:var(--pink)}
+.pin.process circle.core{fill:#fff;stroke:var(--orange);stroke-width:2.6}
 .pin circle.halo{fill:var(--pink);opacity:0;transform-origin:center}
-.pin.vet circle.halo{animation:halo 3.4s ease-out infinite}
+.pin.joined circle.halo{animation:halo 3.4s ease-out infinite}
 @keyframes halo{0%{opacity:.45;r:4}70%{opacity:0;r:13}100%{opacity:0;r:13}}
 .pin:hover circle.core{stroke:var(--ink)}
 .maplegend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px}
 .lg{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
 .lg i{width:11px;height:11px;border-radius:50%;display:inline-block}
-.lg i.v{background:var(--pink)}
-.lg i.n{background:var(--orange)}
+.lg i.o{background:var(--yellow-deep)}
+.lg i.j{background:var(--pink)}
+.lg i.w{background:#fff;box-shadow:inset 0 0 0 2.4px var(--orange)}
 
 .schoolcols{display:grid;gap:20px}
 .schoolgroup h4{font-size:14px;font-weight:800;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
@@ -222,8 +224,9 @@ h2.sec{font-size:clamp(27px,4.4vw,40px);font-weight:900;letter-spacing:-.03em;ma
   border:1px solid var(--line);background:#FCFCFC;color:var(--ink-2);
   transition:background .2s,color .2s,border-color .2s;cursor:default;
 }
-.chip.vet{background:var(--pink-soft);border-color:#F6C9DF;color:var(--pink-deep)}
-.chip.new{background:#FDF1DF;border-color:#F3D6A6;color:#8A5A00}
+.chip.old{background:var(--yellow-soft);border-color:#F0E49B;color:#6E5F00}
+.chip.joined{background:var(--pink-soft);border-color:#F6C9DF;color:var(--pink-deep)}
+.chip.process{background:#fff;border-color:#F3D6A6;color:#8A5A00}
 .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 
 /* ---------- מד התקדמות ---------- */
@@ -397,7 +400,7 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
       <div class="kicker">סיכום שנה ומבט קדימה</div>
       <h1 class="title">השנה <span class="hl">הרצף התארך</span> משני הקצוות.</h1>
       <p class="lede">
-        25 בתי ספר חדשים נכנסו למעגל, ובקצה השני נוצרה תוכנית עם הצבא שמלווה את הצעיר
+        23 בתי ספר חדשים נכנסו למעגל, ובקצה השני נוצרה תוכנית עם הצבא שמלווה את הצעיר
         עד תום השירות. הגיליון הזה מרכז את מה שנעשה השנה, ואת מה שנפתח בשנה הקרובה.
       </p>
       <div class="hero-meta">
@@ -414,14 +417,14 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
 <div class="wrap stats rv">
   <div class="stats-inner">
     <div class="stat a">
-      <div class="num" data-count="12">0</div>
-      <div class="lbl">בתי ספר סיימו הצטרפות</div>
-      <div class="sub">ועוד 13 בעיצומו של התהליך</div>
+      <div class="num" data-count="23">0</div>
+      <div class="lbl">בתי ספר חדשים בתהליך הצטרפות</div>
+      <div class="sub">לצד 6 בתי הספר הוותיקים</div>
     </div>
     <div class="stat b">
-      <div class="num" data-count="4043">0</div>
-      <div class="lbl">תלמידים במרחב ההצטרפות</div>
-      <div class="sub">ב־25 בתי ספר</div>
+      <div class="num" data-count="3762">0</div>
+      <div class="lbl">תלמידים בבתי הספר החדשים</div>
+      <div class="sub">מרחב ההשפעה שנפתח השנה</div>
     </div>
     <div class="stat c">
       <div class="num" data-count="645">0</div>
@@ -442,7 +445,7 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
     <div class="eyebrow"><i class="bar"></i><span>הקדמה</span></div>
     <h2 class="sec">שנה של עומק לפני שנה של רוחב</h2>
     <p class="sec-lede">
-      השנה הופה גדלה לרוחב ולעומק באותה נשימה. 25 בתי ספר חדשים נכנסו לתהליך הצטרפות,
+      השנה הופה גדלה לרוחב ולעומק באותה נשימה. 23 בתי ספר חדשים נכנסו לתהליך הצטרפות לצד ששת הוותיקים,
       אחד עשר מהם ביישובי החברה הערבית והבדואית, ובמקביל הרחבנו את מאגר המענים, פתחנו את המערכת לערבית
       ובנינו תשתית עבודה אחידה לרכזים. הדבר המשמעותי ביותר קרה בקצה השני של הרצף:
       נוצרה תוכנית משותפת עם הצבא, שמלווה את הצעיר מרגע הגיוס ועד תום השירות.
@@ -456,18 +459,19 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
   <div class="wrap">
     <div class="rv">
       <div class="eyebrow"><i class="bar"></i><span>פריסה</span></div>
-      <h2 class="sec">25 בתי ספר בתהליך הצטרפות</h2>
+      <h2 class="sec">מ־6 בתי ספר ל־29</h2>
       <p class="sec-lede">
-        בכל בית ספר מתקיימת פגישת היכרות עם ההנהלה, נפתחת קבוצת עבודה, ומוגדרת תוכנית שנתית.
-        ב־12 בתי ספר התהליך הושלם, מנחלים בשרון ועד מצפה רמון, ו־13 נוספים נמצאים בעיצומו.
-        אחד עשר מתוך ה־25 ביישובי החברה הערבית והבדואית, וזו הסיבה המרכזית לעבודת הנגישות בערבית שמתוארת בהמשך.
+        עד השנה הופה פעלה בשישה בתי ספר. השנה נפתח תהליך הצטרפות מול 23 בתי ספר נוספים,
+        מנחלים בשרון ועד מצפה רמון. בכל אחד מתקיימת פגישת היכרות עם ההנהלה, נפתחת קבוצת עבודה,
+        ומוגדרת תוכנית שנתית. 11 מהחדשים ביישובי החברה הערבית והבדואית,
+        וזו הסיבה המרכזית לעבודת הנגישות בערבית שמתוארת בהמשך.
       </p>
       <div class="hero-meta" style="margin-top:20px">
-        <span class="tag y">צפון · 5</span>
-        <span class="tag">מרכז · 3</span>
+        <span class="tag y">צפון · 12</span>
+        <span class="tag">מרכז · 4</span>
         <span class="tag">ירושלים · 1</span>
-        <span class="tag p">דרום · 3</span>
-        <span class="tag" style="opacity:.75">בפילוח בתי הספר שהשלימו</span>
+        <span class="tag p">דרום · 5</span>
+        <span class="tag" style="opacity:.7">בפילוח בתי הספר החדשים</span>
       </div>
     </div>
 
@@ -480,19 +484,24 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
           </svg>
         </div>
         <div class="maplegend">
-          <span class="lg"><i class="v"></i> הצטרפות הושלמה</span>
-          <span class="lg"><i class="n"></i> בתהליך</span>
+          <span class="lg"><i class="o"></i> ותיק</span>
+          <span class="lg"><i class="j"></i> הצטרף השנה</span>
+          <span class="lg"><i class="w"></i> בתהליך</span>
         </div>
       </div>
 
       <div class="schoolcols">
         <div class="schoolgroup">
-          <h4>הצטרפות הושלמה · 12 בתי ספר</h4>
-          <div class="chips" id="chips-vet"></div>
+          <h4>בתי ספר ותיקים · 6</h4>
+          <div class="chips" id="chips-old"></div>
         </div>
         <div class="schoolgroup">
-          <h4>בתהליך · 13 בתי ספר</h4>
-          <div class="chips" id="chips-new"></div>
+          <h4>הצטרפו השנה · 12</h4>
+          <div class="chips" id="chips-joined"></div>
+        </div>
+        <div class="schoolgroup">
+          <h4>בתהליך הצטרפות · 11</h4>
+          <div class="chips" id="chips-process"></div>
         </div>
       </div>
     </div>
@@ -506,7 +515,7 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
       <div class="eyebrow"><i class="bar y"></i><span>נגישות</span></div>
       <h2 class="sec">המערכת מדברת ערבית</h2>
       <p class="sec-lede">
-        אחד עשר מ־25 בתי הספר שנמצאים בתהליך ההצטרפות הם ביישובי החברה הערבית והבדואית.
+        אחד עשר מ־23 בתי הספר החדשים נמצאים ביישובי החברה הערבית והבדואית.
         עבורם, מאגר שקיים רק בעברית הוא מאגר שלא קיים. התחלנו בתרגום החזית לצעיר ולהורה,
         וממשיכים פנימה אל המערכת והטפסים שהרכזים עובדים איתם.
       </p>
@@ -750,7 +759,7 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
     </div>
     <div class="ahead rv">
       <ol class="aheadlist">
-        <li><i class="n">1</i><div><b>השלמת ההצטרפות והפעלה בכל 25 בתי הספר</b><span>סיום פגישות ההיכרות, ותוכנית עבודה ותקציב ייעודי לכל בית ספר עם יעדים מספריים ומעקב מרכזי.</span></div></li>
+        <li><i class="n">1</i><div><b>השלמת ההצטרפות והפעלה ב־29 בתי הספר</b><span>סיום פגישות ההיכרות, ותוכנית עבודה ותקציב ייעודי לכל בית ספר עם יעדים מספריים ומעקב מרכזי.</span></div></li>
         <li><i class="n">2</i><div><b>הרחבת נערי דוד</b><span>הגדלת מספר המלווים לאורך השירות, והפיכת התוכנית לחלק קבוע במעבר מבית הספר לצבא.</span></div></li>
         <li><i class="n">3</i><div><b>השלמת התרגום לערבית</b><span>מערכת המענים והטפסים, כדי שצעיר יוכל להשלים תהליך מלא בשפת האם.</span></div></li>
         <li><i class="n">4</i><div><b>הרחבת המענים המקומיים</b><span>אימות והעלאה של המענים החדשים למאגר החי, ופנייה יזומה לארגונים שזוהו.</span></div></li>
@@ -800,15 +809,23 @@ footer{margin-top:58px;border-top:1px solid var(--line);background:#fff;padding:
    נתוני הגיליון. לעדכון תוכן, לערוך כאן בלבד.
    ============================================================ */
 const DATA = {
-  /* vet = הצטרפות הושלמה (ורוד) · new = בתהליך (כתום). x,y = מיקום במפה. */
+  /* שלוש קבוצות: ותיק (צהוב) · הצטרף השנה (ורוד) · בתהליך (כתום). x,y = מיקום במפה. */
   schools: {
-    vet: [
+    old: [
+      {n:"אורט בית הערבה",                   c:"ירושלים",      x:103, y:155},
+      {n:"אורט צור ברק",                     c:"קריית מלאכי",  x:50,  y:165},
+      {n:"אורט אדיבי",                       c:"אשקלון",       x:37,  y:168},
+      {n:"עתיד",                             c:"קריית מוצקין", x:88,  y:52},
+      {n:"אורט מגשימים",                     c:"בית שאן",      x:130, y:85},
+      {n:"אורט מרום",                        c:"עכו",          x:86,  y:43}
+    ],
+    joined: [
       {n:"מרכז תורני טכנולוגי",              c:"נחלים",        x:75,  y:128},
       {n:"מנאראת",                           c:"טורעאן",       x:118, y:58},
       {n:"תיכון יוצר עמל טכנולוגי",          c:"אשדוד",        x:45,  y:155},
       {n:"דרור נווה מדבר",                   c:"נווה מדבר",    x:70,  y:225},
       {n:"תיכון אלאמאני",                    c:"סחנין",        x:112, y:50},
-      {n:"תיכון חושן",                       c:"ירושלים",      x:99,  y:161},
+      {n:"תיכון חושן",                       c:"ירושלים",      x:99,  y:163},
       {n:"תיכון שיח",                        c:"עמקה",         x:93,  y:35},
       {n:"התיכון החברתי",                    c:"תל אביב יפו",  x:56,  y:129},
       {n:"הזהיר טכנולוגי",                   c:"רהט",          x:55,  y:196},
@@ -816,9 +833,7 @@ const DATA = {
       {n:"תיכון ח׳סוואת",                    c:"ירכא אבו סנאן",x:100, y:40},
       {n:"התיכון החברתי",                    c:"מצפה רמון",    x:60,  y:274}
     ],
-    "new": [
-      {n:"אורט בית הערבה",                   c:"ירושלים",      x:103, y:155},
-      {n:"אורט צור ברק",                     c:"קריית מלאכי",  x:50,  y:165},
+    process: [
       {n:"עמל רמת דוד",                      c:"רמת דוד",      x:98,  y:67},
       {n:"תיכון טכנולוגי אלאמאני",           c:"סחנין",        x:108, y:47},
       {n:"טכנולוגי לקייה",                   c:"לקייה",        x:67,  y:202},
@@ -846,9 +861,8 @@ const DATA = {
 /* ---------- מפה ---------- */
 (function buildMap(){
   const g = document.getElementById('pins');
-  const cv = document.getElementById('chips-vet');
-  const cn = document.getElementById('chips-new');
   const NS = 'http://www.w3.org/2000/svg';
+  const R = { old: 5.6, joined: 5.2, process: 4.4 };
 
   function add(list, cls, chipBox){
     list.forEach((s, i) => {
@@ -872,7 +886,7 @@ const DATA = {
       const core = document.createElementNS(NS,'circle');
       core.setAttribute('class','core');
       core.setAttribute('cx', s.x); core.setAttribute('cy', s.y);
-      core.setAttribute('r', cls === 'vet' ? 5.4 : 4.6);
+      core.setAttribute('r', R[cls]);
 
       const t = document.createElementNS(NS,'title');
       t.textContent = s.n + (s.c ? ' · ' + s.c : '');
@@ -880,14 +894,15 @@ const DATA = {
       grp.appendChild(halo); grp.appendChild(core); grp.appendChild(t);
       g.appendChild(grp);
 
-      const on  = () => { chip.classList.add('on');    core.setAttribute('r', 8); };
-      const off = () => { chip.classList.remove('on'); core.setAttribute('r', cls === 'vet' ? 5.4 : 4.6); };
+      const on  = () => { chip.classList.add('on');    core.setAttribute('r', 8.4); };
+      const off = () => { chip.classList.remove('on'); core.setAttribute('r', R[cls]); };
       grp.addEventListener('mouseenter', on);  grp.addEventListener('mouseleave', off);
       chip.addEventListener('mouseenter', on); chip.addEventListener('mouseleave', off);
     });
   }
-  add(DATA.schools.vet, 'vet', cv);
-  add(DATA.schools['new'], 'new', cn);
+  add(DATA.schools.old,     'old',     document.getElementById('chips-old'));
+  add(DATA.schools.joined,  'joined',  document.getElementById('chips-joined'));
+  add(DATA.schools.process, 'process', document.getElementById('chips-process'));
 })();
 
 /* ---------- ברי קטגוריות ---------- */
