@@ -337,6 +337,37 @@
     </div>
   </div>
 
+  <!-- ============ פוסט 8 ============ -->
+  <div class="post" id="post8">
+    <div class="post-head">
+      <div class="post-num">8</div>
+      <h2>תקציב ה־SOS — הנשמה היתרה של התוכנית</h2>
+      <span class="chip prep" data-status="post8">בהכנה — מחכה לתמונה</span>
+      <button class="btn ghost small" onclick="togglePublished('post8',this)">סימון כפורסם</button>
+    </div>
+    <div class="post-body">
+      <div class="post-img">
+        <div class="noimg">התמונה המעוצבת תעלה לכאן בקרוב</div>
+      </div>
+      <div class="post-text-wrap">
+        <div class="label">טקסט הפוסט (לוודא אישור של לירון לפני פרסום)</div>
+        <div class="post-text" id="text8">תקציב ה־SOS הוא אחד היסודות המרכזיים במודל של הופה, גם במניעת נשירה וגם בליווי הבוגרים.
+
+רויטל אמיר, לשעבר מנהלת בית הספר אורט בית הערבה וכיום מפקחת פדגוגיה במשרד העבודה, כינתה אותו בעבר "הנשמה היתרה" של התוכנית, וזה אולי התיאור המדויק ביותר. זו האפשרות להעניק לתלמיד או לבוגר סיוע מיידי במצב חירום שלא סובל דיחוי, לפני שהקושי הופך למשבר עמוק יותר.
+
+לפעמים מדובר בנסיעה, מזון, ביגוד, צורך רפואי או מענה רגשי דחוף. לא תמיד אלה סכומים גדולים, אבל ברגע הנכון הם יכולים להיות ההבדל בין הישארות במסגרת לבין נשירה, בין המשך תפקוד לבין הידרדרות.
+
+התקציב מאפשר למובילות הופה ולצוותים לפעול בזמן אמת, בלי להמתין שבועות עד שיימצא מענה אחר. הוא מופעל בשיקול דעת ובמצבים שבהם הזמן הוא חלק מהבעיה.
+
+מבחינתנו, ליווי אמיתי לא יכול להסתפק בהכוונה ובהפניה. לפעמים צריך גם להיות מסוגלים לפעול מיד. לכן תקציב ה־SOS אינו תוספת למודל, אלא חלק מהלב שלו.</div>
+        <div class="copy-row">
+          <button class="btn" onclick="copyText('text8',this)">📋 העתקת הטקסט לפייסבוק</button>
+        </div>
+        <div class="overlay-note">על התמונה: <b>יש רגעים שלא יכולים לחכות</b> (צהוב) · <b>תקציב ה־SOS של הופה</b> (ורוד)</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ ארכיון ============ -->
   <div class="section-title">פוסטים קודמים — תמונות לשימוש חוזר</div>
   <div class="section-sub">התמונות שכבר פורסמו או הוכנו בסבבים קודמים. לחיצה על "הורדה" שומרת את הקובץ.</div>
@@ -398,7 +429,8 @@ function applyPublished(postId, dateStr, btn){
   var b = btn || chip.parentElement.querySelector('button');
   if(b) b.textContent = 'ביטול סימון';
 }
-['post1','post2','post3'].forEach(function(p){
+document.querySelectorAll('[data-status]').forEach(function(el){
+  var p = el.dataset.status;
   var saved = localStorage.getItem('hopa-fb-' + p);
   if(saved) applyPublished(p, saved);
 });
