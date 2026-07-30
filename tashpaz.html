@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מסמך היערכות תשפ"ז — המהדורה הדיגיטלית</title>
+<title>היערכות לשנת הלימודים תשפ"ז — מנהלות ומנהלים</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Bellefair&family=Frank+Ruhl+Libre:wght@700;900&family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,29 @@ h1,h2,h3,.serif{font-family:var(--serif)}
 p+p{margin-top:.9em}
 strong{font-weight:700}
 a{color:var(--petrol)}
-.dl{border-bottom:1px dashed var(--hair-dark);cursor:help}
+a.lk{
+  color:var(--petrol);text-decoration:none;font-weight:500;
+  border-bottom:1.5px solid var(--brass);transition:.15s;
+}
+a.lk::after{content:"↗";font-size:.72em;margin-inline-start:3px;color:var(--brass)}
+a.lk:hover{background:rgba(185,149,74,.16);border-bottom-color:var(--copper)}
+
+/* רשת רכיבי התיק הבית ספרי */
+.tik-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
+  gap:1px;margin:22px 0;background:var(--hair-dark);
+  border:1px solid var(--hair-dark);border-top:3px solid var(--ink-2);
+  box-shadow:0 18px 40px -30px rgba(20,38,46,.4);
+}
+.tik-item{
+  background:var(--white);padding:13px 16px;font-size:.93rem;line-height:1.45;
+  display:flex;gap:12px;align-items:baseline;transition:background .15s;
+}
+.tik-item:hover{background:var(--paper)}
+.tik-item b{
+  font-family:var(--elegant);font-weight:400;color:var(--brass);font-size:1.25rem;
+  min-width:1.6em;
+}
 
 /* ---------- scroll reveal ---------- */
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
@@ -522,10 +544,10 @@ footer b{color:var(--paper)}
   <div class="ghost" aria-hidden="true">תשפ״ז</div>
   <div class="office">משרד העבודה · מינהל הכשרה מקצועית</div>
   <div class="date">כ"ה בתמוז התשפ"ו · 29.7.2026</div>
-  <h1>מסמך היערכות לשנת הלימודים <span class="yr">תשפ"ז</span></h1>
+  <h1>היערכות לשנת הלימודים <span class="yr">תשפ"ז</span></h1>
   <div class="subtitle">תודה, הערכה והמשך הדרך</div>
   <div class="rule"></div>
-  <p class="dedication">המהדורה הדיגיטלית: המסמך המלא, פרק אחר פרק — לצד לוח שנה של אבני הדרך ומד מוכנות אישי למנהלת ולמנהל.</p>
+  <p class="dedication">כל מה שמנהלת ומנהל צריכים לשנה הקרובה: הנחיות, מועדים, משאבים וקישורים — לצד לוח שנה של אבני הדרך ומד מוכנות אישי.</p>
   <div class="hint">⌄</div>
 </header>
 
@@ -535,10 +557,10 @@ footer b{color:var(--paper)}
     <a href="#toc">תוכן</a>
     <a href="#journey">המסע בשנה</a>
     <a href="#meter">מד המוכנות</a>
-    <a href="#ch1">פרק א</a>
-    <a href="#ch2">פרק ב</a>
-    <a href="#ch3">פרק ג</a>
-    <a href="#ch4">פרק ד</a>
+    <a href="#ch1">מנהיגות ניהולית</a>
+    <a href="#ch2">היערכות פדגוגית</a>
+    <a href="#ch3">הנחיות המנהל</a>
+    <a href="#ch4">חינוך יוצר</a>
     <span class="navmeter"><span class="bar"><i id="navBarFill"></i></span><b id="navPct">0%</b></span>
   </div>
 </nav>
@@ -579,9 +601,9 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
-        <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
+        <div class="over">כלי עבודה למנהלת ולמנהל</div>
         <h2>המסע בשנה — לוח אבני הדרך</h2>
-        <p>כל המועדים, הסדירויות והדדליינים שבמסמך, מסודרים כלוח שנה של תשפ"ז — מפתיחת השנה ועד סיומה.</p>
+        <p>כל המועדים, הסדירויות והדדליינים של שנת תשפ"ז, מסודרים כלוח שנה — מפתיחת השנה ועד סיומה.</p>
       </div>
     </div>
   </div>
@@ -656,7 +678,7 @@ footer b{color:var(--paper)}
     </div>
 
   </div>
-  <div class="legend-line"><span><b>◆</b> מועד מחייב מהמסמך</span><span>— פעולה נדרשת</span></div>
+  <div class="legend-line"><span><b>◆</b> מועד מחייב</span><span>— פעולה נדרשת</span></div>
 </section>
 
 <!-- ============ METER ============ -->
@@ -665,9 +687,9 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
-        <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
+        <div class="over">כלי עבודה למנהלת ולמנהל</div>
         <h2>מד המוכנות האישי</h2>
-        <p>כל דרישות ההיערכות שבמסמך, כטופס סימון אחד. הסימונים נשמרים במכשיר שלכם בלבד — סמנו, צאו, חִזרו.</p>
+        <p>כל דרישות ההיערכות לפתיחת השנה, בטופס סימון אחד. הסימונים נשמרים במכשיר שלכם בלבד — סמנו, צאו, חִזרו.</p>
       </div>
     </div>
   </div>
@@ -760,7 +782,7 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">א</div>
       <div class="t">
-        <div class="over">פרק ראשון</div>
+        <div class="over">הובלת בית הספר</div>
         <h2>מנהיגות ניהולית ופדגוגית — בהובלת מנהל ביה"ס</h2>
       </div>
     </div>
@@ -845,24 +867,41 @@ footer b{color:var(--paper)}
 
   <h3 class="sec rv" id="tik">תיק בית ספרי</h3>
   <p>התיק הפדגוגי הוא כלי עבודה מרכזי לניהול, תכנון, תיעוד ובקרה של העשייה החינוכית בבית הספר. ניהול תיק מסודר, מעודכן ונגיש מאפשר רצף עבודה מקצועי, מסייע בקבלת החלטות, מחזק את תהליכי הבקרה והפיקוח ותורם לאיכות הניהול וההוראה. הקפדה על ניהול התיק מבטיחה סדר, ארגון ושמירה על כלל המסמכים הנדרשים לאורך שנת הלימודים.</p>
-  <div class="callout petrol rv">
-    <span class="ttl">התיק יכלול</span>
-    תקנון ביה"ס, תיק בטיחות, תוכנית שימוש בתקציבים, גאנט שנתי, מערכות שעות, תוכנית עבודה שנתית, תוכנית פדגוגית, תוכנית חברתית, תוכנית הכלה ושילוב, תוכנית חניכות, תוכנית מצוינות וחדשנות, תוכנית פיתוח צוות, תוכניות עבודה של כלל בעלי התפקידים, סילבוס של כלל המקצועות והמורים, תוכנית עבודה עם הורי ביה"ס, תוכניות ייחודיות, תוכנית מקצועית הכוללת פיתוח המגמות, קורסים מקצועיים, סיורים ושיתופי פעולה עם הקהילה ובתוכה, ותוכנית לשעת חירום.
+  <h4 class="sub">שמונה־עשר רכיבי התיק</h4>
+  <div class="tik-grid rv">
+    <div class="tik-item"><b>01</b>תקנון בית הספר</div>
+    <div class="tik-item"><b>02</b>תיק בטיחות</div>
+    <div class="tik-item"><b>03</b>תוכנית שימוש בתקציבים</div>
+    <div class="tik-item"><b>04</b>גאנט שנתי</div>
+    <div class="tik-item"><b>05</b>מערכות שעות</div>
+    <div class="tik-item"><b>06</b>תוכנית עבודה שנתית</div>
+    <div class="tik-item"><b>07</b>תוכנית פדגוגית</div>
+    <div class="tik-item"><b>08</b>תוכנית חברתית</div>
+    <div class="tik-item"><b>09</b>תוכנית הכלה ושילוב</div>
+    <div class="tik-item"><b>10</b>תוכנית חניכות</div>
+    <div class="tik-item"><b>11</b>תוכנית מצוינות וחדשנות</div>
+    <div class="tik-item"><b>12</b>תוכנית פיתוח צוות</div>
+    <div class="tik-item"><b>13</b>תוכניות עבודה של כלל בעלי התפקידים</div>
+    <div class="tik-item"><b>14</b>סילבוס של כלל המקצועות והמורים</div>
+    <div class="tik-item"><b>15</b>תוכנית עבודה עם הורי בית הספר</div>
+    <div class="tik-item"><b>16</b>תוכניות ייחודיות</div>
+    <div class="tik-item"><b>17</b>תוכנית מקצועית — פיתוח המגמות, קורסים מקצועיים, סיורים ושיתופי פעולה בקהילה</div>
+    <div class="tik-item"><b>18</b>תוכנית לשעת חירום</div>
   </div>
 
   <h3 class="sec rv" id="emergency-sec">שגרת חירום — היערכות מוקדמת</h3>
   <p>לצד ההיערכות הפדגוגית, הארגונית והמקצועית לשנה החדשה, חשוב להיערך גם למצבים המחייבים מעבר ללמידה מרחוק או להפעלה גמישה של בית הספר. לקראת היערכות תשפ"ז יש להיערך:</p>
   <ol class="ed rv">
     <li><strong>הגשת תוכנית בית ספרית ללמידה מרחוק/היברידית</strong>, תוך בניית מנגנונים ברורים לשמירה על קשר, למידה, תמיכה ומשמעות עבור כל תלמיד ותלמידה.</li>
-    <li>הכנת תיק צל"ח מעודכן — על פי <span class="dl">הנחיות צל"ח</span>.</li>
+    <li>הכנת תיק צל"ח מעודכן — על פי <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1JwvMuvd7cKOQER8Om4TrmVHnIwOnPHt5">הנחיות צל"ח</a>.</li>
     <li>פגישת צוות צל"ח, כולל חלוקת תפקידים.</li>
     <li>הכנת תשתית פדגוגית לכל מורה ותלמיד, כולל התנסות בלמידה מרחוק.</li>
     <li>ניתן לתאם עד 5 ימי לימוד מרחוק במהלך שנת הלימודים על מנת לתרגל ולפתח מיומנויות ללמידה מרחוק, למידה עצמאית, שילוב טכנולוגיות ועוד.</li>
   </ol>
-  <p><span class="dl">מענים ללמידה מרחוק — אגרת כלים למענה פדגוגי ורגשי מיטבי</span></p>
+  <p><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1EYy0grXrfIArYmlv1OSvpLbiIvHmiOIs">מענים ללמידה מרחוק — אגרת כלים למענה פדגוגי ורגשי מיטבי</a></p>
 
   <h3 class="sec rv" id="persistence">התמדה ומניעת נשירה</h3>
-  <p>התמדה וביקור סדיר מהווים תשתית חינוכית קריטית. <strong>בתי הספר מחויבים לעבוד על פי <span class="dl">ההנחיות לדיווח וטיפול בבעיות ביקור סדיר ומניעת נשירה</span>.</strong></p>
+  <p>התמדה וביקור סדיר מהווים תשתית חינוכית קריטית. <strong>בתי הספר מחויבים לעבוד על פי <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1IVhADxZTGfPr_Pe0ryFgLNrKMbGgPFRK/view">ההנחיות לדיווח וטיפול בבעיות ביקור סדיר ומניעת נשירה</a>.</strong></p>
 
   <div class="tbl-scroll rv">
   <table class="doc">
@@ -870,10 +909,10 @@ footer b{color:var(--paper)}
     <tr><th style="width:220px">פעולה</th><th>תדירות והנחיה</th></tr>
     <tr><td class="k">הנחיות למניעת נשירה</td><td>עבודה סדורה על פי ההנחיות שפורסמו.</td></tr>
     <tr><td class="k">דיווח נוכחות</td><td>בכל שיעור יש לדווח נוכחות במערכת הממוחשבת.</td></tr>
-    <tr><td class="k">דו"ח תלמידים בסכנת נשירה</td><td><strong>אחת לחודש</strong> — באחריות המנהל להכין טופס מעקב ולהעבירו במייל למפקחת המערך הטיפולי, למפקח ביה"ס ולמחוז (<span class="dl">טופס דיווח חודשי</span>).</td></tr>
-    <tr><td class="k">גריעת תלמיד/ה ממצבת התלמידים</td><td>יש לפעול על פי ההנחיות ולעדכן באופן מיידי במייל את מפקח ביה"ס והמפקחת על המערך הטיפולי. בעדכון יש לציין את שם התלמיד, הכיתה וסיבת הגריעה (<span class="dl">מכתב סיום לימודים</span>).</td></tr>
+    <tr><td class="k">דו"ח תלמידים בסכנת נשירה</td><td><strong>אחת לחודש</strong> — באחריות המנהל להכין טופס מעקב ולהעבירו במייל למפקחת המערך הטיפולי, למפקח ביה"ס ולמחוז (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1X2lWmpbzOQ4F-aYxiAwRMlApO8FKR05R/edit">טופס דיווח חודשי</a>).</td></tr>
+    <tr><td class="k">גריעת תלמיד/ה ממצבת התלמידים</td><td>יש לפעול על פי ההנחיות ולעדכן באופן מיידי במייל את מפקח ביה"ס והמפקחת על המערך הטיפולי. בעדכון יש לציין את שם התלמיד, הכיתה וסיבת הגריעה (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1hqRte7yAPZi-vZCbRahOpesr6ZU5OOGK/edit">מכתב סיום לימודים</a>).</td></tr>
     <tr><td class="k">ועדות התמדה</td><td>שלוש פעמים בשנה (בתיאום מראש).</td></tr>
-    <tr><td class="k">דיווח לקב"ס</td><td>יש לעמוד בקשר רציף עם הקב"ס על כלל התלמידים עם בעיות התנהגות, התמדה ונוכחות שאינה סדירה (<span class="dl">מכתב הודעה לקב"ס</span>).</td></tr>
+    <tr><td class="k">דיווח לקב"ס</td><td>יש לעמוד בקשר רציף עם הקב"ס על כלל התלמידים עם בעיות התנהגות, התמדה ונוכחות שאינה סדירה (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1CHHuL4BZ-o1mO9AzOFNUz2BNE5fvU0b_/edit">מכתב הודעה לקב"ס</a>).</td></tr>
     <tr><td class="k">ועדה מלווה</td><td>פעמיים בשנה — הצגת נתונים על התמדה, נשירה, מסקנות ותוכנית פעולה.</td></tr>
   </table>
   </div>
@@ -986,7 +1025,7 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">ב</div>
       <div class="t">
-        <div class="over">פרק שני</div>
+        <div class="over">פתיחת שנה סדורה</div>
         <h2>היערכות פדגוגית תשפ"ז</h2>
       </div>
     </div>
@@ -1006,12 +1045,12 @@ footer b{color:var(--paper)}
 
   <h4 class="sub">פעולות באחריות הרכז/ת הפדגוגי/ת</h4>
   <ol class="ed rv">
-    <li>כל מורה מתבקש לבנות <span class="dl">תוכנית עבודה שנתית</span> על פי שבועות — סילבוס (הוראה–למידה–הערכה).</li>
-    <li><span class="dl">פריסת היבחנות תלת־שנתית</span>.</li>
+    <li>כל מורה מתבקש לבנות <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1HJyUxjZ6fEe66eixjA6KVkuyTlrEGlIt">תוכנית עבודה שנתית</a> על פי שבועות — סילבוס (הוראה–למידה–הערכה).</li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1RER9rku3j7C3Cgg2VW-1JF7-daPN_u8i">פריסת היבחנות תלת־שנתית</a>.</li>
     <li>מופעי הערכה והצגת תוצרים.</li>
     <li>שיתופי פעולה אינטר־דיסציפלינריים.</li>
   </ol>
-  <p><span class="dl">תיקיית כלים פדגוגיים</span></p>
+  <p><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1BiNglQkZBFJVfi1y32flDfs6Eh1EpTZe">תיקיית כלים פדגוגיים</a></p>
 
   <h3 class="sec rv" id="gemer">היערכות כיתות תעודת מקצוע וגמר</h3>
   <h4 class="sub">מקצועות הליבה</h4>
@@ -1024,7 +1063,7 @@ footer b{color:var(--paper)}
   </ul>
 
   <h3 class="sec rv" id="bagrut">היערכות כיתות מקצוע ובגרות חלקית / מלאה</h3>
-  <p>בתי ספר שבחרו לכיתות מסוימות מתווה בגרות — להלן הנחיות בהתאם לדרישות משרד החינוך. מנהל ביה"ס יצטרך להתחייב ולעמוד בדרישות הבאות: <strong>שעות הוראה</strong> בהתאם למספר שעות ההוראה בכל מקצוע על פי דרישת משרד החינוך (<span class="dl">אוגדן שעות תשפ"ז</span>).</p>
+  <p>בתי ספר שבחרו לכיתות מסוימות מתווה בגרות — להלן הנחיות בהתאם לדרישות משרד החינוך. מנהל ביה"ס יצטרך להתחייב ולעמוד בדרישות הבאות: <strong>שעות הוראה</strong> בהתאם למספר שעות ההוראה בכל מקצוע על פי דרישת משרד החינוך (<a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1_7xy-YenyrkwzVV0nTll8xX5MG2t8fYw">אוגדן שעות תשפ"ז</a>).</p>
 
   <h4 class="sub">הנחיות לחלוקת שעות הלימוד</h4>
   <p>מסגרת השעות המארגנת משקפת את מספר שעות ההוראה ליחידת לימוד. מספר שעות ההוראה של כלל החומר הנלמד ביחידת לימוד אחת מוערך בכ־90 שעות לימוד בכיתה (3 שעות שבועיות לאורך שנת הלימודים). מקצועות ברמה של 5 יח"ל יילמדו בהיקף של 450 שעות לימוד לפחות.</p>
@@ -1045,7 +1084,7 @@ footer b{color:var(--paper)}
     <span class="ttl">דגשים מחייבים</span>
     השתתפות בהשתלמויות, בהדרכות ובהנחיה המקצועית לאורך השנה היא חלק בלתי נפרד מתפקידו של מורה לבגרות. כל מורה המלמד למקצוע בגרות, על מנת שיאושר לו מתן ציון שנתי (מגן), מחויב ל:
     <ul class="ed tight" style="margin-bottom:0">
-      <li><strong>קבוצת הדרכה מטעם המינהל להכשרה מקצועית</strong> — להיות חלק מקבוצת ההדרכה ולקבל הדרכה פרטנית וקבוצתית (<span class="dl">קישור לקבוצות הלימוד השונות</span>).</li>
+      <li><strong>קבוצת הדרכה מטעם המינהל להכשרה מקצועית</strong> — להיות חלק מקבוצת ההדרכה ולקבל הדרכה פרטנית וקבוצתית (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1hCUgdMQmVM514MNXczBJNsO-UwmJiMqv/edit">קישור לקבוצות הלימוד השונות</a>).</li>
       <li><strong>השתלמות</strong> — להשתתף בהשתלמות בתחום הדעת דרך משרד החינוך אחת לשלוש שנים.</li>
     </ul>
   </div>
@@ -1064,12 +1103,12 @@ footer b{color:var(--paper)}
 
   <div class="callout red rv">
     <span class="ttl">אזהרת שק"ד</span>
-    במקרים בהם ביה"ס ייחשד באירועי שק"ד (פער חריג בין ממוצע הציונים השנתי שהועבר למשרד החינוך לממוצע ציוני הבחינה) — תישלל זכותו להגשת ציון שנתי למשך כשנתיים/שלוש, כנהוג במשרד החינוך (<span class="dl">קישור למסמך מרכז אירועי שק"ד משה"ח</span>).
+    במקרים בהם ביה"ס ייחשד באירועי שק"ד (פער חריג בין ממוצע הציונים השנתי שהועבר למשרד החינוך לממוצע ציוני הבחינה) — תישלל זכותו להגשת ציון שנתי למשך כשנתיים/שלוש, כנהוג במשרד החינוך (<a class="lk" target="_blank" rel="noopener" href="https://mosdot.education.gov.il/students/matriculation/shaked/">מרכז אירועי שק"ד משה"ח</a>).
   </div>
 
   <h4 class="sub">ארגון זמן הלמידה</h4>
   <p>יש לקיים את שעות הלמידה על פי מערכת השעות שנקבעה, באופן רציף וסדיר, ולהקפיד לא לבטל שיעורים לצורך אירועים פדגוגיים כמו: ישיבות, אספות הורים, מועצות פדגוגיות וועדות מקצועיות.</p>
-  <p><span class="dl">חוזר מנכ"ל משרד החינוך: שעות הפעילות במוסדות החינוך הרשמי של מדינת ישראל</span> · <span class="dl">קישור לארגון הלמידה חטיבה עליונה משרד החינוך תשפ"ז</span></p>
+  <p><a class="lk" target="_blank" rel="noopener" href="https://apps.education.gov.il/mankal/horaa.aspx?siduri=52#_Toc256000051">חוזר מנכ"ל משרד החינוך: שעות הפעילות במוסדות החינוך הרשמי של מדינת ישראל</a> · <a class="lk" target="_blank" rel="noopener" href="https://meyda.education.gov.il/files/HighSchool/irgun_lemida_highschool.pdf">ארגון הלמידה בחטיבה העליונה — משרד החינוך תשפ"ז</a></p>
 
   <h3 class="sec rv" id="maatefet">מעטפת פדגוגית מטעם מינהל הכשרה מקצועית</h3>
   <p class="lead">משאבים פדגוגיים העומדים לרשות בית הספר מטעם המינהל להכשרה מקצועית.</p>
@@ -1077,14 +1116,14 @@ footer b{color:var(--paper)}
   <div class="tbl-scroll rv">
   <table class="doc">
     <tr><th style="width:190px">הנושא</th><th>המשאב</th></tr>
-    <tr><td class="k">השתלמות מוסדית</td><td>על מנהל בית הספר להציג למפקח הכולל את תהליכי הפיתוח המקצועי וההשתלמויות שהתקיימו בשנים האחרונות, ולציין את היעד הפדגוגי המרכזי שבית הספר מבקש לקדם השנה באמצעות ההשתלמות הנבחרת והשפעתה הצפויה על ההוראה, הלמידה והתלמידים. <strong>בהמשך יועבר לבתי הספר קטלוג השתלמויות לבחירה</strong> — בית הספר יתבקש לבחור השתלמות מתוך הקטלוג או להציע מנחה חלופי בהתאם ליעד הפדגוגי שבחר, בכפוף לאישור המפקח. ההשתלמויות יתחילו בנובמבר ויסתיימו בחודש מאי. <span class="dl">מסמך הפעלת השתלמות מוכרת לגמול — חינוך יוצר</span> · <span class="dl">פורמט הגשת סילבוס</span></td></tr>
-    <tr><td class="k">מצפן פדגוגי</td><td><span class="dl">אגרת פדגוגית ללמידה משמעותית — מיומנויות רלוונטיות ויישום</span></td></tr>
-    <tr><td class="k">ועדה מלווה</td><td>ועדה מקצועית שתלווה את ביה"ס פעמיים בשנה. <span class="dl">הנחיות ועדה מלווה</span> · <span class="dl">מכתבי הכנה ומצגות ועדה מלווה</span></td></tr>
-    <tr><td class="k">סל תוכניות</td><td>סל תקציבי גמיש המיועד לחיזוק ההיבטים המקצועיים, הערכיים, החברתיים והאישיים של התלמידים, באמצעות פעילויות המקדמות חניכות, פדגוגיה חדשנית, חוסן אישי, מניעת נשירה, שייכות ומעורבות קהילתית. התקציב מאפשר לבית הספר להתאים מענים לצרכיו ולקדם את מטרותיו החינוכיות בהתאם לתפיסת החינוך היוצר והפדגוגיה הדואלית (<span class="dl">מסמך סל תוכניות מעודכן</span>). ישנה גמישות בין הסעיפים באישור מפקח ביה"ס; לא ניתן להשתמש בתקציב זה לטובת שעות הוראה.</td></tr>
-    <tr><td class="k">מדידה והערכה — תחום פדגוגיה</td><td>1. <span class="dl">שאלוני אקלים פדגוגיה צוות ותלמידים</span>. &nbsp;2. פגישת למידה עם המפקח: תוכנית פעולה מבוססת נתוני שאלוני אקלים ופדגוגיה — צוות ותלמידים (<span class="dl">מכתב מקדים לפגישה</span>). &nbsp;3. <span class="dl">מאגר מענים לפדגוגיה מיטיבה</span> בעקבות תוצאות השאלונים.</td></tr>
-    <tr><td class="k">עידוד הרחבת השכלה לעובדי הוראה</td><td>עידוד השכלה גבוהה ותעודות הוראה — <span class="dl">בקשת מענק באתר משרד העבודה</span>, מתעדכן בכל שנה.</td></tr>
+    <tr><td class="k">השתלמות מוסדית</td><td>על מנהל בית הספר להציג למפקח הכולל את תהליכי הפיתוח המקצועי וההשתלמויות שהתקיימו בשנים האחרונות, ולציין את היעד הפדגוגי המרכזי שבית הספר מבקש לקדם השנה באמצעות ההשתלמות הנבחרת והשפעתה הצפויה על ההוראה, הלמידה והתלמידים. <strong>בהמשך יועבר לבתי הספר קטלוג השתלמויות לבחירה</strong> — בית הספר יתבקש לבחור השתלמות מתוך הקטלוג או להציע מנחה חלופי בהתאם ליעד הפדגוגי שבחר, בכפוף לאישור המפקח. ההשתלמויות יתחילו בנובמבר ויסתיימו בחודש מאי. <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Zxg4FZq_yN4tTvnod_SM0KtdZqx55fXo/view">מסמך הפעלת השתלמות מוכרת לגמול — חינוך יוצר</a> · <a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1PFRkv90Uaf0tthUdGOyVieSCQeEvLg2T/edit">פורמט הגשת סילבוס</a></td></tr>
+    <tr><td class="k">מצפן פדגוגי</td><td><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1twJtVMiLTEpTlZP1vRaasTHjfEV6VL-s/view">אגרת פדגוגית ללמידה משמעותית — מיומנויות רלוונטיות ויישום</a></td></tr>
+    <tr><td class="k">ועדה מלווה</td><td>ועדה מקצועית שתלווה את ביה"ס פעמיים בשנה. <a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QNdCPPCZVw5VEnOCCKZPuOKPISGMgmKH/edit">הנחיות ועדה מלווה</a> · <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1mGiiKKrhSmaFUMbJsMK6tK4zEw2N_MC9">מכתבי הכנה ומצגות ועדה מלווה</a></td></tr>
+    <tr><td class="k">סל תוכניות</td><td>סל תקציבי גמיש המיועד לחיזוק ההיבטים המקצועיים, הערכיים, החברתיים והאישיים של התלמידים, באמצעות פעילויות המקדמות חניכות, פדגוגיה חדשנית, חוסן אישי, מניעת נשירה, שייכות ומעורבות קהילתית. התקציב מאפשר לבית הספר להתאים מענים לצרכיו ולקדם את מטרותיו החינוכיות בהתאם לתפיסת החינוך היוצר והפדגוגיה הדואלית (<a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1x_qt-ezw-JqX5WLkzVcSZzHhz5NkJbHr">מסמך סל תוכניות מעודכן</a>). ישנה גמישות בין הסעיפים באישור מפקח ביה"ס; לא ניתן להשתמש בתקציב זה לטובת שעות הוראה.</td></tr>
+    <tr><td class="k">מדידה והערכה — תחום פדגוגיה</td><td>1. <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1i9qZpkKX6Yerd1i3Ufo_NLS_oR5BApr0">שאלוני אקלים פדגוגיה צוות ותלמידים</a>. &nbsp;2. פגישת למידה עם המפקח: תוכנית פעולה מבוססת נתוני שאלוני אקלים ופדגוגיה — צוות ותלמידים (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1xu4maDy35LUQ2oT9wOw135JjYNr3w61G/edit">מכתב מקדים לפגישה</a>). &nbsp;3. <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1uXnaFQB4T3rIEedznWD9SYf7FD8iVHf2">מאגר מענים לפדגוגיה מיטיבה</a> בעקבות תוצאות השאלונים.</td></tr>
+    <tr><td class="k">עידוד הרחבת השכלה לעובדי הוראה</td><td>עידוד השכלה גבוהה ותעודות הוראה — <a class="lk" target="_blank" rel="noopener" href="https://www.gov.il/he/service/grant-teaching-staff-vocational-schools">בקשת מענק באתר משרד העבודה</a>, מתעדכן בכל שנה.</td></tr>
     <tr><td class="k">עידוד משלחות לפולין</td><td>הנחיות אישור מלגות יפורסמו במהלך חודש ינואר.</td></tr>
-    <tr><td class="k">עזרים ומשאבים טכנולוגיים</td><td>חינוך יוצר: <span class="dl">אתר</span>, בוט <span class="dl">beLLAi</span> — בינה יוצרת · <span class="dl">פדגוגיה דואלית באנימציה</span></td></tr>
+    <tr><td class="k">עזרים ומשאבים טכנולוגיים</td><td>חינוך יוצר: <a class="lk" target="_blank" rel="noopener" href="https://yotzer.education/">אתר החינוך היוצר</a>, בוט <a class="lk" target="_blank" rel="noopener" href="https://yotzer.education/chatbot/">beLLAi</a> — בינה יוצרת · <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Gn9B2r0MFYEw-kyXhyMNcTQg9hEvAwjD/view">פדגוגיה דואלית באנימציה</a></td></tr>
   </table>
   </div>
 
@@ -1109,14 +1148,14 @@ footer b{color:var(--paper)}
     <tr><td class="k">רכזי הכלה ושילוב</td><td>השתלמות שנתית — 30 שעות (מפגש פיזי אחד ו־7 מפגשי זום)</td><td>ד"ר מיכל גלסר — מפקחת ארצית מערך טיפולי</td></tr>
     <tr><td class="k">מת"לים</td><td>השתלמות שנתית — 30 שעות (מפגש פיזי אחד ו־7 מפגשי זום). מדריכה: סימונה, 052־4586974</td><td>רויטל אמיר — מפקחת פדגוגית ארצית</td></tr>
     <tr><td class="k">ליווי מורים חדשים</td><td>השתלמות 30 שעות בזום להכשרת מורים למטרת ליווי מורים חדשים במערכת</td><td>רויטל אמיר — מפקחת פדגוגית ארצית</td></tr>
-    <tr><td class="k">בנות שירות לאומי</td><td>3 מפגשי הכשרה שנתיים ומפגש אמצע שנה עם הרכזת המלווה את בנות השירות (<span class="dl">הנחיות קליטת בני ובנות שירות</span>)</td><td>רויטל אמיר — מפקחת פדגוגית ארצית · עידית 052־8985785</td></tr>
-    <tr><td class="k">הדרכה בכלל מקצועות הלימוד (ליבה והומניסטיקה)</td><td>קבוצות פעילות בשפה העברית ובשפה הערבית + הדרכה קבוצתית אחת לחודש + הדרכה פרטנית על פי הצורך ודרישת ביה"ס (<span class="dl">קישור לקובץ עם כלל קבוצות ההדרכה ופרטי המדריכים</span>)</td><td>מפקחים פדגוגיים</td></tr>
+    <tr><td class="k">בנות שירות לאומי</td><td>3 מפגשי הכשרה שנתיים ומפגש אמצע שנה עם הרכזת המלווה את בנות השירות (<a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1PmfGG4FwvqSZ3hpEhA5lH8XD0P68ZR6m/view">הנחיות קליטת בני ובנות שירות</a>)</td><td>רויטל אמיר — מפקחת פדגוגית ארצית · עידית 052־8985785</td></tr>
+    <tr><td class="k">הדרכה בכלל מקצועות הלימוד (ליבה והומניסטיקה)</td><td>קבוצות פעילות בשפה העברית ובשפה הערבית + הדרכה קבוצתית אחת לחודש + הדרכה פרטנית על פי הצורך ודרישת ביה"ס (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1hCUgdMQmVM514MNXczBJNsO-UwmJiMqv/edit">קובץ כלל קבוצות ההדרכה ופרטי המדריכים</a>)</td><td>מפקחים פדגוגיים</td></tr>
   </table>
   </div>
 
   <h3 class="sec rv" id="matzevet">מצבת מורים</h3>
   <ol class="ed rv">
-    <li>להלן הנחיות בעלי תפקידים — <span class="dl">בעלי תפקידים: חלוקת שעות ודגשים</span>.</li>
+    <li>להלן הנחיות בעלי תפקידים — <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1lYBUe9PxhalQAekAKLwg5diX5ag_iN6d/view">בעלי תפקידים: חלוקת שעות ודגשים</a>.</li>
     <li>בכל קליטה של בעל תפקיד (סגן, רכז פדגוגי, רכז חברתי, רכז חניכות, מת"לית, רכזת הכלה ושילוב) יש לעדכן ולקבל את אישור הפיקוח.</li>
     <li>במידה שמורה מבקש לטוס לחו"ל באמצע שנה — נדרש אישור רשת ופיקוח.</li>
     <li>במידה שמורה נעדר לטווח של מעל שבוע — יש לעדכן את מפקח ביה"ס.</li>
@@ -1124,8 +1163,8 @@ footer b{color:var(--paper)}
 
   <h4 class="sub">מורה מתמחה — מורה חונך</h4>
   <p>יש לדווח על כל מורה מתמחה למפקח ביה"ס ולהסדיר מול משרד החינוך. יש לעדכן מי יהיה המורה החונך ובאיזה מקצוע, לקבל על כך אישור ולהעביר לרשת לצורך תשלום. יש לוודא שהמורה החונך עבר את ההכשרה הרלוונטית (דרכנו יש הכשרה).</p>
-  <p>כל עובד הוראה חדש נדרש לפתוח תיק במשרד החינוך; באחריות בית הספר והחונך לוודא שאכן זה נעשה (<span class="dl">פתיחת תיק</span>).</p>
-  <p><span class="dl">תיקיית מורים חונכים בדרייב מנהלים</span> · מייל לשליחת חוות דעת ותצפיות: <a href="mailto:haaracha_yadanit@education.gov.il">haaracha_yadanit@education.gov.il</a></p>
+  <p>כל עובד הוראה חדש נדרש לפתוח תיק במשרד החינוך; באחריות בית הספר והחונך לוודא שאכן זה נעשה (<a class="lk" target="_blank" rel="noopener" href="https://poh.education.gov.il/administrative/teaching-entry/open-file-new/">פתיחת תיק</a>).</p>
+  <p><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1BFTo7pzI43UQC5IRTsi6y2gBFqAw5-d5">תיקיית מורים חונכים בדרייב מנהלים</a> · מייל לשליחת חוות דעת ותצפיות: <a href="mailto:haaracha_yadanit@education.gov.il">haaracha_yadanit@education.gov.il</a></p>
 </section>
 
 <!-- ================================================== -->
@@ -1136,7 +1175,7 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">ג</div>
       <div class="t">
-        <div class="over">פרק שלישי</div>
+        <div class="over">נהלים ותשתית מקצועית</div>
         <h2>הנחיות המנהל</h2>
       </div>
     </div>
@@ -1157,15 +1196,15 @@ footer b{color:var(--paper)}
 
   <h4 class="sub">רשימת ההנחיות</h4>
   <ul class="ed rv">
-    <li><strong>חדש</strong> — <span class="dl">הנחיות לקליטה ומיון תלמידים</span></li>
-    <li><span class="dl">הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה, כולל סיום לימודים</span></li>
-    <li><span class="dl">הנחיות לניהול, דיווח וטיפול באירועי חירום ו/או אירוע חריג, כולל הרחקת תלמיד</span></li>
-    <li><span class="dl">הנחיות לקידום ההכלה הבית ספרית — קליטה, טיפול והתמודדות מיטיבה לתלמידים הזכאים לשירותי חינוך מיוחד</span></li>
-    <li><span class="dl">הנחיות להפעלת ועדה מלווה</span></li>
-    <li><span class="dl">הנחיות לקליטת מתנדבי שירות לאומי</span></li>
-    <li><span class="dl">הנחיות שיפוצים והצטיידות</span></li>
-    <li><span class="dl">הנחיות חסימת תלמידים כפולים</span></li>
-    <li><span class="dl">כלל ההנחיות — בדרייב מנהלים</span></li>
+    <li><strong>חדש</strong> — <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1PRpSY_9xjRfwo_xYdCBV60XWwjsHzLWi/view">הנחיות לקליטה ומיון תלמידים</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/12xrweERQCaXeePyOZM1sqKYSDJPCEiY4/view">הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה, כולל סיום לימודים</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1hAlB8jYy7YlBkk4YwHbma58SEaqg49jU">הנחיות לניהול, דיווח וטיפול באירועי חירום ו/או אירוע חריג, כולל הרחקת תלמיד</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1mvo_vFo5vBv-L3tdXaJ21dhH0ODBCxf2">הנחיות לקידום ההכלה הבית ספרית — קליטה, טיפול והתמודדות מיטיבה לתלמידים הזכאים לשירותי חינוך מיוחד</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QNdCPPCZVw5VEnOCCKZPuOKPISGMgmKH/edit">הנחיות להפעלת ועדה מלווה</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1PmfGG4FwvqSZ3hpEhA5lH8XD0P68ZR6m/view">הנחיות לקליטת מתנדבי שירות לאומי</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://www.gov.il/BlobFolder/policy/youth-renovations/he/prof-licensure_youth-renovations.pdf">הנחיות שיפוצים והצטיידות</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1IFguIPjryUPJB05J1ghLl9E_xamNMz2D/view">הנחיות חסימת תלמידים כפולים</a></li>
+    <li><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1SNrtDpBk7emBZS-j98hEWXWaRuz90RoP">כלל ההנחיות — בדרייב מנהלים</a></li>
   </ul>
   <p><strong>בהמשך יופיעו בתיקייה שתי הנחיות חדשות:</strong> הנחיות מלגות נסיעה לפולין (יפורסם בהמשך) · ילדים חולים בביתם (יפורסם בהמשך).</p>
 </section>
@@ -1178,7 +1217,7 @@ footer b{color:var(--paper)}
     <div class="co-in">
       <div class="big">ד</div>
       <div class="t">
-        <div class="over">פרק רביעי</div>
+        <div class="over">התפיסה החינוכית</div>
         <h2>חוברת החינוך היוצר תשפ"ז</h2>
       </div>
     </div>
@@ -1306,10 +1345,9 @@ footer b{color:var(--paper)}
 <footer>
   <div class="wrap">
     <div>
-      <b>מסמך היערכות לשנת הלימודים תשפ"ז</b> · מינהל הכשרה מקצועית, משרד העבודה · 29.7.2026<br>
-      פריטים המסומנים בקו מקווקו הם קישורים חיים במסמך המקורי ובדרייב המנהלים.
+      <b>היערכות לשנת הלימודים תשפ"ז</b> · מינהל הכשרה מקצועית, משרד העבודה
     </div>
-    <div style="text-align:left">מהדורה דיגיטלית · כלי עזר —<br>המסמך הרשמי הוא הקובע</div>
+    <div style="text-align:left">בברכת שנת לימודים<br>פורייה ושקטה</div>
   </div>
 </footer>
 
