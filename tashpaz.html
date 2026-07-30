@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>היערכות תשפ"ז — מסע בשנה ומד מוכנות למנהל</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e6;
+  --card:#fffdf7;
+  --ink:#182c3d;
+  --ink-soft:#41586c;
+  --teal:#186f7c;
+  --teal-soft:#dceef0;
+  --amber:#d9821f;
+  --amber-soft:#fbe8cf;
+  --green:#3d7d4f;
+  --green-soft:#e2efe4;
+  --rose:#b4485a;
+  --rose-soft:#f6e2e5;
+  --line:#e3dbc9;
+  --shadow:0 10px 30px -12px rgba(24,44,61,.18);
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Assistant',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  background-image:radial-gradient(rgba(24,44,61,.045) 1px, transparent 1.4px);
+  background-size:26px 26px;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(140deg,#14283a 0%,#1b3a50 55%,#1c4a56 100%);
+  color:#f4efe2;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(244,239,226,.07) 1.2px, transparent 1.6px);
+  background-size:22px 22px;
+}
+.hero-inner{
+  position:relative;z-index:1;
+  display:flex;gap:36px;align-items:center;flex-wrap:wrap;
+  padding:56px 0 46px;
+}
+.hero-text{flex:1;min-width:280px}
+.kicker{
+  display:inline-block;
+  font-weight:700;font-size:.85rem;letter-spacing:.06em;
+  color:#0f2231;background:var(--amber);
+  padding:4px 14px;border-radius:999px;margin-bottom:16px;
+}
+h1{
+  font-family:'Frank Ruhl Libre',serif;
+  font-weight:900;font-size:clamp(2rem,5vw,3.1rem);
+  line-height:1.15;margin-bottom:14px;
+}
+h1 em{font-style:normal;color:#f0b45e}
+.hero-sub{font-size:1.08rem;color:#cfdde3;max-width:34em}
+.hero-meta{margin-top:18px;font-size:.9rem;color:#9db4bf}
+.ring-box{
+  text-align:center;flex:0 0 auto;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(244,239,226,.18);
+  border-radius:20px;padding:22px 30px;
+  backdrop-filter:blur(2px);
+}
+.ring-wrap{position:relative;width:150px;height:150px;margin:0 auto}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(244,239,226,.15);stroke-width:11}
+.ring-fg{fill:none;stroke:#f0b45e;stroke-width:11;stroke-linecap:round;
+  transition:stroke-dashoffset .7s cubic-bezier(.22,1,.36,1)}
+.ring-num{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.ring-num b{font-size:2rem;font-weight:800;line-height:1}
+.ring-num span{font-size:.78rem;color:#cfdde3}
+.ring-label{margin-top:10px;font-weight:700;font-size:.95rem}
+.ring-hint{font-size:.78rem;color:#9db4bf;max-width:170px;margin:2px auto 0}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(246,241,230,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{
+  white-space:nowrap;text-decoration:none;color:var(--ink-soft);
+  font-weight:700;font-size:.92rem;
+  padding:7px 16px;border-radius:999px;border:1px solid transparent;
+  transition:.2s;
+}
+.nav a:hover{background:var(--teal-soft);color:var(--teal)}
+
+/* ---------- SECTIONS ---------- */
+section{padding:54px 0 10px}
+.sec-head{margin-bottom:26px}
+.sec-eyebrow{
+  font-weight:800;font-size:.82rem;letter-spacing:.08em;color:var(--amber);
+  text-transform:uppercase;
+}
+h2{
+  font-family:'Frank Ruhl Libre',serif;font-weight:900;
+  font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1.2;
+}
+.sec-desc{color:var(--ink-soft);max-width:44em;margin-top:6px}
+
+/* ---------- WHAT'S NEW ---------- */
+.new-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.new-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 18px 16px;box-shadow:var(--shadow);position:relative;
+}
+.new-card::before{
+  content:"חדש";position:absolute;top:-10px;inset-inline-start:14px;
+  background:var(--rose);color:#fff;font-size:.72rem;font-weight:800;
+  padding:2px 10px;border-radius:999px;
+}
+.new-card b{display:block;margin-bottom:4px;font-size:1rem}
+.new-card p{font-size:.88rem;color:var(--ink-soft)}
+
+/* ---------- TIMELINE ---------- */
+.timeline{position:relative;padding-inline-start:34px;margin-top:8px}
+.timeline::before{
+  content:"";position:absolute;top:6px;bottom:6px;inset-inline-start:11px;
+  width:3px;border-radius:3px;
+  background:linear-gradient(var(--teal),var(--amber));
+}
+.month{position:relative;margin-bottom:26px}
+.month::before{
+  content:"";position:absolute;inset-inline-start:-30px;top:8px;
+  width:17px;height:17px;border-radius:50%;
+  background:var(--card);border:4px solid var(--teal);
+  box-shadow:0 0 0 4px var(--paper);
+}
+.month.m-amber::before{border-color:var(--amber)}
+.month-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px 22px;
+}
+.month-name{
+  font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:1.25rem;
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+}
+.month-name small{
+  font-family:'Assistant',sans-serif;font-weight:700;font-size:.82rem;
+  color:var(--teal);background:var(--teal-soft);padding:2px 10px;border-radius:999px;
+}
+.mi{list-style:none;margin-top:12px;display:grid;gap:9px}
+.mi li{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:.95rem;
+}
+.mi li::before{content:"";flex:0 0 8px;width:8px;height:8px;border-radius:50%;
+  background:var(--teal);margin-top:9px}
+.mi li.deadline::before{background:var(--rose)}
+.tag{
+  display:inline-block;font-size:.7rem;font-weight:800;
+  padding:1px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:2px;
+}
+.tag.dl{background:var(--rose-soft);color:var(--rose)}
+.tag.must{background:var(--amber-soft);color:#9c5d12}
+
+/* recurring strip */
+.pulse-box{
+  margin-top:6px;background:var(--ink);color:#f4efe2;
+  border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);
+}
+.pulse-box h3{
+  font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:1.2rem;margin-bottom:14px;
+  color:#f0b45e;
+}
+.pulse-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+.pulse{
+  background:rgba(255,255,255,.07);border:1px solid rgba(244,239,226,.14);
+  border-radius:12px;padding:11px 14px;font-size:.9rem;
+}
+.pulse b{display:block;font-size:.95rem}
+.pulse span{color:#b9cad2;font-size:.82rem}
+
+/* ---------- CHECKLIST ---------- */
+.check-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.check-tools .note{font-size:.85rem;color:var(--ink-soft)}
+.btn-reset{
+  border:1px solid var(--line);background:var(--card);color:var(--rose);
+  font-family:inherit;font-weight:700;font-size:.85rem;
+  padding:6px 14px;border-radius:999px;cursor:pointer;transition:.2s;
+}
+.btn-reset:hover{background:var(--rose-soft)}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.check-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;
+}
+.cc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+.cc-head h3{font-size:1.08rem;font-weight:800}
+.cc-count{font-size:.8rem;font-weight:800;color:var(--teal);background:var(--teal-soft);
+  padding:2px 10px;border-radius:999px;white-space:nowrap}
+.cc-bar{height:6px;border-radius:6px;background:#eee6d4;overflow:hidden;margin:8px 0 12px}
+.cc-bar i{display:block;height:100%;width:0;border-radius:6px;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+  transition:width .5s cubic-bezier(.22,1,.36,1)}
+.check-card.done .cc-count{background:var(--green-soft);color:var(--green)}
+label.ci{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:7px 6px;border-radius:10px;cursor:pointer;font-size:.93rem;
+  transition:background .15s;
+}
+label.ci:hover{background:var(--teal-soft)}
+label.ci input{
+  appearance:none;flex:0 0 20px;width:20px;height:20px;margin-top:2px;
+  border:2px solid #b9ab8d;border-radius:6px;background:#fff;cursor:pointer;
+  display:grid;place-content:center;transition:.15s;
+}
+label.ci input::before{
+  content:"✓";font-size:13px;font-weight:900;color:#fff;transform:scale(0);transition:.15s;
+}
+label.ci input:checked{background:var(--green);border-color:var(--green)}
+label.ci input:checked::before{transform:scale(1)}
+label.ci input:checked ~ span{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:rgba(61,125,79,.5)}
+
+/* ---------- REFERENCE CARDS ---------- */
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.ref-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:22px;
+}
+.ref-card h3{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+.ref-card .sub{font-size:.85rem;color:var(--ink-soft);margin-bottom:14px}
+.donut-flex{display:flex;gap:18px;align-items:center}
+.donut{
+  flex:0 0 120px;width:120px;height:120px;border-radius:50%;
+  background:conic-gradient(var(--teal) 0 35%,var(--amber) 35% 60%,var(--rose) 60% 80%,var(--green) 80% 100%);
+  display:grid;place-content:center;
+}
+.donut i{
+  width:64px;height:64px;border-radius:50%;background:var(--card);
+  display:grid;place-content:center;font-style:normal;font-weight:800;font-size:.8rem;
+  text-align:center;line-height:1.15;
+}
+.legend{display:grid;gap:6px;font-size:.86rem}
+.legend li{list-style:none;display:flex;align-items:center;gap:8px}
+.dot{width:11px;height:11px;border-radius:4px;flex:0 0 11px}
+.bars{display:grid;gap:10px}
+.bar-row{font-size:.88rem}
+.bar-row .bl{display:flex;justify-content:space-between;font-weight:700;margin-bottom:3px}
+.bar-track{height:12px;border-radius:8px;background:#eee6d4;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px}
+.mini-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.mini-table td{padding:7px 4px;border-bottom:1px dashed var(--line)}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table td:last-child{text-align:left;font-weight:800;color:var(--teal)}
+.big-num{
+  font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:2.2rem;color:var(--teal);
+  line-height:1;
+}
+.goal-list{list-style:none;display:grid;gap:10px;font-size:.92rem}
+.goal-list li{display:flex;gap:10px}
+.goal-list .n{
+  flex:0 0 26px;width:26px;height:26px;border-radius:50%;
+  background:var(--amber-soft);color:#9c5d12;font-weight:800;font-size:.85rem;
+  display:grid;place-content:center;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:60px;background:var(--ink);color:#b9cad2;
+  padding:30px 0;font-size:.85rem;text-align:center;
+}
+footer b{color:#f4efe2}
+
+@media (max-width:640px){
+  .hero-inner{padding:40px 0 34px}
+  .ring-box{margin:0 auto}
+  section{padding:42px 0 6px}
+}
+@media print{
+  .nav,.btn-reset{display:none}
+  body{background:#fff}
+  .hero{background:var(--ink)!important;-webkit-print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <span class="kicker">מינהל הכשרה מקצועית · משרד העבודה</span>
+      <h1>היערכות תשפ"ז:<br>המסע שלך <em>בשנה אחת</em></h1>
+      <p class="hero-sub">מסמך ההיערכות המלא למנהלות ולמנהלים — מאורגן מחדש כציר זמן של שנת הלימודים, מד מוכנות אישי וכרטיסי שליפה מהירה לכל מספר, מחוון ומועד.</p>
+      <p class="hero-meta">מבוסס על מסמך ההיערכות הרשמי לשנה"ל תשפ"ז (29.7.26) · "תודה, הערכה והמשך הדרך"</p>
+    </div>
+    <div class="ring-box">
+      <div class="ring-wrap">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle class="ring-bg" cx="75" cy="75" r="64"></circle>
+          <circle class="ring-fg" id="ringFg" cx="75" cy="75" r="64"></circle>
+        </svg>
+        <div class="ring-num"><b id="ringPct">0%</b><span id="ringCount">0 מתוך 0</span></div>
+      </div>
+      <div class="ring-label">מד המוכנות שלי</div>
+      <div class="ring-hint">מתעדכן אוטומטית לפי הצ'קליסט — ונשמר במכשיר שלך</div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#new">מה חדש בתשפ"ז</a>
+    <a href="#journey">🗓️ המסע בשנה</a>
+    <a href="#readiness">✅ מד המוכנות</a>
+    <a href="#cards">כרטיסי שליפה</a>
+    <a href="#goals">מטרות השנה</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ================= WHAT'S NEW ================= -->
+<section id="new">
+  <div class="sec-head">
+    <div class="sec-eyebrow">שווה לדעת לפני הכל</div>
+    <h2>מה חדש בתשפ"ז</h2>
+  </div>
+  <div class="new-grid">
+    <div class="new-card"><b>מבחנים חיצוניים בליבה</b><p>מתמטיקה ועברית — מבחן גמר חיצוני החל מתשפ"ז לתלמידי יא'.</p></div>
+    <div class="new-card"><b>ציון חניכות בתעודה</b><p>נוסף ציון בתעודה לתחום החניכות, לצד דיווח חודשי במערכת המשרד.</p></div>
+    <div class="new-card"><b>העשרה אחרי הלימודים</b><p>סעיף תקציבי חדש: תוכנית העשרה לאחר 15:00, בכיתות של 15 תלמידים ומעלה, באישור ועדת תכנון והמפקח.</p></div>
+    <div class="new-card"><b>הנחיות חדשות בדרך</b><p>קליטה ומיון תלמידים — כבר פורסם. בהמשך: מלגות נסיעה לפולין וילדים חולים בביתם.</p></div>
+  </div>
+</section>
+
+<!-- ================= JOURNEY ================= -->
+<section id="journey">
+  <div class="sec-head">
+    <div class="sec-eyebrow">במקום 25 עמודים — שנה אחת</div>
+    <h2>🗓️ המסע בשנת תשפ"ז</h2>
+    <p class="sec-desc">כל אבני הדרך מהמסמך, מסודרות לפי החודשים שבהם הן באמת קורות. אדום = מועד מחייב.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="month">
+      <div class="month-card">
+        <div class="month-name">אלול — ספטמבר <small>פתיחת שנה</small></div>
+        <ul class="mi">
+          <li>התיק הבית ספרי מלא ומעודכן — הבסיס לכל ביקורי הפיקוח <span class="tag must">חובה</span></li>
+          <li>מפגשי היכרות, למידה ודיוק של ההנחיות המעודכנות עם הצוות</li>
+          <li>כל מורה מציג לתלמידים את רכיבי ההערכה כבר בתחילת השנה</li>
+          <li>מערכת שעות לפי האוגדן והמסלול הנבחר — כל שינוי באישור המפקח הפדגוגי</li>
+          <li>הגשת תוכנית בית ספרית ללמידה מרחוק/היברידית + תיק צל"ח מעודכן</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="month m-amber">
+      <div class="month-card">
+        <div class="month-name">אוקטובר <small>נכנסים לקצב</small></div>
+        <ul class="mi">
+          <li>נפתחת השתלמות המנהלים השנתית (אוקטובר–יוני, 30 שעות)</li>
+          <li class="deadline">ועדה מלווה — מפגש תחילת שנה: לתאם ולקיים עד דצמבר <span class="tag dl">דדליין</span></li>
+          <li>ועדת התמדה ראשונה — לתאם מראש מול מפקח וקב"ס</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="month-card">
+        <div class="month-name">נובמבר <small>חודש הכנסים</small></div>
+        <ul class="mi">
+          <li>כנס מנהלים ארצי</li>
+          <li>נפתחות ההשתלמויות המוסדיות (נובמבר–מאי) — לפי היעד הפדגוגי שבחרתם מהקטלוג</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="month m-amber">
+      <div class="month-card">
+        <div class="month-name">דצמבר — ינואר <small>חלון המדידה</small></div>
+        <ul class="mi">
+          <li class="deadline">שאלוני אקלים לצוות ולתלמידים — היעד: 100% מילוי <span class="tag dl">חלון: דצמבר–ינואר</span></li>
+          <li class="deadline">דצמבר — המועד האחרון לוועדה המלווה של תחילת השנה <span class="tag dl">דדליין</span></li>
+          <li>ינואר — מתפרסמות הנחיות המלגות למשלחות לפולין</li>
+          <li>אחרי התוצאות: פגישת למידה עם המפקח + תוכנית פעולה מבוססת נתוני השאלונים</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="month-card">
+        <div class="month-name">פברואר — אפריל <small>עומק העשייה</small></div>
+        <ul class="mi">
+          <li>ועדת התמדה שנייה + יום הורים וישיבה פדגוגית (2–3 בשנה)</li>
+          <li>בדיקת אמצע: איפה אנחנו מול היעדים המדידים של תוכנית העבודה?</li>
+          <li>תרגול למידה מרחוק — ניתן לתאם עד 5 ימי לימוד מרחוק במהלך השנה</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="month m-amber">
+      <div class="month-card">
+        <div class="month-name">מאי — יולי <small>סוגרים שנה</small></div>
+        <ul class="mi">
+          <li class="deadline">ועדה מלווה מסכמת — מאי עד יולי <span class="tag dl">דדליין</span></li>
+          <li>ההשתלמויות המוסדיות מסתיימות בחודש מאי</li>
+          <li>ציונים שנתיים (גמר ובגרות) לפי המחוון — מתועד, שקוף, ומוגש בזמן</li>
+          <li>ועדת התמדה שלישית + סיכום נתוני התמדה ונשירה</li>
+          <li>הפקת לקחים ותכנון תשפ"ח — הסיפור ממשיך</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pulse-box">
+    <h3>💓 הדופק הקבוע — כל השנה</h3>
+    <div class="pulse-grid">
+      <div class="pulse"><b>דיווח נוכחות</b><span>בכל שיעור, במערכת הממוחשבת</span></div>
+      <div class="pulse"><b>דו"ח תלמידים בסכנת נשירה</b><span>אחת לחודש, במייל למפקחת המערך הטיפולי, למפקח ולמחוז</span></div>
+      <div class="pulse"><b>דיווח חניכות</b><span>אחת לחודש במערכת המשרד</span></div>
+      <div class="pulse"><b>ביקור פיקוח</b><span>אחת לחודש–חודש וחצי</span></div>
+      <div class="pulse"><b>ישיבות צוות והשתלמות</b><span>אחת לשבוע, לאחר שעות הלימודים</span></div>
+      <div class="pulse"><b>ישיבות הנהלה</b><span>לפחות אחת לשבועיים</span></div>
+      <div class="pulse"><b>מפקח ומנהליו</b><span>5 פעמים בשנה</span></div>
+      <div class="pulse"><b>ועדות התמדה</b><span>3 בשנה, בתיאום מראש מול מפקח וקב"ס</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= READINESS ================= -->
+<section id="readiness">
+  <div class="sec-head">
+    <div class="sec-eyebrow">המסמך שעובד בשבילך</div>
+    <h2>✅ מד המוכנות לפתיחת השנה</h2>
+    <p class="sec-desc">כל דרישות ההיערכות מהמסמך — כצ'קליסט אישי. סמנו מה כבר מוכן אצלכם, והמד למעלה יראה בדיוק איפה אתם עומדים. הסימונים נשמרים במכשיר שלכם בלבד.</p>
+  </div>
+  <div class="check-tools">
+    <button class="btn-reset" id="resetBtn">↺ איפוס הסימונים</button>
+    <span class="note" id="toolNote"></span>
+  </div>
+
+  <div class="check-grid" id="checkGrid">
+
+    <div class="check-card" data-sec="vision">
+      <div class="cc-head"><h3>🧭 חזון ותוכנית עבודה</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="v1"><span>מסמך חזון (סיפור בית ספרי) מבוסס עקרונות החינוך היוצר</span></label>
+      <label class="ci"><input type="checkbox" data-id="v2"><span>תוכנית עבודה מעודכנת עם יעדים מדידים, מדדי הצלחה ודרכי מעקב</span></label>
+      <label class="ci"><input type="checkbox" data-id="v3"><span>יעדים שנתיים ורב-שנתיים מוגדרים על בסיס נתונים</span></label>
+      <label class="ci"><input type="checkbox" data-id="v4"><span>מנגנון ניהול מבוסס נתונים: איסוף → ניתוח → החלטה → יישום ובקרה</span></label>
+    </div>
+
+    <div class="check-card" data-sec="tik">
+      <div class="cc-head"><h3>📁 התיק הבית ספרי</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="t1"><span>תקנון ביה"ס + תיק בטיחות</span></label>
+      <label class="ci"><input type="checkbox" data-id="t2"><span>גאנט שנתי ומערכות שעות</span></label>
+      <label class="ci"><input type="checkbox" data-id="t3"><span>תוכנית פדגוגית + תוכנית חברתית</span></label>
+      <label class="ci"><input type="checkbox" data-id="t4"><span>תוכנית הכלה ושילוב + תוכנית חניכות</span></label>
+      <label class="ci"><input type="checkbox" data-id="t5"><span>תוכנית מצוינות וחדשנות + פיתוח צוות</span></label>
+      <label class="ci"><input type="checkbox" data-id="t6"><span>סילבוסים של כל המקצועות והמורים</span></label>
+      <label class="ci"><input type="checkbox" data-id="t7"><span>תוכנית עבודה עם הורים + תוכנית שימוש בתקציבים</span></label>
+      <label class="ci"><input type="checkbox" data-id="t8"><span>תוכנית לשעת חירום</span></label>
+    </div>
+
+    <div class="check-card" data-sec="emergency">
+      <div class="cc-head"><h3>🚨 מוכנות לחירום</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="e1"><span>הוגשה תוכנית בית ספרית ללמידה מרחוק/היברידית</span></label>
+      <label class="ci"><input type="checkbox" data-id="e2"><span>תיק צל"ח מעודכן לפי ההנחיות</span></label>
+      <label class="ci"><input type="checkbox" data-id="e3"><span>התקיימה פגישת צוות צל"ח כולל חלוקת תפקידים</span></label>
+      <label class="ci"><input type="checkbox" data-id="e4"><span>תשתית פדגוגית לכל מורה ותלמיד + התנסות בלמידה מרחוק</span></label>
+      <label class="ci"><input type="checkbox" data-id="e5"><span>מאגר פעילויות לימודיות וחברתיות לשעת חירום</span></label>
+    </div>
+
+    <div class="check-card" data-sec="pedagogy">
+      <div class="cc-head"><h3>📚 היערכות פדגוגית</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="p1"><span>נבחר מסלול לימוד לכל כיתה</span></label>
+      <label class="ci"><input type="checkbox" data-id="p2"><span>תוכנית פדגוגית ומעשית ללימודי המקצוע בשילוב חניכות</span></label>
+      <label class="ci"><input type="checkbox" data-id="p3"><span>תוכנית ללימודי הליבה בהתאם לשעות האוגדן</span></label>
+      <label class="ci"><input type="checkbox" data-id="p4"><span>נבחרו מיומנויות בכל מקצוע + חיבור מקצוע–ליבה–הומניסטיקה</span></label>
+      <label class="ci"><input type="checkbox" data-id="p5"><span>כל מורה בנה סילבוס שנתי לפי שבועות (הוראה–למידה–הערכה)</span></label>
+      <label class="ci"><input type="checkbox" data-id="p6"><span>פריסת היבחנות תלת-שנתית + תכנון מופעי הערכה ותוצרים</span></label>
+    </div>
+
+    <div class="check-card" data-sec="schedule">
+      <div class="cc-head"><h3>🕑 מערכת שעות וחניכות</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="s1"><span>ט'–י': חמישה ימי לימוד עד 14:30 לפחות (יום אחד קצר לישיבות צוות)</span></label>
+      <label class="ci"><input type="checkbox" data-id="s2"><span>יא'–יב': ארבעה ימי לימוד + יום חניכות</span></label>
+      <label class="ci"><input type="checkbox" data-id="s3"><span>מתוכננות 200 שעות חניכות בשנה (או 400 מגיל 16 עד סוף יב')</span></label>
+      <label class="ci"><input type="checkbox" data-id="s4"><span>מערך ליווי, בקרה ומשוב לחניכות של כל תלמידי יא'–יב'</span></label>
+      <label class="ci"><input type="checkbox" data-id="s5"><span>שעות בגרות לפי האוגדן (3 ש"ש ליח"ל; אנגלית ומתמטיקה — 4 ש"ש)</span></label>
+    </div>
+
+    <div class="check-card" data-sec="staff">
+      <div class="cc-head"><h3>👥 מצבת מורים וצוות</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="f1"><span>כל בעלי התפקידים החדשים עודכנו וקיבלו אישור פיקוח</span></label>
+      <label class="ci"><input type="checkbox" data-id="f2"><span>מורים מתמחים דווחו למפקח + הוסדר מורה חונך מוסמך לכל מתמחה</span></label>
+      <label class="ci"><input type="checkbox" data-id="f3"><span>כל עובד הוראה חדש פתח תיק במשרד החינוך</span></label>
+      <label class="ci"><input type="checkbox" data-id="f4"><span>מורי הבגרות משובצים לקבוצות הדרכה והשתלמות (תנאי לציון מגן!)</span></label>
+      <label class="ci"><input type="checkbox" data-id="f5"><span>תוכנית ליווי למורים חדשים</span></label>
+    </div>
+
+    <div class="check-card" data-sec="persist">
+      <div class="cc-head"><h3>🤝 התמדה ומניעת נשירה</h3><span class="cc-count">0/0</span></div>
+      <div class="cc-bar"><i></i></div>
+      <label class="ci"><input type="checkbox" data-id="n1"><span>רישום נוכחות שעתי במערכת ממוחשבת — מוטמע אצל כל הצוות</span></label>
+      <label class="ci"><input type="checkbox" data-id="n2"><span>שגרת טופס מעקב חודשי לתלמידים בסכנת נשירה</span></label>
+      <label class="ci"><input type="checkbox" data-id="n3"><span>תואמו 3 ועדות התמדה מול המפקח והקב"ס</span></label>
+      <label class="ci"><input type="checkbox" data-id="n4"><span>ערוץ קשר רציף עם הקב"ס + נוהל גריעת תלמיד ידוע לצוות</span></label>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= REFERENCE CARDS ================= -->
+<section id="cards">
+  <div class="sec-head">
+    <div class="sec-eyebrow">המספרים שתמיד מחפשים</div>
+    <h2>כרטיסי שליפה מהירה</h2>
+  </div>
+  <div class="ref-grid">
+
+    <div class="ref-card">
+      <h3>💰 סל תוכניות</h3>
+      <div class="sub"><span class="big-num">3,400 ₪</span> לכל תלמיד · גמישות בין סעיפים באישור מפקח · לא לשעות הוראה</div>
+      <div class="donut-flex">
+        <div class="donut"><i>חלוקת<br>הסל</i></div>
+        <ul class="legend">
+          <li><span class="dot" style="background:var(--teal)"></span>מקצוע וחניכות — 35%</li>
+          <li><span class="dot" style="background:var(--amber)"></span>פדגוגיה חדשנית — 25%</li>
+          <li><span class="dot" style="background:var(--rose)"></span>ייעוצי-טיפולי וחוסן — 20%</li>
+          <li><span class="dot" style="background:var(--green)"></span>חברתי-ערכי — 20%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ref-card">
+      <h3>📝 מחוון הציון השנתי</h3>
+      <div class="sub">גמר ובגרות · מתועד ושקוף לתלמידים לאורך השנה</div>
+      <div class="bars">
+        <div class="bar-row"><div class="bl"><span>מבחנים ובחנים</span><span>40%</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--teal)"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>עבודות, מטלות ופרויקטים</span><span>30%</span></div><div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--amber)"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>השתתפות, אחריות והתמדה</span><span>20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--rose)"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>שיקול דעת המורה</span><span>10%</span></div><div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--green)"></div></div></div>
+      </div>
+    </div>
+
+    <div class="ref-card">
+      <h3>⏱️ שעות הוראה לבגרות</h3>
+      <div class="sub">כ-90 שעות ליחידת לימוד · 5 יח"ל = 450 שעות לפחות</div>
+      <table class="mini-table">
+        <tr><td>1 יח"ל</td><td>3 ש"ש</td></tr>
+        <tr><td>2 יח"ל</td><td>6 ש"ש</td></tr>
+        <tr><td>3 יח"ל</td><td>9 ש"ש</td></tr>
+        <tr><td>5 יח"ל</td><td>15 ש"ש</td></tr>
+        <tr><td>אנגלית ומתמטיקה (כל הרמות)</td><td>4 ש"ש</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-card">
+      <h3>🛠️ חניכות במספרים</h3>
+      <div class="sub">עמוד התווך של הפדגוגיה הדואלית</div>
+      <table class="mini-table">
+        <tr><td>שעות שנתיות (יא'–יב')</td><td>200+</td></tr>
+        <tr><td>או מגיל 16 עד סוף יב'</td><td>400</td></tr>
+        <tr><td>יעד השתלבות</td><td>מכווננות ל-70%+</td></tr>
+        <tr><td>יעד צמיחה שנתי</td><td>‎+25%‎ מתשפ"ו</td></tr>
+        <tr><td>דיווח במערכת</td><td>חודשי</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-card">
+      <h3>🎓 מקצועות ליבה — גמר</h3>
+      <div class="sub">כיתות תעודת מקצוע וגמר</div>
+      <table class="mini-table">
+        <tr><td>מתמטיקה</td><td>גמר חיצוני / המרה ל-1 יח"ל</td></tr>
+        <tr><td>עברית</td><td>גמר חיצוני / תלקיט 1 יח"ל</td></tr>
+        <tr><td>אזרחות</td><td>מבחן+פרויקט / הערכה חלופית</td></tr>
+        <tr><td>ערבית</td><td>לבתי ספר מהחברה הערבית</td></tr>
+        <tr><td>אנגלית</td><td>תוכנית לימודים בבנייה</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-card">
+      <h3>⚖️ גמישות ניהולית — הכלל</h3>
+      <div class="sub">ככל שההישגים והמדדים גבוהים יותר — הגמישות רחבה יותר</div>
+      <ul class="goal-list">
+        <li><span class="n">1</span>מרחב שיקול דעת למנהלים לצד מנגנוני בקרה ודין וחשבון</li>
+        <li><span class="n">2</span>היקף הגמישות נגזר מרמות התפקוד של ביה"ס והמנהל</li>
+        <li><span class="n">3</span>יעדים בהירים מבוססי נתונים = שימוש מושכל יותר בגמישות</li>
+        <li><span class="n">!</span>סטייה מההנחיות — רק באישור מפורש ומתועד מראש מהמפקח</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= GOALS ================= -->
+<section id="goals">
+  <div class="sec-head">
+    <div class="sec-eyebrow">לאן הכל מכוון</div>
+    <h2>חמש המטרות המרכזיות לתשפ"ז</h2>
+  </div>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>1 · מיצוי הפוטנציאל של כל תלמיד</h3><div class="sub">קשר אישי משמעותי, קידום הישגים, התמדה, זכאות לתעודות מקצוע וריבוי תעודות — בשאיפה ל-100% זכאות.</div></div>
+    <div class="ref-card"><h3>2 · הרחבת היקף ואיכות החניכות</h3><div class="sub">יותר תלמידים בחניכות איכותית, העמקת שיתופי פעולה עם מעסיקים, וציון חניכות בתעודה.</div></div>
+    <div class="ref-card"><h3>3 · חיזוק שדרת ההובלה</h3><div class="sub">פיתוח מנהיגות מקצועית, ליווי בעלי תפקידים והובלת שינוי מתמשך.</div></div>
+    <div class="ref-card"><h3>4 · שיפור ההוראה והלמידה</h3><div class="sub">הטמעת פדגוגיה דואלית, הוראה מגוונת, פיתוח מיומנויות המאה ה-21, חדשנות ובינה יוצרת (AI).</div></div>
+    <div class="ref-card"><h3>5 · חיזוק האקלים החינוכי</h3><div class="sub">שייכות, משמעות ומסוגלות; מנהיגות תלמידים, ליווי בוגרים, וכל תלמיד מתנדב לפחות 3 פעמים בשנה.</div></div>
+    <div class="ref-card" style="background:var(--ink);color:#f4efe2;border:none">
+      <h3 style="color:#f0b45e">חַלּוֹנוֹת חַדְרֵי כִּתָּה תָּמִיד פּוֹנִים אֶל הֶעָתִיד</h3>
+      <div class="sub" style="color:#b9cad2">— יהודה עמיחי. כל יום, כל שיעור, כל מפגש הם פתיחה לעתיד חדש עבור תלמידינו.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>היערכות תשפ"ז</b> · מבוסס על מסמך ההיערכות הרשמי של מינהל הכשרה מקצועית, משרד העבודה (29.7.26)</p>
+    <p>הקישורים המלאים לטפסים, להנחיות ולנספחים נמצאים במסמך המקורי ובדרייב המנהלים · דף זה הוא כלי עזר ואינו מחליף את המסמך הרשמי</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const KEY='tashpaz-readiness-v1';
+  const boxes=[...document.querySelectorAll('label.ci input')];
+  const ringFg=document.getElementById('ringFg');
+  const R=64, C=2*Math.PI*R;
+  ringFg.style.strokeDasharray=C;
+  ringFg.style.strokeDashoffset=C;
+
+  let state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){state={}}
+
+  function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+
+  function render(){
+    let done=0;
+    boxes.forEach(b=>{ b.checked=!!state[b.dataset.id]; if(b.checked)done++; });
+    const total=boxes.length;
+    const pct=total?Math.round(done/total*100):0;
+    document.getElementById('ringPct').textContent=pct+'%';
+    document.getElementById('ringCount').textContent=done+' מתוך '+total;
+    ringFg.style.strokeDashoffset=C*(1-done/total);
+    // per-card
+    document.querySelectorAll('.check-card').forEach(card=>{
+      const cbs=[...card.querySelectorAll('input')];
+      const d=cbs.filter(c=>c.checked).length;
+      card.querySelector('.cc-count').textContent=d+'/'+cbs.length;
+      card.querySelector('.cc-bar i').style.width=(cbs.length?d/cbs.length*100:0)+'%';
+      card.classList.toggle('done',d===cbs.length&&cbs.length>0);
+    });
+    const note=document.getElementById('toolNote');
+    if(pct===100) note.textContent='🎉 מוכנים לחלוטין לתשפ"ז — שנה טובה ושקטה!';
+    else if(pct>=70) note.textContent='כמעט שם — עוד '+(total-done)+' משימות לפתיחה מושלמת.';
+    else note.textContent='';
+  }
+
+  boxes.forEach(b=>b.addEventListener('change',()=>{
+    state[b.dataset.id]=b.checked; save(); render();
+  }));
+
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    if(confirm('לאפס את כל הסימונים?')){ state={}; save(); render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
