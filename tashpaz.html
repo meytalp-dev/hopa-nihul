@@ -156,12 +156,19 @@ a.lk:hover{background:rgba(185,149,74,.16);border-bottom-color:var(--copper)}
 }
 .toc a:hover{color:var(--petrol);padding-inline-start:8px}
 .toc a .no{
-  font-family:var(--elegant);font-weight:400;color:var(--brass);font-size:1.2rem;
+  font-family:var(--elegant);font-weight:400;color:var(--dc,var(--brass));font-size:1.2rem;
   min-width:2.1em;
 }
 .toc a .fill{flex:1;border-bottom:1px dotted var(--hair-dark);transform:translateY(-5px);opacity:.7}
 .toc a.tool{font-weight:500}
-.toc a.tool .no{color:var(--petrol)}
+
+/* קידוד צבעים לפרקים — המעוין בתוכן ובכותרת הפרק באותו צבע */
+.c-petrol{--dc:#0f5964}
+.c-copper{--dc:#a8541f}
+.c-moss{--dc:#5f7040}
+.c-wine{--dc:#8e3a44}
+.c-brass{--dc:#b9954a}
+.c-ink{--dc:#0c3b44}
 
 /* ============ NAV ============ */
 .nav{
@@ -202,19 +209,20 @@ section{padding:58px 0 8px}
   display:flex;align-items:center;gap:38px;flex-wrap:wrap;
   padding:52px 34px;position:relative;z-index:2;
 }
+.chapter-open{--dc:var(--brass)}
 .chapter-open .big{
   font-family:var(--serif);font-weight:900;font-size:clamp(5rem,13vw,8.5rem);
-  line-height:.9;color:transparent;-webkit-text-stroke:2.5px var(--brass);
+  line-height:.9;color:transparent;-webkit-text-stroke:2.5px var(--dc);
   flex:0 0 auto;
 }
-.chapter-open::after{ /* אות רפאים ברקע */
+.chapter-open::after{ /* סימן רפאים ברקע */
   content:attr(data-ghost);position:absolute;left:-2%;bottom:-38%;z-index:1;
   font-family:var(--serif);font-weight:900;font-size:17rem;line-height:1;
-  color:transparent;-webkit-text-stroke:1px rgba(15,89,100,.10);
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--dc) 14%,transparent);
   pointer-events:none;
 }
 .chapter-open .t .over{
-  font-size:.78rem;letter-spacing:.34em;color:var(--copper);font-weight:500;margin-bottom:10px;
+  font-size:.78rem;letter-spacing:.34em;color:var(--dc);font-weight:500;margin-bottom:10px;
 }
 .chapter-open h2{font-weight:900;font-size:clamp(1.8rem,4.8vw,2.8rem);line-height:1.18;text-wrap:balance}
 .chapter-open .t p{color:var(--ink-60);max-width:36em;margin-top:10px;font-size:.98rem}
@@ -571,18 +579,18 @@ footer b{color:var(--paper)}
 <div class="toc wrap" id="toc">
   <h2>תוכן <b>·</b> העניינים</h2>
   <div class="toc-grid">
-    <a href="#letter"><span class="no">◈</span><span>דבר המינהל: מכתב פתיחה</span><span class="fill"></span></a>
-    <a href="#journey" class="tool"><span class="no">◈</span><span>המסע בשנה — לוח אבני הדרך</span><span class="fill"></span></a>
-    <a href="#meter" class="tool"><span class="no">◈</span><span>מד המוכנות האישי</span><span class="fill"></span></a>
-    <a href="#ch1"><span class="no">◈</span><span>מנהיגות ניהולית ופדגוגית</span><span class="fill"></span></a>
-    <a href="#flex"><span class="no">◈</span><span>גמישות ניהולית ופדגוגית</span><span class="fill"></span></a>
-    <a href="#ch2"><span class="no">◈</span><span>היערכות פדגוגית תשפ"ז</span><span class="fill"></span></a>
-    <a href="#maatefet"><span class="no">◈</span><span>מעטפת פדגוגית וקהילות לומדות</span><span class="fill"></span></a>
-    <a href="#matzevet"><span class="no">◈</span><span>מצבת מורים</span><span class="fill"></span></a>
-    <a href="#ch3"><span class="no">◈</span><span>הנחיות המנהל</span><span class="fill"></span></a>
-    <a href="#ch4"><span class="no">◈</span><span>חוברת החינוך היוצר תשפ"ז</span><span class="fill"></span></a>
-    <a href="#dual"><span class="no">◈</span><span>הפדגוגיה הדואלית — העמקה ויישום</span><span class="fill"></span></a>
-    <a href="#daily"><span class="no">◈</span><span>פדגוגיה דואלית הלכה למעשה</span><span class="fill"></span></a>
+    <a href="#letter" class="c-ink"><span class="no">◈</span><span>דבר המינהל: מכתב פתיחה</span><span class="fill"></span></a>
+    <a href="#journey" class="tool c-petrol"><span class="no">◈</span><span>המסע בשנה — לוח אבני הדרך</span><span class="fill"></span></a>
+    <a href="#meter" class="tool c-petrol"><span class="no">◈</span><span>מד המוכנות האישי</span><span class="fill"></span></a>
+    <a href="#ch1" class="c-copper"><span class="no">◈</span><span>מנהיגות ניהולית ופדגוגית</span><span class="fill"></span></a>
+    <a href="#flex" class="c-copper"><span class="no">◈</span><span>גמישות ניהולית ופדגוגית</span><span class="fill"></span></a>
+    <a href="#ch2" class="c-moss"><span class="no">◈</span><span>היערכות פדגוגית תשפ"ז</span><span class="fill"></span></a>
+    <a href="#maatefet" class="c-moss"><span class="no">◈</span><span>מעטפת פדגוגית וקהילות לומדות</span><span class="fill"></span></a>
+    <a href="#matzevet" class="c-moss"><span class="no">◈</span><span>מצבת מורים</span><span class="fill"></span></a>
+    <a href="#ch3" class="c-wine"><span class="no">◈</span><span>הנחיות המנהל</span><span class="fill"></span></a>
+    <a href="#ch4" class="c-brass"><span class="no">◈</span><span>חוברת החינוך היוצר תשפ"ז</span><span class="fill"></span></a>
+    <a href="#dual" class="c-brass"><span class="no">◈</span><span>הפדגוגיה הדואלית — העמקה ויישום</span><span class="fill"></span></a>
+    <a href="#daily" class="c-brass"><span class="no">◈</span><span>פדגוגיה דואלית הלכה למעשה</span><span class="fill"></span></a>
   </div>
 </div>
 
@@ -599,7 +607,7 @@ footer b{color:var(--paper)}
 
 <!-- ============ JOURNEY ============ -->
 <section id="journey">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-petrol" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
@@ -685,7 +693,7 @@ footer b{color:var(--paper)}
 
 <!-- ============ METER ============ -->
 <section id="meter">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-petrol" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
@@ -780,7 +788,7 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 1 ============ -->
 <!-- ================================================== -->
 <section id="ch1">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-copper" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
@@ -1023,7 +1031,7 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 2 ============ -->
 <!-- ================================================== -->
 <section id="ch2">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-moss" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
@@ -1173,7 +1181,7 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 3 ============ -->
 <!-- ================================================== -->
 <section id="ch3">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-wine" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
@@ -1215,7 +1223,7 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 4 ============ -->
 <!-- ================================================== -->
 <section id="ch4">
-  <div class="chapter-open" data-ghost="◈">
+  <div class="chapter-open c-brass" data-ghost="◈">
     <div class="co-in">
       <div class="big">◈</div>
       <div class="t">
