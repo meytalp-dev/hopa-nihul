@@ -6,301 +6,440 @@
 <title>מסמך היערכות תשפ"ז — המהדורה הדיגיטלית</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Bellefair&family=Frank+Ruhl+Libre:wght@700;900&family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   מהדורה דיגיטלית — מסמך היערכות תשפ"ז
-   שפה עיצובית: חוברת שנתית מודפסת. נייר, דיו, קווי סרגל.
+   מהדורה דיגיטלית — מסמך היערכות תשפ"ז · גרסה 3
+   שפה עיצובית: דו"ח שנתי יוקרתי. דיו עמוק, נייר חם, פליז.
    ============================================================ */
 :root{
-  --paper:#f3eee2;
-  --paper-deep:#ece5d4;
-  --ink:#1d2b34;
-  --ink-60:#4c5d68;
+  --paper:#f4efe3;
+  --paper-deep:#ebe4d1;
+  --ink:#14262e;
+  --ink-2:#0c3b44;       /* פטרול עמוק */
+  --ink-60:#4d5f68;
   --petrol:#0f5964;
+  --brass:#b9954a;       /* פליז/זהב */
+  --brass-soft:#d8c186;
   --copper:#a8541f;
   --red:#9d3232;
-  --hair:#d4c9b2;
+  --hair:#d6cbb2;
   --hair-dark:#b8ab8e;
   --white:#fbf8f1;
-  --serif:'Frank Ruhl Libre',serif;
-  --sans:'Heebo',sans-serif;
+  --serif:'Suez One','Frank Ruhl Libre',serif;   /* כותרות — סלאב עיתונאי */
+  --elegant:'Bellefair',serif;                    /* מספרים ונגיעות עדינות */
+  --nikud:'Frank Ruhl Libre',serif;               /* טקסט מנוקד */
+  --sans:'IBM Plex Sans Hebrew',sans-serif;       /* טקסט רץ */
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{
   font-family:var(--sans);
   font-weight:400;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 300px),
-    var(--paper);
+  background:var(--paper);
   color:var(--ink);
-  line-height:1.75;
+  line-height:1.78;
   font-size:1.02rem;
+  overflow-x:hidden;
+}
+/* גרעין נייר עדין */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 ::selection{background:var(--petrol);color:#fff}
-.wrap{max-width:980px;margin:0 auto;padding:0 22px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
 .narrow{max-width:760px;margin:0 auto}
-
-/* ---------- typography ---------- */
 h1,h2,h3,.serif{font-family:var(--serif)}
 p+p{margin-top:.9em}
 strong{font-weight:700}
 a{color:var(--petrol)}
-
-/* underlined items that are live links in the source doc */
 .dl{border-bottom:1px dashed var(--hair-dark);cursor:help}
 
-/* ---------- top rule ---------- */
-.toprule{height:6px;background:var(--petrol)}
-.toprule::after{content:"";display:block;height:2px;background:var(--copper)}
+/* ---------- scroll reveal ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
-/* ---------- cover ---------- */
-.cover{padding:64px 0 46px;text-align:center;border-bottom:3px double var(--hair-dark)}
+/* ============ COVER — דו"ח שנתי ============ */
+.cover{
+  position:relative;color:var(--paper);text-align:center;overflow:hidden;
+  background:
+    radial-gradient(1100px 500px at 50% -10%,rgba(185,149,74,.16),transparent 60%),
+    linear-gradient(168deg,#0a2c34 0%,#0c3b44 52%,#0f4a52 100%);
+  padding:92px 20px 110px;
+}
+.cover::before{ /* טבעת פליז דקורטיבית */
+  content:"";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:min(150vw,1100px);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(216,193,134,.18);
+  box-shadow:0 0 0 60px rgba(216,193,134,.04),0 0 0 160px rgba(216,193,134,.03);
+  pointer-events:none;
+}
+.cover .ghost{
+  position:absolute;inset-inline:0;top:46%;transform:translateY(-50%);
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(11rem,34vw,26rem);line-height:1;
+  color:transparent;-webkit-text-stroke:1.5px rgba(216,193,134,.13);
+  user-select:none;pointer-events:none;white-space:nowrap;
+}
+.cover>*{position:relative}
 .cover .office{
-  font-size:.82rem;letter-spacing:.32em;font-weight:500;color:var(--ink-60);
-  text-transform:uppercase;margin-bottom:26px;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  font-size:.8rem;letter-spacing:.34em;font-weight:400;color:var(--brass-soft);
+  margin-bottom:44px;
 }
-.cover .office b{color:var(--petrol);font-weight:700}
-.cover .date{font-family:var(--serif);font-size:.95rem;color:var(--ink-60);margin-bottom:10px}
+.cover .office::before,.cover .office::after{
+  content:"";height:1px;width:min(90px,16vw);background:linear-gradient(90deg,transparent,var(--brass));
+}
+.cover .office::after{background:linear-gradient(-90deg,transparent,var(--brass))}
+.cover .date{font-family:var(--elegant);font-size:1.08rem;color:rgba(244,239,227,.66);margin-bottom:14px;letter-spacing:.12em}
 .cover h1{
-  font-weight:900;font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.18;
-  margin:6px auto 18px;max-width:16em;
+  font-weight:900;font-size:clamp(2.3rem,6.4vw,4.2rem);line-height:1.16;
+  margin:0 auto 22px;max-width:15em;text-wrap:balance;
 }
-.cover h1 .yr{color:var(--petrol)}
+.cover h1 .yr{color:var(--brass-soft)}
 .cover .subtitle{
-  font-family:var(--serif);font-weight:500;font-size:clamp(1.05rem,2.6vw,1.3rem);
-  color:var(--copper);
+  font-family:var(--elegant);font-weight:400;font-size:clamp(1.25rem,3.1vw,1.7rem);
+  color:var(--brass-soft);letter-spacing:.18em;
 }
 .cover .rule{
-  width:90px;height:1px;background:var(--hair-dark);margin:26px auto;position:relative;
+  width:120px;height:1px;background:var(--brass);margin:34px auto;position:relative;opacity:.8;
 }
 .cover .rule::after{
-  content:"◆";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-  color:var(--copper);font-size:.7rem;background:var(--paper);padding:0 8px;
+  content:"◆";position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  color:var(--brass-soft);font-size:.72rem;background:transparent;padding:0 10px;
 }
-.cover .dedication{max-width:36em;margin:0 auto;color:var(--ink-60);font-size:.98rem}
+.cover .dedication{max-width:37em;margin:0 auto;color:rgba(244,239,227,.75);font-size:.98rem;font-weight:300}
+.cover .hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  color:var(--brass-soft);font-size:1.4rem;animation:bob 2.4s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
-/* ---------- TOC ---------- */
-.toc{padding:40px 0 52px;border-bottom:1px solid var(--hair)}
-.toc h2{font-size:1.05rem;font-weight:700;letter-spacing:.18em;text-align:center;margin-bottom:26px;color:var(--ink-60)}
-.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 56px;max-width:860px;margin:0 auto}
+/* ============ TOC ============ */
+.toc{padding:56px 0;border-bottom:1px solid var(--hair)}
+.toc h2{
+  font-size:.92rem;font-weight:700;letter-spacing:.3em;text-align:center;
+  margin-bottom:34px;color:var(--ink-60);font-family:var(--sans);
+}
+.toc h2 b{color:var(--brass);font-weight:700}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:4px 64px;max-width:880px;margin:0 auto}
 .toc a{
-  display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);
-  padding:7px 2px;border-bottom:1px dotted var(--hair);
-  transition:color .15s;
+  display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink);
+  padding:10px 2px;border-bottom:1px solid transparent;font-size:1rem;
+  transition:.2s;
 }
-.toc a:hover{color:var(--petrol)}
-.toc a .no{font-family:var(--serif);font-weight:700;color:var(--copper);font-size:.9rem;min-width:2em}
-.toc a .fill{flex:1;border-bottom:1px dotted var(--hair-dark);transform:translateY(-4px);opacity:.6}
-.toc a .pg{font-family:var(--serif);font-size:.85rem;color:var(--ink-60)}
-.toc a.tool .no{color:var(--petrol)}
+.toc a:hover{color:var(--petrol);padding-inline-start:8px}
+.toc a .no{
+  font-family:var(--elegant);font-weight:400;color:var(--brass);font-size:1.2rem;
+  min-width:2.1em;
+}
+.toc a .fill{flex:1;border-bottom:1px dotted var(--hair-dark);transform:translateY(-5px);opacity:.7}
 .toc a.tool{font-weight:500}
+.toc a.tool .no{color:var(--petrol)}
 
-/* ---------- sticky nav ---------- */
+/* ============ NAV ============ */
 .nav{
   position:sticky;top:0;z-index:90;
-  background:rgba(243,238,226,.94);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--hair-dark);
+  background:rgba(12,43,52,.96);backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 rgba(216,193,134,.35);
 }
 .nav-inner{display:flex;align-items:center;gap:2px;overflow-x:auto;padding:0;scrollbar-width:none}
 .nav-inner::-webkit-scrollbar{display:none}
 .nav a{
-  white-space:nowrap;text-decoration:none;color:var(--ink-60);
-  font-weight:500;font-size:.88rem;
-  padding:12px 15px;border-bottom:3px solid transparent;
-  transition:.15s;
+  white-space:nowrap;text-decoration:none;color:rgba(244,239,227,.78);
+  font-weight:400;font-size:.9rem;letter-spacing:.02em;
+  padding:13px 15px;position:relative;transition:.15s;
 }
-.nav a:hover{color:var(--petrol);border-bottom-color:var(--copper)}
+.nav a::after{
+  content:"";position:absolute;bottom:0;inset-inline:15px;height:2px;
+  background:var(--brass);transform:scaleX(0);transition:transform .2s;
+}
+.nav a:hover{color:#fff}
+.nav a:hover::after{transform:scaleX(1)}
 .nav .navmeter{
-  margin-inline-start:auto;display:flex;align-items:center;gap:8px;
-  font-size:.82rem;color:var(--ink-60);padding-inline-end:6px;white-space:nowrap;
+  margin-inline-start:auto;display:flex;align-items:center;gap:10px;
+  font-size:.82rem;color:rgba(244,239,227,.7);padding-inline-end:8px;white-space:nowrap;
 }
-.navmeter .bar{width:74px;height:4px;background:var(--hair);border-radius:2px;overflow:hidden}
-.navmeter .bar i{display:block;height:100%;width:0;background:var(--petrol);transition:width .5s}
-.navmeter b{font-family:var(--serif);color:var(--petrol)}
+.navmeter .bar{width:78px;height:3px;background:rgba(244,239,227,.2);overflow:hidden}
+.navmeter .bar i{display:block;height:100%;width:0;background:var(--brass-soft);transition:width .5s}
+.navmeter b{font-family:var(--elegant);color:var(--brass-soft);font-size:1.1rem}
 
-/* ---------- section scaffolding ---------- */
+/* ============ scaffolding ============ */
 section{padding:58px 0 8px}
 .chapter-open{
-  padding:74px 0 30px;margin-top:30px;
-  border-top:3px double var(--hair-dark);
-  display:flex;align-items:center;gap:30px;flex-wrap:wrap;
+  margin-top:44px;padding:0;
+  border-block:3px double var(--hair-dark);
+  background:linear-gradient(180deg,var(--paper-deep),var(--paper));
+  position:relative;overflow:hidden;
+}
+.chapter-open .co-in{
+  display:flex;align-items:center;gap:38px;flex-wrap:wrap;
+  padding:52px 34px;position:relative;z-index:2;
 }
 .chapter-open .big{
-  font-family:var(--serif);font-weight:900;font-size:clamp(4.4rem,11vw,7rem);
-  line-height:.85;color:transparent;-webkit-text-stroke:2px var(--copper);
+  font-family:var(--serif);font-weight:900;font-size:clamp(5rem,13vw,8.5rem);
+  line-height:.9;color:transparent;-webkit-text-stroke:2.5px var(--brass);
   flex:0 0 auto;
 }
-.chapter-open .t .over{
-  font-size:.8rem;letter-spacing:.3em;color:var(--ink-60);font-weight:500;margin-bottom:8px;
+.chapter-open::after{ /* אות רפאים ברקע */
+  content:attr(data-ghost);position:absolute;left:-2%;bottom:-38%;z-index:1;
+  font-family:var(--serif);font-weight:900;font-size:17rem;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(15,89,100,.10);
+  pointer-events:none;
 }
-.chapter-open h2{font-weight:900;font-size:clamp(1.7rem,4.6vw,2.6rem);line-height:1.2}
-.chapter-open .t p{color:var(--ink-60);max-width:36em;margin-top:8px;font-size:.98rem}
+.chapter-open .t .over{
+  font-size:.78rem;letter-spacing:.34em;color:var(--copper);font-weight:500;margin-bottom:10px;
+}
+.chapter-open h2{font-weight:900;font-size:clamp(1.8rem,4.8vw,2.8rem);line-height:1.18;text-wrap:balance}
+.chapter-open .t p{color:var(--ink-60);max-width:36em;margin-top:10px;font-size:.98rem}
 
 h3.sec{
-  font-weight:700;font-size:clamp(1.25rem,3vw,1.6rem);
-  margin:46px 0 6px;padding-top:26px;
+  font-weight:900;font-size:clamp(1.3rem,3.1vw,1.7rem);
+  margin:52px 0 8px;padding-top:30px;
   border-top:1px solid var(--hair);
-  display:flex;align-items:baseline;gap:14px;
+  display:flex;align-items:baseline;gap:16px;
 }
-h3.sec::before{content:"";width:34px;height:8px;background:var(--petrol);flex:0 0 auto;transform:translateY(-3px)}
+h3.sec::before{
+  content:"";width:38px;height:9px;background:var(--petrol);flex:0 0 auto;transform:translateY(-4px);
+  box-shadow:42px 0 0 -3px var(--brass);
+}
 h3.sec.first{border-top:none;padding-top:0}
 h4.sub{
-  font-family:var(--serif);font-weight:700;font-size:1.12rem;margin:30px 0 8px;color:var(--petrol);
+  font-family:var(--serif);font-weight:700;font-size:1.16rem;margin:34px 0 10px;color:var(--petrol);
+  display:flex;align-items:center;gap:12px;
 }
-.lead{font-size:1.05rem;color:var(--ink-60)}
+h4.sub::after{content:"";flex:1;height:1px;background:var(--hair);max-width:180px}
+.lead{font-size:1.06rem;color:var(--ink-60)}
 
-/* numbered editorial list */
-ol.ed{list-style:none;counter-reset:ed;margin:16px 0}
+/* רשימות */
+ol.ed{list-style:none;counter-reset:ed;margin:18px 0}
 ol.ed>li{
   counter-increment:ed;position:relative;
-  padding:10px 52px 10px 0;border-bottom:1px dotted var(--hair);
+  padding:11px 56px 11px 0;border-bottom:1px dotted var(--hair);
 }
 ol.ed>li:last-child{border-bottom:none}
 ol.ed>li::before{
-  content:counter(ed);position:absolute;right:0;top:8px;
-  font-family:var(--serif);font-weight:700;font-size:1.35rem;color:var(--copper);
-  width:38px;text-align:center;
+  content:counter(ed,decimal-leading-zero);position:absolute;right:0;top:6px;
+  font-family:var(--elegant);font-weight:400;font-size:1.5rem;color:var(--brass);
+  width:42px;letter-spacing:.04em;
 }
-/* bulleted editorial list */
 ul.ed{list-style:none;margin:14px 0}
-ul.ed>li{
-  position:relative;padding:7px 26px 7px 0;
-}
+ul.ed>li{position:relative;padding:7px 28px 7px 0}
 ul.ed>li::before{
-  content:"—";position:absolute;right:0;top:7px;color:var(--copper);font-weight:700;
+  content:"";position:absolute;right:2px;top:16px;width:12px;height:2px;background:var(--copper);
 }
 ul.ed.tight>li{padding-top:4px;padding-bottom:4px}
 
-/* pull quote / callout */
+/* callout */
 .callout{
-  margin:26px 0;padding:18px 24px;
-  background:var(--white);border-inline-start:5px solid var(--copper);
-  box-shadow:0 1px 0 var(--hair);
-  font-size:1rem;
+  margin:28px 0;padding:22px 28px;
+  background:var(--white);border-inline-start:4px solid var(--copper);
+  box-shadow:0 1px 0 var(--hair),0 14px 34px -22px rgba(20,38,46,.35);
+  font-size:1rem;position:relative;
+}
+.callout::before{
+  content:"";position:absolute;top:0;inset-inline-start:-4px;width:4px;height:34px;background:var(--brass);
 }
 .callout.petrol{border-inline-start-color:var(--petrol)}
 .callout.red{border-inline-start-color:var(--red)}
-.callout .ttl{font-family:var(--serif);font-weight:700;display:block;margin-bottom:4px}
+.callout .ttl{font-family:var(--serif);font-weight:700;display:block;margin-bottom:6px;font-size:1.08rem}
 
-/* ---------- tables ---------- */
-.tbl-scroll{overflow-x:auto;margin:18px 0}
+/* ============ tables ============ */
+.tbl-scroll{overflow-x:auto;margin:20px 0}
 table.doc{
   width:100%;border-collapse:collapse;font-size:.95rem;background:var(--white);
-  border:1px solid var(--hair-dark);
-  min-width:540px;
+  border:1px solid var(--hair-dark);border-top:3px solid var(--ink-2);
+  min-width:540px;box-shadow:0 18px 40px -30px rgba(20,38,46,.4);
 }
 table.doc caption{
-  caption-side:top;text-align:right;font-family:var(--serif);font-weight:700;
-  font-size:1.05rem;padding:0 2px 10px;
+  caption-side:top;text-align:right;font-family:var(--serif);font-weight:900;
+  font-size:1.15rem;padding:0 2px 12px;
 }
+table.doc caption::after{content:"";display:block;width:56px;height:3px;background:var(--brass);margin-top:6px}
 table.doc th{
-  font-weight:700;font-size:.85rem;letter-spacing:.06em;color:var(--white);
-  background:var(--petrol);padding:9px 14px;text-align:right;
+  font-weight:500;font-size:.83rem;letter-spacing:.1em;color:var(--brass-soft);
+  background:var(--ink-2);padding:10px 16px;text-align:right;
 }
-table.doc td{
-  padding:11px 14px;border-bottom:1px solid var(--hair);vertical-align:top;
-}
+table.doc td{padding:12px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
 table.doc tr:last-child td{border-bottom:none}
-table.doc td.k{font-weight:700;white-space:nowrap;background:var(--paper-deep);border-left:1px solid var(--hair)}
-table.doc tr:nth-child(even) td:not(.k){background:#f8f4ea}
+table.doc td.k{
+  font-weight:700;background:var(--paper-deep);border-left:1px solid var(--hair);
+  font-family:var(--serif);font-size:.98rem;
+}
+table.doc tr:nth-child(even) td:not(.k){background:#f7f3e8}
 
-/* ---------- data cycle ---------- */
-.cycle{display:flex;flex-wrap:wrap;gap:0;align-items:center;margin:20px 0;justify-content:center}
-.cycle .step{
+/* ============ מעגל העבודה ============ */
+.cycle-wheel{
+  position:relative;width:min(560px,92vw);height:min(560px,92vw);
+  margin:34px auto 20px;
+}
+.cw-ring{
+  position:absolute;inset:14%;border-radius:50%;
+  border:1.5px dashed var(--hair-dark);
+  animation:spin 90s linear infinite;
+}
+.cw-ring::before{
+  content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid transparent;
+  border-top-color:var(--brass);border-left-color:var(--brass);
+  opacity:.55;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cw-center{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:31%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#11525e,var(--ink-2) 72%);
+  color:var(--paper);display:grid;place-content:center;text-align:center;
+  font-family:var(--serif);font-weight:700;font-size:clamp(.95rem,2.6vw,1.25rem);line-height:1.35;
+  box-shadow:0 22px 46px -18px rgba(12,59,68,.55),inset 0 0 0 5px rgba(216,193,134,.25);
+}
+.cw-center small{
+  display:block;font-family:var(--sans);font-weight:300;font-size:.62em;
+  color:var(--brass-soft);letter-spacing:.22em;margin-bottom:4px;
+}
+.cw-node{
+  position:absolute;left:50%;top:50%;
+  width:clamp(108px,24vw,148px);
+  transform:translate(-50%,-50%) rotate(var(--a)) translate(0,calc(min(560px,92vw)/-2.32)) rotate(calc(var(--a)*-1));
   background:var(--white);border:1px solid var(--hair-dark);
-  padding:9px 16px;font-size:.92rem;font-weight:500;
+  padding:10px 8px 12px;text-align:center;
+  font-size:clamp(.72rem,1.9vw,.88rem);font-weight:500;line-height:1.35;
+  box-shadow:0 12px 26px -14px rgba(20,38,46,.35);
+  transition:transform .25s,box-shadow .25s;
 }
-.cycle .arr{color:var(--copper);font-weight:700;padding:0 8px;font-size:1.05rem}
+.cw-node:hover{box-shadow:0 18px 34px -14px rgba(20,38,46,.5)}
+.cw-node b{
+  display:block;font-family:var(--elegant);font-weight:400;font-size:1.6em;
+  color:var(--brass);letter-spacing:.08em;margin-bottom:2px;line-height:1.1;
+}
+.cw-node::after{
+  content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:7px;height:7px;border-radius:50%;background:var(--copper);
+  box-shadow:0 0 0 4px var(--paper);
+}
+.cycle-caption{text-align:center;font-size:.85rem;color:var(--ink-60);margin-bottom:8px}
+@media (max-width:620px){
+  .cycle-wheel{width:auto;height:auto;margin:24px 0 10px}
+  .cw-ring{display:none}
+  .cw-center{
+    position:static;transform:none;width:auto;aspect-ratio:auto;border-radius:0;
+    padding:14px;margin-bottom:14px;
+  }
+  .cw-node{
+    position:static;transform:none;width:auto;text-align:right;
+    display:flex;align-items:baseline;gap:14px;padding:11px 16px;
+    border-bottom:none;margin:0;
+  }
+  .cw-node+.cw-node{border-top:1px dotted var(--hair)}
+  .cw-node::after{display:none}
+  .cw-node b{margin-bottom:0;min-width:2em}
+}
 
-/* ---------- letter ---------- */
-.letter{padding-top:52px}
-.letter .salut{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-bottom:14px}
+/* ============ letter ============ */
+.letter{padding-top:56px}
+.letter .salut{font-family:var(--serif);font-weight:700;font-size:1.3rem;margin-bottom:16px}
 .letter .body-first::first-letter{
-  font-family:var(--serif);font-weight:900;font-size:3.3em;float:right;
-  line-height:.82;padding:4px 0 0 12px;color:var(--petrol);
+  font-family:var(--serif);font-weight:900;font-size:3.6em;float:right;
+  line-height:.8;padding:6px 0 0 14px;color:var(--petrol);
 }
-.signature{
-  margin-top:30px;text-align:left;font-family:var(--serif);
-}
-.signature b{font-size:1.15rem;font-weight:900}
-.signature span{display:block;color:var(--ink-60);font-size:.95rem}
 
-/* ---------- journey (year planner) ---------- */
-.planner{border-top:1px solid var(--hair-dark);margin-top:10px}
+/* ============ planner ============ */
+.planner{border-top:2px solid var(--ink-2);margin-top:14px}
 .p-row{
-  display:grid;grid-template-columns:200px 1fr;gap:26px;
-  padding:26px 0;border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:210px 1fr;gap:30px;
+  padding:30px 6px;border-bottom:1px solid var(--hair);
+  transition:background .25s;
 }
+.p-row:hover{background:rgba(251,248,241,.75)}
+.p-month{position:relative;padding-inline-start:2px}
 .p-month .m{
-  font-family:var(--serif);font-weight:900;font-size:1.45rem;line-height:1.2;color:var(--petrol);
+  font-family:var(--serif);font-weight:900;font-size:1.5rem;line-height:1.2;color:var(--ink-2);
 }
-.p-month .g{font-size:.85rem;color:var(--ink-60);margin-top:2px}
+.p-month .g{font-size:.85rem;color:var(--ink-60);margin-top:3px}
 .p-month .lbl{
-  display:inline-block;margin-top:10px;font-size:.78rem;font-weight:700;
-  color:var(--copper);border:1px solid var(--copper);padding:1px 10px;
+  display:inline-block;margin-top:12px;font-size:.74rem;font-weight:500;letter-spacing:.14em;
+  color:var(--copper);border:1px solid var(--copper);padding:2px 12px;
+}
+.p-month::after{
+  content:"";position:absolute;top:8px;bottom:2px;inset-inline-end:-15px;width:1px;
+  background:linear-gradient(var(--brass),transparent);
 }
 .p-items{list-style:none}
 .p-items li{
-  position:relative;padding:6px 22px 6px 0;font-size:.97rem;
+  position:relative;padding:7px 24px 7px 0;font-size:.97rem;
   border-bottom:1px dotted var(--hair);
 }
 .p-items li:last-child{border-bottom:none}
 .p-items li::before{
-  content:"·";position:absolute;right:2px;top:2px;font-size:1.5rem;color:var(--petrol);
+  content:"";position:absolute;right:2px;top:17px;width:10px;height:2px;background:var(--petrol);
 }
-.p-items li.deadline::before{content:"◆";font-size:.68rem;top:11px;right:0;color:var(--red)}
+.p-items li.deadline::before{
+  content:"◆";width:auto;height:auto;background:none;top:7px;right:0;
+  color:var(--red);font-size:.66rem;
+}
 .p-items li.deadline{font-weight:500}
 .p-items .when{color:var(--red);font-weight:700;font-size:.85rem}
-.legend-line{display:flex;gap:24px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-60);margin:14px 0 0}
+.legend-line{display:flex;gap:26px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-60);margin:16px 0 0}
 .legend-line span b{color:var(--red)}
 
-/* ---------- checklist ---------- */
+/* ============ meter ============ */
 .meter-head{
-  display:flex;align-items:center;gap:26px;flex-wrap:wrap;
-  background:var(--ink);color:var(--paper);
-  padding:26px 30px;margin:24px 0 30px;
+  display:flex;align-items:center;gap:30px;flex-wrap:wrap;
+  background:
+    radial-gradient(600px 200px at 85% -30%,rgba(185,149,74,.22),transparent 60%),
+    linear-gradient(150deg,#0a2c34,#0c3b44);
+  color:var(--paper);
+  padding:30px 34px;margin:26px 0 34px;
+  border:1px solid rgba(216,193,134,.4);
+  box-shadow:0 26px 60px -34px rgba(12,59,68,.7), inset 0 0 0 5px rgba(12,43,52,.5), inset 0 0 0 6px rgba(216,193,134,.28);
 }
 .meter-head .pct{
-  font-family:var(--serif);font-weight:900;font-size:3.4rem;line-height:1;color:#e9b96f;
-  min-width:3.2ch;text-align:center;
+  font-family:var(--elegant);font-weight:400;font-size:4.6rem;line-height:1;color:var(--brass-soft);
+  min-width:3ch;text-align:center;text-shadow:0 6px 26px rgba(216,193,134,.3);
 }
-.meter-head .mid{flex:1;min-width:220px}
-.meter-head .mbar{height:7px;background:rgba(243,238,226,.18);overflow:hidden;margin-top:10px}
-.meter-head .mbar i{display:block;height:100%;width:0;background:#e9b96f;transition:width .6s cubic-bezier(.22,1,.36,1)}
-.meter-head .cnt{font-size:.9rem;color:#c3ccc9;margin-top:6px}
-.meter-head .note{font-size:.9rem;color:#e9b96f;font-weight:500}
+.meter-head .mid{flex:1;min-width:230px}
+.meter-head .mid .serif{font-size:1.16rem}
+.meter-head .mbar{height:6px;background:rgba(244,239,227,.16);overflow:hidden;margin-top:12px}
+.meter-head .mbar i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--brass),var(--brass-soft));
+  transition:width .7s cubic-bezier(.22,1,.36,1);
+}
+.meter-head .cnt{font-size:.9rem;color:rgba(244,239,227,.66);margin-top:8px}
+.meter-head .note{font-size:.9rem;color:var(--brass-soft);font-weight:500}
 .btn-reset{
-  border:1px solid rgba(243,238,226,.4);background:transparent;color:var(--paper);
-  font-family:var(--sans);font-weight:500;font-size:.83rem;
-  padding:7px 16px;cursor:pointer;transition:.2s;
+  border:1px solid rgba(216,193,134,.5);background:transparent;color:var(--brass-soft);
+  font-family:var(--sans);font-weight:400;font-size:.83rem;letter-spacing:.04em;
+  padding:8px 18px;cursor:pointer;transition:.2s;
 }
-.btn-reset:hover{background:rgba(243,238,226,.12)}
-.check-cols{columns:2;column-gap:26px}
+.btn-reset:hover{background:rgba(216,193,134,.14);color:#fff}
+
+.check-cols{columns:2;column-gap:28px}
 @media (max-width:760px){.check-cols{columns:1}}
 .check-block{
   break-inside:avoid;background:var(--white);border:1px solid var(--hair-dark);
-  margin-bottom:26px;
+  margin-bottom:28px;box-shadow:0 16px 36px -28px rgba(20,38,46,.45);
 }
 .cb-head{
   display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  padding:13px 18px 11px;border-bottom:2px solid var(--ink);
+  padding:13px 20px 12px;background:var(--ink-2);color:var(--paper);
 }
 .cb-head h4{font-family:var(--serif);font-weight:700;font-size:1.06rem}
-.cb-head .c{font-family:var(--serif);font-weight:700;color:var(--copper);font-size:.95rem}
-.check-block.done .cb-head .c{color:var(--petrol)}
+.cb-head .c{font-family:var(--elegant);font-weight:400;color:var(--brass-soft);font-size:1.2rem}
+.check-block.done .cb-head{background:var(--petrol)}
 .check-block.done .cb-head .c::after{content:" ✓"}
 label.ci{
-  display:flex;gap:12px;align-items:flex-start;
-  padding:9px 18px;cursor:pointer;font-size:.93rem;line-height:1.5;
+  display:flex;gap:13px;align-items:flex-start;
+  padding:10px 20px;cursor:pointer;font-size:.93rem;line-height:1.55;
   border-bottom:1px dotted var(--hair);
   transition:background .15s;
 }
 label.ci:last-child{border-bottom:none}
 label.ci:hover{background:var(--paper)}
 label.ci input{
-  appearance:none;flex:0 0 17px;width:17px;height:17px;margin-top:4px;
+  appearance:none;flex:0 0 17px;width:17px;height:17px;margin-top:5px;
   border:1.6px solid var(--ink-60);background:#fff;cursor:pointer;
   display:grid;place-content:center;transition:.15s;
 }
@@ -311,77 +450,102 @@ label.ci input:checked{border-color:var(--petrol)}
 label.ci input:checked::before{transform:scale(1)}
 label.ci input:checked ~ span{color:var(--ink-60)}
 
-/* ---------- weights (מחוון) ---------- */
-.weights{margin:18px 0;max-width:560px}
-.w-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dotted var(--hair)}
-.w-row .wl{font-size:.95rem}
-.w-row .wn{font-family:var(--serif);font-weight:900;font-size:1.3rem;color:var(--petrol);min-width:3ch;text-align:left}
-.w-row .track{grid-column:1/-1;height:8px;background:var(--paper-deep);overflow:hidden}
-.w-row .track i{display:block;height:100%;background:var(--petrol)}
-.w-row:nth-child(2) .track i{background:var(--copper)}
-.w-row:nth-child(3) .track i{background:var(--ink-60)}
+/* ============ מחוון ============ */
+.weights{margin:20px 0;max-width:580px}
+.w-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dotted var(--hair)}
+.w-row .wl{font-size:.96rem}
+.w-row .wn{font-family:var(--elegant);font-weight:400;font-size:1.75rem;color:var(--ink-2);min-width:3ch;text-align:left}
+.w-row .track{grid-column:1/-1;height:9px;background:var(--paper-deep);overflow:hidden}
+.w-row .track i{display:block;height:100%;background:var(--ink-2)}
+.w-row:nth-child(2) .track i{background:var(--petrol)}
+.w-row:nth-child(3) .track i{background:var(--brass)}
 .w-row:nth-child(4) .track i{background:var(--hair-dark)}
 
-/* ---------- basket split ---------- */
-.basket{display:flex;gap:2px;margin:16px 0 8px;height:56px}
+/* ============ סל ============ */
+.basket{display:flex;gap:2px;margin:18px 0 10px;height:64px;box-shadow:0 16px 34px -24px rgba(20,38,46,.5)}
 .basket .seg{
   display:flex;flex-direction:column;justify-content:center;align-items:center;
-  color:#fff;font-size:.8rem;font-weight:500;line-height:1.25;text-align:center;
+  color:#fff;font-size:.8rem;font-weight:400;line-height:1.25;text-align:center;
   padding:4px;
 }
-.basket .seg b{font-family:var(--serif);font-size:1.05rem}
-.basket .s1{width:35%;background:var(--petrol)}
-.basket .s2{width:25%;background:#1b7c8a}
-.basket .s3{width:20%;background:var(--copper)}
-.basket .s4{width:20%;background:#7a6a4f}
+.basket .seg b{font-family:var(--elegant);font-size:1.45rem;font-weight:400}
+.basket .s1{width:35%;background:var(--ink-2)}
+.basket .s2{width:25%;background:var(--petrol)}
+.basket .s3{width:20%;background:var(--brass)}
+.basket .s4{width:20%;background:#77664a}
 .basket-caption{font-size:.85rem;color:var(--ink-60)}
 
-/* ---------- footer ---------- */
+/* ============ closing/footer ============ */
 .closing-quote{
-  margin:60px auto 0;text-align:center;max-width:34em;
-  padding:44px 20px;border-top:3px double var(--hair-dark);
+  margin:70px auto 0;text-align:center;max-width:36em;
+  padding:52px 20px;border-top:3px double var(--hair-dark);position:relative;
+}
+.closing-quote::before{
+  content:"◆";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  color:var(--brass);background:var(--paper);padding:0 14px;font-size:.8rem;
 }
 .closing-quote .q{
-  font-family:var(--serif);font-weight:700;font-size:clamp(1.25rem,3.4vw,1.7rem);
-  color:var(--petrol);line-height:1.5;
+  font-family:var(--nikud);font-weight:900;font-size:clamp(1.4rem,3.7vw,2rem);
+  color:var(--ink-2);line-height:1.55;
 }
-.closing-quote .who{color:var(--ink-60);font-size:.9rem;margin-top:8px}
+.closing-quote .who{color:var(--copper);font-size:.9rem;margin-top:10px;letter-spacing:.1em}
+.signature{margin-top:30px;font-family:var(--serif)}
+.signature b{font-size:1.2rem;font-weight:900;display:block}
+.signature span{display:block;color:var(--ink-60);font-size:.95rem}
 footer{
-  margin-top:50px;background:var(--ink);color:#aebcc0;
-  padding:34px 0;font-size:.85rem;
+  margin-top:56px;background:var(--ink-2);color:rgba(244,239,227,.6);
+  padding:36px 0;font-size:.85rem;border-top:3px solid var(--brass);
 }
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer b{color:var(--paper)}
 
 @media (max-width:640px){
-  .p-row{grid-template-columns:1fr;gap:8px;padding:20px 0}
-  .chapter-open{gap:18px;padding-top:50px}
-  .meter-head{padding:20px}
+  .p-row{grid-template-columns:1fr;gap:10px;padding:22px 0}
+  .p-month::after{display:none}
+  .chapter-open .co-in{gap:20px;padding:38px 22px}
+  .meter-head{padding:22px}
+  .cover{padding:70px 18px 84px}
 }
 @media print{
-  .nav,.btn-reset{display:none}
+  .nav,.btn-reset,.cover .hint{display:none}
   body{background:#fff}
+  body::before{display:none}
   .chapter-open{break-before:page}
+  .rv{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
-<div class="toprule"></div>
-
 <!-- ============ COVER ============ -->
-<header class="cover wrap" id="top">
-  <div class="office">משרד העבודה &nbsp;·&nbsp; <b>מינהל הכשרה מקצועית</b> &nbsp;·&nbsp; ופיתוח כוח אדם</div>
+<header class="cover" id="top">
+  <div class="ghost" aria-hidden="true">תשפ״ז</div>
+  <div class="office">משרד העבודה · מינהל הכשרה מקצועית</div>
   <div class="date">כ"ה בתמוז התשפ"ו · 29.7.2026</div>
   <h1>מסמך היערכות לשנת הלימודים <span class="yr">תשפ"ז</span></h1>
   <div class="subtitle">תודה, הערכה והמשך הדרך</div>
   <div class="rule"></div>
   <p class="dedication">המהדורה הדיגיטלית: המסמך המלא, פרק אחר פרק — לצד לוח שנה של אבני הדרך ומד מוכנות אישי למנהלת ולמנהל.</p>
+  <div class="hint">⌄</div>
 </header>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#toc">תוכן</a>
+    <a href="#journey">המסע בשנה</a>
+    <a href="#meter">מד המוכנות</a>
+    <a href="#ch1">פרק א</a>
+    <a href="#ch2">פרק ב</a>
+    <a href="#ch3">פרק ג</a>
+    <a href="#ch4">פרק ד</a>
+    <span class="navmeter"><span class="bar"><i id="navBarFill"></i></span><b id="navPct">0%</b></span>
+  </div>
+</nav>
 
 <!-- ============ TOC ============ -->
 <div class="toc wrap" id="toc">
-  <h2>תוכן העניינים</h2>
+  <h2>תוכן <b>·</b> העניינים</h2>
   <div class="toc-grid">
     <a href="#letter"><span class="no">—</span><span>דבר המינהל: מכתב פתיחה</span><span class="fill"></span></a>
     <a href="#journey" class="tool"><span class="no">◈</span><span>המסע בשנה — לוח אבני הדרך</span><span class="fill"></span></a>
@@ -398,20 +562,6 @@ footer b{color:var(--paper)}
   </div>
 </div>
 
-<!-- ============ NAV ============ -->
-<nav class="nav">
-  <div class="wrap nav-inner">
-    <a href="#toc">תוכן</a>
-    <a href="#journey">המסע בשנה</a>
-    <a href="#meter">מד המוכנות</a>
-    <a href="#ch1">פרק א</a>
-    <a href="#ch2">פרק ב</a>
-    <a href="#ch3">פרק ג</a>
-    <a href="#ch4">פרק ד</a>
-    <span class="navmeter"><span class="bar"><i id="navBarFill"></i></span><b id="navPct">0%</b></span>
-  </div>
-</nav>
-
 <div class="wrap">
 
 <!-- ============ LETTER ============ -->
@@ -425,18 +575,20 @@ footer b{color:var(--paper)}
 
 <!-- ============ JOURNEY ============ -->
 <section id="journey">
-  <div class="chapter-open" style="border-top:none;padding-top:44px;margin-top:0">
-    <div class="big">◈</div>
-    <div class="t">
-      <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
-      <h2>המסע בשנה — לוח אבני הדרך</h2>
-      <p>כל המועדים, הסדירויות והדדליינים שבמסמך, מסודרים כלוח שנה של תשפ"ז — מפתיחת השנה ועד סיומה.</p>
+  <div class="chapter-open" data-ghost="◈">
+    <div class="co-in">
+      <div class="big">◈</div>
+      <div class="t">
+        <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
+        <h2>המסע בשנה — לוח אבני הדרך</h2>
+        <p>כל המועדים, הסדירויות והדדליינים שבמסמך, מסודרים כלוח שנה של תשפ"ז — מפתיחת השנה ועד סיומה.</p>
+      </div>
     </div>
   </div>
 
   <div class="planner">
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">אלול — תשרי</div><div class="g">ספטמבר · פתיחת השנה</div><span class="lbl">היערכות</span></div>
       <ul class="p-items">
         <li>התיק הבית ספרי מלא, מעודכן ונגיש — כלי העבודה המרכזי מול הפיקוח</li>
@@ -448,7 +600,7 @@ footer b{color:var(--paper)}
       </ul>
     </div>
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">חשוון</div><div class="g">אוקטובר — נובמבר</div><span class="lbl">נכנסים לקצב</span></div>
       <ul class="p-items">
         <li>נפתחת השתלמות המנהלים השנתית — 30 שעות, אוקטובר עד יוני</li>
@@ -458,7 +610,7 @@ footer b{color:var(--paper)}
       </ul>
     </div>
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">כסלו — טבת</div><div class="g">דצמבר — ינואר</div><span class="lbl">חלון המדידה</span></div>
       <ul class="p-items">
         <li class="deadline">שאלוני אקלים לצוות ולתלמידים — <span class="when">חלון ההעברה: דצמבר–ינואר</span>, יעד: 100% מילוי</li>
@@ -468,7 +620,7 @@ footer b{color:var(--paper)}
       </ul>
     </div>
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">שבט — ניסן</div><div class="g">פברואר — אפריל</div><span class="lbl">עומק העשייה</span></div>
       <ul class="p-items">
         <li>ועדת התמדה שנייה; ישיבות פדגוגיות וימי הורים (2–3 בשנה)</li>
@@ -477,7 +629,7 @@ footer b{color:var(--paper)}
       </ul>
     </div>
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">אייר — תמוז</div><div class="g">מאי — יולי</div><span class="lbl">סוגרים שנה</span></div>
       <ul class="p-items">
         <li class="deadline">ועדה מלווה — מפגש סיום שנה: <span class="when">מאי–יולי</span></li>
@@ -488,7 +640,7 @@ footer b{color:var(--paper)}
       </ul>
     </div>
 
-    <div class="p-row">
+    <div class="p-row rv">
       <div class="p-month"><div class="m">כל השנה</div><div class="g">הסדירויות הקבועות</div><span class="lbl">הדופק</span></div>
       <ul class="p-items">
         <li>דיווח נוכחות בכל שיעור במערכת הממוחשבת</li>
@@ -504,24 +656,26 @@ footer b{color:var(--paper)}
     </div>
 
   </div>
-  <div class="legend-line"><span><b>◆</b> מועד מחייב מהמסמך</span><span>· פעולה נדרשת</span></div>
+  <div class="legend-line"><span><b>◆</b> מועד מחייב מהמסמך</span><span>— פעולה נדרשת</span></div>
 </section>
 
 <!-- ============ METER ============ -->
 <section id="meter">
-  <div class="chapter-open" style="padding-top:50px">
-    <div class="big">◈</div>
-    <div class="t">
-      <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
-      <h2>מד המוכנות האישי</h2>
-      <p>כל דרישות ההיערכות שבמסמך, כטופס סימון אחד. הסימונים נשמרים במכשיר שלכם בלבד — סמנו, צאו, חִזרו.</p>
+  <div class="chapter-open" data-ghost="◈">
+    <div class="co-in">
+      <div class="big">◈</div>
+      <div class="t">
+        <div class="over">כלי עבודה · המהדורה הדיגיטלית</div>
+        <h2>מד המוכנות האישי</h2>
+        <p>כל דרישות ההיערכות שבמסמך, כטופס סימון אחד. הסימונים נשמרים במכשיר שלכם בלבד — סמנו, צאו, חִזרו.</p>
+      </div>
     </div>
   </div>
 
-  <div class="meter-head">
+  <div class="meter-head rv">
     <div class="pct" id="ringPct">0%</div>
     <div class="mid">
-      <div class="serif" style="font-weight:700;font-size:1.1rem">מוכנות בית הספר לפתיחת תשפ"ז</div>
+      <div class="serif" style="font-weight:700">מוכנות בית הספר לפתיחת תשפ"ז</div>
       <div class="mbar"><i id="mbarFill"></i></div>
       <div class="cnt"><span id="ringCount">0 מתוך 0</span> משימות הושלמו &nbsp;·&nbsp; <span class="note" id="toolNote"></span></div>
     </div>
@@ -530,7 +684,7 @@ footer b{color:var(--paper)}
 
   <div class="check-cols" id="checkGrid">
 
-    <div class="check-block" data-sec="vision">
+    <div class="check-block rv" data-sec="vision">
       <div class="cb-head"><h4>חזון ותוכנית עבודה</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="v1"><span>מסמך חזון (סיפור בית ספרי) מבוסס עקרונות החינוך היוצר</span></label>
       <label class="ci"><input type="checkbox" data-id="v2"><span>תוכנית עבודה מעודכנת עם יעדים מדידים, מדדי הצלחה ודרכי מעקב</span></label>
@@ -538,7 +692,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="v4"><span>מנגנון ניהול מבוסס נתונים: איסוף, ניתוח, החלטה, יישום ובקרה</span></label>
     </div>
 
-    <div class="check-block" data-sec="tik">
+    <div class="check-block rv" data-sec="tik">
       <div class="cb-head"><h4>התיק הבית ספרי</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="t1"><span>תקנון ביה"ס ותיק בטיחות</span></label>
       <label class="ci"><input type="checkbox" data-id="t2"><span>גאנט שנתי ומערכות שעות</span></label>
@@ -550,7 +704,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="t8"><span>תוכנית לשעת חירום</span></label>
     </div>
 
-    <div class="check-block" data-sec="emergency">
+    <div class="check-block rv" data-sec="emergency">
       <div class="cb-head"><h4>שגרת חירום — היערכות מוקדמת</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="e1"><span>הוגשה תוכנית בית ספרית ללמידה מרחוק/היברידית עם מנגנוני קשר, למידה ותמיכה לכל תלמיד</span></label>
       <label class="ci"><input type="checkbox" data-id="e2"><span>תיק צל"ח מעודכן על פי ההנחיות</span></label>
@@ -559,7 +713,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="e5"><span>מאגר פעילויות לימודיות וחברתיות לשעת חירום</span></label>
     </div>
 
-    <div class="check-block" data-sec="pedagogy">
+    <div class="check-block rv" data-sec="pedagogy">
       <div class="cb-head"><h4>היערכות פדגוגית</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="p1"><span>נבחר מסלול לימוד לכל כיתה</span></label>
       <label class="ci"><input type="checkbox" data-id="p2"><span>תוכנית פדגוגית ומעשית ללימודי המקצוע בשילוב החניכות</span></label>
@@ -569,7 +723,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="p6"><span>פריסת היבחנות תלת־שנתית, מופעי הערכה והצגת תוצרים, שיתופי פעולה אינטר־דיסציפלינריים</span></label>
     </div>
 
-    <div class="check-block" data-sec="schedule">
+    <div class="check-block rv" data-sec="schedule">
       <div class="cb-head"><h4>מערכת שעות וחניכות</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="s1"><span>כיתות ט'–י': חמישה ימי לימוד עד 14:30 לפחות (יום אחד קצר לישיבות והשתלמות צוות)</span></label>
       <label class="ci"><input type="checkbox" data-id="s2"><span>כיתות יא'–יב': ארבעה ימי לימוד + יום חניכות (יומיים — רק במקרים חריגים באישור הפיקוח)</span></label>
@@ -578,7 +732,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="s5"><span>שעות בגרות לפי האוגדן: 3 ש"ש ליח"ל; אנגלית ומתמטיקה — 4 ש"ש לכל הרמות</span></label>
     </div>
 
-    <div class="check-block" data-sec="staff">
+    <div class="check-block rv" data-sec="staff">
       <div class="cb-head"><h4>מצבת מורים וצוות</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="f1"><span>כל קליטה של בעל תפקיד עודכנה וקיבלה את אישור הפיקוח</span></label>
       <label class="ci"><input type="checkbox" data-id="f2"><span>כל מורה מתמחה דווח למפקח; הוסדר מורה חונך מוסמך והועבר לרשת לצורך תשלום</span></label>
@@ -587,7 +741,7 @@ footer b{color:var(--paper)}
       <label class="ci"><input type="checkbox" data-id="f5"><span>תוכנית ליווי למורים חדשים</span></label>
     </div>
 
-    <div class="check-block" data-sec="persist">
+    <div class="check-block rv" data-sec="persist">
       <div class="cb-head"><h4>התמדה ומניעת נשירה</h4><span class="c">0/0</span></div>
       <label class="ci"><input type="checkbox" data-id="n1"><span>רישום נוכחות שעתי במערכת ממוחשבת — מוטמע אצל כלל הצוות</span></label>
       <label class="ci"><input type="checkbox" data-id="n2"><span>שגרת טופס מעקב חודשי לתלמידים בסכנת נשירה</span></label>
@@ -602,19 +756,21 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 1 ============ -->
 <!-- ================================================== -->
 <section id="ch1">
-  <div class="chapter-open">
-    <div class="big">א</div>
-    <div class="t">
-      <div class="over">פרק ראשון</div>
-      <h2>מנהיגות ניהולית ופדגוגית — בהובלת מנהל ביה"ס</h2>
+  <div class="chapter-open" data-ghost="א">
+    <div class="co-in">
+      <div class="big">א</div>
+      <div class="t">
+        <div class="over">פרק ראשון</div>
+        <h2>מנהיגות ניהולית ופדגוגית — בהובלת מנהל ביה"ס</h2>
+      </div>
     </div>
   </div>
 
-  <h3 class="sec first" id="vision">חזון ובניית תוכנית עבודה</h3>
+  <h3 class="sec first rv" id="vision">חזון ובניית תוכנית עבודה</h3>
   <p>באחריות מנהל בית הספר להוביל תהליך מתמשך של גיבוש והטמעת חזון בית ספרי ברור, המבוסס על עקרונות החינוך היוצר והפדגוגיה הדואלית, ולהבטיח כי החזון יבוא לידי ביטוי בכלל תחומי העשייה בבית הספר. <strong>מסמך החזון יבוא לידי מעשה בתוכנית עבודה בית ספרית מעודכנת</strong>, הכוללת יעדים מדידים, מדדי הצלחה ודרכי מעקב, המשמשת בסיס לניהול ולהובלת העשייה לאורך שנת הלימודים.</p>
 
   <h4 class="sub">אחריותו המקצועית של מנהל בית הספר</h4>
-  <ol class="ed">
+  <ol class="ed rv">
     <li>להוביל סיפור בית ספרי (חזון) המבוסס על עקרונות החינוך היוצר ולהטמיעו בכל תחומי העשייה.</li>
     <li>להבטיח עמידה בהנחיות, בדרישות הרגולציה ובמדדי המינהל להכשרה מקצועית, תוך קידום תרבות של איכות ושיפור מתמיד.</li>
     <li>להציב יעדים שנתיים ורב־שנתיים, לעקוב אחר ביצועם ולהוביל את בית הספר למצוינות ולשיפור מתמיד.</li>
@@ -629,7 +785,7 @@ footer b{color:var(--paper)}
   </ol>
 
   <h4 class="sub">מטרות מרכזיות לשנת הלימודים תשפ"ז</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li><strong>מיצוי הפוטנציאל והצלחת כל תלמיד</strong> — קשר אישי משמעותי, קידום הישגים, התמדה, זכאות לתעודות מקצוע וריבוי תעודות.</li>
     <li><strong>הרחבת היקף ואיכות החניכות</strong> — הגדלת מספר התלמידים המשתלבים בחניכות, חיזוק איכות ההתנסות והעמקת שיתופי הפעולה עם מעסיקים.</li>
     <li><strong>חיזוק שדרת ההובלה הבית ספרית</strong> — פיתוח מנהיגות מקצועית, ליווי בעלי תפקידים והובלת שינוי מתמשך בבתי הספר.</li>
@@ -637,7 +793,7 @@ footer b{color:var(--paper)}
     <li><strong>חיזוק האקלים החינוכי והחברתי</strong> — טיפוח תחושת שייכות, משמעות ומסוגלות, פיתוח מנהיגות תלמידים, ליווי בוגרים ועידוד מעורבות ותרומה לקהילה.</li>
   </ul>
 
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc">
     <caption>מדדי הצלחה</caption>
     <tr><th style="width:180px">תחום</th><th>מדד ההצלחה</th></tr>
@@ -652,20 +808,23 @@ footer b{color:var(--paper)}
   </table>
   </div>
 
-  <h3 class="sec" id="data">ניהול מבוסס נתונים</h3>
+  <h3 class="sec rv" id="data">ניהול מבוסס נתונים</h3>
   <p>ניהול איכותי נשען על נתונים ולא על תחושות. מנהל בית הספר נדרש לאסוף מידע באופן שוטף, לנתח אותו, לזהות מגמות, לקבל החלטות מושכלות ולבצע בקרה מתמדת על יישומן.</p>
 
-  <div class="cycle">
-    <span class="step">איסוף נתונים</span><span class="arr">←</span>
-    <span class="step">ניתוח הממצאים</span><span class="arr">←</span>
-    <span class="step">קבלת החלטות</span><span class="arr">←</span>
-    <span class="step">בניית תוכנית פעולה</span><span class="arr">←</span>
-    <span class="step">יישום ובקרה</span><span class="arr">←</span>
-    <span class="step">מדידה מחודשת ושיפור מתמיד</span>
+  <div class="cycle-wheel rv">
+    <div class="cw-ring"></div>
+    <div class="cw-center"><span><small>מעגל העבודה</small>ניהול מבוסס<br>נתונים</span></div>
+    <div class="cw-node" style="--a:0deg"><b>01</b>איסוף נתונים</div>
+    <div class="cw-node" style="--a:-60deg"><b>02</b>ניתוח הממצאים</div>
+    <div class="cw-node" style="--a:-120deg"><b>03</b>קבלת החלטות</div>
+    <div class="cw-node" style="--a:-180deg"><b>04</b>בניית תוכנית פעולה</div>
+    <div class="cw-node" style="--a:-240deg"><b>05</b>יישום ובקרה</div>
+    <div class="cw-node" style="--a:-300deg"><b>06</b>מדידה מחודשת ושיפור מתמיד</div>
   </div>
+  <p class="cycle-caption">מעגל העבודה: משלב 06 חוזרים לשלב 01 — מדידה מזינה איסוף מחודש</p>
 
   <h4 class="sub">מקורות הנתונים</h4>
-  <ul class="ed tight">
+  <ul class="ed tight rv">
     <li>הישגים לימודיים</li>
     <li>נוכחות והתמדה</li>
     <li>נתוני נשירה</li>
@@ -677,23 +836,23 @@ footer b{color:var(--paper)}
   </ul>
 
   <h4 class="sub">מערכת השעות</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li>כיתות ט'–י' לומדים חמישה ימים בשבוע, מינימום עד 14:30 (פרט ליום אחד קצר יותר לצורך ישיבות והשתלמות לצוות).</li>
     <li>כיתות יא'–יב' לומדים ארבעה ימים בשבוע + יום אחד חניכות (במקרים חריגים, באישור הפיקוח, יאושרו לתלמידים יומיים חניכות בשבוע).</li>
     <li>שעות חניכות בכיתות יא'–יב': לפחות 200 שעות בשנה, או 400 שעות החל מגיל 16 עד סיום יב'.</li>
     <li>יש לבנות מערכת שעות בהתאם לאוגדן ועל פי המסלול הנבחר. יש לבקש אישור מהמפקח הפדגוגי בנוגע לכל שינוי.</li>
   </ul>
 
-  <h3 class="sec" id="tik">תיק בית ספרי</h3>
+  <h3 class="sec rv" id="tik">תיק בית ספרי</h3>
   <p>התיק הפדגוגי הוא כלי עבודה מרכזי לניהול, תכנון, תיעוד ובקרה של העשייה החינוכית בבית הספר. ניהול תיק מסודר, מעודכן ונגיש מאפשר רצף עבודה מקצועי, מסייע בקבלת החלטות, מחזק את תהליכי הבקרה והפיקוח ותורם לאיכות הניהול וההוראה. הקפדה על ניהול התיק מבטיחה סדר, ארגון ושמירה על כלל המסמכים הנדרשים לאורך שנת הלימודים.</p>
-  <div class="callout petrol">
+  <div class="callout petrol rv">
     <span class="ttl">התיק יכלול</span>
     תקנון ביה"ס, תיק בטיחות, תוכנית שימוש בתקציבים, גאנט שנתי, מערכות שעות, תוכנית עבודה שנתית, תוכנית פדגוגית, תוכנית חברתית, תוכנית הכלה ושילוב, תוכנית חניכות, תוכנית מצוינות וחדשנות, תוכנית פיתוח צוות, תוכניות עבודה של כלל בעלי התפקידים, סילבוס של כלל המקצועות והמורים, תוכנית עבודה עם הורי ביה"ס, תוכניות ייחודיות, תוכנית מקצועית הכוללת פיתוח המגמות, קורסים מקצועיים, סיורים ושיתופי פעולה עם הקהילה ובתוכה, ותוכנית לשעת חירום.
   </div>
 
-  <h3 class="sec" id="emergency-sec">שגרת חירום — היערכות מוקדמת</h3>
+  <h3 class="sec rv" id="emergency-sec">שגרת חירום — היערכות מוקדמת</h3>
   <p>לצד ההיערכות הפדגוגית, הארגונית והמקצועית לשנה החדשה, חשוב להיערך גם למצבים המחייבים מעבר ללמידה מרחוק או להפעלה גמישה של בית הספר. לקראת היערכות תשפ"ז יש להיערך:</p>
-  <ol class="ed">
+  <ol class="ed rv">
     <li><strong>הגשת תוכנית בית ספרית ללמידה מרחוק/היברידית</strong>, תוך בניית מנגנונים ברורים לשמירה על קשר, למידה, תמיכה ומשמעות עבור כל תלמיד ותלמידה.</li>
     <li>הכנת תיק צל"ח מעודכן — על פי <span class="dl">הנחיות צל"ח</span>.</li>
     <li>פגישת צוות צל"ח, כולל חלוקת תפקידים.</li>
@@ -702,10 +861,10 @@ footer b{color:var(--paper)}
   </ol>
   <p><span class="dl">מענים ללמידה מרחוק — אגרת כלים למענה פדגוגי ורגשי מיטבי</span></p>
 
-  <h3 class="sec" id="persistence">התמדה ומניעת נשירה</h3>
+  <h3 class="sec rv" id="persistence">התמדה ומניעת נשירה</h3>
   <p>התמדה וביקור סדיר מהווים תשתית חינוכית קריטית. <strong>בתי הספר מחויבים לעבוד על פי <span class="dl">ההנחיות לדיווח וטיפול בבעיות ביקור סדיר ומניעת נשירה</span>.</strong></p>
 
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc">
     <caption>פעולות נדרשות</caption>
     <tr><th style="width:220px">פעולה</th><th>תדירות והנחיה</th></tr>
@@ -719,7 +878,7 @@ footer b{color:var(--paper)}
   </table>
   </div>
 
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc">
     <caption>אבני הדרך של שנת הלימודים</caption>
     <tr><th style="width:250px">תחום</th><th>סדירות</th></tr>
@@ -739,8 +898,8 @@ footer b{color:var(--paper)}
   </table>
   </div>
 
-  <h3 class="sec" id="flex">גמישות ניהולית ופדגוגית תשפ"ז</h3>
-  <ul class="ed">
+  <h3 class="sec rv" id="flex">גמישות ניהולית ופדגוגית תשפ"ז</h3>
+  <ul class="ed rv">
     <li>רשת החינוך היא האחראית על בתי הספר ומכירה לעומק את צורכי בית הספר.</li>
     <li>מנהל ביה"ס מכיר באופן המעמיק ביותר את המורים ואת צורכיהם.</li>
     <li>צוות ביה"ס מכיר באופן המעמיק ביותר את התלמידים שלו ואת צורכיהם.</li>
@@ -754,16 +913,16 @@ footer b{color:var(--paper)}
 
   <h4 class="sub">עקרונות</h4>
   <p>הגמישות הניהולית אמורה לאזן בין יכולת בית הספר לתת וליצור את המענים הנכונים ביותר לצורכי המורים והתלמידים, לבין אחריות המערכת לעמידה בסטנדרטים מקצועיים — ובסופו של דבר להוביל את התלמידים להישגים לימודיים, מקצועיים וחברתיים.</p>
-  <ol class="ed">
+  <ol class="ed rv">
     <li>מתן מרחב שיקול דעת למנהלים, בד בבד עם יצירה של מנגנוני בקרה ומתן דין וחשבון. ועדה מלווה היא ביטוי מרכזי לאיזון שבין גמישות ניהולית לבין אחריות ומתן דין וחשבון.</li>
     <li>היקף הגמישות ומרחב שיקול הדעת צריכים להיגזר מרמות התפקוד של ביה"ס והמנהל. ככל שההישגים והמדדים גבוהים יותר — יקבל יותר גמישות (על פי מיפוי של מפקח פדגוגי וטיפולי בהתאם לסטנדרטים שנקבעו).</li>
     <li>ככל שהמטרות והיעדים הבית ספריים מוגדרים בצורה בהירה על בסיס נתונים, ובהלימה לסטנדרטים הנדרשים, קל יותר לעשות שימוש מושכל בגמישות ניהולית.</li>
   </ol>
-  <div class="callout">
+  <div class="callout rv">
     גמישות אינה ויתור על סדר, נהלים או יעדים. להפך — היא היכולת לשמור על מטרות ברורות תוך התאמת הדרכים להשגתן. היא מהווה כלי מרכזי ליצירת <strong>איזון בין דרישות המערכת לחינוך מקצועי איכותי ומתפתח לבין הסיפור הבית ספרי הייחודי</strong>, ובין מדיניות משותפת לבין אוטונומיה מקומית. מנהל הפועל מתוך גמישות מושכלת מסוגל להוביל שינוי, להתמודד עם אתגרים בלתי צפויים ולפתוח בפני תלמידיו וצוותו אפשרויות חדשות לצמיחה ולהצלחה.
   </div>
 
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc">
     <caption>מרחבי הגמישות — נושא, מהות, סטנדרטים ואישור נדרש</caption>
     <tr><th style="width:150px">נושא</th><th>מהות הגמישות</th><th>סטנדרטים</th><th>אישור נדרש</th></tr>
@@ -823,19 +982,21 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 2 ============ -->
 <!-- ================================================== -->
 <section id="ch2">
-  <div class="chapter-open">
-    <div class="big">ב</div>
-    <div class="t">
-      <div class="over">פרק שני</div>
-      <h2>היערכות פדגוגית תשפ"ז</h2>
+  <div class="chapter-open" data-ghost="ב">
+    <div class="co-in">
+      <div class="big">ב</div>
+      <div class="t">
+        <div class="over">פרק שני</div>
+        <h2>היערכות פדגוגית תשפ"ז</h2>
+      </div>
     </div>
   </div>
 
   <p class="lead">ההיערכות הפדגוגית היא אבן היסוד לפתיחת שנת לימודים איכותית, סדורה ומצליחה. תכנון מוקדם, קביעת סדרי עדיפויות, בניית תהליכי עבודה ברורים והיערכות מקצועית של כלל הצוות החינוכי מאפשרים ליצור רצף חינוכי מיטבי, לקדם הישגים ולהעניק לכל תלמיד ותלמידה את המענה המדויק לצורכיהם.</p>
   <p>בשנת תשפ"ז נמשיך להעמיק את יישום תפיסת החינוך היוצר והפדגוגיה הדואלית, תוך חיזוק הקשר בין לימודי הליבה, לימודי המקצוע, החניכות והעולם האמיתי. לצד זאת, נשים דגש על הוראה איכותית, הערכה מיטבית, למידה מבוססת נתונים, פיתוח מקצועי של הצוותים החינוכיים ובניית תרבות ארגונית של למידה, חדשנות ושיפור מתמיד.</p>
 
-  <h3 class="sec" id="ped-guidelines">הנחיות פדגוגיות</h3>
-  <ol class="ed">
+  <h3 class="sec rv" id="ped-guidelines">הנחיות פדגוגיות</h3>
+  <ol class="ed rv">
     <li>בחירת מסלול לימוד לכל כיתה.</li>
     <li>בניית תוכנית פדגוגית ומעשית ללימודי המקצוע בשילוב החניכות.</li>
     <li>בניית תוכנית פדגוגית ללימודי הליבה בהתאם לשעות האוגדן.</li>
@@ -844,7 +1005,7 @@ footer b{color:var(--paper)}
   </ol>
 
   <h4 class="sub">פעולות באחריות הרכז/ת הפדגוגי/ת</h4>
-  <ol class="ed">
+  <ol class="ed rv">
     <li>כל מורה מתבקש לבנות <span class="dl">תוכנית עבודה שנתית</span> על פי שבועות — סילבוס (הוראה–למידה–הערכה).</li>
     <li><span class="dl">פריסת היבחנות תלת־שנתית</span>.</li>
     <li>מופעי הערכה והצגת תוצרים.</li>
@@ -852,9 +1013,9 @@ footer b{color:var(--paper)}
   </ol>
   <p><span class="dl">תיקיית כלים פדגוגיים</span></p>
 
-  <h3 class="sec" id="gemer">היערכות כיתות תעודת מקצוע וגמר</h3>
+  <h3 class="sec rv" id="gemer">היערכות כיתות תעודת מקצוע וגמר</h3>
   <h4 class="sub">מקצועות הליבה</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li><strong>מתמטיקה</strong> — מבחן גמר או המרה ל־1 יח"ל (חיצוני החל משנת תשפ"ז לתלמידי יא').</li>
     <li><strong>עברית</strong> — מבחן גמר או המרה לתלקיט עבודות 1 יח"ל (חיצוני החל משנת תשפ"ז לתלמידי יא'), או עברית לדוברי ערבית.</li>
     <li><strong>ערבית</strong> — לבתי ספר מהחברה הערבית.</li>
@@ -862,12 +1023,12 @@ footer b{color:var(--paper)}
     <li><strong>אנגלית</strong> — בימים אלו נבנית תוכנית לימודים.</li>
   </ul>
 
-  <h3 class="sec" id="bagrut">היערכות כיתות מקצוע ובגרות חלקית / מלאה</h3>
+  <h3 class="sec rv" id="bagrut">היערכות כיתות מקצוע ובגרות חלקית / מלאה</h3>
   <p>בתי ספר שבחרו לכיתות מסוימות מתווה בגרות — להלן הנחיות בהתאם לדרישות משרד החינוך. מנהל ביה"ס יצטרך להתחייב ולעמוד בדרישות הבאות: <strong>שעות הוראה</strong> בהתאם למספר שעות ההוראה בכל מקצוע על פי דרישת משרד החינוך (<span class="dl">אוגדן שעות תשפ"ז</span>).</p>
 
   <h4 class="sub">הנחיות לחלוקת שעות הלימוד</h4>
   <p>מסגרת השעות המארגנת משקפת את מספר שעות ההוראה ליחידת לימוד. מספר שעות ההוראה של כלל החומר הנלמד ביחידת לימוד אחת מוערך בכ־90 שעות לימוד בכיתה (3 שעות שבועיות לאורך שנת הלימודים). מקצועות ברמה של 5 יח"ל יילמדו בהיקף של 450 שעות לימוד לפחות.</p>
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc" style="min-width:380px">
     <tr><th>היקף</th><th>שעות שבועיות לכיתה</th></tr>
     <tr><td class="k">מקצועות בהיקף 1 יח"ל</td><td>3 ש"ש</td></tr>
@@ -880,7 +1041,7 @@ footer b{color:var(--paper)}
 
   <h4 class="sub">חובת המורים במקצועות הבגרות</h4>
   <p>כל מורה המלמד מקצוע לבחינת בגרות מחויב להוראה מקצועית ועדכנית, להשתתפות פעילה <strong>בהשתלמויות, בהדרכות</strong> ובליווי המקצועי הנקבעים על ידי משרד החינוך, משרד העבודה או הגורמים המוסמכים מטעמם. בנוסף, על המורה לקיים הערכה מתמשכת, מקצועית ומתועדת לאורך שנת הלימודים, להציג לתלמידים בתחילת השנה את רכיבי ההערכה, לתעד את הישגיהם באופן שוטף ולקבוע את הציון השנתי באופן המשקף את הישגי התלמיד לאורך השנה.</p>
-  <div class="callout">
+  <div class="callout rv">
     <span class="ttl">דגשים מחייבים</span>
     השתתפות בהשתלמויות, בהדרכות ובהנחיה המקצועית לאורך השנה היא חלק בלתי נפרד מתפקידו של מורה לבגרות. כל מורה המלמד למקצוע בגרות, על מנת שיאושר לו מתן ציון שנתי (מגן), מחויב ל:
     <ul class="ed tight" style="margin-bottom:0">
@@ -889,11 +1050,11 @@ footer b{color:var(--paper)}
     </ul>
   </div>
 
-  <h3 class="sec" id="annual-grade">הנחיות למתן ציון שנתי (גמר ובגרות)</h3>
+  <h3 class="sec rv" id="annual-grade">הנחיות למתן ציון שנתי (גמר ובגרות)</h3>
   <p>הציון השנתי ייקבע על בסיס הערכה מתמשכת של הישגי התלמיד לאורך שנת הלימודים, בהתאם להנחיות משרד החינוך ולמדיניות משרד העבודה. ההערכה תתבסס על קריטריונים ברורים, אחידים ומתועדים, ותשקף את רמת הידע, המיומנויות וההתקדמות של התלמיד.</p>
 
   <h4 class="sub">מחוון מומלץ לקביעת הציון השנתי</h4>
-  <div class="weights">
+  <div class="weights rv">
     <div class="w-row"><span class="wl">מבחנים ובחנים</span><span class="wn">40%</span><span class="track"><i style="width:40%"></i></span></div>
     <div class="w-row"><span class="wl">עבודות, מטלות ופרויקטים</span><span class="wn">30%</span><span class="track"><i style="width:30%"></i></span></div>
     <div class="w-row"><span class="wl">השתתפות פעילה, אחריות והתמדה ומיומנויות למידה</span><span class="wn">20%</span><span class="track"><i style="width:20%"></i></span></div>
@@ -901,7 +1062,7 @@ footer b{color:var(--paper)}
   </div>
   <p style="font-size:.92rem;color:var(--ink-60)">* כל רכיבי ההערכה יתועדו באופן שוטף ויהיו שקופים לתלמידים.<br>* במקצועות שבהם קיימות הנחיות ייעודיות של משרד החינוך — יש לפעול בהתאם להן.</p>
 
-  <div class="callout red">
+  <div class="callout red rv">
     <span class="ttl">אזהרת שק"ד</span>
     במקרים בהם ביה"ס ייחשד באירועי שק"ד (פער חריג בין ממוצע הציונים השנתי שהועבר למשרד החינוך לממוצע ציוני הבחינה) — תישלל זכותו להגשת ציון שנתי למשך כשנתיים/שלוש, כנהוג במשרד החינוך (<span class="dl">קישור למסמך מרכז אירועי שק"ד משה"ח</span>).
   </div>
@@ -910,10 +1071,10 @@ footer b{color:var(--paper)}
   <p>יש לקיים את שעות הלמידה על פי מערכת השעות שנקבעה, באופן רציף וסדיר, ולהקפיד לא לבטל שיעורים לצורך אירועים פדגוגיים כמו: ישיבות, אספות הורים, מועצות פדגוגיות וועדות מקצועיות.</p>
   <p><span class="dl">חוזר מנכ"ל משרד החינוך: שעות הפעילות במוסדות החינוך הרשמי של מדינת ישראל</span> · <span class="dl">קישור לארגון הלמידה חטיבה עליונה משרד החינוך תשפ"ז</span></p>
 
-  <h3 class="sec" id="maatefet">מעטפת פדגוגית מטעם מינהל הכשרה מקצועית</h3>
+  <h3 class="sec rv" id="maatefet">מעטפת פדגוגית מטעם מינהל הכשרה מקצועית</h3>
   <p class="lead">משאבים פדגוגיים העומדים לרשות בית הספר מטעם המינהל להכשרה מקצועית.</p>
 
-  <div class="tbl-scroll">
+  <div class="tbl-scroll rv">
   <table class="doc">
     <tr><th style="width:190px">הנושא</th><th>המשאב</th></tr>
     <tr><td class="k">השתלמות מוסדית</td><td>על מנהל בית הספר להציג למפקח הכולל את תהליכי הפיתוח המקצועי וההשתלמויות שהתקיימו בשנים האחרונות, ולציין את היעד הפדגוגי המרכזי שבית הספר מבקש לקדם השנה באמצעות ההשתלמות הנבחרת והשפעתה הצפויה על ההוראה, הלמידה והתלמידים. <strong>בהמשך יועבר לבתי הספר קטלוג השתלמויות לבחירה</strong> — בית הספר יתבקש לבחור השתלמות מתוך הקטלוג או להציע מנחה חלופי בהתאם ליעד הפדגוגי שבחר, בכפוף לאישור המפקח. ההשתלמויות יתחילו בנובמבר ויסתיימו בחודש מאי. <span class="dl">מסמך הפעלת השתלמות מוכרת לגמול — חינוך יוצר</span> · <span class="dl">פורמט הגשת סילבוס</span></td></tr>
@@ -928,7 +1089,7 @@ footer b{color:var(--paper)}
   </div>
 
   <h4 class="sub">חלוקת סל התוכניות — 3,400 ₪ לכל תלמיד</h4>
-  <div class="basket">
+  <div class="basket rv">
     <div class="seg s1"><b>35%</b>מקצוע וחניכות</div>
     <div class="seg s2"><b>25%</b>פדגוגיה חדשנית</div>
     <div class="seg s3"><b>20%</b>ייעוצי־טיפולי וחוסן</div>
@@ -936,8 +1097,8 @@ footer b{color:var(--paper)}
   </div>
   <p class="basket-caption">גמישות בין הסעיפים — באישור מפקח ביה"ס · לא לשעות הוראה</p>
 
-  <h3 class="sec" id="kehilot">מעטפת פדגוגית — קהילות לומדות</h3>
-  <div class="tbl-scroll">
+  <h3 class="sec rv" id="kehilot">מעטפת פדגוגית — קהילות לומדות</h3>
+  <div class="tbl-scroll rv">
   <table class="doc">
     <tr><th style="width:170px">תחום</th><th>הכשרה שנתית תשפ"ז</th><th style="width:220px">אחראי מטעם המינהל</th></tr>
     <tr><td class="k">ליווי מנהלים</td><td>כנס מנהלים · מפקח ומנהליו — 6 מפגשים בזום · השתלמות מנהלים — 30 שעות</td><td>רויטל אמיר — מפקחת פדגוגית ארצית</td></tr>
@@ -953,8 +1114,8 @@ footer b{color:var(--paper)}
   </table>
   </div>
 
-  <h3 class="sec" id="matzevet">מצבת מורים</h3>
-  <ol class="ed">
+  <h3 class="sec rv" id="matzevet">מצבת מורים</h3>
+  <ol class="ed rv">
     <li>להלן הנחיות בעלי תפקידים — <span class="dl">בעלי תפקידים: חלוקת שעות ודגשים</span>.</li>
     <li>בכל קליטה של בעל תפקיד (סגן, רכז פדגוגי, רכז חברתי, רכז חניכות, מת"לית, רכזת הכלה ושילוב) יש לעדכן ולקבל את אישור הפיקוח.</li>
     <li>במידה שמורה מבקש לטוס לחו"ל באמצע שנה — נדרש אישור רשת ופיקוח.</li>
@@ -971,11 +1132,13 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 3 ============ -->
 <!-- ================================================== -->
 <section id="ch3">
-  <div class="chapter-open">
-    <div class="big">ג</div>
-    <div class="t">
-      <div class="over">פרק שלישי</div>
-      <h2>הנחיות המנהל</h2>
+  <div class="chapter-open" data-ghost="ג">
+    <div class="co-in">
+      <div class="big">ג</div>
+      <div class="t">
+        <div class="over">פרק שלישי</div>
+        <h2>הנחיות המנהל</h2>
+      </div>
     </div>
   </div>
 
@@ -984,16 +1147,16 @@ footer b{color:var(--paper)}
   <p>באחריות כל מנהל, בעל תפקיד ואיש צוות להכיר את ההנחיות הרלוונטיות לתחום אחריותו, ללמוד אותן, להטמיען בעבודתו השוטפת ולפעול על פיהן באופן עקבי. ההנחיות אינן מסמך עיוני בלבד, אלא כלי עבודה מחייב המנחה את ההתנהלות המקצועית והניהולית בכל תחומי העשייה.</p>
   <p>לצורך הטמעת ההנחיות ויישומן יתקיימו בתחילת שנת הלימודים מפגשי היכרות, למידה ודיוק עם צוותי בתי הספר. במסגרת המפגשים יוצגו ההנחיות המעודכנות, יובהרו העקרונות המנחים, תינתן התייחסות לשינויים שבוצעו ויינתן מענה לשאלות העולות מן השטח.</p>
   <p>בכל שאלה, התלבטות או צורך בהבהרה ניתן וחשוב לפנות למפקח הפדגוגי או למפקחת על המערך הטיפולי. ההתייעצות המקצועית היא חלק בלתי נפרד מהעבודה השוטפת, ומטרתה להבטיח יישום נכון, אחיד ומקצועי של ההנחיות.</p>
-  <div class="callout red">
+  <div class="callout red rv">
     סטייה מההנחיות או פעולה שאינה תואמת את ההנחיות מחייבת קבלת אישור מראש מהמפקח הפדגוגי או מהמפקחת על המערך הטיפולי, בהתאם לתחום האחריות. <strong>אין לבצע חריגה מההנחיות ללא אישור מפורש ומתועד.</strong>
   </div>
   <p>אנו רואים בהנחיות בסיס לניהול מקצועי, אחראי ואיכותי של בתי הספר. לצד המחויבות להנחיות, אנו מעודדים יוזמה, חדשנות, גמישות פדגוגית וחשיבה יצירתית — כל עוד הן מתקיימות במסגרת המדיניות וההנחיות המחייבות.</p>
-  <div class="callout petrol">
+  <div class="callout petrol rv">
     הנחיות אינן מגבילות את העשייה החינוכית — הן יוצרות את המסגרת המקצועית והבטוחה שבתוכה ניתן ליזום, להתחדש, להוביל תהליכים משמעותיים ולהעניק לכל תלמיד ותלמידה את המענה האיכותי ביותר. שילוב בין הקפדה על הנהלים לבין יצירתיות חינוכית הוא המאפשר מצוינות, אחריות ומנהיגות חינוכית.
   </div>
 
   <h4 class="sub">רשימת ההנחיות</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li><strong>חדש</strong> — <span class="dl">הנחיות לקליטה ומיון תלמידים</span></li>
     <li><span class="dl">הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה, כולל סיום לימודים</span></li>
     <li><span class="dl">הנחיות לניהול, דיווח וטיפול באירועי חירום ו/או אירוע חריג, כולל הרחקת תלמיד</span></li>
@@ -1011,22 +1174,24 @@ footer b{color:var(--paper)}
 <!-- ============ CHAPTER 4 ============ -->
 <!-- ================================================== -->
 <section id="ch4">
-  <div class="chapter-open">
-    <div class="big">ד</div>
-    <div class="t">
-      <div class="over">פרק רביעי</div>
-      <h2>חוברת החינוך היוצר תשפ"ז</h2>
+  <div class="chapter-open" data-ghost="ד">
+    <div class="co-in">
+      <div class="big">ד</div>
+      <div class="t">
+        <div class="over">פרק רביעי</div>
+        <h2>חוברת החינוך היוצר תשפ"ז</h2>
+      </div>
     </div>
   </div>
 
-  <h3 class="sec first" id="yotzer">חינוך יוצר — עקרונות הליבה, מטרות ודגשים לתשפ"ז</h3>
+  <h3 class="sec first rv" id="yotzer">חינוך יוצר — עקרונות הליבה, מטרות ודגשים לתשפ"ז</h3>
   <p>החינוך היוצר מבקש להגדיר מחדש את החינוך המקצועי בישראל כמערכת חינוך מובילה, חדשנית ורלוונטית, המשלבת בין פדגוגיה דואלית־הומניסטית, פיתוח מיומנויות, ערכים, זהות, התנסות מעשית וחיבור לעולם האמיתי. מערכת הרואה בכל תלמיד ותלמידה אדם שלם, בעל יכולות, חלומות ופוטנציאל, ופועלת לפתוח בפניו מגוון רחב של אפשרויות ואופקים לעתיד.</p>
   <p>אם בשנים הראשונות של הרפורמה עסקנו בבניית התפיסה, בגיבוש השפה המשותפת ובהקמת התשתיות, הרי ששנת הלימודים תשפ"ז — השנה שבה כלל בתי הספר עובדים על פי תפיסת החינוך היוצר — מסמנת שלב חדש: <strong>שלב ההעמקה, הביסוס וההשפעה</strong>. זהו השלב שבו אנו מבקשים לעבור מהטמעה ראשונית לבניית תרבות ארגונית ופדגוגית עמוקה, עקבית ומקיימת, שתבוא לידי ביטוי בכל מרחבי העשייה הבית ספרית בכלל בתי הספר.</p>
   <p>במקביל להתפתחות בתי הספר, גם המינהל להכשרה מקצועית ופיתוח כוח אדם ממשיך להתחדש ולהוביל מהלכים רחבי היקף שנועדו לחזק את המערכת כולה וליצור תשתית איכותית יותר עבור בתי הספר, התלמידים והצוותים החינוכיים. בין המהלכים המרכזיים: חיזוק מעטפת הליווי והבקרה, הרחבת מעטפת התמיכה הפדגוגית, חיזוק שדרת הפיקוח הפדגוגי, פיתוח והגדרה מחודשת של בעלי תפקידים מרכזיים, הרחבת ההכשרות וההשתלמויות לצוותים החינוכיים, פיתוח קהילות מקצועיות לומדות, בניית כלי הערכה ובקרה חדשים, והמשך גיבוש הסטנדרטים המקצועיים של החינוך היוצר.</p>
   <p>בשנה החולפת הושקעו משאבים רבים בפיתוח ובליווי מנהלים ובעלי התפקידים הנוספים, מתוך תפיסה הרואה בפיתוח והעצמת בעלי התפקידים המובילים של המערכת תנאי מרכזי להצלחת בתי הספר ולהצלחת תלמידינו.</p>
 
   <h4 class="sub">עם הפנים לשנת תשפ"ז — נמשיך לחזק את העוגנים המרכזיים בבתי הספר</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li>בתי ספר לומדים, מתחדשים וגמישים, המותאמים למציאות המשתנה.</li>
     <li>חינוך מבוסס יחסים, אמון, שייכות ומשמעות.</li>
     <li>פיתוח צוותים חינוכיים לומדים, מובילים ויוצרים.</li>
@@ -1038,7 +1203,7 @@ footer b{color:var(--paper)}
   </ul>
 
   <h4 class="sub">ההיבטים המרכזיים שנרצה לקדם השנה</h4>
-  <ul class="ed">
+  <ul class="ed rv">
     <li>הקפדה על התמדה, נוכחות סדירה ומניעת נשירה (דיווח יומיומי במערכת הממוחשבת הבית ספרית).</li>
     <li>הגדלת מספר התלמידים המסיימים עם תעודת מקצוע ותעודת גמר — בשאיפה ל־100%.</li>
     <li>הרחבת ההשתתפות בחניכות משמעותית ובהתנסות מקצועית איכותית — עלייה של לפחות 25% מהשנה הקודמת, בשאיפה לתעסוקה בשיעור של 100% בכל בית ספר.</li>
@@ -1053,7 +1218,7 @@ footer b{color:var(--paper)}
 
   <p>עם הפנים לשנת תשפ"ז, אנו מבקשים להמשיך ולחזק את יכולתה של המערכת לפעול הן בשגרה והן בחירום. <strong>על כן נבקש מכל בית ספר להיערך מראש ללמידה מרחוק/היברידית (בניית מאגר פעילויות לימודיות וחברתיות לשעת חירום), תוך בניית מנגנונים ברורים לשמירה על קשר, למידה, תמיכה ומשמעות עבור כל תלמיד ותלמידה.</strong></p>
 
-  <h3 class="sec" id="dual">הפדגוגיה הדואלית בחינוך היוצר — העמקה, יישום וציפיות לשנת תשפ"ז</h3>
+  <h3 class="sec rv" id="dual">הפדגוגיה הדואלית בחינוך היוצר — העמקה, יישום וציפיות לשנת תשפ"ז</h3>
   <p>הפדגוגיה הדואלית היא אחד מעמודי התווך המרכזיים של החינוך היוצר. היא מבקשת לחבר באופן טבעי ורציף בין הלמידה בבית הספר לבין החיים עצמם, בין הידע העיוני לבין ההתנסות המעשית, בין עולם ההשכלה לבין עולם העבודה, הקהילה והחברה. תפיסה זו רואה בלמידה מתוך עשייה, התנסות, יצירה ופתרון בעיות אמיתיות מנוף משמעותי לפיתוח האדם, לחיזוק תחושת המסוגלות ולהכנה מיטבית לחיים במציאות משתנה ודינמית.</p>
   <p>הפדגוגיה הדואלית אינה מתמקדת רק בהקניית ידע, אלא בפיתוח לומדים עצמאיים, סקרנים, יצירתיים ובעלי יכולת להתמודד עם אתגרים מורכבים. היא מחברת בין הכיתה, הסדנה, החניכות ומרחבי החיים השונים, ומאפשרת לתלמידים לראות את הרלוונטיות והמשמעות של הלמידה עבור עתידם האישי, החברתי והתעסוקתי.</p>
 
@@ -1064,11 +1229,11 @@ footer b{color:var(--paper)}
   <p><strong>שילוב בין תחומי דעת ומרחבי למידה.</strong> החינוך היוצר מבקש לצמצם את ההפרדה בין מקצועות הלימוד ולחזק את החיבור בין מקצועות הליבה, לימודי המקצוע, החניכות, החיים בקהילה והעולם התעסוקתי. הלמידה מתרחשת במרחבים מגוונים — בכיתה, בסדנה, במקום החניכות, בקהילה ובמרחבים דיגיטליים.</p>
   <p><strong>פיתוח מתמיד של הצוות החינוכי.</strong> יישום הפדגוגיה הדואלית מחייב צוות חינוכי לומד, מתפתח ומתחדש. פיתוח מקצועי, למידת עמיתים, קהילות מקצועיות לומדות, רפלקציה מתמשכת ועבודה רב־תחומית הם חלק בלתי נפרד מהעשייה הבית ספרית.</p>
 
-  <h3 class="sec" id="practice">פדגוגיה דואלית הלכה למעשה</h3>
+  <h3 class="sec rv" id="practice">פדגוגיה דואלית הלכה למעשה</h3>
   <p>אחת המטרות המרכזיות של הפדגוגיה הדואלית היא יצירת תרבות ארגונית ופדגוגית המאפשרת למידה מתמשכת, אחריות מקצועית וחתירה להתחדשות ושיפור מתמיד. כך הופכת הפדגוגיה הדואלית מרעיון ותפיסה למעשה חינוכי יומיומי, המחבר בין אדם, מקצוע, חברה ועתיד, ומאפשר לכל תלמיד ותלמידה לפתח את מלוא הפוטנציאל האישי, החברתי והמקצועי הגלום בהם.</p>
 
   <h4 class="sub">עקרונות העבודה בתחום הפדגוגיה</h4>
-  <ul class="ed tight">
+  <ul class="ed tight rv">
     <li>סדירויות ומעקב שיטתי אחר התקדמות התלמידים — ניהול מבוסס נתונים.</li>
     <li>בניית תוכנית עבודה פדגוגית סדורה ורב־שנתית.</li>
     <li>מחויבות לאיכות ההוראה, הלמידה וההערכה.</li>
@@ -1079,7 +1244,7 @@ footer b{color:var(--paper)}
   </ul>
 
   <h4 class="sub">יחסים במרכז</h4>
-  <ul class="ed tight">
+  <ul class="ed tight rv">
     <li>טיפוח אמון, שייכות, שקיפות ואחריות הדדית.</li>
     <li>בניית תרבות של למידת עמיתים והפריה מקצועית.</li>
     <li>קיום שיח מקצועי פתוח המבוסס על רפלקציה, משוב וצמיחה.</li>
@@ -1087,7 +1252,7 @@ footer b{color:var(--paper)}
   </ul>
 
   <h4 class="sub">תרבות ארגונית לומדת</h4>
-  <ul class="ed tight">
+  <ul class="ed tight rv">
     <li>עבודה על פי סדירויות ושגרות מקצועיות קבועות.</li>
     <li>קבלת החלטות מבוססת נתונים, מדידה והערכה.</li>
     <li>עמידה ביעדים ובלוחות זמנים.</li>
@@ -1095,8 +1260,8 @@ footer b{color:var(--paper)}
     <li>עידוד יוזמה, חדשנות והתחדשות מתמדת.</li>
   </ul>
 
-  <h3 class="sec" id="expect">מה מצופה מהנהלת בית הספר?</h3>
-  <ul class="ed">
+  <h3 class="sec rv" id="expect">מה מצופה מהנהלת בית הספר?</h3>
+  <ul class="ed rv">
     <li><strong>לשלב את כלל תלמידי י"א–י"ב בחניכות איכותית במקצוע ולבנות מערך ליווי, בקרה ומשוב.</strong></li>
     <li>לגבש ולחדד את הסיפור הבית ספרי ואת הייחודיות החינוכית של בית הספר.</li>
     <li>להגדיר את "האבנים הגדולות" ואת סדרי העדיפויות הפדגוגיים לשנים הקרובות.</li>
@@ -1109,8 +1274,8 @@ footer b{color:var(--paper)}
     <li>לפעול מתוך תפיסה של למידה מבוססת נתונים, הערכה ושיפור מתמיד.</li>
   </ul>
 
-  <h3 class="sec" id="daily">כיצד נראית פדגוגיה דואלית ביומיום?</h3>
-  <ul class="ed">
+  <h3 class="sec rv" id="daily">כיצד נראית פדגוגיה דואלית ביומיום?</h3>
+  <ul class="ed rv">
     <li>תלמידים הלומדים מתוך עשייה, חקר, יצירה ופתרון בעיות.</li>
     <li>עבודה בקבוצות, למידה שיתופית והתנסויות מגוונות במרחבי למידה שונים.</li>
     <li>חיבור מקצועות הליבה בכיתה למגמה ולמקצוע.</li>
@@ -1125,11 +1290,11 @@ footer b{color:var(--paper)}
 </section>
 
 <!-- ============ CLOSING ============ -->
-<div class="closing-quote">
+<div class="closing-quote rv">
   <div class="q">"חַלּוֹנוֹת חַדְרֵי כִּתָּה תָּמִיד פּוֹנִים אֶל הֶעָתִיד"</div>
   <div class="who">— יהודה עמיחי</div>
-  <p style="margin-top:22px;color:var(--ink-60);font-size:.98rem">כל יום, כל שיעור, כל מפגש הם פתיחה לעתיד חדש עבור תלמידינו. אנו נכנסים לשנה זו מתוך מחויבות עמוקה, מקצועיות ושותפות, ממשיכים לפנות קדימה בעשייה שמכוונת עתיד ומחזיקה תקווה פשוטה ומעשית: לאפשר לתלמידים לצמוח, להתפתח ולמצוא את דרכם.</p>
-  <div class="signature" style="text-align:center;margin-top:26px">
+  <p style="margin-top:24px;color:var(--ink-60);font-size:.98rem">כל יום, כל שיעור, כל מפגש הם פתיחה לעתיד חדש עבור תלמידינו. אנו נכנסים לשנה זו מתוך מחויבות עמוקה, מקצועיות ושותפות, ממשיכים לפנות קדימה בעשייה שמכוונת עתיד ומחזיקה תקווה פשוטה ומעשית: לאפשר לתלמידים לצמוח, להתפתח ולמצוא את דרכם.</p>
+  <div class="signature" style="text-align:center;margin-top:28px">
     <span style="font-size:.92rem">בהערכה ובברכת שנת לימודים פורייה ושקטה,</span>
     <b>רויטל אמיר</b>
     <span>מפקחת פדגוגית ארצית</span>
@@ -1150,6 +1315,7 @@ footer b{color:var(--paper)}
 
 <script>
 (function(){
+  /* ---------- מד מוכנות ---------- */
   const KEY='tashpaz-readiness-v1';
   const boxes=[...document.querySelectorAll('label.ci input')];
   let state={};
@@ -1183,6 +1349,14 @@ footer b{color:var(--paper)}
     if(confirm('לאפס את כל הסימונים?')){ state={}; save(); render(); }
   });
   render();
+
+  /* ---------- גילוי בגלילה ---------- */
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
+    });
+  },{threshold:.08,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 })();
 </script>
 </body>
