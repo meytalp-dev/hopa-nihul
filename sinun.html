@@ -129,9 +129,7 @@ const AREAS=['ארצי','צפון','מרכז','דרום','ירושלים'];
 const GEO={"בית זרע": "צפון", "חורפיש": "צפון", "חצור הגלילית": "צפון", "טבריה": "צפון", "כפר כנא": "צפון", "כפר מסריק": "צפון", "כפר רופין": "צפון", "כפר תבור": "צפון", "כרמיאל": "צפון", "לבון": "צפון", "לוחמי הגיטאות": "צפון", "מעין ברוך": "צפון", "נוף הגליל": "צפון", "נטור": "צפון", "נצרת": "צפון", "עפולה": "צפון", "צפת": "צפון", "קצרין": "צפון", "קריית טבעון": "צפון", "שפרעם": "צפון", "דאלית אל-כרמל": "צפון", "דייר אל-אסד": "צפון", "חיפה": "צפון", "ימין אורד": "צפון", "אום אל-פחם": "צפון", "חמדת": "צפון", "שדות ים": "צפון", "כפר סילבר": "צפון", "נתיב העשרה": "צפון", "אופקים": "דרום", "אשדוד": "דרום", "באר אורה": "דרום", "באר שבע": "דרום", "חורה": "דרום", "חצבה": "דרום", "כסיפה": "דרום", "לקיה": "דרום", "מ.א. בני שמעון": "דרום", "סופה": "דרום", "עין גדי": "דרום", "עלומים": "דרום", "ערד": "דרום", "ערערה-בנגב": "דרום", "שדרות": "דרום", "מרכז שפירא": "דרום", "שרשרת": "דרום", "יתיר": "דרום", "בית גוברין": "דרום", "עין צורים": "דרום", "גן יבנה": "דרום", "ירושלים": "ירושלים", "בית שמש": "ירושלים", "כפר אדומים": "ירושלים", "קריית ארבע": "ירושלים", "יד השמונה": "ירושלים", "ייט~ב": "ירושלים", "כפר חב~ד": "ירושלים", "אלעד": "מרכז", "בית ברל": "מרכז", "בן שמן (כפר נוער)": "מרכז", "בני ברק": "מרכז", "גבעתיים": "מרכז", "גת רימון": "מרכז", "הוד השרון": "מרכז", "הרצליה": "מרכז", "חולון": "מרכז", "יבנה": "מרכז", "כפר האורנים": "מרכז", "כפר סבא": "מרכז", "כפר קאסם": "מרכז", "לוד": "מרכז", "מודיעין עילית": "מרכז", "נטעים": "מרכז", "נתניה": "מרכז", "עין שריד": "מרכז", "פדואל": "מרכז", "פתח תקווה": "מרכז", "צופית": "מרכז", "קריית אונו": "מרכז", "ראש העין": "מרכז", "ראשון לציון": "מרכז", "רחובות": "מרכז", "רמת גן": "מרכז", "רעננה": "מרכז", "תל אביב - יפו": "מרכז"};
 
 const S=JSON.parse(localStorage.getItem('hopa_triage')||'{}');
-/* מציגים רק עמותות עם פרטי קשר (מייל/טלפון). עמותה שכבר סומנה/נערכה במכשיר הזה נשארת תמיד. */
-for(let i=ORGS.length-1;i>=0;i--){const o=ORGS[i];
- if(!S[o.num]&&!((o.mails&&o.mails.length)||(o.phones&&o.phones.length)))ORGS.splice(i,1);}
+/* עמותות בלי פרטי קשר מוסתרות מהתצוגה הרגילה (רואים אותן רק במסנן "⚠ בלי קשר") */
 let F='new';
 const save=()=>localStorage.setItem('hopa_triage',JSON.stringify(S));
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -141,7 +139,7 @@ function defaults(o){
  let pop='כלל הצעירים';
  for(const p of o.pops){ if(POPS[p]&&POPS[p]!=='כלל הצעירים'){pop=POPS[p];break} }
  return {name:o.n,category:m[0],subcategory:m[1],description:o.g||'',target_population:pop,
-  geographic_area:o.geo||'ארצי',email:(o.mails&&o.mails[0])||'',phone:(o.phones&&o.phones[0])||'',
+  geographic_area:o.geo||'ארצי',email:allMails(o)[0]||'',phone:allPhones(o)[0]||'',
   url:o.site||'',service_type:''};
 }
 function rec(num){ if(!S[num])S[num]={}; if(!S[num].f)S[num].f=defaults(ORGS.find(o=>o.num===num)); return S[num]; }
@@ -151,9 +149,27 @@ function applyGeo(num,city){ const g=GEO[city]||'ארצי'; rec(num).f.geographi
 function setF(f){ F=f; render(); }
 function delOrg(num){ if(!S[num])S[num]={}; S[num].d=1; save(); render(); }
 function unDel(num){ if(S[num]){delete S[num].d; save();} render(); }
+/* פרטי קשר שהוזנו ידנית נשמרים ב-S[num].mc ומתווספים למה שהגיע מרשם העמותות */
+function allMails(o){ const m=(S[o.num]&&S[o.num].mc&&S[o.num].mc.email)?[S[o.num].mc.email]:[];
+ return m.concat(o.mails||[]); }
+function allPhones(o){ const p=(S[o.num]&&S[o.num].mc&&S[o.num].mc.phone)?[S[o.num].mc.phone]:[];
+ return p.concat(o.phones||[]); }
 function hasContact(o){ const f=S[o.num]&&S[o.num].f;
- if(f) return !!((f.email&&f.email.trim())||(f.phone&&f.phone.trim()));
- return !!((o.mails&&o.mails.length)||(o.phones&&o.phones.length)); }
+ if(f&&((f.email&&f.email.trim())||(f.phone&&f.phone.trim()))) return true;
+ return !!(allMails(o).length||allPhones(o).length); }
+function askContact(num,kind){
+ const r=S[num]||(S[num]={}); r.mc=r.mc||{};
+ const label=kind==='phone'?'מספר טלפון':'כתובת מייל';
+ const cur=r.mc[kind]||'';
+ const val=prompt(cur?'עריכת ה'+label+' (למחיקה — לרוקן את השדה):':'הוספת '+label+':',cur);
+ if(val===null)return;
+ const t=val.trim();
+ if(!t){ delete r.mc[kind]; }
+ else if(kind==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t)){ alert('כתובת המייל לא נראית תקינה: '+t); return; }
+ else if(kind==='phone'&&(t.replace(/\D/g,'').length<8)){ alert('מספר הטלפון קצר מדי: '+t); return; }
+ else { r.mc[kind]=t; }
+ if(r.f){ r.f[kind]=r.mc[kind]||''; }   /* מסנכרן גם לטופס אם כבר אושרה */
+ save(); render(); }
 function delNoContact(){
  const t=ORGS.filter(o=>{const r=S[o.num]||{};return !r.d&&r.v!=='yes'&&!hasContact(o)});
  if(!t.length)return alert('אין עמותות ללא פרטי קשר.');
@@ -163,8 +179,9 @@ function delNoContact(){
 
 function count(){
  const n={all:0,yes:0,no:0,new:0,del:0,noc:0};
- ORGS.forEach(o=>{const r=S[o.num]||{}; if(r.d){n.del++;return} n.all++;
-  if(!hasContact(o))n.noc++;
+ ORGS.forEach(o=>{const r=S[o.num]||{}; if(r.d){n.del++;return}
+  if(!hasContact(o)){n.noc++;return}   /* בלי פרטי קשר — נספרת רק במסנן הייעודי */
+  n.all++;
   if(r.v==='yes')n.yes++; else if(r.v==='no')n.no++; else n.new++});
  ['all','new','yes','no','del','noc'].forEach(k=>{
    document.getElementById('c_'+k).textContent=n[k];
@@ -201,10 +218,14 @@ function card(o){
    ${o.pops.map(p=>`<span class="pop">${esc(p)}</span>`).join('')}</div>
   <div class="goals">${esc(o.g)}</div>
   <div class="meta" style="margin:6px 0">
-   ${(o.mails||[]).map(e=>`<a class="tag" style="background:#e8f5e9;color:#1a7f3c;text-decoration:none" href="mailto:${esc(e)}">📧 ${esc(e)}</a>`).join('')}
-   ${(o.phones||[]).map(p=>`<a class="tag" style="background:#e3f2fd;color:#0d47a1;text-decoration:none" href="tel:${esc(String(p).replace(/[^\d+]/g,''))}">📞 ${esc(p)}</a>`).join('')}
-   ${!(o.mails&&o.mails.length)?'<span class="tag" style="background:#fce4e4;color:#c62828">אין מייל</span>':''}
-   ${!(o.phones&&o.phones.length)?'<span class="tag" style="background:#fff3e0;color:#b07a00">אין טלפון</span>':''}
+   ${allMails(o).map(e=>`<a class="tag" style="background:#e8f5e9;color:#1a7f3c;text-decoration:none" href="mailto:${esc(e)}">📧 ${esc(e)}</a>`).join('')}
+   ${allPhones(o).map(p=>`<a class="tag" style="background:#e3f2fd;color:#0d47a1;text-decoration:none" href="tel:${esc(String(p).replace(/[^\d+]/g,''))}">📞 ${esc(p)}</a>`).join('')}
+   ${allMails(o).length?'':'<span class="tag" style="background:#fce4e4;color:#c62828">אין מייל</span>'}
+   ${allPhones(o).length?'':'<span class="tag" style="background:#fff3e0;color:#b07a00">אין טלפון</span>'}
+   <button class="tag" style="background:#f3eef7;color:#5b4a6b;border:1px dashed #b9a8c9;cursor:pointer;font:inherit;font-size:12px"
+    onclick="askContact('${o.num}','phone')">${(S[o.num]&&S[o.num].mc&&S[o.num].mc.phone)?'✏ עריכת טלפון':'➕ הוספת טלפון'}</button>
+   <button class="tag" style="background:#f3eef7;color:#5b4a6b;border:1px dashed #b9a8c9;cursor:pointer;font:inherit;font-size:12px"
+    onclick="askContact('${o.num}','email')">${(S[o.num]&&S[o.num].mc&&S[o.num].mc.email)?'✏ עריכת מייל':'➕ הוספת מייל'}</button>
   </div>
   <div class="acts">
    ${r.d?`<button class="btn g" onclick="unDel('${o.num}')">↩ שחזור</button>`:`
@@ -226,13 +247,15 @@ function render(){
   if(F==='del'){ if(!r.d)return false; }
   else if(r.d)return false;
   else if(F==='noc'){ if(hasContact(o))return false; }
+  else if(!hasContact(o))return false;   /* מוסתרות מכל שאר התצוגות */
   else if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
   if(!qs)return true;
   const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+o.pops.join(' ')+' '+o.g).toLowerCase();
   return qs.toLowerCase().split(/\s+/).every(t=>hay.includes(t))});
  const vis=show.slice(0,LIM);
  const nocBar=F==='noc'&&show.length?`<div class="box" style="text-align:center">
-  <div class="hint" style="margin-bottom:10px">לעמותות האלה אין מייל וגם לא טלפון — אין דרך ליצור קשר. אפשר להוסיף פרטים ידנית (לסמן ✓ ולמלא בטופס), או:</div>
+  <div class="hint" style="margin-bottom:10px">לעמותות האלה אין מייל וגם לא טלפון ברשם העמותות, ולכן הן מוסתרות משאר התצוגות.<br>
+   אם מצאת פרטים בעצמך — לחצי <b>➕ הוספת טלפון</b> או <b>➕ הוספת מייל</b> על הכרטיס, והעמותה תחזור מיד לרשימה הרגילה. או:</div>
   <button class="btn no" onclick="delNoContact()">🗑 מחיקת כל העמותות ללא פרטי קשר</button></div>`:'';
  document.getElementById('list').innerHTML=nocBar+(show.length
   ? vis.map(card).join('')
