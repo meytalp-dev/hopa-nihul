@@ -67,7 +67,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
     <img src="hopa-logo.png" alt="הופה">
     <div><h1>סינון עמותות למאגר המענים</h1>
     <div class="sub">עמותות פעילות מרשם העמותות עם פרטי יצירת קשר בלבד (סבב 1 + סבב 2) · מסמנים מה מתאים, ומייצאים בפורמט של מאגר הופה
-    <br><b style="color:#E8348A">גרסה 3 · 2.8.2026 — הוספת טלפון/מייל ידנית</b></div></div>
+    <br><b style="color:#E8348A">גרסה 4 · 2.8.2026 — הוספת טלפון/מייל ועריכת התיאור</b></div></div>
     <div class="hsite"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
   </div>
 </header>
@@ -139,7 +139,7 @@ function defaults(o){
  const m=MAP[o.cats[0]]||['השכלה ופיתוח קריירה','מלגות לימודים'];
  let pop='כלל הצעירים';
  for(const p of o.pops){ if(POPS[p]&&POPS[p]!=='כלל הצעירים'){pop=POPS[p];break} }
- return {name:o.n,category:m[0],subcategory:m[1],description:o.g||'',target_population:pop,
+ return {name:o.n,category:m[0],subcategory:m[1],description:goalsOf(o)||'',target_population:pop,
   geographic_area:o.geo||'ארצי',email:allMails(o)[0]||'',phone:allPhones(o)[0]||'',
   url:o.site||'',service_type:''};
 }
@@ -158,6 +158,20 @@ function allPhones(o){ const p=(S[o.num]&&S[o.num].mc&&S[o.num].mc.phone)?[S[o.n
 function hasContact(o){ const f=S[o.num]&&S[o.num].f;
  if(f&&((f.email&&f.email.trim())||(f.phone&&f.phone.trim()))) return true;
  return !!(allMails(o).length||allPhones(o).length); }
+/* תיאור שנערך ידנית נשמר ב-S[num].g ומחליף את הטקסט מרשם העמותות */
+const EDIT=new Set();
+function goalsOf(o){ const r=S[o.num]; return (r&&r.g!=null)?r.g:o.g; }
+function saveGoals(num){
+ const el=document.getElementById('ta_'+num); if(!el)return;
+ const t=el.value.trim(); const r=S[num]||(S[num]={});
+ const orig=(ORGS.find(o=>o.num===num)||{}).g||'';
+ if(!t||t===orig) delete r.g; else r.g=t;
+ if(r.f) r.f.description=t||orig;   /* מסנכרן לטופס ולייצוא */
+ EDIT.delete(num); save(); render(); }
+function resetGoals(num){ const r=S[num]||{}; delete r.g;
+ const orig=(ORGS.find(o=>o.num===num)||{}).g||'';
+ if(r.f) r.f.description=orig;
+ EDIT.delete(num); save(); render(); }
 function askContact(num,kind){
  const r=S[num]||(S[num]={}); r.mc=r.mc||{};
  const label=kind==='phone'?'מספר טלפון':'כתובת מייל';
@@ -217,7 +231,17 @@ function card(o){
   <div class="ct"><span class="nm">${esc(o.n)}</span><span class="meta">📍 ${esc(o.c)}${o.geo?' · פעילות: '+esc(o.geo):''}${o.ceo?' · '+esc(o.ceo):''}</span></div>
   <div class="meta">${hasContact(o)?'':'<span class="tag" style="background:#c62828;color:#fff">⚠ אין מייל וטלפון</span>'}${o.lvl?`<span class="tag" style="background:${o.lvl==='מאומת'?'#1a7f3c':'#b07a00'};color:#fff">${esc(o.lvl)} · סבב 2</span>`:''}${o.cats.map(c=>`<span class="tag">${esc(c)}</span>`).join('')}
    ${o.pops.map(p=>`<span class="pop">${esc(p)}</span>`).join('')}</div>
-  <div class="goals">${esc(o.g)}</div>
+  ${EDIT.has(o.num)?`<div class="goals" style="background:#fff;border:2px solid #E8348A">
+    <textarea id="ta_${o.num}" style="width:100%;min-height:110px;border:0;outline:0;font:inherit;font-size:13px;line-height:1.65;resize:vertical;background:transparent">${esc(goalsOf(o))}</textarea>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+     <button type="button" class="btn ok" onclick="saveGoals('${o.num}')">💾 שמירה</button>
+     <button type="button" class="btn g" onclick="EDIT.delete('${o.num}');render()">ביטול</button>
+     ${(S[o.num]&&S[o.num].g!=null)?`<button type="button" class="btn g" onclick="resetGoals('${o.num}')">↩ לטקסט המקורי</button>`:''}
+    </div></div>`
+   :`<div class="goals">${esc(goalsOf(o))}
+     ${(S[o.num]&&S[o.num].g!=null)?'<span class="tag" style="background:#e8f5e9;color:#1a7f3c;margin-inline-start:6px">✏ נערך</span>':''}
+     <button type="button" style="background:none;border:0;color:#E8348A;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;padding:2px 4px"
+      onclick="EDIT.add('${o.num}');render()">✏ עריכת התיאור</button></div>`}
   <div class="meta" style="margin:6px 0">
    ${allMails(o).map(e=>`<a class="tag" style="background:#e8f5e9;color:#1a7f3c;text-decoration:none" href="mailto:${esc(e)}">📧 ${esc(e)}</a>`).join('')}
    ${allPhones(o).map(p=>`<a class="tag" style="background:#e3f2fd;color:#0d47a1;text-decoration:none" href="tel:${esc(String(p).replace(/[^\d+]/g,''))}">📞 ${esc(p)}</a>`).join('')}
@@ -251,7 +275,7 @@ function render(){
   else if(!hasContact(o))return false;   /* מוסתרות מכל שאר התצוגות */
   else if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
   if(!qs)return true;
-  const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+o.pops.join(' ')+' '+o.g).toLowerCase();
+  const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+o.pops.join(' ')+' '+goalsOf(o)).toLowerCase();
   return qs.toLowerCase().split(/\s+/).every(t=>hay.includes(t))});
  const vis=show.slice(0,LIM);
  const nocBar=F==='noc'&&show.length?`<div class="box" style="text-align:center">
