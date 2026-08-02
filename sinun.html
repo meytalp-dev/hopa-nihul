@@ -88,6 +88,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
   <span class="pill" id="f_new" onclick="setF('new')">לבדיקה <b id="c_new">0</b></span>
   <span class="pill" id="f_yes" onclick="setF('yes')">מתאימות <b id="c_yes">0</b></span>
   <span class="pill" id="f_no" onclick="setF('no')">נדחו <b id="c_no">0</b></span>
+  <span class="pill" id="f_noc" onclick="setF('noc')" style="border-color:#c62828">⚠ בלי קשר <b id="c_noc">0</b></span>
   <span class="pill" id="f_del" onclick="setF('del')">🗑 נמחקו <b id="c_del">0</b></span>
   <button class="btn" onclick="expSQL()">⬇ ייצוא SQL ל-Supabase</button>
   <button class="btn g" onclick="expCSV()">⬇ ייצוא CSV</button>
@@ -147,12 +148,22 @@ function applyGeo(num,city){ const g=GEO[city]||'ארצי'; rec(num).f.geographi
 function setF(f){ F=f; render(); }
 function delOrg(num){ if(!S[num])S[num]={}; S[num].d=1; save(); render(); }
 function unDel(num){ if(S[num]){delete S[num].d; save();} render(); }
+function hasContact(o){ const f=S[o.num]&&S[o.num].f;
+ if(f) return !!((f.email&&f.email.trim())||(f.phone&&f.phone.trim()));
+ return !!((o.mails&&o.mails.length)||(o.phones&&o.phones.length)); }
+function delNoContact(){
+ const t=ORGS.filter(o=>{const r=S[o.num]||{};return !r.d&&r.v!=='yes'&&!hasContact(o)});
+ if(!t.length)return alert('אין עמותות ללא פרטי קשר.');
+ if(!confirm('למחוק '+t.length+' עמותות שאין להן מייל או טלפון? (עמותות שאושרו לא יימחקו, ואפשר לשחזר מתצוגת "נמחקו")'))return;
+ t.forEach(o=>{if(!S[o.num])S[o.num]={};S[o.num].d=1});
+ save(); render(); }
 
 function count(){
- const n={all:0,yes:0,no:0,new:0,del:0};
+ const n={all:0,yes:0,no:0,new:0,del:0,noc:0};
  ORGS.forEach(o=>{const r=S[o.num]||{}; if(r.d){n.del++;return} n.all++;
+  if(!hasContact(o))n.noc++;
   if(r.v==='yes')n.yes++; else if(r.v==='no')n.no++; else n.new++});
- ['all','new','yes','no','del'].forEach(k=>{
+ ['all','new','yes','no','del','noc'].forEach(k=>{
    document.getElementById('c_'+k).textContent=n[k];
    document.getElementById('f_'+k).className='pill'+(F===k?' act':'');
  });
@@ -183,7 +194,7 @@ function card(o){
  const r=S[o.num]||{}, v=r.v||null;
  return `<div class="card ${v||''}">
   <div class="ct"><span class="nm">${esc(o.n)}</span><span class="meta">📍 ${esc(o.c)}${o.geo?' · פעילות: '+esc(o.geo):''}${o.ceo?' · '+esc(o.ceo):''}</span></div>
-  <div class="meta">${o.lvl?`<span class="tag" style="background:${o.lvl==='מאומת'?'#1a7f3c':'#b07a00'};color:#fff">${esc(o.lvl)} · סבב 2</span>`:''}${o.cats.map(c=>`<span class="tag">${esc(c)}</span>`).join('')}
+  <div class="meta">${hasContact(o)?'':'<span class="tag" style="background:#c62828;color:#fff">⚠ אין מייל וטלפון</span>'}${o.lvl?`<span class="tag" style="background:${o.lvl==='מאומת'?'#1a7f3c':'#b07a00'};color:#fff">${esc(o.lvl)} · סבב 2</span>`:''}${o.cats.map(c=>`<span class="tag">${esc(c)}</span>`).join('')}
    ${o.pops.map(p=>`<span class="pop">${esc(p)}</span>`).join('')}</div>
   <div class="goals">${esc(o.g)}</div>
   <div class="acts">
@@ -205,12 +216,16 @@ function render(){
  const show=ORGS.filter(o=>{const r=S[o.num]||{}; const v=r.v||null;
   if(F==='del'){ if(!r.d)return false; }
   else if(r.d)return false;
+  else if(F==='noc'){ if(hasContact(o))return false; }
   else if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
   if(!qs)return true;
   const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+o.pops.join(' ')+' '+o.g).toLowerCase();
   return qs.toLowerCase().split(/\s+/).every(t=>hay.includes(t))});
  const vis=show.slice(0,LIM);
- document.getElementById('list').innerHTML=(show.length
+ const nocBar=F==='noc'&&show.length?`<div class="box" style="text-align:center">
+  <div class="hint" style="margin-bottom:10px">לעמותות האלה אין מייל וגם לא טלפון — אין דרך ליצור קשר. אפשר להוסיף פרטים ידנית (לסמן ✓ ולמלא בטופס), או:</div>
+  <button class="btn no" onclick="delNoContact()">🗑 מחיקת כל העמותות ללא פרטי קשר</button></div>`:'';
+ document.getElementById('list').innerHTML=nocBar+(show.length
   ? vis.map(card).join('')
   : '<div class="box" style="text-align:center;color:#6b6478">אין עמותות בתצוגה הזו.</div>')
   +(show.length>LIM?`<div class="box" style="text-align:center"><button class="btn" onclick="LIM+=200;render()">הצג עוד (מוצגות ${vis.length} מתוך ${show.length})</button></div>`:'');
@@ -225,7 +240,11 @@ function dl(name,text,type){
  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
 }
 function expSQL(){
- const p=picked(); if(!p.length)return alert('עדיין לא סומנה אף עמותה כמתאימה.');
+ let p=picked(); if(!p.length)return alert('עדיין לא סומנה אף עמותה כמתאימה.');
+ const bad=p.filter(({f})=>!(f.email&&f.email.trim())&&!(f.phone&&f.phone.trim()));
+ if(bad.length){
+  alert('שימי לב: '+bad.length+' עמותות מאושרות לא ייוצאו כי אין להן מייל או טלפון:\n'+bad.map(({f})=>'· '+f.name).join('\n')+'\n\nאפשר למלא להן פרטי קשר בטופס ולייצא שוב.');
+  p=p.filter(x=>!bad.includes(x)); if(!p.length)return; }
  const cols='name, category, subcategory, description, target_population, age_track, geographic_area, location, email, phone, url, service_type, gender_target, status, notes';
  const rows=p.map(({o,f})=>'('+[q(f.name),q(f.category),q(f.subcategory),q(f.description),q(f.target_population),
    q('1826'),q(f.geographic_area),q(f.geographic_area),q(f.email),q(f.phone),q(f.url),q(f.service_type),
