@@ -88,6 +88,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
   <span class="pill" id="f_new" onclick="setF('new')">לבדיקה <b id="c_new">0</b></span>
   <span class="pill" id="f_yes" onclick="setF('yes')">מתאימות <b id="c_yes">0</b></span>
   <span class="pill" id="f_no" onclick="setF('no')">נדחו <b id="c_no">0</b></span>
+  <span class="pill" id="f_del" onclick="setF('del')">🗑 נמחקו <b id="c_del">0</b></span>
   <button class="btn" onclick="expSQL()">⬇ ייצוא SQL ל-Supabase</button>
   <button class="btn g" onclick="expCSV()">⬇ ייצוא CSV</button>
   <button class="btn g" onclick="expJSON()">💾 גיבוי החלטות</button>
@@ -144,11 +145,14 @@ function setV(num,v){ const r=rec(num); r.v=(r.v===v?null:v); save(); render(); 
 function setFld(num,k,val){ rec(num).f[k]=val; save(); if(k==='category')render(); else count(); }
 function applyGeo(num,city){ const g=GEO[city]||'ארצי'; rec(num).f.geographic_area=g; save(); render(); }
 function setF(f){ F=f; render(); }
+function delOrg(num){ if(!S[num])S[num]={}; S[num].d=1; save(); render(); }
+function unDel(num){ if(S[num]){delete S[num].d; save();} render(); }
 
 function count(){
- const n={all:ORGS.length,yes:0,no:0,new:0};
- ORGS.forEach(o=>{const v=S[o.num]&&S[o.num].v; if(v==='yes')n.yes++; else if(v==='no')n.no++; else n.new++});
- ['all','new','yes','no'].forEach(k=>{
+ const n={all:0,yes:0,no:0,new:0,del:0};
+ ORGS.forEach(o=>{const r=S[o.num]||{}; if(r.d){n.del++;return} n.all++;
+  if(r.v==='yes')n.yes++; else if(r.v==='no')n.no++; else n.new++});
+ ['all','new','yes','no','del'].forEach(k=>{
    document.getElementById('c_'+k).textContent=n[k];
    document.getElementById('f_'+k).className='pill'+(F===k?' act':'');
  });
@@ -176,28 +180,32 @@ function form(o){
 }
 
 function card(o){
- const v=(S[o.num]&&S[o.num].v)||null;
+ const r=S[o.num]||{}, v=r.v||null;
  return `<div class="card ${v||''}">
   <div class="ct"><span class="nm">${esc(o.n)}</span><span class="meta">📍 ${esc(o.c)}${o.geo?' · פעילות: '+esc(o.geo):''}${o.ceo?' · '+esc(o.ceo):''}</span></div>
   <div class="meta">${o.lvl?`<span class="tag" style="background:${o.lvl==='מאומת'?'#1a7f3c':'#b07a00'};color:#fff">${esc(o.lvl)} · סבב 2</span>`:''}${o.cats.map(c=>`<span class="tag">${esc(c)}</span>`).join('')}
    ${o.pops.map(p=>`<span class="pop">${esc(p)}</span>`).join('')}</div>
   <div class="goals">${esc(o.g)}</div>
   <div class="acts">
+   ${r.d?`<button class="btn g" onclick="unDel('${o.num}')">↩ שחזור</button>`:`
    <button class="btn ok ${v==='yes'?'on-ok':''}" onclick="setV('${o.num}','yes')">✓ מתאימה</button>
    <button class="btn no ${v==='no'?'on-no':''}" onclick="setV('${o.num}','no')">✕ לא רלוונטית</button>
+   <button class="btn no" title="מחיקה מהרשימה" onclick="delOrg('${o.num}')">🗑</button>`}
    ${o.site?`<a class="btn s" target="_blank" rel="noopener" href="${esc(o.site)}">🌐 אתר</a>`
      :`<a class="btn g" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent('"'+o.n+'" עמותה')}">🔎 חיפוש</a>`}
    <a class="btn g" target="_blank" rel="noopener" href="https://www.guidestar.org.il/organization/${o.num}">גיידסטאר</a>
    <a class="btn g" target="_blank" rel="noopener" href="https://next.obudget.org/i/org/association/${o.num}">מפתח התקציב</a>
   </div>
-  ${v==='yes'?form(o):''}</div>`;
+  ${v==='yes'&&!r.d?form(o):''}</div>`;
 }
 
 function render(){
  count();
  const qs=(document.getElementById('srch')?.value||'').trim();
- const show=ORGS.filter(o=>{const v=(S[o.num]&&S[o.num].v)||null;
-  if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
+ const show=ORGS.filter(o=>{const r=S[o.num]||{}; const v=r.v||null;
+  if(F==='del'){ if(!r.d)return false; }
+  else if(r.d)return false;
+  else if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
   if(!qs)return true;
   const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+o.pops.join(' ')+' '+o.g).toLowerCase();
   return qs.toLowerCase().split(/\s+/).every(t=>hay.includes(t))});
@@ -210,7 +218,7 @@ function render(){
 let LIM=200;
 
 const q=v=>(v===null||v===undefined||v==='')?'NULL':"'"+String(v).replace(/'/g,"''")+"'";
-function picked(){ return ORGS.filter(o=>S[o.num]&&S[o.num].v==='yes').map(o=>({o,f:S[o.num].f})); }
+function picked(){ return ORGS.filter(o=>S[o.num]&&S[o.num].v==='yes'&&!S[o.num].d).map(o=>({o,f:S[o.num].f})); }
 function dl(name,text,type){
  const b=new Blob([type==='text/csv'?'﻿'+text:text],{type:type+';charset=utf-8'});
  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();
