@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ניהול פוסטים לפייסבוק · הופה</title>
+<title>ניהול פוסטים · פייסבוק ואינסטגרם · הופה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -72,6 +72,18 @@
   .overlay-note{margin-top:14px;font-size:13px;color:var(--muted);background:var(--pink-soft);border-radius:12px;padding:10px 14px}
   .overlay-note b{color:var(--pink-dark)}
 
+  .ig{margin-top:14px;border:1.5px solid #f3d9e8;border-radius:14px;background:#fdf7fb;padding:0 14px}
+  .ig summary{cursor:pointer;font-weight:800;font-size:14px;padding:11px 0;list-style-position:inside;color:#b0257a}
+  .ig summary::marker{color:#b0257a}
+  .ig .post-text{margin-top:2px;background:#fff}
+  .ig .copy-row{margin-bottom:14px}
+  .btn.ig-btn{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);box-shadow:0 3px 10px rgba(204,35,102,.3)}
+
+  .ig-guide{background:#fdf7fb;border:1.5px solid #f3d9e8;border-radius:16px;padding:4px 18px;margin-bottom:20px}
+  .ig-guide summary{cursor:pointer;font-weight:800;font-size:14.5px;padding:10px 0;list-style-position:inside;color:#b0257a}
+  .ig-guide ol{margin:4px 0 14px;padding-inline-start:20px;font-size:14px}
+  .ig-guide li{margin-bottom:5px}
+
   .section-title{font-size:20px;font-weight:800;margin:34px 0 4px}
   .section-sub{color:var(--muted);font-size:13.5px;margin-bottom:16px}
   .arc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
@@ -96,8 +108,8 @@
   <div class="head-in">
     <div class="logo-chip"><img src="hopa-logo.png" alt="הופה"></div>
     <div class="brand">
-      <h1>ניהול פוסטים לפייסבוק</h1>
-      <div class="sub">כל פוסט: טקסט להעתקה + תמונה להורדה</div>
+      <h1>ניהול פוסטים — פייסבוק ואינסטגרם</h1>
+      <div class="sub">כל פוסט: טקסט לפייסבוק + גרסת אינסטגרם + תמונה להורדה</div>
     </div>
     <a class="site-link" href="https://hopa.org.il" target="_blank">hopa.org.il ↗</a>
   </div>
@@ -114,6 +126,17 @@
       <li>תמונה: 1080×1350, פסים צהוב/ורוד, קו מקווקו, לוגו HOPA! — בלי פרצופים מזוהים.</li>
       <li>לפני פרסום: הטקסט עבר אישור של לירון?</li>
     </ul>
+  </details>
+
+  <details class="ig-guide">
+    <summary>איך מפרסמים לאינסטגרם פוסט שכבר עלה לפייסבוק</summary>
+    <ol>
+      <li>נכנסים ל־<a href="https://business.facebook.com" target="_blank">Meta Business Suite</a> ולוחצים <b>"יצירת פוסט"</b>.</li>
+      <li>בבחירת הפלטפורמות מסמנים <b>רק אינסטגרם</b> (מורידים את הסימון מפייסבוק — כדי שלא תיווצר כפילות בעמוד).</li>
+      <li>מעתיקים מכאן את <b>גרסת האינסטגרם</b> של הפוסט (הכפתור הצבעוני), מורידים את התמונה ומעלים אותה.</li>
+      <li>מפרסמים או מתזמנים. עדיף לפזר — פוסט כל יומיים־שלושה, לא הכול ביום אחד.</li>
+      <li>פוסט חדש שעוד לא פורסם בכלל? מסמנים <b>גם פייסבוק וגם אינסטגרם</b> והוא עולה לשניהם בבת אחת (לפייסבוק — הטקסט המלא; אם רוצים כיתוב שונה לכל פלטפורמה, Business Suite מאפשר לערוך את הטקסט לכל אחת בנפרד).</li>
+    </ol>
   </details>
 
   <!-- ============ פוסט 1 ============ -->
@@ -145,6 +168,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text1',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig1">נשירה לא מתחילה ביום שבו הכיסא נשאר ריק. היא מתחילה בתלמיד שמגיע כל יום, אבל מפסיק להיכנס לשיעורים. באיחורים שחוזרים על עצמם. במשפט קטן שמספר שמשהו בבית השתנה.
+
+בכל בית ספר שבו הופה פועלת יש מובילת הופה: אשת צוות מתוך בית הספר, שמכירה את התלמידים ומקבלת מאיתנו הכשרה וכלים לראות את הסימנים האלה בזמן. היא לא נתפסת כהנהלה או כמשמעת, ולכן תלמידים רבים פונים אליה גם מיוזמתם.
+
+והקשר לא נגמר בסוף י"ב. הצעירים ממשיכים להיות חלק מהקהילה של הופה ולקבל ליווי עד גיל 26.
+
+#הופה #מניעת_נשירה #חינוך #צעירים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig1',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>יש מי שרואה / את מי שנשאר בחוץ</b> (צהוב) · <b>מובילת הופה. בכל בית ספר.</b> (ורוד)</div>
       </div>
     </div>
@@ -177,6 +213,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text2',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig2">מרחיבים את שיתוף הפעולה עם משרד העבודה: 25 בתי ספר נוספים מצטרפים לתוכנית הבוגרים של הופה.
+
+בתי הספר שמצטרפים הם חלוצים. הם מבינים שהעבודה המשמעותית עם צעירים לא נגמרת בסוף י"ב. דווקא בשנים שאחרי, בצמתים של שירות, לימודים, תעסוקה וחיים עצמאיים, הם זקוקים לרצף ולמי שכבר מכיר אותם.
+
+מודות על האמון, מתרגשות מההתרחבות, ומצפות למעגלי ההשפעה שניצור יחד עבור אלפי צעירים.
+
+#הופה #תוכנית_הבוגרים #חינוך #צעירים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig2',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>מישהו כבר הניח את האבן הבאה</b> (צהוב) · <b>25 בתי ספר חלוצים בתוכנית הבוגרים</b> (ורוד)</div>
       </div>
     </div>
@@ -207,6 +256,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text3',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig3">מברכים על הצטרפותם של בתי ספר מהחברה הדרוזית, הבדואית והערבית לתוכנית הבוגרים של הופה.
+
+ההצטרפות מאפשרת לנו צעד חשוב נוסף: לתרגם לערבית את מאגר המענים הגדול בישראל לצעירים, יחד עם החומרים והכלים של התוכנית. כך יותר צעירים יקבלו מידע ברור בשפה שלהם — מלגות, הכשרות, שירות, לימודים ותעסוקה — וימשיכו לקבל ליווי גם אחרי י"ב.
+
+من اليوم، بالعربية أيضًا.
+
+#הופה #מאגר_המענים #צעירים #שוויון_הזדמנויות</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig3',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>מהיום, גם בערבית</b> (צהוב) · <b>מאגר המענים הגדול בישראל לצעירים</b> (ורוד) · <b>من اليوم، بالعربية أيضًا</b> (צהוב, ערבית)</div>
       </div>
     </div>
@@ -237,6 +299,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text4',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig4">מתגייסים. ולא לבד.
+
+שיתוף פעולה ראשון מסוגו בין הופה לתוכנית נערי דוד, שמלווה צעירים כבר מהשלבים שלפני הגיוס ולאורך השירות. מאז תחילת שיתוף הפעולה הצטרפו לתוכנית 25 מתגייסים מבוגרי הופה, שיקבלו מעטפת אישית, הכוונה וכתובת גם ברגעים המאתגרים.
+
+מאחלות לכל המתגייסים שירות משמעותי ומצמיח. מבחינתנו, הליווי לא מסתיים בסוף י"ב — הוא ממשיך גם אל תוך אחד השלבים המשמעותיים ביותר בחייהם.
+
+#הופה #מתגייסים #ליווי_בוגרים #צעירים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig4',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>מתגייסים. ולא לבד.</b> (צהוב) · <b>25 מתגייסים מבוגרי הופה בתוכנית נערי דוד</b> (ורוד)</div>
       </div>
     </div>
@@ -267,6 +342,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text5',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig5">המלגה קיימת. צריך רק למצוא אותה.
+
+אחד החסמים בדרך ללימודים הוא לא רק שכר הלימוד, אלא היכולת למצוא את המלגות המתאימות ולהגיש בזמן. לכן רכשנו עבור בוגרי הופה מנויים למלגה פלוס, שירות שמאתר עבורם מלגות באופן אוטומטי לאורך כל השנה.
+
+שמונה בוגרים כבר נרשמו, ואנחנו מקוות לראות עוד ועוד צעירים בדרך ללימודים ולהתקדמות אישית ומקצועית. מוביליות חברתית מתחילה גם בפתיחת דלתות מעשיות.
+
+#הופה #מלגות #סטודנטים #ליווי_בוגרים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig5',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>המלגה קיימת. צריך רק למצוא אותה.</b> (צהוב) · <b>מנוי מלגה פלוס לבוגרי הופה</b> (ורוד)</div>
       </div>
     </div>
@@ -299,6 +387,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text6',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig6">מאחורי כל התרחבות וכל צעיר שמקבל הזדמנות, עומדים שותפים שבוחרים להאמין בדרך.
+
+תודה לקרן ברלוביץ, למגה אור וליהלום שמאי ביאר על שותפות אמיתית לאורך הדרך: על האמון, על החשיבה המשותפת, ועל היכולת לראות איתנו לא רק את מה שכבר קיים, אלא גם את מה שעוד אפשר לבנות.
+
+תודה שאתם הולכים איתנו.
+
+#הופה #שותפות #עושים_טוב</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig6',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>תודה שאתם הולכים איתנו</b> (צהוב) · <b>קרן ברלוביץ · מגה אור · יהלום שמאי ביאר</b> (ורוד)</div>
       </div>
     </div>
@@ -335,6 +436,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text7',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig7">המודל של הופה לא נולד על הנייר. הוא נולד בשטח.
+
+בבסיסו עומדת התפיסה של אבי רואימי, לשעבר מנהל תיכון מגשימים בבית שאן, שהאמין שהאחריות כלפי תלמידים לא מסתיימת בשער בית הספר. נאווה גיינזברג, מייסדת הופה, זיהתה את העומק והחדשנות שבתפיסה הזו והבינה שזהו בסיס למודל שאפשר לפתח ולהרחיב לעוד מקומות.
+
+מהחיבור ביניהם נבנה המודל של הופה: זיהוי מוקדם של מצבי סיכון, קשר אישי, וליווי רציף שלא נעצר בי"ב אלא ממשיך עד גיל 26.
+
+#הופה #חינוך #מניעת_נשירה #ליווי_בוגרים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig7',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>לא נולד על הנייר. נולד בשטח.</b> (צהוב) · <b>הסיפור מאחורי המודל של הופה</b> (ורוד)</div>
       </div>
     </div>
@@ -369,6 +483,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text8',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig8">יש רגעים שלא יכולים לחכות.
+
+תקציב ה־SOS של הופה מאפשר להעניק לתלמיד או לבוגר סיוע מיידי במצב חירום שלא סובל דיחוי: נסיעה, מזון, ביגוד, צורך רפואי או מענה רגשי דחוף. לא תמיד אלה סכומים גדולים, אבל ברגע הנכון הם ההבדל בין הישארות במסגרת לבין נשירה.
+
+רויטל אמיר, לשעבר מנהלת אורט בית הערבה וכיום מפקחת פדגוגיה במשרד העבודה, כינתה אותו "הנשמה היתרה" של התוכנית. מבחינתנו, הוא לא תוספת למודל — הוא חלק מהלב שלו.
+
+#הופה #מניעת_נשירה #צעירים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig8',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>יש רגעים שלא יכולים לחכות</b> (צהוב) · <b>תקציב ה־SOS של הופה</b> (ורוד)</div>
       </div>
     </div>
@@ -401,6 +528,19 @@
         <div class="copy-row">
           <button class="btn" onclick="copyText('text9',this)">📋 העתקת הטקסט לפייסבוק</button>
         </div>
+        <details class="ig">
+          <summary>גרסת אינסטגרם</summary>
+          <div class="post-text" id="ig9">אתם כבר שם. בואו נמשיך יחד.
+
+מנהלות ומנהלי בתי ספר, מכינות ופנימיות — אתם מכירים היטב את הצורך ללוות צעירים גם אחרי סיום המסגרת. תוכנית הבוגרים של הופה נותנת לעבודה הזו תשתית רציפה עד גיל 26: שמירה על קשר עם הבוגרים, ליווי בצמתים המשמעותיים, וחיבור למלגות, לימודים, הכשרות, תעסוקה, שירות ומיצוי זכויות.
+
+מוזמנים להצטרף לרשת הולכת ומתרחבת של מסגרות שממשיכות ללוות את הבוגרים שלהן גם אחרי היציאה מהמסגרת. לפרטים — הקישור בביו.
+
+#הופה #תוכנית_הבוגרים #חינוך #מנהלים</div>
+          <div class="copy-row">
+            <button class="btn ig-btn" onclick="copyText('ig9',this)">📋 העתקת הטקסט לאינסטגרם</button>
+          </div>
+        </details>
         <div class="overlay-note">על התמונה: <b>אתם כבר שם. בואו נמשיך יחד.</b> (צהוב) · <b>תוכנית הבוגרים של הופה, עד גיל 26</b> (ורוד)</div>
       </div>
     </div>
