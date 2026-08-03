@@ -43,6 +43,8 @@ cursor:pointer;background:var(--pink);color:#fff;text-decoration:none;display:in
 width:150px;direction:ltr;text-align:left}
 .phone:focus{outline:none;border-color:var(--wa)}
 .chk{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--muted);cursor:pointer;margin-inline-start:auto}
+.mode{cursor:pointer;font-size:12.5px;margin-inline-start:6px}
+.mode input{accent-color:var(--wa);vertical-align:middle}
 .toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;
 padding:10px 22px;border-radius:22px;font-size:13.5px;opacity:0;pointer-events:none;transition:.25s;z-index:9}
 .toast.on{opacity:1}
@@ -84,6 +86,10 @@ https://hopa.org.il</textarea>
 <div class="bar">
 <span class="pill">סה״כ מועמדים: <b>21</b></span>
 <span class="pill">נשלחו: <b id="cnt">0</b></span>
+<span class="pill">פתיחת ווטסאפ:
+<label class="mode"><input type="radio" name="wamode" value="app" onchange="setMode('app')"> ישר באפליקציה</label>
+<label class="mode"><input type="radio" name="wamode" value="web" onchange="setMode('web')"> ווטסאפ ווב</label>
+</span>
 <button class="btn g" onclick="resetTpl()">איפוס נוסח לברירת המחדל</button>
 </div>
 
@@ -135,9 +141,21 @@ function normPhone(p){
 }
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');
   clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
+function setMode(m){st.mode=m;save();syncMode()}
+function syncMode(){
+  const m=st.mode||'app';
+  document.querySelectorAll('input[name=wamode]').forEach(r=>r.checked=(r.value===m));
+}
 function waOpen(i){
   const c=CANDS[i],p=normPhone(st.phones[c.e]),txt=encodeURIComponent(msg(c));
-  window.open(p?`https://wa.me/${p}?text=${txt}`:`https://wa.me/?text=${txt}`,'_blank');
+  if((st.mode||'app')==='web'){
+    // לשונית קבועה בשם 'hopaWA' — נפתחת פעם אחת וכל לחיצה רק מחליפה שיחה
+    window.open(p?`https://web.whatsapp.com/send?phone=${p}&text=${txt}`
+                 :`https://web.whatsapp.com/send?text=${txt}`,'hopaWA');
+  }else{
+    // פתיחה ישירה של האפליקציה, בלי דף ביניים של wa.me
+    location.href=p?`whatsapp://send?phone=${p}&text=${txt}`:`whatsapp://send?text=${txt}`;
+  }
   if(!p)toast('אין מספר — בחרי איש קשר בווטסאפ');
 }
 function mailOpen(i){
@@ -170,4 +188,5 @@ function render(){
   document.getElementById('cnt').textContent=cnt;
 }
 render();
+syncMode();
 </script>
