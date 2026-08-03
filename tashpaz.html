@@ -108,6 +108,7 @@ a.lk:hover{background:rgba(185,149,74,.16);border-bottom-color:var(--copper)}
   user-select:none;pointer-events:none;white-space:nowrap;
 }
 .cover>*{position:relative}
+.cover .logo{display:block;width:min(340px,72vw);height:auto;margin:0 auto 26px}
 .cover .office{
   display:flex;align-items:center;justify-content:center;gap:18px;
   font-size:.8rem;letter-spacing:.34em;font-weight:500;color:var(--petrol);
@@ -552,8 +553,8 @@ footer b{color:var(--paper)}
 <!-- ============ COVER ============ -->
 <header class="cover" id="top">
   <div class="ghost" aria-hidden="true">תשפ״ז</div>
+  <img class="logo" src="manpower-logo.png" alt="משרד העבודה · מינהל הכשרה מקצועית">
   <div class="office">משרד העבודה · מינהל הכשרה מקצועית</div>
-  <div class="date">כ"ה בתמוז התשפ"ו · 29.7.2026</div>
   <h1>היערכות לשנת הלימודים <span class="yr">תשפ"ז</span></h1>
   <div class="subtitle">תודה, הערכה והמשך הדרך</div>
   <div class="rule"></div>
@@ -635,9 +636,8 @@ footer b{color:var(--paper)}
     <div class="p-row rv">
       <div class="p-month"><div class="m">חשוון</div><div class="g">אוקטובר — נובמבר</div><span class="lbl">נכנסים לקצב</span></div>
       <ul class="p-items">
-        <li>נפתחת השתלמות המנהלים השנתית — 30 שעות, אוקטובר עד יוני</li>
         <li>כנס מנהלים ארצי — חודש נובמבר</li>
-        <li>נפתחות ההשתלמויות המוסדיות (נובמבר–מאי), לפי היעד הפדגוגי שנבחר מהקטלוג</li>
+        <li>נפתחות ההשתלמויות המוסדיות (אוקטובר–מאי), לפי היעד הפדגוגי שנבחר מהקטלוג</li>
         <li>ועדת התמדה ראשונה — בתיאום מראש מול המפקח והקב"ס</li>
       </ul>
     </div>
@@ -647,6 +647,7 @@ footer b{color:var(--paper)}
       <ul class="p-items">
         <li class="deadline">שאלוני אקלים לצוות ולתלמידים — <span class="when">חלון ההעברה: דצמבר–ינואר</span>, יעד: 100% מילוי</li>
         <li class="deadline">דצמבר — <span class="when">המועד האחרון</span> לוועדה המלווה של תחילת השנה</li>
+        <li>נפתחת השתלמות המנהלים השנתית — 30 שעות, דצמבר עד יוני</li>
         <li>ינואר — פרסום הנחיות המלגות למשלחות לפולין</li>
         <li>בעקבות התוצאות: פגישת למידה עם המפקח ותוכנית פעולה מבוססת נתוני השאלונים</li>
       </ul>
@@ -819,6 +820,7 @@ footer b{color:var(--paper)}
   <h4 class="sub">מטרות מרכזיות לשנת הלימודים תשפ"ז</h4>
   <ul class="ed rv">
     <li><strong>מיצוי הפוטנציאל והצלחת כל תלמיד</strong> — קשר אישי משמעותי, קידום הישגים, התמדה, זכאות לתעודות מקצוע וריבוי תעודות.</li>
+    <li><strong>מניעת נשירה וחיזוק ההתמדה</strong> — ביקור סדיר, מעקב שיטתי אחר נוכחות ואיתור מוקדם ומענה לתלמידים בסיכון לנשירה.</li>
     <li><strong>הרחבת היקף ואיכות החניכות</strong> — הגדלת מספר התלמידים המשתלבים בחניכות, חיזוק איכות ההתנסות והעמקת שיתופי הפעולה עם מעסיקים.</li>
     <li><strong>חיזוק שדרת ההובלה הבית ספרית</strong> — פיתוח מנהיגות מקצועית, ליווי בעלי תפקידים והובלת שינוי מתמשך בבתי הספר.</li>
     <li><strong>שיפור איכות ההוראה והלמידה</strong> — הטמעת פדגוגיה דואלית, הוראה מגוונת, פיתוח מיומנויות וחדשנות.</li>
@@ -929,7 +931,7 @@ footer b{color:var(--paper)}
 
   <div class="tbl-scroll rv">
   <table class="doc">
-    <caption>אבני הדרך של שנת הלימודים</caption>
+    <caption>סדירויות תשפ"ז על פי לוח השנה</caption>
     <tr><th style="width:250px">תחום</th><th>סדירות</th></tr>
     <tr><td class="k">ביקור פיקוח</td><td>אחת לחודש / חודש וחצי</td></tr>
     <tr><td class="k">מניעת נשירה</td><td>דוח נוכחות חודשי</td></tr>
@@ -937,7 +939,8 @@ footer b{color:var(--paper)}
     <tr><td class="k">מפקח ומנהליו</td><td>5 פעמים לאורך השנה</td></tr>
     <tr><td class="k">כנס מנהלים</td><td>חודש נובמבר</td></tr>
     <tr><td class="k">ועדה מלווה</td><td>תחילת שנה (עד דצמבר) וסיום שנה (מאי–יולי)</td></tr>
-    <tr><td class="k">השתלמות מנהלים</td><td>אוקטובר–יוני</td></tr>
+    <tr><td class="k">השתלמות מנהלים</td><td>דצמבר–יוני</td></tr>
+    <tr><td class="k">השתלמות מוסדית</td><td>אוקטובר–מאי, לפי היעד הפדגוגי שנבחר · סיום עד חודש מאי</td></tr>
     <tr><td class="k">ישיבות הנהלה</td><td>מינימום פעם בשבועיים</td></tr>
     <tr><td class="k">ישיבות פדגוגיות</td><td>2–3 פעמים בשנה</td></tr>
     <tr><td class="k">ימי הורים</td><td>2–3 פעמים בשנה</td></tr>
@@ -1126,7 +1129,7 @@ footer b{color:var(--paper)}
   <div class="tbl-scroll rv">
   <table class="doc">
     <tr><th style="width:190px">הנושא</th><th>המשאב</th></tr>
-    <tr><td class="k">השתלמות מוסדית</td><td>על מנהל בית הספר להציג למפקח הכולל את תהליכי הפיתוח המקצועי וההשתלמויות שהתקיימו בשנים האחרונות, ולציין את היעד הפדגוגי המרכזי שבית הספר מבקש לקדם השנה באמצעות ההשתלמות הנבחרת והשפעתה הצפויה על ההוראה, הלמידה והתלמידים. <strong>בהמשך יועבר לבתי הספר קטלוג השתלמויות לבחירה</strong> — בית הספר יתבקש לבחור השתלמות מתוך הקטלוג או להציע מנחה חלופי בהתאם ליעד הפדגוגי שבחר, בכפוף לאישור המפקח. ההשתלמויות יתחילו בנובמבר ויסתיימו בחודש מאי. <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Zxg4FZq_yN4tTvnod_SM0KtdZqx55fXo/view">מסמך הפעלת השתלמות מוכרת לגמול — חינוך יוצר</a> · <a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1PFRkv90Uaf0tthUdGOyVieSCQeEvLg2T/edit">פורמט הגשת סילבוס</a></td></tr>
+    <tr><td class="k">השתלמות מוסדית</td><td>על מנהל בית הספר להציג למפקח הכולל את תהליכי הפיתוח המקצועי וההשתלמויות שהתקיימו בשנים האחרונות, ולציין את היעד הפדגוגי המרכזי שבית הספר מבקש לקדם השנה באמצעות ההשתלמות הנבחרת והשפעתה הצפויה על ההוראה, הלמידה והתלמידים. <strong>בהמשך יועבר לבתי הספר קטלוג השתלמויות לבחירה</strong> — בית הספר יתבקש לבחור השתלמות מתוך הקטלוג או להציע מנחה חלופי בהתאם ליעד הפדגוגי שבחר, בכפוף לאישור המפקח. ההשתלמויות יתחילו באוקטובר ויסתיימו עד חודש מאי. <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Zxg4FZq_yN4tTvnod_SM0KtdZqx55fXo/view">מסמך הפעלת השתלמות מוכרת לגמול — חינוך יוצר</a> · <a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1PFRkv90Uaf0tthUdGOyVieSCQeEvLg2T/edit">פורמט הגשת סילבוס</a></td></tr>
     <tr><td class="k">מצפן פדגוגי</td><td><a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1twJtVMiLTEpTlZP1vRaasTHjfEV6VL-s/view">אגרת פדגוגית ללמידה משמעותית — מיומנויות רלוונטיות ויישום</a></td></tr>
     <tr><td class="k">ועדה מלווה</td><td>ועדה מקצועית שתלווה את ביה"ס פעמיים בשנה. <a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QNdCPPCZVw5VEnOCCKZPuOKPISGMgmKH/edit">הנחיות ועדה מלווה</a> · <a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1mGiiKKrhSmaFUMbJsMK6tK4zEw2N_MC9">מכתבי הכנה ומצגות ועדה מלווה</a></td></tr>
     <tr><td class="k">סל תוכניות</td><td>סל תקציבי גמיש המיועד לחיזוק ההיבטים המקצועיים, הערכיים, החברתיים והאישיים של התלמידים, באמצעות פעילויות המקדמות חניכות, פדגוגיה חדשנית, חוסן אישי, מניעת נשירה, שייכות ומעורבות קהילתית. התקציב מאפשר לבית הספר להתאים מענים לצרכיו ולקדם את מטרותיו החינוכיות בהתאם לתפיסת החינוך היוצר והפדגוגיה הדואלית (<a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1x_qt-ezw-JqX5WLkzVcSZzHhz5NkJbHr">מסמך סל תוכניות מעודכן</a>). ישנה גמישות בין הסעיפים באישור מפקח ביה"ס; לא ניתן להשתמש בתקציב זה לטובת שעות הוראה.</td></tr>
@@ -1158,6 +1161,7 @@ footer b{color:var(--paper)}
     <tr><td class="k">רכזי הכלה ושילוב</td><td>השתלמות שנתית — 30 שעות (מפגש פיזי אחד ו־7 מפגשי זום)</td><td>ד"ר מיכל גלסר — מפקחת ארצית מערך טיפולי</td></tr>
     <tr><td class="k">מת"לים</td><td>השתלמות שנתית — 30 שעות (מפגש פיזי אחד ו־7 מפגשי זום). מדריכה: סימונה, 052־4586974</td><td>רויטל אמיר — מפקחת פדגוגית ארצית</td></tr>
     <tr><td class="k">ליווי מורים חדשים</td><td>השתלמות 30 שעות בזום להכשרת מורים למטרת ליווי מורים חדשים במערכת</td><td>רויטל אמיר — מפקחת פדגוגית ארצית</td></tr>
+    <tr><td class="k">רכזי תקשוב</td><td>תוכנית שנתית — 30 שעות</td><td>—</td></tr>
     <tr><td class="k">בנות שירות לאומי</td><td>3 מפגשי הכשרה שנתיים ומפגש אמצע שנה עם הרכזת המלווה את בנות השירות (<a class="lk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1PmfGG4FwvqSZ3hpEhA5lH8XD0P68ZR6m/view">הנחיות קליטת בני ובנות שירות</a>)</td><td>רויטל אמיר — מפקחת פדגוגית ארצית · עידית 052־8985785</td></tr>
     <tr><td class="k">הדרכה בכלל מקצועות הלימוד (ליבה והומניסטיקה)</td><td>קבוצות פעילות בשפה העברית ובשפה הערבית + הדרכה קבוצתית אחת לחודש + הדרכה פרטנית על פי הצורך ודרישת ביה"ס (<a class="lk" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1hCUgdMQmVM514MNXczBJNsO-UwmJiMqv/edit">קובץ כלל קבוצות ההדרכה ופרטי המדריכים</a>)</td><td>מפקחים פדגוגיים</td></tr>
   </table>
