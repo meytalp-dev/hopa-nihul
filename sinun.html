@@ -67,7 +67,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
     <img src="hopa-logo.png" alt="הופה">
     <div><h1>סינון עמותות למאגר המענים</h1>
     <div class="sub">עמותות פעילות מרשם העמותות עם פרטי יצירת קשר בלבד (סבב 1 + סבב 2) · מסמנים מה מתאים, ומייצאים בפורמט של מאגר הופה
-    <br><b style="color:#E8348A">גרסה 7 · 3.8.2026 — הוספת אתר ידנית</b></div></div>
+    <br><b style="color:#E8348A">גרסה 8 · 3.8.2026 — מסנן \"עם אתר\" + איתור אתרים אוטומטי</b></div></div>
     <div class="hsite"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
   </div>
 </header>
@@ -89,6 +89,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
   <span class="pill" id="f_new" onclick="setF('new')">לבדיקה <b id="c_new">0</b></span>
   <span class="pill" id="f_yes" onclick="setF('yes')">מתאימות <b id="c_yes">0</b></span>
   <span class="pill" id="f_no" onclick="setF('no')">נדחו <b id="c_no">0</b></span>
+  <span class="pill" id="f_site" onclick="setF('site')" style="border-color:#0d7a8a">🌐 עם אתר <b id="c_site">0</b></span>
   <span class="pill" id="f_noc" onclick="setF('noc')" style="border-color:#c62828">⚠ בלי קשר <b id="c_noc">0</b></span>
   <span class="pill" id="f_del" onclick="setF('del')">🗑 נמחקו <b id="c_del">0</b></span>
   <button class="btn" onclick="expSQL()">⬇ ייצוא SQL ל-Supabase</button>
@@ -221,12 +222,13 @@ function delNoContact(){
  save(); render(); }
 
 function count(){
- const n={all:0,yes:0,no:0,new:0,del:0,noc:0};
+ const n={all:0,yes:0,no:0,new:0,del:0,noc:0,site:0};
  ORGS.forEach(o=>{const r=S[o.num]||{}; if(r.d){n.del++;return}
   if(!hasContact(o)){n.noc++;return}   /* בלי פרטי קשר — נספרת רק במסנן הייעודי */
   n.all++;
+  if(siteOf(o)&&!r.v)n.site++;   /* עם אתר וטרם נבדקה */
   if(r.v==='yes')n.yes++; else if(r.v==='no')n.no++; else n.new++});
- ['all','new','yes','no','del','noc'].forEach(k=>{
+ ['all','new','yes','no','del','noc','site'].forEach(k=>{
    document.getElementById('c_'+k).textContent=n[k];
    document.getElementById('f_'+k).className='pill'+(F===k?' act':'');
  });
@@ -305,6 +307,7 @@ function render(){
   else if(r.d)return false;
   else if(F==='noc'){ if(hasContact(o))return false; }
   else if(!hasContact(o))return false;   /* מוסתרות מכל שאר התצוגות */
+  else if(F==='site'){ if(!siteOf(o)||v)return false; }
   else if(!(F==='all'||(F==='new'&&!v)||(F==='yes'&&v==='yes')||(F==='no'&&v==='no')))return false;
   if(!qs)return true;
   const hay=(o.n+' '+o.c+' '+(o.geo||'')+' '+(o.lvl||'')+' '+o.cats.join(' ')+' '+popsOf(o).join(' ')+' '+goalsOf(o)).toLowerCase();
