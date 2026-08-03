@@ -67,7 +67,7 @@ outline:2.5px solid var(--pink);outline-offset:2px}
     <img src="hopa-logo.png" alt="הופה">
     <div><h1>סינון עמותות למאגר המענים</h1>
     <div class="sub">עמותות פעילות מרשם העמותות עם פרטי יצירת קשר בלבד (סבב 1 + סבב 2) · מסמנים מה מתאים, ומייצאים בפורמט של מאגר הופה
-    <br><b style="color:#E8348A">גרסה 6 · 3.8.2026 — תגית דרוזים נפרדת</b></div></div>
+    <br><b style="color:#E8348A">גרסה 7 · 3.8.2026 — הוספת אתר ידנית</b></div></div>
     <div class="hsite"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
   </div>
 </header>
@@ -140,7 +140,7 @@ function defaults(o){
  const pop=popLabel(popsOf(o));
  return {name:o.n,category:m[0],subcategory:m[1],description:goalsOf(o)||'',target_population:pop,
   geographic_area:o.geo||'ארצי',email:allMails(o)[0]||'',phone:allPhones(o)[0]||'',
-  url:o.site||'',service_type:''};
+  url:siteOf(o),service_type:''};
 }
 function rec(num){ if(!S[num])S[num]={}; if(!S[num].f)S[num].f=defaults(ORGS.find(o=>o.num===num)); return S[num]; }
 function setV(num,v){ const r=rec(num); r.v=(r.v===v?null:v); save(); render(); }
@@ -154,6 +154,7 @@ function allMails(o){ const m=(S[o.num]&&S[o.num].mc&&S[o.num].mc.email)?[S[o.nu
  return m.concat(o.mails||[]); }
 function allPhones(o){ const p=(S[o.num]&&S[o.num].mc&&S[o.num].mc.phone)?[S[o.num].mc.phone]:[];
  return p.concat(o.phones||[]); }
+function siteOf(o){ const s=S[o.num]&&S[o.num].mc&&S[o.num].mc.site; return s||o.site||''; }
 function hasContact(o){ const f=S[o.num]&&S[o.num].f;
  if(f&&((f.email&&f.email.trim())||(f.phone&&f.phone.trim()))) return true;
  return !!(allMails(o).length||allPhones(o).length); }
@@ -197,16 +198,20 @@ function resetGoals(num){ const r=S[num]||{}; delete r.g;
  EDIT.delete(num); save(); render(); }
 function askContact(num,kind){
  const r=S[num]||(S[num]={}); r.mc=r.mc||{};
- const label=kind==='phone'?'מספר טלפון':'כתובת מייל';
- const cur=r.mc[kind]||'';
+ const label=kind==='phone'?'מספר טלפון':(kind==='email'?'כתובת מייל':'כתובת אתר');
+ const cur=r.mc[kind]||(kind==='site'?(ORGS.find(x=>x.num===num)||{}).site||'':'');
  const val=prompt(cur?'עריכת ה'+label+' (למחיקה — לרוקן את השדה):':'הוספת '+label+':',cur);
  if(val===null)return;
- const t=val.trim();
+ let t=val.trim();
  if(!t){ delete r.mc[kind]; }
  else if(kind==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t)){ alert('כתובת המייל לא נראית תקינה: '+t); return; }
  else if(kind==='phone'&&(t.replace(/\D/g,'').length<8)){ alert('מספר הטלפון קצר מדי: '+t); return; }
+ else if(kind==='site'){
+  if(!/^https?:\/\//i.test(t)) t='https://'+t;
+  if(!/^https?:\/\/[^\s.]+\.[^\s]{2,}$/i.test(t)){ alert('כתובת האתר לא נראית תקינה: '+t); return; }
+  r.mc.site=t; }
  else { r.mc[kind]=t; }
- if(r.f){ r.f[kind]=r.mc[kind]||''; }   /* מסנכרן גם לטופס אם כבר אושרה */
+ if(r.f){ r.f[kind==='site'?'url':kind]=r.mc[kind]||''; }   /* מסנכרן גם לטופס אם כבר אושרה */
  save(); render(); }
 function delNoContact(){
  const t=ORGS.filter(o=>{const r=S[o.num]||{};return !r.d&&r.v!=='yes'&&!hasContact(o)});
@@ -274,15 +279,17 @@ function card(o){
    ${allPhones(o).length?'':'<span class="tag" style="background:#fff3e0;color:#b07a00">אין טלפון</span>'}
    <button type="button" style="background:#E8348A;color:#fff;border:0;border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;margin-inline-end:6px"
     onclick="askContact('${o.num}','phone')">${(S[o.num]&&S[o.num].mc&&S[o.num].mc.phone)?'✏ עריכת טלפון':'➕ הוספת טלפון'}</button>
-   <button type="button" style="background:#6b4a8a;color:#fff;border:0;border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600"
+   <button type="button" style="background:#6b4a8a;color:#fff;border:0;border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;margin-inline-end:6px"
     onclick="askContact('${o.num}','email')">${(S[o.num]&&S[o.num].mc&&S[o.num].mc.email)?'✏ עריכת מייל':'➕ הוספת מייל'}</button>
+   <button type="button" style="background:#0d7a8a;color:#fff;border:0;border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600"
+    onclick="askContact('${o.num}','site')">${siteOf(o)?'✏ עריכת אתר':'➕ הוספת אתר'}</button>
   </div>
   <div class="acts">
    ${r.d?`<button class="btn g" onclick="unDel('${o.num}')">↩ שחזור</button>`:`
    <button class="btn ok ${v==='yes'?'on-ok':''}" onclick="setV('${o.num}','yes')">✓ מתאימה</button>
    <button class="btn no ${v==='no'?'on-no':''}" onclick="setV('${o.num}','no')">✕ לא רלוונטית</button>
    <button class="btn no" title="מחיקה מהרשימה" onclick="delOrg('${o.num}')">🗑</button>`}
-   ${o.site?`<a class="btn s" target="_blank" rel="noopener" href="${esc(o.site)}">🌐 אתר</a>`
+   ${siteOf(o)?`<a class="btn s" target="_blank" rel="noopener" href="${esc(siteOf(o))}">🌐 אתר</a>`
      :`<a class="btn g" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent('"'+o.n+'" עמותה')}">🔎 חיפוש</a>`}
    <a class="btn g" target="_blank" rel="noopener" href="https://www.guidestar.org.il/organization/${o.num}">גיידסטאר</a>
    <a class="btn g" target="_blank" rel="noopener" href="https://next.obudget.org/i/org/association/${o.num}">מפתח התקציב</a>
