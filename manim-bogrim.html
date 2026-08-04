@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · מענים מומלצים לרכזי בוגרים</title>
+<meta name="description" content="שלושה דפי מענים מומלצים לרכזי בוגרים של הופה: מלגות עם ליווי, תעסוקה והכשרה, כלכלה ומיצוי זכויות.">
+<meta property="og:title" content="הופה · מענים מומלצים לרכזי בוגרים">
+<meta property="og:description" content="15 תוכניות נבחרות מתוך מאגר המענים של הופה, בשלושה דפים מוכנים לשליחה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   הופה · שער דפי המענים לרכזי בוגרים
+   מערכת עיצוב: ורוד #E8348A · צהוב #FFF200 · Rubik · RTL · מובייל first
+   כלל: אין רקע שחור. שחור רק לטקסט.
+   ============================================================ */
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --green:#3BA55C; --green-deep:#2C824A; --green-soft:#E8F5EC;
+  --blue:#3D7DD8; --blue-deep:#2A62B5; --blue-soft:#E7F0FB;
+  --r-lg:24px; --r-md:16px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --shadow-hi:0 2px 6px rgba(17,17,17,.06), 0 18px 48px rgba(232,52,138,.13);
+  --maxw:880px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep)}
+h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.02em;font-weight:800}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+.hero{position:relative;padding:52px 0 44px;overflow:hidden;
+  background:
+    radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+    radial-gradient(900px 460px at 4% 4%, rgba(232,52,138,.14), transparent 60%),
+    #FFFFFF;
+  border-bottom:1px solid var(--line)}
+.hero-grid{position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(rgba(17,17,17,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,17,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);
+  mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent)}
+.hero .wrap{position:relative}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:48px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:16px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.kicker{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.16em;
+  color:var(--pink-deep);background:var(--pink-soft);border-radius:999px;padding:7px 16px;margin-bottom:18px}
+h1.title{font-size:clamp(34px,6.6vw,60px);font-weight:900;letter-spacing:-.035em;max-width:18ch}
+h1.title .hl{background:linear-gradient(180deg,transparent 62%, var(--yellow) 62%, var(--yellow) 94%, transparent 94%);padding:0 4px}
+.lede{font-size:clamp(16px,2.2vw,20px);color:var(--ink-2);max-width:56ch;margin-top:18px}
+
+.cards{padding:36px 0 10px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;
+  transition:transform .14s ease, box-shadow .14s ease}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hi)}
+.card-bar{height:6px}
+.card.c1 .card-bar{background:linear-gradient(90deg,var(--pink),var(--yellow-deep))}
+.card.c2 .card-bar{background:linear-gradient(90deg,var(--blue),var(--yellow-deep))}
+.card.c3 .card-bar{background:linear-gradient(90deg,var(--green),var(--yellow-deep))}
+.card-in{padding:22px;display:flex;align-items:center;gap:18px;justify-content:space-between;flex-wrap:wrap}
+.card .num{font-size:13px;font-weight:800;letter-spacing:.1em;border-radius:999px;padding:5px 13px;margin-bottom:10px;display:inline-block}
+.card.c1 .num{background:var(--pink-soft);color:var(--pink-deep)}
+.card.c2 .num{background:var(--blue-soft);color:var(--blue-deep)}
+.card.c3 .num{background:var(--green-soft);color:var(--green-deep)}
+.card h2{font-size:clamp(21px,3.6vw,27px);font-weight:900}
+.card p{margin:8px 0 0;color:var(--ink-2);font-size:15.5px;max-width:48ch}
+.card .go{flex:none;font-weight:800;font-size:15px;color:var(--ink);background:var(--yellow);
+  border-radius:999px;padding:10px 20px;white-space:nowrap}
+
+.note{margin:20px 0 0;background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:14px 18px;font-size:14px;color:var(--muted)}
+
+.footer{margin-top:40px;padding:34px 0 46px;border-top:1px solid var(--line);
+  background:linear-gradient(180deg,#fff, var(--pink-soft))}
+.footer .wrap{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.footer img{height:56px}
+.footer a.site{display:inline-flex;font-weight:700;font-size:14.5px;text-decoration:none;color:var(--ink);
+  background:var(--yellow);border-radius:999px;padding:9px 18px}
+.footer p{margin:0;font-size:14px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה - פתאום הכל נראה אפשרי!">
+        <span class="org"><b>מענים לבוגרים 18–26</b><span>מתוך מאגר המענים של הופה</span></span>
+      </a>
+    </div>
+    <span class="kicker">לרכזי בוגרים</span>
+    <h1 class="title">15 תוכניות נבחרות, <span class="hl">בשלושה דפים מוכנים לשליחה.</span></h1>
+    <p class="lede">כל דף עומד בפני עצמו: מה התוכנית נותנת, למי לכוון אותה, ואיך יוצרים קשר. אפשר לשלוח לרכזים דף אחד או את שלושתם.</p>
+  </div>
+</header>
+
+<main class="cards">
+  <div class="wrap">
+
+    <a class="card c1" href="manim-milgot.html">
+      <div class="card-bar"></div>
+      <div class="card-in">
+        <div>
+          <span class="num">דף 1</span>
+          <h2>מלגות עם ליווי</h2>
+          <p>עמיתי מעשה, הזנק לעתיד וכוכבי הצפון, יתד (קציר ובנדר), הזנק מרכנתיל ואלומה. מלגות עם מעטפת, כולל מסלולים לחברה הערבית.</p>
+        </div>
+        <span class="go">לדף ←</span>
+      </div>
+    </a>
+
+    <a class="card c2" href="manim-taasuka.html">
+      <div class="card-bar"></div>
+      <div class="card-in">
+        <div>
+          <span class="num">דף 2</span>
+          <h2>תעסוקה והכשרה</h2>
+          <p>אלביט תל חי, תל"מ, היוזמה, תופסים כיוון והפסיכומטרי החינמי של המדינה. מסלולים מעשיים, חלקם עם השמה מובטחת.</p>
+        </div>
+        <span class="go">לדף ←</span>
+      </div>
+    </a>
+
+    <a class="card c3" href="manim-zchuyot.html">
+      <div class="card-bar"></div>
+      <div class="card-in">
+        <div>
+          <span class="num">דף 3</span>
+          <h2>כלכלה ומיצוי זכויות</h2>
+          <p>משל"י, פעמונים ותכל'ס, יתד לטיפול בחובות, מקימי ושי"ל. סוגרים את הבסיס הכלכלי לפני הכל.</p>
+        </div>
+        <span class="go">לדף ←</span>
+      </div>
+    </a>
+
+    <div class="note">המידע מתוך מאגר המענים של הופה, נכון לאוגוסט 2026. מומלץ לוודא מועדים ותנאי זכאות מול כל תוכנית לפני הפניית בוגרים.</div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+    <a class="site" href="https://hopa.org.il" target="_blank" rel="noopener">למאגר המענים המלא · hopa.org.il</a>
+    <p>הופה · רצף ליווי לבני נוער וצעירים מגיל 14 עד 26</p>
+  </div>
+</footer>
+</body>
+</html>
