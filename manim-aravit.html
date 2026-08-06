@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · מענים לחברה הערבית, הדרוזית והבדואית</title>
+<meta name="description" content="כל המענים שאותרו לצעירי החברה הערבית, הדרוזית, הצ'רקסית והבדואית: מלגות, תעסוקה, שירות לאומי-אזרחי, חוסן נפשי, זכויות ומרכזי צעירים.">
+<meta property="og:title" content="הופה · מענים לחברה הערבית, הדרוזית והבדואית">
+<meta property="og:description" content="37 מענים: מלגות, תעסוקה, חוסן נפשי, זכויות ומרכזי צעירים — מהמאגר החי ומהמחקר לבתי הספר החדשים.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   הופה · מענים לחברה הערבית / דרוזית / בדואית
+   מערכת עיצוב: ורוד #E8348A · צהוב #FFF200 · Rubik · RTL · מובייל first
+   כלל: אין רקע שחור. שחור רק לטקסט.
+   ============================================================ */
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --green:#3BA55C; --blue:#3D7DD8; --orange:#F5A623; --purple:#7E57C2;
+  --accent:var(--green); --accent-deep:#2C7D45; --accent-soft:#E8F5EC;
+  --r-lg:24px; --r-md:16px; --r-sm:10px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --maxw:920px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep);text-decoration-thickness:1.5px;text-underline-offset:3px}
+h1,h2,h3,h4{line-height:1.2;margin:0;letter-spacing:-.02em;font-weight:800}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:52px 0 34px;overflow:hidden;
+  background:
+    radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+    radial-gradient(900px 460px at 4% 4%, rgba(59,165,92,.13), transparent 60%),
+    #FFFFFF;
+  border-bottom:1px solid var(--line)}
+.hero-grid{position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(rgba(17,17,17,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,17,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);
+  mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent)}
+.hero .wrap{position:relative}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:48px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.issue{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--ink-2);
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px}
+.issue b{color:var(--pink-deep);font-weight:800}
+.kicker{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.16em;
+  color:var(--accent-deep);background:var(--accent-soft);border-radius:999px;padding:7px 16px;margin-bottom:18px}
+h1.title{font-size:clamp(32px,6.2vw,56px);font-weight:900;letter-spacing:-.035em;max-width:20ch}
+h1.title .hl{background:linear-gradient(180deg,transparent 62%, var(--yellow) 62%, var(--yellow) 94%, transparent 94%);padding:0 4px}
+.lede{font-size:clamp(16px,2.2vw,19px);color:var(--ink-2);max-width:60ch;margin-top:18px;line-height:1.6}
+.hero-meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+.tag{font-size:13px;font-weight:600;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+.tag.p{background:var(--pink-soft);border-color:#F6C9DF;color:var(--pink-deep)}
+.tag.y{background:var(--yellow-soft);border-color:#F3E9A0;color:#7A6A00}
+
+/* ---------- סינון ---------- */
+.toolbar{position:sticky;top:6px;z-index:50;padding:14px 0;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.toolbar .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;border-radius:999px;padding:8px 16px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink-2);transition:all .12s ease}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.srch{flex:1;min-width:180px;font-family:inherit;font-size:15px;padding:9px 16px;border-radius:999px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);outline:none}
+.srch:focus{border-color:var(--pink)}
+.count{font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+
+/* ---------- קטגוריות וכרטיסים ---------- */
+.cards{padding:30px 0 8px}
+.cat-head{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+.cat-head:first-child{margin-top:0}
+.cat-head .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;
+  background:var(--accent-soft);border:1px solid #CBE7D4}
+.cat-head h2{font-size:clamp(20px,3.6vw,26px);font-weight:900}
+.cat-head .n{font-size:13px;font-weight:700;color:var(--accent-deep);background:var(--accent-soft);
+  border-radius:999px;padding:3px 11px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);
+  margin-bottom:18px;overflow:hidden}
+.card-bar{height:5px;background:linear-gradient(90deg,var(--accent),var(--yellow-deep))}
+.card-in{padding:20px 22px 18px}
+.card-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.pill{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 12px;border:1px solid transparent}
+.pill.sec-arab{background:var(--accent-soft);color:var(--accent-deep)}
+.pill.sec-druze{background:#EDE7F6;color:#5E35B1}
+.pill.sec-bedouin{background:#FFF3E0;color:#B26A00}
+.pill.sec-mixed{background:#E7F0FB;color:#2A62B5}
+.pill.who{background:var(--tint);color:var(--ink-2);border-color:var(--line)}
+.pill.new{background:var(--yellow-soft);color:#7A6A00;border-color:#F3E9A0}
+.pill.vf{background:#FDECEA;color:#B3261E;border-color:#F5C6C1}
+.card h3{font-size:clamp(19px,3.2vw,23px);font-weight:900;letter-spacing:-.02em}
+.card .desc{color:var(--ink-2);margin:8px 0 0;font-size:15.5px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;text-decoration:none;
+  border-radius:999px;padding:8px 16px;border:1.5px solid var(--ink);color:var(--ink);background:#fff;
+  transition:transform .12s ease, box-shadow .12s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.primary{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.btn.primary:hover{background:var(--yellow-deep);border-color:var(--yellow-deep)}
+.empty{display:none;text-align:center;color:var(--muted);padding:50px 0;font-weight:600}
+
+/* ---------- הערה + פוטר ---------- */
+.note{margin:26px 0 0;background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:14px 18px;font-size:14px;color:var(--muted)}
+.footer{margin-top:40px;padding:34px 0 46px;border-top:1px solid var(--line);
+  background:linear-gradient(180deg,#fff, var(--accent-soft))}
+.footer .wrap{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.footer img{height:56px}
+.footer p{margin:0;font-size:14px;color:var(--muted)}
+@media (min-width:640px){.card-in{padding:24px 26px 22px}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה - פתאום הכל נראה אפשרי!">
+        <span class="org"><b>מענים לבוגרים 18–26</b><span>מתוך מאגר המענים של הופה</span></span>
+      </a>
+      <span class="issue">חברה ערבית · דרוזית · בדואית · <b id="totalN"></b> מענים</span>
+    </div>
+    <span class="kicker">מענים לפי מגזר</span>
+    <h1 class="title">כל המענים שמצאנו <span class="hl">לחברה הערבית, הדרוזית והבדואית</span></h1>
+    <p class="lede">ריכוז מלא של המענים לצעירים מהחברה הערבית, הדרוזית, הצ'רקסית והבדואית — מלגות, תעסוקה, שירות לאומי-אזרחי, חוסן נפשי, זכויות ומרכזי צעירים. חלק מהמענים כבר במאגר החי באתר הופה, וחלקם אותרו במחקר לבתי הספר החדשים ומסומנים בהתאם.</p>
+    <div class="hero-meta">
+      <span class="tag p">בוגרים 18–26</span>
+      <span class="tag">מהמאגר החי + מהמחקר לבתי ספר חדשים</span>
+      <span class="tag y">מענה שמסומן ⚠ לאמת — לוודא פרטי קשר לפני הפניה</span>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <button class="chip on" data-sec="all">הכל</button>
+    <button class="chip" data-sec="arab">חברה ערבית</button>
+    <button class="chip" data-sec="druze">דרוזים וצ'רקסים</button>
+    <button class="chip" data-sec="bedouin">בדואים · נגב</button>
+    <input class="srch" id="srch" type="search" placeholder="חיפוש: מלגה, תעסוקה, נצרת, רהט…">
+    <span class="count" id="cnt"></span>
+  </div>
+</div>
+
+<main class="cards">
+  <div class="wrap" id="list"></div>
+  <div class="wrap"><div class="empty" id="empty">לא נמצאו מענים לחיפוש הזה.</div>
+    <div class="note">המידע מתוך מאגר המענים של הופה ומחקר בתי הספר החדשים, נכון לאוגוסט 2026. מענים המסומנים "חדש — לא באתר" עדיין לא הוזנו למאגר החי ב-hopa.org.il. מומלץ לוודא מועדי הרשמה ותנאי זכאות מול הגורם עצמו לפני הפניית בוגרים.</div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+    <p>הופה — פתאום הכל נראה אפשרי! · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></p>
+  </div>
+</footer>
+
+<script>
+/* sec: arab / druze / bedouin / mixed (יכול להיות כמה) · src: live=במאגר החי · new=מהמחקר · vf: לאמת */
+const DATA = [
+/* ===== מלגות והשכלה ===== */
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת אירתקא (מל\"ג)", sec:["arab","druze"],
+ desc:"מלגת המל\"ג הגדולה לחברה הערבית, הדרוזית והצ'רקסית: 28,000 ₪ ל-3 שנים או 36,000 ₪ ל-4 שנים, לסטודנטים בשנה א' לתואר ראשון. נשקלים תחום לימוד, מצב משפחתי וסוציו-אקונומי.",
+ pop:"סטודנטים שנה א'", url:"https://irteka.co.il/criteria.asp", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת משרד החינוך לדרוזים וצ'רקסים", sec:["druze"],
+ desc:"מלגה לסטודנטים ממוצא דרוזי או צ'רקסי במוסד מוכר מל\"ג. עדיפות למקצועות מסוימים; הסכום משתנה משנה לשנה.",
+ pop:"סטודנטים דרוזים וצ'רקסים", url:"https://milgapo.co.il/?milga=_edu.gov2", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת סלים שופי ז\"ל — הקרן לידידות", sec:["arab","druze"],
+ desc:"10,000 ₪ לשנה אקדמית לתואר ראשון (5,000 ₪ להנדסאים) לבני המגזר הערבי, הדרוזי, הצ'רקסי והנוצרי אחרי שירות צבאי או לאומי תקין, עד גיל 35.",
+ pop:"אחרי שירות צבאי/לאומי", url:"https://yedidut.org.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"הזנק מרכנתיל", sec:["arab"],
+ desc:"מלגה לסטודנטים מצטיינים מהחברה הערבית מרקע סוציו-אקונומי נמוך: מלגת לימודים, סיוע בלימודים, סדנאות העשרה והרצאות של דמויות מפתח בחברה הערבית.",
+ pop:"סטודנטים מצטיינים", url:"https://heznek.org/%d7%94%d7%96%d7%a0%d7%a7-%d7%9e%d7%a8%d7%9b%d7%a0%d7%aa%d7%99%d7%9c-2/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת עתידנא", sec:["arab"],
+ desc:"5,000 ₪ + סמינרים ו-50 שעות התנסות במנהיגות והובלת נוער, לסטודנטים לתואר ראשון עם פוטנציאל מנהיגותי שרוצים לחולל שינוי בחברה הערבית.",
+ pop:"סטודנטים לתואר ראשון", url:"https://atidna.org/%D7%A2%D7%AA%D7%99%D7%93%D7%A0%D7%90-%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת מדברים ערבית", sec:["arab","druze"],
+ desc:"7,000 ₪ לסטודנטים דוברי ערבית + הכשרה מקצועית להוראת השפה לסטודנטים שאינם דוברי ערבית, בזום ובקמפוס. עדיפות לבעלי ניסיון הדרכתי.",
+ pop:"סטודנטים דוברי ערבית", url:"https://www.nuis.co.il/scholarship/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%9E%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%A2%D7%A8%D7%91%D7%99%D7%AA/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת בני מערוף", sec:["druze"],
+ desc:"מלגה לסטודנטים דרוזים בלבד הלומדים מדעים מדויקים והנדסה, משנה ב' ומעלה. המצב הסוציו-אקונומי משפיע על הבחירה.",
+ pop:"סטודנטים דרוזים · מדעים והנדסה", url:"https://milgapo.co.il/?milga=_bnaymaaroof", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת ההסתדרות הציונית לדרוזים", sec:["druze"],
+ desc:"4,000 ₪ לסטודנטים דרוזים הלומדים מדעים, הנדסה או רפואה, בתמורה ל-4 שעות התנדבות שבועיות. עדיפות לאחרי שירות צבאי/לאומי/אזרחי.",
+ pop:"סטודנטים דרוזים", url:"", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת המועצה הדתית הדרוזית העליונה", sec:["druze"],
+ desc:"מלגה לסטודנטים דרוזים במוסדות מוכרים: מצב סוציו-אקונומי נמוך, אורח חיים דתי, לימודי רפואה ומדעים מדויקים או הצטיינות.",
+ pop:"סטודנטים דרוזים", url:"", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"עמותת דרך מופיד עאמר — אחים לחיים", sec:["druze"],
+ desc:"מלגה לסטודנטים דרוזים חיילים משוחררים (שחרור אחרי 1.1.2019) הלומדים לתואר אקדמי. העדפה למשרתי צו 8 בחרבות ברזל.",
+ pop:"חיילים משוחררים דרוזים", url:"https://derechmofeedamer.co.il/form-view/38LYh5aiHaST0XSqU9rVIgHqkGWV58lC", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגת קרן גרוס", sec:["arab","druze","bedouin"],
+ desc:"עד 10,000 ₪ לחיילים משוחררים ומסיימי שירות לאומי/אזרחי מאוכלוסיות יעד, כולל בני מיעוטים: דרוזים, בדואים, צ'רקסים, מוסלמים ונוצרים שסיימו שירות.",
+ pop:"אחרי שירות", url:"https://www.gruss.org.il/blank-5", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"קרן המלגות ע\"ש ויסאם חמיס", sec:["mixed"],
+ desc:"מלגות לערבים וליהודים לקראת לימודים גבוהים בראיית חשבון, הנדסת מחשבים, תעשייה וניהול ומדעים — לקידום שוויון ודו-קיום. נדרש אישור תרומה לקהילה.",
+ pop:"ערבים ויהודים", url:"https://www.wisam-fund.org/index.html", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"ספורט למען השלום · رياضة من أجل السلام", sec:["mixed"],
+ desc:"מלגת התאחדות הסטודנטים: הסטודנטים מובילים תוכנית חינוכית שמחברת בין בתי ספר מהחברה היהודית והערבית, עם הכשרות מנהיגות ופיתוח אישי.",
+ pop:"סטודנטים יהודים וערבים", url:"https://www.nuis.co.il/scholarship/%D7%AA%D7%9B%D7%A0%D7%99%D7%AA-%D7%A1%D7%A4%D7%95%D7%A8%D7%98-%D7%9C%D7%9E%D7%A2%D7%9F-%D7%94%D7%A9%D7%9C%D7%95%D7%9D/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"עמותת אלומה — מלגות הנדסאים", sec:["arab","druze"],
+ desc:"מלגות ייעודיות ללימודי הנדסאים וייעוץ אקדמי לצעירים מהמגזר הערבי והדרוזי.",
+ pop:"מועמדים ללימודי הנדסאים", phone:"08-8544434", url:"https://aluma.org.il/", src:"live"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מלגות לסטודנטים בדואים — אשכול נגב מזרחי", sec:["bedouin"],
+ desc:"מלגה של 10,000 ₪ לכ-400 סטודנטים בדואים למקצועות מדעיים, כולל חונכות ותגבור לימודי.",
+ pop:"סטודנטים בדואים · מדעים", phone:"08-6311146", email:"office@eastnegev.org", url:"https://eastnegev.org/", src:"new"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"שער לאקדמיה — אוניברסיטת בן-גוריון", sec:["bedouin"],
+ desc:"תוכנית המל\"ג לשילוב צעירים בדואים באקדמיה: מכינה, ליווי ומעטפת תמיכה באוניברסיטת בן-גוריון.",
+ pop:"צעירים בדואים לפני תואר", url:"https://www.bgu.ac.il/welcome/", src:"new"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"המכללה האקדמית סח'נין", sec:["arab"],
+ desc:"תארי B.Ed / M.Ed בחינוך, חינוך מיוחד ומתמטיקה, מכינות ותעודות הוראה — מוסד אקדמי בלב החברה הערבית בגליל.",
+ pop:"תואר בחינוך והוראה", phone:"04-9058000", url:"https://sakhnin.ac.il/", src:"new"},
+{cat:"מלגות והשכלה", ico:"🎓", name:"מכללת אלקאסמי — חינוך והנדסה", sec:["arab"],
+ desc:"מכללה אקדמית ערבית בבאקה אל-גרבייה: תארים בחינוך, הנדסה ומדעים.",
+ pop:"סטודנטים ערבים", url:"https://he.qse.co.il/", src:"new"},
+/* ===== תעסוקה והכשרה ===== */
+{cat:"תעסוקה והכשרה", ico:"💼", name:"רשת מרכזי ריאן — הכוון תעסוקתי", sec:["arab","druze","bedouin"],
+ desc:"מרכזי התעסוקה של משרד העבודה לחברה הערבית, הדרוזית והבדואית: הכוון, הכשרה מקצועית, השמה וליווי — הכל ללא עלות. מרכזים שאיתרנו: סח'נין (04-6659600), ירכא לחברה הדרוזית (04-6435950), נצרת ורהט (משרת את כל הדרום). מוקד ארצי *6584.",
+ pop:"מחפשי עבודה 18+", phone:"*6584", url:"https://www.rayan.org.il/", src:"new"},
+{cat:"תעסוקה והכשרה", ico:"💼", name:"צופן (Tsofen) — הייטק בחברה הערבית", sec:["arab"],
+ desc:"קורסי טכנולוגיה מתקדמים, מנטורינג והשמה בחברות הייטק לצעירים ערבים. מרכז בנצרת.",
+ pop:"סטודנטים ובוגרים", url:"https://tsofen.org/", src:"new"},
+{cat:"תעסוקה והכשרה", ico:"💼", name:"קו משווה (Kav Mashve)", sec:["arab"],
+ desc:"שילוב אקדמאים ערבים בתעסוקה איכותית: מועדוני קריירה, בוטקאמפים, מנטורינג וחיבור למעסיקים.",
+ pop:"סטודנטים ואקדמאים ערבים", url:"https://kavmashve.org.il/", src:"new"},
+{cat:"תעסוקה והכשרה", ico:"💼", name:"אג'יק-נספד — תעסוקה ועסקים חברתיים", sec:["bedouin"],
+ desc:"תעסוקה, הקמת עסקים קטנים והכשרות לשילוב בהייטק ובתעשייה בנגב, לצעירים ונשים מהחברה הבדואית.",
+ pop:"צעירים ונשים בדואים", url:"https://ajeec-nisped.org.il/?page_id=771", src:"new"},
+/* ===== שירות לאומי-אזרחי ===== */
+{cat:"שירות לאומי-אזרחי", ico:"🤝", name:"שירות לאומי-אזרחי לחברה הערבית, הדרוזית והבדואית", sec:["arab","druze","bedouin"],
+ desc:"מסלולי שירות אזרחי-לאומי בחינוך, רווחה, בריאות ועמותות, עם ליווי, קורס עברית והכשרות — לצעירים וצעירות אחרי י\"ב מכל המגזרים.",
+ pop:"צעירים/ות אחרי י\"ב", phone:"1-800-233-133", email:"moked@sherut-leumi.co.il", url:"https://sherut-leumi.co.il/", src:"new"},
+/* ===== חוסן ותמיכה רגשית ===== */
+{cat:"חוסן ותמיכה רגשית", ico:"💚", name:"ער\"ן — קו סיוע נפשי בערבית", sec:["arab","druze","bedouin"],
+ desc:"עזרה ראשונה נפשית אנונימית בערבית 24/7: טלפון 1201 שלוחה 2, או וואטסאפ 052-8451201.",
+ pop:"דוברי ערבית · 24/7", phone:"1201", url:"https://www.eran.org.il/eran-for-the-community/arabic-helpline/", src:"new"},
+{cat:"חוסן ותמיכה רגשית", ico:"💚", name:"עמותת סה\"ר — סיוע והקשבה ברשת", sec:["arab","mixed"],
+ desc:"תמיכה נפשית אנונימית 24/7 דרך צ'אט או וואטסאפ, בעברית ובערבית, למצוקות נפשיות ואובדנות.",
+ pop:"כלל הצעירים · 24/7", email:"sahar.help@gmail.com", url:"https://sahar.org.il/", src:"live"},
+{cat:"חוסן ותמיכה רגשית", ico:"💚", name:"מרכז בריאות הנפש — ביה\"ח האנגלי נצרת", sec:["arab"],
+ desc:"אבחון וטיפול פסיכיאטרי ופסיכותרפי מותאם תרבותית לאוכלוסייה הערבית בנצרת והסביבה.",
+ pop:"תושבי נצרת והסביבה", url:"https://www.kesher.org.il/", src:"new", vf:1},
+{cat:"חוסן ותמיכה רגשית", ico:"💚", name:"ידיד נפש — שיקום בריאות הנפש, נצרת", sec:["arab"],
+ desc:"שירותי שיקום בריאות הנפש בקהילה בנצרת, כולל צעירים מתמודדי נפש.",
+ pop:"מתמודדי נפש", url:"https://yadidnefesh.co.il/", src:"new", vf:1},
+/* ===== זכויות, דיור וסיוע ===== */
+{cat:"זכויות, דיור וסיוע", ico:"⚖️", name:"עמותת סיכוי-אופוק", sec:["arab"],
+ desc:"קידום שוויון ונגישות של משאבי המדינה לאזרחים הערבים. גוף מדיניות וסנגור — כתובת לעבודה מערכתית מול רשויות.",
+ pop:"עבודה מערכתית", url:"https://www.sikkuy-aufoq.org.il/", src:"new"},
+{cat:"זכויות, דיור וסיוע", ico:"⚖️", name:"הרשות לפיתוח והתיישבות הבדואים בנגב", sec:["bedouin"],
+ desc:"הגוף הממשלתי לפיתוח, דיור, הסדרת קרקעות ופתרונות התיישבות למשפחות בדואיות בנגב.",
+ pop:"תושבים בדואים בנגב", url:"https://www.gov.il/he/departments/bedouin_authority", src:"new"},
+/* ===== מרכזי צעירים ===== */
+{cat:"מרכזי צעירים", ico:"🏠", name:"מרכז צעירי רהט", sec:["bedouin"],
+ desc:"ליווי בהשכלה גבוהה, יזמות חברתית וקידום תעסוקה לצעירי רהט, גילאי 18–40.",
+ pop:"צעירי רהט 18–40", phone:"08-6529020", url:"https://www.kolzchut.org.il/he/מרכז_צעירי_רהט", src:"new"},
+{cat:"מרכזי צעירים", ico:"🏠", name:"מרכזי צעירים ביישובים בדואים — תל שבע, לקיה, נווה מדבר", sec:["bedouin"],
+ desc:"מעטפת ליווי בפיתוח קריירה, יזמות ומנהיגות של משרד הנגב והגליל; מרכזים פעילים בתל שבע, לקיה ונווה מדבר.",
+ pop:"צעירים בדואים 18–40", url:"https://negev-galil.gov.il/youthcenter/find-your-own/", src:"new"},
+{cat:"מרכזי צעירים", ico:"🏠", name:"מרכזי צעירים ביישובים ערבים — כלי איתור", sec:["arab","druze"],
+ desc:"כלי האיתור של משרד הנגב והגליל למציאת מרכז הצעירים הקרוב. לוודא מול המועצה אם קיים מרכז פעיל בטורעאן, ביר אל-מכסור וג'וליס.",
+ pop:"צעירים 18–35", url:"https://negev-galil.gov.il/youthcenter/find-your-own/", src:"new", vf:1},
+{cat:"מרכזי צעירים", ico:"🏠", name:"מרכז צעירים 'סנבור' לחברה הערבית — עמק יזרעאל", sec:["arab"],
+ desc:"מרכז צעירים ייעודי לחברה הערבית במועצה האזורית עמק יזרעאל.",
+ pop:"צעירים ערבים בעמק יזרעאל", url:"https://www.emekyizrael.org.il/", src:"new"},
+/* ===== קהילה ואוכלוסיות ייחודיות ===== */
+{cat:"קהילה ואוכלוסיות ייחודיות", ico:"🌈", name:"אג'יק-נספד — תוכנית ג'וסור", sec:["bedouin"],
+ desc:"שילוב צעירים בדואים בתפקידי מפתח בשירות הציבורי, כסוכני שינוי בקהילה.",
+ pop:"צעירים בדואים", url:"https://ajeec-nisped.org.il/?page_id=16252", src:"new"},
+{cat:"קהילה ואוכלוסיות ייחודיות", ico:"🌈", name:"אג'יק-נספד — ארגון הנוער הבדואי", sec:["bedouin"],
+ desc:"מנהיגות, פעולה חברתית, התנדבות ואזרחות פעילה לבני נוער וצעירים בדואים בנגב.",
+ pop:"נוער וצעירים בדואים", url:"https://ajeec-nisped.org.il/?page_id=720", src:"new"},
+{cat:"קהילה ואוכלוסיות ייחודיות", ico:"🌈", name:"עמותת אלמנארה — מוגבלות בחברה הערבית", sec:["arab"],
+ desc:"קידום זכויות, נגישות, חינוך ותעסוקה לאנשים עם מוגבלות בחברה הערבית. מרכז בנצרת.",
+ pop:"צעירים עם מוגבלות", url:"https://almanarah.org/", src:"new"},
+{cat:"קהילה ואוכלוסיות ייחודיות", ico:"🌈", name:"הבית הפתוח בירושלים", sec:["arab","mixed"],
+ desc:"קבוצות חברתיות ייעודיות לצעירים להט\"בים, כולל קבוצות לצעירים ערבים ודתיים מהקהילה. ירושלים.",
+ pop:"קהילת להט\"ב · ירושלים", url:"https://www.openhouse.org.il/", src:"live"},
+];
+
+const SEC_LABEL = {arab:["חברה ערבית","sec-arab"], druze:["דרוזים וצ'רקסים","sec-druze"], bedouin:["בדואים · נגב","sec-bedouin"], mixed:["יהודי-ערבי משותף","sec-mixed"]};
+const CAT_ORDER = ["מלגות והשכלה","תעסוקה והכשרה","שירות לאומי-אזרחי","חוסן ותמיכה רגשית","זכויות, דיור וסיוע","מרכזי צעירים","קהילה ואוכלוסיות ייחודיות"];
+let curSec = "all";
+const esc = s => String(s||"").replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function render(){
+  const q = (document.getElementById('srch').value||"").toLowerCase().trim();
+  const list = document.getElementById('list');
+  let shown = 0, html = "";
+  CAT_ORDER.forEach(cat=>{
+    const items = DATA.filter(p=> p.cat===cat
+      && (curSec==="all" || p.sec.includes(curSec))
+      && (!q || (p.name+" "+p.desc+" "+p.pop).toLowerCase().includes(q)));
+    if(!items.length) return;
+    shown += items.length;
+    html += `<div class="cat-head"><span class="ico">${items[0].ico}</span><h2>${esc(cat)}</h2><span class="n">${items.length}</span></div>`;
+    items.forEach(p=>{
+      const secs = p.sec.map(s=>`<span class="pill ${SEC_LABEL[s][1]}">${SEC_LABEL[s][0]}</span>`).join("");
+      const srcp = p.src==="new" ? `<span class="pill new">✦ חדש — עדיין לא באתר הופה</span>` : "";
+      const vfp  = p.vf ? `<span class="pill vf">⚠ לאמת פרטי קשר</span>` : "";
+      const tel  = p.phone ? `<a class="btn" href="tel:${esc(p.phone.replace(/[^\d*+-]/g,''))}">${esc(p.phone)}</a>` : "";
+      const mail = p.email ? `<a class="btn" href="mailto:${esc(p.email)}">מייל</a>` : "";
+      const site = p.url ? `<a class="btn primary" href="${esc(p.url)}" target="_blank" rel="noopener">לאתר / פרטים</a>` : "";
+      html += `<article class="card"><div class="card-bar"></div><div class="card-in">
+        <div class="card-tags">${secs}<span class="pill who">${esc(p.pop)}</span>${srcp}${vfp}</div>
+        <h3>${esc(p.name)}</h3>
+        <p class="desc">${esc(p.desc)}</p>
+        <div class="actions">${site}${tel}${mail}</div>
+      </div></article>`;
+    });
+  });
+  list.innerHTML = html;
+  document.getElementById('empty').style.display = shown ? "none" : "block";
+  document.getElementById('cnt').textContent = shown + " מענים";
+}
+document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  ch.classList.add('on'); curSec = ch.dataset.sec; render();
+}));
+document.getElementById('srch').addEventListener('input', render);
+document.getElementById('totalN').textContent = DATA.length;
+render();
+</script>
+</body>
+</html>
