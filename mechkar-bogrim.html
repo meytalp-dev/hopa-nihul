@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · מחקר: תוכניות ליווי בוגרים בארץ ובעולם</title>
+<meta name="description" content="מחקר מקיף על תוכניות ליווי בוגרים 18–26 בישראל ובעולם: הכשרות רכזים, פעילויות, תוכניות עבודה ומה בתי ספר עושים.">
+<meta property="og:title" content="הופה · מחקר: תוכניות ליווי בוגרים בארץ ובעולם">
+<meta property="og:description" content="מה אפשר ללמוד מ׳יש לך כתובת׳, KIPP, Bottom Line, יתד ועוד — והמלצות מעשיות לתוכנית הבוגרים של הופה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* הופה · מערכת עיצוב: ורוד #E8348A · צהוב #FFF200 · Rubik · RTL · אין רקע שחור */
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --green:#3BA55C; --green-soft:#E8F5EC;
+  --blue:#3D7DD8; --blue-soft:#E7F0FB;
+  --orange:#E8862F; --orange-soft:#FDF0E3;
+  --r-lg:24px; --r-md:16px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --maxw:920px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep)}
+h1,h2,h3,h4{line-height:1.25;margin:0;letter-spacing:-.02em;font-weight:800}
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.hero{position:relative;padding:52px 0 40px;overflow:hidden;
+  background:radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+             radial-gradient(900px 460px at 4% 4%, rgba(232,52,138,.14), transparent 60%),#FFF;
+  border-bottom:1px solid var(--line)}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:48px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:16px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.datechip{background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:999px;
+  padding:6px 16px;font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.hero h1{font-size:clamp(28px,5vw,42px)}
+.hero .sub{margin:14px 0 0;font-size:18px;color:var(--ink-2);max-width:720px}
+.hero .method{margin-top:10px;font-size:14px;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.toc a{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;
+  font-size:13.5px;font-weight:700;text-decoration:none;color:var(--ink-2)}
+.toc a:hover{border-color:var(--pink);color:var(--pink-deep)}
+main{padding:36px 0 20px}
+section{margin-bottom:52px;scroll-margin-top:30px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-num{flex:none;width:38px;height:38px;border-radius:12px;background:var(--pink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.sec-head h2{font-size:clamp(22px,3.6vw,29px)}
+.sec-lead{color:var(--muted);font-size:15.5px;margin:6px 0 22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px;
+  box-shadow:var(--shadow);margin-bottom:16px}
+.card h3{font-size:19px;margin-bottom:4px}
+.card .tagrow{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.tag{font-size:12px;font-weight:700;border-radius:999px;padding:3px 11px}
+.tag.p{background:var(--pink-soft);color:var(--pink-deep)}
+.tag.y{background:var(--yellow-soft);color:#8a6d00;border:1px solid var(--yellow-deep)}
+.tag.g{background:var(--green-soft);color:var(--green)}
+.tag.b{background:var(--blue-soft);color:var(--blue)}
+.tag.o{background:var(--orange-soft);color:var(--orange)}
+.card ul{margin:8px 0 4px;padding-inline-start:22px}
+.card li{margin-bottom:6px}
+.card .src{font-size:13px;color:var(--muted);margin-top:8px}
+.hl{background:linear-gradient(0deg,rgba(255,242,0,.55),rgba(255,242,0,.55)) no-repeat 0 78%/100% 34%;font-weight:700}
+.big-card{border:2px solid var(--pink);background:linear-gradient(180deg,#fff, var(--pink-soft) 160%)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);margin:14px 0}
+th{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;text-align:right;padding:10px 14px;white-space:nowrap}
+td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:var(--tint)}
+.month{display:grid;grid-template-columns:110px 1fr;gap:0;border-top:1px solid var(--line)}
+.month:first-child{border-top:none}
+.month .m{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;padding:12px 14px;font-size:15px}
+.month .a{padding:12px 16px;font-size:15px}
+.months{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+.callout{border-radius:var(--r-md);padding:16px 20px;margin:14px 0;font-size:15.5px}
+.callout.y{background:var(--yellow-soft);border:1px solid var(--yellow-deep)}
+.callout.p{background:var(--pink-soft);border:1px solid #F3A9CC}
+.callout b:first-child{display:block;margin-bottom:4px}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+@media(max-width:720px){.tiers{grid-template-columns:1fr}}
+.tier{border-radius:var(--r-md);padding:16px 18px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+.tier.green{border-top:6px solid var(--green)}
+.tier.orange{border-top:6px solid var(--orange)}
+.tier.red{border-top:6px solid var(--pink)}
+.tier h4{font-size:16.5px;margin-bottom:6px}
+.tier p{margin:0;font-size:14px;color:var(--ink-2)}
+footer{border-top:1px solid var(--line);background:var(--tint);padding:28px 0 40px;margin-top:30px}
+footer .frow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer img{height:40px}
+footer .fnote{font-size:13.5px;color:var(--muted)}
+.srcs{font-size:14px;columns:2;column-gap:34px}
+@media(max-width:720px){.srcs{columns:1}}
+.srcs li{margin-bottom:6px;break-inside:avoid}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה">
+        <span class="org"><b>הופה</b><span>hopa.org.il · פתאום הכל נראה אפשרי</span></span>
+      </a>
+      <span class="datechip">מחקר פנימי · אוגוסט 2026</span>
+    </div>
+    <h1>תוכניות ליווי בוגרים בארץ ובעולם</h1>
+    <p class="sub">מה עושים הטובים ביותר בליווי צעירים 18–26 — הכשרות רכזים, פעילויות, תוכניות עבודה ותפקיד בית הספר — ומה הופה יכולה לאמץ מחר בבוקר.</p>
+    <p class="method">מבוסס על 4 סבבי מחקר מקבילים · ~165 חיפושים ושליפות מקור · כולל חילוץ מלא של תורת ההפעלה של "יש לך כתובת" (60 עמ׳) ומודל ההפעלה של יתד (38 עמ׳). כל טענה מקושרת למקור; הערכות מסומנות.</p>
+    <nav class="toc">
+      <a href="#summary">תקציר מנהלים</a>
+      <a href="#israel">המפה הישראלית</a>
+      <a href="#world">מהעולם</a>
+      <a href="#training">הכשרת רכזים</a>
+      <a href="#workplan">תוכנית עבודה</a>
+      <a href="#activities">פעילויות ורעיונות</a>
+      <a href="#hopa">המלצות להופה</a>
+      <a href="#sources">מקורות</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ==================== תקציר ==================== -->
+<section id="summary">
+  <div class="sec-head"><span class="sec-num">✦</span><h2>תקציר מנהלים — 7 שורות תחתונות</h2></div>
+  <div class="card">
+    <ul>
+      <li><span class="hl">המסמך החשוב ביותר כבר קיים, בחינם:</span> תורת ההפעלה של <b>"יש לך כתובת"</b> — תוכנית הבוגרים של המינהל לחינוך התיישבותי (112 מוסדות, 99 רכזי בוגרים, 9,500 בוגרים בקשר מתועד) — היא כמעט אחד-לאחד המדריך שהופה צריכה: מבנה תפקיד רכז, 3 רמות מעקב, 4 רמות סיוע, תסריטי שיחה ותוכנית עבודה שנתית.</li>
+      <li><b>ברשתות החינוך הטכנולוגיות (אורט, אמית, עמל) אין מערך ליווי בוגרים מפורסם.</b> הופה ממלאת חלל אמיתי — נקודת בידול חזקה מול משרד העבודה ותורמים.</li>
+      <li><b>בנצ׳מרקים עולמיים ברורים:</b> יועץ מקצועי מלווה 60–85 בוגרים (KIPP, Bottom Line); הליווי נמשך 5–6 שנים אחרי התיכון, אינטנסיבי בשנתיים הראשונות; בבריטניה החוק מחייב "יועץ אישי" לכל בוגר השמה עד גיל 25.</li>
+      <li><b>מודל מדורג הוא הסטנדרט בכולם:</b> רוב הבוגרים בקשר קל (ברכות, קהילה, 3 שיחות בשנה) — ומיעוט מסומן מקבל קשר חודשי ומעלה. בדיוק כמו הרמזור של הופה.</li>
+      <li><b>הכשרת רכזים:</b> הבנצ׳מרק המקובל למלווה בשכר שאינו עו"ס הוא ~40–50 שעות בסיס + הדרכה פרטנית דו-שבועית בשנה הראשונה + פורום עמיתים. סילבוס הליבה חוזר בכל המודלים (פירוט בפרק 3).</li>
+      <li><b>לוח השנה מנצח את הספונטניות:</b> התוכניות המצליחות עובדות לפי צמתים קבועים — סיום י"ב (איסוף דאטה!), גיוס, שחרור (מ-3 חודשים לפני), מלגות (גרוס: ספטמבר–דצמבר, IMPACT: מרץ–מאי), פסיכומטרי. רכזת בלי גאנט מפספסת חלונות שנסגרים.</li>
+      <li><b>הראיות תומכות במודל:</b> מחקר Mathematica על KIPP מצא שליווי אחרי-תיכון מעלה סיום תואר ב-19 נק׳ אחוז; RCT של Bottom Line — ‎+10 נק׳ ברישום והתמדה. בישראל "ילדים בסיכוי" מדווחת 95% סיום שירות ו-80% השתלבות בתעסוקה/לימודים.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== ישראל ==================== -->
+<section id="israel">
+  <div class="sec-head"><span class="sec-num">1</span><h2>המפה הישראלית</h2></div>
+  <p class="sec-lead">מי מלווה בוגרים בישראל, איך — ומה אפשר לקחת מכל אחד.</p>
+
+  <div class="card big-card">
+    <h3>⭐ "יש לך כתובת" — המינהל לחינוך התיישבותי (הממצא המרכזי)</h3>
+    <div class="tagrow"><span class="tag p">המקבילה הקרובה ביותר להופה</span><span class="tag g">תורת הפעלה מלאה פתוחה</span><span class="tag b">י"א עד גיל 26</span></div>
+    <p>תוכנית הבוגרים של כפרי הנוער והפנימיות (הוקמה 2015, מופעלת עם ג׳וינט-אשלים): רכז בוגרים בכל מקום חינוך שמלווה מכיתה י"א עד גיל 26. <b>112 מקומות חינוך · 99 רכזים · ~9,500 בוגרים בקשר מתועד · 4,298 חניכי י"ב נכנסים לליווי בשנה.</b></p>
+    <ul>
+      <li><b>עומס:</b> רכז ותיק מלווה 6 שנתונים אחורה (יעד: 8) — מאות בוגרים לרכז, בדירוג עומק קשר.</li>
+      <li><b>3 רמות מעקב:</b> "עוקב מרחוק" (כלל הבוגרים — ברכות חג, וואטסאפ, 3 שיחות יזומות בשנה) → "עוקב מקרוב" (שיחה חודשית + לפני כל מעבר: גיוס, קורס, שחרור) → "נכנס לפעולה" (קשר אינטנסיבי, פגישות, סנגור).</li>
+      <li><b>4 רמות סיוע:</b> יידוע ← תיווך ← סנגור ← ליווי פיזי לפגישות.</li>
+      <li><b>מבנה תמיכה ברכז:</b> מנחות אזוריות (הדרכה פרטנית לכל רכז) + "רכז הישגים" במטה — מומחה השכלה/מלגות שהרכזים מפנים אליו בוגרים. כפיפות כפולה: מנהלתית למנהל המוסד, מקצועית למטה התוכנית.</li>
+      <li><b>שגרות מתועדות:</b> פגישה אישית עם כל תלמיד י"ב · קבוצת וואטסאפ לשנתון · נוכחות בטקס הסיום · שיחת טלפון לכל בוגר טרי · טלפונים סביב גיוס ("יש לי את תאריכי הגיוס של כולם") · קשר מ-3 חודשים לפני שחרור · כנס השכלה למשוחררים · מפגש בוגרים שנתי · ניוזלטר חודשי.</li>
+      <li><b>מדידה:</b> תיעוד כל שיחה במערכת ממוחשבת, יעדים חודשיים כמותיים, שיחת מעקב = 15 דקות. תוצאות מדווחות: ירידה בנשר משירות, עלייה בקצינים ובלימודים גבוהים.</li>
+      <li><b>ממשק יתד:</b> נוהל כתוב להפניית בוגרים לעו"ס יתד ברשות.</li>
+    </ul>
+    <p class="src">מקור: <a href="https://www.thejoint.org.il/wp-content/uploads/2024/03/Address_Mail-1.pdf" target="_blank" rel="noopener">תורת ההפעלה המלאה (PDF, 60 עמ׳)</a> · <a href="https://www.thejoint.org.il/digital-library/address_mail/" target="_blank" rel="noopener">עמוד התוכנית בג׳וינט</a></p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>ילדים בסיכוי — תוכנית הבוגרים</h3>
+      <div class="tagrow"><span class="tag g">מדדים מרשימים</span><span class="tag b">18–28</span></div>
+      <ul>
+        <li>~500 צעירים בשנה, בוגרי פנימיות ואומנה.</li>
+        <li>"מלווי הדרך" — 250 מנטורים מתנדבים (35–65), מפגש דו-שבועי למשך כשנתיים; 85% מהצעירים: "הדמות המשמעותית בחיי".</li>
+        <li>"גשר לעצמאות" — 48 דירות מעבר · "סיכויים לקריירה" · פלטפורמת BOOST לזכויות · פורום מנהיגות בוגרים.</li>
+        <li><b>95% סיום שירות מוצלח · 80% השתלבות בתעסוקה/לימודים.</b></li>
+      </ul>
+      <p class="src"><a href="https://yeladim.org.il/portfolio-items/bogrim/" target="_blank" rel="noopener">yeladim.org.il</a></p>
+    </div>
+    <div class="card">
+      <h3>אחריי! — "אחריי לפסגה"</h3>
+      <div class="tagrow"><span class="tag o">מודל שיבוץ חכם</span><span class="tag b">18–25</span></div>
+      <ul>
+        <li>מעל 20,000 בוגרים מלווים במהלך השירות ואחריו — ארגון הבוגרים הגדול בישראל של תוכנית נוער.</li>
+        <li><b>רכזות הבוגרים יושבות פיזית ב-10 מרכזי צעירים עירוניים</b> — במקום להקים תשתית, מתארחים בתשתית קיימת.</li>
+        <li>מאגר בוגרים ותיקים שעוזרים לבוגרים צעירים (תעסוקה).</li>
+      </ul>
+      <p class="src"><a href="https://www.kolzchut.org.il/he/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA_%D7%90%D7%97%D7%A8%D7%99%D7%99_%D7%9C%D7%A4%D7%A1%D7%92%D7%94_-_%D7%9C%D7%99%D7%95%D7%95%D7%99_%D7%9C%D7%90%D7%97%D7%A8_%D7%94%D7%A9%D7%99%D7%A8%D7%95%D7%AA_%D7%94%D7%A6%D7%91%D7%90%D7%99" target="_blank" rel="noopener">כל-זכות</a></p>
+    </div>
+    <div class="card">
+      <h3>יתד — התוכנית הלאומית לצעירים בסיכון</h3>
+      <div class="tagrow"><span class="tag b">18–25</span><span class="tag g">תקן ממשלתי</span></div>
+      <ul>
+        <li>עו"ס צעירים + רכז תעסוקה בכל רשות; תוכנית אישית לפי <b>4 תחומי חיים</b>: השכלה-תעסוקה · רווחה רגשית · קיום פיזי ומוגנות · השתייכות.</li>
+        <li><b>תקן עומס: 75% משרה = 60 צעירים</b> — יחס מפתח לתכנון תקן רכזת.</li>
+        <li>מענים כספיים (שכ"ד, חובות, סיוע רפואי). הופה כבר ממופה מולם בחלק מהערים.</li>
+      </ul>
+      <p class="src"><a href="https://www.gov.il/BlobFolder/reports/molsa-yated-basic-documents/he/Yated_BasicDocuments_OperatingModelApril2018.pdf" target="_blank" rel="noopener">מודל ההפעלה (PDF)</a> · <a href="https://www.kolzchut.org.il/he/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA_%D7%99%D7%AA%D7%93_%D7%9C%D7%A6%D7%A2%D7%99%D7%A8%D7%95%D7%AA_%D7%95%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D_%D7%91%D7%9E%D7%A6%D7%91%D7%99_%D7%A1%D7%99%D7%9B%D7%95%D7%9F" target="_blank" rel="noopener">כל-זכות</a></p>
+    </div>
+    <div class="card">
+      <h3>למרחב + גשר לעצמאות</h3>
+      <div class="tagrow"><span class="tag b">חסרי עורף משפחתי</span></div>
+      <ul>
+        <li><b>למרחב:</b> ליווי עד 10 שנים (20–30), פגישה אישית שבועית/דו-שבועית, 9 תחומי ליווי, קבוצת שייכות, סדנאות כלכליות.</li>
+        <li><b>גשר לעצמאות (שירות ארצי):</b> דירות בוגרים ב-400–600 ₪ לחודש עד שנה וחצי + מלווה בוגר. <b>ההרשמה מתחילה כבר בסוף י"א דרך העו"ס</b> — צומת שרכזות הופה חייבות להכיר.</li>
+      </ul>
+      <p class="src"><a href="https://www.lamerhav.co.il/%D7%AA%D7%97%D7%95%D7%9E%D7%99-%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99/" target="_blank" rel="noopener">למרחב</a> · <a href="https://www.kolzchut.org.il/he/%22%D7%92%D7%A9%D7%A8_%D7%9C%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA%22_%D7%9C%D7%91%D7%95%D7%92%D7%A8%D7%99_%D7%A4%D7%A0%D7%99%D7%9E%D7%99%D7%95%D7%AA_%D7%95%D7%90%D7%95%D7%9E%D7%A0%D7%94_%D7%97%D7%A1%D7%A8%D7%99_%D7%A2%D7%95%D7%A8%D7%A3_%D7%9E%D7%A9%D7%A4%D7%97%D7%AA%D7%99" target="_blank" rel="noopener">כל-זכות</a></p>
+    </div>
+    <div class="card">
+      <h3>מועצת המכינות הקדם-צבאיות</h3>
+      <div class="tagrow"><span class="tag o">מידע פומבי חלקי</span></div>
+      <ul>
+        <li>מיזם תמיכה במכינות "המעסיקות רכזי בוגרים בשכר בהלימה להכשרות מועצת המכינות" — כלומר קיימות הכשרות רכזי בוגרים, אך הן פנימיות.</li>
+        <li>~35 רכזי בוגרים ברשת (מתוצאות חיפוש — לאמת), תנועת בוגרים "בארצנו" (בוגרי ~60 מכינות).</li>
+        <li>זה בדיוק ההקשר של תוכנית העבודה של מאור הנמן שיעל צירפה למייל — המסמך הפנימי שאין לאף אחד אחר.</li>
+      </ul>
+      <p class="src"><a href="https://mechinot.org.il/info/projects/2023-06-05-18-33-57" target="_blank" rel="noopener">mechinot.org.il</a></p>
+    </div>
+    <div class="card">
+      <h3>מדרשות וישיבות — טקסים בעלות אפסית</h3>
+      <div class="tagrow"><span class="tag g">רעיונות זולים</span></div>
+      <ul>
+        <li><b>מדרשת אמונה בארי:</b> שיחה שנתית של איש צוות עם <i>כל</i> בוגרת + שבת בוגרות שנתית + הזמנות קבועות לחגים. "טקס קבוע + נגיעה אישית שנתית" — מודל שאפשר להעתיק כמו שהוא.</li>
+        <li><b>ישיבת שבי חברון:</b> מאגר נטוורקינג בוגרים לפי מקצוע — פונים דרך הישיבה ומקבלים חיבור לבוגר תוך יום עסקים.</li>
+      </ul>
+      <p class="src"><a href="https://hamidrashot.org.il/midrasha/%D7%9E%D7%93%D7%A8%D7%A9%D7%AA-%D7%90%D7%9E%D7%95%D7%A0%D7%94-%D7%91%D7%90%D7%A8%D7%99-%D7%A4%D7%A8%D7%93%D7%A1-%D7%97%D7%A0%D7%94/" target="_blank" rel="noopener">המדרשות</a> · <a href="https://shaveihevron.org/bogrim-search/" target="_blank" rel="noopener">שבי חברון</a></p>
+    </div>
+  </div>
+
+  <div class="callout p">
+    <b>🔍 הפער שהופה ממלאת</b>
+    בדיקה של אורט, אמית, עמל ודרור בתי חינוך לא מצאה אף מערך ליווי בוגרים רשתי מפורסם — לאורט יש רק טופס איסוף פרטי בוגרים. במגזר הפנימייתי יש "יש לך כתובת"; במכינות יש רכזי בוגרים; <b>בבתי הספר הטכנולוגיים היומיים — אין כלום. זה החלל של הופה.</b>
+  </div>
+
+  <div class="callout y">
+    <b>💡 בונוס: פורום ארגוני בוגרים</b>
+    קיים בישראל פורום מקצועי של מנהלי קשרי בוגרים — 60+ ארגונים (אחריי!, מעשה, קרנות מנדל/וקסנר/אייסף, אוניברסיטאות) עם ספריית ידע ושיתוף פרקטיקות. כתובת טבעית לרכזי הופה ללמידת עמיתים: <a href="https://forum-bogrim.org/friends-and-graduates/" target="_blank" rel="noopener">forum-bogrim.org</a> · moria@forum-bogrim.org
+  </div>
+</section>
+
+<!-- ==================== עולם ==================== -->
+<section id="world">
+  <div class="sec-head"><span class="sec-num">2</span><h2>מהעולם — המודלים המובילים</h2></div>
+  <p class="sec-lead">ארה"ב פיתחה תעשייה שלמה של "ליווי עד תואר" לבוגרי בתי ספר באוכלוסיות מוחלשות; בריטניה עיגנה ליווי בוגרים בחוק. אלה השורות התחתונות.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>KIPP Forward (ארה"ב)</h3>
+      <div class="tagrow"><span class="tag g">הראיות החזקות בעולם</span></div>
+      <ul>
+        <li>~400 יועצים; יחס 1:100 (מול 1:500 ממוצע); ליווי 6 שנים אחרי התיכון.</li>
+        <li><b>מודל near-peer:</b> בוגרים טריים מועסקים שנתיים כ"עמיתי הצלחה" — כל אחד מלווה 100–120 סטודנטים בשנתיים הראשונות, קרוב לקמפוסים.</li>
+        <li>מדדי "Persistence Benchmarks" בארבעה תחומים: כלכלי · אקדמי · רגשי-חברתי · קריירה.</li>
+        <li><b>מחקר Mathematica (15 שנה, הגרלה):</b> ‎+19 נק׳ אחוז בסיום תואר — והמחקר מייחס זאת במפורש לליווי שאחרי התיכון.</li>
+      </ul>
+      <p class="src"><a href="https://www.kipp.org/approach/kipp-forward/" target="_blank" rel="noopener">kipp.org</a> · <a href="https://www.kipp.org/events-press/mathematica-study-on-kipp-public-schools-long-term-impact/" target="_blank" rel="noopener">Mathematica</a></p>
+    </div>
+    <div class="card">
+      <h3>Bottom Line (ארה"ב)</h3>
+      <div class="tagrow"><span class="tag g">RCT מוכח</span><span class="tag p">פרוטוקול שיחה מוכן</span></div>
+      <ul>
+        <li>יועצים מקצועיים בשכר, <b>85 בוגרים ליועץ</b>, 3–4 פגישות בסמסטר, עד 6 שנים.</li>
+        <li><b>מודל DEAL — כל שיחה עוברת על 4 תחומים:</b> Degree (לימודים) · Employability (תעסוקה) · Aid (מימון וזכויות) · Life (חיים אישיים). פרוטוקול פשוט שכל רכזת יכולה לאמץ מחר.</li>
+        <li>RCT: ‎+10.3 נק׳ ברישום, ‎+9.9 בהתמדה — עקבי בין אתרים ויועצים, כלומר המודל שכפיל.</li>
+      </ul>
+      <p class="src"><a href="https://www.bottomline.org/success-program/" target="_blank" rel="noopener">bottomline.org</a> · <a href="https://edworkingpapers.com/sites/default/files/ai21-481.pdf" target="_blank" rel="noopener">RCT</a></p>
+    </div>
+    <div class="card">
+      <h3>בריטניה — Personal Adviser בחוק</h3>
+      <div class="tagrow"><span class="tag b">ליווי כזכות חוקית</span></div>
+      <ul>
+        <li>כל בוגר השמה חוץ-ביתית זכאי בחוק ל<b>"יועץ אישי" עד גיל 25</b> + "תוכנית מסלול" (Pathway Plan) שנבדקת כל 6 חודשים.</li>
+        <li>כל רשות מחויבת <b>לפרסם "הצעה מקומית"</b> — מסמך פומבי של כל מה שמגיע לבוגר: לימודים, דיור, בריאות, כסף, ואפילו ציון ימי הולדת.</li>
+        <li>רעיון מתנה להופה: <b>"תעודת הבוגר של הופה"</b> — דף פומבי של מה כל בוגר מקבל, לפי שלב (חייל / משוחרר / סטודנט).</li>
+      </ul>
+      <p class="src"><a href="https://www.legislation.gov.uk/uksi/2010/2571/regulation/8/made" target="_blank" rel="noopener">התקנות</a> · <a href="https://assets.publishing.service.gov.uk/media/67a9d1a73b41f783cca461d3/Local_offer_guidance.pdf" target="_blank" rel="noopener">Local Offer</a></p>
+    </div>
+    <div class="card">
+      <h3>Big Brothers Big Sisters — "Big Futures"</h3>
+      <div class="tagrow"><span class="tag o">מסגרת יעד מבריקה</span></div>
+      <ul>
+        <li>תוכנית לגילאי 18–25: היעד — כל בוגר <b>"Enrolled, Employed, or Enlisted"</b> (לומד, עובד או משרת) ומשתכר בכבוד עד גיל 26.</li>
+        <li>שלושת ה-E מתרגמים מושלם לישראל: <b>צבא/שירות · לימודים · תעסוקה</b> — מדד תוצאה פשוט שכל רכזת יכולה לדווח ולירון יכולה להציג לתורמים.</li>
+      </ul>
+      <p class="src"><a href="https://www.bbbs.org/programs/big-futures/" target="_blank" rel="noopener">bbbs.org</a></p>
+    </div>
+    <div class="card">
+      <h3>Cristo Rey Network</h3>
+      <div class="tagrow"><span class="tag p">רכז בוגרים בכל בי"ס</span></div>
+      <ul>
+        <li>כמעט בכל בי"ס ברשת — <b>רכז בוגרים במשרה מלאה</b> שמלווה מ-י"ב עד סיום תואר. המבנה הזהה ביותר להופה.</li>
+        <li><b>Gradforce:</b> מערכת מעקב בוגרים (על בסיס Salesforce) — 62,000 סמסים ו-69,000 מיילים על מלגות וחידושי רישום. <b>סמסים, לא מיילים — זו השפה.</b></li>
+        <li>קרן חירום לבוגרים: מענקים עד 500$ למשבר שמאיים על התמדה.</li>
+      </ul>
+      <p class="src"><a href="https://www.cristoreynetwork.org/schools/academics-college-success" target="_blank" rel="noopener">cristoreynetwork.org</a></p>
+    </div>
+    <div class="card">
+      <h3>עוד מודלים ששווה להכיר</h3>
+      <ul>
+        <li><b>OneGoal:</b> מורה מבית הספר ממשיך ללוות את אותה קבוצה (25–30) שנה שלמה אחרי הסיום — "המורה שלא נעלם".</li>
+        <li><b>iMentor:</b> שכבה כפולה — מנטור מתנדב לקשר + איש צוות בשכר לניווט מקצועי + קרנות חירום קטנות.</li>
+        <li><b>Jim Casey (ארה"ב):</b> חיסכון מותאם (מדביקים לצעיר עד 3,000$ לחיסכון לרכב/לימודים/דיור) + סקר משתתפים דו-שנתי קבוע.</li>
+        <li><b>City Year:</b> 600+ מעסיקים שותפים שמתחייבים להעדפת בוגרים בגיוס — מודל "מעסיקים ידידי בוגרים".</li>
+      </ul>
+      <p class="src"><a href="https://www.onegoal.org/solutions/onegoal-program/year-by-year-timeline/" target="_blank" rel="noopener">OneGoal</a> · <a href="https://imentor.org" target="_blank" rel="noopener">iMentor</a> · <a href="https://www.cebc4cw.org/program/opportunity-passport/" target="_blank" rel="noopener">Opportunity Passport</a> · <a href="https://www.cityyear.org/alumni-life/career-resources/career-partnerships/" target="_blank" rel="noopener">City Year</a></p>
+    </div>
+  </div>
+
+  <h3 style="margin:22px 0 4px">טבלת בנצ׳מרקים</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>פרמטר</th><th>הנורמה בעולם</th><th>המקור</th></tr>
+    <tr><td><b>עומס ליועץ מקצועי</b></td><td>60–85 בוגרים</td><td>KIPP NYC (60), Bottom Line (85), יתד (60)</td></tr>
+    <tr><td><b>עומס ל-near-peer בשכר</b></td><td>100–120</td><td>KIPP Fellows</td></tr>
+    <tr><td><b>משך הליווי</b></td><td>5–6 שנים אחרי תיכון; אינטנסיבי בשנתיים הראשונות</td><td>KIPP, Bottom Line, בריטניה (עד 25)</td></tr>
+    <tr><td><b>תדירות קשר — כלל הבוגרים</b></td><td>3–4 נגיעות יזומות בשנה + ברכות ואירועים</td><td>"יש לך כתובת" (3 שיחות/שנה), Bottom Line</td></tr>
+    <tr><td><b>תדירות קשר — מסומנים</b></td><td>חודשי לפחות; דו-שבועי בחודש הראשון</td><td>"יש לך כתובת", EEPM</td></tr>
+    <tr><td><b>ערוץ מוביל</b></td><td>סמס/וואטסאפ, לא מייל</td><td>Cristo Rey Gradforce</td></tr>
+    <tr><td><b>מדד תוצאה פשוט</b></td><td>"לומד / עובד / משרת" עד גיל 26</td><td>BBBS Big Futures</td></tr>
+  </table></div>
+</section>
+
+<!-- ==================== הכשרה ==================== -->
+<section id="training">
+  <div class="sec-head"><span class="sec-num">3</span><h2>הכשרת רכזי בוגרים</h2></div>
+  <p class="sec-lead">מה מלמדים, כמה שעות, ואיך ממשיכים ללוות אחרי ההכשרה — סינתזה של יתד, "יש לך כתובת", והסטנדרטים הבינלאומיים.</p>
+
+  <div class="card">
+    <h3>בנצ׳מרקים של היקף</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>סוג מלווה</th><th>הכשרת בסיס</th><th>מקור</th></tr>
+      <tr><td>מנטור מתנדב</td><td>מינימום שעתיים; מומלץ 6+ שעות · 3 מפגשים</td><td>MENTOR EEPM · ילדים בסיכוי</td></tr>
+      <tr><td><b>מלווה בשכר שאינו עו"ס (= רכזת הופה)</b></td><td><b>~40–50 שעות + התנסות מודרכת</b></td><td>Peer Specialist (טנסי, YouthMOVE, צפון קרוליינה)</td></tr>
+      <tr><td>יועץ near-peer במשרה מלאה</td><td>4–6 שבועות מרוכזים לפני כניסה לבתי הספר</td><td>College Advising Corps</td></tr>
+      <tr><td>עו"ס צעירים</td><td>קורס כניסה לתפקיד בביה"ס המרכזי לעו"ס + השתלמות שנתית חובה</td><td>מודל יתד</td></tr>
+    </table></div>
+    <p>עיקרון מרכזי מיתד: <span class="hl">ההכשרה בנויה סביב משימות אמיתיות</span> — המשתתפים ממפים את היישוב שלהם, עושים יישוג ראשון ובונים שותפויות תוך כדי הקורס. לא הרצאות — עשייה מודרכת.</p>
+  </div>
+
+  <div class="card">
+    <h3>סילבוס הליבה — הנושאים שחוזרים בכל ההכשרות</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>נושא</th><th>איפה זה מופיע</th></tr>
+      <tr><td><b>"בגרות בהתהוות"</b> — הבנת שלב החיים 18–26</td><td>יתד (בסיס תיאורטי מוצהר), "יש לך כתובת"</td></tr>
+      <tr><td><b>בניית קשר ואמון</b> + עיקרון "לא מוותרים, משאירים דלת פתוחה"</td><td>"יש לך כתובת", Search Institute (5 יסודות הקשר המצמיח), EEPM</td></tr>
+      <tr><td><b>יישוג (Reaching out)</b> — איך רודפים בחיוך אחרי מי שלא עונה</td><td>יתד (מטלת קורס!), "יש לך כתובת", ספרות קידום נוער</td></tr>
+      <tr><td><b>ראיון מוטיבציוני</b> (OARS, זיהוי שפת שינוי)</td><td>הסטנדרט העולמי: סדנת יומיים + תרגול המשך (המיומנות דועכת בלי אימון)</td></tr>
+      <tr><td><b>עולם המענים והזכויות</b> — מלגות, דיור, צבא, תעסוקה</td><td>יתד (4 תחומי חיים), "יש לך כתובת" (רכז הישגים), CAC (מימון לימודים)</td></tr>
+      <tr><td><b>מדרג התערבות:</b> יידוע ← תיווך ← סנגור ← ליווי</td><td>"יש לך כתובת" — ניסוח מוכן לאימוץ</td></tr>
+      <tr><td><b>גבולות, אתיקה ודיווח חובה</b> — כסף, דיגיטל, סודיות, אובדנות</td><td>EEPM — צ׳קליסט חובה מפורט</td></tr>
+      <tr><td><b>זיהוי מצוקה והפניה לטיפול</b></td><td>"יש לך כתובת" (נוהל הפניה ליתד), EEPM (נהלי משבר)</td></tr>
+      <tr><td><b>עבודה עם נתונים</b> — תיעוד, מעקב, יעדים</td><td>"יש לך כתובת" (יעדים חודשיים), CAC (הכשרת מערכת ייעודית)</td></tr>
+      <tr><td><b>מניעת שחיקה</b> של הרכזת עצמה</td><td>יתד — מטרה מוצהרת של ההדרכה; הספרות הישראלית מסמנת שחיקה כאיום המבני הגדול</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>אחרי ההכשרה — הליווי השוטף הוא העיקר</h3>
+    <ul>
+      <li><b>הדרכה פרטנית:</b> ביתד — מדריכה ייעודית לכל 5–6 רכזות, מפגש אחת לשבועיים בשנה הראשונה, קבוצתי אחר כך. ב"יש לך כתובת" — מנחה אזורית לכל רכז.</li>
+      <li><b>צ׳ק-אין מובנה:</b> הסטנדרט העולמי (EEPM) — פעמיים בחודש בהתחלה, חודשי בהמשך.</li>
+      <li><b>קהילת עמיתים:</b> פורום חודשי (יתד — אפילו למדריכות עצמן יש קבוצת עמיתות), קהילה דיגיטלית (ילדים בסיכוי).</li>
+      <li><b>"מומחה עורף" במטה:</b> רכז הישגים ב"יש לך כתובת" — הרכזת בשטח לא צריכה לדעת הכול, יש למי להעביר שאלות מלגות/השכלה. אצל הופה: מאגר 645 המענים + שירות המלגות ממלאים את התפקיד הזה.</li>
+      <li><b>רענון שנתי חובה</b> (יתד, EEPM).</li>
+    </ul>
+  </div>
+
+  <div class="callout y">
+    <b>🎓 מבנה הכשרה מומלץ להופה (הערכה על בסיס כל המקורות)</b>
+    הכשרת בסיס של 4–6 מפגשים (~30–40 שעות) בנויה סביב משימות אמיתיות: מיפוי הבוגרים שלי → יישוג ראשון → שיחת היכרות מתועדת → חיבור ראשון למענה · אחר כך: הדרכה דו-שבועית בשנה א׳ · זום עמיתים חודשי לכל הרכזות (כבר קיים בזימון של לירון ל-24.8!) · יחידת ראיון מוטיבציוני של יומיים בהמשך השנה · השתלמות רענון שנתית. אפשר לתבל בקורסים דיגיטליים חינמיים של <a href="https://campus.gov.il/en/institution/the-ministry-of-welfare-and-social-affairs/" target="_blank" rel="noopener">קמפוס IL</a>.
+  </div>
+</section>
+
+<!-- ==================== תוכנית עבודה ==================== -->
+<section id="workplan">
+  <div class="sec-head"><span class="sec-num">4</span><h2>תוכנית עבודה — המבנה שעובד</h2></div>
+  <p class="sec-lead">שלושה רכיבים חוזרים בכל התוכניות המצליחות: מודל מדורג, לוח שנה עם צמתים קבועים, ופרוטוקול שיחה אחיד.</p>
+
+  <h3>א. מודל שלוש הרמות (מיושר לרמזור של הופה)</h3>
+  <div class="tiers">
+    <div class="tier green">
+      <h4>🟢 ירוק — "עוקב מרחוק"</h4>
+      <p>כלל הבוגרים. ברכות חג ויום הולדת, קהילת וואטסאפ, ניוזלטר, הזמנה לאירועים + <b>3 שיחות יזומות בשנה</b> (סתיו · אביב · סביב צומת אישי). כל שיחה מתועדת ב-15 דקות.</p>
+    </div>
+    <div class="tier orange">
+      <h4>🟠 כתום — "עוקב מקרוב"</h4>
+      <p>בוגר לפני/אחרי מעבר או עם סימן ראשון לקושי. <b>שיחה יזומה חודשית</b> + קשר לפני כל צומת (גיוס, קורס, שחרור, תחילת לימודים) + חיבור אקטיבי למענים מהמאגר.</p>
+    </div>
+    <div class="tier red">
+      <h4>🔴 אדום — "נכנסת לפעולה"</h4>
+      <p>משבר או ניתוק. קשר אינטנסיבי, פגישות פנים-אל-פנים, סנגור מול גורמים, ליווי פיזי לפגישות, הפניה מתועדת ליתד/למרחב/גורם טיפולי + מעקב שבועי.</p>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--muted)">המדרג ורמות הסיוע (יידוע ← תיווך ← סנגור ← ליווי) — מתוך תורת ההפעלה של "יש לך כתובת"; עיקרון וידוא המיקוד — מהמחקר הקודם שלנו (CIS): לוודא כל רבעון שהאדומים באמת מקבלים הכי הרבה זמן, כי ברירת המחדל של כל מערכת היא ההפך.</p>
+
+  <h3 style="margin-top:26px">ב. לוח השנה של רכזת הבוגרים (תשפ"ז)</h3>
+  <div class="months">
+    <div class="month"><span class="m">ספטמבר</span><span class="a">ברכת שנה טובה לכל הבוגרים + עדכון פרטי קשר · <b>נפתחת מלגת קרן גרוס (15.9–15.12)</b> — תזכורת לכל המשוחררים · פגישות היכרות עם שכבת י"ב החדשה</span></div>
+    <div class="month"><span class="m">אוקטובר–נובמבר</span><span class="a">סבב שיחות סתיו (שיחה 1 מתוך 3) · שיחות "לקראת גיוס" לפי תאריכי גיוס · חיבור משוחררים טריים לכנס/ייעוץ השכלה · תזכורות מלגות</span></div>
+    <div class="month"><span class="m">חנוכה</span><span class="a"><b>"יום בוגרים מדברים מהשטח"</b> בכל בתי הספר — בוגרים בחופשת חג מספרים לי"ב על השירות (מסורת קיימת באורט!) · משלוח/ברכת חג לחיילים</span></div>
+    <div class="month"><span class="m">ינואר–פברואר</span><span class="a">מעקב סמסטר לסטודנטים (חידוש מלגות! רישום לסמסטר ב׳) · שיחות שחרור למשתחררי אביב (3 חודשים לפני!)</span></div>
+    <div class="month"><span class="m">מרץ</span><span class="a"><b>נפתחת מלגת IMPACT ללוחמים (מרץ–מאי)</b> · משלוח פורים לחיילים · סבב שיחות אביב (שיחה 2)</span></div>
+    <div class="month"><span class="m">פסח</span><span class="a">ברכת חג + <b>סקר בוגרים שנתי קצר בוואטסאפ</b> (7 שאלות: איפה אתה היום? צריך משהו?) — הסקר הוא גם עדכון המאגר</span></div>
+    <div class="month"><span class="m">מאי</span><span class="a">תזכורת הרשמה ללימודים (חוגים מבוקשים נסגרים!) והכוונת פסיכומטרי (מועדי יולי/ספטמבר) · הכנת מערך פרידה לי"ב</span></div>
+    <div class="month"><span class="m">יוני</span><span class="a"><b>קליטת מחזור י"ב למאגר לפני הפיזור:</b> טלפון אישי (לא מייל בי"ס!), תאריך גיוס צפוי, הסכמה · פתיחת קבוצת וואטסאפ לשנתון · נוכחות בטקס הסיום</span></div>
+    <div class="month"><span class="m">יולי–אוגוסט</span><span class="a">שיחת "בוגר טרי" לכל מסיימי י"ב · מפגש בוגרים שנתי / אירוע קיץ · סדנת הכנה לשחרור למשתחררי הקיץ · תכנון שנה"ל הבאה</span></div>
+  </div>
+
+  <h3 style="margin-top:26px">ג. פרוטוקול שיחה + מדידה</h3>
+  <div class="grid2">
+    <div class="card">
+      <h3>שיחת מעקב בנוסח DEAL (מותאם)</h3>
+      <p>כל שיחה יזומה עוברת בקצרה על 4 תחומים — כך שום דבר לא נופל:</p>
+      <ul>
+        <li><b>מסלול</b> — צבא/לימודים/עבודה: איפה אתה, מה השלב הבא?</li>
+        <li><b>כסף וזכויות</b> — מלגות, פיקדון, זכאויות שלא מומשו</li>
+        <li><b>חיים</b> — דיור, משפחה, מצב רגשי</li>
+        <li><b>חיבור</b> — למה אפשר לחבר אותך עכשיו מהמאגר? (מענה, אירוע, בוגר אחר)</li>
+      </ul>
+      <p style="font-size:14px;color:var(--muted)">15 דקות, מתועד. מבוסס Bottom Line DEAL + 4 תחומי החיים של יתד.</p>
+    </div>
+    <div class="card">
+      <h3>מדדים שכולם משתמשים בהם</h3>
+      <ul>
+        <li><b>מדד קשר:</b> % בוגרים עם קשר מתועד ב-12 החודשים האחרונים (יעד "יש לך כתובת": קשר עד שנתיים+ מהסיום)</li>
+        <li><b>מדד דאטה:</b> % טלפונים תקינים במאגר</li>
+        <li><b>מדד תוצאה:</b> % "לומד / עובד / משרת" (שלושת ה-E)</li>
+        <li><b>מדד מיצוי:</b> % בוגרים שמומשה עבורם לפחות זכות/מלגה אחת השנה</li>
+        <li><b>מדד רך:</b> "יש לי מבוגר שאכפת לו" — שאלה אחת בסקר השנתי (לקח מהמחקר הקודם: זו התוצאה שהכי קל להשיג והכי לגיטימי למדוד)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== פעילויות ==================== -->
+<section id="activities">
+  <div class="sec-head"><span class="sec-num">5</span><h2>פעילויות ורעיונות — מה עושים בפועל</h2></div>
+  <p class="sec-lead">בנק רעיונות ממוין: מה בית הספר עושה, מה הרכזת עושה, ומה אפשר להוסיף כשיש תקציב.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🏫 בבית הספר (מעורבות התלמידים)</h3>
+      <ul>
+        <li><b>"בוגרים מדברים מהשטח"</b> — בוגרים חוזרים לספר לי"ב על השירות. מסורת חיה באורט קרית טבעון — להפוך לחובה בכל בתי הספר של הופה.</li>
+        <li><b>קיר בוגרים / "הכירו את הבוגר"</b> — לוח פיזי או מסך בכניסה + פינה באתר (בדיוק הרעיון של יעל!) · עם QR לטופס עדכון פרטים — הקיר גם אוסף דאטה.</li>
+        <li><b>"שאל בוגר" (Ask-an-Alum)</b> — תלמידים שולחים שאלות, בוגרים עונים בהודעה קולית/סרטון קצר. אסינכרוני — מושלם לחיילים.</li>
+        <li><b>מנטורינג בוגר-תלמיד קצר (4–6 שבועות)</b> — פיילוט ממוקד לפני גיוס, בלי התחייבות שנתית.</li>
+        <li><b>בוגרים בטקסים</b> — בוגר מצטיין מדליק משואה/נואם בטקס סיום; שיעור מחנך "אז והיום" עם תמונות מחזור.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📱 שגרת הרכזת (עלות אפסית)</h3>
+      <ul>
+        <li><b>ברכות אוטומטיות:</b> יום הולדת, יום גיוס, "שנה לשחרור" — אוטומציה במונדיי על הבורד הקיים (408 הבוגרים).</li>
+        <li><b>זרקור בוגר חודשי</b> בקבוצות ובניוזלטר — "לירון מכרמיאל התקבלה להנדסאים" (עיקרון: סיפורים לפני בקשות).</li>
+        <li><b>קהילות וואטסאפ:</b> קהילת "בוגרי הופה" עם תת-קבוצות לפי בי"ס/מחזור (עד 50 קבוצות בקהילה) · 2 אדמינים לקבוצה · חשבון עסקי.</li>
+        <li><b>התראת נתק:</b> "לא היה קשר 90 יום" → תזכורת אוטומטית לרכזת.</li>
+        <li><b>עדויות בצילומי מסך</b> (באישור!) — לחוברת הרכזים ולדיווחי תורמים. בדיוק כמו שיעל הציעה — יש לה כבר אוסף מוכן.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🤝 קהילה ושייכות</h3>
+      <ul>
+        <li><b>לוגו קהילת בוגרים</b> לכל בי"ס (רעיון של יעל — מאושש מהמחקר: זהות חזותית = שייכות) + חולצה/מדבקה בטקס הסיום.</li>
+        <li><b>מפגש בוגרים שנתי</b> קבוע בלוח (קיץ או חנוכה) + שבת/ערב מחזור.</li>
+        <li><b>שגריר בוגרים לכל מחזור</b> — בוגר פעיל אחד שמרכז את הקשר ומוביל את קבוצת המחזור. מקטין דרמטית את העומס על הרכזת.</li>
+        <li><b>נטוורקינג בוגר-בוגר:</b> מאגר "בוגרים עוזרים לבוגרים" לפי מקצוע (מודל שבי חברון + אחריי!).</li>
+        <li><b>Speed networking בוגרים–מעסיקים</b> — שיחות 5–7 דקות; מעסיקים מקומיים "ידידי הופה" שמתחייבים לראיין בוגרים (מודל City Year).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💰 כשיש תקציב</h3>
+      <ul>
+        <li><b>קרן חירום לבוגרים</b> — מענקים קטנים (עד ~1,500 ₪) למשבר שמאיים על התמדה: שכ"ד, תיקון רכב לפני עבודה חדשה (מודל Cristo Rey / iMentor). מתחבר טבעי לשירות המלגות.</li>
+        <li><b>משלוחי חג לחיילים</b> — פורים/חנוכה (מודלים קיימים של עמותות).</li>
+        <li><b>הטבות מועדון בוגרים</b> — הנחות מעסקים מקומיים בערי בתי הספר.</li>
+        <li><b>עידוד חיסכון</b> — ליווי פיקדון החייל + סדנת כלכלה למשתחררים (השראה: Jim Casey Opportunity Passport).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== המלצות ==================== -->
+<section id="hopa">
+  <div class="sec-head"><span class="sec-num">6</span><h2>תרגום להופה — כולל חיבור לרעיונות של יעל</h2></div>
+  <p class="sec-lead">המייל של יעל בזנר (27.7) העלה 8 כיוונים. הנה מה שהמחקר אומר על כל אחד — ומה כדאי לעשות.</p>
+
+  <div class="tbl-wrap"><table>
+    <tr><th>הרעיון של יעל</th><th>מה המחקר מוסיף</th></tr>
+    <tr><td><b>מסמך "ליבת הפעילות" לרכזי בוגרים</b></td><td>לא צריך להמציא — לבנות על תורת ההפעלה של "יש לך כתובת": 3 רמות מעקב, 4 רמות סיוע, יעדים כמותיים. תוכניות העבודה של יעל (תשפ"ד–תשפ"ו, מצורפות למייל שלה) הן ההתאמה המקומית.</td></tr>
+    <tr><td><b>ברכות ימי הולדת, גיוס, חגים</b></td><td>סטנדרט בכל התוכניות שנבדקו; אפשר לאוטומט במונדיי על בורד הבוגרים הקיים. ערוץ מוביל: וואטסאפ/סמס, לא מייל (לקח Gradforce).</td></tr>
+    <tr><td><b>פינת "הכירו את הבוגר" באתרי המוסדות</b></td><td>פרקטיקה מוכחת בעולם ("זרקור בוגר"); להוסיף QR לעדכון פרטים כדי שהפינה גם תאסוף דאטה. ליעל יש כבר דוגמאות נוסח.</td></tr>
+    <tr><td><b>לוגו לקהילת הבוגרים</b></td><td>מאושש — זהות חזותית יוצרת שייכות, ושייכות היא תנאי להתמדה (מהמחקר הקודם). עלות נמוכה, להצמיד לטקס סיום י"ב.</td></tr>
+    <tr><td><b>קשר עם הצבא</b></td><td>אף תוכנית ישראלית לא פיצחה ממשק רשמי עם צה"ל; "יש לך כתובת" עוקפת דרך תאריכי גיוס שנאספים מראש + טלפונים אחרי טירונות. להתמקד בזה, ובמקביל לחדש את הפנייה (אורית מופז/שאול) בלי לתלות בזה את התוכנית.</td></tr>
+    <tr><td><b>מעקב אחרי פעילות הרכזים</b></td><td>המודל המוכן: תיעוד כל שיחה (15 דק׳) + יעדים חודשיים + הצגה בפני הנהלת ביה"ס ("השולחן הפדגוגי") — ובגרסת הופה: הדשבורד והרמזור שכבר קיימים.</td></tr>
+    <tr><td><b>עדויות אותנטיות בחוברת הרכזים</b></td><td>מאושש — סיפורים ועדויות הם כלי ההנעה המרכזי בספרות המקצועית ("Lead with stories"). לקחת מיעל את צילומי המסך (באישור הבוגרים).</td></tr>
+    <tr><td><b>תוכנית העבודה של מאור הנמן (מועצת המכינות)</b></td><td>נכס נדיר — ההכשרות והתוכניות של המכינות אינן פומביות. לקרוא את הקובץ שיעל צירפה ולשלב בגאנט.</td></tr>
+  </table></div>
+
+  <div class="callout p">
+    <b>🎯 חמש פעולות מיידיות (הערכה שלי)</b>
+    <b>1.</b> להוריד ולאמץ את <a href="https://www.thejoint.org.il/wp-content/uploads/2024/03/Address_Mail-1.pdf" target="_blank" rel="noopener">תדריך "יש לך כתובת"</a> כבסיס למסמך ליבת הפעילות שיעל הציעה — ולהתאים להופה (הטקסט המלא כבר חולץ ושמור אצלנו).
+    <b>2.</b> לקבוע את מבנה ההכשרה לרכזים לקראת תשפ"ז: מפגש בסיס לפני פתיחת השנה + זום עמיתים חודשי (הזום של 24.8 עם המפקחים הוא ההזדמנות להציג את זה).
+    <b>3.</b> להטמיע במונדיי את לוח הצמתים: תאריך גיוס + תאריך שחרור צפוי לכל בוגר, ואוטומציות ברכות/התראות נתק.
+    <b>4.</b> יוני 2027 — מבצע "קליטת מחזור": טלפון אישי + תאריך גיוס + הסכמה מכל תלמיד י"ב לפני הפיזור (הטופס הדיגיטלי כבר קיים!).
+    <b>5.</b> שתי פניות ששוות זהב: מטה "יש לך כתובת" במינהל לחינוך התיישבותי (חיבור טבעי — חלק מבתי הספר בפיקוח דומה) ופורום ארגוני בוגרים (moria@forum-bogrim.org) לצירוף הרכזות לקהילת הידע.
+  </div>
+</section>
+
+<!-- ==================== מקורות ==================== -->
+<section id="sources">
+  <div class="sec-head"><span class="sec-num">📚</span><h2>מקורות מרכזיים</h2></div>
+  <div class="card">
+    <b>ישראל</b>
+    <ul class="srcs">
+      <li><a href="https://www.thejoint.org.il/wp-content/uploads/2024/03/Address_Mail-1.pdf" target="_blank" rel="noopener">"יש לך כתובת" — תורת הפעלה מלאה (PDF)</a></li>
+      <li><a href="https://www.gov.il/BlobFolder/reports/molsa-yated-basic-documents/he/Yated_BasicDocuments_OperatingModelApril2018.pdf" target="_blank" rel="noopener">יתד — מודל הפעלה 2018 (PDF)</a></li>
+      <li><a href="https://yeladim.org.il/portfolio-items/bogrim/" target="_blank" rel="noopener">ילדים בסיכוי — תוכנית בוגרים</a></li>
+      <li><a href="https://yeladim.org.il/portfolio-items/melavim/" target="_blank" rel="noopener">ילדים בסיכוי — מלווי הדרך (הכשרה)</a></li>
+      <li><a href="https://www.lamerhav.co.il/%D7%AA%D7%97%D7%95%D7%9E%D7%99-%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99/" target="_blank" rel="noopener">למרחב — תחומי הליווי</a></li>
+      <li><a href="https://mechinot.org.il/info/projects/2023-06-05-18-33-57" target="_blank" rel="noopener">מועצת המכינות — ליווי בוגרים</a></li>
+      <li><a href="https://forum-bogrim.org/friends-and-graduates/" target="_blank" rel="noopener">פורום ארגוני בוגרים</a></li>
+      <li><a href="https://www.thejoint.org.il/wp-content/uploads/2020/09/%D7%9E%D7%A8%D7%9B%D7%96%D7%99-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D.pdf" target="_blank" rel="noopener">ערכת הפעלה מרכזי צעירים — ג׳וינט (PDF)</a></li>
+      <li><a href="https://rashi.org.il/wp-content/uploads/2023/04/%D7%A7%D7%95%D7%9C-%D7%A7%D7%95%D7%A8%D7%90-%D7%9E%D7%99%D7%96%D7%9D-%D7%9E%D7%9B%D7%90%D7%9F-%D7%9C%D7%97%D7%99%D7%99%D7%9C%D7%95%D7%AA-%D7%95%D7%9C%D7%97%D7%99%D7%99%D7%9C%D7%99%D7%9D-%D7%91%D7%95%D7%93%D7%93%D7%99%D7%9D-%D7%9E%D7%A9%D7%95%D7%97%D7%A8%D7%A8%D7%99%D7%9D.pdf" target="_blank" rel="noopener">קרן רש"י — מיזם "מכאן" (מפרט מענה)</a></li>
+      <li><a href="https://www.csf.org.il/2022/12/04/annual-work-plan/" target="_blank" rel="noopener">מדריך תוכנית עבודה שנתית לעמותות</a></li>
+    </ul>
+    <b>עולם</b>
+    <ul class="srcs">
+      <li><a href="https://www.kipp.org/approach/kipp-forward/" target="_blank" rel="noopener">KIPP Forward</a> · <a href="https://www.kipp.org/events-press/mathematica-study-on-kipp-public-schools-long-term-impact/" target="_blank" rel="noopener">מחקר Mathematica</a></li>
+      <li><a href="https://www.bottomline.org/success-program/" target="_blank" rel="noopener">Bottom Line + מודל DEAL</a></li>
+      <li><a href="https://www.onegoal.org/solutions/onegoal-program/year-by-year-timeline/" target="_blank" rel="noopener">OneGoal — תוכנית תלת-שנתית</a></li>
+      <li><a href="https://imentor.org" target="_blank" rel="noopener">iMentor</a></li>
+      <li><a href="https://www.cristoreynetwork.org/schools/academics-college-success" target="_blank" rel="noopener">Cristo Rey — רכזי בוגרים ו-Gradforce</a></li>
+      <li><a href="https://www.bbbs.org/programs/big-futures/" target="_blank" rel="noopener">BBBS Big Futures ("3 E's")</a></li>
+      <li><a href="https://www.legislation.gov.uk/uksi/2010/2571/regulation/8/made" target="_blank" rel="noopener">בריטניה — תקנות Personal Adviser</a></li>
+      <li><a href="https://www.mentoring.org/wp-content/uploads/2019/11/Final_Elements_Publication_Fourth.pdf" target="_blank" rel="noopener">MENTOR — EEPM (סטנדרט המנטורינג)</a></li>
+      <li><a href="https://searchinstitute.org/developmental-relationships" target="_blank" rel="noopener">Search Institute — Developmental Relationships</a></li>
+      <li><a href="https://www.cebc4cw.org/program/opportunity-passport/" target="_blank" rel="noopener">Jim Casey — Opportunity Passport</a></li>
+      <li><a href="https://www.sos-childrensvillages.org/prepare-for-leaving-care" target="_blank" rel="noopener">SOS — Prepare for Leaving Care</a></li>
+      <li><a href="https://collegeadvisingcorps.org/" target="_blank" rel="noopener">College Advising Corps</a></li>
+    </ul>
+    <p class="src">הושלם ב-6.8.2026 · משלים את מחקר יוני 2026 על מניעת נשירה · הערכות ופרשנות מסומנות בגוף המסמך. תוכן שסומן "לאמת" מבוסס על תקצירי חיפוש בלבד.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+      <img src="hopa-logo.png" alt="הופה">
+    </a>
+    <span class="fnote">הופה — פתאום הכל נראה אפשרי · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></span>
+  </div>
+</footer>
+</body>
+</html>
