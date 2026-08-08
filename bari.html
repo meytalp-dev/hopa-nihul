@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>תיק חפיפה — רכז מענים ובוגרים | הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111; --muted:#666; --line:#E5E5E5; --bg:#F7F7F7; --white:#fff;
+  --green:#3BA55C; --blue:#3D7DD8; --orange:#F5A623; --purple:#7E57C2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;direction:rtl}
+a{color:var(--pink-deep)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+
+/* header */
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--pink);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.topbar-in{display:flex;align-items:center;gap:12px;padding:9px 18px;max-width:1060px;margin:0 auto}
+.topbar img{height:36px}
+.topbar .t{font-weight:700;font-size:15px;white-space:nowrap}
+.nav{display:flex;gap:4px;overflow-x:auto;margin-inline-start:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:6px 11px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid transparent}
+.nav a:hover{background:var(--pink-soft);border-color:var(--pink)}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--pink-soft),var(--yellow-soft));padding:44px 0 36px;border-bottom:1px solid var(--line)}
+.hero .kicker{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.2}
+.hero h1 em{font-style:normal;color:var(--pink)}
+.hero p{max-width:640px;margin-top:12px;font-size:17px;color:#333}
+.hero .tag{margin-top:16px;font-weight:600;color:var(--pink-deep)}
+
+/* sections */
+section{padding:38px 0 8px}
+h2{font-size:clamp(22px,3.5vw,30px);font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2 .num{background:var(--pink);color:#fff;min-width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.sub{color:var(--muted);margin-bottom:18px;font-size:15.5px}
+h3{font-size:18px;font-weight:700;margin:20px 0 8px}
+
+/* cards */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:14px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;border-top:4px solid var(--pink)}
+.card.y{border-top-color:var(--yellow-deep)}
+.card.g{border-top-color:var(--green)}
+.card.b{border-top-color:var(--blue)}
+.card.o{border-top-color:var(--orange)}
+.card.p{border-top-color:var(--purple)}
+.card h4{font-size:16.5px;font-weight:700;margin-bottom:6px}
+.card p{font-size:14.5px;color:#333}
+.card .small{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* stats */
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.stat .v{font-size:30px;font-weight:900;color:var(--pink)}
+.stat .l{font-size:13.5px;color:var(--muted);margin-top:2px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line);margin:12px 0;font-size:14.5px}
+.tbl th{background:var(--pink-soft);text-align:right;padding:10px 12px;font-weight:700;font-size:14px}
+.tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl-wrap{overflow-x:auto}
+
+/* pills & notes */
+.pill{display:inline-block;background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;margin:2px 2px 2px 0}
+.pill.pk{background:var(--pink-soft);border-color:var(--pink)}
+.note{background:var(--yellow-soft);border-right:5px solid var(--yellow-deep);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note.pk{background:var(--pink-soft);border-right-color:var(--pink)}
+.note b{font-weight:700}
+
+/* steps */
+.steps{counter-reset:s;margin:14px 0}
+.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px 13px 16px;margin-bottom:10px;position:relative;padding-right:58px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;right:14px;top:13px;width:30px;height:30px;border-radius:50%;background:var(--yellow);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+.step b{font-weight:700}
+.step p{font-size:14.5px;color:#333;margin-top:2px}
+
+/* links grid */
+.links{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:14px 0}
+.lk{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.lk:hover{border-color:var(--pink)}
+.lk b{display:block;font-size:15px;color:var(--pink-deep)}
+.lk span{font-size:13px;color:var(--muted)}
+
+/* checklist */
+.chk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.chk h4{font-weight:800;font-size:16px;margin-bottom:10px;color:var(--pink-deep)}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line);font-size:14.5px;cursor:pointer}
+.chk label:first-of-type{border-top:none}
+.chk input{width:18px;height:18px;accent-color:var(--pink);margin-top:3px;flex:none}
+.chk input:checked+span{text-decoration:line-through;color:var(--muted)}
+.progress{background:var(--pink-soft);border-radius:999px;height:12px;overflow:hidden;margin:8px 0 20px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow-deep));width:0;transition:width .3s}
+
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+summary{font-weight:700;cursor:pointer;font-size:15px}
+details p,details li{font-size:14.5px}
+ul.plain{padding-right:20px;margin:8px 0}
+ul.plain li{margin-bottom:5px;font-size:14.5px}
+
+footer{margin-top:44px;background:#fff;border-top:3px solid var(--pink);padding:26px 0;text-align:center}
+footer img{height:40px}
+footer p{font-size:13.5px;color:var(--muted);margin-top:8px}
+@media(max-width:640px){.topbar .t{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <img src="hopa-logo.png" alt="הופה">
+    <span class="t">תיק חפיפה · רכז מענים ובוגרים</span>
+    <nav class="nav">
+      <a href="#about">מי אנחנו</a>
+      <a href="#people">אנשים</a>
+      <a href="#milon">מילון</a>
+      <a href="#schools">בתי ספר</a>
+      <a href="#tools">מערכות</a>
+      <a href="#routine">שגרות</a>
+      <a href="#flow">הפצת מענה</a>
+      <a href="#challenges">אתגרים</a>
+      <a href="#projects">פרויקטים</a>
+      <a href="#links">קישורים</a>
+      <a href="#first30">חודש ראשון</a>
+    </nav>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">תיק חפיפה · אוגוסט 2026</span>
+    <h1>ברוך הבא לתפקיד, <em>בארי!</em></h1>
+    <p>כאן תמצא את כל מה שצריך כדי להיכנס לתפקיד רכז המענים והבוגרים של הופה: מי האנשים, איך עובדות המערכות, מה השגרות, ומה מחכה לך על השולחן. הדף נבנה מתוך מסמך החפיפה של מנהלת הפרויקטים הקודמת (מאי 2026) + כל מה שקרה מאז.</p>
+    <div class="tag">פתאום הכל נראה אפשרי 💛</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 1. מי אנחנו ============ -->
+<section id="about">
+  <h2><span class="num">1</span>הופה על רגל אחת</h2>
+  <p class="sub">ההקשר שחייבים להכיר לפני הכל</p>
+
+  <div class="note pk"><b>המשפט המגדיר:</b> הופה היא עמותה הפועלת ליצירת רצף ליווי לבני נוער וצעירים מגיל 14 עד 26, דרך מניעת נשירה, ליווי בוגרים, חיבור להזדמנויות ושילוב בין קשר אנושי לתשתית חכמה. הופה פועלת <b>תחת עמותת אלומות</b>.</div>
+
+  <div class="grid">
+    <div class="card"><h4>🎓 ציר בוגרים (18–26)</h4><p>ליווי בוגרי בתי הספר במעברים הגדולים: צבא ושירות לאומי, תעסוקה, לימודים, מלגות, מיצוי זכויות ועצמאות. <b>זה הציר המרכזי של התפקיד שלך.</b></p></div>
+    <div class="card y"><h4>🏫 ציר מניעת נשירה (14–18)</h4><p>עבודה עם תלמידים בסיכון בתוך בית הספר: זיהוי מוקדם, מעקב, עבודה עם צוותים.</p><p class="small">כלל ברזל: שני הצירים לא מתערבבים לעולם — לא במענים, לא בתוכן, לא בעיצוב.</p></div>
+    <div class="card g"><h4>📡 מודל הרדאר (4 שלבים)</h4><p>1. שידור וקליטה — איסוף מידע · 2. ניתוח נתונים (רמזור אדום/כתום/ירוק) · 3. חישוב והתאמת מענים · 4. החזרת גלים — פעולה יזומה.</p></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">29</div><div class="l">בתי ספר (6 ותיקים + חדשים מתשפ"ז)</div></div>
+    <div class="stat"><div class="v">645</div><div class="l">מענים במאגר החי (551 בוגרים · 94 נוער)</div></div>
+    <div class="stat"><div class="v">412</div><div class="l">בוגרים במאגר במונדיי + 65 תלמידי י"ב</div></div>
+    <div class="stat"><div class="v">1,000+</div><div class="l">תלמידים בסיכון מלווים</div></div>
+  </div>
+</section>
+
+<!-- ============ 2. אנשים ============ -->
+<section id="people">
+  <h2><span class="num">2</span>האנשים שתעבוד איתם</h2>
+  <p class="sub">טלפונים אישיים נמצאים בדף הניהול (מוגן בסיסמה) ובקבוצות הוואטסאפ — בקש ממיטל או מלירון</p>
+
+  <div class="grid">
+    <div class="card"><h4>לירון גולן — מנכ"לית הופה</h4><p>גם רכזת בית הערבה (לקחה תפקיד רכזת כדי לראות את השטח). liron@hopa.org.il</p><p class="small">טיפ מהחפיפה הקודמת: שאל שאלות ספציפיות וממוקדות — כך מקבלים ממנה מענה מהיר וברור.</p></div>
+    <div class="card y"><h4>מיטל פלג — יועצת טכנולוגיה ושיווק</h4><p>בונה ומתחזקת את המערכות: דפי הניהול, מאגר הבוגרים, הקטלוגים, הדפים החיים. אליה פונים בכל מה שקשור לכלים ודאטה.</p></div>
+    <div class="card b"><h4>רכזי הבוגרים בבתי הספר</h4><p>אנשי סגל שמונו לתפקיד רכז בוגרים — דמות מוכרת לבוגרים, מנהלים את קבוצות הוואטסאפ של המחזורים. הם הידיים שלך בשטח.</p></div>
+  </div>
+
+  <h3>רכזי בוגרים בבתי הספר הוותיקים</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>שם</th><th>בית ספר</th><th>ערוץ</th></tr>
+    <tr><td>סיגל</td><td>אורט אדיבי, אשקלון</td><td>קבוצת וואטסאפ</td></tr>
+    <tr><td>אביחי</td><td>עתיד "שמיים", קריית מוצקין</td><td>קבוצת וואטסאפ</td></tr>
+    <tr><td>טוהר</td><td>אורט מרום, עכו</td><td>קבוצת וואטסאפ</td></tr>
+    <tr><td>טלי</td><td>אורט צור ברק</td><td>קבוצת וואטסאפ</td></tr>
+    <tr><td>חן</td><td>אורט מגשימים, בית שאן</td><td>קבוצת וואטסאפ</td></tr>
+    <tr><td>לירון</td><td>אורט בית הערבה, ירושלים</td><td>ישיר</td></tr>
+  </table></div>
+
+  <details>
+    <summary>🤝 מתנדבים (נכון למאי 2026 — לאמת מי עדיין פעיל)</summary>
+    <p>תפקיד המתנדבים: יצירת קשר עם בוגרים שלא ענו על טפסים, איסוף פרטים ובדיקת צרכים. שיוך אחרון שידוע: כרמית — עכו · פני — מוצקין · דניאל — צור ברק · שני — חונכת · ניקול — חיפוש מענים לנוער · ליאן — חדשה. הקבוצה ברובה שקטה; אחד האתגרים הפתוחים (ראה סעיף אתגרים).</p>
+  </details>
+
+  <div class="note">📌 <b>שים לב:</b> מסמך החפיפה המקורי נכתב על ידי מנהלת הפרויקטים הקודמת, שסיימה את תפקידה ביוני 2026. התיק הזה מעדכן את התמונה — אבל חלק מהפרטים (מתנדבים, רכזים) כדאי לאמת מול לירון בשבוע הראשון.</div>
+</section>
+
+<!-- ============ 3. מילון ============ -->
+<section id="milon">
+  <h2><span class="num">3</span>מילון מונחים פנימי</h2>
+  <p class="sub">השפה שמדברים בה בהופה — חשוב להכיר מהיום הראשון</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>מונח</th><th>הסבר</th></tr>
+    <tr><td><b>מענה</b></td><td>משאב או פתרון לצורך של בוגר: מכינה, מלגה, טיפול נפשי, עזרה כספית, הכשרה מקצועית. עדיף תמיד להשיג איש קשר שיוצר קשר ישיר עם הבוגר.</td></tr>
+    <tr><td><b>מענה פנימי</b></td><td>אנשי קשר "שלנו" שיכולים לעזור במקרים מסוימים (לא מפורסם החוצה).</td></tr>
+    <tr><td><b>רכז/ת בוגרים</b></td><td>איש סגל בית ספר שאחראי על הקשר עם בוגרי אותו בית ספר ומנהל את קבוצת הוואטסאפ שלהם.</td></tr>
+    <tr><td><b>בוגרים</b></td><td>בוגרי בתי הספר, גיל 18–26.</td></tr>
+    <tr><td><b>טראק גילאים</b></td><td>במערכות: <b>1826</b> = בוגרים · <b>1418</b> = נוער. ההפרדה מוחלטת בכל מערכת ותוכן.</td></tr>
+    <tr><td><b>רדאר</b></td><td>מודל 4 השלבים של הופה לזיהוי מוקדם והתאמת מענים (רמזור אדום/כתום/ירוק).</td></tr>
+    <tr><td><b>וורקספייס / בורד</b></td><td>במונדיי: לכל בית ספר וורקספייס משלו, ובו בורדים (לוחות) — בוגרים, מעקב, טפסים.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 4. בתי ספר ============ -->
+<section id="schools">
+  <h2><span class="num">4</span>בתי הספר</h2>
+  <p class="sub">6 ותיקים + 22 שהצטרפו בקול הקורא של תשפ"ז — סה"כ כמעט 29 בתי ספר בפריסה ארצית</p>
+
+  <div class="grid">
+    <div class="card"><h4>🏫 הוותיקים (6)</h4><p>אורט אדיבי אשקלון · עתיד "שמיים" קריית מוצקין · אורט מרום עכו · אורט מגשימים בית שאן · אורט צור ברק (דרום) · אורט בית הערבה (ירושלים).</p><p class="small">שים לב לשמות המדויקים: עכו = אורט <b>מרום</b>, בית שאן = אורט <b>מגשימים</b>.</p></div>
+    <div class="card y"><h4>🆕 המצטרפים (תשפ"ז)</h4><p>22 בתי ספר חדשים, רובם בחברה הערבית (סח'נין, טורעאן, נצרת, ג'וליס, ביר אלמכסור...) והבדואית (רהט, לקיה, תל שבע, נווה מדבר) — לצד כרמיאל, חושן, נחלים, מצפה רמון ועוד.</p><p class="small">התיק המלא של כל בית ספר — בדף הניהול, לשונית "בתי ספר מצטרפים".</p></div>
+    <div class="card g"><h4>📍 גורמים קהילתיים</h4><p>לכל עיר/בית ספר ממופים הגורמים בקהילה: מרכזי צעירים, ריאן, יתד, קידום נוער, רווחה — עם טלפון, מייל וכפתורי פנייה.</p><p class="small"><a href="kehila.html">👈 דף הגורמים הקהילתיים המרוכז (kehila.html)</a></p></div>
+  </div>
+
+  <div class="note">🗺️ <b>דיוקי מיקום שחשוב לדעת:</b> אורט בית הערבה נמצא ב<b>ירושלים</b> (ארנונה), לא בבקעת הירדן · אורט צור ברק ב<b>דרום</b> (בין קריית מלאכי לאשקלון) · עתיד יוצר מגשימים = <b>כרמיאל</b> · תיכון חושן = ירושלים.</div>
+</section>
+
+<!-- ============ 5. מערכות ============ -->
+<section id="tools">
+  <h2><span class="num">5</span>הכלים והמערכות</h2>
+  <p class="sub">איפה הכל נמצא — ומה עושים בכל מערכת</p>
+
+  <div class="grid">
+    <div class="card"><h4>📊 מונדיי (Monday.com) — ה-CRM</h4><p>הלב של מעקב הבוגרים. לכל בית ספר וורקספייס משלו עם בורד בוגרים + טופס קליטה. יש וורקספייס ייעודי ל<b>מעקב מענים</b> — כל מענה שנשלח נרשם שם עם טופס הרשמה פנימי, כדי למדוד אימפקט (כמה נשלחו, כמה נרשמו, לפי בית ספר).</p><p class="small">חדש מאוגוסט 2026: לוחות "מאגר בוגרים" עם 412 בוגרים (בית הערבה, כרמיאל, מוצקין, סח'נין) + קבוצת י"ב תשפ"ז.</p></div>
+    <div class="card y"><h4>💬 וואטסאפ — ערוץ התקשורת המרכזי</h4><p><b>קבוצת הרכזים</b> — לשם שולחים הודעות מוכנות עם מענים (לפחות פעם בשבוע). <b>קבוצות הבוגרים</b> — של כל בית ספר, מנוהלות על ידי הרכזים. <b>קבוצת המתנדבים</b> ו<b>קבוצות ההנהלה</b> — עדכונים.</p><p class="small">בנוסף: בוט וואטסאפ חכם במספר 058-558-5991 — בוגרים מחפשים בו מענים בעצמם, ועמותות מגישות דרכו מענים חדשים.</p></div>
+    <div class="card g"><h4>🌐 אתר הופה — hopa.org.il</h4><p>מאגר המענים הציבורי: 645 מענים ב-7 קטגוריות, 5 אזורים. בוגרים מחפשים בו עצמאית. יש גם צ'אט (hopa.org.il/chat), טופס הגשת מענה, ופאנל ניהול (/admin) לעדכון המאגר.</p></div>
+    <div class="card b"><h4>🗂️ הופה דש — hopadash.vercel.app</h4><p>פורטל בתי הספר החי: לכל בית ספר דף משלו עם אנשי קשר אזוריים, חומרים וקישורים. מנוהל על ידי לירון ומיטל.</p></div>
+    <div class="card p"><h4>🛠️ דף הניהול — hopa-nihul</h4><p>ה-hub הפנימי: משימות משותפות, תיקי בתי ספר, בתי ספר מצטרפים, שליחת הודעות, כלים. מוגן בסיסמה — בקש ממיטל.</p><p class="small"><a href="index.html">👈 לדף הניהול</a></p></div>
+    <div class="card o"><h4>📁 Google Drive</h4><p>בנק הודעות מוכנות לרכזים (תוכן שבועי), תיקיות בתי ספר, קבצים שוטפים. אם אין מענים לשלוח השבוע — לוקחים רעיון מהבנק.</p></div>
+  </div>
+</section>
+
+<!-- ============ 6. שגרות ============ -->
+<section id="routine">
+  <h2><span class="num">6</span>השגרות של התפקיד</h2>
+  <p class="sub">מה עושים כל שבוע — הבסיס שהתפקיד עומד עליו</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>תדירות</th><th>משימה</th><th>פירוט</th></tr>
+    <tr><td><span class="pill pk">יומי</span></td><td>מעבר על בורדים</td><td>לעבור על בורדי הבוגרים במונדיי ולראות אם יש בקשות סיוע חדשות או פתוחות.</td></tr>
+    <tr><td><span class="pill">שבועי</span></td><td>עדכון מונדיי</td><td>לבדוק שהרכזים והמתנדבים מעדכנים, לעקוב אחרי פניות פתוחות.</td></tr>
+    <tr><td><span class="pill">שבועי</span></td><td>תוכן לקבוצות בוגרים</td><td>לשלוח לרכזים הודעה מוכנה עם מענה/תוכן להעברה לקבוצות — לפחות פעם בשבוע.</td></tr>
+    <tr><td><span class="pill">שוטף</span></td><td>מענה לפניות בוגרים</td><td>בוגר עם בקשה → לחפש מענה מתאים ולחבר ביניהם. אפשר להתייעץ עם הרכזים.</td></tr>
+    <tr><td><span class="pill">שוטף</span></td><td>חיפוש מענים חדשים</td><td>לחפש מענים רלוונטיים (ארצי או לפי עיר), להוסיף למונדיי ולמאגר, להכין טופס ולשלוח.</td></tr>
+    <tr><td><span class="pill">חודשי</span></td><td>ימי הולדת + דו"ח</td><td>תחילת חודש: לעדכן את קבוצות ההנהלה למי יישלחו ברכות (מערכת האוטומציה). סוף חודש: דו"ח פעילות להנהלות — כמה מענים נשלחו, כמה נרשמו, לכמה ניתן סיוע.</td></tr>
+    <tr><td><span class="pill">לפי צורך</span></td><td>רכזים ומתנדבים</td><td>תיאום, תזכורות, הפצת חומרים, גיוס ומעקב.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 7. הפצת מענה ============ -->
+<section id="flow">
+  <h2><span class="num">7</span>זרימת העבודה: מצאת מענה — מה עכשיו?</h2>
+  <p class="sub">התהליך המלא מרגע שמזהים מענה רלוונטי ועד שהוא מגיע לבוגרים</p>
+  <div class="steps">
+    <div class="step"><b>מוסיפים את המענה למונדיי</b><p>בוורקספייס המענים, בבורד לפי קטגוריה — כך יש תמונה של מה נשלח ובאילו תחומים.</p></div>
+    <div class="step"><b>יוצרים טופס הרשמה פנימי</b><p>בבורד ההרשמות — דרכו עוקבים כמה נרשמו לכל מענה, מה פופולרי ומה פחות. זה מדד האימפקט.</p></div>
+    <div class="step"><b>מנסחים הודעה עם הקישור</b><p>קצרה, ברורה, עם קישור הטופס הפנימי (לא הקישור המקורי — אחרת מאבדים את המדידה).</p></div>
+    <div class="step"><b>שולחים קודם לקבוצת הרכזים</b><p>עדיף שההודעה תגיע לבוגרים <b>מהרכז המוכר</b> — הסיכוי שיירשמו גדול יותר. הרכזים מעתיקים ומדביקים בקבוצות שלהם.</p></div>
+    <div class="step"><b>עוקבים ומדווחים</b><p>בודקים הרשמות בטופס, מוודאים שהרכזים העבירו, ובסוף החודש זה נכנס לדו"ח להנהלות.</p></div>
+  </div>
+  <div class="note">💡 <b>איפה מחפשים מענים?</b> קבוצות וואטסאפ של מענים, רשתות חברתיות, אתר הופה עצמו — וגם הקטלוגים המוכנים: <a href="manim-bogrim.html">וואן-פייג'רים לרכזים</a> (מלגות · תעסוקה · זכויות), <a href="manim-aravit.html">מענים לחברה הערבית/דרוזית/בדואית</a> ו<a href="hachana.html">הכנה לשירות משמעותי</a>.</div>
+</section>
+
+<!-- ============ 8. אתגרים ============ -->
+<section id="challenges">
+  <h2><span class="num">8</span>האתגרים הפתוחים</h2>
+  <p class="sub">מה שדורש את תשומת הלב והאנרגיה שלך — בעיניים פקוחות</p>
+  <div class="grid">
+    <div class="card o"><h4>🔸 רכזים לא פעילים</h4><p>חלק מהרכזים לא מנהלים את קבוצות הבוגרים ולא שולחים תוכן.</p><p class="small"><b>מה עוזר (חלקית):</b> פנייה אישית + הודעה מוכנה וספציפית. <b>מה לא עבד:</b> פניות כלליות "תהיו פעילים" ומאגרי תבניות. צריך רעיונות יצירתיים חדשים.</p></div>
+    <div class="card o"><h4>🔸 מתנדבים לא פעילים</h4><p>הקבוצה ברובה שקטה ("אין זמן, מחר אתחיל").</p><p class="small">מה שחסר: מבנה ברור לתפקיד — מה מצפים, כמה שעות, מה המתנדב מרוויח. הזדמנות לבנות את זה מחדש.</p></div>
+    <div class="card o"><h4>🔸 בקשות בוגרים תלויות</h4><p>יש בוגרים שביקשו סיוע ועדיין לא נענו. לעבור על הבורדים, לבדוק אם הבקשה עדיין רלוונטית, ולסגור מעגלים.</p></div>
+    <div class="card o"><h4>🔸 פער במגזר הערבי והבדואי</h4><p>רוב בתי הספר החדשים מהחברה הערבית והבדואית — אבל במאגר המענים כמעט אין מענים ייעודיים להם. נאספו כבר 37 מענים בדף ייעודי; צריך להמשיך לאתר ולהזין למאגר.</p><p class="small"><a href="manim-aravit.html">👈 דף המענים לחברה הערבית</a></p></div>
+  </div>
+</section>
+
+<!-- ============ 9. פרויקטים ============ -->
+<section id="projects">
+  <h2><span class="num">9</span>פרויקטים חיים על השולחן</h2>
+  <p class="sub">מה שקורה עכשיו — ואיפה אתה נכנס לתמונה</p>
+  <div class="grid">
+    <div class="card"><h4>🚀 פיילוט משרד העבודה</h4><p>"נתיבים לבוגרים" — פיילוט ארצי של 15 בתי ספר × 10,000 ₪, בשותפות נתיבים לחניכות וקריירה. כולל אקדמיית רכזים (60 שעות) ומסע הבוגר.</p></div>
+    <div class="card y"><h4>📋 תוכניות עבודה של בתי הספר</h4><p>כל בית ספר ממלא תוכנית עבודה בדף אחד — חלוקת 10,000 ₪ ל-5 סעיפים + יעדים. יש תצוגת ניהול שמראה מי הגיש ומי לא.</p><p class="small"><a href="plan.html">👈 plan.html</a></p></div>
+    <div class="card g"><h4>✍️ טופס הסכמה דיגיטלי</h4><p>בוגרים חותמים בנייד על כתב הסכמה (במקום הדפסה וסריקה) — הנתונים נוחתים בגיליון. חובה לפני עבודה עם פרטי בוגרים.</p></div>
+    <div class="card b"><h4>📇 מאגר הבוגרים</h4><p>412 בוגרים + 65 תלמידי י"ב בלוחות "מאגר בוגרים" במונדיי (בית הערבה, כרמיאל, מוצקין, סח'נין). חלק מהרשומות מסומנות "לאמת" — הצלבה מול סריקות מקור.</p><p class="small">⚠️ מידע רגיש: ת"ז וטלפונים — לשימוש פנימי בלבד, בכפוף לכתב ההסכמה.</p></div>
+    <div class="card p"><h4>📖 מחקר ליווי בוגרים</h4><p>מחקר מקיף על מודלים בארץ ובעולם. ממצא מפתח: תורת ההפעלה של "יש לך כתובת" (מינהל חינוך התיישבותי) — הבסיס המומלץ למסמך ליבת הפעילות של הרכזים.</p><p class="small"><a href="mechkar-bogrim.html">👈 mechkar-bogrim.html</a></p></div>
+    <div class="card o"><h4>📣 סיפורי הצלחה + בוגרים בעסקים</h4><p>שתי יוזמות תוכן שהתחילו וממתינות להמשך: פוסטים על סיפורי הצלחה של בוגרים (יש שמות וטלפונים בקובץ), ונטוורקינג של בוגרים בעלי עסקים (וורקספייס במונדיי).</p></div>
+  </div>
+</section>
+
+<!-- ============ 10. קישורים ============ -->
+<section id="links">
+  <h2><span class="num">10</span>כל הקישורים במקום אחד</h2>
+  <p class="sub">שמור את הדף הזה — הכל נפתח גם בנייד</p>
+
+  <h3>אתר ומערכות ליבה</h3>
+  <div class="links">
+    <a class="lk" href="https://hopa.org.il" target="_blank"><b>אתר הופה</b><span>מאגר 645 המענים הציבורי</span></a>
+    <a class="lk" href="https://hopa.org.il/chat" target="_blank"><b>הצ'אט באתר</b><span>חיפוש מענים בשיחה</span></a>
+    <a class="lk" href="https://hopa.org.il/submit-program" target="_blank"><b>הגשת מענה חדש</b><span>טופס לעמותות ולגופים</span></a>
+    <a class="lk" href="https://api.whatsapp.com/send/?phone=972585585991&text=%D7%94%D7%99%D7%99+%D7%94%D7%95%D7%A4%D7%94" target="_blank"><b>בוט הוואטסאפ</b><span>058-558-5991 — איתור מענים</span></a>
+    <a class="lk" href="https://hopadash.vercel.app" target="_blank"><b>הופה דש</b><span>פורטל בתי הספר</span></a>
+    <a class="lk" href="index.html"><b>דף הניהול</b><span>משימות · תיקי בתי ספר · שליחת הודעות (בסיסמה)</span></a>
+  </div>
+
+  <h3>קטלוגים ודפי מענים</h3>
+  <div class="links">
+    <a class="lk" href="manim-bogrim.html"><b>מענים מומלצים לרכזים</b><span>שער: מלגות · תעסוקה · מיצוי זכויות</span></a>
+    <a class="lk" href="manim-aravit.html"><b>מענים לחברה הערבית</b><span>37 מענים — ערבי · דרוזי · בדואי</span></a>
+    <a class="lk" href="hachana.html"><b>הכנה לשירות משמעותי</b><span>תוכניות לפי אזור, למנהלים ורכזים</span></a>
+    <a class="lk" href="kehila.html"><b>גורמים קהילתיים</b><span>אנשי קשר בכל עיר — 122 גורמים</span></a>
+  </div>
+
+  <h3>תוכניות ומסמכים</h3>
+  <div class="links">
+    <a class="lk" href="plan.html"><b>תוכנית עבודה בוגרים</b><span>הדף שבתי הספר ממלאים</span></a>
+    <a class="lk" href="mechkar-bogrim.html"><b>מחקר ליווי בוגרים</b><span>מודלים בארץ ובעולם</span></a>
+    <a class="lk" href="tashpaz.html"><b>היערכות תשפ"ז</b><span>מסמך משרד העבודה כמסע בשנה</span></a>
+    <a class="lk" href="midaon.html"><b>מידעון שותפים</b><span>סיכום שנת תשפ"ו</span></a>
+  </div>
+
+  <h3>רשתות חברתיות</h3>
+  <div class="links">
+    <a class="lk" href="https://www.facebook.com/profile.php?id=100095158987953" target="_blank"><b>פייסבוק הופה</b><span>פוסטים ועדכונים</span></a>
+    <a class="lk" href="https://www.instagram.com/hopa.hopa2914/" target="_blank"><b>אינסטגרם הופה</b><span>hopa.hopa2914</span></a>
+  </div>
+</section>
+
+<!-- ============ 11. חודש ראשון ============ -->
+<section id="first30">
+  <h2><span class="num">11</span>החודש הראשון שלך — צ'קליסט</h2>
+  <p class="sub">הסימונים נשמרים בדפדפן שלך — אפשר לחזור לדף ולהמשיך מאיפה שעצרת</p>
+  <div class="progress"><i id="pbar"></i></div>
+
+  <div class="chk">
+    <h4>שבוע 1 — להכיר</h4>
+    <label><input type="checkbox" data-k="w1a"><span>פגישת פתיחה עם לירון: ציפיות, היקף התפקיד, סדרי עדיפויות</span></label>
+    <label><input type="checkbox" data-k="w1b"><span>לקבל גישות: מונדיי, קבוצות וואטסאפ (רכזים, מתנדבים, הנהלות), דרייב, דף הניהול</span></label>
+    <label><input type="checkbox" data-k="w1c"><span>לקרוא את הדף הזה מההתחלה עד הסוף 🙂 + לשוטט באתר הופה ובמאגר המענים</span></label>
+    <label><input type="checkbox" data-k="w1d"><span>להציג את עצמך בקבוצת הרכזים — הודעת היכרות קצרה וחמה</span></label>
+    <label><input type="checkbox" data-k="w1e"><span>סיור במונדיי: וורקספייס של בית ספר אחד מהוותיקים + וורקספייס המענים</span></label>
+  </div>
+
+  <div class="chk">
+    <h4>שבוע 2 — להתחיל לזוז</h4>
+    <label><input type="checkbox" data-k="w2a"><span>שיחת היכרות אישית (טלפון/וואטסאפ) עם כל אחד מ-5 רכזי הבוגרים הוותיקים</span></label>
+    <label><input type="checkbox" data-k="w2b"><span>לעבור על בורדי הבוגרים — לאתר בקשות סיוע פתוחות ולטפל בראשונות</span></label>
+    <label><input type="checkbox" data-k="w2c"><span>לשלוח מענה ראשון לקבוצת הרכזים (אפשר לבחור מהוואן-פייג'רים המוכנים)</span></label>
+    <label><input type="checkbox" data-k="w2d"><span>לאמת את רשימת המתנדבים מול לירון — מי פעיל ומה השיוך</span></label>
+  </div>
+
+  <div class="chk">
+    <h4>שבוע 3 — להרחיב</h4>
+    <label><input type="checkbox" data-k="w3a"><span>להכיר את בתי הספר החדשים: דף הניהול (בתי ספר מצטרפים) + דף הגורמים הקהילתיים</span></label>
+    <label><input type="checkbox" data-k="w3b"><span>לבדוק את סטטוס תוכניות העבודה — אילו בתי ספר הגישו ואילו צריכים תזכורת</span></label>
+    <label><input type="checkbox" data-k="w3c"><span>לשלוח הודעת עדכון ראשונה לקבוצות ההנהלה</span></label>
+    <label><input type="checkbox" data-k="w3d"><span>לחפש ולהוסיף מענה חדש אחד למאגר — לעבור את התהליך המלא פעם אחת</span></label>
+  </div>
+
+  <div class="chk">
+    <h4>שבוע 4 — לקחת בעלות</h4>
+    <label><input type="checkbox" data-k="w4a"><span>דו"ח חודשי ראשון להנהלות: מענים שנשלחו, הרשמות, סיוע שניתן</span></label>
+    <label><input type="checkbox" data-k="w4b"><span>לבחור אתגר אחד (רכזים/מתנדבים/בקשות תלויות) ולהציע ללירון תוכנית פעולה</span></label>
+    <label><input type="checkbox" data-k="w4c"><span>להמשיך פרויקט תוכן אחד: סיפורי הצלחה או בוגרים בעסקים</span></label>
+    <label><input type="checkbox" data-k="w4d"><span>שיחת סיכום חודש עם לירון: מה עובד, מה חסר, מה הלאה</span></label>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer>
+  <a href="https://hopa.org.il" target="_blank"><img src="hopa-logo.png" alt="הופה"></a>
+  <p><a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · תיק חפיפה לרכז מענים ובוגרים · נבנה על בסיס מסמך החפיפה (מאי 2026) והידע המצטבר · אוגוסט 2026</p>
+</footer>
+
+<script>
+(function(){
+  var KEY='bari_hafifa_checks';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  var boxes=document.querySelectorAll('.chk input[type=checkbox]');
+  function update(){
+    var done=0;
+    boxes.forEach(function(b){if(b.checked)done++});
+    document.getElementById('pbar').style.width=Math.round(done/boxes.length*100)+'%';
+  }
+  boxes.forEach(function(b){
+    if(saved[b.dataset.k])b.checked=true;
+    b.addEventListener('change',function(){
+      saved[b.dataset.k]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
