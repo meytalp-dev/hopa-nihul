@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>קבוצות וואטסאפ למענים ותוכניות | הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111; --muted:#666; --line:#E5E5E5; --bg:#F7F7F7; --white:#fff;
+  --green:#3BA55C; --wa:#25D366; --blue:#3D7DD8; --orange:#F5A623; --purple:#7E57C2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;direction:rtl}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px}
+
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--pink);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.topbar-in{display:flex;align-items:center;gap:12px;padding:9px 18px;max-width:1020px;margin:0 auto}
+.topbar img{height:36px}
+.topbar .t{font-weight:700;font-size:15px}
+.nav{display:flex;gap:4px;overflow-x:auto;margin-inline-start:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:6px 11px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none}
+.nav a:hover{background:var(--pink-soft)}
+
+.hero{background:linear-gradient(135deg,var(--yellow-soft),var(--pink-soft));padding:36px 0 30px;border-bottom:1px solid var(--line)}
+.hero .kicker{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:12px}
+.hero h1{font-size:clamp(26px,4.5vw,40px);font-weight:900;line-height:1.2}
+.hero p{max-width:640px;margin-top:10px;font-size:16.5px;color:#333}
+
+section{padding:30px 0 6px}
+h2{font-size:clamp(20px,3vw,26px);font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+h2 .ico{font-size:22px}
+.sub{color:var(--muted);margin-bottom:14px;font-size:14.5px}
+
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));margin:14px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;border-top:4px solid var(--pink);display:flex;flex-direction:column}
+.card.y{border-top-color:var(--yellow-deep)}
+.card.g{border-top-color:var(--green)}
+.card.b{border-top-color:var(--blue)}
+.card.o{border-top-color:var(--orange)}
+.card.p{border-top-color:var(--purple)}
+.card h4{font-size:16.5px;font-weight:700;margin-bottom:5px}
+.card p{font-size:14px;color:#333;margin-bottom:4px}
+.card .small{font-size:12.5px;color:var(--muted)}
+.pill{display:inline-block;background:var(--pink-soft);border:1px solid var(--pink);border-radius:999px;padding:1px 10px;font-size:12px;font-weight:600;margin-bottom:6px;align-self:flex-start}
+.pill.yy{background:var(--yellow-soft);border-color:var(--yellow-deep)}
+.btns{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;font-size:13.5px;font-weight:700;text-decoration:none;border:1.5px solid transparent}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.wa:hover{background:#1fb457}
+.btn.lnk{background:#fff;color:var(--pink-deep);border-color:var(--pink)}
+.btn.lnk:hover{background:var(--pink-soft)}
+.btn.tel{background:#fff;color:#333;border-color:var(--line)}
+.btn.tel:hover{border-color:#999}
+
+.note{background:var(--yellow-soft);border-right:5px solid var(--yellow-deep);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+
+footer{margin-top:40px;background:#fff;border-top:3px solid var(--pink);padding:24px 0;text-align:center}
+footer img{height:38px}
+footer p{font-size:13px;color:var(--muted);margin-top:8px}
+footer a{color:var(--pink-deep)}
+@media(max-width:640px){.topbar .t{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <img src="hopa-logo.png" alt="הופה">
+    <span class="t">קבוצות וואטסאפ · מענים ותוכניות</span>
+    <nav class="nav">
+      <a href="#taasuka">תעסוקה</a>
+      <a href="#milgot">מלגות</a>
+      <a href="#sadnaot">סדנאות</a>
+      <a href="#arim">לפי עיר</a>
+      <a href="#jlm">ירושלים</a>
+      <a href="#noar">נוער</a>
+    </nav>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">מקורות חיים למענים 💬</span>
+    <h1>הצטרפות לקבוצות וואטסאפ — מענים ותוכניות</h1>
+    <p>הקבוצות והפורומים שבהם מתפרסמים מענים, משרות, מלגות והכשרות באופן שוטף. מצטרפים פעם אחת — ומקבלים זרם קבוע של מענים להפצה לבוגרים. בחלק מהקבוצות ההצטרפות דרך איש קשר.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- תעסוקה -->
+<section id="taasuka">
+  <h2><span class="ico">💼</span>תעסוקה וקריירה</h2>
+  <p class="sub">משרות, הכשרות ופורומים ארציים</p>
+  <div class="grid">
+    <div class="card">
+      <h4>פורום ארגוני תעסוקת צעירים</h4>
+      <p>הפורום המרכזי של הארגונים העוסקים בתעסוקת צעירים.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/Kdhajh3ushHFIfnYa8CypR" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card">
+      <h4>לוח משרות</h4>
+      <p>לוח משרות מתעדכן לצעירים.</p>
+      <div class="btns"><a class="btn lnk" href="https://did.li/AqLOf" target="_blank">🔗 ללוח המשרות</a></div>
+    </div>
+    <div class="card">
+      <h4>משרות ללא ניסיון למשוחררים</h4>
+      <p>משרות שמתאימות לחיילים משוחררים בלי ניסיון תעסוקתי קודם.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/GhM3GO0t2k0FLdsKBewOqt" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card">
+      <h4>מרכז לאודר לתעסוקה</h4>
+      <p>עדכוני תוכניות והכשרות של מרכז לאודר.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/L1fj92qnFBf7mKMRIhBWEH" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card">
+      <h4>הזדמנויות בהכשרה ותעסוקה — מרכז ודרום</h4>
+      <p>הכשרות ומשרות באזורי המרכז והדרום.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/JOk3xllkjjcI80Bt3gGmhe" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card">
+      <h4>מרחב עובדים צעירים</h4>
+      <p>ריכוז קישורים ותכנים לעובדים צעירים.</p>
+      <div class="btns"><a class="btn lnk" href="https://linktr.ee/youngadul" target="_blank">🔗 לכל הקישורים (Linktree)</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- מלגות -->
+<section id="milgot">
+  <h2><span class="ico">🎓</span>מלגות והשכלה</h2>
+  <p class="sub">עדכוני מלגות שוטפים + קהילת שאלות ותשובות</p>
+  <div class="grid">
+    <div class="card y">
+      <h4>עדכוני מלגות</h4>
+      <p>קבוצת עדכונים שוטפת על מלגות חדשות ומועדי הגשה.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/LNREr1tz37VAmtRMtX5UPD?s=cl&p=a&ilr=4" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card y">
+      <h4>שאלות בנושא מלגות והשכלה</h4>
+      <p>קהילה לשאלות ותשובות בנושאי מלגות והשכלה. יש גם קובץ מרוכז.</p>
+      <p class="small">להצטרפות לקבוצה פונים להדס בן אליהו.</p>
+      <div class="btns">
+        <a class="btn lnk" href="https://docs.google.com/spreadsheets/d/1Imr8xc5qTuSsfX_xlg-L2dYoQt8KlM1EmkZXblHsjXI/edit?gid=0#gid=0" target="_blank">📄 לקובץ המרוכז</a>
+        <a class="btn wa" href="https://wa.me/972523666670" target="_blank">💬 הדס בן אליהו</a>
+        <a class="btn tel" href="tel:0523666670">📞 052-366-6670</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- סדנאות -->
+<section id="sadnaot">
+  <h2><span class="ico">🎯</span>סדנאות, קורסים והעשרה</h2>
+  <div class="grid">
+    <div class="card p">
+      <h4>קבוצה לסדנאות וקורסים</h4>
+      <p>עדכונים על סדנאות וקורסים לצעירים.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/FF0NMxYuCljAELWTvKXUBd?mode=gi_t" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card p">
+      <h4>המלצות להרצאות וסדנאות</h4>
+      <p>קבוצת המלצות על מרצים, הרצאות וסדנאות.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/GwLsu4Cvnwq1Rhf3SsIyoE" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+    <div class="card p">
+      <h4>מרכז הזדמנות</h4>
+      <p>להתחברות פונים לנאווה גיאת.</p>
+      <div class="btns">
+        <a class="btn wa" href="https://wa.me/972528834276" target="_blank">💬 נאווה גיאת</a>
+        <a class="btn tel" href="tel:0528834276">📞 052-883-4276</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- לפי עיר -->
+<section id="arim">
+  <h2><span class="ico">📍</span>קבוצות לפי עיר ואזור</h2>
+  <div class="grid">
+    <div class="card b">
+      <h4>באר שבע — סטארט אפ, תעסוקה והכשרות</h4>
+      <p>שלוש קבוצות של המרכז בבאר שבע:</p>
+      <div class="btns">
+        <a class="btn wa" href="https://did.li/C4J5q" target="_blank">💬 סטארט אפ באר שבע</a>
+        <a class="btn wa" href="https://did.li/W0Uw5" target="_blank">💬 תעסוקה וקריירה</a>
+        <a class="btn wa" href="https://did.li/Ygnrl" target="_blank">💬 הכשרות מקצועיות</a>
+      </div>
+    </div>
+    <div class="card b">
+      <h4>קריית מוצקין — צעירים ומשוחררים</h4>
+      <p>שתי קבוצות: צעירים מוצקין + משוחררים מוצקין.</p>
+      <p class="small">ההצטרפות דרך ירדן, רכזת הצעירים — לבקש ממנה חיבור לקבוצות.</p>
+      <div class="btns">
+        <a class="btn wa" href="https://wa.me/972526708915" target="_blank">💬 ירדן — רכזת צעירים</a>
+        <a class="btn tel" href="tel:0526708915">📞 052-670-8915</a>
+      </div>
+    </div>
+    <div class="card b">
+      <h4>בית שאן — סטודנטים</h4>
+      <p>קבוצת הסטודנטים של בית שאן.</p>
+      <p class="small">ההצטרפות דרך חגי, רכז חיילים משוחררים.</p>
+      <div class="btns">
+        <a class="btn wa" href="https://wa.me/972509552000" target="_blank">💬 חגי — רכז משוחררים</a>
+        <a class="btn tel" href="tel:0509552000">📞 050-955-2000</a>
+      </div>
+    </div>
+    <div class="card b">
+      <h4>עכו — מועדון עכוג'וב</h4>
+      <p>מועדון התעסוקה של עכו — משרות והזדמנויות בעיר.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/GxHSlPa5EzH9PC0HMYJ9BJ" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ירושלים -->
+<section id="jlm">
+  <h2><span class="ico">🏛️</span>ירושלים</h2>
+  <div class="grid">
+    <div class="card g">
+      <h4>פדלט מענים חדשים — פורום מצב ירושלים</h4>
+      <p>לוח פדלט שמרכז מענים חדשים בירושלים. ההצטרפות בשני שלבים: ממלאים את הטופס, ואז שולחים הודעה למספר של הפורום.</p>
+      <div class="btns">
+        <a class="btn lnk" href="https://padlet.com/hadarmaweiss/padlet-hqbjkc04mgbvdple" target="_blank">🔗 לפדלט המענים</a>
+        <a class="btn lnk" href="https://forms.office.com/r/9VAMLcVRKn?origin=lprLink" target="_blank">📝 טופס הצטרפות</a>
+        <a class="btn wa" href="https://wa.me/97225468450" target="_blank">💬 הודעה אחרי מילוי</a>
+        <a class="btn tel" href="tel:025468450">📞 02-546-8450</a>
+      </div>
+    </div>
+    <div class="card g">
+      <h4>משוחררים ירושלים</h4>
+      <p>קבוצת החיילים המשוחררים של ירושלים.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/BbizRe7vw9MIFQeDawIqnN" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- נוער -->
+<section id="noar">
+  <h2><span class="ico">🌱</span>נוער (14–18)</h2>
+  <p class="sub">שימו לב — קבוצה בטראק הנוער, לא לערבב עם מענים לבוגרים</p>
+  <div class="grid">
+    <div class="card">
+      <span class="pill">נוער 14–18</span>
+      <h4>מענים עירוניים לנוער</h4>
+      <p>מענים עירוניים לבני נוער.</p>
+      <div class="btns"><a class="btn wa" href="https://chat.whatsapp.com/IoOwIDI8wGeFemUeU0PZGp" target="_blank">💬 הצטרפות לקבוצה</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="note">💡 <b>מצאתם מענה טוב באחת הקבוצות?</b> התהליך הרגיל: מוסיפים למונדיי (וורקספייס מענים) → יוצרים טופס הרשמה פנימי → שולחים לקבוצת הרכזים להפצה. כך שומרים על מדידת האימפקט.</div>
+
+</div>
+
+<footer>
+  <a href="https://hopa.org.il" target="_blank"><img src="hopa-logo.png" alt="הופה"></a>
+  <p><a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · קבוצות וואטסאפ למענים ותוכניות · הרשימה מלירון, אוגוסט 2026</p>
+</footer>
+
+</body>
+</html>
