@@ -119,7 +119,7 @@ footer a{color:var(--pink-deep)}
 <div class="stage locked" id="s2">
   <span class="done-tag">✓ מולא</span>
   <h2><span class="n">2</span>שאלון היכרות קצר</h2>
-  <p>כמה שאלות על איפה את/ה היום ומה את/ה צריך/ה — זה מה שעוזר לנו להתאים לך את הליווי. בחר/י את בית הספר שלך:</p>
+  <p>כמה שאלות על איפה את/ה היום ומה את/ה צריך/ה — זה מה שעוזר לנו להתאים לך את הליווי. בחר/י בית ספר והקלד/י את הטלפון שלך:</p>
   <select id="schoolSel">
     <option value="">— בחרו בית ספר —</option>
     <option value="https://forms12grade.fillout.com/t/4yqCmdoFBDus">אורט אדיבי אשקלון</option>
@@ -130,10 +130,12 @@ footer a{color:var(--pink-deep)}
     <option value="https://forms12grade.fillout.com/t/fNhxNpBj26us">אורט בית הערבה ירושלים</option>
     <option value="other">בית ספר אחר</option>
   </select>
+  <input type="tel" id="phoneInp" placeholder="הטלפון הנייד שלך (למשל 0501234567)" style="display:none;width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:'Rubik',sans-serif;font-size:15px;margin:0 0 10px;direction:rtl">
   <div class="btnrow">
-    <a class="btn pk" id="quizBtn" href="#" target="_blank" style="display:none">פתיחת השאלון 📝</a>
+    <a class="btn pk" id="quizBtn" href="#" target="_blank" style="display:none">פתיחת השאלון שלי 📝</a>
     <button class="btn gh" id="quizDone" style="display:none">סיימתי למלא — ממשיכים ←</button>
   </div>
+  <div class="note" id="notFoundNote" style="display:none">🔍 השאלון לא מצא אותך? כנראה שהטלפון שלך עדיין לא במערכת — לא נורא, אפשר <button id="skipQuiz" style="background:none;border:none;color:var(--pink-deep);font-family:'Rubik',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0">להמשיך לשלב הבא</button> ונשלים את הפרטים בטופס.</div>
   <div class="note" id="otherNote" style="display:none">בית הספר שלך עדיין לא ברשימה — אפשר להמשיך ישר לשלב הבא 👇</div>
 </div>
 
@@ -191,15 +193,26 @@ footer a{color:var(--pink-deep)}
   chk.addEventListener('change',function(){agreeBtn.disabled=!chk.checked});
   agreeBtn.addEventListener('click',function(){st.agreed=true;save();render();s2.scrollIntoView({behavior:'smooth',block:'center'})});
 
+  var phoneInp=document.getElementById('phoneInp'),notFound=document.getElementById('notFoundNote'),skipQuiz=document.getElementById('skipQuiz');
+  function buildQuiz(){
+    var v=sel.value;
+    if(!v||v==='other'){quizBtn.style.display='none';return}
+    var ph=(phoneInp.value||'').replace(/\D/g,'');
+    quizBtn.href=ph.length>=9?v+'?Phone_number='+ph:v;
+    quizBtn.style.display='inline-flex';
+  }
   sel.addEventListener('change',function(){
     var v=sel.value;
-    quizBtn.style.display='none';quizDone.style.display='none';otherNote.style.display='none';
+    quizBtn.style.display='none';quizDone.style.display='none';otherNote.style.display='none';notFound.style.display='none';phoneInp.style.display='none';
     if(!v)return;
     if(v==='other'){otherNote.style.display='block';st.quiz=true;save();render();return}
-    quizBtn.href=v;quizBtn.style.display='inline-flex';
+    phoneInp.style.display='block';
+    buildQuiz();
   });
-  quizBtn.addEventListener('click',function(){setTimeout(function(){quizDone.style.display='inline-flex'},800)});
+  phoneInp.addEventListener('input',buildQuiz);
+  quizBtn.addEventListener('click',function(){setTimeout(function(){quizDone.style.display='inline-flex';notFound.style.display='block'},800)});
   quizDone.addEventListener('click',function(){st.quiz=true;save();render()});
+  skipQuiz.addEventListener('click',function(){st.quiz=true;save();render()});
 
   render();
 })();
