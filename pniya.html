@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>פנייה להופה — בוגרים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111; --muted:#666; --line:#E5E5E5; --bg:#F7F7F7;
+  --green:#3BA55C; --wa:#25D366; --blue:#3D7DD8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;direction:rtl}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+.topbar{background:#fff;border-bottom:3px solid var(--pink);padding:10px 0}
+.topbar .wrap{display:flex;align-items:center;gap:12px}
+.topbar img{height:38px}
+.topbar .t{font-weight:700;font-size:15px}
+
+.hero{background:linear-gradient(135deg,var(--yellow-soft),var(--pink-soft));padding:34px 0 28px;border-bottom:1px solid var(--line);text-align:center}
+.hero h1{font-size:clamp(26px,5vw,38px);font-weight:900;line-height:1.2}
+.hero p{max-width:560px;margin:10px auto 0;font-size:16px;color:#333}
+
+/* progress dots */
+.dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.dot{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--muted)}
+.dot.on{background:var(--yellow);border-color:var(--yellow-deep);color:var(--ink)}
+.dot.done{background:var(--green);border-color:var(--green);color:#fff}
+
+.stage{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin:22px 0;position:relative}
+.stage.locked{opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.stage h2{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.stage h2 .n{background:var(--pink);color:#fff;min-width:30px;height:30px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+.stage p{font-size:14.5px;color:#333}
+.stage .done-tag{position:absolute;top:16px;left:16px;background:var(--green);color:#fff;border-radius:999px;padding:2px 12px;font-size:12.5px;font-weight:700;display:none}
+.stage.completed .done-tag{display:inline-block}
+.stage.completed{border-color:var(--green)}
+
+/* consent */
+.consent{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;max-height:300px;overflow-y:auto;font-size:13.5px;color:#333}
+.consent h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.consent p{margin-bottom:9px;font-size:13.5px}
+.agree{display:flex;gap:10px;align-items:flex-start;background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:10px;padding:12px 14px;cursor:pointer;font-size:14.5px;font-weight:600}
+.agree input{width:20px;height:20px;accent-color:var(--pink);margin-top:2px;flex:none}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:999px;font-size:15px;font-weight:800;text-decoration:none;border:none;cursor:pointer;font-family:'Rubik',sans-serif}
+.btn.pk{background:var(--pink);color:#fff}
+.btn.pk:hover{background:var(--pink-deep)}
+.btn.pk:disabled{background:#ccc;cursor:not-allowed}
+.btn.gh{background:#fff;color:var(--pink-deep);border:2px solid var(--pink)}
+.btn.gh:hover{background:var(--pink-soft)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+/* school select */
+select{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:'Rubik',sans-serif;font-size:15px;background:#fff;margin:10px 0;direction:rtl}
+select:focus{outline:none;border-color:var(--pink)}
+
+/* split cards */
+.split{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:14px}
+.opt{border:2px solid var(--line);border-radius:14px;padding:18px;text-align:center;text-decoration:none;color:var(--ink);background:#fff;transition:border-color .15s}
+.opt:hover{border-color:var(--pink)}
+.opt .em{font-size:34px}
+.opt h3{font-size:17px;font-weight:800;margin:8px 0 4px;color:var(--pink-deep)}
+.opt p{font-size:13.5px;color:var(--muted)}
+
+.note{background:var(--yellow-soft);border-right:5px solid var(--yellow-deep);border-radius:10px;padding:11px 14px;margin:12px 0;font-size:13.5px}
+
+footer{margin-top:36px;background:#fff;border-top:3px solid var(--pink);padding:22px 0;text-align:center}
+footer img{height:36px}
+footer p{font-size:12.5px;color:var(--muted);margin-top:6px}
+footer a{color:var(--pink-deep)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <img src="hopa-logo.png" alt="הופה">
+    <span class="t">פנייה להופה · בוגרים</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>היי! טוב שבאת 💛</h1>
+    <p>כדי שנוכל לעזור לך בצורה הכי טובה — יש כאן שלושה שלבים קצרים: אישור הסכמה, שאלון היכרות קצר, ואז הפנייה עצמה. כל הדרך לוקחת כמה דקות.</p>
+    <div class="dots"><span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- שלב 1: הסכמה -->
+<div class="stage" id="s1">
+  <span class="done-tag">✓ אושר</span>
+  <h2><span class="n">1</span>טופס הסכמה לקבלת שירותי העמותה</h2>
+  <p>קראו בבקשה את טופס ההסכמה ואשרו בתחתית:</p>
+  <div class="consent">
+    <h3>טופס הסכמה לקבלת שירותי עמותת הופה, ע.ר. 580831550</h3>
+    <p>עמותת הופה ("העמותה") מודה לך על שבחרת להצטרף לתכנית הבוגרים של בית הספר שלך ("התכנית"). התכנית מיועדת ללוות את בוגרי בית הספר לאחר סיום הלימודים בתחומים כגון שירות צבאי או לאומי, תעסוקה, לימודים ומלגות.</p>
+    <p>לצורך השתתפות בתכנית, נדרשת הסכמתך לכך שהעמותה תקבל ממך שם מלא, תעודת זהות, טלפון, כתובת וגיל ("המידע האישי"), ותשתמש בו לצורך מתן השירותים, לרבות יצירת קשר ומסירת עדכונים לך. חשוב לנו להבהיר כי אינך מחויב/ת על פי חוק למסור מידע זה, אך אם לא תמסור/י את המידע, לא נוכל לספק לך את שירותי העמותה.</p>
+    <p>העמותה רשאית להעביר את פרטי הקשר שלך לגופים המספקים שירותים ותוכניות סיוע המפורסמים באתר העמותה, לצורך מתן שירות או סיוע רלוונטי עבורך.</p>
+    <p>באישורך, הנך מסכים/ה ומאשר/ת לעמותה ליצור עמך קשר טלפוני מעת לעת או לשלוח לך הודעות SMS, וואטסאפ או דוא"ל, לשם מתן שירותי העמותה.</p>
+    <p>המידע האישי שלך יישמר במאגרי המידע המאובטחים של העמותה.</p>
+    <p>זכותך לעיין במידע המוחזק עליך בעמותה ולבקש את תיקונו: בכל שלב תוכל/י לפנות לעמותה לצורך עיון במידע האישי אודותיך השמור אצלנו, עדכונו או תיקונו, בכפוף להוראות הדין, באמצעות פנייה מזוהה בכתב לכתובת הדוא"ל: liron@hopa.org.il.</p>
+  </div>
+  <label class="agree"><input type="checkbox" id="agreeChk"><span>קראתי והבנתי את טופס ההסכמה במלואו, ואני מסכים/ה לאמור בו</span></label>
+  <div class="btnrow"><button class="btn pk" id="agreeBtn" disabled>ממשיכים לשאלון ←</button></div>
+</div>
+
+<!-- שלב 2: שאלון מיפוי -->
+<div class="stage locked" id="s2">
+  <span class="done-tag">✓ מולא</span>
+  <h2><span class="n">2</span>שאלון היכרות קצר</h2>
+  <p>כמה שאלות על איפה את/ה היום ומה את/ה צריך/ה — זה מה שעוזר לנו להתאים לך את הליווי. בחר/י את בית הספר שלך:</p>
+  <select id="schoolSel">
+    <option value="">— בחרו בית ספר —</option>
+    <option value="https://forms12grade.fillout.com/t/4yqCmdoFBDus">אורט אדיבי אשקלון</option>
+    <option value="https://forms12grade.fillout.com/t/wbcapmr8RZus">עתיד שמיים קריית מוצקין</option>
+    <option value="https://forms12grade.fillout.com/t/2oEYozRRNLus">אורט מרום עכו</option>
+    <option value="https://forms12grade.fillout.com/t/bBWnRDYD2nus">אורט מגשימים בית שאן</option>
+    <option value="https://forms12grade.fillout.com/t/ki3biGmocKus">אורט צור ברק</option>
+    <option value="https://forms12grade.fillout.com/t/fNhxNpBj26us">אורט בית הערבה ירושלים</option>
+    <option value="other">בית ספר אחר</option>
+  </select>
+  <div class="btnrow">
+    <a class="btn pk" id="quizBtn" href="#" target="_blank" style="display:none">פתיחת השאלון 📝</a>
+    <button class="btn gh" id="quizDone" style="display:none">סיימתי למלא — ממשיכים ←</button>
+  </div>
+  <div class="note" id="otherNote" style="display:none">בית הספר שלך עדיין לא ברשימה — אפשר להמשיך ישר לשלב הבא 👇</div>
+</div>
+
+<!-- שלב 3: פיצול -->
+<div class="stage locked" id="s3">
+  <h2><span class="n">3</span>איך נוכל לעזור?</h2>
+  <div class="split">
+    <a class="opt" href="https://wkf.ms/4cbOZ9H" target="_blank">
+      <div class="em">🙋</div>
+      <h3>פנייה אישית</h3>
+      <p>צריכים עזרה, הכוונה או סיוע בנושא כלשהו — מלגות, תעסוקה, זכויות, כל דבר</p>
+    </a>
+    <a class="opt" href="https://wkf.ms/3TISUod" target="_blank">
+      <div class="em">🎯</div>
+      <h3>הרשמה למענה שפורסם</h3>
+      <p>ראיתם מענה, קורס או תוכנית שפרסמנו ואתם רוצים להירשם</p>
+    </a>
+  </div>
+  <div class="note">💡 אם הגעתם לכאן מקישור של מענה ספציפי — לחצו על "הרשמה למענה" ושם המענה כבר ימתין לכם בטופס.</div>
+</div>
+
+</div>
+
+<footer>
+  <a href="https://hopa.org.il" target="_blank"><img src="hopa-logo.png" alt="הופה"></a>
+  <p><a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · הופה — פתאום הכל נראה אפשרי</p>
+</footer>
+
+<script>
+(function(){
+  var KEY='hopa_pniya_state';
+  var st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+
+  var s1=document.getElementById('s1'),s2=document.getElementById('s2'),s3=document.getElementById('s3');
+  var d1=document.getElementById('d1'),d2=document.getElementById('d2'),d3=document.getElementById('d3');
+  var chk=document.getElementById('agreeChk'),agreeBtn=document.getElementById('agreeBtn');
+  var sel=document.getElementById('schoolSel'),quizBtn=document.getElementById('quizBtn'),quizDone=document.getElementById('quizDone'),otherNote=document.getElementById('otherNote');
+
+  // maane param passthrough: אם הגיעו עם ?maane= — נעביר אותו לטופס ההרשמה
+  var maane=new URLSearchParams(location.search).get('maane');
+  if(maane){
+    var reg=document.querySelector('#s3 .opt:nth-child(2)');
+    reg.href='https://forms.monday.com/forms/49e7efabc467255c4fbeb12f11a98791?r=euc1&maane='+encodeURIComponent(maane);
+  }
+
+  function render(){
+    if(st.agreed){s1.classList.add('completed');d1.classList.add('done');d1.textContent='✓';s2.classList.remove('locked');d2.classList.add('on');chk.checked=true;agreeBtn.style.display='none'}
+    if(st.quiz){s2.classList.add('completed');d2.classList.remove('on');d2.classList.add('done');d2.textContent='✓';s3.classList.remove('locked');d3.classList.add('on');
+      if(!s3.classList.contains('locked'))s3.scrollIntoView({behavior:'smooth',block:'center'})}
+    if(!st.agreed)d1.classList.add('on');
+  }
+
+  chk.addEventListener('change',function(){agreeBtn.disabled=!chk.checked});
+  agreeBtn.addEventListener('click',function(){st.agreed=true;save();render();s2.scrollIntoView({behavior:'smooth',block:'center'})});
+
+  sel.addEventListener('change',function(){
+    var v=sel.value;
+    quizBtn.style.display='none';quizDone.style.display='none';otherNote.style.display='none';
+    if(!v)return;
+    if(v==='other'){otherNote.style.display='block';st.quiz=true;save();render();return}
+    quizBtn.href=v;quizBtn.style.display='inline-flex';
+  });
+  quizBtn.addEventListener('click',function(){setTimeout(function(){quizDone.style.display='inline-flex'},800)});
+  quizDone.addEventListener('click',function(){st.quiz=true;save();render()});
+
+  render();
+})();
+</script>
+</body>
+</html>
