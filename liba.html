@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · ליבת הפעילות של רכז/ת הבוגרים</title>
+<meta name="description" content="מסמך ליבת הפעילות של רכז/ת הבוגרים של הופה — מה בליבה של התפקיד, איך עובדים, ומה מוסיפים כשהיקף המשרה מאפשר.">
+<meta property="og:title" content="הופה · ליבת הפעילות של רכז/ת הבוגרים">
+<meta property="og:description" content="הגדרת התפקיד, רמות המעקב והסיוע, לוח השנה, המדדים והגבולות — בעמוד אחד.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* הופה · מערכת עיצוב: ורוד #E8348A · צהוב #FFF200 · Rubik · RTL · אין רקע שחור */
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --green:#3BA55C; --green-soft:#E8F5EC;
+  --orange:#E8862F; --orange-soft:#FDF0E3;
+  --blue:#3D7DD8; --blue-soft:#E7F0FB;
+  --r-lg:24px; --r-md:16px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --maxw:880px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep)}
+h1,h2,h3,h4{line-height:1.25;margin:0;letter-spacing:-.02em;font-weight:800}
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.hero{position:relative;padding:52px 0 38px;overflow:hidden;
+  background:radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+             radial-gradient(900px 460px at 4% 4%, rgba(232,52,138,.14), transparent 60%),#FFF;
+  border-bottom:1px solid var(--line)}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:48px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:16px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.datechip{background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:999px;
+  padding:6px 16px;font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.hero h1{font-size:clamp(27px,5vw,40px)}
+.hero .sub{margin:14px 0 0;font-size:18px;color:var(--ink-2);max-width:700px}
+.hero .method{margin-top:10px;font-size:14px;color:var(--muted)}
+main{padding:34px 0 20px}
+section{margin-bottom:44px;scroll-margin-top:30px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--pink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px}
+.sec-head h2{font-size:clamp(21px,3.4vw,27px)}
+.sec-lead{color:var(--muted);font-size:15.5px;margin:6px 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 24px;
+  box-shadow:var(--shadow);margin-bottom:14px}
+.card h3{font-size:18px;margin-bottom:6px}
+.card ul{margin:6px 0 4px;padding-inline-start:22px}
+.card li{margin-bottom:7px}
+.hl{background:linear-gradient(0deg,rgba(255,242,0,.55),rgba(255,242,0,.55)) no-repeat 0 78%/100% 34%;font-weight:700}
+.mission{border:2px solid var(--pink);background:linear-gradient(180deg,#fff,var(--pink-soft) 200%);
+  border-radius:var(--r-lg);padding:22px 26px;font-size:19px;font-weight:600;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.pr{background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px}
+.pr b{display:block;font-size:15px;color:var(--pink-deep);margin-bottom:3px}
+.pr span{font-size:13.5px;color:var(--ink-2);line-height:1.5;display:block}
+table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);margin:12px 0}
+th{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;text-align:right;padding:10px 14px;white-space:nowrap}
+td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:var(--tint)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:700px){.tiers{grid-template-columns:1fr}}
+.tier{border-radius:var(--r-md);padding:15px 17px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+.tier.green{border-top:6px solid var(--green)}
+.tier.orange{border-top:6px solid var(--orange)}
+.tier.red{border-top:6px solid var(--pink)}
+.tier h4{font-size:16px;margin-bottom:6px}
+.tier p{margin:0;font-size:14px;color:var(--ink-2)}
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:700px){.ladder{grid-template-columns:1fr 1fr}}
+.rung{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px;box-shadow:var(--shadow);position:relative}
+.rung b{display:block;font-size:15.5px;color:var(--pink-deep)}
+.rung span{font-size:13px;color:var(--ink-2);line-height:1.5;display:block;margin-top:3px}
+.rung .step{position:absolute;top:-11px;inset-inline-end:12px;background:var(--yellow);border:1px solid var(--yellow-deep);
+  border-radius:999px;font-size:11.5px;font-weight:800;padding:1px 10px}
+.month{display:grid;grid-template-columns:105px 1fr;border-top:1px solid var(--line)}
+.month:first-child{border-top:none}
+.month .m{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;padding:11px 13px;font-size:14.5px}
+.month .a{padding:11px 15px;font-size:14.5px}
+.months{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+.callout{border-radius:var(--r-md);padding:15px 19px;margin:12px 0;font-size:15px}
+.callout.y{background:var(--yellow-soft);border:1px solid var(--yellow-deep)}
+.callout.p{background:var(--pink-soft);border:1px solid #F3A9CC}
+.callout.r{background:#FDECEC;border:1px solid #F0B4B4}
+.callout b:first-child{display:block;margin-bottom:4px}
+.quote{border-inline-start:4px solid var(--yellow-deep);background:var(--yellow-soft);
+  border-radius:0 var(--r-md) var(--r-md) 0;padding:12px 18px;margin:12px 0;font-size:15px;font-weight:600;color:var(--ink-2)}
+footer{border-top:1px solid var(--line);background:var(--tint);padding:26px 0 38px;margin-top:26px}
+footer .frow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer img{height:40px}
+footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה">
+        <span class="org"><b>הופה</b><span>hopa.org.il · פתאום הכל נראה אפשרי</span></span>
+      </a>
+      <span class="datechip">טיוטה לדיון · אוגוסט 2026 · תשפ"ז</span>
+    </div>
+    <h1>ליבת הפעילות של רכז/ת הבוגרים</h1>
+    <p class="sub">מה בליבה של התפקיד — החובות של כל רכז/ת בכל בית ספר, איך עובדים בפועל, ומה מוסיפים כשהיקף המשרה מאפשר.</p>
+    <p class="method">מבוסס על תורת ההפעלה של "יש לך כתובת" (המינהל לחינוך התיישבותי + ג'וינט אשלים), <a href="mechkar-bogrim.html">מחקר ההשוואה של הופה</a> (אוג' 2026) והרעיונות שגובשו בשיחות יעל ולירון.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section id="mahut">
+  <div class="sec-head"><span class="sec-num">1</span><h2>מהות התפקיד</h2></div>
+  <div class="mission">
+    רכז/ת הבוגרים הוא/היא <span class="hl">הכתובת הקבועה</span> של כל בוגר/ת בית הספר מכיתה י"ב ועד גיל 26 —
+    המבוגר המשמעותי שלא נעלם אחרי הטקס, שיוזם קשר, מחבר להזדמנויות ולא מוותר.
+  </div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <h3>שתי זירות עבודה</h3>
+      <ul>
+        <li><b>פרטנית</b> — ליווי בוגרים: קשר יזום, איתור צרכים, חיבור למענים, פתרון בעיות ומיצוי זכויות.</li>
+        <li><b>מערכתית</b> — בתוך בית הספר: מיצוב תחום הבוגרים, מיפוי שכבות י"א–י"ב עם הצוות, הצגת נתונים להנהלה, ואירועי בוגרים.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>מסגרת ארגונית</h3>
+      <ul>
+        <li><b>כפיפות מנהלתית:</b> מנהל/ת בית הספר.</li>
+        <li><b>ליווי מקצועי:</b> מטה הופה — הדרכה, זום רכזים חודשי, וכלים (מאגר המענים, שירות המלגות, הדשבורד).</li>
+        <li><b>עורף מקצועי:</b> רכז המענים והבוגרים במטה הופה — לשאלות מלגות, השכלה ומענים. הרכז/ת בשטח לא צריכ/ה לדעת הכול לבד.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="ekronot">
+  <div class="sec-head"><span class="sec-num">2</span><h2>חמישה עקרונות עבודה</h2></div>
+  <div class="principles">
+    <div class="pr"><b>רצף ליווי</b><span>מכיתה י"ב עד גיל 26 — הקשר לא נקטע אף פעם, גם כשהבוגר "נעלם".</span></div>
+    <div class="pr"><b>פרו-אקטיביות</b><span>בוגרים לא מבקשים עזרה. האחריות ליזום — על הרכז/ת, והיא מעוגנת ביעדים.</span></div>
+    <div class="pr"><b>התאמה אישית</b><span>רמת הקשר והסיוע נגזרת מהצורך — ומשתנה עם הזמן.</span></div>
+    <div class="pr"><b>ראייה כוללנית</b><span>צבא, לימודים, עבודה, כסף, דיור ורגש — הכול קשור להכול.</span></div>
+    <div class="pr"><b>גשר לקהילה</b><span>לא מחליפים שירותים — מחברים אליהם ומוודאים שהחיבור עבד.</span></div>
+  </div>
+  <p class="quote">"לא מוותרים על אף בוגר — משאירים דלת פתוחה. גם מי שלא עונה היום, יודע שיש לו כתובת מחר."</p>
+</section>
+
+<!-- 3 -->
+<section id="liba">
+  <div class="sec-head"><span class="sec-num">3</span><h2>הליבה — שש החובות של כל רכז/ת</h2></div>
+  <p class="sec-lead">אלה לא המלצות. זו ההגדרה המינימלית של התפקיד, בכל בית ספר ובכל היקף משרה.</p>
+
+  <div class="card">
+    <h3>א. מאגר בוגרים חי</h3>
+    <ul>
+      <li><b>קליטת מחזור לפני הפיזור (מאי–יוני):</b> מכל תלמיד/ת י"ב — טלפון אישי (לא מייל בית ספרי!), תאריך גיוס צפוי, טופס הסכמה. פגישה/שיחה אישית קצרה עם כל אחד.</li>
+      <li>עדכון שוטף של המאגר במונדיי אחרי כל שיחה — טלפון שמתנתק הוא בוגר שאבד.</li>
+      <li>פתיחת קבוצת וואטסאפ לשנתון עוד לפני סוף השנה.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ב. קשר יזום מדורג — לפי רמת מעקב</h3>
+    <div class="tiers">
+      <div class="tier green">
+        <h4>🟢 עוקב/ת מרחוק</h4>
+        <p>כל הבוגרים: <b>3 שיחות יזומות בשנה</b> + ברכות חג ויום הולדת, קבוצת וואטסאפ, הזמנות לאירועים.</p>
+      </div>
+      <div class="tier orange">
+        <h4>🟠 עוקב/ת מקרוב</h4>
+        <p>בוגרים שסומנו במיפוי או לפני מעבר: <b>שיחה יזומה אחת לחודש</b> + קשר לפני כל צומת (גיוס, קורס, שחרור, לימודים).</p>
+      </div>
+      <div class="tier red">
+        <h4>🔴 נכנס/ת לפעולה</h4>
+        <p>עלה צורך ממשי: קשר אינטנסיבי, פגישות, סנגור וליווי מול גורמים — עד שהצורך נענה.</p>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin:4px 0 0">שיחת מעקב = <b>כ-15 דקות</b>, נפתחת ב"נוח לך לדבר עכשיו?". האווירה חשובה מהטופס. הרמה נקבעת מחדש בכל מעבר בין תקופות.</p>
+  </div>
+
+  <div class="card">
+    <h3>ג. נוכחות בצמתים הקבועים</h3>
+    <ul>
+      <li><b>אחרי סיום י"ב:</b> שיחת טלפון לכל בוגר/ת טרי/ה בקיץ.</li>
+      <li><b>סביב הגיוס:</b> ברכה ביום הגיוס + שיחה אחרי הטירונות (תאריכי הגיוס כבר במאגר).</li>
+      <li><b>לקראת שחרור:</b> שיחות החל מ-3 חודשים לפני תאריך השחרור — "מה התוכנית ליום שאחרי?"</li>
+      <li><b>אחרי השחרור:</b> חיבור למלגות (החלונות נסגרים!), לימודים, תעסוקה ומרכז הצעירים המקומי.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ד. חיבור למענים — במדרג, ועד הסוף</h3>
+    <div class="ladder">
+      <div class="rung"><span class="step">1</span><b>יידוע</b><span>מידע מלא ומדויק — הבוגר/ת מממש/ת לבד.</span></div>
+      <div class="rung"><span class="step">2</span><b>תיווך</b><span>הרכז/ת מקשר/ת: שיחה מקדימה לגורם או שיחה משותפת.</span></div>
+      <div class="rung"><span class="step">3</span><b>סנגור</b><span>הרכז/ת פונה בעצמו/ה לגורם — בהחלטה משותפת, הבוגר/ת מעודכנ/ת ומוביל/ה.</span></div>
+      <div class="rung"><span class="step">4</span><b>ליווי</b><span>מתלווים פיזית לפגישה כשבלי זה הבוגר/ת לא יגיע.</span></div>
+    </div>
+    <ul>
+      <li>הכלים: <a href="https://hopa.org.il" target="_blank" rel="noopener">מאגר המענים של הופה</a> (645+ מענים), שירות המלגות, ורכז המענים במטה.</li>
+      <li><b>"לא למהר לקבל לא"</b> — מטילים ספק בתשובה שלילית של פקיד, עולים קומה למנהל, ומציידים את הבוגר/ת בנוסח אסרטיבי ומנומס.</li>
+      <li><b>סוגרים מעגל:</b> חיבור למענה בלי מעקב לא נחשב. בודקים שהקשר נוצר ושהצורך באמת נענה — ואם לא, מחפשים מענה אחר.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ה. עבודה מערכתית בבית הספר</h3>
+    <ul>
+      <li><b>ישיבת הנהלה בפתיחת השנה:</b> הצגת תמונת הבוגרים — נתונים, הצלחות ופערים (מה שקורה לבוגרים מלמד את ביה"ס מה לשפר בהכנה).</li>
+      <li><b>ישיבות איתור ומיפוי פעמיים בשנה</b> עם צוות י"א וצוות י"ב: מי חסר/ת עורף משפחתי? למי אין לאן ללכת אחרי י"ב? מי צריך ליווי מקרוב מהיום הראשון?</li>
+      <li>נוכחות בטקס סיום י"ב ובפעילויות הכנה לצה"ל · היכרות עם שכבת י"א · שיתוף פעולה עם רכז/ת ההכנה לצה"ל והיועצת.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ו. תיעוד ודיווח</h3>
+    <ul>
+      <li><b>כל שיחה מתועדת</b> — תאריך, נושאים, צרכים שעלו, מה סוכם. ("כשאני מתקשר אחרי תקופה אני זוכר הכול — וזה מאוד משמעותי עבורו.")</li>
+      <li><b>יעדים חודשיים כמותיים:</b> כמה שיחות מעקב החודש, נגזר ממספר הבוגרים הכולל.</li>
+      <li>הנתונים נכנסים לדשבורד של הופה — והם הבסיס לדיווח להנהלה, למטה ולמשרד העבודה.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="sicha">
+  <div class="sec-head"><span class="sec-num">4</span><h2>פרוטוקול שיחת מעקב — 4 שאלות</h2></div>
+  <p class="sec-lead">כל שיחה יזומה עוברת בקצרה על ארבעה תחומים — כך שום דבר לא נופל בין הכיסאות.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>תחום</th><th>מה שואלים</th></tr>
+    <tr><td><b>🧭 מסלול</b></td><td>איפה את/ה עכשיו — צבא / שירות / לימודים / עבודה? מה השלב הבא ומתי?</td></tr>
+    <tr><td><b>💰 כסף וזכויות</b></td><td>מלגות פתוחות, פיקדון, זכאויות שלא מומשו, חובות שמעיקים?</td></tr>
+    <tr><td><b>🏠 חיים</b></td><td>דיור, משפחה, איך את/ה מרגיש/ה באמת? (מקשיבים גם למה שלא נאמר)</td></tr>
+    <tr><td><b>🔗 חיבור</b></td><td>למה אפשר לחבר אותך עכשיו — מענה מהמאגר, אירוע, בוגר/ת אחר/ת?</td></tr>
+  </table></div>
+  <div class="callout y">
+    <b>עקרונות השיחה</b>
+    מתחילים מהתקוות, לא מהחששות · משקפים כוחות והצלחות ("שיחה טובה היא שיחה שבה הבוגר לומד על צדדים חזקים שלו") · מדברים על "הפרק הבא", לא על "כל החיים" · ומסיימים ב"מה הצעד הבא שלך?" + עדכון המאגר.
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="luach">
+  <div class="sec-head"><span class="sec-num">5</span><h2>עוגני לוח השנה</h2></div>
+  <div class="months">
+    <div class="month"><span class="m">ספטמבר</span><span class="a">ברכת שנה טובה לכולם + עדכון פרטים · תזכורת <b>מלגת קרן גרוס (15.9–15.12)</b> · ישיבת הנהלה · מיפוי ראשון עם צוותי י"א–י"ב</span></div>
+    <div class="month"><span class="m">סתיו</span><span class="a">סבב שיחות 1 · שיחות לקראת גיוס לפי תאריכים · חיבור משוחררים לייעוץ השכלה</span></div>
+    <div class="month"><span class="m">חנוכה</span><span class="a">יום "בוגרים מדברים מהשטח" — בוגרים בחופשת חג מספרים לי"ב · ברכת חג לחיילים</span></div>
+    <div class="month"><span class="m">חורף</span><span class="a">מעקב סטודנטים (חידוש מלגות, סמסטר ב') · שיחות שחרור למשתחררי האביב</span></div>
+    <div class="month"><span class="m">אביב</span><span class="a"><b>מלגת IMPACT (מרץ–מאי)</b> · ברכת פורים/פסח + סקר בוגרים שנתי קצר · סבב שיחות 2 · מיפוי שני עם הצוותים</span></div>
+    <div class="month"><span class="m">מאי–יוני</span><span class="a"><b>מבצע קליטת מחזור:</b> טלפון + תאריך גיוס + הסכמה מכל י"ב · קבוצת וואטסאפ · טקס סיום</span></div>
+    <div class="month"><span class="m">קיץ</span><span class="a">שיחת "בוגר טרי" לכל המסיימים · סבב שיחות 3 · מפגש בוגרים שנתי · תכנון שנה"ל הבאה</span></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="madadim">
+  <div class="sec-head"><span class="sec-num">6</span><h2>איך יודעים שזה עובד — המדדים</h2></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>מדד</th><th>מה מודדים</th></tr>
+    <tr><td><b>מדד קשר</b></td><td>% הבוגרים עם קשר מתועד ב-12 החודשים האחרונים</td></tr>
+    <tr><td><b>מדד דאטה</b></td><td>% מספרי טלפון תקינים במאגר</td></tr>
+    <tr><td><b>מדד תוצאה</b></td><td>% "לומד / עובד / משרת" מכלל הבוגרים בקשר</td></tr>
+    <tr><td><b>מדד מיצוי</b></td><td>% בוגרים שמומשה עבורם לפחות זכות או מלגה אחת השנה</td></tr>
+    <tr><td><b>מדד רך</b></td><td>"יש לי מבוגר שאכפת לו ממני" — שאלה אחת בסקר השנתי</td></tr>
+  </table></div>
+  <div class="callout p">
+    <b>וידוא מיקוד — פעם ברבעון</b>
+    לבדוק: האם חמשת הבוגרים הכי אדומים באמת קיבלו הכי הרבה זמן? המחקר מראה שברירת המחדל של כל מערכת היא לזלוג אל המקרים הקלים. בודקים — ומתקנים.
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="harchavot">
+  <div class="sec-head"><span class="sec-num">7</span><h2>הרחבות — כשהיקף המשרה מאפשר</h2></div>
+  <p class="sec-lead">המלצות מדורגות מעבר לליבה. לא תנאי לתפקיד — אבל כל אחת מהן מוכחת מהשטח בארץ או בעולם.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>קהילה ושייכות</h3>
+      <ul>
+        <li><b>פינת "הכירו את הבוגר"</b> באתר/בכניסה לביה"ס — זרקור חודשי + QR לעדכון פרטים.</li>
+        <li><b>לוגו קהילת הבוגרים</b> של בית הספר — על חולצה/מדבקה בטקס הסיום.</li>
+        <li><b>שגריר/ת מחזור</b> — בוגר/ת פעיל/ה שמרכז/ת את קבוצת המחזור ומוריד/ה עומס מהרכז/ת.</li>
+        <li>ניוזלטר בוגרים תקופתי — סיפורים לפני בקשות.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>אירועים ומעורבות</h3>
+      <ul>
+        <li><b>בוגרים חונכים תלמידים</b> — פאנלים, "שאל בוגר" אסינכרוני, מנטורינג קצר לפני גיוס.</li>
+        <li><b>ערב נטוורקינג</b> בוגרים–בוגרים או בוגרים–מעסיקים מקומיים.</li>
+        <li>משלוח/ברכה מושקעת לחיילים בחגים · ציון "שנה לשחרור".</li>
+        <li>עדויות בוגרים (בהסכמה!) — לחוברת, לדיווחים ולגיוס משאבים.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="gvulot">
+  <div class="sec-head"><span class="sec-num">8</span><h2>גבולות, אתיקה ומצבי חירום</h2></div>
+  <div class="card">
+    <ul>
+      <li><b>סודיות והסכמה:</b> מידע על בוגר/ת נשמר במערכות הופה בלבד ולא משותף בלי צורך מקצועי. פרסום שם/תמונה/סיפור — רק בהסכמה מפורשת.</li>
+      <li><b>כסף:</b> הרכז/ת לא מעביר/ה כסף אישי לבוגרים ולא מלווה כספית. סיוע כלכלי — רק דרך מענים, מלגות וזכויות.</li>
+      <li><b>ערוצים:</b> וואטסאפ מהמספר הייעודי, בשעות סבירות. זמינות ≠ 24/7 — מגדירים ציפיות מראש.</li>
+      <li><b>לא מטפלים — מחברים:</b> הרכז/ת אינו/ה איש טיפול. תפקידו/ה לזהות ולחבר לגורם המקצועי.</li>
+    </ul>
+  </div>
+  <div class="callout r">
+    <b>🚨 מצוקה חריפה — עוצרים הכול</b>
+    בכל סימן למצוקה נפשית חריפה, פגיעה או סכנה: שיחה מיידית למטה הופה להתייעצות, וחיבור לעו"ס יתד / גורם טיפולי ברשות — עוד באותו יום. אחרי החיבור עוברים ל"עוקב מרחוק" כדי לפנות מקום לקשר הטיפולי, אבל המסר לבוגר/ת תמיד: <b>"אני עדיין איתך"</b> — העו"ס משלים את הרכז/ת, לא מחליף/ה.
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="mimshakim">
+  <div class="sec-head"><span class="sec-num">9</span><h2>מפת הממשקים</h2></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>גורם</th><th>מה מקבלים ממנו / עושים יחד</th></tr>
+    <tr><td><b>מנהל/ת ביה"ס</b></td><td>גיבוי, זמן בישיבות, הצגת נתונים בפתיחת שנה</td></tr>
+    <tr><td><b>מחנכי י"א–י"ב + יועצת + עו"ס</b></td><td>ישיבות מיפוי פעמיים בשנה, העברת מקל חמה על תלמידים בסיכון</td></tr>
+    <tr><td><b>רכז/ת הכנה לצה"ל</b></td><td>תיאום פעילויות ההכנה, תאריכי גיוס, בעיות מול מיטב</td></tr>
+    <tr><td><b>מטה הופה</b></td><td>הדרכה, זום רכזים חודשי, מאגר מענים, שירות מלגות, רכז מענים ובוגרים, דשבורד</td></tr>
+    <tr><td><b>ברשות המקומית</b></td><td>עו"ס יתד (הפניות טיפוליות), מרכז צעירים (תעסוקה והשכלה), קידום נוער</td></tr>
+    <tr><td><b>קהילת הרכזים</b></td><td>למידת עמיתים בין בתי הספר של הופה + פורום ארגוני בוגרים הארצי</td></tr>
+  </table></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+      <img src="hopa-logo.png" alt="הופה">
+    </a>
+    <span class="fnote">טיוטה לדיון — מיטל, לירון ויעל · מבוסס על תורת ההפעלה של "יש לך כתובת" (מינהל חינוך התיישבותי + ג'וינט אשלים) ועל <a href="mechkar-bogrim.html">מחקר ההשוואה</a> · הופה — <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></span>
+  </div>
+</footer>
+</body>
+</html>
