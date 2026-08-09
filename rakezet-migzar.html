@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>תיק חפיפה — רכזת החברה הערבית, הבדואית והדרוזית | הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111; --muted:#666; --line:#E5E5E5; --bg:#F7F7F7; --white:#fff;
+  --green:#3BA55C; --blue:#3D7DD8; --orange:#F5A623; --purple:#7E57C2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;direction:rtl}
+a{color:var(--pink-deep)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+
+/* header */
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--pink);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.topbar-in{display:flex;align-items:center;gap:12px;padding:9px 18px;max-width:1060px;margin:0 auto}
+.topbar img{height:36px}
+.topbar .t{font-weight:700;font-size:15px;white-space:nowrap}
+.nav{display:flex;gap:4px;overflow-x:auto;margin-inline-start:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:6px 11px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid transparent}
+.nav a:hover{background:var(--pink-soft);border-color:var(--pink)}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--pink-soft),var(--yellow-soft));padding:44px 0 36px;border-bottom:1px solid var(--line)}
+.hero .kicker{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.2}
+.hero h1 em{font-style:normal;color:var(--pink)}
+.hero p{max-width:640px;margin-top:12px;font-size:17px;color:#333}
+.hero .tag{margin-top:16px;font-weight:600;color:var(--pink-deep)}
+
+/* sections */
+section{padding:38px 0 8px}
+h2{font-size:clamp(22px,3.5vw,30px);font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2 .num{background:var(--pink);color:#fff;min-width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.sub{color:var(--muted);margin-bottom:18px;font-size:15.5px}
+h3{font-size:18px;font-weight:700;margin:20px 0 8px}
+
+/* cards */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:14px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;border-top:4px solid var(--pink)}
+.card.y{border-top-color:var(--yellow-deep)}
+.card.g{border-top-color:var(--green)}
+.card.b{border-top-color:var(--blue)}
+.card.o{border-top-color:var(--orange)}
+.card.p{border-top-color:var(--purple)}
+.card h4{font-size:16.5px;font-weight:700;margin-bottom:6px}
+.card p{font-size:14.5px;color:#333}
+.card .small{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* stats */
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.stat .v{font-size:30px;font-weight:900;color:var(--pink)}
+.stat .l{font-size:13.5px;color:var(--muted);margin-top:2px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line);margin:12px 0;font-size:14.5px}
+.tbl th{background:var(--pink-soft);text-align:right;padding:10px 12px;font-weight:700;font-size:14px}
+.tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl-wrap{overflow-x:auto}
+
+/* pills & notes */
+.pill{display:inline-block;background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;margin:2px 2px 2px 0}
+.pill.pk{background:var(--pink-soft);border-color:var(--pink)}
+.pill.gr{background:#E8F5EC;border-color:var(--green)}
+.pill.bl{background:#E7F0FB;border-color:var(--blue)}
+.pill.pu{background:#EDE7F6;border-color:var(--purple)}
+.pill.or{background:#FFF3E0;border-color:var(--orange)}
+.note{background:var(--yellow-soft);border-right:5px solid var(--yellow-deep);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note.pk{background:var(--pink-soft);border-right-color:var(--pink)}
+.note b{font-weight:700}
+
+/* steps */
+.steps{counter-reset:s;margin:14px 0}
+.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px 13px 16px;margin-bottom:10px;position:relative;padding-right:58px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;right:14px;top:13px;width:30px;height:30px;border-radius:50%;background:var(--yellow);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+.step b{font-weight:700}
+.step p{font-size:14.5px;color:#333;margin-top:2px}
+
+/* links grid */
+.links{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:14px 0}
+.lk{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.lk:hover{border-color:var(--pink)}
+.lk b{display:block;font-size:15px;color:var(--pink-deep)}
+.lk span{font-size:13px;color:var(--muted)}
+
+/* checklist */
+.chk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.chk h4{font-weight:800;font-size:16px;margin-bottom:10px;color:var(--pink-deep)}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line);font-size:14.5px;cursor:pointer}
+.chk label:first-of-type{border-top:none}
+.chk input{width:18px;height:18px;accent-color:var(--pink);margin-top:3px;flex:none}
+.chk input:checked+span{text-decoration:line-through;color:var(--muted)}
+.progress{background:var(--pink-soft);border-radius:999px;height:12px;overflow:hidden;margin:8px 0 20px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow-deep));width:0;transition:width .3s}
+
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+summary{font-weight:700;cursor:pointer;font-size:15px}
+details p,details li{font-size:14.5px}
+ul.plain{padding-right:20px;margin:8px 0}
+ul.plain li{margin-bottom:5px;font-size:14.5px}
+
+footer{margin-top:44px;background:#fff;border-top:3px solid var(--pink);padding:26px 0;text-align:center}
+footer img{height:40px}
+footer p{font-size:13.5px;color:var(--muted);margin-top:8px}
+@media(max-width:640px){.topbar .t{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <img src="hopa-logo.png" alt="הופה">
+    <span class="t">תיק חפיפה · רכזת החברה הערבית, הבדואית והדרוזית</span>
+    <nav class="nav">
+      <a href="#about">מי אנחנו</a>
+      <a href="#people">אנשים</a>
+      <a href="#milon">מילון</a>
+      <a href="#schools">בתי הספר שלך</a>
+      <a href="#anchors">עוגני המגזר</a>
+      <a href="#tools">מערכות</a>
+      <a href="#routine">שגרות</a>
+      <a href="#flow">הפצת מענה</a>
+      <a href="#challenges">אתגרים</a>
+      <a href="#projects">פרויקטים</a>
+      <a href="#links">קישורים</a>
+      <a href="#first30">משימות ראשונות</a>
+    </nav>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">תיק חפיפה · אוגוסט 2026</span>
+    <h1>ברוכה הבאה לתפקיד — <em>רכזת החברה הערבית, הבדואית והדרוזית!</em></h1>
+    <p>כאן תמצאי את כל מה שצריך כדי להיכנס לתפקיד: מי האנשים, איך עובדות המערכות, מה השגרות המשותפות לכל רכזי הופה — ומה הייחודי לעבודה עם 12 בתי הספר של החברה הערבית, הדרוזית והבדואית שהצטרפו להופה בתשפ"ז. זה הלב של הצמיחה של הופה השנה.</p>
+    <div class="tag">פתאום הכל נראה אפשרי 💛</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 1. מי אנחנו ============ -->
+<section id="about">
+  <h2><span class="num">1</span>הופה על רגל אחת</h2>
+  <p class="sub">ההקשר שחייבים להכיר לפני הכל</p>
+
+  <div class="note pk"><b>המשפט המגדיר:</b> הופה היא עמותה הפועלת ליצירת רצף ליווי לבני נוער וצעירים מגיל 14 עד 26, דרך מניעת נשירה, ליווי בוגרים, חיבור להזדמנויות ושילוב בין קשר אנושי לתשתית חכמה. הופה פועלת <b>תחת עמותת אלומות</b>.</div>
+
+  <div class="grid">
+    <div class="card"><h4>🎓 ציר בוגרים (18–26)</h4><p>ליווי בוגרי בתי הספר במעברים הגדולים: שירות לאומי-אזרחי או צבא, תעסוקה, לימודים, מלגות, מיצוי זכויות ועצמאות. <b>זה הציר המרכזי של התפקיד שלך.</b></p></div>
+    <div class="card y"><h4>🏫 ציר מניעת נשירה (14–18)</h4><p>עבודה עם תלמידים בסיכון בתוך בית הספר: זיהוי מוקדם, מעקב, עבודה עם צוותים.</p><p class="small">כלל ברזל: שני הצירים לא מתערבבים לעולם — לא במענים, לא בתוכן, לא בעיצוב.</p></div>
+    <div class="card g"><h4>📡 מודל הרדאר (4 שלבים)</h4><p>1. שידור וקליטה — איסוף מידע · 2. ניתוח נתונים (רמזור אדום/כתום/ירוק) · 3. חישוב והתאמת מענים · 4. החזרת גלים — פעולה יזומה.</p></div>
+  </div>
+
+  <div class="note"><b>למה התפקיד שלך קיים:</b> רוב בתי הספר שהצטרפו להופה בתשפ"ז הם מהחברה הערבית, הדרוזית והבדואית — אבל מאגר המענים של הופה נבנה במשך שנים סביב בתי הספר הוותיקים, וכמעט אין בו מענים ייעודיים למגזר. התפקיד שלך הוא לסגור את הפער הזה משני הכיוונים: להביא את המענים אל הבוגרים, ולהביא את הידע מהשטח אל המאגר.</div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">12</div><div class="l">בתי ספר ב-10 יישובים במגזר</div></div>
+    <div class="stat"><div class="v">3</div><div class="l">מגזרים: ערבי · דרוזי · בדואי</div></div>
+    <div class="stat"><div class="v">37</div><div class="l">מענים בדף המגזרי (ורק 16 מהם באתר)</div></div>
+    <div class="stat"><div class="v">645</div><div class="l">מענים במאגר הכללי של הופה</div></div>
+  </div>
+</section>
+
+<!-- ============ 2. אנשים ============ -->
+<section id="people">
+  <h2><span class="num">2</span>האנשים שתעבדי איתם</h2>
+  <p class="sub">טלפונים אישיים — בקשי ממיטל או מלירון (נמצאים גם בקבוצות הוואטסאפ)</p>
+
+  <div class="grid">
+    <div class="card"><h4>לירון גולן — מנכ"לית הופה</h4><p>גם רכזת בית הערבה (לקחה תפקיד רכזת כדי לראות את השטח). liron@hopa.org.il</p><p class="small">טיפ מהחפיפות הקודמות: שאלות ספציפיות וממוקדות — כך מקבלים ממנה מענה מהיר וברור.</p></div>
+    <div class="card y"><h4>מיטל פלג — סמנכ"לית תפעול</h4><p>אחראית על התפעול, המערכות והדאטה: דפי הניהול, מאגר הבוגרים, הקטלוגים, הדפים החיים. אליה פונים בכל מה שקשור לכלים, נתונים ותהליכי עבודה.</p></div>
+    <div class="card g"><h4>בארי — רכז מענים ובוגרים</h4><p>העמית הכי קרוב שלך בתפקיד: אחראי על המענים והבוגרים בפריסה הכללית. אתם עובדים באותן מערכות, באותם טפסים ובאותה זרימת עבודה — שווה לתאם ולחלוק ידע באופן קבוע.</p></div>
+    <div class="card b"><h4>רכזי הבוגרים בבתי הספר</h4><p>אנשי סגל שמונו לתפקיד רכז בוגרים — דמות מוכרת לבוגרים, מנהלים את קבוצות הוואטסאפ של המחזורים. בבתי הספר החדשים של המגזר חלק מהרכזים עדיין בתהליך מינוי והצטרפות — מיפוי מי מונה ומי לא הוא אחת המשימות הראשונות שלך.</p></div>
+  </div>
+
+  <div class="note">📌 <b>שימי לב:</b> בתי הספר של המגזר הצטרפו רק בתשפ"ז — אין עדיין "היסטוריה" של עבודה מולם כמו בוותיקים. זה אומר שאת בונה את הקשר מאפס: היכרות עם ההנהלות, הרכזים והגורמים הקהילתיים בכל יישוב. היתרון: הכל נבנה נכון מההתחלה, בהתאמה תרבותית ובשפה הנכונה.</div>
+</section>
+
+<!-- ============ 3. מילון ============ -->
+<section id="milon">
+  <h2><span class="num">3</span>מילון מונחים פנימי</h2>
+  <p class="sub">השפה שמדברים בה בהופה — פלוס המונחים של עולם המגזר</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>מונח</th><th>הסבר</th></tr>
+    <tr><td><b>מענה</b></td><td>משאב או פתרון לצורך של בוגר: מכינה, מלגה, טיפול נפשי, עזרה כספית, הכשרה מקצועית. עדיף תמיד להשיג איש קשר שיוצר קשר ישיר עם הבוגר.</td></tr>
+    <tr><td><b>מענה פנימי</b></td><td>אנשי קשר "שלנו" שיכולים לעזור במקרים מסוימים (לא מפורסם החוצה).</td></tr>
+    <tr><td><b>רכז/ת בוגרים</b></td><td>איש סגל בית ספר שאחראי על הקשר עם בוגרי אותו בית ספר ומנהל את קבוצת הוואטסאפ שלהם.</td></tr>
+    <tr><td><b>טראק גילאים</b></td><td>במערכות: <b>1826</b> = בוגרים · <b>1418</b> = נוער. ההפרדה מוחלטת בכל מערכת ותוכן.</td></tr>
+    <tr><td><b>רדאר</b></td><td>מודל 4 השלבים של הופה לזיהוי מוקדם והתאמת מענים (רמזור אדום/כתום/ירוק).</td></tr>
+    <tr><td><b>וורקספייס / בורד</b></td><td>במונדיי: לכל בית ספר וורקספייס משלו, ובו בורדים (לוחות) — בוגרים, מעקב, טפסים.</td></tr>
+    <tr><td><b>ריאן</b></td><td>רשת מרכזי התעסוקה של משרד העבודה לחברה הערבית, הדרוזית והבדואית: הכוון, הכשרה והשמה ללא עלות. מוקד ארצי *6584. העוגן התעסוקתי המרכזי במגזר.</td></tr>
+    <tr><td><b>יתד</b></td><td>התוכנית הלאומית לצעירים בסיכון (18–25) — פועלת דרך מחלקות הרווחה ברשויות. בכל יישוב יש עו"ס יתד — כתובת חשובה לבוגרים במצבי סיכון.</td></tr>
+    <tr><td><b>שירות לאומי-אזרחי</b></td><td>המסלול המקביל לצבא עבור רוב צעירי המגזר — שנה-שנתיים של שירות שפותחות זכאויות (מלגות, מענקים). חלק מהמלגות במגזר מותנות בו.</td></tr>
+    <tr><td><b>קידום נוער / היל"ה</b></td><td>יחידות הרשות לנוער מנותק ונושר (14–18) והשלמת השכלה — הצד של ציר מניעת הנשירה ברשויות.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 4. בתי הספר שלך ============ -->
+<section id="schools">
+  <h2><span class="num">4</span>בתי הספר שלך</h2>
+  <p class="sub">12 בתי ספר ב-10 יישובים, מהגליל ועד הנגב — כולם מהצטרפות תשפ"ז</p>
+
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>מגזר</th><th>יישוב</th><th>בית ספר</th></tr>
+    <tr><td><span class="pill pk">חברה ערבית</span></td><td>טורעאן (גליל תחתון)</td><td>מנאראת טורעאן</td></tr>
+    <tr><td><span class="pill pk">חברה ערבית</span></td><td>סח'נין</td><td>תיכון אלאמאני (2 מוסדות)</td></tr>
+    <tr><td><span class="pill pk">חברה ערבית</span></td><td>נצרת</td><td>בוטו נאיף ממלכתי · עמל נצרת</td></tr>
+    <tr><td><span class="pill pu">דרוזי</span></td><td>ג'וליס (גליל)</td><td>תיכון יוצר עתיד בנות ג'וליס</td></tr>
+    <tr><td><span class="pill pu">דרוזי</span></td><td>ירכא · אבו סנאן (גליל מערבי)</td><td>תיכון ח'טוואת</td></tr>
+    <tr><td><span class="pill or">בדואי · גליל</span></td><td>ביר אל-מכסור</td><td>עתיד אבדאע</td></tr>
+    <tr><td><span class="pill or">בדואי · נגב</span></td><td>רהט</td><td>עמל טכנולוגי רהט</td></tr>
+    <tr><td><span class="pill or">בדואי · נגב</span></td><td>לקיה</td><td>טכנולוגי לקייה</td></tr>
+    <tr><td><span class="pill or">בדואי · נגב</span></td><td>תל שבע</td><td>טכנולוגי אלמוסתקבל</td></tr>
+    <tr><td><span class="pill or">בדואי · נגב</span></td><td>נווה מדבר</td><td>דרור נווה מדבר</td></tr>
+  </table></div>
+
+  <div class="grid">
+    <div class="card g"><h4>📍 גורמים קהילתיים בכל יישוב</h4><p>לכל יישוב כבר ממופים הגורמים בקהילה: מרכזי צעירים, ריאן, יתד, קידום נוער, רווחה — עם טלפון, מייל וכפתורי פנייה. חלק מהפרטים מסומנים "לאמת" — אימות שלהם הוא משימה ראשונה שלך.</p><p class="small"><a href="kehila.html">👈 דף הגורמים הקהילתיים המרוכז (kehila.html)</a></p></div>
+    <div class="card b"><h4>🗺️ שני מוקדים גאוגרפיים</h4><p><b>גליל:</b> טורעאן, סח'נין, נצרת, ג'וליס, ירכא-אבו סנאן, ביר אל-מכסור. <b>נגב:</b> רהט, לקיה, תל שבע, נווה מדבר. לכל מוקד עוגנים אזוריים משלו (ריאן נצרת בגליל · ריאן רהט ואשכול נגב מזרחי בדרום).</p></div>
+    <div class="card y"><h4>🏙️ ומה עם הערים המעורבות?</h4><p>בתי ספר בערים מעורבות (יפו, חיפה, עכו) שייכים לרכזי הפריסה הכללית — אבל חלק מהבוגרים שם מהחברה הערבית, והמענים המגזריים רלוונטיים גם להם. שווה לתאם עם בארי ולסגור מול לירון את חלוקת האחריות המדויקת.</p></div>
+  </div>
+
+  <div class="note">🗺️ <b>שימי לב לנפרדות נצרת / נוף הגליל:</b> חיפוש "מרכז צעירים נצרת" או "יתד נצרת" מפנה לרוב לנוף הגליל — עיר יהודית נפרדת. הגורמים של נצרת הערבית מרוכזים בדף הגורמים הקהילתיים.</div>
+</section>
+
+<!-- ============ 5. עוגני המגזר ============ -->
+<section id="anchors">
+  <h2><span class="num">5</span>עוגני המענים של המגזר</h2>
+  <p class="sub">הארגונים והתוכניות שכל רכזת מגזר חייבת להכיר — הפירוט המלא בדף המענים המגזרי</p>
+
+  <div class="grid">
+    <div class="card"><h4>💼 ריאן — תעסוקה</h4><p>מרכזי ההכוון של משרד העבודה לחברה הערבית, הדרוזית והבדואית. סניפים רלוונטיים: סח'נין, נצרת, ירכא (דרוזי), רהט, ושלוחות ביישובים הבדואיים. מוקד *6584.</p></div>
+    <div class="card y"><h4>🎓 אירתקא — המלגה הגדולה</h4><p>מלגת המל"ג לחברה הערבית, הדרוזית והצ'רקסית: 28,000–36,000 ₪ לתואר ראשון. נקודת הפתיחה של כמעט כל שיחת מלגות עם בוגר/ת מהמגזר. לצידה: סלים שופי, קרן גרוס, עתידנא, הזנק מרכנתיל, ומלגות ייעודיות לדרוזים ולבדואים.</p></div>
+    <div class="card g"><h4>🤝 שירות לאומי-אזרחי</h4><p>מסלולי שירות בחינוך, רווחה ובריאות לצעירים/ות אחרי י"ב, עם קורס עברית והכשרות. פותח זכאויות למלגות ומענקים — חשוב להציג לבוגרים כבר בי"ב. מוקד 1-800-233-133.</p></div>
+    <div class="card b"><h4>💻 צופן וקו משווה — הייטק וקריירה</h4><p>צופן: קורסי טכנולוגיה והשמה בהייטק (מרכז בנצרת). קו משווה: שילוב אקדמאים ערבים בתעסוקה איכותית — מועדוני קריירה, בוטקאמפים ומנטורינג.</p></div>
+    <div class="card o"><h4>🐪 אג'יק-נספד ועוגני הנגב</h4><p>המרכז הבדואי הגדול: תעסוקה, עסקים חברתיים, ארגון הנוער הבדואי ותוכנית ג'וסור. לצידו: מרכז צעירי רהט, מרכזי צעירים בתל שבע/לקיה/נווה מדבר, אשכול נגב מזרחי (מלגות 10,000 ₪) ושער לאקדמיה בבן-גוריון.</p></div>
+    <div class="card p"><h4>💚 חוסן נפשי בערבית</h4><p>ער"ן בערבית: 1201 שלוחה 2 או וואטסאפ 052-8451201, אנונימי 24/7. סה"ר: צ'אט בערבית ובעברית. בנצרת: מרכז בריאות הנפש בביה"ח האנגלי (לאמת פרטים).</p></div>
+  </div>
+
+  <div class="note pk">📚 <b>הדף המרכזי שלך:</b> <a href="manim-aravit.html">manim-aravit.html — כל 37 המענים לחברה הערבית, הדרוזית והבדואית</a>, עם סינון לפי מגזר וחיפוש. רק 16 מהם נמצאים במאגר החי באתר — הזנת השאר היא אחד הפרויקטים הפתוחים שלך (סעיף 10).</div>
+</section>
+
+<!-- ============ 6. מערכות ============ -->
+<section id="tools">
+  <h2><span class="num">6</span>הכלים והמערכות</h2>
+  <p class="sub">איפה הכל נמצא — ומה עושים בכל מערכת</p>
+
+  <div class="grid">
+    <div class="card"><h4>📊 מונדיי (Monday.com) — ה-CRM</h4><p>הלב של מעקב הבוגרים. לכל בית ספר וורקספייס משלו עם בורד בוגרים + טופס קליטה. יש וורקספייס ייעודי ל<b>מעקב מענים</b> — כל מענה שנשלח נרשם שם, כדי למדוד אימפקט (כמה נשלחו, כמה נרשמו, לפי בית ספר).</p><p class="small">במאגר הבוגרים במונדיי יש כבר רשימת בוגרים מסח'נין — נקודת פתיחה טובה.</p></div>
+    <div class="card y"><h4>💬 וואטסאפ — ערוץ התקשורת המרכזי</h4><p><b>קבוצת הרכזים</b> — לשם שולחים הודעות מוכנות עם מענים. <b>קבוצות הבוגרים</b> — של כל בית ספר, מנוהלות על ידי הרכזים. בבתי הספר של המגזר חלק מהקבוצות עוד לא קיימות — הקמתן עם הרכזים היא חלק מהעבודה.</p><p class="small">בנוסף: בוט וואטסאפ חכם במספר 058-558-5991 — בוגרים מחפשים בו מענים בעצמם.</p></div>
+    <div class="card g"><h4>🌐 אתר הופה — hopa.org.il</h4><p>מאגר המענים הציבורי: 645 מענים ב-7 קטגוריות. שימי לב: המאגר בעברית — כשמפנים בוגרים ששפת האם שלהם ערבית, עדיף לצרף להודעה את עיקרי הפרטים ואיש קשר, לא רק קישור.</p></div>
+    <div class="card b"><h4>🗂️ הופה דש — hopadash.vercel.app</h4><p>פורטל בתי הספר החי: לכל בית ספר דף משלו עם אנשי קשר אזוריים, חומרים וקישורים. מנוהל על ידי לירון ומיטל.</p></div>
+    <div class="card p"><h4>💬 קבוצות מקור למענים</h4><p>הקבוצות והפורומים שבהם מתפרסמים מענים, משרות ומלגות באופן שוטף — המקור השוטף שלך לאיסוף מענים.</p><p class="small"><a href="kvutzot.html">👈 דף ההצטרפות לכל הקבוצות</a> · חסרות קבוצות ייעודיות למגזר? איתור והוספה שלהן היא משימה שלך.</p></div>
+    <div class="card o"><h4>📁 Google Drive</h4><p>בנק הודעות מוכנות לרכזים (תוכן שבועי), תיקיות בתי ספר, קבצים שוטפים.</p></div>
+  </div>
+</section>
+
+<!-- ============ 7. שגרות ============ -->
+<section id="routine">
+  <h2><span class="num">7</span>השגרות של התפקיד</h2>
+  <p class="sub">אותן שגרות של כל רכזי הופה — עם דגשי מגזר</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>תדירות</th><th>משימה</th><th>פירוט</th></tr>
+    <tr><td><span class="pill pk">יומי</span></td><td>מעבר על בורדים</td><td>לעבור על בורדי הבוגרים של בתי הספר שלך במונדיי ולראות אם יש בקשות סיוע חדשות או פתוחות.</td></tr>
+    <tr><td><span class="pill">שבועי</span></td><td>תוכן לקבוצות בוגרים</td><td>לשלוח לרכזים הודעה מוכנה עם מענה/תוכן להעברה לקבוצות — לפחות פעם בשבוע. דגש מגזר: לוודא שהמענה באמת פתוח לבוגרים שלך (חלק מהמענים הכלליים דורשים שירות צבאי).</td></tr>
+    <tr><td><span class="pill">שוטף</span></td><td>מענה לפניות בוגרים</td><td>בוגר/ת עם בקשה → לחפש מענה מתאים ולחבר ביניהם. להתחיל תמיד מהדף המגזרי, ואז מהמאגר הכללי.</td></tr>
+    <tr><td><span class="pill">שוטף</span></td><td>חיפוש מענים חדשים</td><td>לאתר מענים ייעודיים למגזר (ארצי או לפי יישוב), לתעד בטופס ולהזרים למאגר — זה הפער המרכזי שהתפקיד נועד לסגור.</td></tr>
+    <tr><td><span class="pill">חודשי</span></td><td>דו"ח פעילות</td><td>סוף חודש: דו"ח להנהלות — כמה מענים נשלחו, כמה נרשמו, לכמה ניתן סיוע, לפי בית ספר.</td></tr>
+    <tr><td><span class="pill">לפי צורך</span></td><td>רכזים וגורמים קהילתיים</td><td>תיאום, תזכורות, הפצת חומרים — ובניית הקשר עם מחלקות הרווחה, יתד, ריאן ומרכזי הצעירים בכל יישוב.</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 8. הפצת מענה ============ -->
+<section id="flow">
+  <h2><span class="num">8</span>זרימת העבודה: מצאת מענה — מה עכשיו?</h2>
+  <p class="sub">שני מסלולים — לפי סוג המענה. זהו התהליך הקנוני של הופה, זהה לכל הרכזים</p>
+  <div class="steps">
+    <div class="step"><b>מוצאים מענה מתאים</b><p>בקבוצות המקור (<a href="kvutzot.html">דף הקבוצות</a>), ברשתות, בהמלצות מהגורמים הקהילתיים. בודקים רגע: למי זה מיועד (בוגרים 18–26 / נוער 14–18), לאיזה אזור, האם זה פתוח לבוגרי המגזר (תנאי שירות צבאי?), והאם זה עדיין רלוונטי.</p></div>
+    <div class="step"><b>מענה קבוע → קבוצת "הכנסת מענים לאתר הופה"</b><p>מלגה, עמותה, שירות או תוכנית מתמשכת — שולחים את הפרטים לקבוצת הוואטסאפ של הכנסת המענים, כדי שהמענה ייכנס למאגר הקבוע באתר hopa.org.il.</p></div>
+    <div class="step"><b>קורס / תוכנית עתידית עם דד-ליין → קבוצות הרכזים</b><p>משהו שנסגר בתאריך מסוים (הרשמה לקורס, מחזור קרוב, סדנה) — מנסחים הודעה מוכנה עם הקישור והדד-ליין ושולחים לקבוצת הרכזים, שיעבירו לקבוצות הבוגרים. עדיף שההודעה תגיע לבוגרים <b>מהרכז המוכר</b> — ובמגזר זה חשוב שבעתיים.</p></div>
+    <div class="step"><b>מתעדים בטופס "מצאתי מענה חדש"</b><p><a href="https://wkf.ms/4g5dZk9" target="_blank">הטופס</a> מכניס את המענה למעקב במונדיי — כך יודעים בסוף החודש מה נמצא, מה נשלח ומה נכנס לאתר.</p></div>
+  </div>
+  <div class="note">💡 <b>איפה מחפשים מענים?</b> <a href="manim-aravit.html">הדף המגזרי (37 מענים)</a> · <a href="kvutzot.html">קבוצות הוואטסאפ של המענים</a> · <a href="manim-bogrim.html">הוואן-פייג'רים לרכזים</a> (מלגות · תעסוקה · זכויות) · <a href="hachana.html">הכנה לשירות משמעותי</a> · אתר הופה עצמו.</div>
+</section>
+
+<!-- ============ 9. אתגרים ============ -->
+<section id="challenges">
+  <h2><span class="num">9</span>האתגרים הפתוחים</h2>
+  <p class="sub">מה שדורש את תשומת הלב והאנרגיה שלך — בעיניים פקוחות</p>
+  <div class="grid">
+    <div class="card o"><h4>🔸 פער המענים במגזר</h4><p>זה האתגר המרכזי: במאגר של 645 מענים כמעט אין מענים ייעודיים לחברה הערבית והבדואית. נאספו כבר 37 בדף המגזרי, אבל רק 16 מהם באתר — וברור שיש בשטח הרבה יותר.</p><p class="small"><a href="manim-aravit.html">👈 דף המענים המגזרי</a></p></div>
+    <div class="card o"><h4>🔸 קשרים חדשים מאפס</h4><p>בתי הספר הצטרפו רק בתשפ"ז — אין עדיין רכזי בוגרים מגובשים, קבוצות וואטסאפ פעילות או שגרת עבודה מולם. בניית התשתית האנושית הזו היא העבודה של השנה הראשונה.</p></div>
+    <div class="card o"><h4>🔸 אנשי קשר לא מאומתים</h4><p>חלק מהגורמים הקהילתיים ומהמענים החדשים מסומנים "⚠ לאמת" — טלפונים ומיילים שנאספו ממקורות פתוחים וטרם אומתו. לפני שמפנים בוגר, מאמתים.</p><p class="small"><a href="kehila.html">👈 דף הגורמים הקהילתיים</a></p></div>
+    <div class="card o"><h4>🔸 שפה והתאמה תרבותית</h4><p>אתר הופה והחומרים בעברית; חלק מהבוגרים והמשפחות נוח להם יותר בערבית. צריך לגבש עם לירון ומיטל מדיניות: אילו חומרים מתרגמים, איך מנוסחות ההודעות, ומה עושה הבוט.</p></div>
+  </div>
+</section>
+
+<!-- ============ 10. פרויקטים ============ -->
+<section id="projects">
+  <h2><span class="num">10</span>פרויקטים חיים על השולחן</h2>
+  <p class="sub">מה שקורה עכשיו — ואיפה את נכנסת לתמונה</p>
+  <div class="grid">
+    <div class="card"><h4>🚀 פיילוט משרד העבודה</h4><p>"נתיבים לבוגרים" — פיילוט ארצי של 15 בתי ספר × 10,000 ₪, בשותפות נתיבים לחניכות וקריירה. כולל אקדמיית רכזים (60 שעות) ומסע הבוגר. חלק מבתי הספר שלך בפנים.</p></div>
+    <div class="card y"><h4>📋 תוכניות עבודה של בתי הספר</h4><p>כל בית ספר ממלא תוכנית עבודה בדף אחד — חלוקת 10,000 ₪ ל-5 סעיפים + יעדים. יש תצוגת ניהול שמראה מי הגיש ומי לא — לוודא שבתי הספר שלך מגישים.</p><p class="small"><a href="plan.html">👈 plan.html</a></p></div>
+    <div class="card g"><h4>📥 הזנת 21 המענים החדשים למאגר</h4><p>21 מהמענים בדף המגזרי סומנו "✦ חדש — עדיין לא באתר". המשימה: לאמת פרטי קשר ולהעביר אותם דרך קבוצת "הכנסת מענים לאתר הופה" — כך הם יגיעו לכל הבוגרים, לא רק לשלך.</p></div>
+    <div class="card b"><h4>✍️ טופס הסכמה דיגיטלי</h4><p>בוגרים חותמים בנייד על כתב הסכמה (במקום הדפסה וסריקה). חובה לפני עבודה עם פרטי בוגרים — רלוונטי במיוחד כשמתחילים לאסוף רשימות בוגרים בבתי הספר החדשים.</p></div>
+    <div class="card p"><h4>📖 מחקר ליווי בוגרים</h4><p>מחקר מקיף על מודלים בארץ ובעולם. ממצא מפתח: תורת ההפעלה של "יש לך כתובת" (מינהל חינוך התיישבותי) — הבסיס המומלץ לליבת הפעילות של הרכזים.</p><p class="small"><a href="mechkar-bogrim.html">👈 mechkar-bogrim.html</a></p></div>
+  </div>
+</section>
+
+<!-- ============ 11. קישורים ============ -->
+<section id="links">
+  <h2><span class="num">11</span>כל הקישורים במקום אחד</h2>
+  <p class="sub">שמרי את הדף הזה — הכל נפתח גם בנייד</p>
+
+  <h3>אתר ומערכות ליבה</h3>
+  <div class="links">
+    <a class="lk" href="https://hopa.org.il" target="_blank"><b>אתר הופה</b><span>מאגר 645 המענים הציבורי</span></a>
+    <a class="lk" href="https://hopa.org.il/chat" target="_blank"><b>הצ'אט באתר</b><span>חיפוש מענים בשיחה</span></a>
+    <a class="lk" href="https://hopa.org.il/submit-program" target="_blank"><b>הגשת מענה חדש</b><span>טופס לעמותות ולגופים</span></a>
+    <a class="lk" href="https://api.whatsapp.com/send/?phone=972585585991&text=%D7%94%D7%99%D7%99+%D7%94%D7%95%D7%A4%D7%94" target="_blank"><b>בוט הוואטסאפ</b><span>058-558-5991 — איתור מענים</span></a>
+    <a class="lk" href="https://hopadash.vercel.app" target="_blank"><b>הופה דש</b><span>פורטל בתי הספר</span></a>
+  </div>
+
+  <h3>טפסי העבודה שלך (נכנסים ישר למונדיי — בלי צורך בחשבון)</h3>
+  <div class="links">
+    <a class="lk" href="https://wkf.ms/4g5dZk9" target="_blank"><b>💡 מצאתי מענה חדש</b><span>קליטת מענה מהקבוצות — נכנס ללוח "מענים חדשים"</span></a>
+    <a class="lk" href="https://wkf.ms/4cbOZ9H" target="_blank"><b>📝 תיעוד פניית בוגר/ת</b><span>מהות הפנייה · בית ספר · דרכי טיפול · מענה אפשרי</span></a>
+  </div>
+
+  <h3>הדפים של המגזר</h3>
+  <div class="links">
+    <a class="lk" href="manim-aravit.html"><b>⭐ מענים לחברה הערבית</b><span>37 מענים — ערבי · דרוזי · בדואי, עם סינון וחיפוש</span></a>
+    <a class="lk" href="kehila.html"><b>גורמים קהילתיים</b><span>אנשי קשר בכל יישוב — רווחה, יתד, ריאן, מרכזי צעירים</span></a>
+    <a class="lk" href="https://www.rayan.org.il/" target="_blank"><b>רשת מרכזי ריאן</b><span>הכוון תעסוקתי למגזר · מוקד *6584</span></a>
+    <a class="lk" href="https://irteka.co.il/criteria.asp" target="_blank"><b>מלגת אירתקא</b><span>מלגת המל"ג לחברה הערבית, הדרוזית והצ'רקסית</span></a>
+  </div>
+
+  <h3>קטלוגים ודפי מענים כלליים</h3>
+  <div class="links">
+    <a class="lk" href="kvutzot.html"><b>קבוצות וואטסאפ למענים</b><span>הצטרפות לכל קבוצות המקור — תעסוקה · מלגות · ערים</span></a>
+    <a class="lk" href="manim-bogrim.html"><b>מענים מומלצים לרכזים</b><span>שער: מלגות · תעסוקה · מיצוי זכויות</span></a>
+    <a class="lk" href="hachana.html"><b>הכנה לשירות משמעותי</b><span>תוכניות לפי אזור, למנהלים ורכזים</span></a>
+  </div>
+
+  <h3>תוכניות ומסמכים</h3>
+  <div class="links">
+    <a class="lk" href="plan.html"><b>תוכנית עבודה בוגרים</b><span>הדף שבתי הספר ממלאים</span></a>
+    <a class="lk" href="mechkar-bogrim.html"><b>מחקר ליווי בוגרים</b><span>מודלים בארץ ובעולם</span></a>
+    <a class="lk" href="tashpaz.html"><b>היערכות תשפ"ז</b><span>מסמך משרד העבודה כמסע בשנה</span></a>
+    <a class="lk" href="bari.html"><b>תיק החפיפה של בארי</b><span>התיק המקביל — רכז המענים והבוגרים</span></a>
+  </div>
+</section>
+
+<!-- ============ 12. משימות ראשונות ============ -->
+<section id="first30">
+  <h2><span class="num">12</span>המשימות הראשונות שלך</h2>
+  <p class="sub">מה שמוגדר לך להתחלה — הסימונים נשמרים בדפדפן, אפשר לחזור ולהמשיך מאיפה שעצרת</p>
+  <div class="progress"><i id="pbar"></i></div>
+
+  <div class="chk">
+    <h4>שלב א' — היכרות עם הופה</h4>
+    <label><input type="checkbox" data-k="a1"><span>ללמוד את כל החומר על הופה טוב טוב — הדף הזה מההתחלה עד הסוף 🙂</span></label>
+    <label><input type="checkbox" data-k="a2"><span>להכיר את המודל — הרדאר, שני הצירים, מסע הבוגר (סעיף 1)</span></label>
+    <label><input type="checkbox" data-k="a3"><span>לשוטט באתר hopa.org.il ובמאגר המענים — לנסות חיפוש כמו שבוגר/ת מהמגזר היו מחפשים, ולשים לב מה חסר</span></label>
+    <label><input type="checkbox" data-k="a4"><span>לעבור על <a href="manim-aravit.html">דף המענים המגזרי</a> — להכיר את כל 37 המענים ואת העוגנים (ריאן, אירתקא, אג'יק-נספד)</span></label>
+    <label><input type="checkbox" data-k="a5"><span>סיור במונדיי — וורקספייס של בית ספר אחד מהמגזר (סח'נין למשל) + וורקספייס המענים</span></label>
+    <label><input type="checkbox" data-k="a6"><span>להכיר את הופה דש — פורטל בתי הספר (hopadash.vercel.app), כולל הדפים של בתי הספר שלך</span></label>
+  </div>
+
+  <div class="chk">
+    <h4>שלב ב' — חיבורים</h4>
+    <label><input type="checkbox" data-k="b1"><span>להצטרף לכל קבוצות הוואטסאפ של המענים — <a href="kvutzot.html">דף ההצטרפות המרוכז</a></span></label>
+    <label><input type="checkbox" data-k="b2"><span>להצטרף לקבוצת הרכזים ולהציג את עצמך — הודעת היכרות קצרה וחמה</span></label>
+    <label><input type="checkbox" data-k="b3"><span>שיחת תיאום עם בארי — חלוקת עבודה, מה עובר דרכו ומה דרכך, ערים מעורבות</span></label>
+    <label><input type="checkbox" data-k="b4"><span>לאתר קבוצות וערוצים ייעודיים למגזר (מלגות לחברה הערבית, תעסוקה בנגב וכו') ולהוסיף אותם לדף הקבוצות</span></label>
+  </div>
+
+  <div class="chk">
+    <h4>שלב ג' — משימות עבודה</h4>
+    <label><input type="checkbox" data-k="c1"><span>למפות את המצב בכל אחד מ-12 בתי הספר: מי רכז/ת הבוגרים? יש קבוצת וואטסאפ? יש רשימת בוגרים? — ולרשום איפה חסר</span></label>
+    <label><input type="checkbox" data-k="c2"><span>לאמת את הגורמים הקהילתיים של היישובים שלך ב<a href="kehila.html">דף הגורמים הקהילתיים</a> — במיוחד את המסומנים "⚠ לאמת"</span></label>
+    <label><input type="checkbox" data-k="c3"><span>להתחיל להזין את 21 המענים החדשים מהדף המגזרי למאגר: לאמת פרטים → לשלוח לקבוצת "הכנסת מענים לאתר הופה" → לתעד ב<a href="https://wkf.ms/4g5dZk9" target="_blank">טופס "מצאתי מענה חדש"</a></span></label>
+    <label><input type="checkbox" data-k="c4"><span>פניות בוגרים — לתעד כל פנייה ב<a href="https://wkf.ms/4cbOZ9H" target="_blank">טופס תיעוד הפניות</a></span></label>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer>
+  <a href="https://hopa.org.il" target="_blank"><img src="hopa-logo.png" alt="הופה"></a>
+  <p><a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · תיק חפיפה לרכזת החברה הערבית, הבדואית והדרוזית · נבנה על בסיס תיק החפיפה של רכז המענים והבוגרים והידע המצטבר · אוגוסט 2026</p>
+</footer>
+
+<script>
+(function(){
+  var KEY='migzar_hafifa_checks';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  var boxes=document.querySelectorAll('.chk input[type=checkbox]');
+  function update(){
+    var done=0;
+    boxes.forEach(function(b){if(b.checked)done++});
+    document.getElementById('pbar').style.width=Math.round(done/boxes.length*100)+'%';
+  }
+  boxes.forEach(function(b){
+    if(saved[b.dataset.k])b.checked=true;
+    b.addEventListener('change',function(){
+      saved[b.dataset.k]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
