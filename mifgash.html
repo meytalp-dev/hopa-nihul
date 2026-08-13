@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>רישום למפגש רכזי בוגרים — הופה · 24.8 · 11:00</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#141414; --gray:#666; --line:#eee;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Rubik',Arial,sans-serif; background:#FAF7F9; color:var(--ink);
+  -webkit-font-smoothing:antialiased; padding-bottom:60px;
+}
+.topbar{height:8px;background:linear-gradient(90deg,var(--pink),var(--yellow))}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px}
+
+/* ---------- header ---------- */
+header{text-align:center;padding:28px 0 8px}
+header img{height:64px}
+.kicker{
+  display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:99px;
+  font-weight:700;font-size:14px;margin-top:14px;
+}
+h1{font-size:30px;font-weight:900;line-height:1.2;margin-top:10px}
+.meet{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.meet span{
+  background:#fff;border:2px solid var(--pink-soft);border-radius:12px;
+  padding:8px 14px;font-weight:700;font-size:15px;
+}
+.meet b{color:var(--pink)}
+.intro{color:var(--gray);font-size:15.5px;line-height:1.6;margin-top:14px}
+
+/* ---------- sections ---------- */
+section{
+  background:#fff;border-radius:18px;padding:22px 20px;margin-top:22px;
+  box-shadow:0 2px 10px rgba(20,20,20,.05);
+}
+section.err{outline:3px solid var(--pink);outline-offset:2px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.num{
+  min-width:34px;height:34px;border-radius:50%;background:var(--pink);color:#fff;
+  font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;
+}
+.sec-head h2{font-size:20px;font-weight:800}
+.hint{color:var(--gray);font-size:14px;margin:2px 0 14px 0;line-height:1.5}
+
+label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+label small{color:var(--gray);font-weight:400}
+input[type=text],input[type=tel],select,textarea{
+  width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;
+  font:inherit;font-size:16px;background:#fff;transition:border-color .15s;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
+textarea{min-height:96px;resize:vertical;line-height:1.6}
+
+/* ---------- photo ---------- */
+.photo-zone{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.photo-circle{
+  width:120px;height:120px;border-radius:50%;background:var(--pink-soft);
+  border:3px dashed var(--pink);display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex:none;cursor:pointer;
+}
+.photo-circle.filled{border-style:solid}
+.photo-circle img{width:100%;height:100%;object-fit:cover}
+.photo-circle .ph{font-size:38px}
+.btn-sec{
+  display:inline-block;background:var(--pink-soft);color:var(--pink-deep);border:none;
+  font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:12px;cursor:pointer;
+}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{
+  border:2px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;
+  font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .12s;
+}
+.chip.on{background:var(--yellow);border-color:var(--yellow-deep);font-weight:700}
+
+/* ---------- vision cards ---------- */
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.vcard{
+  border:3px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;
+  background:#fff;text-align:center;transition:all .12s;position:relative;
+}
+.vcard .vimg{width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:10px;background:var(--pink-soft)}
+.vcard .vt{font-weight:800;font-size:16px;margin-top:8px}
+.vcard .vs{color:var(--gray);font-size:12.5px;line-height:1.4;margin-top:2px;min-height:34px}
+.vcard.on{border-color:var(--pink);box-shadow:0 4px 14px rgba(232,52,138,.18)}
+.vcard.on::after{
+  content:'✓';position:absolute;top:-12px;left:-6px;width:28px;height:28px;background:var(--pink);
+  color:#fff;border-radius:50%;font-weight:900;display:flex;align-items:center;justify-content:center;
+}
+
+/* ---------- quotes ---------- */
+.qgroup{font-weight:800;font-size:15px;color:var(--pink-deep);margin:18px 0 8px}
+.qcard{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;
+  background:#fff;margin-bottom:9px;transition:all .12s;
+}
+.qcard .qt{font-size:15.5px;font-weight:500;line-height:1.5}
+.qcard .qb{color:var(--gray);font-size:13px;margin-top:4px}
+.qcard.on{border-color:var(--pink);background:var(--pink-soft)}
+.qcard.on .qt{font-weight:700}
+
+/* ---------- submit ---------- */
+.submit{
+  width:100%;border:none;background:var(--pink);color:#fff;font:inherit;font-weight:800;
+  font-size:19px;padding:17px;border-radius:16px;cursor:pointer;margin-top:26px;
+  box-shadow:0 6px 18px rgba(232,52,138,.3);transition:transform .1s;
+}
+.submit:active{transform:scale(.98)}
+.submit:disabled{opacity:.6;cursor:wait}
+.errmsg{
+  display:none;background:var(--pink-soft);color:var(--pink-deep);font-weight:700;
+  padding:13px 16px;border-radius:12px;margin-top:14px;text-align:center;font-size:15px;line-height:1.6;
+}
+footer{text-align:center;color:#aaa;font-size:13px;margin-top:44px;line-height:1.7}
+footer a{color:var(--pink);font-weight:700;text-decoration:none}
+
+/* ---------- מסך סיום ---------- */
+#done{display:none;text-align:center;padding:26px 0 0}
+#done h2{font-size:27px;font-weight:900}
+#done .sub{color:var(--gray);font-size:15.5px;line-height:1.7;margin-top:8px}
+#result{
+  width:100%;max-width:420px;border-radius:14px;margin-top:18px;
+  box-shadow:0 10px 30px rgba(20,20,20,.18);
+}
+.done-actions{display:flex;flex-direction:column;gap:11px;max-width:420px;margin:20px auto 0}
+.abtn{
+  display:block;text-align:center;text-decoration:none;border:none;cursor:pointer;
+  font:inherit;font-weight:800;font-size:17px;padding:15px;border-radius:14px;
+}
+.abtn.wa{background:#25D366;color:#fff;box-shadow:0 5px 16px rgba(37,211,102,.35)}
+.abtn.dl{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.donenote{
+  background:var(--yellow-soft);border:2px solid var(--yellow-deep);border-radius:12px;
+  padding:12px 15px;font-size:14.5px;line-height:1.6;margin-top:16px;text-align:right;
+}
+
+@media (max-width:430px){
+  h1{font-size:25px}
+  .vcard .vs{font-size:11.5px}
+}
+@media (min-width:540px){
+  .vgrid{grid-template-columns:1fr 1fr 1fr}
+  .vcard .vs{min-height:42px}
+}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<div class="wrap" id="formview">
+  <header>
+    <img src="hopa-logo.png" alt="הופה!">
+    <div><span class="kicker">נפגשים סוף סוף! 🎉</span></div>
+    <h1>המפגש הראשון של רכזי ורכזות הבוגרים</h1>
+    <div class="meet">
+      <span>📅 <b>יום שני · 24.8.2026</b></span>
+      <span>🕚 בשעה <b>11:00</b></span>
+    </div>
+    <p class="intro">
+      כדי שנכיר אתכם עוד לפני שנפגש — מלאו את הדף הקצר הזה.
+      בסוף ייווצר לכם <b>דף אישי מעוצב</b> — שלחו אותו אלינו והוא יחכה לכם מודפס במפגש 💛
+    </p>
+  </header>
+
+  <!-- 1. פרטים -->
+  <section id="s1">
+    <div class="sec-head"><div class="num">1</div><h2>מי את/ה?</h2></div>
+    <label>שם מלא</label>
+    <input type="text" id="full_name" placeholder="השם שיופיע על הדף שלך">
+    <label>בית הספר</label>
+    <select id="school"><option value="" selected disabled>בחרו בית ספר…</option></select>
+    <label>טלפון <small>(לא חובה — לעדכונים על המפגש)</small></label>
+    <input type="tel" id="phone" placeholder="050-0000000" inputmode="tel">
+  </section>
+
+  <!-- 2. תמונה -->
+  <section id="s2">
+    <div class="sec-head"><div class="num">2</div><h2>תמונה שלך</h2></div>
+    <p class="hint">התמונה תופיע על הדף האישי שלך. אפשר לצלם עכשיו או לבחור מהגלריה.</p>
+    <div class="photo-zone">
+      <div class="photo-circle" id="pcircle" onclick="document.getElementById('photofile').click()">
+        <span class="ph">📷</span>
+      </div>
+      <div>
+        <button type="button" class="btn-sec" onclick="document.getElementById('photofile').click()">בחירת תמונה</button>
+        <p class="hint" style="margin:8px 0 0" id="photomsg">עדיין לא נבחרה תמונה</p>
+      </div>
+    </div>
+    <input type="file" id="photofile" accept="image/*" style="display:none">
+  </section>
+
+  <!-- 3. ערכים -->
+  <section id="s3">
+    <div class="sec-head"><div class="num">3</div><h2>הערכים שחשובים לי</h2></div>
+    <p class="hint">מה מוביל אתכם בליווי הבוגרים? כתבו במילים שלכם, או היעזרו בהצעות.</p>
+    <textarea id="values_text" placeholder="למשל: אמונה בכל בוגר ובוגרת, יחס אישי, התמדה גם כשקשה…"></textarea>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <!-- 4. חזון -->
+  <section id="s4">
+    <div class="sec-head"><div class="num">4</div><h2>תמונת החזון שלי</h2></div>
+    <p class="hint">איזו תמונה הכי מתארת את החזון שלך בליווי בוגרים? בחרו אחת.</p>
+    <div class="vgrid" id="vgrid"></div>
+  </section>
+
+  <!-- 5. פתגם -->
+  <section id="s5">
+    <div class="sec-head"><div class="num">5</div><h2>המשפט שלי</h2></div>
+    <p class="hint">בחרו פתגם או משפט אחד שילווה את הדף שלכם.</p>
+    <div id="quotes"></div>
+  </section>
+
+  <div class="errmsg" id="errmsg"></div>
+  <button class="submit" id="sendbtn" onclick="createSheet()">✨ יצירת הדף האישי שלי</button>
+
+  <footer>
+    עמותת הופה · פתאום הכל נראה אפשרי<br>
+    <a href="https://hopa.org.il" target="_blank">hopa.org.il</a>
+  </footer>
+</div>
+
+<!-- מסך סיום -->
+<div class="wrap" id="done">
+  <h2>🎉 הדף שלך מוכן!</h2>
+  <p class="sub">ככה הוא ייראה מודפס. עכשיו — שלחו אותו אלינו בוואטסאפ ונתראה במפגש 🌸</p>
+  <img id="result" alt="הדף האישי שלי">
+  <div class="done-actions">
+    <button class="abtn wa" id="sharebtn" onclick="shareSheet()">📲 שליחת הדף בוואטסאפ</button>
+    <button class="abtn dl" onclick="downloadSheet()">⬇ הורדת הדף למכשיר</button>
+  </div>
+  <div class="donenote" id="donenote" style="display:none"></div>
+  <footer>
+    📅 יום שני · 24.8.2026 · 11:00 · פרטי המיקום יישלחו בקבוצת הוואטסאפ<br>
+    עמותת הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a>
+  </footer>
+</div>
+
+
+<script>
+/* ============================ הגדרות ============================ */
+const WA_PHONE = '972585585991';   /* הוואטסאפ של הופה — לכאן נשלחים הדפים */
+
+const MEETING = { date: 'יום שני · 24.8.2026', time: '11:00' };
+
+const SCHOOLS = [
+  'אורט בית הערבה','אורט צור ברק','אורט קריית מוצקין','אורט מרום עכו',
+  'אורט מגשימים בית שאן','אורט אשקלון','אורט כרמל חיפה',
+  'מרכז תורני טכנולוגי נחלים','מנאראת טוראען','יוצר עמל טכנולוגי אשדוד',
+  'עמל רמת דוד','דרור נווה מדבר','טכנולוגי אלאמאני סחנין','תיכון חושן',
+  'טכנולוגי לקייה',"יוצר עתיד בנות ג'וליס",'עתיד אבדאע ביר אלמכסור',
+  "תיכון שיח' דנון עמקה",'יוצר עתיד פלמחים','התיכון החברתי תל אביב-יפו',
+  'עמל טכנולוגי רהט','אולפנת עתידי בת עמי','אלמוסתקבל תל שבע',
+  'עתיד יוצר מגשימים כרמיאל','אחר / לא ברשימה'
+];
+
+const VALUE_CHIPS = [
+  'אמונה בכל אחד ואחת','יחס אישי','הקשבה','התמדה','שוויון הזדמנויות',
+  'אחריות','שותפות','אופטימיות','מקצועיות','מחויבות','דוגמה אישית','אהבת אדם'
+];
+
+const VISIONS = [
+  { key:'path',       n:1,  title:'הדרך המתפתלת',  sub:'לכל בוגר ובוגרת מסלול משלהם' },
+  { key:'hands',      n:2,  title:'היד המושטת',     sub:'להיות שם בדיוק ברגע שצריך' },
+  { key:'sprout',     n:3,  title:'הצמיחה',         sub:'שורשים חזקים וצמיחה בקצב אישי' },
+  { key:'together',   n:4,  title:'יחד על הפסגה',   sub:'קהילה שמגיעה רחוק ביחד' },
+  { key:'mosaic',     n:5,  title:'הפסיפס',         sub:'כל אחד ואחת — צורה וצבע משלהם' },
+  { key:'boat',       n:6,  title:'ההפלגה',         sub:'יוצאים לדרך, ואנחנו הרוח הגבית' },
+  { key:'circle',     n:7,  title:'המעגל',          sub:'מעגל פתוח שתמיד אפשר לחזור אליו' },
+  { key:'climb',      n:8,  title:'העלייה המשותפת', sub:'יד תומכת בכל טיפוס' },
+  { key:'crossroads', n:9,  title:'הצומת',          sub:'עוזרים לבחור כיוון בצמתים של החיים' },
+  { key:'network',    n:10, title:'הרשת',           sub:'מחברים לאנשים ולהזדמנויות הנכונות' },
+  { key:'door',       n:11, title:'הדלת הפתוחה',    sub:'יש לך כתובת — תמיד' },
+  { key:'journey',    n:12, title:'תחנות המסע',     sub:'מלווים מתחנה לתחנה, לאורך כל הדרך' }
+];
+VISIONS.forEach(function(v){ v.img = 'mifgash-img/tile-' + v.n + '.jpg'; });
+
+const QUOTES = [
+  { group: 'דרך ומסע', items: [
+    { text: 'כל העולם כולו גשר צר מאוד, והעיקר לא לפחד כלל', by: 'רבי נחמן מברסלב' },
+    { text: 'מסע של אלף מיל מתחיל בצעד אחד', by: 'לאו דזה' },
+    { text: 'עשה לך רב, וקנה לך חבר', by: 'פרקי אבות' },
+    { text: 'לא עליך המלאכה לגמור, ולא אתה בן חורין להיבטל ממנה', by: 'פרקי אבות' }
+  ]},
+  { group: 'אמונה באדם', items: [
+    { text: 'אם תרצו, אין זו אגדה', by: 'בנימין זאב הרצל' },
+    { text: 'אין דבר העומד בפני הרצון', by: 'אמרה עממית' },
+    { text: 'חנוך לנער על פי דרכו', by: 'ספר משלי' },
+    { text: 'איזהו חכם? הלומד מכל אדם', by: 'פרקי אבות' },
+    { text: 'לא המקום מכבד את האדם, אלא האדם מכבד את מקומו', by: 'תלמוד בבלי' }
+  ]},
+  { group: 'צמיחה', items: [
+    { text: 'שני דברים עלינו להעניק לילדינו: שורשים וכנפיים', by: 'מיוחס לגתה' },
+    { text: 'החינוך הוא הנשק החזק ביותר לשינוי העולם', by: 'נלסון מנדלה' },
+    { text: 'הדרך הטובה ביותר לחזות את העתיד היא ליצור אותו', by: 'פיטר דרוקר' },
+    { text: "מי שיש לו 'למה' לחיות למענו, יוכל לשאת כמעט כל 'איך'", by: 'ויקטור פרנקל' },
+    { text: 'אם אתה מאמין שאפשר לקלקל, תאמין שאפשר לתקן', by: 'רבי נחמן מברסלב' }
+  ]},
+  { group: 'ברוח הופה', items: [
+    { text: 'מעט מן האור דוחה הרבה מן החושך', by: 'רבי שניאור זלמן מלאדי' },
+    { text: 'פתאום הכל נראה אפשרי', by: 'הופה!' },
+    { text: 'בוגר עם כתובת אף פעם לא הולך לאיבוד', by: 'ברוח תוכנית הבוגרים' },
+    { text: 'כל בוגר ובוגרת הם עולם ומלואו', by: 'בעקבות המשנה' }
+  ]}
+];
+
+/* ============================ בניית הטופס ============================ */
+const $ = id => document.getElementById(id);
+let photoData = '';
+let vision = null;
+let quote = null;
+let resultBlob = null;
+
+SCHOOLS.forEach(function(s){
+  const o = document.createElement('option');
+  o.value = s; o.textContent = s;
+  $('school').appendChild(o);
+});
+
+VALUE_CHIPS.forEach(function(v){
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.textContent = v;
+  b.onclick = function(){
+    const ta = $('values_text');
+    if (b.classList.contains('on')){
+      b.classList.remove('on');
+      ta.value = ta.value.split(/,\s*|\n/).filter(function(x){return x.trim() && x.trim() !== v;}).join(', ');
+    } else {
+      b.classList.add('on');
+      ta.value = ta.value.trim() ? ta.value.trim().replace(/,\s*$/,'') + ', ' + v : v;
+    }
+  };
+  $('chips').appendChild(b);
+});
+
+VISIONS.forEach(function(v){
+  const c = document.createElement('div');
+  c.className = 'vcard';
+  c.innerHTML = '<img class="vimg" src="' + v.img + '" loading="lazy" alt="">' +
+                '<div class="vt">' + v.title + '</div><div class="vs">' + v.sub + '</div>';
+  c.onclick = function(){
+    document.querySelectorAll('.vcard').forEach(function(x){x.classList.remove('on');});
+    c.classList.add('on');
+    vision = v;
+  };
+  $('vgrid').appendChild(c);
+});
+
+QUOTES.forEach(function(g){
+  const h = document.createElement('div');
+  h.className = 'qgroup'; h.textContent = g.group;
+  $('quotes').appendChild(h);
+  g.items.forEach(function(q){
+    const c = document.createElement('div');
+    c.className = 'qcard';
+    c.innerHTML = '<div class="qt">„' + q.text + '"</div><div class="qb">— ' + q.by + '</div>';
+    c.onclick = function(){
+      document.querySelectorAll('.qcard').forEach(function(x){x.classList.remove('on');});
+      c.classList.add('on');
+      quote = q;
+    };
+    $('quotes').appendChild(c);
+  });
+});
+
+/* ---------- תמונה: דחיסה בצד הלקוח ---------- */
+$('photofile').addEventListener('change', function(){
+  const f = this.files && this.files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX){
+        const k = MAX / Math.max(w, h);
+        w = Math.round(w * k); h = Math.round(h * k);
+      }
+      const cv = document.createElement('canvas');
+      cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(img, 0, 0, w, h);
+      photoData = cv.toDataURL('image/jpeg', 0.88);
+      $('pcircle').classList.add('filled');
+      $('pcircle').innerHTML = '<img src="' + photoData + '" alt="">';
+      $('photomsg').textContent = 'מעולה! אפשר להחליף בלחיצה';
+    };
+    img.onerror = function(){ $('photomsg').textContent = 'הקובץ לא נקרא — נסו תמונה אחרת'; };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(f);
+});
+
+/* ============================ יצירת דף ה-A4 ============================ */
+function problem(){
+  if ($('full_name').value.trim().length < 2) return ['s1','חסר שם מלא'];
+  if (!$('school').value)                     return ['s1','לא נבחר בית ספר'];
+  if (!photoData)                             return ['s2','חסרה תמונה שלך'];
+  if ($('values_text').value.trim().length < 2) return ['s3','ספרו לנו אילו ערכים חשובים לכם'];
+  if (!vision)                                return ['s4','בחרו תמונת חזון אחת'];
+  if (!quote)                                 return ['s5','בחרו פתגם או משפט אחד'];
+  return null;
+}
+
+/* ---------- ציור דף ה-A4 ישירות על קנבס — אמין בכל דפדפן ---------- */
+const C = {
+  pink:'#E8348A', pinkDeep:'#C2185B', pinkSoft:'#FCE7F2',
+  yellow:'#FFF200', ink:'#141414', gray:'#666', graySoft:'#999', white:'#fff'
+};
+
+function loadImg(src){
+  return new Promise(function(res, rej){
+    const im = new Image();
+    im.onload = function(){ res(im); };
+    im.onerror = function(){ rej(new Error('image failed: ' + src)); };
+    im.src = src;
+  });
+}
+
+function rr(ctx, x, y, w, h, r){
+  r = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+/* מצייר תמונה בחיתוך cover בתוך מלבן */
+function drawCover(ctx, im, x, y, w, h){
+  const k = Math.max(w / im.width, h / im.height);
+  const sw = w / k, sh = h / k;
+  ctx.drawImage(im, (im.width - sw) / 2, (im.height - sh) / 2, sw, sh, x, y, w, h);
+}
+
+function wrapLines(ctx, text, maxW){
+  const words = String(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let cur = '';
+  words.forEach(function(w){
+    const t = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && cur){ lines.push(cur); cur = w; }
+    else cur = t;
+  });
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function drawSheet(logo, visionImg, photoImg){
+  const W = 794, H = 1123, S = 2;
+  const cv = document.createElement('canvas');
+  cv.width = W * S; cv.height = H * S;
+  const ctx = cv.getContext('2d');
+  ctx.scale(S, S);
+  ctx.direction = 'rtl';
+  ctx.textBaseline = 'alphabetic';
+  const F = function(weight, size){ return weight + ' ' + size + 'px Rubik, Arial, sans-serif'; };
+  const M = 60, R = W - M, L = M;                 /* שוליים */
+
+  /* רקע ופס עליון */
+  ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
+  const grad = ctx.createLinearGradient(0, 0, W, 0);  /* ורוד→צהוב, כמו בפס של האתר */
+  grad.addColorStop(0, C.pink); grad.addColorStop(1, C.yellow);
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, 34);
+
+  /* לוגו מימין, כותרת האירוע משמאל */
+  const logoH = 50, logoW = logoH * logo.width / logo.height;
+  ctx.drawImage(logo, R - logoW, 72, logoW, logoH);
+  ctx.font = F(700, 15);
+  const evDate = MEETING.date, evLabel = 'מפגש רכזי ורכזות בוגרים · ';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = C.pink;
+  ctx.fillText(evDate, L, 103);
+  ctx.fillStyle = C.gray;
+  ctx.fillText(evLabel, L + ctx.measureText(evDate).width + 4, 103);
+
+  /* תמונת הרכז/ת בעיגול עם טבעות */
+  const cx = W / 2, cy = 262, pr = 110;
+  ctx.fillStyle = C.yellow; ctx.beginPath(); ctx.arc(cx, cy, pr + 14, 0, 7); ctx.fill();
+  ctx.fillStyle = C.pink;   ctx.beginPath(); ctx.arc(cx, cy, pr + 8, 0, 7); ctx.fill();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx, cy, pr, 0, 7); ctx.clip();
+  drawCover(ctx, photoImg, cx - pr, cy - pr, pr * 2, pr * 2);
+  ctx.restore();
+
+  /* שם ובית ספר */
+  ctx.textAlign = 'center';
+  ctx.fillStyle = C.ink;
+  let nameSize = 41;
+  ctx.font = F(900, nameSize);
+  const name = $('full_name').value.trim();
+  while (ctx.measureText(name).width > W - 2 * M && nameSize > 26){
+    nameSize -= 2; ctx.font = F(900, nameSize);
+  }
+  ctx.fillText(name, cx, 448);
+  const school = $('school').value;
+  ctx.font = F(700, 17);
+  const sw2 = ctx.measureText(school).width + 52;
+  ctx.fillStyle = C.yellow;
+  rr(ctx, cx - sw2 / 2, 468, sw2, 37, 19); ctx.fill();
+  ctx.fillStyle = C.ink;
+  ctx.fillText(school, cx, 493);
+
+  /* שתי עמודות: ערכים (ימין) וחזון (שמאל) */
+  const colTop = 548;
+  const valW = 345, valR = R, valL = valR - valW;     /* עמודת ערכים בימין */
+  const visW = 299, visL = L, visCx = visL + visW / 2;/* עמודת חזון בשמאל */
+
+  function secTitle(txt, right, left){
+    ctx.font = F(800, 17);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = C.pinkDeep;
+    ctx.fillText(txt, right, colTop);
+    const tw = ctx.measureText(txt).width;
+    ctx.fillStyle = C.pinkSoft;
+    rr(ctx, left, colTop - 7, right - left - tw - 9, 3, 2); ctx.fill();
+  }
+  secTitle('הערכים שלי', valR, valL);
+  secTitle('החזון שלי', visL + visW, visL);
+
+  /* ערכים — צ'יפים או פסקה */
+  const parts = $('values_text').value.trim().split(/,|\n|·/).map(function(s){return s.trim();}).filter(Boolean);
+  const asChips = parts.length >= 2 && parts.length <= 10 && parts.every(function(p){return p.length <= 32;});
+  let vy = colTop + 24;
+  if (asChips){
+    ctx.font = F(500, 15);
+    let x = valR;
+    parts.forEach(function(p){
+      const w = ctx.measureText(p).width + 38;
+      if (x - w < valL){ x = valR; vy += 43; }
+      ctx.fillStyle = C.pinkSoft;
+      rr(ctx, x - w, vy, w, 34, 17); ctx.fill();
+      ctx.fillStyle = C.ink;
+      ctx.textAlign = 'center';
+      ctx.fillText(p, x - w / 2, vy + 23);
+      x -= w + 9;
+    });
+  } else {
+    ctx.font = F(400, 16.5);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = C.ink;
+    wrapLines(ctx, $('values_text').value.trim(), valW).slice(0, 9).forEach(function(ln){
+      ctx.fillText(ln, valR, vy + 14); vy += 27;
+    });
+  }
+
+  /* תמונת החזון */
+  const vimgW = 212, vx = visCx - vimgW / 2, vyy = colTop + 22;
+  ctx.save();
+  ctx.shadowColor = 'rgba(20,20,20,.25)'; ctx.shadowBlur = 11; ctx.shadowOffsetY = 4;
+  rr(ctx, vx, vyy, vimgW, vimgW, 15);
+  ctx.fillStyle = C.white; ctx.fill();
+  ctx.restore();
+  ctx.save();
+  rr(ctx, vx, vyy, vimgW, vimgW, 15); ctx.clip();
+  drawCover(ctx, visionImg, vx, vyy, vimgW, vimgW);
+  ctx.restore();
+  ctx.textAlign = 'center';
+  ctx.fillStyle = C.ink;
+  ctx.font = F(800, 18);
+  ctx.fillText(vision.title, visCx, vyy + vimgW + 30);
+  ctx.font = F(400, 14);
+  ctx.fillStyle = C.gray;
+  wrapLines(ctx, vision.sub, visW).forEach(function(ln, i){
+    ctx.fillText(ln, visCx, vyy + vimgW + 52 + i * 20);
+  });
+
+  /* הציטוט — בלוק שחור בתחתית */
+  ctx.font = F(700, 22);
+  const qLines = wrapLines(ctx, '„' + quote.text + '"', W - 2 * M - 76);
+  const qh = 30 + qLines.length * 33 + 9 + 21 + 30;
+  const qTop = H - 30 - 20 - 22 - qh;
+  ctx.fillStyle = C.ink;
+  rr(ctx, M, qTop, W - 2 * M, qh, 23); ctx.fill();
+  ctx.fillStyle = C.yellow;
+  ctx.beginPath(); ctx.arc(R - 38 - 22, qTop, 22, 0, 7); ctx.fill();
+  ctx.fillStyle = C.ink;
+  ctx.font = F(900, 26);
+  ctx.fillText('”', R - 38 - 22, qTop + 9);
+  ctx.fillStyle = C.white;
+  ctx.font = F(700, 22);
+  qLines.forEach(function(ln, i){
+    ctx.fillText(ln, cx, qTop + 30 + 24 + i * 33);
+  });
+  ctx.fillStyle = C.yellow;
+  ctx.font = F(500, 15);
+  ctx.fillText('— ' + quote.by, cx, qTop + 30 + qLines.length * 33 + 24);
+
+  /* תחתית */
+  ctx.font = F(400, 13);
+  ctx.textAlign = 'right';
+  ctx.fillStyle = C.pink;
+  ctx.fillText('Hopa!', R, H - 32);
+  const hw = ctx.measureText('Hopa!').width;
+  ctx.fillStyle = C.graySoft;
+  ctx.fillText(' · פתאום הכל נראה אפשרי', R - hw, H - 32);
+  ctx.textAlign = 'left';
+  ctx.fillText('hopa.org.il', L, H - 32);
+
+  return cv;
+}
+
+function createSheet(){
+  document.querySelectorAll('section').forEach(function(s){s.classList.remove('err');});
+  const p = problem();
+  if (p){
+    $(p[0]).classList.add('err');
+    $('errmsg').textContent = p[1];
+    $('errmsg').style.display = 'block';
+    $(p[0]).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  $('errmsg').style.display = 'none';
+  const btn = $('sendbtn');
+  btn.disabled = true; btn.textContent = 'רגע, מציירים את הדף שלך… 🎨';
+
+  const fonts = ['900 41px', '800 18px', '700 22px', '500 15px', '400 14px']
+    .map(function(f){ return document.fonts.load(f + ' Rubik', 'אבג Hopa'); });
+
+  Promise.all([loadImg('hopa-logo.png'), loadImg(vision.img), loadImg(photoData)].concat(fonts))
+  .then(function(res){
+    const cv = drawSheet(res[0], res[1], res[2]);
+    return new Promise(function(done){ cv.toBlob(done, 'image/png'); });
+  }).then(function(blob){
+    if (!blob) throw new Error('no blob');
+    resultBlob = blob;
+    $('result').src = URL.createObjectURL(blob);
+    $('formview').style.display = 'none';
+    $('done').style.display = 'block';
+    window.scrollTo(0, 0);
+  }).catch(function(err){
+    btn.disabled = false; btn.textContent = '✨ יצירת הדף האישי שלי';
+    $('errmsg').textContent = 'משהו השתבש ביצירת הדף — נסו שוב (' + err + ')';
+    $('errmsg').style.display = 'block';
+  });
+}
+
+/* ============================ שליחה והורדה ============================ */
+function fileName(){
+  return 'מפגש-הופה-' + $('full_name').value.trim().replace(/[\\/:*?"<>|]/g, '') + '.png';
+}
+
+function waText(){
+  return 'היי, נרשמתי למפגש רכזי הבוגרים ב-24.8! 🌸\n' +
+         $('full_name').value.trim() + ' · ' + $('school').value +
+         ($('phone').value.trim() ? ' · ' + $('phone').value.trim() : '') +
+         '\nמצורף הדף האישי שלי 👇';
+}
+
+function shareSheet(){
+  const file = new File([resultBlob], fileName(), { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })){
+    navigator.share({ files: [file], text: waText() }).catch(function(){ /* המשתמש ביטל */ });
+  } else {
+    /* אין שיתוף קבצים (בעיקר במחשב) — מורידים ופותחים את הצ'אט */
+    downloadSheet();
+    window.open('https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(waText()), '_blank');
+    const n = $('donenote');
+    n.innerHTML = '💡 הדף ירד למכשיר (תיקיית ההורדות). בצ\'אט שנפתח — צרפו אותו עם 📎 ושלחו.';
+    n.style.display = 'block';
+  }
+}
+
+function downloadSheet(){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(resultBlob);
+  a.download = fileName();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+</script>
+</body>
+</html>
