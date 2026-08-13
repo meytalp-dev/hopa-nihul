@@ -614,41 +614,50 @@ function drawSheet(logo, visionImg, photoImg){
   const parts = rawVals.split(/,|\n|·/).map(function(s){ return s.trim(); }).filter(Boolean);
   const asList = parts.length >= 2 && parts.length <= 10 && parts.every(function(p){ return p.length <= 34; });
 
+  /* אזור הערכים ממלא את כל הגובה עד קו ההפרדה */
+  const vTop = 112, vBottom = 440, vRegion = vBottom - vTop;
+
   if (asList){
-    /* כל ערך בשורה משלו עם הדגשת מרקר צהובה — ממורכז אנכית באזור */
+    /* כל ערך בשורה משלו עם הדגשת מרקר — הגודל נמתח למלא את האזור */
     const n = parts.length;
-    const vSize = n <= 4 ? 33 : n <= 6 ? 28 : n <= 8 ? 23 : 20;
-    const rowH  = n <= 4 ? 56 : n <= 6 ? 48 : n <= 8 ? 40 : 34;
-    let vy = 132 + Math.max(0, (430 - 132 - (parts.length - 1) * rowH - vSize) / 2);
+    const rowH = vRegion / n;
     parts.forEach(function(p, i){
-      ctx.font = F(800, vSize);
-      let sz = vSize;
-      while (ctx.measureText(p).width > AR - AL - 30 && sz > 15){
+      let sz = Math.min(52, Math.floor(rowH * 0.62));
+      ctx.font = F(800, sz);
+      while (ctx.measureText(p).width > AR - AL - 40 && sz > 15){
         sz -= 1; ctx.font = F(800, sz);
       }
       const tw = ctx.measureText(p).width;
+      const vy = vTop + rowH * i + rowH / 2 + sz * 0.36;
       ctx.save();
       ctx.translate(AR, vy);
       ctx.rotate((i % 2 === 0 ? -1 : 1) * 0.006);
       ctx.fillStyle = i % 3 === 2 ? C.pinkSoft : C.yellow;
-      rr(ctx, -tw - 16, -sz * 0.78, tw + 26, sz * 1.08, 5); ctx.fill();
+      rr(ctx, -tw - 18, -sz * 0.8, tw + 30, sz * 1.12, 6); ctx.fill();
       ctx.fillStyle = C.ink;
       ctx.textAlign = 'right';
       ctx.fillText(p, 0, 0);
       ctx.restore();
-      vy += rowH;
     });
   } else {
-    /* טקסט חופשי — פסקה גדולה עם פס ורוד */
-    ctx.font = F(500, 21);
-    const lines = wrapLines(ctx, rawVals, AR - AL - 40).slice(0, 8);
+    /* טקסט חופשי — פסקה שנמתחת למלא את האזור */
+    let sz = 34, lines;
+    while (sz > 17){
+      ctx.font = F(500, sz);
+      lines = wrapLines(ctx, rawVals, AR - AL - 40);
+      if (lines.length * sz * 1.55 <= vRegion - 20) break;
+      sz -= 1;
+    }
+    lines = lines.slice(0, 10);
+    const lh = sz * 1.55;
+    const startY = vTop + Math.max(0, (vRegion - lines.length * lh) / 2);
     ctx.fillStyle = C.pink;
-    rr(ctx, AR + 14, 116, 5, lines.length * 34 + 10, 3); ctx.fill();
+    rr(ctx, AR + 14, startY + 6, 5, lines.length * lh - 8, 3); ctx.fill();
     ctx.fillStyle = C.ink;
-    let vy = 142;
+    let vy = startY + sz * 1.1;
     lines.forEach(function(ln){
       ctx.textAlign = 'right';
-      ctx.fillText(ln, AR - 6, vy); vy += 34;
+      ctx.fillText(ln, AR - 6, vy); vy += lh;
     });
   }
 
