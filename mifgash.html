@@ -457,8 +457,49 @@ function wrapLines(ctx, text, maxW){
   return lines;
 }
 
+/* ניצוץ דקורטיבי בסגנון הלוגו */
+function drawSpark(ctx, x, y, r, color){
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x, y - r);
+  ctx.quadraticCurveTo(x + r * 0.12, y - r * 0.12, x + r, y);
+  ctx.quadraticCurveTo(x + r * 0.12, y + r * 0.12, x, y + r);
+  ctx.quadraticCurveTo(x - r * 0.12, y + r * 0.12, x - r, y);
+  ctx.quadraticCurveTo(x - r * 0.12, y - r * 0.12, x, y - r);
+  ctx.fill();
+  ctx.restore();
+}
+
+/* הלוגו הטיפוגרפי Hopa! — ה-o על ריבוע צהוב (גרסה לבנה לפאנל הכהה) */
+function drawHopaLogo(ctx, cx, y, size){
+  ctx.save();
+  ctx.direction = 'ltr';
+  ctx.textAlign = 'left';
+  const F = '900 ' + size + 'px Rubik, Arial, sans-serif';
+  ctx.font = F;
+  const wH = ctx.measureText('H').width;
+  const wO = ctx.measureText('o').width;
+  const wRest = ctx.measureText('pa!').width;
+  const pad = size * 0.14;
+  const total = wH + wO + pad * 2 + wRest;
+  const x0 = cx - total / 2;
+  ctx.fillStyle = '#fff';
+  ctx.fillText('H', x0, y);
+  ctx.fillStyle = C.yellow;
+  rr(ctx, x0 + wH + pad - size * 0.06, y - size * 0.72, wO + size * 0.12, size * 0.86, size * 0.12);
+  ctx.fill();
+  ctx.fillStyle = C.ink;
+  ctx.fillText('o', x0 + wH + pad, y);
+  ctx.fillStyle = '#fff';
+  ctx.fillText('pa!', x0 + wH + pad + wO + pad, y);
+  ctx.restore();
+  return total;
+}
+
 function drawSheet(logo, visionImg, photoImg){
-  const W = 794, H = 1123, S = 2;
+  /* A4 לרוחב */
+  const W = 1123, H = 794, S = 2;
   const cv = document.createElement('canvas');
   cv.width = W * S; cv.height = H * S;
   const ctx = cv.getContext('2d');
@@ -466,147 +507,226 @@ function drawSheet(logo, visionImg, photoImg){
   ctx.direction = 'rtl';
   ctx.textBaseline = 'alphabetic';
   const F = function(weight, size){ return weight + ' ' + size + 'px Rubik, Arial, sans-serif'; };
-  const M = 60, R = W - M, L = M;                 /* שוליים */
 
-  /* רקע ופס עליון */
   ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
-  const grad = ctx.createLinearGradient(0, 0, W, 0);  /* ורוד→צהוב, כמו בפס של האתר */
-  grad.addColorStop(0, C.pink); grad.addColorStop(1, C.yellow);
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, 34);
 
-  /* לוגו מימין, כותרת האירוע משמאל */
-  const logoH = 50, logoW = logoH * logo.width / logo.height;
-  ctx.drawImage(logo, R - logoW, 72, logoW, logoH);
-  ctx.font = F(700, 15);
-  const evDate = MEETING.date, evLabel = 'מפגש רכזי ורכזות בוגרים · ';
-  ctx.textAlign = 'left';
-  ctx.fillStyle = C.pink;
-  ctx.fillText(evDate, L, 103);
-  ctx.fillStyle = C.gray;
-  ctx.fillText(evLabel, L + ctx.measureText(evDate).width + 4, 103);
+  /* ================= הפאנל השחור מימין ================= */
+  const PW = 360, PX = W - PW;          /* הפאנל: x מ-763 עד 1123 */
+  const pcx = PX + PW / 2;
+  ctx.fillStyle = C.ink;
+  ctx.fillRect(PX, 0, PW, H);
 
-  /* תמונת הרכז/ת בעיגול עם טבעות */
-  const cx = W / 2, cy = 262, pr = 110;
-  ctx.fillStyle = C.yellow; ctx.beginPath(); ctx.arc(cx, cy, pr + 14, 0, 7); ctx.fill();
-  ctx.fillStyle = C.pink;   ctx.beginPath(); ctx.arc(cx, cy, pr + 8, 0, 7); ctx.fill();
+  /* פס גרדיאנט דק בקצה הפנימי של הפאנל */
+  const pg = ctx.createLinearGradient(0, 0, 0, H);
+  pg.addColorStop(0, C.pink); pg.addColorStop(1, C.yellow);
+  ctx.fillStyle = pg; ctx.fillRect(PX - 6, 0, 6, H);
+
+  /* דקורציה על הפאנל */
+  drawSpark(ctx, PX + 42, 64, 14, C.yellow);
+  drawSpark(ctx, W - 38, 108, 9, C.pink);
+  drawSpark(ctx, PX + 34, H - 150, 8, C.pink);
+  drawSpark(ctx, W - 46, H - 96, 12, C.yellow);
+  ctx.globalAlpha = 0.22;
+  ctx.strokeStyle = C.yellow; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(W + 10, H + 10, 150, 0, 7); ctx.stroke();
+  ctx.beginPath(); ctx.arc(PX + 6, -14, 90, 0, 7); ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  /* לוגו + טאגליין */
+  drawHopaLogo(ctx, pcx, 74, 40);
+  ctx.font = F(500, 13);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = C.yellow;
+  ctx.fillText('פתאום הכל נראה אפשרי', pcx, 98);
+
+  /* תמונת הרכז/ת — עיגול גדול עם טבעת צהובה */
+  const pr = 118, cy = 268;
+  ctx.fillStyle = C.yellow;
+  ctx.beginPath(); ctx.arc(pcx, cy, pr + 10, 0, 7); ctx.fill();
   ctx.save();
-  ctx.beginPath(); ctx.arc(cx, cy, pr, 0, 7); ctx.clip();
-  drawCover(ctx, photoImg, cx - pr, cy - pr, pr * 2, pr * 2);
+  ctx.beginPath(); ctx.arc(pcx, cy, pr, 0, 7); ctx.clip();
+  drawCover(ctx, photoImg, pcx - pr, cy - pr, pr * 2, pr * 2);
   ctx.restore();
 
-  /* שם ובית ספר */
-  ctx.textAlign = 'center';
-  ctx.fillStyle = C.ink;
-  let nameSize = 41;
-  ctx.font = F(900, nameSize);
+  /* שם — לבן, גדול, עם ירידת שורה אם צריך */
   const name = $('full_name').value.trim();
-  while (ctx.measureText(name).width > W - 2 * M && nameSize > 26){
+  let nameSize = 36;
+  ctx.font = F(900, nameSize);
+  let nameLines = [name];
+  if (ctx.measureText(name).width > PW - 56 && name.indexOf(' ') > 0){
+    nameLines = wrapLines(ctx, name, PW - 56);
+  }
+  while (nameLines.some(function(l){ return ctx.measureText(l).width > PW - 56; }) && nameSize > 22){
     nameSize -= 2; ctx.font = F(900, nameSize);
+    nameLines = wrapLines(ctx, name, PW - 56);
   }
-  ctx.fillText(name, cx, 448);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#fff';
+  let ny = 448;
+  nameLines.slice(0, 2).forEach(function(l){
+    ctx.fillText(l, pcx, ny); ny += nameSize * 1.15;
+  });
+
+  /* בית הספר — גלולה צהובה */
   const school = $('school').value;
-  ctx.font = F(700, 17);
-  const sw2 = ctx.measureText(school).width + 52;
-  ctx.fillStyle = C.yellow;
-  rr(ctx, cx - sw2 / 2, 468, sw2, 37, 19); ctx.fill();
-  ctx.fillStyle = C.ink;
-  ctx.fillText(school, cx, 493);
-
-  /* שתי עמודות: ערכים (ימין) וחזון (שמאל) */
-  const colTop = 548;
-  const valW = 345, valR = R, valL = valR - valW;     /* עמודת ערכים בימין */
-  const visW = 299, visL = L, visCx = visL + visW / 2;/* עמודת חזון בשמאל */
-
-  function secTitle(txt, right, left){
-    ctx.font = F(800, 17);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = C.pinkDeep;
-    ctx.fillText(txt, right, colTop);
-    const tw = ctx.measureText(txt).width;
-    ctx.fillStyle = C.pinkSoft;
-    rr(ctx, left, colTop - 7, right - left - tw - 9, 3, 2); ctx.fill();
+  let schSize = 17;
+  ctx.font = F(700, schSize);
+  while (ctx.measureText(school).width > PW - 90 && schSize > 12){
+    schSize -= 1; ctx.font = F(700, schSize);
   }
-  secTitle('הערכים שלי', valR, valL);
-  secTitle('החזון שלי', visL + visW, visL);
+  const sw2 = ctx.measureText(school).width + 46;
+  const schY = ny - nameSize * 1.15 + 20;
+  ctx.fillStyle = C.yellow;
+  rr(ctx, pcx - sw2 / 2, schY, sw2, 36, 18); ctx.fill();
+  ctx.fillStyle = C.ink;
+  ctx.fillText(school, pcx, schY + 24);
+  ctx.font = F(500, 14);
+  ctx.fillStyle = 'rgba(255,255,255,.55)';
+  ctx.fillText('רכז/ת בוגרים', pcx, schY + 62);
 
-  /* ערכים — צ'יפים או פסקה */
-  const parts = $('values_text').value.trim().split(/,|\n|·/).map(function(s){return s.trim();}).filter(Boolean);
-  const asChips = parts.length >= 2 && parts.length <= 10 && parts.every(function(p){return p.length <= 32;});
-  let vy = colTop + 24;
-  if (asChips){
-    ctx.font = F(500, 15);
-    let x = valR;
-    parts.forEach(function(p){
-      const w = ctx.measureText(p).width + 38;
-      if (x - w < valL){ x = valR; vy += 43; }
-      ctx.fillStyle = C.pinkSoft;
-      rr(ctx, x - w, vy, w, 34, 17); ctx.fill();
+  /* פרטי המפגש בתחתית הפאנל */
+  ctx.strokeStyle = 'rgba(255,255,255,.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(PX + 60, H - 96); ctx.lineTo(W - 60, H - 96); ctx.stroke();
+  ctx.font = F(500, 13.5);
+  ctx.fillStyle = 'rgba(255,255,255,.75)';
+  ctx.fillText('מפגש רכזי ורכזות בוגרים', pcx, H - 66);
+  ctx.font = F(800, 17);
+  ctx.fillStyle = C.yellow;
+  ctx.fillText('יום שני · 24.8.2026 · 11:00', pcx, H - 38);
+
+  /* ================= אזור התוכן משמאל ================= */
+  const AR = PX - 52, AL = 48;          /* שוליים פנימיים */
+
+  drawSpark(ctx, AL + 14, 52, 11, C.pink);
+  drawSpark(ctx, AL + 40, 74, 6, C.yellow);
+
+  /* --- הערכים שלי — גדול, בסגנון מרקר --- */
+  ctx.textAlign = 'right';
+  ctx.font = F(900, 30);
+  ctx.fillStyle = C.ink;
+  ctx.fillText('הערכים שלי', AR, 78);
+  const hwT = ctx.measureText('הערכים שלי').width;
+  ctx.fillStyle = C.pink;
+  rr(ctx, AR - hwT, 88, hwT, 5, 3); ctx.fill();
+
+  const rawVals = $('values_text').value.trim();
+  const parts = rawVals.split(/,|\n|·/).map(function(s){ return s.trim(); }).filter(Boolean);
+  const asList = parts.length >= 2 && parts.length <= 10 && parts.every(function(p){ return p.length <= 34; });
+
+  if (asList){
+    /* כל ערך בשורה משלו עם הדגשת מרקר צהובה — ממורכז אנכית באזור */
+    const n = parts.length;
+    const vSize = n <= 4 ? 33 : n <= 6 ? 28 : n <= 8 ? 23 : 20;
+    const rowH  = n <= 4 ? 56 : n <= 6 ? 48 : n <= 8 ? 40 : 34;
+    let vy = 132 + Math.max(0, (430 - 132 - (parts.length - 1) * rowH - vSize) / 2);
+    parts.forEach(function(p, i){
+      ctx.font = F(800, vSize);
+      let sz = vSize;
+      while (ctx.measureText(p).width > AR - AL - 30 && sz > 15){
+        sz -= 1; ctx.font = F(800, sz);
+      }
+      const tw = ctx.measureText(p).width;
+      ctx.save();
+      ctx.translate(AR, vy);
+      ctx.rotate((i % 2 === 0 ? -1 : 1) * 0.006);
+      ctx.fillStyle = i % 3 === 2 ? C.pinkSoft : C.yellow;
+      rr(ctx, -tw - 16, -sz * 0.78, tw + 26, sz * 1.08, 5); ctx.fill();
       ctx.fillStyle = C.ink;
-      ctx.textAlign = 'center';
-      ctx.fillText(p, x - w / 2, vy + 23);
-      x -= w + 9;
+      ctx.textAlign = 'right';
+      ctx.fillText(p, 0, 0);
+      ctx.restore();
+      vy += rowH;
     });
   } else {
-    ctx.font = F(400, 16.5);
-    ctx.textAlign = 'right';
+    /* טקסט חופשי — פסקה גדולה עם פס ורוד */
+    ctx.font = F(500, 21);
+    const lines = wrapLines(ctx, rawVals, AR - AL - 40).slice(0, 8);
+    ctx.fillStyle = C.pink;
+    rr(ctx, AR + 14, 116, 5, lines.length * 34 + 10, 3); ctx.fill();
     ctx.fillStyle = C.ink;
-    wrapLines(ctx, $('values_text').value.trim(), valW).slice(0, 9).forEach(function(ln){
-      ctx.fillText(ln, valR, vy + 14); vy += 27;
+    let vy = 142;
+    lines.forEach(function(ln){
+      ctx.textAlign = 'right';
+      ctx.fillText(ln, AR - 6, vy); vy += 34;
     });
   }
 
-  /* תמונת החזון */
-  const vimgW = 212, vx = visCx - vimgW / 2, vyy = colTop + 22;
+  /* --- שורה תחתונה: ציטוט (ימין) + תמונת חזון (שמאל) --- */
+  const bandTop = 470;
+
+  /* קו הפרדה עדין */
+  ctx.strokeStyle = C.pinkSoft; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(AL, bandTop - 26); ctx.lineTo(AR, bandTop - 26); ctx.stroke();
+  drawSpark(ctx, (AL + AR) / 2, bandTop - 26, 9, C.pink);
+
+  /* תמונת החזון משמאל */
+  const vimg = 235, vx = AL, vyy = bandTop + 8;
   ctx.save();
-  ctx.shadowColor = 'rgba(20,20,20,.25)'; ctx.shadowBlur = 11; ctx.shadowOffsetY = 4;
-  rr(ctx, vx, vyy, vimgW, vimgW, 15);
+  ctx.shadowColor = 'rgba(20,20,20,.28)'; ctx.shadowBlur = 14; ctx.shadowOffsetY = 5;
+  rr(ctx, vx, vyy, vimg, vimg, 18);
   ctx.fillStyle = C.white; ctx.fill();
   ctx.restore();
   ctx.save();
-  rr(ctx, vx, vyy, vimgW, vimgW, 15); ctx.clip();
-  drawCover(ctx, visionImg, vx, vyy, vimgW, vimgW);
+  rr(ctx, vx, vyy, vimg, vimg, 18); ctx.clip();
+  drawCover(ctx, visionImg, vx, vyy, vimg, vimg);
   ctx.restore();
-  ctx.textAlign = 'center';
-  ctx.fillStyle = C.ink;
-  ctx.font = F(800, 18);
-  ctx.fillText(vision.title, visCx, vyy + vimgW + 30);
-  ctx.font = F(400, 14);
-  ctx.fillStyle = C.gray;
-  wrapLines(ctx, vision.sub, visW).forEach(function(ln, i){
-    ctx.fillText(ln, visCx, vyy + vimgW + 52 + i * 20);
-  });
-
-  /* הציטוט — בלוק שחור בתחתית */
-  ctx.font = F(700, 22);
-  const qLines = wrapLines(ctx, '„' + quote.text + '"', W - 2 * M - 76);
-  const qh = 30 + qLines.length * 33 + 9 + 21 + 30;
-  const qTop = H - 30 - 20 - 22 - qh;
-  ctx.fillStyle = C.ink;
-  rr(ctx, M, qTop, W - 2 * M, qh, 23); ctx.fill();
-  ctx.fillStyle = C.yellow;
-  ctx.beginPath(); ctx.arc(R - 38 - 22, qTop, 22, 0, 7); ctx.fill();
-  ctx.fillStyle = C.ink;
-  ctx.font = F(900, 26);
-  ctx.fillText('”', R - 38 - 22, qTop + 9);
-  ctx.fillStyle = C.white;
-  ctx.font = F(700, 22);
-  qLines.forEach(function(ln, i){
-    ctx.fillText(ln, cx, qTop + 30 + 24 + i * 33);
-  });
-  ctx.fillStyle = C.yellow;
-  ctx.font = F(500, 15);
-  ctx.fillText('— ' + quote.by, cx, qTop + 30 + qLines.length * 33 + 24);
-
-  /* תחתית */
-  ctx.font = F(400, 13);
-  ctx.textAlign = 'right';
+  /* מסגרת צהובה דקה + תגית כותרת על התמונה */
+  ctx.strokeStyle = C.yellow; ctx.lineWidth = 5;
+  rr(ctx, vx, vyy, vimg, vimg, 18); ctx.stroke();
+  ctx.font = F(800, 16);
+  const vtW = ctx.measureText(vision.title).width + 36;
   ctx.fillStyle = C.pink;
-  ctx.fillText('Hopa!', R, H - 32);
-  const hw = ctx.measureText('Hopa!').width;
+  rr(ctx, vx + vimg / 2 - vtW / 2, vyy + vimg - 20, vtW, 34, 17); ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText(vision.title, vx + vimg / 2, vyy + vimg + 3);
+  ctx.font = F(500, 13.5);
+  ctx.fillStyle = C.gray;
+  wrapLines(ctx, vision.sub, vimg + 30).forEach(function(ln, i){
+    ctx.fillText(ln, vx + vimg / 2, vyy + vimg + 40 + i * 19);
+  });
+
+  /* הציטוט מימין — מירכאות ענק וטקסט גדול, ממורכז אנכית */
+  const qR = AR, qL = vx + vimg + 46;
+  const qMaxW = qR - qL - 20;
+  ctx.textAlign = 'right';
+  let qSize = 27;
+  ctx.font = F(800, qSize);
+  let qLines = wrapLines(ctx, quote.text, qMaxW);
+  while (qLines.length > 4 && qSize > 18){
+    qSize -= 2; ctx.font = F(800, qSize);
+    qLines = wrapLines(ctx, quote.text, qMaxW);
+  }
+  /* ציטוט קצר? מגדילים עד שממלא יפה את הרוחב */
+  while (qSize < 38){
+    ctx.font = F(800, qSize + 2);
+    const t = wrapLines(ctx, quote.text, qMaxW);
+    if (t.length > Math.max(2, qLines.length)) break;
+    qSize += 2; qLines = t;
+  }
+  ctx.font = F(800, qSize);
+  const qLineH = qSize * 1.45;
+  const qBlockH = qLines.length * qLineH + 36;          /* + שורת הקרדיט */
+  const qRegionTop = bandTop + 26, qRegionH = H - 74 - qRegionTop;
+  let qy = qRegionTop + Math.max(0, (qRegionH - qBlockH) / 2) + qSize;
+  ctx.font = F(900, 90);
+  ctx.fillStyle = '#F6ADD3';
+  ctx.fillText('”', qR + 8, qy - qSize - 6);
+  ctx.font = F(800, qSize);
+  ctx.fillStyle = C.ink;
+  qLines.forEach(function(ln){
+    ctx.fillText(ln, qR - 14, qy); qy += qLineH;
+  });
+  ctx.font = F(700, 16);
+  ctx.fillStyle = C.pink;
+  ctx.fillText('— ' + quote.by, qR - 14, qy + 4);
+
+  /* תחתית — במרכז אזור התוכן, הרחק מהתמונה */
+  ctx.font = F(500, 12.5);
+  ctx.textAlign = 'center';
   ctx.fillStyle = C.graySoft;
-  ctx.fillText(' · פתאום הכל נראה אפשרי', R - hw, H - 32);
-  ctx.textAlign = 'left';
-  ctx.fillText('hopa.org.il', L, H - 32);
+  ctx.fillText('hopa.org.il · עמותת הופה', (qL + qR) / 2, H - 26);
 
   return cv;
 }
