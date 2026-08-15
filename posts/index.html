@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תור הפרסום של הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='4' y='4' width='32' height='32' rx='8' fill='%23FFF200'/%3E%3Ccircle cx='20' cy='20' r='9' fill='%23E8348A'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --pink: #E8348A; --yellow: #FFF200; --ink: #111; --soft: #555; --muted: #999;
+    --bg: #faf9f6; --surface: #fff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Heebo', 'Segoe UI', sans-serif; line-height: 1.6; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 36px 20px 80px; }
+
+  header { text-align: center; margin-bottom: 32px; }
+  header img.logo { height: 54px; background: var(--yellow); padding: 12px 18px 9px; border-radius: 12px; }
+  header h1 { font-family: 'Rubik', sans-serif; font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 900; margin: 14px 0 8px; }
+  header h1 span { color: var(--pink); }
+  header p { color: var(--soft); max-width: 56ch; margin: 0 auto; }
+  .header-links { margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .header-links a {
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: .9rem;
+    padding: 9px 20px; border-radius: 999px;
+  }
+  .link-dark { background: var(--ink); color: #fff; }
+  .link-ghost { background: rgba(0,0,0,.06); color: var(--ink); }
+
+  .howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .step { background: var(--surface); border-radius: 16px; padding: 15px 17px; box-shadow: 0 5px 20px rgba(0,0,0,.06); font-size: .92rem; color: var(--soft); }
+  .step b { display: block; color: var(--ink); font-size: .98rem; margin-bottom: 2px; }
+  .step .n { font-family: 'Rubik', sans-serif; color: var(--pink); font-weight: 900; }
+
+  .summary { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px; font-size: .92rem; font-weight: 700; }
+  .summary span { background: var(--surface); border-radius: 999px; padding: 7px 18px; box-shadow: 0 4px 12px rgba(0,0,0,.05); }
+
+  .day-label {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 1.1rem;
+    color: var(--soft); margin: 32px 4px 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .day-label::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,.12); }
+
+  .post-card {
+    background: var(--surface); border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    margin-bottom: 26px; overflow: hidden; display: grid; grid-template-columns: 300px 1fr;
+    border-top: 4px solid var(--yellow);
+  }
+  @media (max-width: 800px) { .post-card { grid-template-columns: 1fr; } }
+
+  .preview { background: #f2f0eb; padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; }
+  .preview img, .preview video { width: 100%; max-width: 264px; border-radius: 12px; box-shadow: 0 8px 22px rgba(0,0,0,.14); }
+  .btn {
+    display: inline-block; border: 0; cursor: pointer; text-decoration: none; text-align: center;
+    background: var(--ink); color: #fff; font-family: 'Heebo', sans-serif;
+    font-size: .85rem; font-weight: 700; padding: 8px 18px; border-radius: 999px;
+  }
+
+  .content { padding: 20px 24px; }
+  .content .top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .content h2 { font-family: 'Rubik', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 0; }
+  .when { font-size: .85rem; color: var(--pink); font-weight: 700; white-space: nowrap; }
+
+  .status { font-size: .8rem; font-weight: 800; padding: 4px 14px; border-radius: 999px; white-space: nowrap; }
+  .status.pending   { background: #fdf3d7; color: #8a6d1a; }
+  .status.approved  { background: #ddf3e7; color: #1e7a4d; }
+  .status.published { background: #dbeafe; color: #1d4ed8; }
+
+  .tabs { display: flex; gap: 8px; margin: 10px 0 12px; flex-wrap: wrap; }
+  .tab {
+    border: 0; cursor: pointer; font-family: 'Heebo', sans-serif;
+    background: rgba(0,0,0,.06); color: var(--ink);
+    font-size: .86rem; font-weight: 700; padding: 6px 16px; border-radius: 999px;
+  }
+  .tab.active { background: var(--pink); color: #fff; }
+
+  .caption-box { position: relative; }
+  .caption {
+    background: var(--bg); border-radius: 12px; padding: 14px 16px;
+    font-size: .92rem; white-space: pre-wrap; max-height: 210px; overflow-y: auto;
+    border-inline-start: 4px solid var(--yellow);
+  }
+  .copy-btn {
+    position: absolute; top: 10px; inset-inline-end: 10px;
+    border: 0; cursor: pointer; font-family: 'Heebo', sans-serif;
+    background: #fff; color: var(--ink); font-weight: 700; font-size: .8rem;
+    padding: 5px 14px; border-radius: 999px; box-shadow: 0 3px 10px rgba(0,0,0,.15);
+  }
+  .copy-btn.done { background: var(--pink); color: #fff; }
+
+  footer { text-align: center; color: var(--muted); font-size: .85rem; border-top: 1px solid rgba(0,0,0,.1); padding-top: 22px; margin-top: 40px; }
+  footer a { color: var(--pink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="logo" src="../hopa-logo.png" alt="הופה">
+    <h1>תור <span>הפרסום</span> של הופה</h1>
+    <p>הפוסטים הבאים לפייסבוק ולאינסטגרם — עם המועד המוצע לכל אחד. פוסט מתפרסם אוטומטית רק אחרי שאישרתן אותו.</p>
+    <div class="header-links">
+      <a class="link-dark" href="https://business.facebook.com/latest/planner" target="_blank" rel="noopener">📅 Meta Business Suite</a>
+      <a class="link-ghost" href="../facebook.html">כל הפוסטים והטקסטים</a>
+      <a class="link-ghost" href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+    </div>
+  </header>
+
+  <div class="howto">
+    <div class="step"><b><span class="n">1</span> · עוברים על התור</b>כל פוסט מופיע כאן עם התמונה, הטקסטים והמועד המוצע שלו</div>
+    <div class="step"><b><span class="n">2</span> · מאשרים לקלוד</b>אומרים "מאשרת את 10 ו־11" / "תזיזי את 13 לרביעי" / "בלי 14"</div>
+    <div class="step"><b><span class="n">3</span> · הפרסום אוטומטי</b>הסוכן רץ ב־8:00 וב־20:00 ומפרסם רק פוסטים מאושרים ✅</div>
+    <div class="step"><b><span class="n">4</span> · הדף מתעדכן</b>פוסט שיצא מסומן "פורסם" — תמיד רואים מה המצב האמיתי</div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+  <div id="posts"></div>
+
+  <footer>
+    תור הפרסום של הופה · <a href="../facebook.html">דף הפוסטים המלא</a> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+  </footer>
+</div>
+
+<script>
+const STATUS_LABELS = {
+  pending:   { cls: 'pending',   text: '⏳ ממתין לאישור' },
+  approved:  { cls: 'approved',  text: '✅ מאושר — יפורסם אוטומטית' },
+  published: { cls: 'published', text: '🚀 פורסם' }
+};
+const DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const PLATFORMS = [ {key:'fb', label:'פייסבוק'}, {key:'ig', label:'אינסטגרם'} ];
+
+fetch('posts-data.json?v=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    const scheduled = data.posts.filter(p => p.when).sort((a, b) => a.when.localeCompare(b.when));
+    const unscheduled = data.posts.filter(p => !p.when);
+
+    const counts = { pending: 0, approved: 0, published: 0 };
+    data.posts.forEach(p => { if (counts[p.status] !== undefined) counts[p.status]++; });
+    document.getElementById('summary').innerHTML =
+      '<span>⏳ ממתינים לאישור: ' + counts.pending + '</span>' +
+      '<span>✅ מאושרים: ' + counts.approved + '</span>' +
+      '<span>🚀 פורסמו: ' + counts.published + '</span>';
+
+    const container = document.getElementById('posts');
+    let lastDay = '';
+
+    const addCard = (p) => {
+      const st = STATUS_LABELS[p.status] || STATUS_LABELS.pending;
+      const time = p.when ? p.when.slice(11) : '';
+      const card = document.createElement('div');
+      card.className = 'post-card';
+
+      const mediaHtml = p.type === 'video'
+        ? '<video src="../fb/' + p.file + '" controls preload="metadata" playsinline></video>'
+        : '<img src="../fb/' + p.file + '" alt="' + p.title + '" loading="lazy">';
+
+      const tabsHtml = PLATFORMS.map((pl, i) =>
+        '<button class="tab' + (i === 0 ? ' active' : '') + '" data-key="' + pl.key + '">' + pl.label + '</button>'
+      ).join('');
+
+      card.innerHTML =
+        '<div class="preview">' +
+          mediaHtml +
+          '<a class="btn" href="../fb/' + p.file + '" download>⬇ הורדה</a>' +
+        '</div>' +
+        '<div class="content">' +
+          '<div class="top">' +
+            '<h2>' + p.title + '</h2>' +
+            (time ? '<span class="when">🕗 ' + time + '</span>' : '') +
+            '<span class="status ' + st.cls + '">' + st.text + '</span>' +
+          '</div>' +
+          '<div class="tabs">' + tabsHtml + '</div>' +
+          '<div class="caption-box">' +
+            '<button class="copy-btn">העתקה</button>' +
+            '<div class="caption"></div>' +
+          '</div>' +
+        '</div>';
+
+      const caption = card.querySelector('.caption');
+      const copyBtn = card.querySelector('.copy-btn');
+      let current = 'fb';
+      const render = () => { caption.textContent = p[current]; };
+      render();
+
+      card.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          card.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          current = tab.dataset.key;
+          render();
+          copyBtn.textContent = 'העתקה';
+          copyBtn.classList.remove('done');
+        });
+      });
+
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(p[current]).then(() => {
+          copyBtn.textContent = '✓ הועתק';
+          copyBtn.classList.add('done');
+          setTimeout(() => { copyBtn.textContent = 'העתקה'; copyBtn.classList.remove('done'); }, 2200);
+        });
+      });
+
+      container.appendChild(card);
+    };
+
+    scheduled.forEach(p => {
+      const d = new Date(p.when.replace(' ', 'T'));
+      const dayKey = p.when.slice(0, 10);
+      if (dayKey !== lastDay) {
+        lastDay = dayKey;
+        const label = document.createElement('div');
+        label.className = 'day-label';
+        label.textContent = 'יום ' + DAYS[d.getDay()] + ' · ' + d.getDate() + '.' + (d.getMonth() + 1);
+        container.appendChild(label);
+      }
+      addCard(p);
+    });
+
+    if (unscheduled.length) {
+      const label = document.createElement('div');
+      label.className = 'day-label';
+      label.textContent = 'לא משובצים בתור (ייתכן שכבר פורסמו בעבר)';
+      container.appendChild(label);
+      unscheduled.forEach(addCard);
+    }
+  })
+  .catch(() => {
+    document.getElementById('posts').innerHTML =
+      '<p style="text-align:center;color:#999">לא הצלחתי לטעון את תור הפוסטים — נסו לרענן.</p>';
+  });
+</script>
+</body>
+</html>
