@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שליחת הודעות לקבוצות · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+    --shadow-lg:0 12px 40px rgba(43,43,51,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit}
+  a{color:var(--pink-dark)}
+
+  header.app{background:linear-gradient(120deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:14px 0;box-shadow:var(--shadow)}
+  .head-in{max-width:980px;margin:0 auto;padding:0 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;flex:1;min-width:220px}
+  .brand img{width:46px;height:46px;border-radius:12px;background:#fff;padding:4px;object-fit:contain;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .brand h1{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
+  .brand .sub{font-size:12.5px;opacity:.9;font-weight:500}
+  .headlink{background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px}
+  .headlink:hover{background:rgba(255,255,255,.3)}
+
+  main{max-width:980px;margin:0 auto;padding:20px 18px 80px}
+  .vsub{color:var(--muted);font-size:14px;margin-bottom:14px}
+  .box{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px}
+  .box h3{margin:0 0 10px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .box.accent{border-inline-start:5px solid var(--pink)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:1fr 1fr}
+  @media(max-width:760px){.g2{grid-template-columns:1fr}}
+  .btn{background:var(--pink);color:#fff;border-radius:11px;padding:10px 17px;font-weight:700;font-size:14px;box-shadow:0 3px 10px rgba(232,52,138,.28);transition:.15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.ghost{background:#fff;color:var(--pink-dark);box-shadow:none;border:1.5px solid var(--pink-soft)}
+  .btn.small{padding:7px 12px;font-size:13px}
+  .btn:disabled{opacity:.55;cursor:default;transform:none}
+  .refbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .localnote{font-size:12px;color:var(--muted)}
+  .field{margin-bottom:13px}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#55555f}
+  .field input{width:100%;padding:11px 13px;border-radius:11px;border:1.5px solid var(--line);font-size:14.5px;outline:none;background:#fff}
+  .field input:focus{border-color:var(--pink)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+  .chip{padding:7px 13px;border-radius:999px;font-size:13px;font-weight:600;background:#fff;border:1.5px solid var(--line);color:#55555f}
+  .chip.active{background:var(--pink);color:#fff;border-color:var(--pink)}
+  .sc-block{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+  .sc-block h4{font-size:15.5px;font-weight:800;color:var(--pink-dark);margin-bottom:11px;display:flex;align-items:center;gap:7px}
+  .checkrow{display:flex;align-items:center;gap:11px;padding:10px 4px;border-bottom:1px solid var(--line)}
+  .checkrow:last-child{border:none}
+  .checkrow input{width:20px;height:20px;accent-color:var(--pink);flex:none;cursor:pointer}
+  .wa-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:640px){.wa-list{grid-template-columns:1fr}}
+  .wa{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:11px;padding:9px 12px;font-size:13px}
+  .wa .lbl{font-weight:600;color:#444}
+  .wabtn2{background:#25D366;color:#fff;font-weight:700;font-size:12px;padding:4px 10px;border-radius:8px;white-space:nowrap;margin-inline-start:4px}
+  .toast{position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);z-index:90;transition:.3s;opacity:0}
+  .toast.show{transform:translateX(50%) translateY(0);opacity:1}
+  .toast.ok{background:#22b573}.toast.bad{background:#d9534f}.toast.good{background:#22b573}
+  footer{max-width:980px;margin:0 auto;padding:0 18px 40px;font-size:12.5px;color:var(--muted);text-align:center}
+  footer a{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="head-in">
+    <div class="brand">
+      <img src="hopa-logo.png" alt="הופה">
+      <div>
+        <h1>📣 שליחת הודעות לקבוצות</h1>
+        <div class="sub">צוותי הופה · קבוצות בוגרים · לפי אזורים</div>
+      </div>
+    </div>
+    <a class="headlink" href="index.html">🏠 לדף הניהול המלא</a>
+    <a class="headlink" href="https://hopa.org.il/" target="_blank" rel="noopener">🌐 אתר הופה</a>
+  </div>
+</header>
+
+<main>
+  <div class="vsub">בחרי קבוצות — צוותים, בוגרים או אזור שלם — כתבי הודעה אחת, והיא תישלח מהוואטסאפ שלך לכל הקבוצות שנבחרו.</div>
+
+  <div id="msgSetup" class="box accent" style="margin-bottom:14px">
+    <h3>⚙️ חיבור חד-פעמי</h3>
+    <div class="vsub" style="margin:0 0 10px">הדביקי את כתובת ה-Web App ואת הסיסמה (SEND_SECRET) מ-Apps Script. נשמר במחשב הזה. אם כבר התחברת בדף הניהול — החיבור נטען אוטומטית.</div>
+    <div class="field"><label>כתובת Web App</label><input id="m_url" placeholder="https://script.google.com/macros/s/.../exec"></div>
+    <div class="field"><label>סיסמה (SEND_SECRET)</label><input id="m_secret" placeholder="הסיסמה שהגדרת ב-Script Properties"></div>
+    <button class="btn" id="m_connect">התחבר וטען קבוצות</button>
+    <span id="m_status" class="localnote"></span>
+  </div>
+
+  <div id="msgMain" style="display:none">
+    <div class="grid g2" style="align-items:start">
+      <div class="box">
+        <h3>1. בחרי קבוצות</h3>
+        <div class="refbar" style="margin-bottom:8px">
+          <button class="btn small" id="m_teams">🏫 רק צוותים</button>
+          <button class="btn small" id="m_alumni">🎓 רק בוגרים</button>
+          <button class="btn small" id="m_teamalumni">👥 צוות + בוגרים</button>
+          <button class="btn small ghost" id="m_all">בחר הכל</button>
+          <button class="btn small ghost" id="m_none">נקה</button>
+          <button class="btn small ghost" id="m_reload">↻ רענן רשימה</button>
+        </div>
+        <div class="chips" id="m_viewbar" style="margin:0 0 8px">
+          <span class="localnote" style="align-self:center">תצוגה:</span>
+          <button class="chip" data-mview="type">רשימה אחת לפי סוג</button>
+          <button class="chip" data-mview="region">לפי אזורים</button>
+        </div>
+        <div id="m_note"></div>
+        <div id="m_groups"></div>
+        <details style="margin-top:10px">
+          <summary style="cursor:pointer;font-size:13px;color:var(--pink-dark);font-weight:700">➕ קבוצה חסרה? הוספה ידנית מכל קבוצות הוואטסאפ</summary>
+          <div class="vsub" style="margin:8px 0 6px">חיפוש בכל הקבוצות שבחשבון הוואטסאפ — והוספה לרשימה כקבוצת צוות או בוגרים.</div>
+          <input id="m_rawsearch" placeholder="חיפוש קבוצה…" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;margin-bottom:6px">
+          <div id="m_rawlist"></div>
+        </details>
+      </div>
+      <div class="box">
+        <h3>2. כתבי הודעה</h3>
+        <textarea id="m_text" rows="10" style="width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px;font:inherit;resize:vertical" placeholder="ההודעה שתישלח לקבוצות שנבחרו…"></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px;flex-wrap:wrap">
+          <span class="localnote" id="m_count">נבחרו 0 קבוצות</span>
+          <button class="btn" id="m_send">📣 שלח</button>
+        </div>
+      </div>
+    </div>
+    <div id="m_results" style="margin-top:14px"></div>
+  </div>
+</main>
+
+<footer>הופה · <a href="https://hopa.org.il/" target="_blank" rel="noopener">hopa.org.il</a> · ההודעות נשלחות מחשבון הוואטסאפ המחובר ל-Green API</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(m,k){const t=$('#toast');t.textContent=m;t.className='toast show '+(k||'');setTimeout(()=>t.className='toast',2200);}
+let jsonpN=0;
+
+/* אותם מפתחות localStorage כמו בדף הניהול — חיבור אחד לשני הדפים */
+const MLS={url:'hopa_send_url',secret:'hopa_send_secret',view:'hopa_msg_view',extra:'hopa_msg_extra'};
+const MSG={url:localStorage.getItem(MLS.url)||'',secret:localStorage.getItem(MLS.secret)||'',groups:[],sel:new Set(),view:localStorage.getItem(MLS.view)||'type',curated:[],raw:null,extra:JSON.parse(localStorage.getItem(MLS.extra)||'{}')};
+function msgJsonp(params,tmo){return new Promise((res,rej)=>{if(!MSG.url){rej(new Error('no-url'));return;}const cb='msgcb_'+(jsonpN++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},tmo||30000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:MSG.secret,callback:cb})).toString();s.src=MSG.url+(MSG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+
+/* שיוך אזורי לפי מילות מפתח בשם הקבוצה / בית הספר. סדר הבדיקה: ירושלים→דרום→מרכז→צפון */
+const REGION_RULES=[
+ {r:'ירושלים',kw:['בית הערבה','הערבה','חושן']},
+ {r:'דרום',kw:['צור ברק','אדיבי','אשקלון','אשדוד','רהט','לקיה','לקייה','תל שבע','אלמוסתקבל','נווה מדבר']},
+ {r:'מרכז',kw:['נחלים','פלמחים','אזולאי','החברתי','תל אביב','בת עמי']},
+ {r:'צפון',kw:['עכו','מרום','בית שאן','מגשימים','כרמיאל','מוצקין','עתיד טכנולוגי','טוראען','טורעאן','מנאראת','סחנין','אלאמאני','ג\'וליס','גוליס','אלמכסור','אבדאע','נצרת','בוטו','עמקה','תיכון שיח','חיפה','כרמל','רמת דוד']},
+];
+const REGION_ORDER=['צפון','מרכז','ירושלים','דרום','ללא שיוך אזורי'];
+function nrmS(s){return String(s||'').replace(/["'״׳`]/g,'').toLowerCase();}
+function guessRegion(txt){const t=nrmS(txt);if(!t)return '';for(const R of REGION_RULES){if(R.kw.some(k=>t.includes(nrmS(k))))return R.r;}return '';}
+function classifyRaw(name){const n=String(name||'');if(/צוות/.test(n)&&/הופה/.test(n))return 'צוות';if(/בוגר/.test(n)&&guessRegion(n))return 'בוגרים';return null;}
+function buildMsgGroups(){
+  const list=[],seen=new Set();
+  MSG.curated.forEach(g=>{if(!g.chatId||seen.has(g.chatId))return;seen.add(g.chatId);list.push({label:g.label,type:g.type,school:g.school||'',chatId:g.chatId,region:guessRegion(g.school)||guessRegion(g.label)});});
+  Object.entries(MSG.extra).forEach(([id,x])=>{if(seen.has(id))return;seen.add(id);list.push({label:x.label,type:x.type,school:'',chatId:id,region:guessRegion(x.label),manual:true});});
+  (MSG.raw||[]).forEach(g=>{if(seen.has(g.id))return;const t=classifyRaw(g.name);if(!t)return;seen.add(g.id);list.push({label:g.name,type:t,school:'',chatId:g.id,region:guessRegion(g.name)});});
+  const keep=new Set([...MSG.sel].map(i=>MSG.groups[i]&&MSG.groups[i].chatId).filter(Boolean));
+  MSG.groups=list;MSG.sel=new Set();list.forEach((g,i)=>{if(keep.has(g.chatId))MSG.sel.add(i);});
+  const nt=list.filter(g=>g.type==='צוות').length,na=list.filter(g=>g.type==='בוגרים').length;
+  $('#m_note').innerHTML=(MSG.raw===null?'<div style="background:#fff8e6;border:1px solid #ffe08a;color:#8a6d00;font-size:12.5px;border-radius:9px;padding:8px 12px;margin-bottom:8px">⚠️ לא הצלחתי למשוך את כל הקבוצות מהוואטסאפ — מוצגות רק הקבוצות מלשונית "ניהול" בגיליון. כדי שהקבוצות החדשות יופיעו אוטומטית צריך לעדכן את Code.gs (פעולת allgroups) ולפרוס גרסה חדשה.</div>':'')+
+    `<div class="vsub" style="margin:0 0 8px">סה"כ ${list.length} קבוצות · 🏫 ${nt} צוותים · 🎓 ${na} בוגרים</div>`;
+}
+async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.curated=r.groups||[];MSG.raw=null;try{const ra=await msgJsonp({action:'allgroups'});if(ra&&ra.ok)MSG.raw=ra.groups||[];}catch(_){}buildMsgGroups();$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();renderRawList();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
+function sortByRegion(arr){const ri=r=>{const i=REGION_ORDER.indexOf(r||'');return i<0?99:i;};return arr.sort((a,b)=>ri(a.region)-ri(b.region)||String(a.label).localeCompare(b.label,'he'));}
+function groupRow(g){const ic=g.type==='בוגרים'?'🎓':g.type==='פורום'?'📣':'🏫';return `<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${ic} ${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}${g.region?` <span style="color:#b8b8c0;font-size:12px">· ${esc(g.region)}</span>`:''}${g.manual?` <button data-rmx="${esc(g.chatId)}" title="הסרת קבוצה שנוספה ידנית" style="border:none;background:none;color:#c66;cursor:pointer;font-size:13px">✕</button>`:''}</span></label>`;}
+function msgBlock(title,arr,selAttr){return `<div class="sc-block" style="margin-bottom:10px"><h4>${title}<button class="btn small ghost" ${selAttr} style="margin-inline-start:auto">בחר</button></h4>${arr.map(groupRow).join('')}</div>`;}
+function renderMsgGroups(){
+  document.querySelectorAll('#m_viewbar [data-mview]').forEach(b=>b.classList.toggle('active',b.dataset.mview===MSG.view));
+  const gs=MSG.groups.map((g,i)=>Object.assign({i},g));let html='';
+  if(MSG.view==='region'){
+    const byR={};gs.forEach(g=>{const r=g.region||'ללא שיוך אזורי';(byR[r]=byR[r]||[]).push(g);});
+    const tOrder={'פורום':0,'צוות':1,'בוגרים':2};
+    html=REGION_ORDER.filter(r=>byR[r]).map(r=>msgBlock((r==='ללא שיוך אזורי'?'':'📍 ')+esc(r)+` (${byR[r].length})`,byR[r].sort((a,b)=>(tOrder[a.type]??9)-(tOrder[b.type]??9)||String(a.label).localeCompare(b.label,'he')),`data-selregion="${esc(r)}"`)).join('');
+  }else{
+    const order={'פורום':0,'צוות':1,'בוגרים':2};const byT={};gs.forEach(g=>{(byT[g.type]=byT[g.type]||[]).push(g);});
+    html=Object.keys(byT).sort((a,b)=>(order[a]??9)-(order[b]??9)).map(t=>msgBlock(t==='צוות'?`🏫 כל הצוותים (${byT[t].length})`:t==='בוגרים'?`🎓 בוגרים (${byT[t].length})`:esc(t),sortByRegion(byT[t]),`data-seltype="${esc(t)}"`)).join('');
+  }
+  $('#m_groups').innerHTML=html||'<div class="vsub">לא נמצאו קבוצות. הרצי listManagementGroups ב-Apps Script או הוסיפי קבוצות ידנית למטה.</div>';updMsgCount();
+}
+function renderRawList(){
+  const el=$('#m_rawlist');if(!el)return;
+  const q=nrmS($('#m_rawsearch').value);
+  const listed=new Set(MSG.groups.map(g=>g.chatId));
+  const raws=(MSG.raw||[]).filter(g=>g.name&&!listed.has(g.id)&&(!q||nrmS(g.name).includes(q))).slice(0,30);
+  el.innerHTML=raws.map(g=>`<div class="checkrow"><span style="flex:1;font-size:13.5px">${esc(g.name)}</span><button class="btn small ghost" data-addraw="${esc(g.id)}" data-t="צוות">➕ צוות</button><button class="btn small ghost" data-addraw="${esc(g.id)}" data-t="בוגרים">➕ בוגרים</button></div>`).join('')||'<div class="vsub">'+(MSG.raw===null?'נדרש עדכון Code.gs (פעולת allgroups) כדי למשוך את כל הקבוצות.':'אין קבוצות נוספות שמתאימות לחיפוש.')+'</div>';
+}
+function updMsgCount(){const p=[...MSG.sel].map(i=>MSG.groups[i]).filter(Boolean);const t=p.filter(g=>g.type==='צוות').length,a=p.filter(g=>g.type==='בוגרים').length;$('#m_count').textContent='נבחרו '+MSG.sel.size+' קבוצות'+(MSG.sel.size?` (🏫 ${t} · 🎓 ${a})`:'');}
+async function sendMsg(){
+  const text=$('#m_text').value.trim();if(!text){toast('כתבי הודעה קודם','bad');return;}
+  if(!MSG.sel.size){toast('בחרי לפחות קבוצה אחת','bad');return;}
+  const picked=[...MSG.sel].map(i=>MSG.groups[i]).filter(Boolean);
+  if(!confirm('לשלוח את ההודעה ל-'+picked.length+' קבוצות?\n\n'+picked.map(g=>'• '+g.label).join('\n')))return;
+  $('#m_send').disabled=true;
+  const CHUNK=8;let sent=0,done=0;
+  $('#m_results').innerHTML='<div class="box" id="m_prog">שולח… 0/'+picked.length+' קבוצות</div>';
+  try{
+    for(let i=0;i<picked.length;i+=CHUNK){
+      const chunk=picked.slice(i,i+CHUNK);
+      const r=await msgJsonp({action:'send',chatIds:chunk.map(g=>g.chatId).join(','),message:text},120000);
+      if(!r||!r.ok)throw new Error(r&&r.error||'err');
+      sent+=r.sent;done+=chunk.length;
+      const el=$('#m_prog');if(el)el.textContent='שולח… '+done+'/'+picked.length+' קבוצות';
+    }
+    $('#m_results').innerHTML='<div class="box accent">✅ נשלח ל-'+sent+' מתוך '+picked.length+' קבוצות.</div>';toast('נשלח ל-'+sent+' קבוצות','good');
+  }catch(e){$('#m_results').innerHTML='<div class="box" style="border-inline-start-color:#e33">❌ שגיאה: '+esc(e.message)+(sent?' (נשלח ל-'+sent+' קבוצות לפני התקלה)':'')+'</div>';toast('השליחה נכשלה','bad');}
+  $('#m_send').disabled=false;
+}
+$('#m_connect').onclick=()=>{MSG.url=$('#m_url').value.trim();MSG.secret=$('#m_secret').value.trim();localStorage.setItem(MLS.url,MSG.url);localStorage.setItem(MLS.secret,MSG.secret);MSG.groups=[];loadMsgGroups();};
+$('#m_reload').onclick=()=>{MSG.groups=[];MSG.sel.clear();loadMsgGroups();};
+function selOnly(pred){MSG.sel.clear();MSG.groups.forEach((g,i)=>{if(pred(g))MSG.sel.add(i);});renderMsgGroups();}
+$('#m_teams').onclick=()=>{selOnly(g=>g.type==='צוות');toast('נבחרו כל הצוותים','ok');};
+$('#m_alumni').onclick=()=>{selOnly(g=>g.type==='בוגרים');toast('נבחרו כל קבוצות הבוגרים','ok');};
+$('#m_teamalumni').onclick=()=>{selOnly(g=>g.type==='צוות'||g.type==='בוגרים');toast('נבחרו כל קבוצות הצוות והבוגרים','ok');};
+$('#m_all').onclick=()=>{MSG.groups.forEach((g,i)=>MSG.sel.add(i));renderMsgGroups();};
+$('#m_none').onclick=()=>{MSG.sel.clear();renderMsgGroups();};
+$('#m_viewbar').addEventListener('click',e=>{const b=e.target.closest('[data-mview]');if(!b)return;MSG.view=b.dataset.mview;localStorage.setItem(MLS.view,MSG.view);renderMsgGroups();});
+$('#m_groups').addEventListener('change',e=>{const cb=e.target.closest('[data-g]');if(!cb)return;const i=+cb.dataset.g;if(cb.checked)MSG.sel.add(i);else MSG.sel.delete(i);updMsgCount();});
+$('#m_groups').addEventListener('click',e=>{
+  const rm=e.target.closest('[data-rmx]');if(rm){e.preventDefault();delete MSG.extra[rm.dataset.rmx];localStorage.setItem(MLS.extra,JSON.stringify(MSG.extra));buildMsgGroups();renderMsgGroups();renderRawList();toast('הקבוצה הוסרה מהרשימה','ok');return;}
+  const sr=e.target.closest('[data-selregion]');if(sr){const r=sr.dataset.selregion;MSG.groups.forEach((g,i)=>{if((g.region||'ללא שיוך אזורי')===r)MSG.sel.add(i);});renderMsgGroups();toast('נבחרו קבוצות '+r,'ok');return;}
+  const st=e.target.closest('[data-seltype]');if(st){MSG.groups.forEach((g,i)=>{if(g.type===st.dataset.seltype)MSG.sel.add(i);});renderMsgGroups();return;}
+});
+$('#m_rawsearch').addEventListener('input',renderRawList);
+$('#m_rawlist').addEventListener('click',e=>{const b=e.target.closest('[data-addraw]');if(!b)return;const g=(MSG.raw||[]).find(x=>x.id===b.dataset.addraw);if(!g)return;MSG.extra[g.id]={label:g.name,type:b.dataset.t};localStorage.setItem(MLS.extra,JSON.stringify(MSG.extra));buildMsgGroups();renderMsgGroups();renderRawList();toast('נוספה: '+g.name,'ok');});
+$('#m_send').onclick=sendMsg;
+
+/* אתחול: אם החיבור כבר שמור — נכנסים ישר */
+$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;
+if(MSG.url&&MSG.secret)loadMsgGroups();
+</script>
+</body>
+</html>

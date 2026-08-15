@@ -591,12 +591,6 @@
       <h2 class="vh">שליחת הודעות לקבוצות</h2>
       <div class="vsub">שליחה נוחה לקבוצות הצוות והבוגרים. ההודעה נשלחת מהווטסאפ שלך, עם תצוגה מקדימה ואישור לפני שליחה.</div>
 
-      <div class="box accent" style="margin-bottom:14px">
-        <h3>📋 טפסי מיפוי לבוגרים — קישור קבוע לכל בי"ס</h3>
-        <div class="vsub" style="margin:0 0 10px">בחרי את בית הספר, לחצי “העתק קישור” — והדביקי בהודעה לקבוצת הבוגרים. הקישורים קבועים ולא משתנים.</div>
-        <div class="wa-list" id="mapFormsList"></div>
-      </div>
-
       <div id="msgSetup" class="box accent" style="margin-bottom:14px">
         <h3>⚙️ חיבור חד-פעמי</h3>
         <div class="vsub" style="margin:0 0 10px">הדביקי את כתובת ה-Web App ואת הסיסמה (SEND_SECRET) מ-Apps Script. נשמר במחשב הזה.</div>
@@ -840,15 +834,6 @@ const JOIN_TEMPLATES=[
 ];
 
 /* ===== טפסי מיפוי לבוגרים — קישור Fillout קבוע לכל בי"ס (מתוך תיאור הוורקספייס במונדיי) ===== */
-const MAPPING_FORMS=[
-  {school:'אורט בית הערבה · ירושלים', url:'https://forms12grade.fillout.com/t/fNhxNpBj26us'},
-  {school:'אורט אדיבי · אשקלון',      url:'https://forms12grade.fillout.com/t/4yqCmdoFBDus'},
-  {school:'מגשימים · בית שאן',        url:'https://forms12grade.fillout.com/t/bBWnRDYD2nus'},
-  {school:'עתיד · מוצקין',            url:'https://forms12grade.fillout.com/t/wbcapmr8RZus'},
-  {school:'אורט מרום · עכו',          url:'https://forms12grade.fillout.com/t/2oEYozRRNLus'},
-  {school:'תיכון · צור ברק',          url:'https://forms12grade.fillout.com/t/ki3biGmocKus'},
-];
-
 const STATUS={todo:'טרם התחיל',doing:'בביצוע',done:'הושלם'};
 const PRIORITY={high:{l:'דחוף',c:'#e5484d',ic:'🔴'},normal:{l:'רגיל',c:'#3B82F6',ic:'🔵'},low:{l:'נמוך',c:'#94a3b8',ic:'⚪'}};
 const PRANK={high:0,normal:1,low:2};
@@ -1300,9 +1285,7 @@ function buildMsgGroups(){
   $('#m_note').innerHTML=(MSG.raw===null?'<div style="background:#fff8e6;border:1px solid #ffe08a;color:#8a6d00;font-size:12.5px;border-radius:9px;padding:8px 12px;margin-bottom:8px">⚠️ לא הצלחתי למשוך את כל הקבוצות מהוואטסאפ — מוצגות רק הקבוצות מלשונית "ניהול" בגיליון. כדי שהקבוצות החדשות יופיעו אוטומטית צריך לעדכן את Code.gs (פעולת allgroups) ולפרוס גרסה חדשה.</div>':'')+
     `<div class="vsub" style="margin:0 0 8px">סה"כ ${list.length} קבוצות · 🏫 ${nt} צוותים · 🎓 ${na} בוגרים</div>`;
 }
-function renderMapForms(){const el=$('#mapFormsList');if(!el)return;el.innerHTML=MAPPING_FORMS.map((f,i)=>`<div class="wa"><span class="lbl">🏫 ${esc(f.school)}</span><a href="${esc(f.url)}" target="_blank" rel="noopener" style="color:var(--pink-dark);text-decoration:none;font-weight:700;margin-inline-start:auto;font-size:12px">↗ פתיחה</a><button class="wabtn2" data-mapcopy="${i}" style="background:var(--pink);border:none;cursor:pointer">📋 העתקה</button></div>`).join('');}
-function initMessages(){renderMapForms();$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
-$('#mapFormsList').addEventListener('click',e=>{const b=e.target.closest('[data-mapcopy]');if(!b)return;const url=MAPPING_FORMS[+b.dataset.mapcopy].url;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>toast('הקישור הועתק ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('הקישור הועתק ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});});
+function initMessages(){$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
 async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.curated=r.groups||[];MSG.raw=null;try{const ra=await msgJsonp({action:'allgroups'});if(ra&&ra.ok)MSG.raw=ra.groups||[];}catch(_){}buildMsgGroups();$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();renderRawList();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
 function sortByRegion(arr){const ri=r=>{const i=REGION_ORDER.indexOf(r||'');return i<0?99:i;};return arr.sort((a,b)=>ri(a.region)-ri(b.region)||String(a.label).localeCompare(b.label,'he'));}
 function groupRow(g){const ic=g.type==='בוגרים'?'🎓':g.type==='פורום'?'📣':'🏫';return `<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${ic} ${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}${g.region?` <span style="color:#b8b8c0;font-size:12px">· ${esc(g.region)}</span>`:''}${g.manual?` <button data-rmx="${esc(g.chatId)}" title="הסרת קבוצה שנוספה ידנית" style="border:none;background:none;color:#c66;cursor:pointer;font-size:13px">✕</button>`:''}</span></label>`;}
