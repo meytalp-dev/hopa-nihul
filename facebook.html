@@ -49,6 +49,13 @@
   .chip.ready{background:var(--green-soft);color:var(--green)}
   .chip.prep{background:var(--amber-soft);color:#c07f0a}
   .chip.published{background:var(--pink-soft);color:var(--pink-dark)}
+  .post.done{opacity:.68;margin-bottom:10px}
+  .post.done:hover{opacity:1}
+  .post.done .post-body{display:none}
+  .post.done .post-head{border-bottom:none;padding:10px 20px}
+  .post.done.open{opacity:1;margin-bottom:26px}
+  .post.done.open .post-body{display:flex}
+  .post.done.open .post-head{border-bottom:1px solid var(--line);padding:16px 20px}
 
   .post-body{display:flex;gap:20px;padding:20px;align-items:flex-start}
   .post-img{width:270px;flex:none}
@@ -1787,7 +1794,21 @@ function applyPublished(postId, dateStr, btn){
   chip.className = 'chip published';
   var b = btn || chip.parentElement.querySelector('button');
   if(b) b.textContent = 'ביטול סימון';
+  var postEl = document.getElementById(postId);
+  if(postEl){
+    postEl.classList.add('done');
+    postEl.classList.remove('open');
+    var head = postEl.querySelector('.post-head');
+    if(head){ head.style.cursor = 'pointer'; head.title = 'פורסם — לחיצה פותחת/סוגרת'; }
+  }
 }
+document.querySelectorAll('.post-head').forEach(function(h){
+  h.addEventListener('click', function(e){
+    if(e.target.closest('button') || e.target.closest('a')) return;
+    var p = h.parentElement;
+    if(p.classList.contains('done')) p.classList.toggle('open');
+  });
+});
 document.querySelectorAll('[data-status]').forEach(function(el){
   var p = el.dataset.status;
   var saved = localStorage.getItem('hopa-fb-' + p);
