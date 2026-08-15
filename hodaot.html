@@ -109,6 +109,7 @@
           <button class="btn small ghost" id="m_all">בחר הכל</button>
           <button class="btn small ghost" id="m_none">נקה</button>
           <button class="btn small ghost" id="m_reload">↻ רענן רשימה</button>
+          <button class="btn small ghost" id="m_share">🔑 שיתוף גישה</button>
         </div>
         <div class="chips" id="m_viewbar" style="margin:0 0 8px">
           <span class="localnote" style="align-self:center">תצוגה:</span>
@@ -236,6 +237,11 @@ $('#m_groups').addEventListener('click',e=>{
 $('#m_rawsearch').addEventListener('input',renderRawList);
 $('#m_rawlist').addEventListener('click',e=>{const b=e.target.closest('[data-addraw]');if(!b)return;const g=(MSG.raw||[]).find(x=>x.id===b.dataset.addraw);if(!g)return;MSG.extra[g.id]={label:g.name,type:b.dataset.t};localStorage.setItem(MLS.extra,JSON.stringify(MSG.extra));buildMsgGroups();renderMsgGroups();renderRawList();toast('נוספה: '+g.name,'ok');});
 $('#m_send').onclick=sendMsg;
+$('#m_share').onclick=()=>{
+  if(!MSG.url||!MSG.secret){toast('אין חיבור שמור במכשיר הזה','bad');return;}
+  const txt='היי 👋 זה הקישור לדף שליחת ההודעות לקבוצות של הופה:\nhttps://meytalp-dev.github.io/hopa-nihul/hodaot.html\n\nבכניסה הראשונה יש חיבור חד-פעמי — להדביק את שני אלה:\n\nכתובת Web App:\n'+MSG.url+'\n\nסיסמה (SEND_SECRET):\n'+MSG.secret+'\n\nשימי לב 🙏 השליחה מהדף יוצאת מהוואטסאפ של מיטל — לתאם איתה לפני שליחה בפועל.';
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('הודעה מוכנה הועתקה — הדביקי ללירון בוואטסאפ ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('הודעה מוכנה הועתקה ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});
+};
 
 /* אתחול: אם החיבור כבר שמור — נכנסים ישר */
 $('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;
