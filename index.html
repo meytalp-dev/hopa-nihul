@@ -611,12 +611,26 @@
           <div class="box">
             <h3>1. בחרי קבוצות</h3>
             <div class="refbar" style="margin-bottom:8px">
+              <button class="btn small" id="m_teams">🏫 רק צוותים</button>
+              <button class="btn small" id="m_alumni">🎓 רק בוגרים</button>
               <button class="btn small" id="m_teamalumni">👥 צוות + בוגרים</button>
               <button class="btn small ghost" id="m_all">בחר הכל</button>
               <button class="btn small ghost" id="m_none">נקה</button>
               <button class="btn small ghost" id="m_reload">↻ רענן רשימה</button>
             </div>
+            <div class="chips" id="m_viewbar" style="margin:0 0 8px">
+              <span class="localnote" style="align-self:center">תצוגה:</span>
+              <button class="chip" data-mview="type">רשימה אחת לפי סוג</button>
+              <button class="chip" data-mview="region">לפי אזורים</button>
+            </div>
+            <div id="m_note"></div>
             <div id="m_groups"></div>
+            <details style="margin-top:10px">
+              <summary style="cursor:pointer;font-size:13px;color:var(--pink-dark);font-weight:700">➕ קבוצה חסרה? הוספה ידנית מכל קבוצות הוואטסאפ</summary>
+              <div class="vsub" style="margin:8px 0 6px">חיפוש בכל הקבוצות שבחשבון הוואטסאפ — והוספה לרשימה כקבוצת צוות או בוגרים.</div>
+              <input id="m_rawsearch" placeholder="חיפוש קבוצה…" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;margin-bottom:6px">
+              <div id="m_rawlist"></div>
+            </details>
           </div>
           <div class="box">
             <h3>2. כתבי הודעה</h3>
@@ -1260,22 +1274,97 @@ function show(view){currentView=view;document.querySelectorAll('.view').forEach(
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)show(b.dataset.v);});
 
 /* ================= שליחת הודעות לקבוצות ================= */
-const MLS={url:'hopa_send_url',secret:'hopa_send_secret'};
-const MSG={url:localStorage.getItem(MLS.url)||'',secret:localStorage.getItem(MLS.secret)||'',groups:[],sel:new Set()};
-function msgJsonp(params){return new Promise((res,rej)=>{if(!MSG.url){rej(new Error('no-url'));return;}const cb='msgcb_'+(jsonpN++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},30000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:MSG.secret,callback:cb})).toString();s.src=MSG.url+(MSG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+const MLS={url:'hopa_send_url',secret:'hopa_send_secret',view:'hopa_msg_view',extra:'hopa_msg_extra'};
+const MSG={url:localStorage.getItem(MLS.url)||'',secret:localStorage.getItem(MLS.secret)||'',groups:[],sel:new Set(),view:localStorage.getItem(MLS.view)||'type',curated:[],raw:null,extra:JSON.parse(localStorage.getItem(MLS.extra)||'{}')};
+function msgJsonp(params,tmo){return new Promise((res,rej)=>{if(!MSG.url){rej(new Error('no-url'));return;}const cb='msgcb_'+(jsonpN++);const s=document.createElement('script');const timer=setTimeout(()=>{cleanup();rej(new Error('timeout'));},tmo||30000);function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(timer);}window[cb]=d=>{cleanup();res(d);};const q=new URLSearchParams(Object.assign({},params,{secret:MSG.secret,callback:cb})).toString();s.src=MSG.url+(MSG.url.includes('?')?'&':'?')+q;s.onerror=()=>{cleanup();rej(new Error('network'));};document.body.appendChild(s);});}
+/* שיוך אזורי לפי מילות מפתח בשם הקבוצה / בית הספר. סדר הבדיקה: ירושלים→דרום→מרכז→צפון */
+const REGION_RULES=[
+ {r:'ירושלים',kw:['בית הערבה','הערבה','חושן']},
+ {r:'דרום',kw:['צור ברק','אדיבי','אשקלון','אשדוד','רהט','לקיה','לקייה','תל שבע','אלמוסתקבל','נווה מדבר']},
+ {r:'מרכז',kw:['נחלים','פלמחים','אזולאי','החברתי','תל אביב','בת עמי']},
+ {r:'צפון',kw:['עכו','מרום','בית שאן','מגשימים','כרמיאל','מוצקין','עתיד טכנולוגי','טוראען','טורעאן','מנאראת','סחנין','אלאמאני','ג\'וליס','גוליס','אלמכסור','אבדאע','נצרת','בוטו','עמקה','תיכון שיח','חיפה','כרמל','רמת דוד']},
+];
+const REGION_ORDER=['צפון','מרכז','ירושלים','דרום','ללא שיוך אזורי'];
+function nrmS(s){return String(s||'').replace(/["'״׳`]/g,'').toLowerCase();}
+function guessRegion(txt){const t=nrmS(txt);if(!t)return '';for(const R of REGION_RULES){if(R.kw.some(k=>t.includes(nrmS(k))))return R.r;}return '';}
+/* זיהוי אוטומטי של קבוצות חדשות: "צוות הופה + בי"ס" = צוות, "בוגרי X" עם שיוך לבי"ס = בוגרים */
+function classifyRaw(name){const n=String(name||'');if(/צוות/.test(n)&&/הופה/.test(n))return 'צוות';if(/בוגר/.test(n)&&guessRegion(n))return 'בוגרים';return null;}
+function buildMsgGroups(){
+  const list=[],seen=new Set();
+  MSG.curated.forEach(g=>{if(!g.chatId||seen.has(g.chatId))return;seen.add(g.chatId);list.push({label:g.label,type:g.type,school:g.school||'',chatId:g.chatId,region:guessRegion(g.school)||guessRegion(g.label)});});
+  Object.entries(MSG.extra).forEach(([id,x])=>{if(seen.has(id))return;seen.add(id);list.push({label:x.label,type:x.type,school:'',chatId:id,region:guessRegion(x.label),manual:true});});
+  (MSG.raw||[]).forEach(g=>{if(seen.has(g.id))return;const t=classifyRaw(g.name);if(!t)return;seen.add(g.id);list.push({label:g.name,type:t,school:'',chatId:g.id,region:guessRegion(g.name)});});
+  const keep=new Set([...MSG.sel].map(i=>MSG.groups[i]&&MSG.groups[i].chatId).filter(Boolean));
+  MSG.groups=list;MSG.sel=new Set();list.forEach((g,i)=>{if(keep.has(g.chatId))MSG.sel.add(i);});
+  const nt=list.filter(g=>g.type==='צוות').length,na=list.filter(g=>g.type==='בוגרים').length;
+  $('#m_note').innerHTML=(MSG.raw===null?'<div style="background:#fff8e6;border:1px solid #ffe08a;color:#8a6d00;font-size:12.5px;border-radius:9px;padding:8px 12px;margin-bottom:8px">⚠️ לא הצלחתי למשוך את כל הקבוצות מהוואטסאפ — מוצגות רק הקבוצות מלשונית "ניהול" בגיליון. כדי שהקבוצות החדשות יופיעו אוטומטית צריך לעדכן את Code.gs (פעולת allgroups) ולפרוס גרסה חדשה.</div>':'')+
+    `<div class="vsub" style="margin:0 0 8px">סה"כ ${list.length} קבוצות · 🏫 ${nt} צוותים · 🎓 ${na} בוגרים</div>`;
+}
 function renderMapForms(){const el=$('#mapFormsList');if(!el)return;el.innerHTML=MAPPING_FORMS.map((f,i)=>`<div class="wa"><span class="lbl">🏫 ${esc(f.school)}</span><a href="${esc(f.url)}" target="_blank" rel="noopener" style="color:var(--pink-dark);text-decoration:none;font-weight:700;margin-inline-start:auto;font-size:12px">↗ פתיחה</a><button class="wabtn2" data-mapcopy="${i}" style="background:var(--pink);border:none;cursor:pointer">📋 העתקה</button></div>`).join('');}
 function initMessages(){renderMapForms();$('#m_url').value=MSG.url;$('#m_secret').value=MSG.secret;if(MSG.url&&MSG.secret&&!MSG.groups.length)loadMsgGroups();}
 $('#mapFormsList').addEventListener('click',e=>{const b=e.target.closest('[data-mapcopy]');if(!b)return;const url=MAPPING_FORMS[+b.dataset.mapcopy].url;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>toast('הקישור הועתק ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('הקישור הועתק ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});});
-async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.groups=r.groups||[];$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
-function renderMsgGroups(){const order={'פורום':0,'צוות':1,'בוגרים':2};const byType={};MSG.groups.forEach((g,i)=>{(byType[g.type]=byType[g.type]||[]).push(Object.assign({i},g));});const html=Object.keys(byType).sort((a,b)=>(order[a]??9)-(order[b]??9)).map(t=>`<div class="sc-block" style="margin-bottom:10px"><h4>${esc(t)}</h4>${byType[t].map(g=>`<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}</span></label>`).join('')}</div>`).join('');$('#m_groups').innerHTML=html||'<div class="vsub">לא נמצאו קבוצות. הרצי listManagementGroups ב-Apps Script.</div>';updMsgCount();}
-function updMsgCount(){$('#m_count').textContent='נבחרו '+MSG.sel.size+' קבוצות';}
-async function sendMsg(){const text=$('#m_text').value.trim();if(!text){toast('כתבי הודעה קודם','bad');return;}if(!MSG.sel.size){toast('בחרי לפחות קבוצה אחת','bad');return;}const picked=[...MSG.sel].map(i=>MSG.groups[i]);if(!confirm('לשלוח את ההודעה ל-'+picked.length+' קבוצות?\n\n'+picked.map(g=>'• '+g.label).join('\n')))return;$('#m_send').disabled=true;$('#m_results').innerHTML='<div class="box">שולח… זה עשוי לקחת כמה שניות</div>';try{const chatIds=picked.map(g=>g.chatId).join(',');const r=await msgJsonp({action:'send',chatIds,message:text});if(!r||!r.ok)throw new Error(r&&r.error||'err');$('#m_results').innerHTML='<div class="box accent">✅ נשלח ל-'+r.sent+' מתוך '+r.total+' קבוצות.</div>';toast('נשלח ל-'+r.sent+' קבוצות','good');}catch(e){$('#m_results').innerHTML='<div class="box" style="border-inline-start-color:#e33">❌ שגיאה: '+esc(e.message)+'</div>';toast('השליחה נכשלה','bad');}$('#m_send').disabled=false;}
+async function loadMsgGroups(){$('#m_status').textContent='טוען…';try{const r=await msgJsonp({action:'groups'});if(!r||!r.ok)throw new Error(r&&r.error||'err');MSG.curated=r.groups||[];MSG.raw=null;try{const ra=await msgJsonp({action:'allgroups'});if(ra&&ra.ok)MSG.raw=ra.groups||[];}catch(_){}buildMsgGroups();$('#msgSetup').style.display='none';$('#msgMain').style.display='block';$('#m_status').textContent='';renderMsgGroups();renderRawList();}catch(e){$('#msgSetup').style.display='block';$('#m_status').textContent='שגיאה: '+e.message;}}
+function sortByRegion(arr){const ri=r=>{const i=REGION_ORDER.indexOf(r||'');return i<0?99:i;};return arr.sort((a,b)=>ri(a.region)-ri(b.region)||String(a.label).localeCompare(b.label,'he'));}
+function groupRow(g){const ic=g.type==='בוגרים'?'🎓':g.type==='פורום'?'📣':'🏫';return `<label class="checkrow" style="cursor:pointer"><input type="checkbox" data-g="${g.i}" ${MSG.sel.has(g.i)?'checked':''}><span>${ic} ${esc(g.label)}${g.school?` <span style="color:#999">· ${esc(g.school)}</span>`:''}${g.region?` <span style="color:#b8b8c0;font-size:12px">· ${esc(g.region)}</span>`:''}${g.manual?` <button data-rmx="${esc(g.chatId)}" title="הסרת קבוצה שנוספה ידנית" style="border:none;background:none;color:#c66;cursor:pointer;font-size:13px">✕</button>`:''}</span></label>`;}
+function msgBlock(title,arr,selAttr){return `<div class="sc-block" style="margin-bottom:10px"><h4>${title}<button class="btn small ghost" ${selAttr} style="margin-inline-start:auto">בחר</button></h4>${arr.map(groupRow).join('')}</div>`;}
+function renderMsgGroups(){
+  document.querySelectorAll('#m_viewbar [data-mview]').forEach(b=>b.classList.toggle('active',b.dataset.mview===MSG.view));
+  const gs=MSG.groups.map((g,i)=>Object.assign({i},g));let html='';
+  if(MSG.view==='region'){
+    const byR={};gs.forEach(g=>{const r=g.region||'ללא שיוך אזורי';(byR[r]=byR[r]||[]).push(g);});
+    const tOrder={'פורום':0,'צוות':1,'בוגרים':2};
+    html=REGION_ORDER.filter(r=>byR[r]).map(r=>msgBlock((r==='ללא שיוך אזורי'?'':'📍 ')+esc(r)+` (${byR[r].length})`,byR[r].sort((a,b)=>(tOrder[a.type]??9)-(tOrder[b.type]??9)||String(a.label).localeCompare(b.label,'he')),`data-selregion="${esc(r)}"`)).join('');
+  }else{
+    const order={'פורום':0,'צוות':1,'בוגרים':2};const byT={};gs.forEach(g=>{(byT[g.type]=byT[g.type]||[]).push(g);});
+    html=Object.keys(byT).sort((a,b)=>(order[a]??9)-(order[b]??9)).map(t=>msgBlock(t==='צוות'?`🏫 כל הצוותים (${byT[t].length})`:t==='בוגרים'?`🎓 בוגרים (${byT[t].length})`:esc(t),sortByRegion(byT[t]),`data-seltype="${esc(t)}"`)).join('');
+  }
+  $('#m_groups').innerHTML=html||'<div class="vsub">לא נמצאו קבוצות. הרצי listManagementGroups ב-Apps Script או הוסיפי קבוצות ידנית למטה.</div>';updMsgCount();
+}
+function renderRawList(){
+  const el=$('#m_rawlist');if(!el)return;
+  const q=nrmS($('#m_rawsearch').value);
+  const listed=new Set(MSG.groups.map(g=>g.chatId));
+  const raws=(MSG.raw||[]).filter(g=>g.name&&!listed.has(g.id)&&(!q||nrmS(g.name).includes(q))).slice(0,30);
+  el.innerHTML=raws.map(g=>`<div class="checkrow"><span style="flex:1;font-size:13.5px">${esc(g.name)}</span><button class="btn small ghost" data-addraw="${esc(g.id)}" data-t="צוות">➕ צוות</button><button class="btn small ghost" data-addraw="${esc(g.id)}" data-t="בוגרים">➕ בוגרים</button></div>`).join('')||'<div class="vsub">'+(MSG.raw===null?'נדרש עדכון Code.gs (פעולת allgroups) כדי למשוך את כל הקבוצות.':'אין קבוצות נוספות שמתאימות לחיפוש.')+'</div>';
+}
+function updMsgCount(){const p=[...MSG.sel].map(i=>MSG.groups[i]).filter(Boolean);const t=p.filter(g=>g.type==='צוות').length,a=p.filter(g=>g.type==='בוגרים').length;$('#m_count').textContent='נבחרו '+MSG.sel.size+' קבוצות'+(MSG.sel.size?` (🏫 ${t} · 🎓 ${a})`:'');}
+async function sendMsg(){
+  const text=$('#m_text').value.trim();if(!text){toast('כתבי הודעה קודם','bad');return;}
+  if(!MSG.sel.size){toast('בחרי לפחות קבוצה אחת','bad');return;}
+  const picked=[...MSG.sel].map(i=>MSG.groups[i]).filter(Boolean);
+  if(!confirm('לשלוח את ההודעה ל-'+picked.length+' קבוצות?\n\n'+picked.map(g=>'• '+g.label).join('\n')))return;
+  $('#m_send').disabled=true;
+  const CHUNK=8;let sent=0,done=0;
+  $('#m_results').innerHTML='<div class="box" id="m_prog">שולח… 0/'+picked.length+' קבוצות</div>';
+  try{
+    for(let i=0;i<picked.length;i+=CHUNK){
+      const chunk=picked.slice(i,i+CHUNK);
+      const r=await msgJsonp({action:'send',chatIds:chunk.map(g=>g.chatId).join(','),message:text},120000);
+      if(!r||!r.ok)throw new Error(r&&r.error||'err');
+      sent+=r.sent;done+=chunk.length;
+      const el=$('#m_prog');if(el)el.textContent='שולח… '+done+'/'+picked.length+' קבוצות';
+    }
+    $('#m_results').innerHTML='<div class="box accent">✅ נשלח ל-'+sent+' מתוך '+picked.length+' קבוצות.</div>';toast('נשלח ל-'+sent+' קבוצות','good');
+  }catch(e){$('#m_results').innerHTML='<div class="box" style="border-inline-start-color:#e33">❌ שגיאה: '+esc(e.message)+(sent?' (נשלח ל-'+sent+' קבוצות לפני התקלה)':'')+'</div>';toast('השליחה נכשלה','bad');}
+  $('#m_send').disabled=false;
+}
 $('#m_connect').onclick=()=>{MSG.url=$('#m_url').value.trim();MSG.secret=$('#m_secret').value.trim();localStorage.setItem(MLS.url,MSG.url);localStorage.setItem(MLS.secret,MSG.secret);MSG.groups=[];loadMsgGroups();};
 $('#m_reload').onclick=()=>{MSG.groups=[];MSG.sel.clear();loadMsgGroups();};
-$('#m_teamalumni').onclick=()=>{MSG.sel.clear();MSG.groups.forEach((g,i)=>{if(g.type==='צוות'||g.type==='בוגרים')MSG.sel.add(i);});renderMsgGroups();toast('נבחרו כל קבוצות הצוות והבוגרים','ok');};
+function selOnly(pred){MSG.sel.clear();MSG.groups.forEach((g,i)=>{if(pred(g))MSG.sel.add(i);});renderMsgGroups();}
+$('#m_teams').onclick=()=>{selOnly(g=>g.type==='צוות');toast('נבחרו כל הצוותים','ok');};
+$('#m_alumni').onclick=()=>{selOnly(g=>g.type==='בוגרים');toast('נבחרו כל קבוצות הבוגרים','ok');};
+$('#m_teamalumni').onclick=()=>{selOnly(g=>g.type==='צוות'||g.type==='בוגרים');toast('נבחרו כל קבוצות הצוות והבוגרים','ok');};
 $('#m_all').onclick=()=>{MSG.groups.forEach((g,i)=>MSG.sel.add(i));renderMsgGroups();};
 $('#m_none').onclick=()=>{MSG.sel.clear();renderMsgGroups();};
+$('#m_viewbar').addEventListener('click',e=>{const b=e.target.closest('[data-mview]');if(!b)return;MSG.view=b.dataset.mview;localStorage.setItem(MLS.view,MSG.view);renderMsgGroups();});
 $('#m_groups').addEventListener('change',e=>{const cb=e.target.closest('[data-g]');if(!cb)return;const i=+cb.dataset.g;if(cb.checked)MSG.sel.add(i);else MSG.sel.delete(i);updMsgCount();});
+$('#m_groups').addEventListener('click',e=>{
+  const rm=e.target.closest('[data-rmx]');if(rm){e.preventDefault();delete MSG.extra[rm.dataset.rmx];localStorage.setItem(MLS.extra,JSON.stringify(MSG.extra));buildMsgGroups();renderMsgGroups();renderRawList();toast('הקבוצה הוסרה מהרשימה','ok');return;}
+  const sr=e.target.closest('[data-selregion]');if(sr){const r=sr.dataset.selregion;MSG.groups.forEach((g,i)=>{if((g.region||'ללא שיוך אזורי')===r)MSG.sel.add(i);});renderMsgGroups();toast('נבחרו קבוצות '+r,'ok');return;}
+  const st=e.target.closest('[data-seltype]');if(st){MSG.groups.forEach((g,i)=>{if(g.type===st.dataset.seltype)MSG.sel.add(i);});renderMsgGroups();return;}
+});
+$('#m_rawsearch').addEventListener('input',renderRawList);
+$('#m_rawlist').addEventListener('click',e=>{const b=e.target.closest('[data-addraw]');if(!b)return;const g=(MSG.raw||[]).find(x=>x.id===b.dataset.addraw);if(!g)return;MSG.extra[g.id]={label:g.name,type:b.dataset.t};localStorage.setItem(MLS.extra,JSON.stringify(MSG.extra));buildMsgGroups();renderMsgGroups();renderRawList();toast('נוספה: '+g.name,'ok');});
 $('#m_send').onclick=sendMsg;
 $('#ovTiles').addEventListener('click',e=>{const t=e.target.closest('[data-goto]');if(t)show(t.dataset.goto);});
 $('#addBtn').onclick=()=>openTaskModal(null);
