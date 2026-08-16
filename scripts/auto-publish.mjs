@@ -79,6 +79,7 @@ let published = 0, failed = 0;
 
 for (const post of due) {
   const mediaUrl = data.mediaBase + post.file;
+  const igMediaUrl = data.mediaBase + (post.igFile || post.file);
   const isVideo = post.type === 'video';
   console.log(`\n▶ ${post.id} — ${post.title}`);
 
@@ -110,8 +111,8 @@ for (const post of due) {
 
   try {
     const containerParams = isVideo
-      ? { media_type: 'REELS', video_url: mediaUrl, caption: post.ig }
-      : { image_url: mediaUrl, caption: post.ig };
+      ? { media_type: 'REELS', video_url: igMediaUrl, caption: post.ig }
+      : { image_url: igMediaUrl, caption: post.ig };
     const container = await graphPost(`${META_IG_USER_ID}/media`, containerParams, PAGE_TOKEN);
     if (isVideo) {
       for (let i = 0; i < 30; i++) {

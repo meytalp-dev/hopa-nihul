@@ -100,6 +100,7 @@ if (!post) {
   process.exit(1);
 }
 const mediaUrl = data.mediaBase + post.file;
+const igMediaUrl = data.mediaBase + (post.igFile || post.file);
 const isVideo = post.type === 'video';
 
 async function publishFacebook() {
@@ -126,8 +127,8 @@ async function publishInstagram() {
   if (!META_IG_USER_ID) throw new Error('אין חשבון אינסטגרם עסקי מקושר לעמוד');
   if (when) console.warn('⚠ אינסטגרם: ה-API לא תומך בתזמון — מפרסם עכשיו.');
   const containerParams = isVideo
-    ? { media_type: 'REELS', video_url: mediaUrl, caption: post.ig }
-    : { image_url: mediaUrl, caption: post.ig };
+    ? { media_type: 'REELS', video_url: igMediaUrl, caption: post.ig }
+    : { image_url: igMediaUrl, caption: post.ig };
   const container = await graph(`${META_IG_USER_ID}/media`, containerParams);
   if (isVideo) {
     // וידאו מעובד אסינכרונית — ממתינים שהקונטיינר יהיה מוכן
