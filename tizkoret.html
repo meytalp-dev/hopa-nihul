@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תזכורת למפגש רכזי הבוגרים · מי עוד לא נרשם · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;--wa:#25D366;--wa-dark:#1da851;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;--warn:#f0a500;
+    --shadow:0 4px 18px rgba(31,31,38,.07);--shadow-lg:0 14px 40px rgba(31,31,38,.14)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  button,textarea,input{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:940px;margin:0 auto;padding:0 16px}
+
+  header{background:#111;color:#fff;padding:18px 0 22px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%);pointer-events:none}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex;align-items:center}
+  .logo img{height:40px;display:block}
+  header h1{margin:0;font-size:22px;font-weight:900;letter-spacing:-.2px}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:2px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+  .meet small{font-weight:500;opacity:.8}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:-16px auto 0;position:relative;z-index:2}
+  .stat{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;text-align:center;border-top:4px solid var(--line)}
+  .stat.pink{border-top-color:var(--pink)}.stat.ok{border-top-color:var(--ok)}.stat.warn{border-top-color:var(--warn)}
+  .stat .n{font-size:30px;font-weight:900;line-height:1}
+  .stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .live{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+  .live b{color:var(--ok)}
+  .live.err b{color:#d9534f}
+
+  section{margin-top:18px}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:16px}
+  .card h2{margin:0 0 4px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h2 .cnt{font-weight:600;color:var(--muted);font-size:14px}
+  .hint{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .field{margin:8px 0}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:4px}
+  .field input,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--ink);outline:none;transition:.15s}
+  .field input:focus,.field textarea:focus{border-color:var(--pink)}
+  .field textarea{min-height:150px;resize:vertical;line-height:1.55}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:4px}
+  .tags code{background:var(--pink-soft);color:var(--pink-dark);border-radius:6px;padding:1px 6px;font-family:inherit;font-weight:600}
+  .warnbox{background:#fff8dc;border:1.5px solid #f6dc7a;color:#6b5300;border-radius:12px;padding:10px 12px;font-size:13px;margin-top:8px}
+  .okbox{background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b;border-radius:12px;padding:10px 12px;font-size:13px;margin-top:8px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none;transition:.15s;font-size:14px;line-height:1.2}
+  .btn:active{transform:scale(.97)}
+  .btn.wa{background:var(--wa);color:#fff}.btn.wa:hover{background:var(--wa-dark)}
+  .btn.pink{background:var(--pink);color:#fff}.btn.pink:hover{background:var(--pink-dark)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.btn.ghost:hover{border-color:var(--pink);color:var(--pink-dark)}
+  .btn.dark{background:#111;color:var(--yellow)}
+  .btn.sm{padding:7px 10px;font-size:13px;border-radius:10px}
+  .btn[disabled],.btn.dis{opacity:.45;cursor:not-allowed}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .toolbar .sp{flex:1}
+
+  .prog{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 2px}
+  .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-dark));width:0;transition:.4s}
+
+  .list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  .row{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:34px 1fr;gap:10px 12px;transition:.2s}
+  .row.sent{opacity:.55;background:#f7fdf9;border-color:#cdeedb}
+  .row .num{width:34px;height:34px;border-radius:50%;background:var(--pink-soft);color:var(--pink-dark);font-weight:800;display:grid;place-items:center;font-size:14px}
+  .row.sent .num{background:#d9f5e5;color:#14613b}
+  .row .who{min-width:0}
+  .row .sc{font-weight:800;font-size:15.5px}
+  .row .nm{font-size:14px;color:var(--ink);margin-top:1px}
+  .row .nm .role{font-size:12px;color:var(--muted);font-weight:500}
+  .row .note{font-size:12px;color:#8a6d00;background:#fff8dc;border-radius:8px;padding:2px 8px;display:inline-block;margin-top:4px}
+  .row .note.blue{color:#0b4f8a;background:#e6f2fc}
+  .phone{display:flex;align-items:center;gap:6px;margin-top:6px}
+  .phone input{width:150px;max-width:100%;border:1.5px dashed var(--line);border-radius:10px;padding:6px 10px;direction:ltr;text-align:right;font-weight:600;color:var(--ink);background:#fafafa}
+  .phone input:focus{border-style:solid;border-color:var(--pink);outline:none;background:#fff}
+  .phone input.empty{border-color:#f0a500;background:#fffbea}
+  .phone .plbl{font-size:12px;color:var(--muted)}
+  .acts{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .acts .mark{margin-inline-start:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px;cursor:pointer}
+  .acts .mark input{width:16px;height:16px;accent-color:var(--ok)}
+
+  .reg{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chip{background:#e8f8ef;color:#14613b;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600;border:1px solid #cdeedb}
+  .chip small{font-weight:500;opacity:.8}
+
+  details summary{cursor:pointer;font-weight:700;color:var(--pink-dark);font-size:14px;list-style:none;display:flex;align-items:center;gap:6px}
+  details summary::-webkit-details-marker{display:none}
+  details summary:before{content:"▸";transition:.2s;display:inline-block}
+  details[open] summary:before{transform:rotate(90deg)}
+  details .body{margin-top:8px}
+
+  .conn{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+  .dot{width:10px;height:10px;border-radius:50%;background:#ccc;display:inline-block}
+  .dot.on{background:var(--ok)}.dot.off{background:#d9534f}
+
+  .toast{position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);z-index:90;transition:.3s;opacity:0;max-width:92vw;text-align:center}
+  .toast.show{transform:translateX(50%) translateY(0);opacity:1}
+  .toast.ok{background:#22b573}.toast.bad{background:#d9534f}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 0 30px}
+  footer a{color:var(--pink-dark);font-weight:700;text-decoration:none}
+  @media (max-width:560px){
+    .stats{grid-template-columns:repeat(3,1fr);gap:6px}.stat .n{font-size:24px}.stat .l{font-size:11px}
+    header h1{font-size:19px}
+    .row{grid-template-columns:28px 1fr}.row .num{width:28px;height:28px;font-size:12px}
+    .btn{padding:9px 11px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <div class="hrow">
+      <a class="logo" href="https://hopa.org.il" target="_blank" rel="noopener" title="hopa.org.il"><img src="hopa-logo.png" alt="Hopa!"></a>
+      <div>
+        <h1>תזכורת למפגש רכזי הבוגרים</h1>
+        <div class="sub">מי עוד לא נרשם/ה — ושליחת תזכורת אישית בוואטסאפ ישירות לרכז/ת</div>
+      </div>
+    </div>
+    <div class="meet">📅 יום שני 24.8.2026 · 11:00 <small>· המפגש הראשון של רכזי הבוגרים</small></div>
+  </div>
+</header>
+
+<div class="in">
+  <div class="stats">
+    <div class="stat ok"><div class="n" id="stReg">–</div><div class="l">נרשמו</div></div>
+    <div class="stat warn"><div class="n" id="stMiss">–</div><div class="l">עוד לא נרשמו</div></div>
+    <div class="stat pink"><div class="n" id="stSent">0</div><div class="l">תזכורות נשלחו</div></div>
+  </div>
+  <div class="live" id="live">טוען נתוני הרשמה חיים מהגיליון…</div>
+
+  <!-- הודעה + קישור -->
+  <section>
+    <div class="card">
+      <h2>✍️ נוסח התזכורת</h2>
+      <p class="hint">ההודעה נשלחת אישית לכל רכז/ת. אפשר לערוך — השינוי נשמר במכשיר הזה. משתנים: <span class="tags"><code>{שם}</code><code>{בית_ספר}</code><code>{קישור}</code></span></p>
+      <div class="field"><label>קישור לטופס ההרשמה (מוחלף ב-{קישור})</label><input id="link" placeholder="הדביקי כאן את קישור טופס ההרשמה של לירון (forms.gle/…)" dir="auto"></div>
+      <div id="linkWarn" class="warnbox" style="display:none">⚠️ עדיין אין קישור לטופס — ההודעה תצא בלי קישור הרשמה. כדאי להדביק את הקישור למעלה לפני השליחה.</div>
+      <div class="field"><label>ההודעה</label><textarea id="msg"></textarea></div>
+      <div class="toolbar">
+        <button class="btn ghost sm" id="resetMsg">↺ החזרת נוסח ברירת המחדל</button>
+        <span class="sp"></span>
+        <button class="btn ghost sm" id="resetSent">איפוס סימוני "נשלח"</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- שליחה אוטומטית -->
+  <section>
+    <div class="card">
+      <h2>⚡ שליחה אוטומטית מהוואטסאפ של מיטל <span class="cnt">(אופציונלי)</span></h2>
+      <p class="hint">אותו חיבור כמו בדף שליחת ההודעות לקבוצות (hodaot) — אם כבר התחברת שם, זה נטען אוטומטית. השליחה יוצאת ישירות למספר של הרכז/ת בלי לפתוח וואטסאפ.</p>
+      <div class="conn"><span class="dot" id="connDot"></span><span id="connTxt">לא מחובר</span>
+        <details style="margin-inline-start:auto"><summary>חיבור / עדכון פרטים</summary>
+          <div class="body">
+            <div class="field"><label>כתובת Web App</label><input id="m_url" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr"></div>
+            <div class="field"><label>סיסמה (SEND_SECRET)</label><input id="m_secret" placeholder="הסיסמה מ-Script Properties" dir="ltr"></div>
+            <button class="btn pink sm" id="m_connect">שמירת חיבור</button>
+          </div>
+        </details>
+      </div>
+      <div class="toolbar">
+        <button class="btn dark" id="sendAll" disabled>⚡ שליחה מרוכזת לכל מי שיש טלפון ועוד לא סומן "נשלח"</button>
+        <button class="btn ghost" id="sendForum" disabled>📣 תזכורת כללית לפורום רכזי הבוגרים</button>
+      </div>
+      <div id="bulkStat" class="hint" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <!-- לא נרשמו -->
+  <section>
+    <div class="card">
+      <h2>📨 עוד לא נרשמו <span class="cnt" id="missCnt"></span></h2>
+      <p class="hint">כפתור <b>💬 וואטסאפ</b> פותח שיחה עם ההודעה מוכנה — נשאר רק ללחוץ "שלח". אם אין לנו טלפון של הרכז/ת — מוצג איש הקשר מהמונדיי (בד"כ המנהל/ת) ואפשר להקליד טלפון אחר; הוא נשמר במכשיר.</p>
+      <div class="prog"><i id="progBar"></i></div>
+      <div id="list" class="list"></div>
+    </div>
+  </section>
+
+  <!-- נרשמו -->
+  <section>
+    <div class="card">
+      <details>
+        <summary>✅ כבר נרשמו <span class="cnt" id="regCnt"></span></summary>
+        <div class="body"><div class="reg" id="regList"></div></div>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · הנתונים נמשכים חי מ<a href="https://docs.google.com/spreadsheets/d/1MfdsObvN0U-finQMmqpD0JyYB-RYFAgOz4aU92joIWY/edit" target="_blank" rel="noopener">גיליון ההרשמה</a> ומלוח המונדיי "רשימת בתי ספר תשפ"ז בוגרים"
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   נתונים
+   ============================================================ */
+const SHEET_ID='1MfdsObvN0U-finQMmqpD0JyYB-RYFAgOz4aU92joIWY';
+const FORUM_CHAT='120363405187341710@g.us'; // פורום רכזי בוגרים
+const MEETING='יום שני 24.8 בשעה 11:00';
+
+// בתי הספר בתוכנית הבוגרים תשפ"ז. keys = מילות זיהוי לשורה בגיליון; alias = שמות רכזים שנרשמו כ"אחר / לא ברשימה".
+// c = רכז/ת (מפורום רכזי הבוגרים / המונדיי), ph = טלפון של הרכז/ת אם ידוע; fb = איש קשר חלופי מהמונדיי (מנהל/ת).
+// grp = קבוצת הצוות/הנהלה בוואטסאפ (מהמונדיי). inForm=false → בית הספר לא מופיע כלל ברשימת הטופס.
+const SCHOOLS=[
+ {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה'], c:'יעקב גרונספלד', role:'רכז בוגרים', ph:'', fb:{n:'רווית גל',r:'מנהלת',ph:'0503993021'}, grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
+ {id:'zurbarak', sc:'אורט צור ברק', keys:['צור ברק'], c:'טלי יונה', role:'רכזת בוגרים', ph:'0548080808', fb:{n:'סיגל כהן',r:'מנהלת',ph:'0545303604'}, grp:'https://chat.whatsapp.com/I5pxElQRVOa1k9dxLOo5Zz'},
+ {id:'motzkin', sc:'עתיד שמיים קריית מוצקין', keys:['מוצקין'], alias:['אביחי'], c:'אביחי חריר', role:'רכז בוגרים', ph:'0503139150', grp:'https://chat.whatsapp.com/EpQOaxiQsrW2vatlYTqLn7'},
+ {id:'akko', sc:'אורט מרום עכו', keys:['מרום עכו','עכו'], c:'טוהר', role:'רכזת בוגרים', ph:'', grp:'https://chat.whatsapp.com/Hc5ElMYaDHcGDoSCEVDJjf'},
+ {id:'beitshean', sc:'אורט מגשימים בית שאן', keys:['בית שאן'], c:'חן', role:'רכזת מניעת נשירה ובוגרים', ph:'', grp:'https://chat.whatsapp.com/CLsLCDhmjYD4pVsV8cCagM'},
+ {id:'ashkelon', sc:'אורט אדיבי אשקלון', keys:['אשקלון'], c:'סיגל דדון', role:'רכזת בוגרים', ph:'', grp:'https://chat.whatsapp.com/I0MoDIeeSoQE1frFGOTSKB'},
+ {id:'carmel', sc:'אורט כרמל חיפה', keys:['כרמל'], c:'חנין / מריה דיאב', role:'', ph:'0532417145', fb:{n:'וליד דאו',r:'מנהל',ph:'0544597762'}, grp:'https://chat.whatsapp.com/GRD38vb9sTUC9jSBjkIpTc'},
+ {id:'nechalim', sc:'מרכז תורני טכנולוגי נחלים', keys:['נחלים'], c:'טל מילוא', role:'רכז בוגרים', ph:'', fb:{n:'אליהו טובול',r:'מנהל',ph:'0528119499'}, grp:'https://chat.whatsapp.com/GH6DeFFP2aIL1qk1c6QXbw'},
+ {id:'turan', sc:'מנאראת טורעאן', keys:['טורעאן','טוראען','מנאראת'], c:'', role:'', ph:'', fb:{n:'עלי עדאווי',r:'מנהל',ph:'0545714431'}, grp:'https://chat.whatsapp.com/BgZFsZdK1ukIdOj0LAmF4q', noCoord:true},
+ {id:'ashdod', sc:'יוצר עמל טכנולוגי אשדוד', keys:['אשדוד'], c:'ריקי מסס', role:'רכזת חברתית ובוגרים', ph:'0544441300', fb:{n:'מגי רביבו',r:'מנהלת',ph:'0528334601'}, grp:'https://chat.whatsapp.com/HHifhAFuBiWJ9ddpRPamnZ'},
+ {id:'ramatdavid', sc:'עמל רמת דוד', keys:['רמת דוד'], c:'מוניק איפרח ממן', role:'רכזת בוגרים', ph:'0509883385', fb:{n:'יואב ברבי',r:'מנהל',ph:'0549933445'}, grp:'https://chat.whatsapp.com/ISjFCUIc51n9Htjs8QKa4C'},
+ {id:'nevemidbar', sc:'דרור נווה מדבר', keys:['נווה מדבר'], c:'תמרה גילאווני', role:'רכזת בוגרים', ph:'', fb:{n:'עבד אבו אלקיעאן',r:'מנהל',ph:'0525873735'}, grp:'https://chat.whatsapp.com/H2jSmUeAiwxI8CSwD8OChP'},
+ {id:'sakhnin', sc:'טכנולוגי אלאמאני סחנין', keys:['סחנין'], c:'סוזן / סאמר מיעארי', role:'', ph:'0508784131', fb:{n:'מוחמד גזאל',r:'מנהל',ph:'0507527765'}, grp:'https://chat.whatsapp.com/DkhOjtuWOMqDcSh9VnZLKQ'},
+ {id:'hoshen', sc:'תיכון חושן (ירושלים)', keys:['חושן'], c:'', role:'', ph:'', fb:{n:'שרי שמבורסקי',r:'מנהלת',ph:'0523936126'}, grp:'https://chat.whatsapp.com/JPwDMBWet1lJRXavGqP7BM', noCoord:true},
+ {id:'lakiya', sc:'טכנולוגי לקייה', keys:['לקייה','לקיה'], c:'רניה', role:'רכזת בוגרים', ph:'', fb:{n:'איש הקשר במונדיי (רניה?)',r:'לאמת',ph:'0504708424'}, grp:'https://chat.whatsapp.com/JNsS0xRkYxICPrcrJZZbZO'},
+ {id:'julis', sc:"יוצר עתיד בנות ג'וליס", keys:["ג'וליס",'ג׳וליס','גוליס'], c:'בהייה מולא', role:'רכזת בוגרים', ph:'', fb:{n:'שאדיה נבואני',r:'מנהלת',ph:'0542454243'}, grp:'https://chat.whatsapp.com/HfV73OsEnYx7GQ17JM96ov'},
+ {id:'birmaksur', sc:'עתיד אבדאע ביר אלמכסור', keys:['אלמכסור','אבדאע'], c:'', role:'', ph:'', fb:{n:'ופיק אגבאריה',r:'מנהל',ph:'0509551109'}, noCoord:true},
+ {id:'siach', sc:"תיכון שיח' דנון עמקה", keys:['שיח','עמקה'], c:'טליה ברנע', role:'רכזת בוגרים', ph:'0548069898', grp:'https://chat.whatsapp.com/IhToin5XAxuFo0RkL1Yoqs'},
+ {id:'palmachim', sc:'יוצר עתיד פלמחים', keys:['פלמחים'], c:'', role:'', ph:'', fb:{n:'ד"ר ורד אזולאי יהב',r:'מנהלת',ph:'0526631135'}, noCoord:true},
+ {id:'tlv', sc:'התיכון החברתי תל אביב-יפו', keys:['תל אביב'], c:'לי ארנן', role:'רכזת בוגרים', ph:'0503450755', fb:{n:'יפית שפירא',r:'מנהלת',ph:'0549747128'}, grp:'https://chat.whatsapp.com/H4YjdHrcEDF5IyrKGaWQmC'},
+ {id:'rahat', sc:'עמל טכנולוגי רהט', keys:['רהט'], c:'זהור אלעוברה', role:'רכזת בוגרים', ph:'0547918502', fb:{n:'הוזייל ראיד',r:'רכז',ph:'0546493125'}, grp:'https://chat.whatsapp.com/H8kP4xsPGUfE59MHt3HqUd'},
+ {id:'batami', sc:'אולפנת עתיד בת עמי', keys:['בת עמי'], c:'', role:'', ph:'', fb:{n:'קארן סגל',r:'מנהלת',ph:'0536234479'}, noCoord:true},
+ {id:'telsheva', sc:'טכנולוגי אלמסתקבל תל שבע', keys:['תל שבע','אלמוסתקבל','אלמסתקבל'], c:'', role:'', ph:'', fb:{n:'שאקר בטיחאת',r:'מנהל',ph:'0548786981'}, noCoord:true},
+ {id:'karmiel', sc:'עתיד יוצר מגשימים כרמיאל', keys:['כרמיאל'], c:'לבנה בן חמו', role:'רכזת חינוך חברתי ובוגרים', ph:'0504400956', fb:{n:'שיראל פרץ',r:'מנהלת',ph:'0526572714'}, grp:'https://chat.whatsapp.com/HLfjBtx1PkfDeG6beUkMiv'},
+ // לא מופיעים ברשימת הטופס — כנראה נשמטו; מסומנים בדף
+ {id:'yarka', sc:"תיכון ח'טוואת ירכא אבו סנאן", keys:['ירכא','טוואת'], alias:['רשא','ראשה'], c:'רשא סייד אחמד', role:'רכזת בוגרים', ph:'0505455077', fb:{n:'נסרין נבואני',r:'מנהלת',ph:'0508711450'}, grp:'https://chat.whatsapp.com/BSHBsimSYE2C358EjQ41O4', inForm:false},
+ {id:'mitzpe', sc:'התיכון החברתי מצפה רמון', keys:['מצפה רמון'], alias:['ענבל'], c:'ענבלי לוי', role:'רכזת חברתית ובוגרים', ph:'', fb:{n:'תמר צביבך',r:'מנהלת',ph:'0546738573'}, grp:'https://chat.whatsapp.com/Eqy8J9J0kYrK9Mn8pkC4hX', inForm:false},
+ {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], c:'', role:'', ph:'', fb:{n:'עינת וינברן',r:'מנהלת',ph:'0546735214'}, noCoord:true, inForm:false},
+];
+
+// תמונת מצב מהגיליון (17.8.2026) — משמשת רק אם המשיכה החיה נכשלת
+const SNAPSHOT={registeredIds:['zurbarak','carmel','ramatdavid','sakhnin','siach','tlv','rahat','motzkin'], who:{zurbarak:'טלי יונה',carmel:'מריה דיאב',ramatdavid:'מוניק איפרח ממן, מור',sakhnin:'סאמר מיעארי',siach:'טליה ברנע',tlv:'לי ארנן',rahat:'זהור אלעוברה',motzkin:'אביחי חריר'}};
+
+const DEFAULT_MSG=
+`היי {שם} 👋
+מזכירים באהבה: המפגש הראשון של רכזי הבוגרים של הופה מתקיים ב${MEETING} — ועדיין לא ראינו את ההרשמה של {בית_ספר} 🙈
+
+הרישום לוקח דקה, וכולל כמה שאלות קטנות עלייך שיהפכו לדף אישי מרשים שמחכה לך במפגש 🎨
+{קישור}
+
+נשמח מאוד לראות אותך שם — זו ההזדמנות להכיר את שאר הרכזים ולצאת לדרך ביחד 💛
+מיטל, הופה`;
+
+const FORUM_MSG=
+`היי לכולם 👋
+תזכורת: המפגש הראשון של רכזי הבוגרים מתקיים ב${MEETING} 🎉
+מי שעוד לא נרשם/ה — הרישום לוקח דקה והוא חשוב לנו כדי להכין לכם דף אישי למפגש:
+{קישור}
+
+מחכים לראות את כולם 💛`;
+
+/* ============================================================
+   מצב מקומי
+   ============================================================ */
+const LS={msg:'hopa_tz_msg',link:'hopa_tz_link',sent:'hopa_tz_sent',phones:'hopa_tz_phones',url:'hopa_send_url',secret:'hopa_send_secret'};
+const $=s=>document.querySelector(s);
+const state={
+  msg:localStorage.getItem(LS.msg)||DEFAULT_MSG,
+  link:localStorage.getItem(LS.link)||'',
+  sent:JSON.parse(localStorage.getItem(LS.sent)||'{}'),
+  phones:JSON.parse(localStorage.getItem(LS.phones)||'{}'),
+  url:localStorage.getItem(LS.url)||'', secret:localStorage.getItem(LS.secret)||'',
+  reg:{}, live:false, regRows:[]
+};
+function save(k,v){localStorage.setItem(LS[k],typeof v==='string'?v:JSON.stringify(v));}
+function toast(t,c){const el=$('#toast');el.textContent=t;el.className='toast show '+(c||'');clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',2600);}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function digits(p){let d=String(p||'').replace(/\D/g,'');if(d.startsWith('972'))return d;if(d.startsWith('0'))d=d.slice(1);return d?'972'+d:'';}
+function pretty(p){const d=digits(p);return d?('0'+d.slice(3)).replace(/^(\d{3})(\d{3})(\d{4})$/,'$1-$2-$3'):'';}
+function firstName(n){return String(n||'').split(/[\s\/]+/)[0]||'';}
+function phoneOf(s){return state.phones[s.id]!==undefined?state.phones[s.id]:(s.ph||(s.fb&&s.fb.ph)||'');}
+function contactName(s){ if(s.c) return s.c; if(s.fb) return s.fb.n; return ''; }
+function buildMsg(s,tpl){
+  const nm=firstName(s.c)|| (s.fb?firstName(s.fb.n):'') || '';
+  const link=state.link.trim()||'';
+  let m=(tpl||state.msg).replace(/\{שם\}/g,nm).replace(/\{בית_ספר\}/g,s.sc).replace(/\{קישור\}/g,link);
+  return m.replace(/\n{3,}/g,'\n\n').trim();
+}
+
+/* ============================================================
+   נתונים חיים מהגיליון (JSONP של gviz — עובד ישירות מהדפדפן)
+   ============================================================ */
+function gviz(sheet){return new Promise((res,rej)=>{
+  const cb='gv_'+Math.random().toString(36).slice(2);const s=document.createElement('script');
+  const t=setTimeout(()=>{done();rej(new Error('timeout'));},15000);
+  function done(){s.remove();clearTimeout(t);try{delete window[cb];}catch(e){window[cb]=undefined;}}
+  window[cb]=j=>{done();res(j);};
+  s.onerror=()=>{done();rej(new Error('net'));};
+  s.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cb}&sheet=${encodeURIComponent(sheet)}&_=${Date.now()}`;
+  document.body.appendChild(s);
+});}
+function rows(j){return ((j&&j.table&&j.table.rows)||[]).map(r=>(r.c||[]).map(c=>c&&c.v!=null?String(c.f||c.v):''));}
+function nrm(s){return String(s||'').replace(/["'״׳`]/g,'').replace(/\s+/g,' ').trim();}
+function matchSchool(name){const n=nrm(name);if(!n||n.startsWith('אחר'))return null;
+  // התאמה לפי מילות זיהוי — הארוכה ביותר קודם כדי ש"מרום עכו" לא ייתפס ע"י מפתח קצר של בי"ס אחר
+  let best=null,bl=0;SCHOOLS.forEach(s=>s.keys.forEach(k=>{if(n.includes(nrm(k))&&k.length>bl){best=s;bl=k.length;}}));return best;}
+
+async function loadLive(){
+  try{
+    const [sch,reg]=await Promise.all([gviz('בתי ספר'),gviz('הרשמות')]);
+    const R={};
+    rows(sch).forEach(r=>{const s=matchSchool(r[0]);if(!s)return;if((r[1]||'').includes('נרשם'))R[s.id]=r[2]||'✓';});
+    // נרשמים שבחרו "אחר / לא ברשימה" — משויכים לפי שם הרכז/ת
+    const rr=rows(reg).filter(r=>r[1]);state.regRows=rr;
+    rr.forEach(r=>{const nm=nrm(r[1]),sc=nrm(r[2]);let s=matchSchool(sc);
+      if(!s)SCHOOLS.forEach(x=>{if((x.alias||[]).some(a=>nm.includes(a))||(x.c&&nm&&nrm(x.c).includes(nm.split(' ')[0])&&nm.split(' ')[0].length>2))s=s||x;});
+      if(s&&!R[s.id])R[s.id]=r[1];});
+    state.reg=R;state.live=true;
+    $('#live').className='live';$('#live').innerHTML=`<b>● חי</b> · נמשך מגיליון ההרשמה עכשיו (${new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}) · <a href="#" id="reload">רענון</a>`;
+  }catch(e){
+    state.reg={};SNAPSHOT.registeredIds.forEach(id=>state.reg[id]=SNAPSHOT.who[id]||'✓');state.live=false;
+    $('#live').className='live err';$('#live').innerHTML=`<b>● לא מקוון</b> · לא הצלחתי למשוך מהגיליון — מוצגת תמונת מצב מ-17.8.2026 · <a href="#" id="reload">נסי שוב</a>`;
+  }
+  $('#reload').onclick=e=>{e.preventDefault();$('#live').textContent='טוען…';loadLive();};
+  render();
+}
+
+/* ============================================================
+   רינדור
+   ============================================================ */
+function render(){
+  const missing=SCHOOLS.filter(s=>!state.reg[s.id]);
+  const registered=SCHOOLS.filter(s=>state.reg[s.id]);
+  $('#stReg').textContent=registered.length;$('#stMiss').textContent=missing.length;
+  const sentN=missing.filter(s=>state.sent[s.id]).length;$('#stSent').textContent=sentN;
+  $('#missCnt').textContent=`· ${missing.length} בתי ספר`;$('#regCnt').textContent=`· ${registered.length}`;
+  $('#progBar').style.width=(missing.length?Math.round(sentN/missing.length*100):0)+'%';
+  $('#linkWarn').style.display=state.link.trim()?'none':'block';
+
+  $('#list').innerHTML=missing.map((s,i)=>{
+    const ph=phoneOf(s), d=digits(ph), usingFb=!s.ph && !state.phones[s.id] && s.fb && ph===s.fb.ph;
+    const nameLine = s.c ? `<div class="nm">${esc(s.c)} ${s.role?`<span class="role">· ${esc(s.role)}</span>`:''}</div>`
+                         : `<div class="nm"><span class="role">אין רכז/ת בוגרים ידוע/ה — </span>${s.fb?esc(s.fb.n)+` <span class="role">· ${esc(s.fb.r)}</span>`:''}</div>`;
+    const notes=[];
+    if(s.inForm===false)notes.push('<span class="note blue">לא מופיע ברשימת הטופס — לעדכן את לירון</span>');
+    if(s.c && usingFb)notes.push(`<span class="note">אין לנו טלפון של ${esc(firstName(s.c))} — מוצג ${esc(s.fb.r)} (${esc(s.fb.n)}). אפשר להקליד טלפון אחר</span>`);
+    if(s.c && !d)notes.push('<span class="note">חסר טלפון — הקלידי כדי לשלוח</span>');
+    const wa=d?`https://wa.me/${d}?text=${encodeURIComponent(buildMsg(s))}`:'#';
+    return `<div class="row ${state.sent[s.id]?'sent':''}" data-id="${s.id}">
+      <div class="num">${i+1}</div>
+      <div class="who">
+        <div class="sc">${esc(s.sc)}</div>
+        ${nameLine}
+        <div class="phone"><span class="plbl">📱</span><input value="${esc(pretty(ph))}" placeholder="05X-XXXXXXX" inputmode="tel" data-ph="${s.id}" class="${d?'':'empty'}"></div>
+        ${notes.length?`<div>${notes.join(' ')}</div>`:''}
+      </div>
+      <div class="acts">
+        <a class="btn wa sm ${d?'':'dis'}" href="${wa}" ${d?'target="_blank" rel="noopener"':''} data-wa="${s.id}" ${d?'':'aria-disabled="true"'}>💬 וואטסאפ</a>
+        <button class="btn pink sm" data-auto="${s.id}" ${(state.url&&d)?'':'disabled'} title="שליחה אוטומטית מהוואטסאפ של מיטל">⚡ שלח</button>
+        <button class="btn ghost sm" data-copy="${s.id}">📋 העתקה</button>
+        ${s.grp?`<a class="btn ghost sm" href="${esc(s.grp)}" target="_blank" rel="noopener" title="קבוצת הצוות/הנהלה של בית הספר">👥 קבוצת הצוות</a>`:''}
+        <label class="mark"><input type="checkbox" data-mark="${s.id}" ${state.sent[s.id]?'checked':''}> נשלח</label>
+      </div>
+    </div>`;
+  }).join('') || '<div class="okbox">🎉 כולם נרשמו!</div>';
+
+  $('#regList').innerHTML=registered.map(s=>`<span class="chip">${esc(s.sc)} <small>· ${esc(state.reg[s.id]===true?'':state.reg[s.id])}</small></span>`).join('')||'<span class="hint">עדיין אין נרשמים</span>';
+
+  // חיבור
+  const on=!!(state.url&&state.secret);
+  $('#connDot').className='dot '+(on?'on':'off');
+  $('#connTxt').textContent=on?'מחובר — אפשר לשלוח אוטומטית ⚡':'לא מחובר — כפתורי ⚡ כבויים (כפתור 💬 עובד תמיד)';
+  $('#sendAll').disabled=!on||!missing.some(s=>digits(phoneOf(s))&&!state.sent[s.id]);
+  $('#sendForum').disabled=!on;
+}
+
+/* ============================================================
+   שליחה אוטומטית — Apps Script (JSONP) → Green API
+   ============================================================ */
+let jn=0;
+function api(params,tmo){return new Promise((res,rej)=>{if(!state.url){rej(new Error('no-url'));return;}
+  const cb='tzcb_'+(jn++);const s=document.createElement('script');
+  const t=setTimeout(()=>{cl();rej(new Error('timeout'));},tmo||60000);
+  function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t);}
+  window[cb]=d=>{cl();res(d);};
+  const q=new URLSearchParams(Object.assign({},params,{secret:state.secret,callback:cb})).toString();
+  s.src=state.url+(state.url.includes('?')?'&':'?')+q;s.onerror=()=>{cl();rej(new Error('network'));};document.body.appendChild(s);});}
+async function sendTo(chatId,text){const r=await api({action:'send',chatIds:chatId,message:text},90000);if(!r||!r.ok)throw new Error((r&&r.error)||'שגיאה');return r;}
+async function autoSend(s,quiet){
+  const d=digits(phoneOf(s));if(!d){toast('אין טלפון','bad');return false;}
+  const btn=document.querySelector(`[data-auto="${s.id}"]`);if(btn){btn.disabled=true;btn.textContent='⏳';}
+  try{const r=await sendTo(d+'@c.us',buildMsg(s));if(r.sent<1)throw new Error('לא נשלח');state.sent[s.id]=true;save('sent',state.sent);if(!quiet)toast('נשלח ל'+(firstName(s.c)||s.sc)+' ✔','ok');return true;}
+  catch(e){if(!quiet)toast('שליחה נכשלה: '+e.message,'bad');return false;}
+  finally{render();}
+}
+
+/* ============================================================
+   אירועים
+   ============================================================ */
+$('#msg').value=state.msg;$('#link').value=state.link;
+$('#m_url').value=state.url;$('#m_secret').value=state.secret;
+$('#msg').addEventListener('input',()=>{state.msg=$('#msg').value;save('msg',state.msg);render();});
+$('#link').addEventListener('input',()=>{state.link=$('#link').value.trim();save('link',state.link);render();});
+$('#resetMsg').onclick=()=>{if(confirm('להחזיר את נוסח ברירת המחדל?')){state.msg=DEFAULT_MSG;$('#msg').value=DEFAULT_MSG;save('msg',DEFAULT_MSG);render();}};
+$('#resetSent').onclick=()=>{if(confirm('לאפס את כל סימוני "נשלח"?')){state.sent={};save('sent',{});render();}};
+$('#m_connect').onclick=()=>{state.url=$('#m_url').value.trim();state.secret=$('#m_secret').value.trim();localStorage.setItem(LS.url,state.url);localStorage.setItem(LS.secret,state.secret);render();toast(state.url?'החיבור נשמר':'החיבור נמחק');};
+
+$('#list').addEventListener('click',e=>{
+  const wa=e.target.closest('[data-wa]');
+  if(wa){ if(wa.getAttribute('aria-disabled')){e.preventDefault();toast('חסר טלפון — הקלידי מספר בכרטיס','bad');return;}
+    const id=wa.dataset.wa;setTimeout(()=>{state.sent[id]=true;save('sent',state.sent);render();},400);return;}
+  const cp=e.target.closest('[data-copy]');
+  if(cp){const s=SCHOOLS.find(x=>x.id===cp.dataset.copy);const txt=buildMsg(s);
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('ההודעה הועתקה ✔','ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('ההודעה הועתקה ✔','ok');}catch(_){toast('לא ניתן להעתיק','bad');}ta.remove();});return;}
+  const au=e.target.closest('[data-auto]');
+  if(au&&!au.disabled){const s=SCHOOLS.find(x=>x.id===au.dataset.auto);if(confirm(`לשלוח עכשיו הודעה אוטומטית ל-${contactName(s)} (${pretty(phoneOf(s))}) מהוואטסאפ של מיטל?`))autoSend(s);return;}
+});
+$('#list').addEventListener('change',e=>{
+  const m=e.target.closest('[data-mark]');if(m){state.sent[m.dataset.mark]=m.checked;save('sent',state.sent);render();}
+});
+$('#list').addEventListener('input',e=>{
+  const p=e.target.closest('[data-ph]');if(!p)return;
+  state.phones[p.dataset.ph]=p.value.trim();save('phones',state.phones);
+  // עדכון עדין בלי לאבד פוקוס: רק הקישור/כפתורים של השורה
+  const s=SCHOOLS.find(x=>x.id===p.dataset.ph);const row=p.closest('.row');const d=digits(p.value);
+  p.classList.toggle('empty',!d);
+  const a=row.querySelector('[data-wa]');if(d){a.href=`https://wa.me/${d}?text=${encodeURIComponent(buildMsg(s))}`;a.target='_blank';a.rel='noopener';a.removeAttribute('aria-disabled');}else{a.href='#';a.setAttribute('aria-disabled','true');}
+  const b=row.querySelector('[data-auto]');if(b)b.disabled=!(state.url&&d);
+});
+$('#list').addEventListener('focusout',e=>{if(e.target.closest('[data-ph]'))render();});
+
+$('#sendAll').onclick=async()=>{
+  const targets=SCHOOLS.filter(s=>!state.reg[s.id]&&digits(phoneOf(s))&&!state.sent[s.id]);
+  if(!targets.length){toast('אין למי לשלוח','bad');return;}
+  const fb=targets.filter(s=>!s.c||(!s.ph&&!state.phones[s.id]));
+  let q=`לשלוח תזכורת אוטומטית ל-${targets.length} אנשי קשר מהוואטסאפ של מיטל?`;
+  if(fb.length)q+=`\n\nשימי לב: ב-${fb.length} מהם ההודעה תגיע לאיש הקשר מהמונדיי (מנהל/ת) ולא לרכז/ת.`;
+  if(!state.link.trim())q+='\n\n⚠️ אין קישור לטופס בהודעה!';
+  if(!confirm(q))return;
+  $('#sendAll').disabled=true;let ok=0;
+  for(let i=0;i<targets.length;i++){$('#bulkStat').textContent=`שולח ${i+1}/${targets.length} — ${targets[i].sc}…`;if(await autoSend(targets[i],true))ok++;await new Promise(r=>setTimeout(r,1500));}
+  $('#bulkStat').textContent=`הסתיים: נשלחו ${ok} מתוך ${targets.length}.`;toast(`נשלחו ${ok}/${targets.length}`,ok===targets.length?'ok':'bad');render();
+};
+$('#sendForum').onclick=async()=>{
+  const txt=FORUM_MSG.replace(/\{קישור\}/g,state.link.trim()||'').replace(/\n{3,}/g,'\n\n');
+  if(!confirm('לשלוח תזכורת כללית לקבוצת "פורום רכזי בוגרים"?\n\n'+txt))return;
+  try{await sendTo(FORUM_CHAT,txt);toast('נשלח לפורום ✔','ok');}catch(e){toast('נכשל: '+e.message,'bad');}
+};
+
+render();
+loadLive();
+</script>
+</body>
+</html>
