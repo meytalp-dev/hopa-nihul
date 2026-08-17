@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מפגש רכזי הבוגרים #1 · בוגר אחד, שנה אחת · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --green:#22A55B; --orange:#F5941F; --red:#E03A3A;
+  --ink:#141414; --gray:#666; --line:#eee; --bg:#FAF7F9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Rubik',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:80px}
+.topbar{height:8px;background:linear-gradient(90deg,var(--pink),var(--yellow))}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+a{color:var(--pink-deep)}
+header{padding:22px 0 8px}
+header img{height:46px}
+.tag{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:99px;font-weight:700;font-size:14px;margin-top:14px}
+h1{font-size:30px;font-weight:900;line-height:1.2;margin-top:10px}
+h1 span{color:var(--pink)}
+.meet{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.meet div{background:#fff;border:2px solid var(--pink-soft);border-radius:12px;padding:8px 14px;font-weight:700;font-size:15px}
+.meet b{color:var(--pink)}
+.intro{color:var(--gray);font-size:15.5px;line-height:1.6;margin-top:14px}
+nav{position:sticky;top:0;z-index:20;background:rgba(250,247,249,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-top:16px}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 18px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13.5px;font-weight:700;white-space:nowrap}
+nav a b{display:inline-block;background:var(--pink);color:#fff;border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;font-size:12px;margin-left:5px}
+nav a.now{border-color:var(--pink);background:var(--pink-soft)}
+section{background:#fff;border-radius:18px;padding:22px 20px;margin-top:22px;box-shadow:0 2px 12px rgba(0,0,0,.04);scroll-margin-top:64px}
+.sec-head{display:flex;align-items:center;gap:12px}
+.num{min-width:36px;height:36px;border-radius:50%;background:var(--pink);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center}
+.sec-head h2{font-size:21px;font-weight:800;line-height:1.2}
+.sec-head small{display:block;color:var(--gray);font-weight:500;font-size:13px;margin-top:2px}
+.time{margin-right:auto;background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:8px;padding:3px 9px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.hint{color:var(--gray);font-size:14.5px;line-height:1.55;margin-top:12px}
+h3{font-size:16px;font-weight:800;margin:18px 0 8px}
+p{line-height:1.6}
+.box{border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.6;font-size:15px}
+.box.task{border-color:var(--pink);background:var(--pink-soft)}
+.box.task::before{content:"המשימה עכשיו";display:block;font-weight:800;color:var(--pink-deep);font-size:13px;margin-bottom:4px}
+.box.method{border-color:var(--yellow-deep);background:var(--yellow-soft)}
+.box.method::before{content:"שיטת העבודה של הופה";display:block;font-weight:800;font-size:13px;margin-bottom:4px}
+.box.zoom{border-style:dashed;color:var(--gray);font-size:14px}
+.box.zoom::before{content:"בזום";display:block;font-weight:800;color:var(--ink);font-size:13px;margin-bottom:2px}
+ul,ol{padding-right:20px;line-height:1.7}
+li{margin:3px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font:inherit;font-weight:800;font-size:15px;border-radius:12px;padding:12px 18px;text-decoration:none;color:#fff;background:var(--pink);transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.y{background:var(--yellow);color:var(--ink)}
+.btn.o{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.sm{padding:8px 13px;font-size:13.5px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+input,textarea,select{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;background:#fff}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink)}
+label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+label small{color:var(--gray);font-weight:400}
+textarea{min-height:80px;resize:vertical}
+.file{border:2px solid var(--ink);border-radius:16px;overflow:hidden;margin-top:14px}
+.file-top{background:var(--yellow);padding:14px 16px;display:flex;align-items:center;gap:14px}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--ink);color:var(--yellow);font-weight:900;font-size:30px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.file-top h3{margin:0;font-size:20px}
+.file-top small{display:block;font-weight:500;color:#333;font-size:13.5px;margin-top:2px}
+.facts{padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.facts{grid-template-columns:1fr}}
+.fact{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.5}
+.fact b{display:block;color:var(--gray);font-size:12px;font-weight:700}
+.wa{background:#E5DDD5;padding:14px;border-top:2px solid var(--ink)}
+.wa .head{font-size:12.5px;color:#555;text-align:center;margin-bottom:8px}
+.bub{max-width:80%;background:#fff;border-radius:10px;padding:8px 11px;font-size:14.5px;line-height:1.45;margin:6px 0;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+.bub.me{background:#DCF8C6;margin-right:auto}
+.bub small{display:block;text-align:left;color:#888;font-size:11px;margin-top:2px}
+.tl{display:flex;gap:10px;margin-top:12px}
+.tl button{flex:1;border:3px solid transparent;border-radius:14px;padding:12px 8px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 0 0 2px var(--line);transition:.15s}
+.tl button span{display:block;width:26px;height:26px;border-radius:50%;margin:0 auto 6px}
+.tl .g span{background:var(--green)}.tl .o span{background:var(--orange)}.tl .r span{background:var(--red)}
+.tl button.on{box-shadow:none}
+.tl button.on.g{border-color:var(--green);background:#EAF7EF}
+.tl button.on.o{border-color:var(--orange);background:#FFF3E3}
+.tl button.on.r{border-color:var(--red);background:#FDEAEA}
+.tl-desc{font-size:13.5px;color:var(--gray);line-height:1.5;margin-top:8px;min-height:20px}
+.mine{margin-top:10px;font-weight:700;font-size:14px;line-height:1.5}
+.mine i{font-style:normal;color:var(--pink-deep)}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+@media(max-width:520px){.roles{grid-template-columns:1fr}}
+.roles button{border:2px solid var(--line);background:#fff;border-radius:14px;padding:14px 8px;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.roles button.on{border-color:var(--pink);background:var(--pink-soft)}
+.roles button small{display:block;font-weight:500;color:var(--gray);font-size:12.5px;margin-top:3px}
+.role-card{display:none;margin-top:12px}
+.role-card.show{display:block}
+.secret{background:#141414;color:#fff;border-radius:14px;padding:16px;margin-top:10px;line-height:1.65;font-size:15px}
+.secret b{color:var(--yellow)}
+.check label{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:15px;margin:8px 0;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;flex:0 0 auto;accent-color:var(--pink)}
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+@media(max-width:520px){.ladder{grid-template-columns:1fr 1fr}}
+.ladder button{border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px 8px;font:inherit;cursor:pointer;text-align:center}
+.ladder button b{display:block;font-size:16px}
+.ladder button small{display:block;color:var(--gray);font-size:12px;line-height:1.4;margin-top:4px}
+.ladder button.on{border-color:var(--pink);background:var(--pink-soft)}
+.timer{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--yellow);border-radius:12px;padding:8px 14px;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums}
+.timer button{background:var(--yellow);color:var(--ink);border:none;border-radius:8px;font:inherit;font-weight:800;padding:4px 10px;cursor:pointer;font-size:13px}
+.links a{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;font-weight:700}
+.links a:hover{border-color:var(--pink)}
+.links a small{color:var(--gray);font-weight:400;font-size:13px;text-align:left}
+.year{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:520px){.year{grid-template-columns:1fr}}
+.year div{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13.5px;line-height:1.5}
+.year b{color:var(--pink-deep)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.done{display:none;background:var(--yellow-soft);border:2px solid var(--yellow-deep);border-radius:14px;padding:16px;margin-top:14px;line-height:1.6}
+.toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
+footer img{height:36px;display:block;margin:0 auto 6px}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="wrap">
+  <img src="hopa-logo.png" alt="הופה">
+  <div class="tag">מפגש רכזי ורכזות הבוגרים · מפגש #1</div>
+  <h1>בוגר אחד, <span>שנה אחת</span></h1>
+  <div class="meet">
+    <div>📅 <b>יום שני 24.8.2026</b></div>
+    <div>🕚 <b>11:00–13:00</b></div>
+    <div>💻 <b>בזום</b></div>
+  </div>
+  <p class="intro">
+    היום לא נלמד "על" שיטות העבודה של הופה. נעקוב יחד אחרי בוגר אחד, <b>אלון</b>, שסיים י"ב ביוני בבית הספר שלכם,
+    ונפגוש כל שיטת עבודה בדיוק ברגע שהוא צריך אותה. הדף הזה נשאר פתוח אצלכם בטלפון או במסך שני לאורך כל המפגש.
+    כל מה שתכתבו בו נשמר אצלכם במכשיר.
+  </p>
+</header>
+
+<nav><div class="wrap">
+  <a href="#s0"><b>0</b>מי בחדר</a>
+  <a href="#s1"><b>1</b>התיק של אלון</a>
+  <a href="#s2"><b>2</b>רמזור</a>
+  <a href="#s3"><b>3</b>השיחה</a>
+  <a href="#s4"><b>4</b>מענה</a>
+  <a href="#s5"><b>5</b>מדרג + תיעוד</a>
+  <a href="#s6"><b>6</b>השנה שלי</a>
+  <a href="#s7"><b>7</b>סגירה</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="s0">
+  <div class="sec-head"><div class="num">0</div><div><h2>מי בחדר</h2><small>גלריית הרכזים</small></div><div class="time">10 דק'</div></div>
+  <p class="hint">על המסך רצים הפוסטרים שיצרתם ברישום: הערכים, תמונת החזון והפתגם של כל אחד ואחת.</p>
+  <div class="box task">
+    מצאו בפוסטרים <b>ערך אחד של מישהו אחר שהוא גם שלכם</b>, וכתבו בצ'אט: <i>"השם שלי · הערך · של מי"</i>.<br>
+    האדם שבחרתם הוא בן/בת הזוג שלכם לחדרים היום.
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head"><div class="num">1</div><div><h2>המעטפה: התיק של אלון</h2><small>מה יודעים, מה לא, מה עושים ראשון</small></div><div class="time">10 דק'</div></div>
+
+  <div class="file">
+    <div class="file-top">
+      <div class="avatar">א</div>
+      <div><h3>אלון · בן 18 וחצי</h3><small>בוגר י"ב תשפ"ו, בית הספר שלכם · מסלול טכנולוגי</small></div>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>בגרות</b>עבר את כל המקצועות חוץ ממתמטיקה 3 יח' (נכשל במועד ב')</div>
+      <div class="fact"><b>גיוס</b>תאריך גיוס: פברואר 2027. לא ברור לאיזה תפקיד</div>
+      <div class="fact"><b>עכשיו</b>עובד במשמרות בסופר השכונתי, מאז יולי</div>
+      <div class="fact"><b>בית</b>גר עם אמא ושני אחים קטנים. אבא לא בתמונה. הטלפון של אמא במאגר לא מעודכן</div>
+    </div>
+    <div class="wa">
+      <div class="head">קבוצת וואטסאפ · בוגרי תשפ"ו · לפני 12 יום</div>
+      <div class="bub me">היי אלון, מה נשמע? איך הקיץ? 😊<small>10:42</small></div>
+      <div class="bub">היי, הכל בסדר, עובד<small>23:17</small></div>
+      <div class="bub me">איזה יופי. נדבר בקרוב?<small>08:05</small></div>
+      <div class="bub">👍<small>14:51</small></div>
+    </div>
+  </div>
+
+  <div class="box zoom">חדרים של 4 · 6 דקות · חוזרים ונציג/ה של חדר אחד מסכם/ת בדקה.</div>
+  <div class="box task">
+    בחדר, ענו על שלוש שאלות:<br>
+    1. <b>מה אנחנו יודעים</b> על אלון?<br>
+    2. <b>מה אנחנו לא יודעים</b> ומאוד היינו רוצים לדעת?<br>
+    3. <b>מה הפעולה הראשונה</b> שהייתם עושים מחר בבוקר?
+  </div>
+  <label>הפעולה הראשונה שלנו <small>(כדי לחזור לזה בסוף)</small></label>
+  <input id="firstAction" placeholder="למשל: מתקשרים אליו, לא כותבים">
+</section>
+
+<section id="s2">
+  <div class="sec-head"><div class="num">2</div><div><h2>המאגר החי והרמזור</h2><small>שיטת עבודה #1</small></div><div class="time">10 דק'</div></div>
+  <div class="box method">
+    כל בוגר במאגר מקבל צבע, והצבע קובע את <b>קצב הקשר</b>. הצבע נקבע מחדש בכל מעבר בין תקופות. הוא לא תווית.
+    <ul style="margin-top:8px">
+      <li><b>🟢 עוקב/ת מרחוק</b>: כל הבוגרים. 3 שיחות יזומות בשנה + ברכות חג ויום הולדת, קבוצת וואטסאפ, הזמנות.</li>
+      <li><b>🟠 עוקב/ת מקרוב</b>: סומן במיפוי או לפני מעבר. שיחה יזומה אחת לחודש + קשר לפני כל צומת (גיוס, קורס, שחרור, לימודים).</li>
+      <li><b>🔴 נכנס/ת לפעולה</b>: עלה צורך ממשי. קשר אינטנסיבי, פגישות, סנגור וליווי מול גורמים, עד שהצורך נענה.</li>
+    </ul>
+  </div>
+  <div class="box task">
+    לפי מה שיש בתיק עכשיו: <b>איזה צבע אלון?</b> סמנו כאן, וענו גם על סקר הזום שיופיע על המסך.
+  </div>
+  <div class="tl" data-key="tl1">
+    <button class="g"><span></span>ירוק</button>
+    <button class="o"><span></span>כתום</button>
+    <button class="r"><span></span>אדום</button>
+  </div>
+  <div class="tl-desc" id="tl1desc"></div>
+  <div class="box zoom">סקר זום #1: "איזה צבע אלון עכשיו?" התוצאה על המסך. זוכרים אותה, נחזור אליה בעוד רבע שעה.</div>
+  <h3>הכלי האמיתי</h3>
+  <p class="hint">פתחו את <b>הפורטל של בית הספר שלכם</b> (הקישור האישי שנשלח בקבוצת הצוות) ומצאו איפה יושב הכרטיס של בוגר, איפה מסמנים צבע ואיפה נכתבת שיחה. לא צריך לשנות כלום עכשיו, רק לדעת איפה זה.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><div class="num">3</div><div><h2>השיחה הראשונה: 4 השאלות</h2><small>שיטת עבודה #2</small></div><div class="time">17 דק'</div></div>
+  <div class="box method">
+    שיחת מעקב = כ-15 דקות, נפתחת ב<b>"נוח לך לדבר עכשיו?"</b>. האווירה חשובה מהטופס. ארבע שאלות, תמיד באותו סדר:
+    <ul style="margin-top:8px">
+      <li>🧭 <b>מסלול</b>: איפה את/ה עכשיו, צבא / שירות / לימודים / עבודה? מה השלב הבא ומתי?</li>
+      <li>💰 <b>כסף וזכויות</b>: מלגות פתוחות, פיקדון, זכאויות שלא מומשו, חובות שמעיקים?</li>
+      <li>🏠 <b>חיים</b>: דיור, משפחה, איך את/ה מרגיש/ה באמת? (מקשיבים גם למה שלא נאמר)</li>
+      <li>🔗 <b>חיבור</b>: למה אפשר לחבר אותך עכשיו, מענה מהמאגר, אירוע, בוגר/ת אחר/ת?</li>
+    </ul>
+    מתחילים מהתקוות, לא מהחששות. משקפים כוחות. מדברים על "הפרק הבא", לא על "כל החיים". מסיימים ב<b>"מה הצעד הבא שלך?"</b>
+  </div>
+  <div class="box zoom">חדרים של 3 · 7 דקות לשיחה + 3 דקות שיחה על השיחה בתוך החדר. בוחרים תפקיד רק אחרי שנכנסים לחדר.</div>
+  <div class="box task">בחרו תפקיד. <b>רק מי שמשחק/ת את אלון פותח/ת את הכרטיס השחור.</b> הרכז/ת והצופה לא מציצים.</div>
+  <div class="roles">
+    <button data-role="alon">אלון<small>הבוגר</small></button>
+    <button data-role="rakaz">הרכז/ת<small>מנהל/ת את השיחה</small></button>
+    <button data-role="tzofe">הצופה<small>עוקב/ת עם צ'ק-ליסט</small></button>
+  </div>
+
+  <div class="role-card" id="role-alon">
+    <div class="secret">
+      <b>מה שאלון יודע ואף אחד עוד לא (לעיניך בלבד):</b><br>
+      • אתה באמת "בסדר", אבל בעיקר כי אף אחד לא שאל יותר מזה. אתה שמח שהתקשרו, ולא תגיד את זה.<br>
+      • אתה רוצה לעשות <b>קורס טכנאי חשמל או מכונאות לפני הגיוס</b>. חבר סיפר. "אבל אין כסף וגם לא יודע איך נרשמים".<br>
+      • אתה נותן לאמא חלק מהמשכורת. היא לחוצה. אתה לא מספר על זה אלא אם שואלים איך בבית.<br>
+      • לא ידעת שיש השלמת בגרות בחינם, מכינות קדם-צבאיות, או שהופה יכולה לעזור עם מלגה לקורס.<br>
+      • המתמטיקה מביכה אותך. תגיד "לא משנה, אין לי ראש לזה" ותנסה לעבור נושא.<br><br>
+      <b>הכלל שלך:</b> תענה קצר ("סבבה", "בסדר", "עובד"). תיפתח רק אם הרכז/ת שואל/ת ישירות על כסף, על מה קורה עד פברואר, או על הבית. אם שואלים טוב, אתה נותן. אם לא, השיחה נגמרת ב"טוב, תודה שהתקשרת".
+    </div>
+  </div>
+
+  <div class="role-card" id="role-rakaz">
+    <div class="box">
+      את/ה מתקשר/ת לאלון. יש לך 7 דקות. פתח/י ב"נוח לך לדבר עכשיו?" ועבור/י על 4 השאלות בסדר: <b>מסלול → כסף → חיים → חיבור</b>.<br>
+      טיפ: כשהוא עונה במילה אחת, אל תעבור/י הלאה. שאל/י "ומה התוכנית עד פברואר?" או "איך זה עובד עם הכסף בבית?"<br>
+      סיים/י ב"מה הצעד הבא שלך?" ואמור/י מה <b>את/ה</b> עושה עד השיחה הבאה.
+    </div>
+  </div>
+
+  <div class="role-card" id="role-tzofe">
+    <div class="box check">
+      <b>סמנו תוך כדי השיחה:</b>
+      <label><input type="checkbox">נפתחה ב"נוח לך לדבר עכשיו?"</label>
+      <label><input type="checkbox">🧭 מסלול נשאל</label>
+      <label><input type="checkbox">💰 כסף וזכויות נשאל</label>
+      <label><input type="checkbox">🏠 חיים / בית נשאל</label>
+      <label><input type="checkbox">🔗 חיבור למענה הוצע</label>
+      <label><input type="checkbox">הרכז/ת לא ויתר/ה אחרי תשובה של מילה אחת</label>
+      <label><input type="checkbox">שיקוף של כוח או הצלחה של אלון</label>
+      <label><input type="checkbox">נסגר ב"מה הצעד הבא שלך?" + מה הרכז/ת עושה</label>
+      <label><input type="checkbox">משך: בערך 7 דקות ולא 20</label>
+      <div class="hint">אחרי השיחה, 3 דקות בחדר: מה גילינו שלא היה בתיק? איזו שאלה אחת שינתה את השיחה?</div>
+    </div>
+  </div>
+
+  <h3>ועכשיו, אחרי השיחה</h3>
+  <div class="box task">חוזרים למליאה. <b>איזה צבע אלון עכשיו?</b> סמנו שוב וענו על סקר הזום #2.</div>
+  <div class="tl" data-key="tl2">
+    <button class="g"><span></span>ירוק</button>
+    <button class="o"><span></span>כתום</button>
+    <button class="r"><span></span>אדום</button>
+  </div>
+  <div class="tl-desc" id="tl2desc"></div>
+  <div class="mine" id="tlcompare"></div>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><div class="num">4</div><div><h2>"אני רוצה קורס אבל אין כסף": מאגר המענים</h2><small>שיטת עבודה #3</small></div><div class="time">10 דק'</div></div>
+  <div class="box method">
+    הרכז/ת הוא/היא <b>מתווך/ת</b>, לא מומחה/ית לכל מענה. התפקיד: לדעת שיש מאגר, לדעת לחפש בו מהר, ולוודא שהחיבור עבד.
+    לא מחליפים שירותים, מחברים אליהם. חיבור למענה בלי מעקב לא נחשב.
+  </div>
+  <div class="box task">
+    <b>3 דקות. לבד. טלפון ביד.</b> מצאו לאלון מענה אמיתי אחד: מלגה לקורס מקצועי, השלמת בגרות, מכינה קדם-צבאית, או כל דבר שיעזור לו עד פברואר.
+    הדביקו את <b>הקישור או שם המענה בצ'אט</b>. הראשון/ה מספר/ת בקול איך מצא/ה.
+  </div>
+  <div class="row" style="align-items:center">
+    <div class="timer"><span id="tmr">3:00</span><button id="tmrBtn">התחל</button></div>
+  </div>
+  <div class="links">
+    <a href="manim-bogrim.html" target="_blank">שער המענים לרכזי בוגרים <small>מלגות · תעסוקה · זכויות</small></a>
+    <a href="manim-milgot.html" target="_blank">וואן-פייג'ר מלגות <small>הדף המהיר</small></a>
+    <a href="https://hopa.org.il" target="_blank">hopa.org.il <small>מאגר המענים המלא, לפי קטגוריה ואזור</small></a>
+  </div>
+  <label>המענה שמצאתי</label>
+  <input id="mane" placeholder="שם המענה / קישור">
+</section>
+
+<section id="s5">
+  <div class="sec-head"><div class="num">5</div><div><h2>מה עושים עם זה: מדרג הסיוע ותיעוד</h2><small>שיטת עבודה #4</small></div><div class="time">10 דק'</div></div>
+  <div class="box method">
+    לא כל צורך דורש שהרכז/ת ירים/תרים טלפון. יש מדרג, ועולים בו רק כשצריך:
+  </div>
+  <div class="ladder" id="ladder">
+    <button data-v="יידוע"><b>1 · יידוע</b><small>מידע מלא ומדויק, הבוגר מממש לבד</small></button>
+    <button data-v="תיווך"><b>2 · תיווך</b><small>שיחה מקדימה לגורם או שיחה משותפת</small></button>
+    <button data-v="סנגור"><b>3 · סנגור</b><small>הרכז/ת פונה לגורם, הבוגר מעודכן ומוביל</small></button>
+    <button data-v="ליווי"><b>4 · ליווי</b><small>הולכים יחד עד שהצורך נענה</small></button>
+  </div>
+  <div class="box task">
+    א. <b>איפה הצורך של אלון יושב במדרג?</b> סמנו למעלה.<br>
+    ב. כתבו את <b>שורת התיעוד</b> של השיחה, כמו שהיא תיכתב במערכת: תאריך · נושאים · צרכים שעלו · מה סוכם · צבע. שתי שורות, לא יותר. שלחו לצ'אט.
+  </div>
+  <label>שורת התיעוד שלי</label>
+  <textarea id="doc" placeholder="24.8 · שיחת מעקב · אלון · רוצה קורס טכנאי לפני גיוס בפב'. חסם: כסף + מידע. חסר 3 יח' מתמ'. סוכם: שולחת פרטי מלגה + השלמת בגרות עד יום ה', שיחה חוזרת בעוד שבועיים. צבע: כתום"></textarea>
+  <div class="row"><button class="btn sm" id="copyDoc">העתקה לצ'אט</button></div>
+  <p class="hint">למה זה חשוב: "כשאני מתקשר אחרי תקופה אני זוכר הכול, וזה מאוד משמעותי עבורו." התיעוד הוא גם הבסיס לדשבורד ולדיווח למשרד העבודה.</p>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><div class="num">6</div><div><h2>השנה שלי בדף אחד</h2><small>מאלון אליכם</small></div><div class="time">23 דק'</div></div>
+  <p class="hint">8 דקות לבד, אחר כך 8 דקות בזוגות מהגלריה. בסוף שולחים להופה בוואטסאפ, וזה יהיה נקודת הפתיחה של השיחה האישית איתכם בספטמבר.</p>
+  <h3>עוגני השנה של רכז/ת הבוגרים</h3>
+  <div class="year">
+    <div><b>ספטמבר</b> ברכת שנה טובה + עדכון פרטים · תזכורת מלגת קרן גרוס (15.9–15.12) · מיפוי ראשון עם צוותי י"א–י"ב</div>
+    <div><b>סתיו</b> סבב שיחות 1 · שיחות לקראת גיוס לפי תאריכים · משוחררים לייעוץ השכלה</div>
+    <div><b>חנוכה</b> "בוגרים מדברים מהשטח" מול י"ב · ברכת חג לחיילים</div>
+    <div><b>חורף</b> מעקב סטודנטים (חידוש מלגות) · שיחות שחרור למשתחררי האביב</div>
+    <div><b>אביב</b> מלגת IMPACT (מרץ–מאי) · סקר בוגרים קצר · סבב שיחות 2 · מיפוי שני</div>
+    <div><b>מאי–יוני</b> מבצע קליטת מחזור: טלפון + תאריך גיוס + הסכמה מכל י"ב · קבוצת וואטסאפ</div>
+    <div><b>קיץ</b> שיחת "בוגר טרי" לכל המסיימים · סבב שיחות 3 · מפגש בוגרים שנתי</div>
+  </div>
+
+  <label>שם מלא</label><input id="f_name">
+  <label>בית הספר</label><input id="f_school">
+  <div class="grid2">
+    <div><label>כמה בוגרים יש לי במאגר <small>(בערך)</small></label><input id="f_total" type="number" inputmode="numeric"></div>
+    <div><label>כמה מהם בקשר איתי היום</label><input id="f_contact" type="number" inputmode="numeric"></div>
+  </div>
+  <label>3 הפעולות הראשונות שלי בספטמבר</label>
+  <input id="f_a1" placeholder="1.">
+  <input id="f_a2" placeholder="2." style="margin-top:8px">
+  <input id="f_a3" placeholder="3." style="margin-top:8px">
+  <label>מה אני צריך/ה מהופה כדי שזה יקרה</label>
+  <input id="f_need" placeholder="קישור לפורטל / רשימת בוגרים מסודרת / הדרכה על המערכת / ...">
+  <label>שאלה פתוחה: מה מהשיטה שראינו היום לא יעבוד לי ב-2 שעות שבועיות?</label>
+  <textarea id="f_q" placeholder="כנות עוזרת לנו לבנות את זה נכון"></textarea>
+  <div class="row">
+    <button class="btn" id="sendWa">שליחה להופה בוואטסאפ</button>
+    <button class="btn o" id="copyPlan">העתקה</button>
+  </div>
+  <div class="done" id="planDone">נשלח. תודה! נחזור אליכם עם הקישור האישי לתוכנית העבודה המלאה.</div>
+</section>
+
+<section id="s7">
+  <div class="sec-head"><div class="num">7</div><div><h2>סגירה</h2><small>משפט אחד</small></div><div class="time">12 דק'</div></div>
+  <div class="box task">
+    כתבו בצ'אט <b>משפט אחד שאתם לוקחים מהיום</b>. אחר כך: מצלמות פתוחות לצילום מסך קבוצתי.
+  </div>
+  <label>המשפט שלי</label>
+  <input id="f_sentence">
+  <div class="row"><button class="btn sm" id="copySentence">העתקה לצ'אט</button></div>
+  <h3>מה קורה אחרי המפגש</h3>
+  <ul>
+    <li>פורום רכזי הבוגרים בוואטסאפ: שם נשלחות ההזדמנויות, שם שואלים.</li>
+    <li>שיחה אישית עם כל רכז/ת בספטמבר, על בסיס "השנה שלי" ששלחתם.</li>
+    <li>המפגש הבא: התאריך יישלח בפורום.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <img src="hopa-logo.png" alt="הופה">
+  הופה · רצף ליווי לבני נוער וצעירים 14–26 · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(id){return document.getElementById(id)};
+var STORE='mifgashZoom1';
+var st={}; try{st=JSON.parse(localStorage.getItem(STORE)||'{}')}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(st))}catch(e){}}
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1800)}
+function copy(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('הועתק, הדביקו בצ\'אט')},function(){fallbackCopy(t)})}
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('הועתק')}catch(e){}ta.remove()}
+var fields=['firstAction','mane','doc','f_name','f_school','f_total','f_contact','f_a1','f_a2','f_a3','f_need','f_q','f_sentence'];
+fields.forEach(function(id){var el=$(id);if(!el)return;if(st[id])el.value=st[id];el.addEventListener('input',function(){st[id]=el.value;save()})});
+var TLD={g:'ירוק: 3 שיחות בשנה, ברכות, קבוצה. הוא "בסדר".',o:'כתום: לפני צומת (גיוס בפברואר) או עלה משהו. שיחה בחודש + קשר לפני כל מעבר.',r:'אדום: צורך ממשי עכשיו. נכנסים לפעולה עד שנענה.'};
+function colorOf(b){return b.classList.contains('g')?'g':b.classList.contains('o')?'o':'r'}
+document.querySelectorAll('.tl').forEach(function(tl){
+  var key=tl.dataset.key, bs=tl.querySelectorAll('button');
+  function paint(){bs.forEach(function(b){b.classList.toggle('on',st[key]===colorOf(b))});var d=$(key+'desc');if(d)d.textContent=st[key]?TLD[st[key]]:'';compare()}
+  bs.forEach(function(b){b.addEventListener('click',function(){st[key]=colorOf(b);save();paint()})});
+  paint();
+});
+function compare(){
+  var el=$('tlcompare');if(!el)return;
+  var n={g:'ירוק',o:'כתום',r:'אדום'};
+  if(st.tl1&&st.tl2){el.innerHTML=st.tl1===st.tl2?'לפני השיחה: <i>'+n[st.tl1]+'</i> · אחרי: <i>'+n[st.tl2]+'</i>. אותו צבע. מה היה צריך לקרות בשיחה כדי שישתנה?':'לפני השיחה: <i>'+n[st.tl1]+'</i> · אחרי: <i>'+n[st.tl2]+'</i>. <b>הצבע זז.</b> זה כל הרעיון: הרמזור חי, והשיחה היא מה שמזיז אותו.'}
+  else el.textContent='';
+}
+document.querySelectorAll('.roles button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.roles button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+  document.querySelectorAll('.role-card').forEach(function(c){c.classList.remove('show')});
+  $('role-'+b.dataset.role).classList.add('show');
+})});
+document.querySelectorAll('#ladder button').forEach(function(b){
+  if(st.ladder===b.dataset.v)b.classList.add('on');
+  b.addEventListener('click',function(){st.ladder=b.dataset.v;save();document.querySelectorAll('#ladder button').forEach(function(x){x.classList.toggle('on',x===b)})});
+});
+var T=180,tick=null;
+function showT(){var m=Math.floor(T/60),s=T%60;$('tmr').textContent=m+':'+(s<10?'0':'')+s}
+$('tmrBtn').addEventListener('click',function(){
+  var btn=this;
+  if(tick){clearInterval(tick);tick=null;T=180;showT();btn.textContent='התחל';return}
+  btn.textContent='איפוס';
+  tick=setInterval(function(){T--;showT();if(T<=0){clearInterval(tick);tick=null;btn.textContent='התחל';T=180;toast('הזמן נגמר. מי מצא?')}},1000);
+});
+$('copyDoc').addEventListener('click',function(){copy($('doc').value||'')});
+$('copySentence').addEventListener('click',function(){copy($('f_sentence').value||'')});
+function planText(){
+  var v=function(id){return ($(id).value||'').trim()};
+  return 'השנה שלי בדף אחד · מפגש רכזי בוגרים 24.8\n'+
+  'שם: '+v('f_name')+'\nבית ספר: '+v('f_school')+'\n'+
+  'בוגרים במאגר: '+v('f_total')+' · בקשר היום: '+v('f_contact')+'\n'+
+  '3 פעולות ראשונות בספטמבר:\n1. '+v('f_a1')+'\n2. '+v('f_a2')+'\n3. '+v('f_a3')+'\n'+
+  'מה אני צריך/ה מהופה: '+v('f_need')+'\n'+
+  'מה לא יעבוד לי ב-2 ש"ש: '+v('f_q')+'\n'+
+  (v('firstAction')?'(הפעולה הראשונה שלנו לאלון: '+v('firstAction')+')\n':'')+
+  (v('doc')?'שורת התיעוד שלי: '+v('doc'):'');
+}
+$('copyPlan').addEventListener('click',function(){copy(planText())});
+$('sendWa').addEventListener('click',function(){
+  if(!$('f_name').value.trim()||!$('f_school').value.trim()){toast('שם ובית ספר, ואז שולחים');$('f_name').focus();return}
+  window.open('https://wa.me/972585585991?text='+encodeURIComponent(planText()),'_blank');
+  $('planDone').style.display='block';
+});
+var secs=[].slice.call(document.querySelectorAll('section')),links=[].slice.call(document.querySelectorAll('nav a'));
+function hl(){var y=window.scrollY+120,cur=0;secs.forEach(function(s,i){if(s.offsetTop<=y)cur=i});links.forEach(function(a,i){a.classList.toggle('now',i===cur)})}
+window.addEventListener('scroll',hl,{passive:true});hl();
+</script>
+</body>
+</html>

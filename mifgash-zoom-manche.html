@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>רץ-שיט למנחות · מפגש רכזי הבוגרים #1 · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--pink-deep:#C2185B;--pink-soft:#FCE7F2;--yellow:#FFF200;--yellow-deep:#FFD500;--yellow-soft:#FFFCE6;--ink:#141414;--gray:#666;--line:#eee;--bg:#FAF7F9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Rubik',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:80px}
+.topbar{height:8px;background:linear-gradient(90deg,var(--pink),var(--yellow))}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+a{color:var(--pink-deep)}
+header{padding:22px 0 8px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header img{height:44px}
+.tag{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:99px;font-weight:700;font-size:14px;margin-top:12px}
+h1{font-size:28px;font-weight:900;line-height:1.2;margin-top:8px}
+.sub{color:var(--gray);margin-top:6px;line-height:1.6}
+.clock{background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;min-width:260px}
+.clock .big{font-size:34px;font-weight:900;color:var(--yellow);font-variant-numeric:tabular-nums;line-height:1}
+.clock .now{font-size:14px;margin-top:6px;line-height:1.5}
+.clock .now b{color:var(--yellow)}
+.clock .row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.clock button{font:inherit;font-weight:800;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;background:var(--yellow);color:var(--ink);font-size:13px}
+.clock button.o{background:#333;color:#fff}
+section{background:#fff;border-radius:18px;padding:22px;margin-top:22px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+h2{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px}
+h2 span{background:var(--pink);color:#fff;border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:15px}
+h3{font-size:15.5px;font-weight:800;margin:16px 0 6px}
+p,li{line-height:1.65}
+ul{padding-right:20px}
+.hint{color:var(--gray);font-size:14px;margin-top:6px}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14.5px}
+th{background:var(--pink-soft);text-align:right;padding:9px 10px;font-size:13px;color:var(--pink-deep)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55}
+tr.blk td:first-child{white-space:nowrap;font-weight:800;font-variant-numeric:tabular-nums}
+tr.blk td:nth-child(2){white-space:nowrap;color:var(--gray)}
+tr.now td{background:var(--yellow-soft)}
+tr.now td:first-child{box-shadow:inset 4px 0 0 var(--pink)}
+tr.past td{opacity:.55}
+tr.brk td{background:#f5f5f5;font-style:italic}
+.who{display:inline-block;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:800;margin:1px 2px 1px 0}
+.who.a{background:var(--pink);color:#fff}.who.b{background:var(--yellow);color:var(--ink)}.who.l{background:var(--ink);color:#fff}
+.tip{display:block;color:var(--gray);font-size:13px;margin-top:4px}
+.chk label{display:flex;gap:10px;align-items:flex-start;margin:7px 0;cursor:pointer;line-height:1.5}
+.chk input{width:19px;height:19px;margin-top:3px;flex:0 0 auto;accent-color:var(--pink)}
+.msg{background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px;line-height:1.6;position:relative;white-space:pre-line}
+.msg .cp{position:absolute;left:10px;top:10px;font:inherit;font-size:12px;font-weight:800;border:none;background:var(--pink);color:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
+.msg b.t{display:block;color:var(--pink-deep);font-size:12.5px;margin-bottom:4px;padding-left:70px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.secret{background:#141414;color:#fff;border-radius:14px;padding:16px;line-height:1.65;font-size:14.5px;margin-top:10px}
+.secret b{color:var(--yellow)}
+.poll{border:2px solid var(--yellow-deep);background:var(--yellow-soft);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px}
+.poll b{display:block}
+.toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
+@media print{.clock,.cp{display:none}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<header class="wrap">
+  <div>
+    <img src="hopa-logo.png" alt="הופה">
+    <div class="tag">רץ-שיט למנחות · לא לשיתוף מסך</div>
+    <h1>בוגר אחד, שנה אחת · מפגש רכזי הבוגרים #1</h1>
+    <p class="sub">יום שני 24.8.2026 · 11:00–13:00 · זום · דף המשתתפים: <a href="mifgash-zoom.html" target="_blank">mifgash-zoom.html</a></p>
+  </div>
+  <div class="clock">
+    <div class="big" id="clk">--:--</div>
+    <div class="now" id="clkNow">לחצי "התחלנו" ברגע שמתחילים, והדף יסמן איפה אנחנו וכמה זמן נשאר לבלוק.</div>
+    <div class="row"><button id="startBtn">התחלנו</button><button class="o" id="resetBtn">איפוס</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2><span>א</span>מי עושה מה</h2>
+  <p>שתי מנחות, לא אחת. זה מה שמחזיק מפגש זום של שעתיים.</p>
+  <ul>
+    <li><span class="who a">מדברת</span> מובילה את המליאה, מסבירה כל שיטה, מנהלת דיון. (מיטל)</li>
+    <li><span class="who b">מפעילה</span> פותחת חדרים, משגרת סקרים, מדביקה הודעות בצ'אט, עוקבת אחרי הזמן, מקליטה. לא מדברת במליאה חוץ מהוראות טכניות. (בארי / לירון / מי שנבחר)</li>
+    <li><span class="who l">לירון</span> פתיחה של 8 דקות + משפט סיום.</li>
+  </ul>
+  <p class="hint">כלל ברזל: אין בלוק פסיבי מעל 8 דקות. כל 8 דקות משהו קורה, סקר / חדר / צ'אט / קישור.</p>
+</section>
+
+<section>
+  <h2><span>ב</span>לוח זמנים דקה-דקה</h2>
+  <table id="sched">
+    <thead><tr><th>שעה</th><th>משך</th><th>מה קורה</th><th>מי</th></tr></thead>
+    <tbody>
+      <tr class="blk" data-start="0" data-len="10"><td>11:00</td><td>10 דק'</td><td><b>0 · גלריית הרכזים.</b> בכניסה: שיתוף מסך של הפוסטרים מהרישום כמצגת אוטומטית (10 שנ' לפוסטר), מוזיקה. ב-11:03: "כתבו בצ'אט ערך של מישהו אחר שגם שלכם: השם שלי · הערך · של מי". <span class="tip">המפעילה רושמת את הזוגות שנוצרים בצ'אט: זה בסיס חדרי הזוגות של סעיף 6.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט+זוגות</span></td></tr>
+      <tr class="blk" data-start="10" data-len="8"><td>11:10</td><td>8 דק'</td><td><b>לירון: למה אנחנו כאן.</b> הנתון (80% מוכרים לרווחה, עם ליווי 10%), מה השנה מביאה, מה מצפים מהרכזים, ומשפט אחד על "היום נלמד דרך בוגר אחד". מצלמות פתוחות לכולם.</td><td><span class="who l">לירון</span></td></tr>
+      <tr class="blk" data-start="18" data-len="10"><td>11:18</td><td>10 דק'</td><td><b>1 · המעטפה.</b> "פתחו את סעיף 1 בדף. זה אלון." דקה קריאה בשקט. חדרים של 4, 6 דקות, שלוש שאלות (יודעים / לא יודעים / פעולה ראשונה). חזרה: נציג/ה של חדר אחד, דקה. <span class="tip">מה לחלץ בסיכום: כמעט כולם יגידו "מתקשרים אליו". יופי, זו השיטה. ו"מה לא יודעים" תמיד ארוך יותר מ"מה יודעים", וזו הנקודה.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×4</span></td></tr>
+      <tr class="blk" data-start="28" data-len="10"><td>11:28</td><td>10 דק'</td><td><b>2 · רמזור.</b> 3 דקות הסבר על שלושת הצבעים והקצב. <b>סקר זום #1</b>: "איזה צבע אלון עכשיו?" 60 שניות. מציגים תוצאה, לא דנים בה: "זוכרים את המספר. נחזור אליו". 3 דקות: כולם פותחים את הפורטל של בית הספר ומוצאים איפה הכרטיס, הצבע והשיחה. <span class="tip">רוב החדר יבחר ירוק ("הכל בסדר, עובד"). זה מה שאנחנו רוצים שיקרה.</span></td><td><span class="who a">מדברת</span><span class="who b">סקר #1</span></td></tr>
+      <tr class="blk" data-start="38" data-len="17"><td>11:38</td><td>17 דק'</td><td><b>3 · שיחת 4 השאלות.</b> 3 דקות הסבר על הפרוטוקול. חדרים של 3, 10 דקות (7 שיחה + 3 שיחה על השיחה). "בוחרים תפקיד רק בתוך החדר. רק אלון פותח את הכרטיס השחור." חזרה: <b>סקר זום #2</b> "איזה צבע אלון עכשיו?" 60 שניות. מציגים ליד סקר #1. 3 דקות מליאה: "מה גילינו שלא היה בתיק? איזו שאלה שינתה?" <span class="tip">הרגע החשוב במפגש: הצבע זז מירוק לכתום בלי שאף אחד אמר להם. לומר את זה במילים: "הרמזור חי. השיחה היא מה שמזיז אותו".</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×3, סקר #2</span></td></tr>
+      <tr class="blk" data-start="55" data-len="10"><td>11:55</td><td>10 דק'</td><td><b>4 · מאגר המענים.</b> 2 דקות: "אתם מתווכים, לא מומחים". <b>3 דקות טיימר</b> (בדף): מצאו מענה אמיתי לאלון, הדביקו בצ'אט. הראשון/ה מספר/ת בקול איך מצא/ה. 3 דקות: המדברת מדגימה חיפוש בשער המענים / hopa.org.il בשיתוף מסך. <span class="tip">לשים לב מי לא הדביק כלום, אלה שצריכים הדרכת מערכת בספטמבר.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
+      <tr class="blk" data-start="65" data-len="10"><td>12:05</td><td>10 דק'</td><td><b>5 · מדרג + תיעוד.</b> 3 דקות: ארבע המדרגות. "איפה אלון?" ידיים / ריאקשנים. 4 דקות: כותבים שורת תיעוד ומדביקים בצ'אט. המדברת מקריאה 3 ואומרת מה טוב ומה חסר (תאריך? מה סוכם? צבע?). <span class="tip">אלון = בין יידוע לתיווך: שולחים מידע, ואם לא נרשם תוך שבועיים, עולים לתיווך. זה מלמד שהמדרג דינמי כמו הרמזור.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
+      <tr class="blk brk" data-start="75" data-len="10"><td>12:15</td><td>10 דק'</td><td>הפסקה. מצלמות כבויות, מוזיקה, טיימר על המסך. המפעילה מכינה את חדרי הזוגות מהגלריה.</td><td><span class="who b">חדרי זוגות</span></td></tr>
+      <tr class="blk" data-start="85" data-len="23"><td>12:25</td><td>23 דק'</td><td><b>6 · השנה שלי בדף אחד.</b> 2 דקות: עוגני השנה (על המסך). 8 דקות לבד בסעיף 6 בדף. 8 דקות בזוגות מהגלריה: "מה 3 הפעולות הראשונות שלך בספטמבר?" חזרה, 5 דקות: 4 אנשים אומרים פעולה אחת. "לחצו שליחה בוואטסאפ, זה מגיע אלינו". <span class="tip">השאלה הפתוחה בטופס ("מה לא יעבוד ב-2 ש"ש") היא איסוף משוב על מסמך הליבה, שעדיין טיוטה. לקרוא הכול לפני השיחות האישיות.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרי זוגות</span></td></tr>
+      <tr class="blk" data-start="108" data-len="12"><td>12:48</td><td>12 דק'</td><td><b>7 · סגירה.</b> "משפט אחד שאני לוקח/ת" בצ'אט. המדברת מקריאה 5. לירון: משפט סיום. מצלמות פתוחות, צילום מסך קבוצתי (המפעילה). מה הלאה: פורום, שיחות אישיות בספטמבר, מפגש הבא. סיום 13:00 בדיוק.</td><td><span class="who a">מדברת</span><span class="who l">לירון</span><span class="who b">צילום</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span>ג</span>סקרי הזום להגדרה מראש</h2>
+  <p class="hint">להגדיר בזום לפני המפגש (Polls), כדי לשגר בלחיצה. אותו נוסח בדיוק בשני הסקרים הראשונים, זה מכוון.</p>
+  <div class="poll"><b>סקר #1 (11:31)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק, עוקבים מרחוק / 🟠 כתום, עוקבים מקרוב / 🔴 אדום, נכנסים לפעולה</div>
+  <div class="poll"><b>סקר #2 (11:51)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק / 🟠 כתום / 🔴 אדום</div>
+  <div class="poll"><b>סקר #3, רשות (12:50)</b> שאלה: כמה מוכן/ה אני לפתוח את השנה עם הבוגרים שלי? · תשובות: 1 / 2 / 3 / 4 / 5</div>
+</section>
+
+<section>
+  <h2><span>ד</span>הודעות מוכנות לצ'אט</h2>
+  <p class="hint">המפעילה מדביקה בזמן הנכון. לחיצה על "העתקה".</p>
+  <div class="msg"><b class="t">11:00 · עם הכניסה</b><button class="cp">העתקה</button>ברוכים הבאים 👋 פתחו את דף המפגש בטלפון או במסך שני, הוא ילווה אותנו לאורך כל השעתיים:
+https://meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html</div>
+  <div class="msg"><b class="t">11:03 · גלריה</b><button class="cp">העתקה</button>מצאו בפוסטרים ערך אחד של מישהו אחר שהוא גם שלכם, וכתבו כאן: השם שלי · הערך · של מי 🙂</div>
+  <div class="msg"><b class="t">11:19 · המעטפה</b><button class="cp">העתקה</button>סעיף 1 בדף: התיק של אלון. בחדרים (6 דקות): מה אנחנו יודעים? מה לא יודעים? מה הפעולה הראשונה מחר בבוקר?</div>
+  <div class="msg"><b class="t">11:31 · רמזור</b><button class="cp">העתקה</button>סעיף 2: איזה צבע אלון עכשיו? סמנו בדף וענו על הסקר. אחר כך: פתחו את הפורטל של בית הספר שלכם ומצאו איפה יושב הכרטיס של בוגר.</div>
+  <div class="msg"><b class="t">11:41 · שיחה</b><button class="cp">העתקה</button>סעיף 3: חדרים של 3, 10 דקות. בוחרים תפקיד רק בתוך החדר: אלון / הרכז/ת / הצופה. רק מי שהוא אלון פותח את הכרטיס השחור 🤫 7 דקות שיחה + 3 דקות שיחה על השיחה.</div>
+  <div class="msg"><b class="t">11:57 · מענה</b><button class="cp">העתקה</button>סעיף 4: 3 דקות, לבד. מצאו לאלון מענה אמיתי אחד והדביקו כאן את הקישור או השם. שער המענים: https://meytalp-dev.github.io/hopa-nihul/manim-bogrim.html · המאגר המלא: https://hopa.org.il</div>
+  <div class="msg"><b class="t">12:08 · תיעוד</b><button class="cp">העתקה</button>סעיף 5: כתבו את שורת התיעוד של השיחה עם אלון (תאריך · נושאים · צרכים · מה סוכם · צבע) והדביקו כאן. שתי שורות, לא יותר.</div>
+  <div class="msg"><b class="t">12:15 · הפסקה</b><button class="cp">העתקה</button>הפסקה של 10 דקות ☕ חוזרים ב-12:25 בדיוק, ואז עוברים מאלון אליכם.</div>
+  <div class="msg"><b class="t">12:27 · השנה שלי</b><button class="cp">העתקה</button>סעיף 6: השנה שלי בדף אחד. 8 דקות לבד, ואז חדרי זוגות. בסוף לחצו "שליחה להופה בוואטסאפ", זה מגיע אלינו והוא הבסיס לשיחה האישית איתכם בספטמבר.</div>
+  <div class="msg"><b class="t">12:48 · סגירה</b><button class="cp">העתקה</button>משפט אחד שאתם לוקחים מהיום 👇 ואז מצלמות פתוחות לצילום קבוצתי 📸</div>
+</section>
+
+<section>
+  <h2><span>ה</span>מה המנחות צריכות לדעת על אלון</h2>
+  <div class="two">
+    <div>
+      <h3>הסודות (מה שרק "אלון" בחדר יודע)</h3>
+      <div class="secret">
+        • רוצה <b>קורס טכנאי חשמל / מכונאות לפני הגיוס</b>, "אין כסף ולא יודע איך".<br>
+        • נותן לאמא חלק מהמשכורת, היא לחוצה. מספר רק אם שואלים על הבית.<br>
+        • לא ידע על השלמת בגרות חינם / מכינות קדם-צבאיות / מלגה דרך הופה.<br>
+        • המתמטיקה מביכה, מנסה לעבור נושא.<br>
+        • עונה קצר. נפתח רק לשאלה ישירה על כסף / עד פברואר / הבית.
+      </div>
+    </div>
+    <div>
+      <h3>הצבעים הנכונים (לא אומרים מראש)</h3>
+      <ul>
+        <li><b>לפני השיחה:</b> רוב החדר יגיד ירוק. אפשר להגן גם על כתום (בוגר טרי, לפני גיוס = צומת). שניהם לגיטימיים.</li>
+        <li><b>אחרי השיחה:</b> כתום. יש צומת (גיוס בפברואר) ויש צורך (כסף + מידע). לא אדום: אין מצוקה חריפה, והוא עובד ומתפקד.</li>
+        <li><b>מדרג:</b> יידוע → תיווך. שולחים מידע על מלגה/השלמת בגרות; אם לא נרשם תוך שבועיים, שיחה משותפת לגורם.</li>
+      </ul>
+      <h3>שורת תיעוד לדוגמה (להקראה אם אין טובה בצ'אט)</h3>
+      <p style="font-size:14px;background:var(--bg);border-radius:10px;padding:10px 12px">24.8 · שיחת מעקב · אלון · רוצה קורס טכנאי לפני גיוס בפב'. חסם: כסף + מידע. חסר 3 יח' מתמ'. סוכם: שולחת פרטי מלגה + השלמת בגרות עד יום ה', שיחה חוזרת בעוד שבועיים. צבע: כתום.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span>ו</span>הכנות לפני המפגש</h2>
+  <div class="two">
+    <div class="chk">
+      <h3>עד יום חמישי 20.8</h3>
+      <label><input type="checkbox">כל הפוסטרים מהרישום מסודרים במצגת אחת (תמונה לשקף), מעבר אוטומטי 10 שניות</label>
+      <label><input type="checkbox">3 סקרים מוגדרים בזום (סעיף ג)</label>
+      <label><input type="checkbox">Breakout rooms מופעל בהגדרות הזום, המפעילה co-host</label>
+      <label><input type="checkbox">קישור לדף המפגש נשלח בפורום הרכזים יום לפני, עם בקשה: "לפתוח בטלפון, המחשב לזום"</label>
+      <label><input type="checkbox">קישורי הפורטל האישיים לכל בית ספר מוכנים אצל המפעילה (מי ששכח מקבל בפרטי בזמן סעיף 2)</label>
+      <label><input type="checkbox">בארי מוכן להיות איש הקשר שנאמר בסעיף 6</label>
+      <label><input type="checkbox">אופציונלי אבל חזק: בוגר/ת אמיתי/ת ל-10 דקות (במקום או לפני המעטפה). מהטלפון, בלי נסיעה</label>
+    </div>
+    <div class="chk">
+      <h3>ביום המפגש</h3>
+      <label><input type="checkbox">10:40 המנחות בזום, בודקות שיתוף מסך של המצגת ושל דף המשתתפים</label>
+      <label><input type="checkbox">הקלטה פועלת מ-11:00</label>
+      <label><input type="checkbox">דף זה פתוח אצל המפעילה עם "התחלנו" ב-11:00</label>
+      <label><input type="checkbox">רשימת הזוגות מהגלריה נרשמת ב-11:05 (המפעילה)</label>
+      <label><input type="checkbox">חדרי הזוגות מוגדרים ידנית בזמן ההפסקה</label>
+      <label><input type="checkbox">צילום מסך קבוצתי ב-12:55</label>
+      <h3>אחרי</h3>
+      <label><input type="checkbox">כל הודעות "השנה שלי" שהגיעו לוואטסאפ של הופה נאספות לגיליון אחד</label>
+      <label><input type="checkbox">תודה + הקלטה + הקישור לדף נשלחים לפורום באותו יום</label>
+      <label><input type="checkbox">שיחות אישיות עם כל רכז/ת נקבעות לספטמבר, על בסיס מה ששלחו</label>
+      <label><input type="checkbox">התשובות ל"מה לא יעבוד ב-2 ש"ש" חוזרות לדיון על מסמך הליבה עם לירון ויעל</label>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · רץ-שיט פנימי למנחות</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(id){return document.getElementById(id)};
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1600)}
+document.querySelectorAll('.msg .cp').forEach(function(b){b.addEventListener('click',function(){
+  var box=b.parentNode.cloneNode(true);box.querySelector('.cp').remove();box.querySelector('b.t').remove();
+  var t=box.textContent.trim();
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast('הועתק')});
+  else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('הועתק')}
+})});
+var KEY='mifgashZoomStart';
+var rows=[].slice.call(document.querySelectorAll('tr.blk'));
+function pad(n){return (n<10?'0':'')+n}
+function tickClock(){
+  var s=parseInt(localStorage.getItem(KEY)||'0',10);
+  var now=new Date();
+  $('clk').textContent=pad(now.getHours())+':'+pad(now.getMinutes());
+  if(!s){rows.forEach(function(r){r.classList.remove('now','past')});return}
+  var el=Math.floor((now.getTime()-s)/60000);
+  var cur=null;
+  rows.forEach(function(r){var st=+r.dataset.start,ln=+r.dataset.len;
+    r.classList.toggle('past',el>=st+ln);
+    var isNow=el>=st&&el<st+ln;r.classList.toggle('now',isNow);if(isNow)cur=r});
+  if(cur){var left=(+cur.dataset.start+ +cur.dataset.len)-el;
+    var name=cur.cells[2].querySelector('b');name=name?name.textContent:'';
+    $('clkNow').innerHTML='עכשיו: <b>'+name+'</b><br>נשארו <b>'+left+' דק\'</b> לבלוק · דקה '+el+' מתוך 120'}
+  else if(el<0)$('clkNow').textContent='עוד לא התחלנו';
+  else $('clkNow').innerHTML='<b>סיימנו.</b> '+el+' דקות מההתחלה';
+}
+$('startBtn').addEventListener('click',function(){localStorage.setItem(KEY,String(Date.now()));tickClock();toast('התחלנו. בהצלחה!')});
+$('resetBtn').addEventListener('click',function(){localStorage.removeItem(KEY);tickClock()});
+tickClock();setInterval(tickClock,15000);
+</script>
+</body>
+</html>
