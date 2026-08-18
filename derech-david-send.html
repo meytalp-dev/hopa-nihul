@@ -55,6 +55,8 @@
   .tok{background:var(--bg);border-radius:99px;padding:3px 10px;font-size:12px;color:var(--muted)}
   .tok b{color:var(--ink);font-family:monospace}
 
+  .card.direct{border:2px dashed #cfe9d8}
+  .card.direct.on{border:2px solid #b8ecc9;background:#f3fcf6}
   .stats{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
   .st{background:#fff;border-radius:14px;padding:8px 12px;font-size:13px;color:var(--muted);box-shadow:var(--shadow);border:2px solid transparent}
   .st b{display:block;color:var(--ink);font-size:20px;font-weight:800;line-height:1.1}
@@ -116,6 +118,48 @@ const DEFAULT_MSG = `היי {שם} 👋 זו {רכז} מהופה.
 
 /* ===================== מצב ===================== */
 let DATA = { students: [], msg: DEFAULT_MSG, rakez: '', rakezTel: '', school: '' };
+
+/* ---- שליחה ישירה דרך הוואטסאפ המחובר (Green API דרך ה-Apps Script של איסוף המענים) ----
+   אותם מפתחות localStorage כמו hodaot.html / דף הניהול — חיבור אחד לכל הדפים. הטוקן של Green לא נמצא כאן; רק כתובת ה-/exec + הסיסמה. */
+const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
+const WA = { url: localStorage.getItem(MLS.url)||'', secret: localStorage.getItem(MLS.secret)||'', busy:false, stop:false };
+let jsonpN = 0;
+function waJsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    if(!WA.url){ rej(new Error('לא מחובר')); return; }
+    const cb='wacb_'+(jsonpN++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{cleanup(); rej(new Error('timeout'));}, tmo||45000);
+    function cleanup(){ try{delete window[cb]}catch(e){window[cb]=undefined} s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{cleanup(); res(d);};
+    s.src = WA.url + (WA.url.includes('?')?'&':'?') + new URLSearchParams(Object.assign({}, params, {secret:WA.secret, callback:cb})).toString();
+    s.onerror=()=>{cleanup(); rej(new Error('network'));};
+    document.body.appendChild(s);
+  });
+}
+async function sendDirect(s){
+  const r = await waJsonp({ action:'send', chatIds: waNum(s.phone)+'@c.us', message: msgFor(s) }, 60000);
+  if(!r || !r.ok || !r.sent) throw new Error((r&&r.error)||'לא נשלח');
+  s.sentAt = new Date().toISOString(); s.sentVia = 'direct';
+}
+async function sendAllDirect(){
+  const list = DATA.students.filter(s=>statusOf(s)==='new');
+  if(!list.length){ toast('אין למי לשלוח — כולם קיבלו'); return; }
+  if(!confirm(`לשלוח עכשיו ${list.length} הודעות אישיות מהוואטסאפ המחובר?\n\nההודעה תצא בשם: ${DATA.rakez||'הצוות'}`)) return;
+  WA.busy=true; WA.stop=false; let ok=0, fail=[];
+  for(let i=0;i<list.length;i++){
+    if(WA.stop) break;
+    const s=list[i]; setProgress(`שולח ל${s.name}… (${i+1}/${list.length})`);
+    try{ await sendDirect(s); ok++; save(true); }catch(e){ fail.push(s.name+' ('+e.message+')'); }
+    if(i<list.length-1) await new Promise(r=>setTimeout(r,1800));
+  }
+  WA.busy=false; render();
+  toast(`נשלחו ${ok} מתוך ${list.length}` + (fail.length?' · נכשלו: '+fail.join(', '):''));
+}
+function setProgress(t){ const el=document.getElementById('waProg'); if(el) el.textContent=t; }
+async function testConnection(){
+  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret); toast('מחובר ✓'); render(); } else throw new Error((r&&r.error)||'err'); }
+  catch(e){ toast('החיבור נכשל: '+e.message); }
+}
 let SUBMITTED = {};   // phone(digits) -> {name, ts}
 let filter = 'all', query = '';
 const app = document.getElementById('app');
@@ -223,9 +267,24 @@ function render(){
     <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${counts.sent}</b>נשלח, מחכים למילוי</button>
     <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${counts.done}</b>✓ מילאו את השאלון</button>
   </div>
+  <div class="card direct ${WA.url?'on':''}">
+    <h2>⚡ שליחה ישירה <small>${WA.url ? 'מחובר לוואטסאפ של הופה — בלי לפתוח חלון לכל אחד' : 'שליחה אוטומטית מהוואטסאפ המחובר, בלי לפתוח חלון לכל תלמיד'}</small></h2>
+    ${WA.url ? `
+      <div class="toolbar" style="margin-top:6px">
+        <button class="btn primary" id="sendAll" ${WA.busy||!counts.new?'disabled':''}>⚡ שלח לכל מי שעוד לא קיבל (${counts.new})</button>
+        ${WA.busy ? '<button class="btn outline" id="stopAll">⏹ עצור</button>' : ''}
+        <span class="hint" id="waProg" style="margin:0"></span>
+        <button class="btn outline sm" id="disconnect" title="ניתוק החיבור במכשיר הזה" style="margin-inline-start:auto">ניתוק</button>
+      </div>
+      <p class="hint" style="margin:8px 0 0">ההודעות יוצאות מהמספר המחובר (הוואטסאפ של מיטל) — כדאי ששם הרכז/ת בהודעה יתאים. יש השהיה של כ-2 שניות בין הודעה להודעה.</p>`
+    : `
+      <p class="hint">אותו חיבור כמו בדף <a href="hodaot.html" target="_blank" rel="noopener">שליחת הודעות לקבוצות</a> — אם כבר התחברת שם במכשיר הזה, זה מתחבר לבד. אחרת: הדביקי את כתובת ה-Web App (/exec) של סקריפט איסוף המענים ואת סיסמת השליחה.</p>
+      <div class="row"><input class="field" id="waUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(WA.url)}"><input class="field" id="waSecret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="${esc(WA.secret)}"></div>
+      <div class="toolbar"><button class="btn primary" id="waConnect">התחברות</button><span class="hint" style="margin:0">בלי חיבור — הכפתורים הירוקים עדיין פותחים וואטסאפ רגיל לכל תלמיד.</span></div>`}
+  </div>
   <div class="toolbar">
     <input class="field" id="q" placeholder="חיפוש שם / טלפון…" value="${esc(query)}">
-    ${nextNew ? `<a class="btn wa" id="next" href="${waHref(nextNew)}" target="_blank" rel="noopener" data-id="${esc(nextNew.id)}">💬 שלח לבא בתור: ${esc(nextNew.name.split(' ')[0])}</a>` : ''}
+    ${nextNew && !WA.url ? `<a class="btn wa" id="next" href="${waHref(nextNew)}" target="_blank" rel="noopener" data-id="${esc(nextNew.id)}">💬 שלח לבא בתור: ${esc(nextNew.name.split(' ')[0])}</a>` : ''}
     <a class="btn outline" href="${ADMIN_URL}" target="_blank" rel="noopener">📥 לתשובות שהתקבלו</a>
   </div>
 
@@ -246,12 +305,17 @@ function render(){
   document.getElementById('bulkAdd').onclick = addBulk;
   app.querySelectorAll('.st').forEach(b=>b.onclick=()=>{ filter=b.dataset.f; render(); });
   document.getElementById('q').oninput = e => { query = e.target.value.trim(); render(); const el=document.getElementById('q'); el.focus(); el.setSelectionRange(el.value.length, el.value.length); };
-  app.querySelectorAll('a.wa[data-id]').forEach(a=>a.addEventListener('click', ()=>{ markSent(a.dataset.id); }));
+  app.querySelectorAll('a[data-id]').forEach(a=>a.addEventListener('click', ()=>{ markSent(a.dataset.id); }));
+  const sa=document.getElementById('sendAll'); if(sa) sa.onclick = ()=>{ render(); sendAllDirect(); };
+  const so=document.getElementById('stopAll'); if(so) so.onclick = ()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית…'); };
+  const wc=document.getElementById('waConnect'); if(wc) wc.onclick = ()=>{ WA.url=document.getElementById('waUrl').value.trim(); WA.secret=document.getElementById('waSecret').value.trim(); if(!WA.url||!WA.secret){ toast('צריך כתובת וסיסמה'); return; } testConnection(); };
+  const dc=document.getElementById('disconnect'); if(dc) dc.onclick = ()=>{ if(confirm('לנתק את החיבור במכשיר הזה? (הדף hodaot.html ידרוש חיבור מחדש)')){ localStorage.removeItem(MLS.url); localStorage.removeItem(MLS.secret); WA.url=''; WA.secret=''; render(); } };
+  app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const s=DATA.students.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(s); save(true); toast('נשלח ל'+s.name+' ✓'); render(); }catch(e){ b.disabled=false; b.textContent='⚡ שלח'; toast('לא נשלח: '+e.message); } });
   app.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.del); if(confirm('להסיר את '+s.name+' מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
   app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.unsend); s.sentAt=''; save(); render(); });
   app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(msgFor(s)).then(()=>toast('ההודעה הועתקה')); });
 }
-function refreshLinks(){ app.querySelectorAll('a.wa[data-id]').forEach(a=>{ const s=DATA.students.find(x=>x.id===a.dataset.id); if(s) a.href=waHref(s); }); }
+function refreshLinks(){ app.querySelectorAll('a[data-id]').forEach(a=>{ const s=DATA.students.find(x=>x.id===a.dataset.id); if(s) a.href=waHref(s); }); }
 function rowHtml(s){
   const st = statusOf(s);
   const sub = SUBMITTED[digits(s.phone)];
@@ -259,7 +323,7 @@ function rowHtml(s){
   return `<div class="stu ${st}">
     <div class="who"><b>${esc(s.name)}</b> ${tag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span></div>
     <div class="acts">
-      ${st==='done' ? '' : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`}
+      ${st==='done' ? '' : (WA.url ? `<button class="btn wa sm ${st==='sent'?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${st==='sent'?'שלח שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}" title="פתיחה בוואטסאפ רגיל">💬</a>` : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`)}
       <button class="btn outline sm" data-copy="${esc(s.id)}" title="העתק הודעה">📋</button>
       ${st==='sent' ? `<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון נשלח">↩</button>` : ''}
       <button class="btn sm danger" data-del="${esc(s.id)}" title="הסר">✕</button>
