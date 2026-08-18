@@ -215,7 +215,7 @@ const MEETING='יום שני 24.8 בשעה 11:00';
 // c = רכז/ת (מפורום רכזי הבוגרים / המונדיי), ph = טלפון של הרכז/ת אם ידוע; fb = איש קשר חלופי מהמונדיי (מנהל/ת).
 // grp = קבוצת הצוות/הנהלה בוואטסאפ (מהמונדיי). inForm=false → בית הספר לא מופיע כלל ברשימת הטופס.
 const SCHOOLS=[
- {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה'], c:'יעקב גרונספלד', role:'רכז חברתי ובוגרים', ph:'', fb:{n:'רווית גל',r:'מנהלת',ph:'0503993021'}, grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
+ {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה'], c:'יעקב גרונספלד', role:'רכז חברתי ובוגרים', ph:'0546995254', fb:{n:'רווית גל',r:'מנהלת',ph:'0503993021'}, grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
  {id:'zurbarak', sc:'אורט צור ברק', keys:['צור ברק'], c:'טלי יונה', role:'רכזת בוגרים', ph:'0548080808', fb:{n:'סיגל כהן',r:'מנהלת',ph:'0545303604'}, grp:'https://chat.whatsapp.com/I5pxElQRVOa1k9dxLOo5Zz'},
  {id:'motzkin', sc:'עתיד שמיים קריית מוצקין', keys:['מוצקין'], alias:['אביחי'], c:'אביחי חריר', role:'רכז בוגרים', ph:'0503139150', grp:'https://chat.whatsapp.com/EpQOaxiQsrW2vatlYTqLn7'},
  {id:'akko', sc:'אורט מרום עכו', keys:['מרום עכו','עכו'], c:'טוהר', role:'רכזת בוגרים', ph:'0508282032', grp:'https://chat.whatsapp.com/Hc5ElMYaDHcGDoSCEVDJjf'},
@@ -229,8 +229,8 @@ const SCHOOLS=[
  {id:'nevemidbar', sc:'דרור נווה מדבר', keys:['נווה מדבר'], c:'תמרה גילאוני', role:'רכזת בוגרים', ph:'0504222996', fb:{n:'עבד אבו אלקיעאן',r:'מנהל',ph:'0525873735'}, grp:'https://chat.whatsapp.com/H2jSmUeAiwxI8CSwD8OChP'},
  {id:'sakhnin', sc:'טכנולוגי אלאמאני סחנין', keys:['סחנין'], c:'סוזן', role:'רכזת בוגרים', ph:'0508784131', fb:{n:'מוחמד גזאל',r:'מנהל',ph:'0507527765'}, grp:'https://chat.whatsapp.com/DkhOjtuWOMqDcSh9VnZLKQ'},
  {id:'hoshen', sc:'תיכון חושן (ירושלים)', keys:['חושן'], c:'', role:'', ph:'', fb:{n:'שרי שמבורסקי',r:'מנהלת',ph:'0523936126'}, grp:'https://chat.whatsapp.com/JPwDMBWet1lJRXavGqP7BM', noCoord:true},
- {id:'lakiya', sc:'טכנולוגי לקייה', keys:['לקייה','לקיה'], c:'רניה', role:'רכזת בוגרים', ph:'', fb:{n:'איש הקשר במונדיי (רניה?)',r:'לאמת',ph:'0504708424'}, grp:'https://chat.whatsapp.com/JNsS0xRkYxICPrcrJZZbZO'},
- {id:'julis', sc:"יוצר עתיד בנות ג'וליס", keys:["ג'וליס",'ג׳וליס','גוליס'], c:'בהייה מולא', role:'רכזת בוגרים', ph:'', fb:{n:'שאדיה נבואני',r:'מנהלת',ph:'0542454243'}, grp:'https://chat.whatsapp.com/HfV73OsEnYx7GQ17JM96ov'},
+ {id:'lakiya', sc:'טכנולוגי לקייה', keys:['לקייה','לקיה'], c:'רניה', role:'רכזת בוגרים', ph:'0504708424', fb:{n:'עלי אלחואגרה',r:'מנהל',ph:''}, grp:'https://chat.whatsapp.com/JNsS0xRkYxICPrcrJZZbZO'},
+ {id:'julis', sc:"יוצר עתיד בנות ג'וליס", keys:["ג'וליס",'ג׳וליס','גוליס'], c:'בהייה מולא', role:'רכזת בוגרים', ph:'0546699072', fb:{n:'שאדיה נבואני',r:'מנהלת',ph:'0542454243'}, grp:'https://chat.whatsapp.com/HfV73OsEnYx7GQ17JM96ov'},
  {id:'birmaksur', sc:'עתיד אבדאע ביר אלמכסור', keys:['אלמכסור','אבדאע'], c:'', role:'', ph:'', fb:{n:'ופיק אגבאריה',r:'מנהל',ph:'0509551109'}, noCoord:true},
  {id:'siach', sc:"תיכון שיח' דנון עמקה", keys:['שיח','עמקה'], c:'טליה ברנע', role:'רכזת בוגרים', ph:'0548069898', grp:'https://chat.whatsapp.com/IhToin5XAxuFo0RkL1Yoqs'},
  {id:'palmachim', sc:'יוצר עתיד פלמחים', keys:['פלמחים'], c:'שירן עוגן', role:'רכזת בוגרים', ph:'0549789029', fb:{n:'ד"ר ורד אזולאי יהב',r:'מנהלת',ph:'0526631135'}},
@@ -242,7 +242,7 @@ const SCHOOLS=[
  // לא מופיעים ברשימת הטופס — כנראה נשמטו; מסומנים בדף
  {id:'yarka', sc:"תיכון ח'טוואת ירכא אבו סנאן", keys:['ירכא','טוואת','חטוואת'], alias:['רשא','ראשה'], c:'רשא סייד אחמד', role:'רכזת בוגרים', ph:'0505455077', fb:{n:'נסרין נבואני',r:'מנהלת',ph:'0508711450'}, grp:'https://chat.whatsapp.com/BSHBsimSYE2C358EjQ41O4', inForm:false},
  {id:'mitzpe', sc:'התיכון החברתי מצפה רמון', keys:['מצפה רמון','דרור רמון'], alias:['ענבל'], c:'ענבלי לוי', role:'רכזת חברתית ובוגרים', ph:'', fb:{n:'תמר צביבך',r:'מנהלת',ph:'0546738573'}, grp:'https://chat.whatsapp.com/Eqy8J9J0kYrK9Mn8pkC4hX', inForm:false},
- {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], c:'רינה רביד', role:'רכזת בוגרים', ph:'', fb:{n:'עינת וינברן',r:'מנהלת',ph:'0546735214'}, inForm:false},
+ {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], c:'רינה שריד', role:'רכזת בוגרים', ph:'0546738232', fb:{n:'עינת וינברן',r:'מנהלת',ph:'0546735214'}, inForm:false},
 ];
 
 // תמונת מצב מהגיליון (17.8.2026) — משמשת רק אם המשיכה החיה נכשלת
