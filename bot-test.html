@@ -95,7 +95,9 @@ section{margin:30px 0}
 
 /* who tabs */
 .who{display:flex;gap:6px;background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content;max-width:100%;margin:6px 0 14px}
-.who button{border:0;background:transparent;border-radius:999px;padding:9px 20px;font-size:15px;font-weight:800;color:var(--ink-2)}
+.who{background:#fff;align-items:center;flex-wrap:wrap}
+.who .wl{font-size:14px;font-weight:800;color:var(--muted);padding:0 8px 0 12px}
+.who button{border:0;background:transparent;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:800;color:var(--ink-2)}
 .who button.on{background:var(--pink);color:#fff;box-shadow:0 2px 10px rgba(232,52,138,.3)}
 .who button.on.b{background:var(--blue)}
 .who button.on.a{background:var(--ink)}
@@ -184,9 +186,15 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
         <img src="hopa-logo.png" alt="הופה">
         <span class="org"><b>הופה</b><span>hopa.org.il · פתאום הכל נראה אפשרי</span></span>
       </a>
-      <span class="datechip">דף בדיקות · אוגוסט 2026 · תשפ"ז</span>
+      <span class="datechip">דף בדיקות · אוגוסט 2026 · תשפ"ז · v2</span>
     </div>
     <h1>דף בדיקות לבוט של הופה</h1>
+    <div class="who" id="who" style="margin:12px 0 16px">
+      <span class="wl">מי בודק/ת עכשיו?</span>
+      <button data-who="meital">מיטל</button>
+      <button data-who="bari" class="b">בארי</button>
+      <button data-who="all" class="a">הכול</button>
+    </div>
     <p class="sub">תרחישים מוכנים לבדיקת בוט הוואטסאפ והצ'אט באתר: מה לשלוח, מה לצפות, ואיפה לתעד את התשובה. בסוף מייצרים סיכום ושולחים למיטל.</p>
     <div class="botline">
       <a class="pill wa" href="https://api.whatsapp.com/send/?phone=972585585991&text=%D7%94%D7%99%D7%99+%D7%94%D7%95%D7%A4%D7%94" target="_blank" rel="noopener">
@@ -236,12 +244,7 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
 <!-- 2 -->
 <section id="who">
   <div class="sec-head"><span class="sec-num">2</span><h2>מי בודק</h2></div>
-  <p style="margin:0 0 6px;color:var(--ink-2);font-size:15px">החלוקה: <b>מיטל</b> — הליבה והדברים הרגישים (מכירה את העמותה ויודעת מה אמור להיות במאגר). <b>בארי</b> — הזירה של רכז הבוגרים והשימוש בשטח. בחרו את הטאב שלכם — הדף יראה רק את התרחישים שלכם, והסיכום יתייחס רק אליהם.</p>
-  <div class="who" id="who">
-    <button data-who="meital">אני מיטל</button>
-    <button data-who="bari" class="b">אני בארי</button>
-    <button data-who="all" class="a">הכול</button>
-  </div>
+  <p style="margin:0 0 6px;color:var(--ink-2);font-size:15px">החלוקה: <b>מיטל</b> — הליבה והדברים הרגישים (מכירה את העמותה ויודעת מה אמור להיות במאגר). <b>בארי</b> — הזירה של רכז הבוגרים והשימוש בשטח. הטאבים למעלה (מתחת לכותרת) מחליפים בין החלקים — הדף מראה רק את התרחישים של מי שנבחר, והסיכום מתייחס רק אליהם.</p>
   <div class="split" id="split"></div>
   <div class="card" style="margin-top:12px">
     <div class="tester">
