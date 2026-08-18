@@ -169,7 +169,9 @@
       <div class="toolbar">
         <button class="btn dark" id="sendAll" disabled>⚡ שליחה מרוכזת לכל מי שיש טלפון ועוד לא סומן "נשלח"</button>
         <button class="btn ghost" id="sendForum" disabled>📣 תזכורת כללית לפורום רכזי הבוגרים</button>
+        <button class="btn ghost" id="pullContacts" disabled>📇 משיכת מספרי הרכזים מאנשי הקשר בוואטסאפ</button>
       </div>
+      <div id="contactsPanel" style="display:none;margin-top:10px"></div>
       <div id="bulkStat" class="hint" style="margin-top:8px"></div>
     </div>
   </section>
@@ -213,34 +215,34 @@ const MEETING='יום שני 24.8 בשעה 11:00';
 // c = רכז/ת (מפורום רכזי הבוגרים / המונדיי), ph = טלפון של הרכז/ת אם ידוע; fb = איש קשר חלופי מהמונדיי (מנהל/ת).
 // grp = קבוצת הצוות/הנהלה בוואטסאפ (מהמונדיי). inForm=false → בית הספר לא מופיע כלל ברשימת הטופס.
 const SCHOOLS=[
- {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה'], c:'יעקב גרונספלד', role:'רכז בוגרים', ph:'', fb:{n:'רווית גל',r:'מנהלת',ph:'0503993021'}, grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
+ {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה'], c:'יעקב גרונספלד', role:'רכז חברתי ובוגרים', ph:'', fb:{n:'רווית גל',r:'מנהלת',ph:'0503993021'}, grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
  {id:'zurbarak', sc:'אורט צור ברק', keys:['צור ברק'], c:'טלי יונה', role:'רכזת בוגרים', ph:'0548080808', fb:{n:'סיגל כהן',r:'מנהלת',ph:'0545303604'}, grp:'https://chat.whatsapp.com/I5pxElQRVOa1k9dxLOo5Zz'},
  {id:'motzkin', sc:'עתיד שמיים קריית מוצקין', keys:['מוצקין'], alias:['אביחי'], c:'אביחי חריר', role:'רכז בוגרים', ph:'0503139150', grp:'https://chat.whatsapp.com/EpQOaxiQsrW2vatlYTqLn7'},
- {id:'akko', sc:'אורט מרום עכו', keys:['מרום עכו','עכו'], c:'טוהר', role:'רכזת בוגרים', ph:'', grp:'https://chat.whatsapp.com/Hc5ElMYaDHcGDoSCEVDJjf'},
- {id:'beitshean', sc:'אורט מגשימים בית שאן', keys:['בית שאן'], c:'חן', role:'רכזת מניעת נשירה ובוגרים', ph:'', grp:'https://chat.whatsapp.com/CLsLCDhmjYD4pVsV8cCagM'},
- {id:'ashkelon', sc:'אורט אדיבי אשקלון', keys:['אשקלון'], c:'סיגל דדון', role:'רכזת בוגרים', ph:'', grp:'https://chat.whatsapp.com/I0MoDIeeSoQE1frFGOTSKB'},
- {id:'carmel', sc:'אורט כרמל חיפה', keys:['כרמל'], c:'חנין / מריה דיאב', role:'', ph:'0532417145', fb:{n:'וליד דאו',r:'מנהל',ph:'0544597762'}, grp:'https://chat.whatsapp.com/GRD38vb9sTUC9jSBjkIpTc'},
+ {id:'akko', sc:'אורט מרום עכו', keys:['מרום עכו','עכו'], c:'טוהר', role:'רכזת בוגרים', ph:'0508282032', grp:'https://chat.whatsapp.com/Hc5ElMYaDHcGDoSCEVDJjf'},
+ {id:'beitshean', sc:'אורט מגשימים בית שאן', keys:['בית שאן'], c:'חן', role:'רכזת מניעת נשירה ובוגרים', ph:'0526851485', grp:'https://chat.whatsapp.com/CLsLCDhmjYD4pVsV8cCagM'},
+ {id:'ashkelon', sc:'אורט אדיבי אשקלון', keys:['אשקלון','אדיבי'], c:'סיגל דדון', role:'רכזת בוגרים', ph:'0537780196', grp:'https://chat.whatsapp.com/I0MoDIeeSoQE1frFGOTSKB'},
+ {id:'carmel', sc:'אורט כרמל חיפה', keys:['כרמל'], c:'חנין', role:'רכזת בוגרים', ph:'0532417145', fb:{n:'וליד דאו',r:'מנהל',ph:'0544597762'}, grp:'https://chat.whatsapp.com/GRD38vb9sTUC9jSBjkIpTc'},
  {id:'nechalim', sc:'מרכז תורני טכנולוגי נחלים', keys:['נחלים'], c:'טל מילוא', role:'רכז בוגרים', ph:'', fb:{n:'אליהו טובול',r:'מנהל',ph:'0528119499'}, grp:'https://chat.whatsapp.com/GH6DeFFP2aIL1qk1c6QXbw'},
  {id:'turan', sc:'מנאראת טורעאן', keys:['טורעאן','טוראען','מנאראת'], c:'', role:'', ph:'', fb:{n:'עלי עדאווי',r:'מנהל',ph:'0545714431'}, grp:'https://chat.whatsapp.com/BgZFsZdK1ukIdOj0LAmF4q', noCoord:true},
- {id:'ashdod', sc:'יוצר עמל טכנולוגי אשדוד', keys:['אשדוד'], c:'ריקי מסס', role:'רכזת חברתית ובוגרים', ph:'0544441300', fb:{n:'מגי רביבו',r:'מנהלת',ph:'0528334601'}, grp:'https://chat.whatsapp.com/HHifhAFuBiWJ9ddpRPamnZ'},
+ {id:'ashdod', sc:'יוצר עמל טכנולוגי אשדוד', keys:['אשדוד','עמל אשדוד'], c:'ריקי מסס', role:'רכזת חברתית ובוגרים', ph:'0544441300', fb:{n:'מגי רביבו',r:'מנהלת',ph:'0528334601'}, grp:'https://chat.whatsapp.com/HHifhAFuBiWJ9ddpRPamnZ'},
  {id:'ramatdavid', sc:'עמל רמת דוד', keys:['רמת דוד'], c:'מוניק איפרח ממן', role:'רכזת בוגרים', ph:'0509883385', fb:{n:'יואב ברבי',r:'מנהל',ph:'0549933445'}, grp:'https://chat.whatsapp.com/ISjFCUIc51n9Htjs8QKa4C'},
- {id:'nevemidbar', sc:'דרור נווה מדבר', keys:['נווה מדבר'], c:'תמרה גילאווני', role:'רכזת בוגרים', ph:'', fb:{n:'עבד אבו אלקיעאן',r:'מנהל',ph:'0525873735'}, grp:'https://chat.whatsapp.com/H2jSmUeAiwxI8CSwD8OChP'},
- {id:'sakhnin', sc:'טכנולוגי אלאמאני סחנין', keys:['סחנין'], c:'סוזן / סאמר מיעארי', role:'', ph:'0508784131', fb:{n:'מוחמד גזאל',r:'מנהל',ph:'0507527765'}, grp:'https://chat.whatsapp.com/DkhOjtuWOMqDcSh9VnZLKQ'},
+ {id:'nevemidbar', sc:'דרור נווה מדבר', keys:['נווה מדבר'], c:'תמרה גילאוני', role:'רכזת בוגרים', ph:'0504222996', fb:{n:'עבד אבו אלקיעאן',r:'מנהל',ph:'0525873735'}, grp:'https://chat.whatsapp.com/H2jSmUeAiwxI8CSwD8OChP'},
+ {id:'sakhnin', sc:'טכנולוגי אלאמאני סחנין', keys:['סחנין'], c:'סוזן', role:'רכזת בוגרים', ph:'0508784131', fb:{n:'מוחמד גזאל',r:'מנהל',ph:'0507527765'}, grp:'https://chat.whatsapp.com/DkhOjtuWOMqDcSh9VnZLKQ'},
  {id:'hoshen', sc:'תיכון חושן (ירושלים)', keys:['חושן'], c:'', role:'', ph:'', fb:{n:'שרי שמבורסקי',r:'מנהלת',ph:'0523936126'}, grp:'https://chat.whatsapp.com/JPwDMBWet1lJRXavGqP7BM', noCoord:true},
  {id:'lakiya', sc:'טכנולוגי לקייה', keys:['לקייה','לקיה'], c:'רניה', role:'רכזת בוגרים', ph:'', fb:{n:'איש הקשר במונדיי (רניה?)',r:'לאמת',ph:'0504708424'}, grp:'https://chat.whatsapp.com/JNsS0xRkYxICPrcrJZZbZO'},
  {id:'julis', sc:"יוצר עתיד בנות ג'וליס", keys:["ג'וליס",'ג׳וליס','גוליס'], c:'בהייה מולא', role:'רכזת בוגרים', ph:'', fb:{n:'שאדיה נבואני',r:'מנהלת',ph:'0542454243'}, grp:'https://chat.whatsapp.com/HfV73OsEnYx7GQ17JM96ov'},
  {id:'birmaksur', sc:'עתיד אבדאע ביר אלמכסור', keys:['אלמכסור','אבדאע'], c:'', role:'', ph:'', fb:{n:'ופיק אגבאריה',r:'מנהל',ph:'0509551109'}, noCoord:true},
  {id:'siach', sc:"תיכון שיח' דנון עמקה", keys:['שיח','עמקה'], c:'טליה ברנע', role:'רכזת בוגרים', ph:'0548069898', grp:'https://chat.whatsapp.com/IhToin5XAxuFo0RkL1Yoqs'},
- {id:'palmachim', sc:'יוצר עתיד פלמחים', keys:['פלמחים'], c:'', role:'', ph:'', fb:{n:'ד"ר ורד אזולאי יהב',r:'מנהלת',ph:'0526631135'}, noCoord:true},
+ {id:'palmachim', sc:'יוצר עתיד פלמחים', keys:['פלמחים'], c:'שירן עוגן', role:'רכזת בוגרים', ph:'0549789029', fb:{n:'ד"ר ורד אזולאי יהב',r:'מנהלת',ph:'0526631135'}},
  {id:'tlv', sc:'התיכון החברתי תל אביב-יפו', keys:['תל אביב'], c:'לי ארנן', role:'רכזת בוגרים', ph:'0503450755', fb:{n:'יפית שפירא',r:'מנהלת',ph:'0549747128'}, grp:'https://chat.whatsapp.com/H4YjdHrcEDF5IyrKGaWQmC'},
  {id:'rahat', sc:'עמל טכנולוגי רהט', keys:['רהט'], c:'זהור אלעוברה', role:'רכזת בוגרים', ph:'0547918502', fb:{n:'הוזייל ראיד',r:'רכז',ph:'0546493125'}, grp:'https://chat.whatsapp.com/H8kP4xsPGUfE59MHt3HqUd'},
- {id:'batami', sc:'אולפנת עתיד בת עמי', keys:['בת עמי'], c:'', role:'', ph:'', fb:{n:'קארן סגל',r:'מנהלת',ph:'0536234479'}, noCoord:true},
+ {id:'batami', sc:'אולפנת עתיד בת עמי', keys:['בת עמי'], c:'', role:'', ph:'', fb:{n:'קארן סגל',r:'איש הקשר במונדיי (מנהלת?)',ph:'0536234479'}, noCoord:true},
  {id:'telsheva', sc:'טכנולוגי אלמסתקבל תל שבע', keys:['תל שבע','אלמוסתקבל','אלמסתקבל'], c:'', role:'', ph:'', fb:{n:'שאקר בטיחאת',r:'מנהל',ph:'0548786981'}, noCoord:true},
  {id:'karmiel', sc:'עתיד יוצר מגשימים כרמיאל', keys:['כרמיאל'], c:'לבנה בן חמו', role:'רכזת חינוך חברתי ובוגרים', ph:'0504400956', fb:{n:'שיראל פרץ',r:'מנהלת',ph:'0526572714'}, grp:'https://chat.whatsapp.com/HLfjBtx1PkfDeG6beUkMiv'},
  // לא מופיעים ברשימת הטופס — כנראה נשמטו; מסומנים בדף
- {id:'yarka', sc:"תיכון ח'טוואת ירכא אבו סנאן", keys:['ירכא','טוואת'], alias:['רשא','ראשה'], c:'רשא סייד אחמד', role:'רכזת בוגרים', ph:'0505455077', fb:{n:'נסרין נבואני',r:'מנהלת',ph:'0508711450'}, grp:'https://chat.whatsapp.com/BSHBsimSYE2C358EjQ41O4', inForm:false},
- {id:'mitzpe', sc:'התיכון החברתי מצפה רמון', keys:['מצפה רמון'], alias:['ענבל'], c:'ענבלי לוי', role:'רכזת חברתית ובוגרים', ph:'', fb:{n:'תמר צביבך',r:'מנהלת',ph:'0546738573'}, grp:'https://chat.whatsapp.com/Eqy8J9J0kYrK9Mn8pkC4hX', inForm:false},
- {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], c:'', role:'', ph:'', fb:{n:'עינת וינברן',r:'מנהלת',ph:'0546735214'}, noCoord:true, inForm:false},
+ {id:'yarka', sc:"תיכון ח'טוואת ירכא אבו סנאן", keys:['ירכא','טוואת','חטוואת'], alias:['רשא','ראשה'], c:'רשא סייד אחמד', role:'רכזת בוגרים', ph:'0505455077', fb:{n:'נסרין נבואני',r:'מנהלת',ph:'0508711450'}, grp:'https://chat.whatsapp.com/BSHBsimSYE2C358EjQ41O4', inForm:false},
+ {id:'mitzpe', sc:'התיכון החברתי מצפה רמון', keys:['מצפה רמון','דרור רמון'], alias:['ענבל'], c:'ענבלי לוי', role:'רכזת חברתית ובוגרים', ph:'', fb:{n:'תמר צביבך',r:'מנהלת',ph:'0546738573'}, grp:'https://chat.whatsapp.com/Eqy8J9J0kYrK9Mn8pkC4hX', inForm:false},
+ {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], c:'רינה רביד', role:'רכזת בוגרים', ph:'', fb:{n:'עינת וינברן',r:'מנהלת',ph:'0546735214'}, inForm:false},
 ];
 
 // תמונת מצב מהגיליון (17.8.2026) — משמשת רק אם המשיכה החיה נכשלת
@@ -376,7 +378,7 @@ function render(){
   $('#connDot').className='dot '+(on?'on':'off');
   $('#connTxt').textContent=on?'מחובר — אפשר לשלוח אוטומטית ⚡':'לא מחובר — כפתורי ⚡ כבויים (כפתור 💬 עובד תמיד)';
   $('#sendAll').disabled=!on||!missing.some(s=>digits(phoneOf(s))&&!state.sent[s.id]);
-  $('#sendForum').disabled=!on;
+  $('#sendForum').disabled=!on;$('#pullContacts').disabled=!on;
 }
 
 /* ============================================================
@@ -445,6 +447,25 @@ $('#sendAll').onclick=async()=>{
   $('#sendAll').disabled=true;let ok=0;
   for(let i=0;i<targets.length;i++){$('#bulkStat').textContent=`שולח ${i+1}/${targets.length} — ${targets[i].sc}…`;if(await autoSend(targets[i],true))ok++;await new Promise(r=>setTimeout(r,1500));}
   $('#bulkStat').textContent=`הסתיים: נשלחו ${ok} מתוך ${targets.length}.`;toast(`נשלחו ${ok}/${targets.length}`,ok===targets.length?'ok':'bad');render();
+};
+/* משיכת אנשי קשר "רכז/ת בוגרים" מהוואטסאפ של מיטל (פעולת contacts ב-Code.gs) */
+function matchContact(name){const n=nrm(name);let best=null,bl=0;
+  SCHOOLS.forEach(s=>{s.keys.forEach(k=>{if(n.includes(nrm(k))&&k.length>bl){best=s;bl=k.length;}});
+    const fn=firstName(s.c);if(fn&&fn.length>2&&n.includes(fn)&&bl===0){best=s;bl=1;}});
+  return best;}
+$('#pullContacts').onclick=async()=>{
+  const panel=$('#contactsPanel');panel.style.display='block';panel.innerHTML='<div class="hint">מושך אנשי קשר…</div>';
+  let r;try{r=await api({action:'contacts',q:'בוגרים'},90000);}catch(e){panel.innerHTML='<div class="warnbox">לא הצלחתי להתחבר: '+esc(e.message)+'</div>';return;}
+  if(!r||!r.ok){panel.innerHTML='<div class="warnbox">⚠️ ה-Apps Script שפרוס עדיין לא מכיר את הפעולה הזו ('+esc((r&&r.error)||'')+'). צריך פעם אחת להדביק את <a href="https://github.com/meytalp-dev/hopa-nihul/blob/main/scripts/Code.gs" target="_blank" rel="noopener">Code.gs המעודכן</a> ב-Apps Script של גיליון המענים ולפרוס גרסה חדשה (Deploy → Manage deployments → ✏️ → New version). בינתיים אפשר להקליד מספרים ידנית בכרטיסים.</div>';return;}
+  const list=(r.contacts||[]).map(c=>({id:c.id,name:c.name,phone:String(c.id).replace('@c.us',''),school:matchContact(c.name)}));
+  if(!list.length){panel.innerHTML='<div class="warnbox">לא נמצאו אנשי קשר עם "בוגרים" בשם.</div>';return;}
+  const opts=SCHOOLS.map(s=>`<option value="${s.id}">${esc(s.sc)}</option>`).join('');
+  panel.innerHTML=`<div class="okbox">נמצאו ${list.length} אנשי קשר. בדקי את השיוך לבית הספר ולחצי "החלת המספרים" — המספרים ייכנסו לכרטיסים (רק במקום שאין לנו מספר של הרכז/ת, או שהמספר שונה).</div>
+    <div class="list" style="gap:6px">${list.map((c,i)=>`<div class="row" style="grid-template-columns:1fr auto;align-items:center;padding:8px 12px"><div><div class="nm" style="font-weight:600">${esc(c.name)}</div><div class="hint" style="margin:0;direction:ltr;text-align:right">${esc(pretty(c.phone))}</div></div><select data-ci="${i}" style="border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;max-width:210px"><option value="">— לא לשייך —</option>${opts}</select></div>`).join('')}</div>
+    <div class="toolbar"><button class="btn pink" id="applyContacts">✔ החלת המספרים</button></div>`;
+  panel.querySelectorAll('select[data-ci]').forEach(sel=>{const c=list[+sel.dataset.ci];if(c.school)sel.value=c.school.id;});
+  $('#applyContacts').onclick=()=>{let n=0;panel.querySelectorAll('select[data-ci]').forEach(sel=>{const c=list[+sel.dataset.ci];if(!sel.value)return;const s=SCHOOLS.find(x=>x.id===sel.value);const cur=digits(phoneOf(s));if(cur!==digits(c.phone)){state.phones[s.id]=pretty(c.phone);n++;}});
+    save('phones',state.phones);render();toast(n?`עודכנו ${n} מספרים ✔`:'אין שינויים — הכל כבר מעודכן','ok');};
 };
 $('#sendForum').onclick=async()=>{
   const txt=FORUM_MSG.replace(/\{קישור\}/g,state.link.trim()||'').replace(/\n{3,}/g,'\n\n');
