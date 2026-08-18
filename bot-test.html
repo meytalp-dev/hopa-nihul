@@ -93,6 +93,23 @@ section{margin:30px 0}
 .counts .o{background:var(--orange-soft);border-color:#f3cfa5;color:#9a5312}
 .counts .r{background:var(--red-soft);border-color:#f0b4b4;color:#a4302a}
 
+/* who tabs */
+.who{display:flex;gap:6px;background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content;max-width:100%;margin:6px 0 14px}
+.who button{border:0;background:transparent;border-radius:999px;padding:9px 20px;font-size:15px;font-weight:800;color:var(--ink-2)}
+.who button.on{background:var(--pink);color:#fff;box-shadow:0 2px 10px rgba(232,52,138,.3)}
+.who button.on.b{background:var(--blue)}
+.who button.on.a{background:var(--ink)}
+.owner{font-size:12px;border-radius:999px;padding:2px 10px;font-weight:800;margin-inline-start:auto}
+.owner.m{background:var(--pink-soft);color:var(--pink-deep)}
+.owner.b{background:var(--blue-soft);color:#245ca8}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+@media(max-width:700px){.split{grid-template-columns:1fr}}
+.split .card{border-top:6px solid var(--pink)}
+.split .card.b{border-top-color:var(--blue)}
+.split .card ul{margin:4px 0 0;padding-inline-start:20px}
+.split .card li{font-size:14.5px;margin-bottom:3px}
+.split .card .n{font-size:13px;color:var(--muted);font-weight:700}
+
 /* filters */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:13.5px;font-weight:700;color:var(--ink-2)}
@@ -219,7 +236,14 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
 <!-- 2 -->
 <section id="who">
   <div class="sec-head"><span class="sec-num">2</span><h2>מי בודק</h2></div>
-  <div class="card">
+  <p style="margin:0 0 6px;color:var(--ink-2);font-size:15px">החלוקה: <b>מיטל</b> — הליבה והדברים הרגישים (מכירה את העמותה ויודעת מה אמור להיות במאגר). <b>בארי</b> — הזירה של רכז הבוגרים והשימוש בשטח. בחרו את הטאב שלכם — הדף יראה רק את התרחישים שלכם, והסיכום יתייחס רק אליהם.</p>
+  <div class="who" id="who">
+    <button data-who="meital">אני מיטל</button>
+    <button data-who="bari" class="b">אני בארי</button>
+    <button data-who="all" class="a">הכול</button>
+  </div>
+  <div class="split" id="split"></div>
+  <div class="card" style="margin-top:12px">
     <div class="tester">
       <div class="field"><label>שם הבודק/ת</label><input id="tName" placeholder="למשל: מיטל / בארי"></div>
       <div class="field"><label>תאריך הבדיקה</label><input id="tDate" type="date"></div>
@@ -237,7 +261,7 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
 <!-- 3 -->
 <section id="tests">
   <div class="sec-head"><span class="sec-num">3</span><h2>התרחישים</h2></div>
-  <p style="margin:0 0 6px;color:var(--ink-2);font-size:14.5px">לא חייבים לעשות הכול. מיטל ובארי יכולים להתחלק — למשל בארי לוקח את בוגרים/צבא/תעסוקה/מגזר, מיטל את תלמידים/הורים/רכזות/הגשת מענה. סינון לפי קטגוריה:</p>
+  <p style="margin:0 0 6px;color:var(--ink-2);font-size:14.5px" id="listIntro"></p>
   <div class="filters" id="filters"></div>
   <div id="list"></div>
 </section>
@@ -275,19 +299,19 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:600px}
 <script>
 const BOT = '972585585991';
 const CATS = [
- {k:'basic',  t:'פתיחה ואישיות', d:'הרושם הראשון: האם הבוט מציג את עצמו, מבין למה הוא מיועד ומדבר "הופי".'},
- {k:'age',    t:'זיהוי גיל והפרדת גילאים', d:'הכלל הכי קריטי: 14–18 ו-18–26 לא מתערבבים לעולם. הבוט צריך לזהות גיל, ולשאול אם לא ברור.'},
- {k:'search', t:'חיפוש לפי תחום', d:'שאלות אמיתיות של צעירים. לאמת כל מענה שהבוט מציע מול האתר.'},
- {k:'region', t:'חיפוש לפי אזור', d:'האם הבוט מבין מיקום ומציע גם מענים מקומיים וגם ארציים.'},
- {k:'bogrim', t:'בוגרים 18–26 (צבא, תעסוקה, מלגות, זכויות)', d:'התרחישים הכי רלוונטיים לרכזי הבוגרים ולבארי.'},
- {k:'adults', t:'הורים, רכזות ומורים', d:'הבוט צריך לזהות שמי שכותב הוא מבוגר שפונה עבור צעיר/ה.'},
- {k:'memory', t:'זיכרון שיחה', d:'הבוט זוכר 10 הודעות אחורה. שולחים הודעת פתיחה ואז הודעת המשך שמסתמכת עליה.'},
- {k:'truth',  t:'דיוק ואמינות (לא להמציא)', d:'תשובות שממציאות מענים, טלפונים או קישורים — זה הכשל החמור ביותר.'},
- {k:'human',  t:'העברה לבן-אדם ומצבי מצוקה', d:'הבוט צריך להעביר לנציג/ה (דרך Chatwoot) ולדעת להגיב נכון למצוקה. לבדוק שלא מפנה לטל מאיר — היא כבר לא בעמותה.'},
- {k:'edge',   t:'מקרי קצה', d:'הודעות לא צפויות: שפות אחרות, שגיאות כתיב, אימוג\'ים, תמונות, שאלות לא קשורות.'},
- {k:'submit', t:'הגשת מענה (עמותות)', d:'הבוט השני: עמותה שרוצה להעלות תוכנית לאתר. לכתוב "בדיקה" בשם התוכנית!'},
- {k:'admin',  t:'בוט האדמין (הרשאות)', d:'"הוסף מענה" אמור לעבוד רק ממספרים מורשים. ממספר רגיל — צריך לסרב בנימוס.'},
- {k:'web',    t:'הצ\'אט באתר', d:'אותן שאלות בצ\'אט של hopa.org.il/chat — האם התשובות דומות ואיכותיות באותה מידה?'},
+ {k:'basic', o:'meital',  t:'פתיחה ואישיות', d:'הרושם הראשון: האם הבוט מציג את עצמו, מבין למה הוא מיועד ומדבר "הופי".'},
+ {k:'age', o:'meital',    t:'זיהוי גיל והפרדת גילאים', d:'הכלל הכי קריטי: 14–18 ו-18–26 לא מתערבבים לעולם. הבוט צריך לזהות גיל, ולשאול אם לא ברור.'},
+ {k:'search', o:'meital', t:'חיפוש לפי תחום', d:'שאלות אמיתיות של צעירים. לאמת כל מענה שהבוט מציע מול האתר.'},
+ {k:'region', o:'bari', t:'חיפוש לפי אזור', d:'האם הבוט מבין מיקום ומציע גם מענים מקומיים וגם ארציים.'},
+ {k:'bogrim', o:'bari', t:'בוגרים 18–26 (צבא, תעסוקה, מלגות, זכויות)', d:'התרחישים הכי רלוונטיים לרכזי הבוגרים ולבארי.'},
+ {k:'adults', o:'bari', t:'הורים, רכזות ומורים', d:'הבוט צריך לזהות שמי שכותב הוא מבוגר שפונה עבור צעיר/ה.'},
+ {k:'memory', o:'bari', t:'זיכרון שיחה', d:'הבוט זוכר 10 הודעות אחורה. שולחים הודעת פתיחה ואז הודעת המשך שמסתמכת עליה.'},
+ {k:'truth', o:'meital',  t:'דיוק ואמינות (לא להמציא)', d:'תשובות שממציאות מענים, טלפונים או קישורים — זה הכשל החמור ביותר.'},
+ {k:'human', o:'meital',  t:'העברה לבן-אדם ומצבי מצוקה', d:'הבוט צריך להעביר לנציג/ה (דרך Chatwoot) ולדעת להגיב נכון למצוקה. לבדוק שלא מפנה לטל מאיר — היא כבר לא בעמותה.'},
+ {k:'edge', o:'bari',   t:'מקרי קצה', d:'הודעות לא צפויות: שפות אחרות, שגיאות כתיב, אימוג\'ים, תמונות, שאלות לא קשורות.'},
+ {k:'submit', o:'meital', t:'הגשת מענה (עמותות)', d:'הבוט השני: עמותה שרוצה להעלות תוכנית לאתר. לכתוב "בדיקה" בשם התוכנית!'},
+ {k:'admin', o:'meital',  t:'בוט האדמין (הרשאות)', d:'"הוסף מענה" אמור לעבוד רק ממספרים מורשים. ממספר רגיל — צריך לסרב בנימוס.'},
+ {k:'web', o:'bari',    t:'הצ\'אט באתר', d:'אותן שאלות בצ\'אט של hopa.org.il/chat — האם התשובות דומות ואיכותיות באותה מידה?'},
 ];
 const T = [
  // basic
@@ -371,7 +395,11 @@ T.forEach((x,i)=>x.id=i+1);
 
 const KEY='hopa-bot-tests-v1';
 let S = JSON.parse(localStorage.getItem(KEY)||'{}');
-S.r = S.r||{}; S.hide = S.hide||{};
+S.r = S.r||{}; S.hide = S.hide||{}; S.who = S.who||'all';
+const qw=new URLSearchParams(location.search).get('who'); if(['meital','bari','all'].includes(qw)){S.who=qw;}
+const WHO={meital:'מיטל',bari:'בארי',all:'הכול'};
+const mine=c=>S.who==='all'||c.o===S.who;
+const myTests=()=>T.filter(t=>mine(CATS.find(c=>c.k===t.c)));
 const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -386,7 +414,7 @@ function renderFilters(){
   const f=$('#filters');f.innerHTML='';
   const all=document.createElement('button');all.className='chip on';all.textContent='הכול';
   all.onclick=()=>{S.hide={};save();renderFilters();renderList();};f.appendChild(all);
-  CATS.forEach(c=>{
+  CATS.filter(mine).forEach(c=>{
     const b=document.createElement('button');b.className='chip'+(S.hide[c.k]?'':' on');
     const n=T.filter(t=>t.c===c.k).length, done=T.filter(t=>t.c===c.k&&S.r[t.id]?.res).length;
     b.textContent=c.t+' '+done+'/'+n;
@@ -396,11 +424,13 @@ function renderFilters(){
 }
 function renderList(){
   const L=$('#list');L.innerHTML='';
-  CATS.forEach(c=>{
+  $('#listIntro').innerHTML = S.who==='all' ? 'מוצגים כל התרחישים של שניכם. סינון לפי קטגוריה:' :
+    (S.who==='meital' ? 'התרחישים של <b>מיטל</b> — הליבה, האמינות והדברים הרגישים. סינון לפי קטגוריה:' : 'התרחישים של <b>בארי</b> — בוגרים, אזורים, זיכרון שיחה ומקרי קצה. סינון לפי קטגוריה:');
+  CATS.filter(mine).forEach(c=>{
     if(S.hide[c.k])return;
     const cat=document.createElement('div');cat.className='cat';
     const n=T.filter(t=>t.c===c.k).length;
-    cat.innerHTML='<h3>'+esc(c.t)+' <span class="n">'+n+' בדיקות</span></h3><p>'+esc(c.d)+'</p>';
+    cat.innerHTML='<h3>'+esc(c.t)+' <span class="n">'+n+' בדיקות</span><span class="owner '+(c.o==='bari'?'b':'m')+'">'+(c.o==='bari'?'בארי':'מיטל')+'</span></h3><p>'+esc(c.d)+'</p>';
     L.appendChild(cat);
     T.filter(t=>t.c===c.k).forEach(t=>L.appendChild(card(t)));
   });
@@ -436,14 +466,14 @@ function card(t){
   d.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{
     S.r[t.id]=S.r[t.id]||{};S.r[t.id].res=(S.r[t.id].res===b.dataset.res)?'':b.dataset.res;save();
     d.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res===S.r[t.id].res));
-    d.className='test '+(S.r[t.id].res||'');summary();renderFilters();
+    d.className='test '+(S.r[t.id].res||'');summary();renderFilters();renderWho();
   });
   d.querySelector('[data-copy]')?.addEventListener('click',e=>copy(e.target.dataset.copy));
   return d;
 }
 function stats(){
-  const o={pass:0,partial:0,fail:0,skip:0};Object.values(S.r).forEach(r=>{if(r.res&&o[r.res]!==undefined)o[r.res]++;});
-  o.done=o.pass+o.partial+o.fail;o.total=T.length;return o;
+  const o={pass:0,partial:0,fail:0,skip:0};const my=myTests();my.forEach(t=>{const r=S.r[t.id];if(r?.res&&o[r.res]!==undefined)o[r.res]++;});
+  o.done=o.pass+o.partial+o.fail;o.total=my.length;return o;
 }
 function summary(){
   const s=stats();
@@ -454,12 +484,12 @@ function summary(){
 }
 function report(full=true){
   const s=stats();const name=S.name||'—',date=S.date||'',chan=S.chan||'וואטסאפ';
-  let out=`דוח בדיקת בוט הופה\nבודק/ת: ${name} · ${date} · ערוץ: ${chan}\nנבדקו ${s.done} מתוך ${T.length} תרחישים · עבר ${s.pass} · חלקי ${s.partial} · נכשל ${s.fail}\n`;
-  const fails=T.filter(t=>['fail','partial'].includes(S.r[t.id]?.res));
+  let out=`דוח בדיקת בוט הופה\nבודק/ת: ${name} · ${date} · ערוץ: ${chan} · חלק: ${WHO[S.who]}\nנבדקו ${s.done} מתוך ${s.total} תרחישים · עבר ${s.pass} · חלקי ${s.partial} · נכשל ${s.fail}\n`;
+  const fails=myTests().filter(t=>['fail','partial'].includes(S.r[t.id]?.res));
   if(fails.length){out+=`\n🔧 לתיקון (${fails.length}):\n`;fails.forEach(t=>{const r=S.r[t.id];out+=`• #${t.id} ${t.t} — ${RES[r.res]}${r.notes?': '+r.notes:''}\n`;});}
   if(full){
     out+='\n——— פירוט ———\n';
-    CATS.forEach(c=>{
+    CATS.filter(mine).forEach(c=>{
       const rows=T.filter(t=>t.c===c.k&&S.r[t.id]&&(S.r[t.id].res||S.r[t.id].ans||S.r[t.id].notes));
       if(!rows.length)return;out+=`\n[${c.t}]\n`;
       rows.forEach(t=>{const r=S.r[t.id];
@@ -473,15 +503,27 @@ function report(full=true){
 $('#bCopy').onclick=()=>copy(report(true));
 $('#bShow').onclick=()=>{const o=$('#out');o.textContent=report(true);o.style.display=o.style.display==='block'?'none':'block';};
 $('#bWa').onclick=()=>{let t=report(true);if(t.length>3500)t=report(false)+'\n(הפירוט המלא ארוך — נשלח כקובץ/העתקה בנפרד)';window.open('https://api.whatsapp.com/send/?text='+encodeURIComponent(t),'_blank');};
-$('#bJson').onclick=()=>{const blob=new Blob([JSON.stringify({meta:{name:S.name,date:S.date,chan:S.chan},r:S.r},null,1)],{type:'application/json'});
+$('#bJson').onclick=()=>{const blob=new Blob([JSON.stringify({meta:{name:S.name,date:S.date,chan:S.chan,who:S.who},r:S.r},null,1)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`hopa-bot-test-${(S.name||'tester').replace(/\s+/g,'_')}-${S.date||''}.json`;a.click();};
 $('#fLoad').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);
   if(!confirm('לטעון את התוצאות של '+(j.meta?.name||'הקובץ')+'? זה יחליף את מה שמסומן כרגע במכשיר הזה.'))return;
-  S.r=j.r||{};S.name=j.meta?.name||S.name;S.date=j.meta?.date||S.date;S.chan=j.meta?.chan||S.chan;save();init();toast('נטען');}catch(err){alert('קובץ לא תקין');}};rd.readAsText(f);};
+  S.r=j.r||{};S.name=j.meta?.name||S.name;S.date=j.meta?.date||S.date;S.chan=j.meta?.chan||S.chan;S.who=j.meta?.who||S.who;save();init();toast('נטען');}catch(err){alert('קובץ לא תקין');}};rd.readAsText(f);};
 $('#bReset').onclick=()=>{if(confirm('למחוק את כל התיעוד מהמכשיר הזה?')){S={r:{},hide:{}};save();init();}};
 
+function renderWho(){
+  document.querySelectorAll('#who button').forEach(b=>{b.classList.toggle('on',b.dataset.who===S.who);
+    b.onclick=()=>{S.who=b.dataset.who;if(S.who!=='all'&&!S.name)S.name=WHO[S.who];save();init();};});
+  const sp=$('#split');sp.innerHTML='';
+  ['meital','bari'].forEach(w=>{
+    const cs=CATS.filter(c=>c.o===w);const n=T.filter(t=>cs.some(c=>c.k===t.c)).length;
+    const done=T.filter(t=>cs.some(c=>c.k===t.c)&&S.r[t.id]?.res&&S.r[t.id].res!=='skip').length;
+    const d=document.createElement('div');d.className='card '+(w==='bari'?'b':'');
+    d.innerHTML='<h3>'+WHO[w]+' <span class="n">'+n+' תרחישים · נבדקו '+done+'</span></h3><ul>'+cs.map(c=>'<li>'+esc(c.t)+' ('+T.filter(t=>t.c===c.k).length+')</li>').join('')+'</ul>';
+    sp.appendChild(d);});
+}
 function init(){
   if(!S.date)S.date=new Date().toISOString().slice(0,10);
+  renderWho();
   $('#tName').value=S.name||'';$('#tDate').value=S.date;$('#tChan').value=S.chan||'וואטסאפ';
   ['tName','tDate','tChan'].forEach(id=>$('#'+id).oninput=e=>{S[{tName:'name',tDate:'date',tChan:'chan'}[id]]=e.target.value;save();});
   renderFilters();renderList();summary();
