@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שליחת שאלון "דרך דוד" לתלמידים · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --bad:#d9534f; --wa:#25D366;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 14px 60px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:21px;font-weight:800;line-height:1.25}
+  .hero p{margin:0;opacity:.92;font-size:14px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-top:14px}
+  .card h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .card h2 small{font-weight:400;color:var(--muted);font-size:13px}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  textarea.field{min-height:96px;resize:vertical;line-height:1.5}
+  select.field{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8a95' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat left 12px center;padding-left:34px}
+  .row{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+  .row3{display:grid;gap:8px;grid-template-columns:1.2fr 1fr 1.2fr auto}
+  .btn{border-radius:12px;padding:10px 16px;font-size:15px;font-weight:700;transition:transform .1s;white-space:nowrap}
+  .btn:active{transform:scale(.97)}
+  .btn.primary{background:var(--pink);color:#fff;box-shadow:0 6px 18px rgba(232,52,138,.3)}
+  .btn.outline{border:2px solid var(--line);background:#fff}
+  .btn.wa{background:var(--wa);color:#fff;box-shadow:0 6px 16px rgba(37,211,102,.3)}
+  .btn.wa.again{background:#fff;color:#1a9c4a;border:2px solid #b8ecc9;box-shadow:none}
+  .btn.sm{padding:7px 12px;font-size:13px;border-radius:10px}
+  .btn.danger{color:var(--bad)}
+  .btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+  details summary{cursor:pointer;color:var(--pink-dark);font-weight:600;font-size:14px;margin:6px 0}
+  .tokens{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 0}
+  .tok{background:var(--bg);border-radius:99px;padding:3px 10px;font-size:12px;color:var(--muted)}
+  .tok b{color:var(--ink);font-family:monospace}
+
+  .stats{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+  .st{background:#fff;border-radius:14px;padding:8px 12px;font-size:13px;color:var(--muted);box-shadow:var(--shadow);border:2px solid transparent}
+  .st b{display:block;color:var(--ink);font-size:20px;font-weight:800;line-height:1.1}
+  .st.on{border-color:var(--pink)}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+  .toolbar .field{flex:1;min-width:150px;padding:9px 12px}
+
+  .list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .stu{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-right:5px solid var(--line)}
+  .stu.sent{border-right-color:#f5c542}
+  .stu.done{border-right-color:var(--ok)}
+  .stu .who{flex:1;min-width:160px}
+  .stu .who b{font-size:16px}
+  .stu .who span{display:block;font-size:13px;color:var(--muted)}
+  .stu .who span a{color:var(--muted);text-decoration:none}
+  .tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+  .tag.gray{background:var(--bg);color:var(--muted)}
+  .tag.yel{background:var(--yellow-soft);color:#7a6a00}
+  .tag.ok{background:var(--ok-soft);color:#137a4a}
+  .acts{display:flex;gap:6px;align-items:center}
+  .empty{text-align:center;color:var(--muted);padding:26px 10px}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
+  .foot a{color:var(--pink-dark);text-decoration:none;font-weight:600}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+  .toast.on{opacity:1}
+  .gate{max-width:360px;margin:60px auto;text-align:center}
+  .gate input{text-align:center;font-size:22px;letter-spacing:4px}
+  @media (max-width:600px){.row,.row3{grid-template-columns:1fr}.stu .acts{width:100%;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>שליחת שאלון "דרך דוד" לתלמידים</h1>
+      <p>מי שאישר/ה השתתפות → הודעה אישית בוואטסאפ עם הקישור לשאלון</p>
+    </div>
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== הגדרות ===================== */
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET = 'hopa-nihul-2026';
+const STORE_KEY = 'dd_sendlist';                       // מפתח בגיליון "נתונים"
+const FORM_URL = 'https://meytalp-dev.github.io/hopa-nihul/derech-david.html';
+const ADMIN_URL = FORM_URL + '?admin=hopa';
+const PIN = 'hopa';                                     // נזכר במכשיר אחרי פעם אחת
+const SCHOOLS = ['אולפנת עתיד בת עמי','אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
+const DEFAULT_MSG = `היי {שם} 👋 זו {רכז} מהופה.
+שמחים שאישרת להשתתף בתוכנית "דרך דוד" 💛
+כדי שנוכל להעביר את הפנייה שלך למדור, צריך למלא שאלון קצר — פחות מ-3 דקות, ישר מהטלפון:
+{קישור}
+
+אם משהו לא ברור או צריך עזרה — אני כאן 🙂`;
+
+/* ===================== מצב ===================== */
+let DATA = { students: [], msg: DEFAULT_MSG, rakez: '', rakezTel: '', school: '' };
+let SUBMITTED = {};   // phone(digits) -> {name, ts}
+let filter = 'all', query = '';
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2000); }
+const digits = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+const waNum = p => '972' + digits(p).replace(/^0/,'');
+const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'}) + ' ' + d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+
+function jsonp(params){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    window[cb]=d=>{delete window[cb]; s.remove(); res(d);};
+    const s=document.createElement('script');
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+let saveT;
+function save(silent){
+  clearTimeout(saveT);
+  saveT = setTimeout(async()=>{
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams({action:'storeSet',secret:GS_SECRET,key:STORE_KEY,json:JSON.stringify(DATA)}).toString()});
+      if(!silent) toast('נשמר ✓');
+    }catch(e){ toast('שגיאה בשמירה — בדקו אינטרנט'); }
+  }, 350);
+}
+async function load(){
+  app.innerHTML = '<div class="card"><p class="hint">טוען את הרשימה מהגיליון…</p></div>';
+  try{
+    const r = await jsonp({action:'storeAll',secret:GS_SECRET});
+    if(!r.ok) throw new Error(r.error||'err');
+    const st = r.store||{};
+    if (st[STORE_KEY] && Array.isArray(st[STORE_KEY].students)) DATA = Object.assign(DATA, st[STORE_KEY]);
+    SUBMITTED = {};
+    Object.keys(st).filter(k=>k.startsWith('intake_dd_')).forEach(k=>{ const x=st[k]; if(x && x.name && !x._test && x.phone) SUBMITTED[digits(x.phone)] = {name:x.name, ts:x.ts}; });
+  }catch(e){ app.innerHTML = `<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון (${esc(e.message)}). נסו לרענן.</p></div>`; return; }
+  render();
+}
+
+/* ===================== קישור והודעה ===================== */
+function linkFor(s){
+  const p = new URLSearchParams();
+  const school = s.school || DATA.school; if (school) p.set('school', school);
+  if (DATA.rakez) p.set('rakez', DATA.rakez);
+  if (DATA.rakezTel) p.set('tel', DATA.rakezTel);
+  return FORM_URL + (p.toString() ? '?' + p.toString() : '');
+}
+function msgFor(s){
+  const first = (s.name||'').trim().split(/\s+/)[0] || '';
+  return (DATA.msg||DEFAULT_MSG).replace(/\{שם\}/g, first).replace(/\{שם מלא\}/g, s.name||'').replace(/\{רכז\}/g, DATA.rakez||'הצוות').replace(/\{קישור\}/g, linkFor(s));
+}
+function waHref(s){ return 'https://wa.me/' + waNum(s.phone) + '?text=' + encodeURIComponent(msgFor(s)); }
+
+/* ===================== רינדור ===================== */
+function statusOf(s){
+  if (SUBMITTED[digits(s.phone)]) return 'done';
+  if (s.sentAt) return 'sent';
+  return 'new';
+}
+function render(){
+  const list = DATA.students;
+  const counts = { all:list.length, new:0, sent:0, done:0 };
+  list.forEach(s=>counts[statusOf(s)]++);
+  const shown = list.filter(s => (filter==='all' || statusOf(s)===filter) && (!query || (s.name+' '+s.phone+' '+(s.school||'')).includes(query)));
+  const nextNew = list.find(s=>statusOf(s)==='new');
+
+  app.innerHTML = `
+  <div class="card">
+    <h2>✉️ ההודעה שנשלחת <small>אפשר לערוך — נשמר לכולם</small></h2>
+    <textarea class="field" id="msg">${esc(DATA.msg||DEFAULT_MSG)}</textarea>
+    <div class="tokens"><span class="tok">משתנים:</span><span class="tok"><b>{שם}</b> שם פרטי</span><span class="tok"><b>{שם מלא}</b></span><span class="tok"><b>{רכז}</b> שם הרכז/ת</span><span class="tok"><b>{קישור}</b> הקישור האישי לשאלון</span></div>
+    <details><summary>⚙️ פרטי הרכז/ת וברירות מחדל (נכנסים לקישור של כל תלמיד)</summary>
+      <div class="row3" style="margin-top:6px">
+        <input class="field" id="rakez" placeholder="שם הרכז/ת (מופיע בהודעה)" value="${esc(DATA.rakez)}">
+        <input class="field" id="rakezTel" placeholder="טלפון הרכז/ת לתשובת המדור" inputmode="tel" value="${esc(DATA.rakezTel)}">
+        <select class="field" id="defSchool"><option value="">בית ספר ברירת מחדל (לא חובה)</option>${SCHOOLS.map(x=>`<option ${DATA.school===x?'selected':''}>${esc(x)}</option>`).join('')}</select>
+        <button class="btn outline" id="preview">👁 תצוגה מקדימה</button>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>➕ הוספת תלמיד/ה</h2>
+    <div class="row3">
+      <input class="field" id="nName" placeholder="שם מלא">
+      <input class="field" id="nPhone" placeholder="טלפון (05X…)" inputmode="tel">
+      <select class="field" id="nSchool"><option value="">בית ספר (ברירת מחדל)</option>${SCHOOLS.map(x=>`<option>${esc(x)}</option>`).join('')}</select>
+      <button class="btn primary" id="add">הוסף</button>
+    </div>
+    <details><summary>📋 הדבקת רשימה שלמה (מאקסל / וואטסאפ / מונדיי)</summary>
+      <p class="hint">שורה לכל תלמיד/ה: <b>שם, טלפון</b> (אפשר גם עם בית ספר בסוף). מופרד בפסיק, טאב או מקף. שורות בלי טלפון תקין ידולגו.</p>
+      <textarea class="field" id="bulk" placeholder="נועה כהן, 0521234567
+דני לוי	0509876543	אורט מרום עכו"></textarea>
+      <div class="toolbar"><button class="btn primary" id="bulkAdd">הוסף את כל הרשימה</button><span class="hint" id="bulkInfo"></span></div>
+    </details>
+  </div>
+
+  <div class="stats">
+    <button class="st ${filter==='all'?'on':''}" data-f="all"><b>${counts.all}</b>ברשימה</button>
+    <button class="st ${filter==='new'?'on':''}" data-f="new"><b>${counts.new}</b>עוד לא נשלח</button>
+    <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${counts.sent}</b>נשלח, מחכים למילוי</button>
+    <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${counts.done}</b>✓ מילאו את השאלון</button>
+  </div>
+  <div class="toolbar">
+    <input class="field" id="q" placeholder="חיפוש שם / טלפון…" value="${esc(query)}">
+    ${nextNew ? `<a class="btn wa" id="next" href="${waHref(nextNew)}" target="_blank" rel="noopener" data-id="${esc(nextNew.id)}">💬 שלח לבא בתור: ${esc(nextNew.name.split(' ')[0])}</a>` : ''}
+    <a class="btn outline" href="${ADMIN_URL}" target="_blank" rel="noopener">📥 לתשובות שהתקבלו</a>
+  </div>
+
+  <div class="list">
+    ${shown.length ? shown.map(rowHtml).join('') : `<div class="card empty">${list.length ? 'אין תלמידים בסינון הזה' : 'הרשימה ריקה — הוסיפו תלמיד/ה למעלה או הדביקו רשימה שלמה'}</div>`}
+  </div>
+  <div class="foot"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · פתאום הכל נראה אפשרי!</div>`;
+
+  /* wiring */
+  document.getElementById('msg').oninput = e => { DATA.msg = e.target.value; save(true); refreshLinks(); };
+  document.getElementById('rakez').oninput = e => { DATA.rakez = e.target.value.trim(); save(true); refreshLinks(); };
+  document.getElementById('rakezTel').oninput = e => { DATA.rakezTel = e.target.value.trim(); save(true); refreshLinks(); };
+  document.getElementById('defSchool').onchange = e => { DATA.school = e.target.value; save(); refreshLinks(); };
+  document.getElementById('preview').onclick = () => { const s = DATA.students[0] || {name:'נועה כהן', phone:'0500000000'}; alert(msgFor(s)); };
+  document.getElementById('add').onclick = addOne;
+  document.getElementById('nPhone').addEventListener('keydown', e=>{ if(e.key==='Enter') addOne(); });
+  document.getElementById('nName').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('nPhone').focus(); });
+  document.getElementById('bulkAdd').onclick = addBulk;
+  app.querySelectorAll('.st').forEach(b=>b.onclick=()=>{ filter=b.dataset.f; render(); });
+  document.getElementById('q').oninput = e => { query = e.target.value.trim(); render(); const el=document.getElementById('q'); el.focus(); el.setSelectionRange(el.value.length, el.value.length); };
+  app.querySelectorAll('a.wa[data-id]').forEach(a=>a.addEventListener('click', ()=>{ markSent(a.dataset.id); }));
+  app.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.del); if(confirm('להסיר את '+s.name+' מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
+  app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.unsend); s.sentAt=''; save(); render(); });
+  app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(msgFor(s)).then(()=>toast('ההודעה הועתקה')); });
+}
+function refreshLinks(){ app.querySelectorAll('a.wa[data-id]').forEach(a=>{ const s=DATA.students.find(x=>x.id===a.dataset.id); if(s) a.href=waHref(s); }); }
+function rowHtml(s){
+  const st = statusOf(s);
+  const sub = SUBMITTED[digits(s.phone)];
+  const tag = st==='done' ? `<span class="tag ok">✓ מילא/ה ${esc(fmtDate(sub.ts))}</span>` : st==='sent' ? `<span class="tag yel">נשלח ${esc(fmtDate(s.sentAt))}</span>` : `<span class="tag gray">עוד לא נשלח</span>`;
+  return `<div class="stu ${st}">
+    <div class="who"><b>${esc(s.name)}</b> ${tag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span></div>
+    <div class="acts">
+      ${st==='done' ? '' : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`}
+      <button class="btn outline sm" data-copy="${esc(s.id)}" title="העתק הודעה">📋</button>
+      ${st==='sent' ? `<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון נשלח">↩</button>` : ''}
+      <button class="btn sm danger" data-del="${esc(s.id)}" title="הסר">✕</button>
+    </div>
+  </div>`;
+}
+function markSent(id){ const s=DATA.students.find(x=>x.id===id); if(!s) return; s.sentAt=new Date().toISOString(); save(true); setTimeout(render, 400); }
+function newId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
+function addStudent(name, phone, school){
+  const ph = digits(phone); if (!/^0\d{8,9}$/.test(ph) || !name) return false;
+  if (DATA.students.some(x=>digits(x.phone)===ph)) return 'dup';
+  DATA.students.push({ id:newId(), name:name.trim(), phone:ph, school:school||'', sentAt:'', addedAt:new Date().toISOString() });
+  return true;
+}
+function addOne(){
+  const n=document.getElementById('nName').value.trim(), p=document.getElementById('nPhone').value, sc=document.getElementById('nSchool').value;
+  const r = addStudent(n,p,sc);
+  if (r===true){ save(); render(); toast(n+' נוסף/ה'); setTimeout(()=>document.getElementById('nName').focus(),50); }
+  else if (r==='dup') toast('הטלפון הזה כבר ברשימה');
+  else toast('צריך שם וטלפון תקין (05X…)');
+}
+function addBulk(){
+  const txt = document.getElementById('bulk').value; let ok=0, dup=0, bad=0;
+  txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).forEach(line=>{
+    const parts = line.split(/[,\t;|]+| - /).map(x=>x.trim()).filter(Boolean);
+    let phone = parts.find(x=>/^[\d\s\-+()]{9,}$/.test(x)); if(!phone){ const m=line.match(/0\d[\d\-\s]{7,}\d/); phone = m?m[0]:''; }
+    const rest = parts.filter(x=>x!==phone && !/^[\d\s\-+()]{9,}$/.test(x));
+    const name = rest[0]||''; const school = SCHOOLS.find(sc=>rest.slice(1).some(x=>x.includes(sc)||sc.includes(x)))||'';
+    const r = addStudent(name, phone, school); if(r===true) ok++; else if(r==='dup') dup++; else bad++;
+  });
+  save(); render();
+  toast(`נוספו ${ok}${dup?' · כפולים '+dup:''}${bad?' · שורות לא תקינות '+bad:''}`);
+}
+
+/* ===================== שער ===================== */
+function gate(){
+  if (localStorage.getItem('hopa_dd_pin')===PIN) return load();
+  app.innerHTML = `<div class="card gate"><h2 style="justify-content:center">🔒 דף לצוות הופה</h2><p class="hint">הקלידו את קוד הצוות פעם אחת במכשיר הזה</p><input class="field" id="pin" type="password" autocomplete="off"><button class="btn primary" id="go" style="margin-top:10px;width:100%">כניסה</button><p class="hint" id="pinErr" style="margin-top:8px"></p></div>`;
+  const go = ()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ localStorage.setItem('hopa_dd_pin',PIN); load(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
+  document.getElementById('go').onclick = go; document.getElementById('pin').addEventListener('keydown',e=>{ if(e.key==='Enter') go(); }); document.getElementById('pin').focus();
+}
+gate();
+</script>
+</body>
+</html>
