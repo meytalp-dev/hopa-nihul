@@ -170,8 +170,10 @@
         <button class="btn dark" id="sendAll" disabled>⚡ שליחה מרוכזת לכל מי שיש טלפון ועוד לא סומן "נשלח"</button>
         <button class="btn ghost" id="sendForum" disabled>📣 תזכורת כללית לפורום רכזי הבוגרים</button>
         <button class="btn ghost" id="pullContacts" disabled>📇 משיכת מספרי הרכזים מאנשי הקשר בוואטסאפ</button>
+        <button class="btn ghost" id="pullAvatars" disabled>📷 תמונות פרופיל וואטסאפ של מי שלא נרשם (לדף הקהילה)</button>
       </div>
       <div id="contactsPanel" style="display:none;margin-top:10px"></div>
+      <div id="avatarsPanel" style="display:none;margin-top:10px"></div>
       <div id="bulkStat" class="hint" style="margin-top:8px"></div>
     </div>
   </section>
@@ -378,7 +380,7 @@ function render(){
   $('#connDot').className='dot '+(on?'on':'off');
   $('#connTxt').textContent=on?'מחובר — אפשר לשלוח אוטומטית ⚡':'לא מחובר — כפתורי ⚡ כבויים (כפתור 💬 עובד תמיד)';
   $('#sendAll').disabled=!on||!missing.some(s=>digits(phoneOf(s))&&!state.sent[s.id]);
-  $('#sendForum').disabled=!on;$('#pullContacts').disabled=!on;
+  $('#sendForum').disabled=!on;$('#pullContacts').disabled=!on;$('#pullAvatars').disabled=!on;
 }
 
 /* ============================================================
@@ -466,6 +468,18 @@ $('#pullContacts').onclick=async()=>{
   panel.querySelectorAll('select[data-ci]').forEach(sel=>{const c=list[+sel.dataset.ci];if(c.school)sel.value=c.school.id;});
   $('#applyContacts').onclick=()=>{let n=0;panel.querySelectorAll('select[data-ci]').forEach(sel=>{const c=list[+sel.dataset.ci];if(!sel.value)return;const s=SCHOOLS.find(x=>x.id===sel.value);const cur=digits(phoneOf(s));if(cur!==digits(c.phone)){state.phones[s.id]=pretty(c.phone);n++;}});
     save('phones',state.phones);render();toast(n?`עודכנו ${n} מספרים ✔`:'אין שינויים — הכל כבר מעודכן','ok');};
+};
+$('#pullAvatars').onclick=async()=>{
+  const panel=$('#avatarsPanel');panel.style.display='block';
+  const targets=SCHOOLS.filter(s=>!state.reg[s.id]&&s.c&&digits(phoneOf(s)));
+  if(!targets.length){panel.innerHTML='<div class="okbox">לכל מי שלא נרשם אין טלפון של רכז/ת — אין ממי למשוך.</div>';return;}
+  panel.innerHTML='<div class="hint">מושך תמונות פרופיל מוואטסאפ ל-'+targets.length+' רכזים/ות…</div>';
+  let r;try{r=await api({action:'avatars',phones:targets.map(s=>digits(phoneOf(s))).join(',')},120000);}catch(e){panel.innerHTML='<div class="warnbox">לא הצלחתי להתחבר: '+esc(e.message)+'</div>';return;}
+  if(!r||!r.ok){panel.innerHTML='<div class="warnbox">⚠️ ה-Apps Script שפרוס עדיין לא מכיר את הפעולה הזו ('+esc((r&&r.error)||'')+'). צריך פעם אחת להדביק את <a href="https://github.com/meytalp-dev/hopa-nihul/blob/main/scripts/Code.gs" target="_blank" rel="noopener">Code.gs המעודכן</a> ב-Apps Script של גיליון המענים ולפרוס גרסה חדשה (Deploy → Manage deployments → ✏️ → New version).</div>';return;}
+  const byPhone={};(r.avatars||[]).forEach(a=>{byPhone[a.phone]=a.url||'';});
+  const got=targets.filter(s=>byPhone[digits(phoneOf(s))]);
+  panel.innerHTML=`<div class="${got.length?'okbox':'warnbox'}">נמצאו תמונות פרופיל ל-${got.length} מתוך ${targets.length}. אלו תמונות הפרופיל הפרטיות שלהם בוואטסאפ — כדאי לבקש אישור לפני שמעלים לדף הקהילה. לחיצה על תמונה פותחת אותה בגודל מלא (לשמירה).</div>
+    <div class="list" style="gap:6px">${targets.map(s=>{const u=byPhone[digits(phoneOf(s))];return `<div class="row" style="grid-template-columns:72px 1fr auto;align-items:center;padding:8px 12px">${u?`<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #FFF200"></a>`:`<div style="width:64px;height:64px;border-radius:50%;background:#f3f3ee;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center">אין תמונה</div>`}<div><div class="nm" style="font-weight:600">${esc(s.c)}</div><div class="hint" style="margin:0">${esc(s.sc)}</div></div><a class="btn ghost sm" href="https://wa.me/${digits(phoneOf(s))}?text=${encodeURIComponent('היי '+s.c.split(' ')[0]+', זו מיטל מהופה 💛 אפשר להשתמש בתמונת הפרופיל שלך מהוואטסאפ לדף קהילת רכזי הבוגרים שלנו? (או לשלוח לי תמונה אחרת שאת/ה אוהב/ת)')}" target="_blank" rel="noopener">💬 לבקש אישור</a></div>`;}).join('')}</div>`;
 };
 $('#sendForum').onclick=async()=>{
   const txt=FORUM_MSG.replace(/\{קישור\}/g,state.link.trim()||'').replace(/\n{3,}/g,'\n\n');

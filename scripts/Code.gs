@@ -337,6 +337,19 @@ function greenSend(chatId, message) {
   return true;
 }
 
+// תמונת פרופיל וואטסאפ של מספר (Green API getAvatar) — מחזיר URL או ''
+function greenAvatar(chatId) {
+  const inst = prop('GREENAPI_INSTANCE'), token = prop('GREENAPI_TOKEN');
+  const url = `https://api.green-api.com/waInstance${inst}/getAvatar/${token}`;
+  const res = UrlFetchApp.fetch(url, {
+    method: 'post', contentType: 'application/json', muteHttpExceptions: true,
+    payload: JSON.stringify({ chatId })
+  });
+  if (res.getResponseCode() !== 200) return '';
+  const j = JSON.parse(res.getContentText() || '{}');
+  return (j.available && j.urlAvatar) ? j.urlAvatar : '';
+}
+
 // מבקש מ-Green קישור הורדה טרי לקובץ של הודעה
 function greenDownloadUrl(chatId, idMessage) {
   const inst = prop('GREENAPI_INSTANCE'), token = prop('GREENAPI_TOKEN');
@@ -460,6 +473,16 @@ function doGet(e) {
         contacts: contacts
           .filter(c => String(c.id || '').endsWith('@c.us') && String(c.name || '').indexOf(q) !== -1)
           .map(c => ({ id: c.id, name: c.name || '' }))
+      };
+    } else if (p.action === 'avatars') {
+      // תמונות פרופיל וואטסאפ לרשימת טלפונים (מופרדים בפסיק, 05X או 972X) — לתצוגה מקדימה בדף התזכורת/הקהילה
+      const phones = String(p.phones || '').split(',').map(x => x.replace(/\D/g, '')).filter(Boolean).slice(0, 40);
+      out = {
+        ok: true,
+        avatars: phones.map(ph => {
+          const intl = ph.startsWith('0') ? '972' + ph.slice(1) : ph;
+          return { phone: ph, url: greenAvatar(intl + '@c.us') };
+        })
       };
     } else if (p.action === 'send') {
       out = sendManyGroups(p.chatIds || '', p.message || '');
