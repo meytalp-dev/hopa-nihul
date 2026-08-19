@@ -68,6 +68,9 @@
   .status.pending   { background: #fdf3d7; color: #8a6d1a; }
   .status.approved  { background: #ddf3e7; color: #1e7a4d; }
   .status.published { background: #dbeafe; color: #1d4ed8; }
+  .status.skipped   { background: #f1f1f1; color: #6b6b6b; text-decoration: line-through; }
+  .post-card.skipped { opacity: .55; }
+  .note { font-size: .85rem; color: #8a6d1a; background: #fff8dc; border-radius: 8px; padding: 6px 10px; margin: 6px 0 0; }
 
   .tabs { display: flex; gap: 8px; margin: 10px 0 12px; flex-wrap: wrap; }
   .tab {
@@ -127,7 +130,8 @@
 const STATUS_LABELS = {
   pending:   { cls: 'pending',   text: '⏳ ממתין לאישור' },
   approved:  { cls: 'approved',  text: '✅ מאושר — יפורסם אוטומטית' },
-  published: { cls: 'published', text: '🚀 פורסם' }
+  published: { cls: 'published', text: '🚀 פורסם' },
+  skipped:   { cls: 'skipped',   text: '⛔ לא יפורסם' }
 };
 const DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 const PLATFORMS = [ {key:'fb', label:'פייסבוק'}, {key:'ig', label:'אינסטגרם'} ];
@@ -152,7 +156,7 @@ fetch('posts-data.json?v=' + Date.now())
       const st = STATUS_LABELS[p.status] || STATUS_LABELS.pending;
       const time = p.when ? p.when.slice(11) : '';
       const card = document.createElement('div');
-      card.className = 'post-card';
+      card.className = 'post-card' + (p.status === 'skipped' ? ' skipped' : '');
 
       const mediaHtml = p.type === 'video'
         ? '<video src="../fb/' + p.file + '" controls preload="metadata" playsinline></video>'
@@ -173,6 +177,7 @@ fetch('posts-data.json?v=' + Date.now())
             (time ? '<span class="when">🕗 ' + time + '</span>' : '') +
             '<span class="status ' + st.cls + '">' + st.text + '</span>' +
           '</div>' +
+          (p.note ? '<div class="note">📝 ' + p.note + '</div>' : '') +
           '<div class="tabs">' + tabsHtml + '</div>' +
           '<div class="caption-box">' +
             '<button class="copy-btn">העתקה</button>' +
