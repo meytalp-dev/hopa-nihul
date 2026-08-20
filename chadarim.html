@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>חלוקת חדרים בזום · מפגש רכזי בוגרים #1 · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;--warn:#f0a500;--blue:#2b6cb0;
+    --shadow:0 4px 18px rgba(31,31,38,.07);--shadow-lg:0 14px 40px rgba(31,31,38,.14)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:1060px;margin:0 auto;padding:0 16px}
+
+  header{background:#111;color:#fff;padding:18px 0 22px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%);pointer-events:none}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex;align-items:center}
+  .logo img{height:40px;display:block}
+  header h1{margin:0;font-size:22px;font-weight:900;letter-spacing:-.2px}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:2px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+  .meet small{font-weight:500;opacity:.8}
+
+  section{margin-top:20px}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:16px}
+  .card h2{margin:0 0 4px;font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 .time{background:#111;color:var(--yellow);border-radius:8px;padding:2px 10px;font-size:14px;font-weight:800}
+  .card h2 .cnt{font-weight:600;color:var(--muted);font-size:13.5px}
+  .hint{font-size:13px;color:var(--muted);margin:2px 0 10px}
+  .warnbox{background:#fff8dc;border:1.5px solid #f6dc7a;color:#6b5300;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:8px}
+  .okbox{background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:8px}
+  .infobox{background:#eaf2fb;border:1.5px solid #bcd5ef;color:#1d4e7e;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:8px}
+  .live{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+  .live b{color:var(--ok)}
+
+  .rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:10px}
+  .room{background:var(--pink-soft);border:1.5px solid #f6c3dc;border-radius:14px;padding:10px}
+  .room h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--pink-dark);display:flex;justify-content:space-between;align-items:center}
+  .room h3 .rc{font-weight:600;font-size:12px;color:var(--muted)}
+  .room.low{border-color:#f6dc7a;background:#fffbe8}
+  .chip{display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;margin-top:6px;cursor:pointer;user-select:none;transition:.12s}
+  .chip:first-of-type{margin-top:0}
+  .chip:hover{border-color:var(--pink)}
+  .chip.sel{border-color:var(--pink);background:var(--pink-soft);box-shadow:0 0 0 2px rgba(232,52,138,.25)}
+  .chip.out{opacity:.45}
+  .chip.out .nm{text-decoration:line-through}
+  .chip .nm{font-weight:700;font-size:13.5px;line-height:1.25}
+  .chip .sc{font-size:11.5px;color:var(--muted);line-height:1.2}
+  .chip .x{margin-inline-start:auto;border:none;background:none;color:var(--muted);font-weight:800;cursor:pointer;padding:2px 4px;border-radius:6px;font-size:12px;flex:none}
+  .chip .x:hover{background:#f3e3ec;color:var(--pink-dark)}
+  .roles{font-size:12px;color:var(--muted);margin-top:8px;border-top:1px dashed #f6c3dc;padding-top:6px}
+
+  .pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin-top:10px}
+  .pair{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13.5px}
+  .pair b{color:var(--pink-dark)}
+  .pair .n{font-weight:800;color:var(--muted);font-size:12px;margin-inline-end:6px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer;text-decoration:none;transition:.15s;font-size:13.5px;line-height:1.2}
+  .btn:active{transform:scale(.97)}
+  .btn.pink{background:var(--pink);color:#fff}.btn.pink:hover{background:var(--pink-dark)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.btn.ghost:hover{border-color:var(--pink);color:var(--pink-dark)}
+  .btn.dark{background:#111;color:var(--yellow)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+  .steps{margin:8px 0 0;padding:0;list-style:none;counter-reset:s}
+  .steps li{counter-increment:s;position:relative;padding:6px 34px 6px 0;font-size:13.5px}
+  .steps li:before{content:counter(s);position:absolute;right:0;top:7px;width:22px;height:22px;border-radius:50%;background:var(--pink);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+
+  footer{margin:34px 0 20px;text-align:center;font-size:12.5px;color:var(--muted)}
+  .toast{position:fixed;bottom:18px;inset-inline-start:50%;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;border-radius:12px;padding:10px 18px;font-size:13.5px;font-weight:600;transition:.25s;z-index:99;opacity:0}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  @media print{header{background:#fff;color:#111}.actions,.btn,.chip .x,.warnbox,.infobox,.live{display:none!important}body{background:#fff}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <div class="hrow">
+      <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+      <div>
+        <h1>חלוקת חדרים בזום · "בוגר אחד, שנה אחת"</h1>
+        <div class="sub">מפגש רכזי בוגרים #1 · דף עבודה למפעילה — פתוח על מסך שני ליד הזום</div>
+      </div>
+    </div>
+    <div class="meet">🗓️ יום א' 24.8 · 11:00–13:00 <small>· זום · 20 נרשמים</small></div>
+  </div>
+</header>
+
+<main class="in">
+
+<section>
+  <div class="card">
+    <h2>איך זה עובד בזום</h2>
+    <p class="hint">אי אפשר לשבץ מראש דרך זום עצמו: שיבוץ מוקדם (CSV) דורש את כתובת המייל של חשבון הזום של כל משתתף — ואספנו רק טלפונים. חוץ מזה, זום מאפשר רק תצורה קבועה אחת מראש, ולנו יש שלושה סבבים שונים. לכן: המפעילה משבצת ידנית, עם הדף הזה פתוח.</p>
+    <ol class="steps">
+      <li>לפני המפגש: לוודא שב-Settings של החשבון מופעל Breakout Rooms + האפשרות Assign manually. להגדיר טיימר לחדרים ו-60 שניות התראה לפני סגירה.</li>
+      <li><b>11:18 · סבב 1:</b> Breakout Rooms → Create 5 Rooms → Manually → לשבץ לפי הרשימה למטה → Open All Rooms (6 דקות).</li>
+      <li><b>11:38 · סבב 2:</b> Recreate → Create 6 Rooms → Manually → לשבץ לפי סבב 2 → Open (10 דקות).</li>
+      <li><b>בהפסקה (12:15):</b> Recreate → 10 חדרים → לשבץ זוגות. עדיפות לזוגות שנוצרו בצ'אט בפתיחה (המפעילה רשמה אותם ב-11:05); מי שנשאר בלי זוג — לפי חלוקת הגיבוי למטה.</li>
+      <li>מי שמתנתק/ת וחוזר — זום לא מחזיר אותו לחדר אוטומטית. לשבץ ידנית מחדש לפי הדף.</li>
+    </ol>
+    <div class="infobox">💡 לירון, מיטל ובארי לא משובצים: המדברת והמפעילה נשארות במליאה, ולירון מסתובבת בין חדרים (Join אל חדר מהרשימה, ואז חוזרים).</div>
+    <div class="live" id="live">🔄 בודק מול גיליון ההרשמה…</div>
+    <div class="warnbox" id="newreg" style="display:none"></div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>סבב 1 · המעטפה <span class="time">11:18</span> <span class="cnt">5 חדרים × 4 · 6 דקות</span></h2>
+    <p class="hint">שלוש שאלות על אלון: מה יודעים / מה לא יודעים / מה הפעולה הראשונה מחר בבוקר. השיבוץ מערבב אזורים ומפריד רכזים מאותו בית ספר. לחיצה על שם ואז על שם אחר — מחליפה ביניהם. ✕ מסמן שלא הגיע/ה.</p>
+    <div class="rooms" id="r1"></div>
+    <div class="actions">
+      <button class="btn pink" data-copy="r1">📋 העתקת סבב 1</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>סבב 2 · שיחת 4 השאלות <span class="time">11:38</span> <span class="cnt">4 חדרים × 3 + 2 חדרים × 4 · 10 דקות</span></h2>
+    <p class="hint">בכל חדר בוחרים תפקידים בפנים: אלון / הרכז·ת / צופה. בחדרים של 4 — שני צופים. השיבוץ שונה מסבב 1 כדי שכולם יפגשו אנשים חדשים.</p>
+    <div class="rooms" id="r2"></div>
+    <div class="actions">
+      <button class="btn pink" data-copy="r2">📋 העתקת סבב 2</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>סבב 3 · השנה שלי בדף אחד <span class="time">12:25</span> <span class="cnt">10 זוגות · 8 דקות</span></h2>
+    <p class="hint">"מה 3 הפעולות הראשונות שלך בספטמבר?" — <b>עדיפות ראשונה: הזוגות שנוצרו במשחק הצ'אט בפתיחה</b> (מי כתב ערך של מי). הרשימה כאן היא גיבוי למי שלא נוצר לו זוג.</p>
+    <div class="pairs" id="r3"></div>
+    <div class="actions">
+      <button class="btn pink" data-copy="r3">📋 העתקת זוגות הגיבוי</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>כלים</h2>
+    <div class="actions" style="margin-top:4px">
+      <button class="btn dark" onclick="window.print()">🖨️ הדפסה / PDF</button>
+      <button class="btn ghost" id="resetBtn">↩️ איפוס כל השינויים</button>
+      <a class="btn ghost" href="mifgash-zoom-manche.html">📖 לרץ-שיט המלא</a>
+      <a class="btn ghost" href="tizkoret.html">📣 דף התזכורות</a>
+    </div>
+    <div class="okbox">שינויים (החלפות וסימוני חיסורים) נשמרים אוטומטית בדפדפן הזה. איפוס מחזיר לחלוקה המקורית.</div>
+  </div>
+</section>
+
+</main>
+<footer>הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · דף פנימי למפעילת המפגש</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---- data ----
+var PEOPLE = {
+  monique: {n:"מוניק איפרח ממן", s:"עמל רמת דוד"},
+  avichai: {n:"אביחי חריר", s:"עתיד שמיים ק. מוצקין"},
+  zohar:   {n:"זהור אלעוברה", s:"עמל טכנולוגי רהט"},
+  talia:   {n:"טליה ברנע", s:"שיח' דנון עמקה"},
+  mor:     {n:"מור", s:"עמל רמת דוד"},
+  lee:     {n:"לי ארנן", s:"התיכון החברתי ת\"א"},
+  taliy:   {n:"טלי יונה", s:"אורט צור ברק"},
+  maria:   {n:"מריה דיאב", s:"אורט כרמל חיפה"},
+  samer:   {n:"סאמר מיעארי", s:"אלאמאני סחנין"},
+  hiam:    {n:"היאם אזברגה", s:"דרור נווה מדבר"},
+  riki:    {n:"ריקי מסס", s:"יוצר עמל אשדוד"},
+  ali:     {n:"עלי עותמאן", s:"עתיד אבדאע ביר אלמכסור"},
+  tohar:   {n:"טוהר מרסדס כהן", s:"אורט מרום עכו"},
+  rania:   {n:"ראניה חגו", s:"טכנולוגי לקייה"},
+  livna:   {n:"לבנה גיל בן חמו", s:"מגשימים כרמיאל"},
+  yaakov:  {n:"יעקב גרונספלד", s:"אורט בית הערבה"},
+  mohamad: {n:"מוחמד גזאל (מנהל)", s:"אלאמאני סחנין"},
+  malsha:  {n:"מלשה חנין", s:"אורט כרמל חיפה"},
+  munir:   {n:"מוניר עבדאלהאדי", s:"מנאראת טוראען"},
+  sigal:   {n:"סיגל דדון", s:"אורט אשקלון"}
+};
+var DEFAULT = {
+  r1: [
+    ["monique","zohar","hiam","yaakov"],
+    ["avichai","rania","malsha","tohar"],
+    ["mor","samer","lee","taliy"],
+    ["talia","mohamad","ali","sigal"],
+    ["maria","munir","riki","livna"]
+  ],
+  r2: [
+    ["zohar","avichai","lee"],
+    ["munir","talia","tohar"],
+    ["rania","mor","yaakov"],
+    ["ali","monique","maria"],
+    ["samer","malsha","sigal","livna"],
+    ["mohamad","taliy","hiam","riki"]
+  ],
+  r3: [
+    ["monique","sigal"],["mor","hiam"],["avichai","maria"],["talia","rania"],["lee","tohar"],
+    ["taliy","livna"],["zohar","malsha"],["yaakov","samer"],["ali","riki"],["mohamad","munir"]
+  ]
+};
+var LS_KEY = "hopa-chadarim-24-8";
+var state = load();
+function load(){
+  try{ var s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.rooms && s.out) return s; }catch(e){}
+  return { rooms: JSON.parse(JSON.stringify(DEFAULT)), out: {} };
+}
+function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+var $=function(id){return document.getElementById(id)};
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1800)}
+
+var sel = null; // {round, room, idx}
+function render(){
+  ["r1","r2"].forEach(function(rid){
+    var host = $(rid); host.innerHTML = "";
+    state.rooms[rid].forEach(function(room, ri){
+      var present = room.filter(function(k){return !state.out[k]}).length;
+      var div = document.createElement("div");
+      div.className = "room" + (present < (rid==="r1"?3:2) ? " low" : "");
+      var h = document.createElement("h3");
+      h.innerHTML = "חדר " + (ri+1) + ' <span class="rc">' + present + " נוכחים</span>";
+      div.appendChild(h);
+      room.forEach(function(key, pi){
+        div.appendChild(chip(key, rid, ri, pi));
+      });
+      if(rid==="r2"){
+        var roles = document.createElement("div");
+        roles.className = "roles";
+        roles.textContent = room.length === 4 ? "תפקידים: אלון · רכז/ת · 2 צופים" : "תפקידים: אלון · רכז/ת · צופה";
+        div.appendChild(roles);
+      }
+      host.appendChild(div);
+    });
+  });
+  var host3 = $("r3"); host3.innerHTML = "";
+  state.rooms.r3.forEach(function(pair, ri){
+    var d = document.createElement("div");
+    d.className = "pair";
+    var names = pair.map(function(k){
+      var cls = state.out[k] ? 'style="text-decoration:line-through;opacity:.5"' : "";
+      return "<b " + cls + ">" + PEOPLE[k].n + "</b>";
+    }).join(" ↔ ");
+    d.innerHTML = '<span class="n">' + (ri+1) + '</span>' + names;
+    host3.appendChild(d);
+  });
+}
+function chip(key, rid, ri, pi){
+  var p = PEOPLE[key];
+  var c = document.createElement("div");
+  c.className = "chip" + (state.out[key] ? " out" : "") + (sel && sel.round===rid && sel.room===ri && sel.idx===pi ? " sel" : "");
+  c.innerHTML = '<span><span class="nm">' + p.n + '</span><br><span class="sc">' + p.s + '</span></span>';
+  var x = document.createElement("button");
+  x.className = "x"; x.title = "סימון שלא הגיע/ה"; x.textContent = state.out[key] ? "↩" : "✕";
+  x.addEventListener("click", function(ev){
+    ev.stopPropagation();
+    state.out[key] = !state.out[key];
+    if(state.out[key]) toast(p.n + " סומן/ה כלא נוכח/ת — שימו לב לחדרים שנחלשו"); else toast(p.n + " חזר/ה");
+    save(); render();
+  });
+  c.appendChild(x);
+  c.addEventListener("click", function(){
+    if(sel && sel.round === rid && !(sel.room===ri && sel.idx===pi)){
+      var a = state.rooms[rid][sel.room][sel.idx];
+      state.rooms[rid][sel.room][sel.idx] = state.rooms[rid][ri][pi];
+      state.rooms[rid][ri][pi] = a;
+      sel = null; save(); render();
+      toast("הוחלפו ✓");
+    } else if (sel && sel.room===ri && sel.idx===pi && sel.round===rid){
+      sel = null; render();
+    } else {
+      sel = {round: rid, room: ri, idx: pi}; render();
+      toast("עכשיו לחצו על שם שני להחלפה (באותו סבב)");
+    }
+  });
+  return c;
+}
+
+// copy buttons
+document.querySelectorAll("[data-copy]").forEach(function(b){
+  b.addEventListener("click", function(){
+    var rid = b.getAttribute("data-copy");
+    var lines = state.rooms[rid].map(function(room, i){
+      var names = room.filter(function(k){return !state.out[k]}).map(function(k){return PEOPLE[k].n});
+      return (rid==="r3" ? "זוג " : "חדר ") + (i+1) + ": " + names.join(", ");
+    });
+    var txt = lines.join("\n");
+    navigator.clipboard.writeText(txt).then(function(){toast("הועתק ✓")},function(){
+      window.prompt("העתיקו ידנית:", txt);
+    });
+  });
+});
+
+$("resetBtn").addEventListener("click", function(){
+  if(!confirm("לאפס את כל ההחלפות והחיסורים ולחזור לחלוקה המקורית?")) return;
+  state = { rooms: JSON.parse(JSON.stringify(DEFAULT)), out: {} };
+  save(); render(); toast("אופס ✓");
+});
+
+render();
+
+// ---- live check vs the signup sheet ----
+(function(){
+  var SHEET = "1MfdsObvN0U-finQMmqpD0JyYB-RYFAgOz4aU92joIWY";
+  var url = "https://docs.google.com/spreadsheets/d/" + SHEET + "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent("הרשמות");
+  fetch(url).then(function(r){return r.text()}).then(function(raw){
+    var m = raw.match(/setResponse\(([\s\S]*)\)/);
+    if(!m) throw new Error("gviz");
+    var j = JSON.parse(m[1]);
+    var rows = (j.table.rows||[]).map(function(r){return (r.c||[]).map(function(c){return c&&c.v!=null?String(c.v):""})});
+    var regNames = rows.map(function(r){return (r[1]||"").trim()}).filter(Boolean);
+    var known = Object.keys(PEOPLE).map(function(k){return PEOPLE[k].n.replace(" (מנהל)","")});
+    var fresh = regNames.filter(function(n){
+      return !known.some(function(k){ return k.indexOf(n) !== -1 || n.indexOf(k) !== -1; });
+    });
+    $("live").innerHTML = "🟢 מחובר לגיליון ההרשמה · <b>" + regNames.length + " נרשמים</b> כרגע (החלוקה נבנתה על 20)";
+    if(fresh.length){
+      var box = $("newreg");
+      box.style.display = "";
+      box.innerHTML = "⚠️ <b>נרשמו אחרי בניית החלוקה ועדיין לא משובצים:</b> " + fresh.join(", ") + " — לצרף אותם לחדרים החלשים (המסומנים בצהוב) או לעדכן ידנית.";
+    }
+  }).catch(function(){
+    $("live").innerHTML = "⚪ לא הצלחתי להתחבר לגיליון כרגע — החלוקה למטה מבוססת על 20 הנרשמים נכון ל-20.8.";
+  });
+})();
+</script>
+</body>
+</html>
