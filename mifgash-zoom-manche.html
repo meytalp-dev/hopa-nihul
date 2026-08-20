@@ -55,6 +55,16 @@ tr.brk td{background:#f5f5f5;font-style:italic}
 .secret b{color:var(--yellow)}
 .poll{border:2px solid var(--yellow-deep);background:var(--yellow-soft);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px}
 .poll b{display:block}
+.cloud{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;justify-content:center;background:#fff;border:2px dashed var(--line);border-radius:14px;padding:26px 18px;margin-top:14px;min-height:110px}
+.cloud:empty::before{content:"המילים יופיעו כאן";color:#bbb;font-size:14px}
+.cloud b{font-weight:900;line-height:1.15;white-space:nowrap}
+.cloud-full{display:none;position:fixed;inset:0;background:#fff;z-index:100;overflow:auto;padding:48px 40px;text-align:center}
+.cloud-full.show{display:block}
+.cloud-full h3{font-size:34px;font-weight:900;margin-bottom:6px}
+.cloud-full h3 i{font-style:normal;color:var(--pink)}
+.cloud-full .sub2{color:var(--gray);font-size:17px;margin-bottom:30px}
+.cloud-full .cloud{border:none;gap:16px 38px;padding:10px}
+.cloud-full .close{position:fixed;top:16px;left:16px;font:inherit;font-weight:800;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 16px;cursor:pointer;z-index:101}
 .toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
 .toast.show{opacity:1}
 footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
@@ -84,10 +94,11 @@ footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line
   <p>שתי מנחות, לא אחת. זה מה שמחזיק מפגש זום של שעתיים.</p>
   <ul>
     <li><span class="who a">מדברת</span> מובילה את המליאה, מסבירה כל שיטה, מנהלת דיון. (מיטל)</li>
-    <li><span class="who b">מפעילה</span> פותחת חדרים, משגרת סקרים, מדביקה הודעות בצ'אט, עוקבת אחרי הזמן, מקליטה. לא מדברת במליאה חוץ מהוראות טכניות. (בארי / לירון / מי שנבחר)</li>
-    <li><span class="who l">לירון</span> פתיחה של 8 דקות + משפט סיום.</li>
+    <li><span class="who b">מפעילה</span> פותחת חדרים, משגרת סקרים, מדביקה הודעות בצ'אט, מפעילה את מסך המילים, עוקבת אחרי הזמן, מקליטה. לא מדברת במליאה חוץ מהוראות טכניות. (בארי / מי שנבחר)</li>
+    <li><span class="who l">לירון</span> מנכ"לית העמותה. פתיחה של 5 דקות + משפט סיום.</li>
+    <li><span class="who l">נאוה</span> נאוה גינזבורג. 10 דקות אחרי לירון (לתאם איתה נושא וזמן מראש).</li>
   </ul>
-  <p class="hint">כלל ברזל: אין בלוק פסיבי מעל 8 דקות. כל 8 דקות משהו קורה, סקר / חדר / צ'אט / קישור.</p>
+  <p class="hint">כלל ברזל: חוץ מרבע השעה של הפתיחה (לירון + נאוה), אין בלוק פסיבי מעל 8 דקות. כל 8 דקות משהו קורה, סקר / חדר / צ'אט / מסך מילים.</p>
 </section>
 
 <section>
@@ -95,46 +106,62 @@ footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line
   <table id="sched">
     <thead><tr><th>שעה</th><th>משך</th><th>מה קורה</th><th>מי</th></tr></thead>
     <tbody>
-      <tr class="blk" data-start="0" data-len="10"><td>11:00</td><td>10 דק'</td><td><b>0 · גלריית הרכזים.</b> בכניסה: שיתוף מסך של הפוסטרים מהרישום כמצגת אוטומטית (10 שנ' לפוסטר), מוזיקה. ב-11:03: "כתבו בצ'אט ערך של מישהו אחר שגם שלכם: השם שלי · הערך · של מי". <span class="tip">המפעילה רושמת את הזוגות שנוצרים בצ'אט: זה בסיס חדרי הזוגות של סעיף 6.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט+זוגות</span></td></tr>
-      <tr class="blk" data-start="10" data-len="8"><td>11:10</td><td>8 דק'</td><td><b>לירון: למה אנחנו כאן.</b> הנתון (80% מוכרים לרווחה, עם ליווי 10%), מה השנה מביאה, מה מצפים מהרכזים, ומשפט אחד על "היום נלמד דרך בוגר אחד". מצלמות פתוחות לכולם.</td><td><span class="who l">לירון</span></td></tr>
-      <tr class="blk" data-start="18" data-len="10"><td>11:18</td><td>10 דק'</td><td><b>1 · המעטפה.</b> "פתחו את סעיף 1 בדף. זה אלון." דקה קריאה בשקט. חדרים של 4, 6 דקות, שלוש שאלות (יודעים / לא יודעים / פעולה ראשונה). חזרה: נציג/ה של חדר אחד, דקה. <span class="tip">מה לחלץ בסיכום: כמעט כולם יגידו "מתקשרים אליו". יופי, זו השיטה. ו"מה לא יודעים" תמיד ארוך יותר מ"מה יודעים", וזו הנקודה.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×4</span></td></tr>
-      <tr class="blk" data-start="28" data-len="10"><td>11:28</td><td>10 דק'</td><td><b>2 · רמזור.</b> 3 דקות הסבר על שלושת הצבעים והקצב. <b>סקר זום #1</b>: "איזה צבע אלון עכשיו?" 60 שניות. מציגים תוצאה, לא דנים בה: "זוכרים את המספר. נחזור אליו". 3 דקות: כולם פותחים את הפורטל של בית הספר ומוצאים איפה הכרטיס, הצבע והשיחה. <span class="tip">רוב החדר יבחר ירוק ("הכל בסדר, עובד"). זה מה שאנחנו רוצים שיקרה.</span></td><td><span class="who a">מדברת</span><span class="who b">סקר #1</span></td></tr>
-      <tr class="blk" data-start="38" data-len="17"><td>11:38</td><td>17 דק'</td><td><b>3 · שיחת 4 השאלות.</b> 3 דקות הסבר על הפרוטוקול. חדרים של 3, 10 דקות (7 שיחה + 3 שיחה על השיחה). "בוחרים תפקיד רק בתוך החדר. רק אלון פותח את הכרטיס השחור." חזרה: <b>סקר זום #2</b> "איזה צבע אלון עכשיו?" 60 שניות. מציגים ליד סקר #1. 3 דקות מליאה: "מה גילינו שלא היה בתיק? איזו שאלה שינתה?" <span class="tip">הרגע החשוב במפגש: הצבע זז מירוק לכתום בלי שאף אחד אמר להם. לומר את זה במילים: "הרמזור חי. השיחה היא מה שמזיז אותו".</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×3, סקר #2</span></td></tr>
-      <tr class="blk" data-start="55" data-len="10"><td>11:55</td><td>10 דק'</td><td><b>4 · מאגר המענים.</b> 2 דקות: "אתם מתווכים, לא מומחים". <b>3 דקות טיימר</b> (בדף): מצאו מענה אמיתי לאלון, הדביקו בצ'אט. הראשון/ה מספר/ת בקול איך מצא/ה. 3 דקות: המדברת מדגימה חיפוש בשער המענים / hopa.org.il בשיתוף מסך. <span class="tip">לשים לב מי לא הדביק כלום, אלה שצריכים הדרכת מערכת בספטמבר.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
-      <tr class="blk" data-start="65" data-len="10"><td>12:05</td><td>10 דק'</td><td><b>5 · מדרג + תיעוד.</b> 3 דקות: ארבע המדרגות. "איפה אלון?" ידיים / ריאקשנים. 4 דקות: כותבים שורת תיעוד ומדביקים בצ'אט. המדברת מקריאה 3 ואומרת מה טוב ומה חסר (תאריך? מה סוכם? צבע?). <span class="tip">אלון = בין יידוע לתיווך: שולחים מידע, ואם לא נרשם תוך שבועיים, עולים לתיווך. זה מלמד שהמדרג דינמי כמו הרמזור.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
-      <tr class="blk brk" data-start="75" data-len="10"><td>12:15</td><td>10 דק'</td><td>הפסקה. מצלמות כבויות, מוזיקה, טיימר על המסך. המפעילה מכינה את חדרי הזוגות מהגלריה.</td><td><span class="who b">חדרי זוגות</span></td></tr>
-      <tr class="blk" data-start="85" data-len="23"><td>12:25</td><td>23 דק'</td><td><b>6 · השנה שלי בדף אחד.</b> 2 דקות: עוגני השנה (על המסך). 8 דקות לבד בסעיף 6 בדף. 8 דקות בזוגות מהגלריה: "מה 3 הפעולות הראשונות שלך בספטמבר?" חזרה, 5 דקות: 4 אנשים אומרים פעולה אחת. "לחצו שליחה בוואטסאפ, זה מגיע אלינו". <span class="tip">השאלה הפתוחה בטופס ("מה לא יעבוד ב-2 ש"ש") היא איסוף משוב על מסמך הליבה, שעדיין טיוטה. לקרוא הכול לפני השיחות האישיות.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרי זוגות</span></td></tr>
-      <tr class="blk" data-start="108" data-len="12"><td>12:48</td><td>12 דק'</td><td><b>7 · סגירה.</b> "משפט אחד שאני לוקח/ת" בצ'אט. המדברת מקריאה 5. לירון: משפט סיום. מצלמות פתוחות, צילום מסך קבוצתי (המפעילה). מה הלאה: פורום, שיחות אישיות בספטמבר, מפגש הבא. סיום 13:00 בדיוק.</td><td><span class="who a">מדברת</span><span class="who l">לירון</span><span class="who b">צילום</span></td></tr>
+      <tr class="blk" data-start="0" data-len="5"><td>11:00</td><td>5 דק'</td><td><b>0 · פתיחה: לירון גולן, מנכ"לית.</b> למה שנת הבוגרים הזו חשובה: הנתון (80% מוכרים לרווחה, עם ליווי 10%), מה השנה מביאה, מה מצפים מהרכזים. מצלמות פתוחות לכולם. <span class="tip">בכניסה (10:55–11:00): שיתוף מסך של הפוסטרים מהרישום כמצגת אוטומטית, מוזיקה.</span></td><td><span class="who l">לירון</span></td></tr>
+      <tr class="blk" data-start="5" data-len="10"><td>11:05</td><td>10 דק'</td><td><b>נאוה גינזבורג.</b> 10 דקות. לתאם איתה מראש נושא, ומי מציגה אותה (המדברת, במשפט אחד). <span class="tip">המפעילה שומרת על הזמן: ב-11:14 הודעה פרטית "דקה אחרונה".</span></td><td><span class="who l">נאוה</span></td></tr>
+      <tr class="blk" data-start="15" data-len="12"><td>11:15</td><td>12 דק'</td><td><b>1 · מהי קהילה עבורכם.</b> 3 דקות: כל אחד כותב <b>מילה אחת</b> בצ'אט ("מהי קהילה עבורכם?"). המפעילה מעתיקה את הצ'אט למסך המילים (סעיף ג כאן) ומשתפת מסך — כל המילים של כולם יחד. 4 דקות: כל אחד ממלא בדף את "הקהילה הסודית שלי" (קהילה שאני שייך/ת אליה, מה היא נותנת לי, איך היא מייצרת שייכות) ומדביק בצ'אט. 3 דקות: 3–4 משתפים בקול. 2 דקות גשר: "מה שהקהילות שלכם נותנות לכם — זה בדיוק מה שאנחנו בונים השנה לבוגרים". <span class="tip">לחלץ בשיתופים את המכניקה של שייכות: זוכרים אותי, יש שפה פנימית, שמים לב כשאני נעלם/ת. אלה בדיוק הרמזור, הברכות והשיחות היזומות.</span></td><td><span class="who a">מדברת</span><span class="who b">מסך המילים</span></td></tr>
+      <tr class="blk" data-start="27" data-len="8"><td>11:27</td><td>8 דק'</td><td><b>2 · גלריית הרכזים.</b> הפוסטרים מהרישום על המסך (10 שנ' לפוסטר). "כתבו בצ'אט ערך של מישהו אחר שגם שלכם: השם שלי · הערך · של מי". <span class="tip">המפעילה רושמת את הזוגות שנוצרים בצ'אט: זה בסיס חדרי הזוגות של סעיף 8.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט+זוגות</span></td></tr>
+      <tr class="blk" data-start="35" data-len="10"><td>11:35</td><td>10 דק'</td><td><b>3 · המעטפה.</b> "פתחו את סעיף 3 בדף. זה אלון." דקה קריאה בשקט. חדרים של 4, 6 דקות, שלוש שאלות (יודעים / לא יודעים / פעולה ראשונה). חזרה: נציג/ה של חדר אחד, דקה. <span class="tip">מה לחלץ בסיכום: כמעט כולם יגידו "מתקשרים אליו". יופי, זו השיטה. ו"מה לא יודעים" תמיד ארוך יותר מ"מה יודעים", וזו הנקודה.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×4</span></td></tr>
+      <tr class="blk" data-start="45" data-len="8"><td>11:45</td><td>8 דק'</td><td><b>4 · רמזור.</b> 4 דקות הסבר על שלושת הצבעים והקצב. <b>סקר זום #1</b>: "איזה צבע אלון עכשיו?" 60 שניות. מציגים תוצאה, לא דנים בה: "זוכרים את המספר. נחזור אליו". <span class="tip">רוב החדר יבחר ירוק ("הכל בסדר, עובד"). זה מה שאנחנו רוצים שיקרה.</span></td><td><span class="who a">מדברת</span><span class="who b">סקר #1</span></td></tr>
+      <tr class="blk" data-start="53" data-len="17"><td>11:53</td><td>17 דק'</td><td><b>5 · שיחת 4 השאלות.</b> 3 דקות הסבר על הפרוטוקול. חדרים של 3, 10 דקות (7 שיחה + 3 שיחה על השיחה). "בוחרים תפקיד רק בתוך החדר. רק אלון פותח את הכרטיס השחור." חזרה: <b>סקר זום #2</b> "איזה צבע אלון עכשיו?" 60 שניות. מציגים ליד סקר #1. 3 דקות מליאה: "מה גילינו שלא היה בתיק? איזו שאלה שינתה?" <span class="tip">הרגע החשוב במפגש: הצבע זז מירוק לכתום בלי שאף אחד אמר להם. לומר את זה במילים: "הרמזור חי. השיחה היא מה שמזיז אותו".</span></td><td><span class="who a">מדברת</span><span class="who b">חדרים ×3, סקר #2</span></td></tr>
+      <tr class="blk" data-start="70" data-len="10"><td>12:10</td><td>10 דק'</td><td><b>6 · מאגר המענים.</b> 2 דקות: "אתם מתווכים, לא מומחים". <b>3 דקות טיימר</b> (בדף): מצאו מענה אמיתי לאלון, הדביקו בצ'אט. הראשון/ה מספר/ת בקול איך מצא/ה. 3 דקות: המדברת מדגימה חיפוש בשער המענים / hopa.org.il בשיתוף מסך. <span class="tip">לשים לב מי לא הדביק כלום, אלה שצריכים הדרכת מערכת בספטמבר.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
+      <tr class="blk" data-start="80" data-len="10"><td>12:20</td><td>10 דק'</td><td><b>7 · מדרג + תיעוד.</b> 3 דקות: ארבע המדרגות. "איפה אלון?" ידיים / ריאקשנים. 4 דקות: כותבים שורת תיעוד ומדביקים בצ'אט. המדברת מקריאה 3 ואומרת מה טוב ומה חסר (תאריך? מה סוכם? צבע?). <span class="tip">אלון = בין יידוע לתיווך: שולחים מידע, ואם לא נרשם תוך שבועיים, עולים לתיווך. זה מלמד שהמדרג דינמי כמו הרמזור.</span></td><td><span class="who a">מדברת</span><span class="who b">צ'אט</span></td></tr>
+      <tr class="blk brk" data-start="90" data-len="8"><td>12:30</td><td>8 דק'</td><td>הפסקה. מצלמות כבויות, מוזיקה, טיימר על המסך. חוזרים ב-12:38. המפעילה מכינה את חדרי הזוגות מהגלריה.</td><td><span class="who b">חדרי זוגות</span></td></tr>
+      <tr class="blk" data-start="98" data-len="12"><td>12:38</td><td>12 דק'</td><td><b>8 · השנה שלי בדף אחד.</b> 6 דקות לבד בסעיף 8 בדף (רק השאלות: שם, מספרים, 3 פעולות, מה צריך מהופה, מה לא יעבוד). 4 דקות בזוגות מהגלריה: "מה 3 הפעולות הראשונות שלך בספטמבר?" 2 דקות: "לחצו שליחה בוואטסאפ, זה מגיע אלינו". <span class="tip">השאלה הפתוחה בטופס ("מה לא יעבוד ב-2 ש"ש") היא איסוף משוב על מסמך הליבה, שעדיין טיוטה. לקרוא הכול לפני השיחות האישיות.</span></td><td><span class="who a">מדברת</span><span class="who b">חדרי זוגות</span></td></tr>
+      <tr class="blk" data-start="110" data-len="10"><td>12:50</td><td>10 דק'</td><td><b>9 · סגירה.</b> "משפט אחד שאני לוקח/ת" בצ'אט. המדברת מקריאה 5. לירון: משפט סיום. מצלמות פתוחות, צילום מסך קבוצתי (המפעילה). מה הלאה: פורום, שיחות אישיות בספטמבר, מפגש הבא. סיום 13:00 בדיוק.</td><td><span class="who a">מדברת</span><span class="who l">לירון</span><span class="who b">צילום</span></td></tr>
     </tbody>
   </table>
 </section>
 
 <section>
-  <h2><span>ג</span>סקרי הזום להגדרה מראש</h2>
-  <p class="hint">להגדיר בזום לפני המפגש (Polls), כדי לשגר בלחיצה. אותו נוסח בדיוק בשני הסקרים הראשונים, זה מכוון.</p>
-  <div class="poll"><b>סקר #1 (11:31)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק, עוקבים מרחוק / 🟠 כתום, עוקבים מקרוב / 🔴 אדום, נכנסים לפעולה</div>
-  <div class="poll"><b>סקר #2 (11:51)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק / 🟠 כתום / 🔴 אדום</div>
-  <div class="poll"><b>סקר #3, רשות (12:50)</b> שאלה: כמה מוכן/ה אני לפתוח את השנה עם הבוגרים שלי? · תשובות: 1 / 2 / 3 / 4 / 5</div>
+  <h2><span>ג</span>מסך המילים: מהי קהילה עבורכם</h2>
+  <p class="hint">ב-11:15 המשתתפים כותבים מילה אחת בצ'אט. המפעילה מסמנת את הודעות הצ'אט, מעתיקה, מדביקה כאן ולוחצת "הצגה" — הדף שולף רק את המילים (גם אם הודבקו שורות "מאת X אל כולם"). מילה שחוזרת אצל כמה אנשים גדלה. ואז "מסך מלא" + שיתוף מסך בזום.</p>
+  <textarea id="wordsIn" placeholder="הדביקו כאן את הצ'אט, או כתבו מילה בכל שורה" style="width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:15px;min-height:110px;margin-top:10px"></textarea>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <button id="wordsGo" style="font:inherit;font-weight:800;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;background:var(--pink);color:#fff">הצגה</button>
+    <button id="wordsFull" style="font:inherit;font-weight:800;border:2px solid var(--line);border-radius:10px;padding:10px 18px;cursor:pointer;background:#fff">מסך מלא לשיתוף</button>
+    <button id="wordsClear" style="font:inherit;font-weight:700;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;background:#f0f0f0;color:var(--gray)">ניקוי</button>
+  </div>
+  <div id="cloud" class="cloud"></div>
 </section>
 
 <section>
-  <h2><span>ד</span>הודעות מוכנות לצ'אט</h2>
+  <h2><span>ד</span>סקרי הזום להגדרה מראש</h2>
+  <p class="hint">להגדיר בזום לפני המפגש (Polls), כדי לשגר בלחיצה. אותו נוסח בדיוק בשני הסקרים הראשונים, זה מכוון.</p>
+  <div class="poll"><b>סקר #1 (11:49)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק, עוקבים מרחוק / 🟠 כתום, עוקבים מקרוב / 🔴 אדום, נכנסים לפעולה</div>
+  <div class="poll"><b>סקר #2 (12:06)</b> שאלה: איזה צבע אלון עכשיו? · תשובות: 🟢 ירוק / 🟠 כתום / 🔴 אדום</div>
+  <div class="poll"><b>סקר #3, רשות (12:52)</b> שאלה: כמה מוכן/ה אני לפתוח את השנה עם הבוגרים שלי? · תשובות: 1 / 2 / 3 / 4 / 5</div>
+</section>
+
+<section>
+  <h2><span>ה</span>הודעות מוכנות לצ'אט</h2>
   <p class="hint">המפעילה מדביקה בזמן הנכון. לחיצה על "העתקה".</p>
   <div class="msg"><b class="t">11:00 · עם הכניסה</b><button class="cp">העתקה</button>ברוכים הבאים 👋 פתחו את דף המפגש בטלפון או במסך שני, הוא ילווה אותנו לאורך כל השעתיים:
 https://meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html</div>
-  <div class="msg"><b class="t">11:03 · גלריה</b><button class="cp">העתקה</button>מצאו בפוסטרים ערך אחד של מישהו אחר שהוא גם שלכם, וכתבו כאן: השם שלי · הערך · של מי 🙂</div>
-  <div class="msg"><b class="t">11:19 · המעטפה</b><button class="cp">העתקה</button>סעיף 1 בדף: התיק של אלון. בחדרים (6 דקות): מה אנחנו יודעים? מה לא יודעים? מה הפעולה הראשונה מחר בבוקר?</div>
-  <div class="msg"><b class="t">11:31 · רמזור</b><button class="cp">העתקה</button>סעיף 2: איזה צבע אלון עכשיו? סמנו בדף וענו על הסקר. אחר כך: פתחו את הפורטל של בית הספר שלכם ומצאו איפה יושב הכרטיס של בוגר.</div>
-  <div class="msg"><b class="t">11:41 · שיחה</b><button class="cp">העתקה</button>סעיף 3: חדרים של 3, 10 דקות. בוחרים תפקיד רק בתוך החדר: אלון / הרכז/ת / הצופה. רק מי שהוא אלון פותח את הכרטיס השחור 🤫 7 דקות שיחה + 3 דקות שיחה על השיחה.</div>
-  <div class="msg"><b class="t">11:57 · מענה</b><button class="cp">העתקה</button>סעיף 4: 3 דקות, לבד. מצאו לאלון מענה אמיתי אחד והדביקו כאן את הקישור או השם. שער המענים: https://meytalp-dev.github.io/hopa-nihul/manim-bogrim.html · המאגר המלא: https://hopa.org.il</div>
-  <div class="msg"><b class="t">12:08 · תיעוד</b><button class="cp">העתקה</button>סעיף 5: כתבו את שורת התיעוד של השיחה עם אלון (תאריך · נושאים · צרכים · מה סוכם · צבע) והדביקו כאן. שתי שורות, לא יותר.</div>
-  <div class="msg"><b class="t">12:15 · הפסקה</b><button class="cp">העתקה</button>הפסקה של 10 דקות ☕ חוזרים ב-12:25 בדיוק, ואז עוברים מאלון אליכם.</div>
-  <div class="msg"><b class="t">12:27 · השנה שלי</b><button class="cp">העתקה</button>סעיף 6: השנה שלי בדף אחד. 8 דקות לבד, ואז חדרי זוגות. בסוף לחצו "שליחה להופה בוואטסאפ", זה מגיע אלינו והוא הבסיס לשיחה האישית איתכם בספטמבר.</div>
-  <div class="msg"><b class="t">12:48 · סגירה</b><button class="cp">העתקה</button>משפט אחד שאתם לוקחים מהיום 👇 ואז מצלמות פתוחות לצילום קבוצתי 📸</div>
+  <div class="msg"><b class="t">11:15 · קהילה, מילה אחת</b><button class="cp">העתקה</button>מהי קהילה עבורכם? כתבו כאן מילה אחת 👇 עוד רגע נראה את כל המילים של כולנו על המסך ✨</div>
+  <div class="msg"><b class="t">11:18 · הקהילה הסודית שלי</b><button class="cp">העתקה</button>סעיף 1 בדף: חשבו על קהילה אחת שאתם באמת שייכים אליה (לאו דווקא מהעבודה!). כתבו כאן: אני שייך/ת לקהילת ___ · היא נותנת לי ___ · היא מייצרת שייכות ככה: ___ + אימוג'י שמייצג אותה ⚽🎸🏠</div>
+  <div class="msg"><b class="t">11:27 · גלריה</b><button class="cp">העתקה</button>מצאו בפוסטרים ערך אחד של מישהו אחר שהוא גם שלכם, וכתבו כאן: השם שלי · הערך · של מי 🙂</div>
+  <div class="msg"><b class="t">11:36 · המעטפה</b><button class="cp">העתקה</button>סעיף 3 בדף: התיק של אלון. בחדרים (6 דקות): מה אנחנו יודעים? מה לא יודעים? מה הפעולה הראשונה מחר בבוקר?</div>
+  <div class="msg"><b class="t">11:47 · רמזור</b><button class="cp">העתקה</button>סעיף 4: איזה צבע אלון עכשיו? סמנו בדף וענו על הסקר.</div>
+  <div class="msg"><b class="t">11:56 · שיחה</b><button class="cp">העתקה</button>סעיף 5: חדרים של 3, 10 דקות. בוחרים תפקיד רק בתוך החדר: אלון / הרכז/ת / הצופה. רק מי שהוא אלון פותח את הכרטיס השחור 🤫 7 דקות שיחה + 3 דקות שיחה על השיחה.</div>
+  <div class="msg"><b class="t">12:12 · מענה</b><button class="cp">העתקה</button>סעיף 6: 3 דקות, לבד. מצאו לאלון מענה אמיתי אחד והדביקו כאן את הקישור או השם. שער המענים: https://meytalp-dev.github.io/hopa-nihul/manim-bogrim.html · המאגר המלא: https://hopa.org.il</div>
+  <div class="msg"><b class="t">12:23 · תיעוד</b><button class="cp">העתקה</button>סעיף 7: כתבו את שורת התיעוד של השיחה עם אלון (תאריך · נושאים · צרכים · מה סוכם · צבע) והדביקו כאן. שתי שורות, לא יותר.</div>
+  <div class="msg"><b class="t">12:30 · הפסקה</b><button class="cp">העתקה</button>הפסקה של 8 דקות ☕ חוזרים ב-12:38 בדיוק, ואז עוברים מאלון אליכם.</div>
+  <div class="msg"><b class="t">12:40 · השנה שלי</b><button class="cp">העתקה</button>סעיף 8: השנה שלי בדף אחד. 6 דקות לבד, ואז חדרי זוגות. בסוף לחצו "שליחה להופה בוואטסאפ", זה מגיע אלינו והוא הבסיס לשיחה האישית איתכם בספטמבר.</div>
+  <div class="msg"><b class="t">12:50 · סגירה</b><button class="cp">העתקה</button>משפט אחד שאתם לוקחים מהיום 👇 ואז מצלמות פתוחות לצילום קבוצתי 📸</div>
 </section>
 
 <section>
-  <h2><span>ה</span>מה המנחות צריכות לדעת על אלון</h2>
+  <h2><span>ו</span>מה המנחות צריכות לדעת על אלון</h2>
   <div class="two">
     <div>
       <h3>הסודות (מה שרק "אלון" בחדר יודע)</h3>
@@ -160,24 +187,25 @@ https://meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html</div>
 </section>
 
 <section>
-  <h2><span>ו</span>הכנות לפני המפגש</h2>
+  <h2><span>ז</span>הכנות לפני המפגש</h2>
   <div class="two">
     <div class="chk">
       <h3>עד יום חמישי 20.8</h3>
+      <label><input type="checkbox">מתואם עם לירון (5 דק' פתיחה) ועם נאוה גינזבורג (10 דק'): נושא, סדר, מי מציגה אותן</label>
       <label><input type="checkbox">כל הפוסטרים מהרישום מסודרים במצגת אחת (תמונה לשקף), מעבר אוטומטי 10 שניות</label>
-      <label><input type="checkbox">3 סקרים מוגדרים בזום (סעיף ג)</label>
+      <label><input type="checkbox">3 סקרים מוגדרים בזום (סעיף ד)</label>
       <label><input type="checkbox">Breakout rooms מופעל בהגדרות הזום, המפעילה co-host</label>
       <label><input type="checkbox">קישור לדף המפגש נשלח בפורום הרכזים יום לפני, עם בקשה: "לפתוח בטלפון, המחשב לזום"</label>
-      <label><input type="checkbox">קישורי הפורטל האישיים לכל בית ספר מוכנים אצל המפעילה (מי ששכח מקבל בפרטי בזמן סעיף 2)</label>
-      <label><input type="checkbox">בארי מוכן להיות איש הקשר שנאמר בסעיף 6</label>
+      <label><input type="checkbox">בארי מוכן להיות איש הקשר שנאמר בסעיף 8</label>
       <label><input type="checkbox">אופציונלי אבל חזק: בוגר/ת אמיתי/ת ל-10 דקות (במקום או לפני המעטפה). מהטלפון, בלי נסיעה</label>
     </div>
     <div class="chk">
       <h3>ביום המפגש</h3>
       <label><input type="checkbox">10:40 המנחות בזום, בודקות שיתוף מסך של המצגת ושל דף המשתתפים</label>
+      <label><input type="checkbox">מסך המילים נבדק (הדבקה לדוגמה + מסך מלא + שיתוף מסך)</label>
       <label><input type="checkbox">הקלטה פועלת מ-11:00</label>
       <label><input type="checkbox">דף זה פתוח אצל המפעילה עם "התחלנו" ב-11:00</label>
-      <label><input type="checkbox">רשימת הזוגות מהגלריה נרשמת ב-11:05 (המפעילה)</label>
+      <label><input type="checkbox">רשימת הזוגות מהגלריה נרשמת ב-11:30 (המפעילה)</label>
       <label><input type="checkbox">חדרי הזוגות מוגדרים ידנית בזמן ההפסקה</label>
       <label><input type="checkbox">צילום מסך קבוצתי ב-12:55</label>
       <h3>אחרי</h3>
@@ -191,6 +219,14 @@ https://meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html</div>
 
 </main>
 <footer>הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · רץ-שיט פנימי למנחות</footer>
+
+<div class="cloud-full" id="cloudFull">
+  <button class="close" id="cloudClose">סגירה ✕</button>
+  <h3>מהי <i>קהילה</i> עבורכם?</h3>
+  <div class="sub2">רכזי ורכזות הבוגרים של הופה · במילה אחת</div>
+  <div class="cloud" id="cloudBig"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -202,6 +238,56 @@ document.querySelectorAll('.msg .cp').forEach(function(b){b.addEventListener('cl
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast('הועתק')});
   else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('הועתק')}
 })});
+// מסך המילים: שולף מילים מהדבקת צ'אט של זום או משורות חופשיות
+var CLOUD_COLORS=['#E8348A','#C2185B','#141414','#F5941F','#22A55B','#7B4397'];
+function parseWords(t){
+  var out=[];
+  t.split(/\r?\n+/).forEach(function(line){
+    line=line.trim();
+    if(!line)return;
+    // שורת כותרת של זום ("11:15:22 מאת X אל כולם:" / "From X to Everyone:") בלי תוכן אחריה
+    if(/:$/.test(line)&&/(From|מאת|אל כולם|to Everyone)/i.test(line))return;
+    var m=line;
+    if(/(From|מאת|to Everyone|אל כולם)/i.test(m)){var i=m.lastIndexOf(':');if(i>-1)m=m.slice(i+1)}
+    m=m.replace(/^[\s\-•·:]+|[\s.!?,;'"״׳]+$/g,'').trim();
+    if(!m)return;
+    if(/^[\d:.\s]+$/.test(m))return;          // רק שעות/מספרים
+    if(m.length>40)return;                     // משפט ארוך, לא מילה
+    out.push(m);
+  });
+  return out;
+}
+function renderCloud(el,words,base){
+  var count={},order=[];
+  words.forEach(function(w){var k=w.replace(/\s+/g,' ');if(!count[k]){count[k]=0;order.push(k)}count[k]++});
+  el.innerHTML='';
+  order.forEach(function(w,i){
+    var b=document.createElement('b');
+    b.textContent=w;
+    var n=Math.min(count[w],5);
+    b.style.fontSize=(base+ (n-1)*base*0.45)+'px';
+    b.style.color=CLOUD_COLORS[i%CLOUD_COLORS.length];
+    b.style.transform='rotate('+((i%2?1:-1)*(i%3))+'deg)';
+    b.title=count[w]>1?count[w]+' פעמים':'';
+    el.appendChild(b);
+  });
+}
+function cloudWords(){return parseWords($('wordsIn').value||'')}
+$('wordsGo').addEventListener('click',function(){
+  var w=cloudWords();
+  if(!w.length){toast('הדביקו קודם את הצ\'אט או כתבו מילים');return}
+  renderCloud($('cloud'),w,20);
+});
+$('wordsFull').addEventListener('click',function(){
+  var w=cloudWords();
+  if(!w.length){toast('הדביקו קודם את הצ\'אט או כתבו מילים');return}
+  renderCloud($('cloudBig'),w,34);
+  $('cloudFull').classList.add('show');
+});
+$('wordsClear').addEventListener('click',function(){$('wordsIn').value='';$('cloud').innerHTML=''});
+$('cloudClose').addEventListener('click',function(){$('cloudFull').classList.remove('show')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('cloudFull').classList.remove('show')});
+
 var KEY='mifgashZoomStart';
 var rows=[].slice.call(document.querySelectorAll('tr.blk'));
 function pad(n){return (n<10?'0':'')+n}
