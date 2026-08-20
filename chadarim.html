@@ -54,6 +54,12 @@
   .chip .sc{font-size:11.5px;color:var(--muted);line-height:1.2}
   .chip .x{margin-inline-start:auto;border:none;background:none;color:var(--muted);font-weight:800;cursor:pointer;padding:2px 4px;border-radius:6px;font-size:12px;flex:none}
   .chip .x:hover{background:#f3e3ec;color:var(--pink-dark)}
+  .chip.lead{background:#111;border-color:#111}
+  .chip.lead .nm{color:var(--yellow)}
+  .chip.lead .sc{color:#cfcfcf}
+  .chip.lead:hover{border-color:var(--yellow)}
+  .chip.lead.sel{box-shadow:0 0 0 2px rgba(255,242,0,.6);border-color:var(--yellow)}
+  .chip.lead .x{color:#aaa}.chip.lead .x:hover{background:#333;color:var(--yellow)}
   .roles{font-size:12px;color:var(--muted);margin-top:8px;border-top:1px dashed #f6c3dc;padding-top:6px}
 
   .pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin-top:10px}
@@ -89,7 +95,7 @@
         <div class="sub">מפגש רכזי בוגרים #1 · דף עבודה למפעילה — פתוח על מסך שני ליד הזום</div>
       </div>
     </div>
-    <div class="meet">🗓️ יום א' 24.8 · 11:00–13:00 <small>· זום · 20 נרשמים</small></div>
+    <div class="meet">🗓️ יום א' 24.8 · 11:00–13:00 <small>· זום · 20 נרשמים + 5 צוות</small></div>
   </div>
 </header>
 
@@ -106,7 +112,7 @@
       <li><b>בהפסקה (12:15):</b> Recreate → 10 חדרים → לשבץ זוגות. עדיפות לזוגות שנוצרו בצ'אט בפתיחה (המפעילה רשמה אותם ב-11:05); מי שנשאר בלי זוג — לפי חלוקת הגיבוי למטה.</li>
       <li>מי שמתנתק/ת וחוזר — זום לא מחזיר אותו לחדר אוטומטית. לשבץ ידנית מחדש לפי הדף.</li>
     </ol>
-    <div class="infobox">💡 לירון, מיטל ובארי לא משובצים: המדברת והמפעילה נשארות במליאה, ולירון מסתובבת בין חדרים (Join אל חדר מהרשימה, ואז חוזרים).</div>
+    <div class="infobox">💡 לכל חדר יש אחראי/ת קבוצה מהצוות: מיטל, לירון, בארי, אסמאא וברכה (מסומנים בשחור-צהוב). מי שמשמש/ת כמפעילה משבצת קודם את כולם לחדרים ורק אז מצטרפת לחדר שלה. בסבב 2 יש 6 חדרים — חדר אחד בלי אחראי/ת (מסומן), כדאי להציץ בו באמצע.</div>
     <div class="live" id="live">🔄 בודק מול גיליון ההרשמה…</div>
     <div class="warnbox" id="newreg" style="display:none"></div>
   </div>
@@ -184,7 +190,12 @@ var PEOPLE = {
   mohamad: {n:"מוחמד גזאל (מנהל)", s:"אלאמאני סחנין"},
   malsha:  {n:"מלשה חנין", s:"אורט כרמל חיפה"},
   munir:   {n:"מוניר עבדאלהאדי", s:"מנאראת טוראען"},
-  sigal:   {n:"סיגל דדון", s:"אורט אשקלון"}
+  sigal:   {n:"סיגל דדון", s:"אורט אשקלון"},
+  meital:  {n:"מיטל", s:"צוות הופה", staff:1},
+  liron:   {n:"לירון", s:"צוות הופה", staff:1},
+  bari:    {n:"בארי", s:"צוות הופה", staff:1},
+  asmaa:   {n:"אסמאא", s:"צוות הופה", staff:1},
+  bracha:  {n:"ברכה", s:"צוות הופה", staff:1}
 };
 var DEFAULT = {
   r1: [
@@ -207,18 +218,23 @@ var DEFAULT = {
     ["taliy","livna"],["zohar","malsha"],["yaakov","samer"],["ali","riki"],["mohamad","munir"]
   ]
 };
-var LS_KEY = "hopa-chadarim-24-8";
+var DEFAULT_LEADS = {
+  r1: ["asmaa","liron","meital","bari","bracha"],
+  r2: ["meital","bracha","liron","asmaa","bari",""]
+};
+var LS_KEY = "hopa-chadarim-24-8-v2";
 var state = load();
 function load(){
-  try{ var s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.rooms && s.out) return s; }catch(e){}
-  return { rooms: JSON.parse(JSON.stringify(DEFAULT)), out: {} };
+  try{ var s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.rooms && s.out && s.leads) return s; }catch(e){}
+  return { rooms: JSON.parse(JSON.stringify(DEFAULT)), leads: JSON.parse(JSON.stringify(DEFAULT_LEADS)), out: {} };
 }
 function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
 
 var $=function(id){return document.getElementById(id)};
 function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1800)}
 
-var sel = null; // {round, room, idx}
+var sel = null;     // {round, room, idx}
+var selLead = null; // {round, room}
 function render(){
   ["r1","r2"].forEach(function(rid){
     var host = $(rid); host.innerHTML = "";
@@ -229,6 +245,7 @@ function render(){
       var h = document.createElement("h3");
       h.innerHTML = "חדר " + (ri+1) + ' <span class="rc">' + present + " נוכחים</span>";
       div.appendChild(h);
+      div.appendChild(leadChip(rid, ri));
       room.forEach(function(key, pi){
         div.appendChild(chip(key, rid, ri, pi));
       });
@@ -252,6 +269,43 @@ function render(){
     d.innerHTML = '<span class="n">' + (ri+1) + '</span>' + names;
     host3.appendChild(d);
   });
+}
+function leadChip(rid, ri){
+  var key = state.leads[rid][ri];
+  var c = document.createElement("div");
+  if(!key){
+    c.className = "chip lead";
+    c.style.opacity = ".7";
+    c.innerHTML = '<span><span class="nm">— בלי אחראי/ת —</span><br><span class="sc">להציץ באמצע הסבב</span></span>';
+  } else {
+    var p = PEOPLE[key];
+    c.className = "chip lead" + (state.out[key] ? " out" : "");
+    c.innerHTML = '<span><span class="nm">⭐ ' + p.n + '</span><br><span class="sc">אחראי/ת קבוצה · ' + p.s + '</span></span>';
+    var x = document.createElement("button");
+    x.className = "x"; x.title = "סימון שלא הגיע/ה"; x.textContent = state.out[key] ? "↩" : "✕";
+    x.addEventListener("click", function(ev){
+      ev.stopPropagation();
+      state.out[key] = !state.out[key];
+      save(); render();
+    });
+    c.appendChild(x);
+  }
+  if(selLead && selLead.round===rid && selLead.room===ri) c.classList.add("sel");
+  c.addEventListener("click", function(){
+    if(selLead && selLead.round === rid && selLead.room !== ri){
+      var a = state.leads[rid][selLead.room];
+      state.leads[rid][selLead.room] = state.leads[rid][ri];
+      state.leads[rid][ri] = a;
+      selLead = null; save(); render();
+      toast("האחראים הוחלפו ✓");
+    } else if (selLead && selLead.round===rid && selLead.room===ri){
+      selLead = null; render();
+    } else {
+      selLead = {round: rid, room: ri}; sel = null; render();
+      toast("עכשיו לחצו על אחראי/ת בחדר אחר להחלפה");
+    }
+  });
+  return c;
 }
 function chip(key, rid, ri, pi){
   var p = PEOPLE[key];
@@ -277,7 +331,7 @@ function chip(key, rid, ri, pi){
     } else if (sel && sel.room===ri && sel.idx===pi && sel.round===rid){
       sel = null; render();
     } else {
-      sel = {round: rid, room: ri, idx: pi}; render();
+      sel = {round: rid, room: ri, idx: pi}; selLead = null; render();
       toast("עכשיו לחצו על שם שני להחלפה (באותו סבב)");
     }
   });
@@ -290,7 +344,9 @@ document.querySelectorAll("[data-copy]").forEach(function(b){
     var rid = b.getAttribute("data-copy");
     var lines = state.rooms[rid].map(function(room, i){
       var names = room.filter(function(k){return !state.out[k]}).map(function(k){return PEOPLE[k].n});
-      return (rid==="r3" ? "זוג " : "חדר ") + (i+1) + ": " + names.join(", ");
+      var lead = (state.leads[rid]||[])[i];
+      var leadTxt = lead && !state.out[lead] ? " (אחראי/ת: " + PEOPLE[lead].n + ")" : "";
+      return (rid==="r3" ? "זוג " : "חדר ") + (i+1) + leadTxt + ": " + names.join(", ");
     });
     var txt = lines.join("\n");
     navigator.clipboard.writeText(txt).then(function(){toast("הועתק ✓")},function(){
@@ -301,7 +357,7 @@ document.querySelectorAll("[data-copy]").forEach(function(b){
 
 $("resetBtn").addEventListener("click", function(){
   if(!confirm("לאפס את כל ההחלפות והחיסורים ולחזור לחלוקה המקורית?")) return;
-  state = { rooms: JSON.parse(JSON.stringify(DEFAULT)), out: {} };
+  state = { rooms: JSON.parse(JSON.stringify(DEFAULT)), leads: JSON.parse(JSON.stringify(DEFAULT_LEADS)), out: {} };
   save(); render(); toast("אופס ✓");
 });
 
@@ -317,7 +373,7 @@ render();
     var j = JSON.parse(m[1]);
     var rows = (j.table.rows||[]).map(function(r){return (r.c||[]).map(function(c){return c&&c.v!=null?String(c.v):""})});
     var regNames = rows.map(function(r){return (r[1]||"").trim()}).filter(Boolean);
-    var known = Object.keys(PEOPLE).map(function(k){return PEOPLE[k].n.replace(" (מנהל)","")});
+    var known = Object.keys(PEOPLE).filter(function(k){return !PEOPLE[k].staff}).map(function(k){return PEOPLE[k].n.replace(" (מנהל)","")});
     var fresh = regNames.filter(function(n){
       return !known.some(function(k){ return k.indexOf(n) !== -1 || n.indexOf(k) !== -1; });
     });
