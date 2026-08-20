@@ -116,6 +116,12 @@ textarea{min-height:80px;resize:vertical}
 .year b{color:var(--pink-deep)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .done{display:none;background:var(--yellow-soft);border:2px solid var(--yellow-deep);border-radius:14px;padding:16px;margin-top:14px;line-height:1.6}
+.wc-send{display:flex;gap:8px}
+.wc-send input{flex:1;min-width:0}
+.wc-send .btn{flex:0 0 auto;white-space:nowrap}
+.wc{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;justify-content:center;background:var(--bg);border:2px dashed var(--line);border-radius:14px;padding:22px 16px;margin-top:14px;min-height:96px}
+.wc:empty::before{content:"ענן המילים של כולנו ייבנה כאן ✨";color:#bbb;font-size:14px}
+.wc b{font-weight:900;line-height:1.15;white-space:nowrap;transition:font-size .4s}
 .toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
 .toast.show{opacity:1}
 footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
@@ -168,10 +174,15 @@ footer img{height:36px;display:block;margin:0 auto 6px}
 <section id="s1">
   <div class="sec-head"><div class="num">1</div><div><h2>מהי קהילה עבורכם</h2><small>מתחילים מאיתנו, לא מהבוגרים</small></div><div class="time">12 דק'</div></div>
   <div class="box task">
-    <b>מילה אחת.</b> מהי קהילה עבורכם? כתבו את המילה שלכם בצ'אט — ועוד רגע נראה על המסך את כל המילים של כולנו יחד.
+    <b>מילה אחת.</b> מהי קהילה עבורכם? כתבו מילה ולחצו שליחה — היא מצטרפת מיד לענן המילים המשותף של כולנו, כאן ועל המסך. מילה שכמה אנשים כתבו — גדלה.
   </div>
-  <label>המילה שלי <small>(אפשר לנסח כאן ואז להעתיק לצ'אט)</small></label>
-  <input id="c_word" placeholder="למשל: בית · יחד · גב · שפה משותפת">
+  <label>המילה שלי</label>
+  <div class="wc-send">
+    <input id="c_word" placeholder="למשל: בית · יחד · גב · שפה משותפת" maxlength="24">
+    <button class="btn" id="wordSend">שליחה לענן</button>
+  </div>
+  <div id="wc" class="wc"></div>
+  <p class="hint" id="wcStatus" style="text-align:center;margin-top:8px"></p>
 
   <h3>הקהילה הסודית שלי</h3>
   <p class="hint">לכל אחד מאיתנו יש קהילה שהוא באמת שייך אליה — ולאו דווקא מהעבודה: קבוצת הכדורגל של יום שלישי, קבוצת הוואטסאפ של ההורים, חברי הילדות, החוג, קהילת אוהדים. חשבו על אחת כזו.</p>
@@ -454,6 +465,79 @@ $('tmrBtn').addEventListener('click',function(){
   btn.textContent='איפוס';
   tick=setInterval(function(){T--;showT();if(T<=0){clearInterval(tick);tick=null;btn.textContent='התחל';T=180;toast('הזמן נגמר. מי מצא?')}},1000);
 });
+/* ── ענן המילים החי: מהי קהילה עבורכם ── */
+var WC_EXEC='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var WC_SECRET='hopa-nihul-2026';
+var WC_COLORS=['#E8348A','#C2185B','#141414','#F5941F','#22A55B','#7B4397'];
+function wcNorm(w){return (w||'').replace(/["',.!?;:()\[\]{}<>*_~`׳״]+/g,' ').replace(/\s+/g,' ').trim().slice(0,24)}
+function wcRender(el,words,base){
+  var count={},order=[];
+  words.forEach(function(w){var k=w.replace(/\s+/g,' ');if(!count[k]){count[k]=0;order.push(k)}count[k]++});
+  el.innerHTML='';
+  order.forEach(function(w,i){
+    var b=document.createElement('b');
+    b.textContent=w;
+    var n=Math.min(count[w],5);
+    b.style.fontSize=(base+(n-1)*base*0.45)+'px';
+    b.style.color=WC_COLORS[i%WC_COLORS.length];
+    b.style.transform='rotate('+((i%2?1:-1)*(i%3))+'deg)';
+    b.title=count[w]>1?count[w]+' פעמים':'';
+    el.appendChild(b);
+  });
+}
+function wcJsonp(params){return new Promise(function(res,rej){
+  var cb='wcb'+Math.random().toString(36).slice(2,8);
+  var s=document.createElement('script');
+  var done=function(){delete window[cb];s.remove()};
+  window[cb]=function(d){done();res(d)};
+  s.onerror=function(){done();rej(new Error('jsonp'))};
+  s.src=WC_EXEC+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+  document.body.appendChild(s);
+})}
+var wcWords=[],wcSeen={},wcMine=[];
+function wcDraw(){
+  var words=wcWords.slice();
+  wcMine.forEach(function(m){if(!wcSeen[m.key])words.push(m.word)});
+  wcRender($('wc'),words,17);
+  $('wcStatus').textContent=words.length?'✨ '+words.length+' מילים בענן — מתעדכן לבד':'';
+}
+var wcBusy=false;
+function wcPoll(){
+  if(wcBusy)return;wcBusy=true;
+  wcJsonp({action:'storeAll',secret:WC_SECRET}).then(function(r){
+    wcBusy=false;
+    if(!r||!r.ok)return;
+    var ws=[];wcSeen={};
+    Object.keys(r.store||{}).forEach(function(k){
+      if(k.indexOf('intake_wc_')!==0)return;
+      var o=r.store[k]||{};
+      if(o.del||!o.word)return;
+      wcSeen[k]=1;ws.push(String(o.word));
+    });
+    wcWords=ws;wcDraw();
+  }).catch(function(){wcBusy=false});
+}
+var wcTimer=null;
+function wcStart(){if(wcTimer)return;wcPoll();wcTimer=setInterval(function(){if(!document.hidden)wcPoll()},7000)}
+function wcStop(){if(wcTimer){clearInterval(wcTimer);wcTimer=null}}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)wcStart();else wcStop()})},{rootMargin:'150px'}).observe($('s1'));
+}else{wcStart()}
+function wcSend(){
+  var w=wcNorm($('c_word').value);
+  if(!w){toast('כתבו מילה קודם');$('c_word').focus();return}
+  var id='wc_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+  fetch(WC_EXEC,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({action:'intakeSubmit',school:id,json:JSON.stringify({word:w,ts:Date.now()})}).toString()});
+  wcMine.push({key:'intake_'+id,word:w});
+  wcDraw();
+  $('c_word').value='';st.c_word='';save();
+  toast('המילה שלכם בענן ✨');
+  setTimeout(wcPoll,4000);
+}
+$('wordSend').addEventListener('click',wcSend);
+$('c_word').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();wcSend()}});
+
 $('copyCommunity').addEventListener('click',function(){
   var v=function(id){return ($(id).value||'').trim()};
   if(!v('c_name')){toast('כתבו קודם לאיזו קהילה אתם שייכים');$('c_name').focus();return}
