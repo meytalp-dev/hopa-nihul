@@ -95,7 +95,7 @@
         <div class="sub">מפגש רכזי בוגרים #1 · דף עבודה למפעילה — פתוח על מסך שני ליד הזום</div>
       </div>
     </div>
-    <div class="meet">🗓️ יום א' 24.8 · 11:00–13:00 <small>· זום · 20 נרשמים + 5 צוות</small></div>
+    <div class="meet">🗓️ יום שני 24.8 · 11:00–13:00 <small>· זום · 20 נרשמים + 5 צוות</small></div>
   </div>
 </header>
 
@@ -112,7 +112,7 @@
       <li><b>בהפסקה (12:15):</b> Recreate → 10 חדרים → לשבץ זוגות. עדיפות לזוגות שנוצרו בצ'אט בפתיחה (המפעילה רשמה אותם ב-11:05); מי שנשאר בלי זוג — לפי חלוקת הגיבוי למטה.</li>
       <li>מי שמתנתק/ת וחוזר — זום לא מחזיר אותו לחדר אוטומטית. לשבץ ידנית מחדש לפי הדף.</li>
     </ol>
-    <div class="infobox">💡 לכל חדר יש אחראי/ת קבוצה מהצוות: מיטל, לירון, בארי, אסמאא וברכה (מסומנים בשחור-צהוב). מי שמשמש/ת כמפעילה משבצת קודם את כולם לחדרים ורק אז מצטרפת לחדר שלה. בסבב 2 יש 6 חדרים — חדר אחד בלי אחראי/ת (מסומן), כדאי להציץ בו באמצע.</div>
+    <div class="infobox">💡 לכל חדר יש אחראי/ת קבוצה מהצוות: מיטל, לירון, בארי, אסמאא וברכה (מסומנים בשחור-צהוב). חדר 1 בשני הסבבים הוא חדר המגזר: אסמאא עם כל 7 רכזי החברה הערבית, הדרוזית והבדואית. מי שמשמש/ת כמפעילה משבצת קודם את כולם לחדרים ורק אז מצטרפת לחדר שלה.</div>
     <div class="live" id="live">🔄 בודק מול גיליון ההרשמה…</div>
     <div class="warnbox" id="newreg" style="display:none"></div>
   </div>
@@ -120,8 +120,8 @@
 
 <section>
   <div class="card">
-    <h2>סבב 1 · המעטפה <span class="time">11:18</span> <span class="cnt">5 חדרים × 4 · 6 דקות</span></h2>
-    <p class="hint">שלוש שאלות על אלון: מה יודעים / מה לא יודעים / מה הפעולה הראשונה מחר בבוקר. השיבוץ מערבב אזורים ומפריד רכזים מאותו בית ספר. לחיצה על שם ואז על שם אחר — מחליפה ביניהם. ✕ מסמן שלא הגיע/ה.</p>
+    <h2>סבב 1 · המעטפה <span class="time">11:18</span> <span class="cnt">חדר מגזר (7) + 4 חדרים של 3–4 · 6 דקות</span></h2>
+    <p class="hint">שלוש שאלות על אלון: מה יודעים / מה לא יודעים / מה הפעולה הראשונה מחר בבוקר. חדר 1 עם אסמאא מרכז את כל רכזי החברה הערבית, הדרוזית והבדואית; שאר החדרים מעורבבים אזורית, עם הפרדה בין רכזים מאותו בית ספר. לחיצה על שם ואז על שם אחר — מחליפה ביניהם. ✕ מסמן שלא הגיע/ה.</p>
     <div class="rooms" id="r1"></div>
     <div class="actions">
       <button class="btn pink" data-copy="r1">📋 העתקת סבב 1</button>
@@ -131,8 +131,8 @@
 
 <section>
   <div class="card">
-    <h2>סבב 2 · שיחת 4 השאלות <span class="time">11:38</span> <span class="cnt">4 חדרים × 3 + 2 חדרים × 4 · 10 דקות</span></h2>
-    <p class="hint">בכל חדר בוחרים תפקידים בפנים: אלון / הרכז·ת / צופה. בחדרים של 4 — שני צופים. השיבוץ שונה מסבב 1 כדי שכולם יפגשו אנשים חדשים.</p>
+    <h2>סבב 2 · שיחת 4 השאלות <span class="time">11:38</span> <span class="cnt">חדר מגזר (7) + 4 חדרים של 3–4 · 10 דקות</span></h2>
+    <p class="hint">בכל חדר בוחרים תפקידים בפנים: אלון / הרכז·ת / צופה. בחדר של 4 — שני צופים. חדר המגזר של אסמאא נשאר יחד — בפנים מתחלקים לשתי קבוצות (שלישייה ורביעייה) ואפשר לקיים את התרגיל בערבית. שאר השיבוץ שונה מסבב 1 כדי שכולם יפגשו אנשים חדשים.</p>
     <div class="rooms" id="r2"></div>
     <div class="actions">
       <button class="btn pink" data-copy="r2">📋 העתקת סבב 2</button>
@@ -199,19 +199,18 @@ var PEOPLE = {
 };
 var DEFAULT = {
   r1: [
-    ["monique","zohar","hiam","yaakov"],
-    ["avichai","rania","malsha","tohar"],
-    ["mor","samer","lee","taliy"],
-    ["talia","mohamad","ali","sigal"],
-    ["maria","munir","riki","livna"]
+    ["zohar","samer","mohamad","hiam","ali","rania","munir"],
+    ["monique","avichai","maria","yaakov"],
+    ["mor","talia","riki"],
+    ["lee","tohar","malsha"],
+    ["taliy","livna","sigal"]
   ],
   r2: [
-    ["zohar","avichai","lee"],
-    ["munir","talia","tohar"],
-    ["rania","mor","yaakov"],
-    ["ali","monique","maria"],
-    ["samer","malsha","sigal","livna"],
-    ["mohamad","taliy","hiam","riki"]
+    ["zohar","samer","mohamad","hiam","ali","rania","munir"],
+    ["monique","talia","taliy"],
+    ["avichai","mor","livna"],
+    ["maria","lee","tohar"],
+    ["yaakov","riki","malsha","sigal"]
   ],
   r3: [
     ["monique","sigal"],["mor","hiam"],["avichai","maria"],["talia","rania"],["lee","tohar"],
@@ -220,9 +219,9 @@ var DEFAULT = {
 };
 var DEFAULT_LEADS = {
   r1: ["asmaa","liron","meital","bari","bracha"],
-  r2: ["meital","bracha","liron","asmaa","bari",""]
+  r2: ["asmaa","meital","liron","bari","bracha"]
 };
-var LS_KEY = "hopa-chadarim-24-8-v2";
+var LS_KEY = "hopa-chadarim-24-8-v3";
 var state = load();
 function load(){
   try{ var s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.rooms && s.out && s.leads) return s; }catch(e){}
@@ -252,7 +251,7 @@ function render(){
       if(rid==="r2"){
         var roles = document.createElement("div");
         roles.className = "roles";
-        roles.textContent = room.length === 4 ? "תפקידים: אלון · רכז/ת · 2 צופים" : "תפקידים: אלון · רכז/ת · צופה";
+        roles.textContent = room.length >= 5 ? "חדר גדול — מתחלקים בפנים לשלישייה ורביעייה, כל קבוצה: אלון · רכז/ת · צופה/ים" : (room.length === 4 ? "תפקידים: אלון · רכז/ת · 2 צופים" : "תפקידים: אלון · רכז/ת · צופה");
         div.appendChild(roles);
       }
       host.appendChild(div);
