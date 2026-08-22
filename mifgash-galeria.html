@@ -51,6 +51,7 @@ body{font-family:'Rubik',Arial,sans-serif;background:#111;overflow:hidden;-webki
 .p-vals p{font-size:29px;color:var(--gray);font-weight:500;line-height:1.45}
 .p-future{font-size:31px;font-weight:500;color:var(--gray);line-height:1.45;margin-top:34px;border-right:8px solid var(--yellow-deep);padding-right:28px}
 .p-future b{color:var(--ink);font-weight:800}
+.p-av{position:absolute;top:56px;left:64px;width:180px;height:180px;border-radius:50%;object-fit:cover;border:8px solid var(--pink);box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:4;background:#fff}
 
 /* סיום */
 .outro{flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--ink);color:#fff}
@@ -158,6 +159,7 @@ RAKAZIM.forEach(function(r,i){
       valsHtml(r.v)+
       '<div class="p-future"><b>תמונת העתיד:</b> '+r.future+'</div>'+
     '</div>'+
+    '<img class="p-av" src="photos/'+num+'.jpg" alt="">'+
     '<img class="logo" src="hopa-logo.png" alt="הופה">'+
     '<a class="site" href="https://hopa.org.il" target="_blank">hopa.org.il</a>';
   outro.parentNode.insertBefore(sec,outro);
