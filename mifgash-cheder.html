@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דף החדר · מפגש רכזי הבוגרים #1 · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --green:#22A55B; --orange:#F5941F; --red:#E03A3A;
+  --ink:#141414; --gray:#666; --line:#eee; --bg:#FAF7F9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Rubik',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:80px}
+.topbar{height:8px;background:linear-gradient(90deg,var(--pink),var(--yellow))}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+a{color:var(--pink-deep)}
+header{padding:22px 0 8px}
+header img{height:42px}
+.tag{display:inline-block;background:var(--yellow);padding:4px 14px;border-radius:99px;font-weight:700;font-size:14px;margin-top:12px}
+h1{font-size:28px;font-weight:900;line-height:1.2;margin-top:8px}
+h1 span{color:var(--pink)}
+.hint{color:var(--gray);font-size:14.5px;line-height:1.55;margin-top:10px}
+section{background:#fff;border-radius:18px;padding:22px 20px;margin-top:20px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.sec-head{display:flex;align-items:center;gap:12px}
+.num{min-width:36px;height:36px;border-radius:50%;background:var(--pink);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center}
+.sec-head h2{font-size:20px;font-weight:800;line-height:1.2}
+.sec-head small{display:block;color:var(--gray);font-weight:500;font-size:13px;margin-top:2px}
+h3{font-size:16px;font-weight:800;margin:18px 0 8px}
+p{line-height:1.6}
+ul{padding-right:20px;line-height:1.7}
+.rooms{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:12px}
+@media(max-width:560px){.rooms{grid-template-columns:repeat(4,1fr)}}
+.rooms button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:14px 6px;font:inherit;font-weight:900;font-size:20px;cursor:pointer}
+.rooms button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-deep)}
+.box{border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.6;font-size:15px}
+.box.task{border-color:var(--pink);background:var(--pink-soft)}
+.box.task::before{content:"המשימה";display:block;font-weight:800;color:var(--pink-deep);font-size:13px;margin-bottom:4px}
+label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+label small{color:var(--gray);font-weight:400}
+input,textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;background:#fff}
+input:focus,textarea:focus{outline:none;border-color:var(--pink)}
+textarea{min-height:70px;resize:vertical}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font:inherit;font-weight:800;font-size:15px;border-radius:12px;padding:12px 18px;text-decoration:none;color:#fff;background:var(--pink);transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.big{width:100%;justify-content:center;font-size:16px;padding:14px}
+.btn.dark{background:var(--ink);color:var(--yellow)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.done{display:none;background:var(--yellow-soft);border:2px solid var(--yellow-deep);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.6;font-weight:700}
+.roles-out{display:none;margin-top:16px}
+.roles-out .role{display:flex;align-items:center;gap:14px;border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:8px;font-size:16px}
+.roles-out .role .em{font-size:28px}
+.roles-out .role b{font-size:18px}
+.roles-out .role small{display:block;color:var(--gray);font-weight:500}
+.roles-out .role.alon{border-color:var(--ink);background:#f5f5f5}
+.secret-gate{display:none;margin-top:14px}
+.secret{display:none;background:#141414;color:#fff;border-radius:14px;padding:16px;margin-top:10px;line-height:1.65;font-size:15px}
+.secret b{color:var(--yellow)}
+.check label{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:15px;margin:8px 0;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;flex:0 0 auto;accent-color:var(--pink)}
+.pill{display:inline-block;background:var(--yellow);border-radius:99px;padding:2px 12px;font-weight:800;font-size:13px}
+.toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
+footer img{height:34px;display:block;margin:0 auto 6px}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="wrap">
+  <img src="hopa-logo.png" alt="הופה">
+  <div class="tag">מפגש רכזי הבוגרים #1 · 24.8</div>
+  <h1>דף <span>החדר</span></h1>
+  <p class="hint">הדף של החדר שלכם בזום. קודם כל: באיזה חדר אתם? (מספר החדר מופיע בכותרת חלון הזום)</p>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="sec-head"><div class="num">🚪</div><div><h2>החדר שלנו</h2><small>בוחרים פעם אחת, נשמר אוטומטית</small></div></div>
+  <div class="rooms" id="rooms"></div>
+  <p class="hint" id="roomStatus">עוד לא נבחר חדר.</p>
+</section>
+
+<section id="envelope">
+  <div class="sec-head"><div class="num">א</div><div><h2>המעטפה: שלוש שאלות על אלון</h2><small>חדרים של 4 · 6 דקות</small></div></div>
+  <p class="hint">התיק המלא של אלון נמצא בסעיף 4 של דף המפגש. עונים יחד, אחד/ת מקליד/ה. התשובות מגיעות ישירות אלינו ועולות על המסך בחזרה למליאה.</p>
+  <label>1 · מה אנחנו <b>יודעים</b> על אלון?</label>
+  <textarea id="e_know" placeholder="עובדות מהתיק, לא פרשנויות"></textarea>
+  <label>2 · מה אנחנו <b>לא יודעים</b> — ומאוד היינו רוצים לדעת?</label>
+  <textarea id="e_dont" placeholder="מה חסר לנו כדי באמת להבין איפה הוא"></textarea>
+  <label>3 · מה <b>הפעולה הראשונה</b> שהיינו עושים מחר בבוקר?</label>
+  <input id="e_first" placeholder="למשל: מתקשרים אליו, לא כותבים">
+  <div class="row"><button class="btn big" id="sendEnv">שליחת התשובות של החדר 📬</button></div>
+  <div class="done" id="envDone">נשלח! התשובות שלכם יעלו על המסך במליאה.</div>
+</section>
+
+<section id="simulation">
+  <div class="sec-head"><div class="num">ב</div><div><h2>מתקשרים לאלון</h2><small>חדרים של 3 · 7 דקות שיחה + 3 דקות עליה</small></div></div>
+  <p class="hint">כתבו את השמות שלכם (3 או 4) ולחצו הגרלה. הדף מגריל מי אלון, מי הרכז/ת ומי הצופה — <b>אותה הגרלה תצא לכולם בחדר</b>, אז כל אחד יכול לפתוח את הדף אצלו ולראות את אותן תוצאות. בחדר של 4 יש שני צופים. חדר 1 (המגזר): מתחלקים לשתי קבוצות, וכל קבוצה עושה הגרלה עם השמות שלה.</p>
+  <label>מי בקבוצה? <small>(שם פרטי מספיק · השדה הרביעי רק אם אתם ארבעה)</small></label>
+  <input id="n1" placeholder="שם ראשון">
+  <input id="n2" placeholder="שם שני" style="margin-top:8px">
+  <input id="n3" placeholder="שם שלישי" style="margin-top:8px">
+  <input id="n4" placeholder="שם רביעי (לא חובה)" style="margin-top:8px">
+  <div class="row"><button class="btn big dark" id="lottery">🎲 הגרלת תפקידים</button></div>
+
+  <div class="roles-out" id="rolesOut">
+    <div class="role alon"><span class="em">🤫</span><div><b id="roleAlon"></b> — אלון, הבוגר<small>רק את/ה פותח/ת את הכרטיס השחור למטה. השאר לא מציצים!</small></div></div>
+    <div class="role"><span class="em">📞</span><div><b id="roleRakaz"></b> — הרכז/ת<small>מנהל/ת את השיחה: "נוח לך לדבר עכשיו?" → מסלול → כסף → חיים → חיבור → "מה הצעד הבא שלך?"</small></div></div>
+    <div class="role"><span class="em">👀</span><div><b id="roleTzofe"></b> — הצופה<small>עוקב/ת עם הצ'ק-ליסט למטה ומשקף/ת אחרי השיחה</small></div></div>
+  </div>
+
+  <div class="secret-gate" id="secretGate">
+    <h3>הכרטיס השחור של אלון</h3>
+    <div class="box" style="border-color:var(--ink)">
+      <b id="gateName"></b>, זה בשבילך בלבד. כולם מסתכלים הצידה?
+      <div class="row"><button class="btn dark" id="openSecret">אני <span id="gateName2"></span> — פתיחת הכרטיס 🤫</button></div>
+    </div>
+    <div class="secret" id="secretCard">
+      <b>מה שאלון יודע ואף אחד עוד לא (לעיניך בלבד):</b><br>
+      • אתה באמת "בסדר", אבל בעיקר כי אף אחד לא שאל יותר מזה. אתה שמח שהתקשרו, ולא תגיד את זה.<br>
+      • אתה רוצה לעשות <b>קורס טכנאי חשמל או מכונאות לפני הגיוס</b>. חבר סיפר. "אבל אין כסף וגם לא יודע איך נרשמים".<br>
+      • אתה נותן לאמא חלק מהמשכורת. היא לחוצה. אתה לא מספר על זה אלא אם שואלים איך בבית.<br>
+      • לא ידעת שיש השלמת בגרות בחינם, מכינות קדם-צבאיות, או שהופה יכולה לעזור עם מלגה לקורס.<br>
+      • המתמטיקה מביכה אותך. תגיד "לא משנה, אין לי ראש לזה" ותנסה לעבור נושא.<br><br>
+      <b>הכלל שלך:</b> תענה קצר ("סבבה", "בסדר", "עובד"). תיפתח רק אם הרכז/ת שואל/ת ישירות על כסף, על מה קורה עד פברואר, או על הבית. אם שואלים טוב, אתה נותן. אם לא, השיחה נגמרת ב"טוב, תודה שהתקשרת".
+    </div>
+  </div>
+
+  <h3>הצ'ק-ליסט של הצופה <span class="pill">ממלאים תוך כדי, שולחים בסוף</span></h3>
+  <div class="box check" id="obsBox">
+    <label><input type="checkbox" data-c="נפתחה ב'נוח לך לדבר עכשיו?'">נפתחה ב"נוח לך לדבר עכשיו?"</label>
+    <label><input type="checkbox" data-c="מסלול נשאל">🧭 מסלול נשאל</label>
+    <label><input type="checkbox" data-c="כסף וזכויות נשאל">💰 כסף וזכויות נשאל</label>
+    <label><input type="checkbox" data-c="חיים/בית נשאל">🏠 חיים / בית נשאל</label>
+    <label><input type="checkbox" data-c="חיבור למענה הוצע">🔗 חיבור למענה הוצע</label>
+    <label><input type="checkbox" data-c="לא ויתר אחרי מילה אחת">הרכז/ת לא ויתר/ה אחרי תשובה של מילה אחת</label>
+    <label><input type="checkbox" data-c="שיקוף כוח">שיקוף של כוח או הצלחה של אלון</label>
+    <label><input type="checkbox" data-c="נסגר בצעד הבא">נסגר ב"מה הצעד הבא שלך?" + מה הרכז/ת עושה</label>
+    <label><input type="checkbox" data-c="בערך 7 דקות">משך: בערך 7 דקות ולא 20</label>
+    <label style="display:block;margin-top:12px">מה גילינו שלא היה בתיק? איזו שאלה אחת שינתה את השיחה?</label>
+    <textarea id="o_insight"></textarea>
+    <div class="row"><button class="btn big" id="sendObs">שליחת הצ'ק-ליסט של החדר 📬</button></div>
+    <div class="done" id="obsDone">נשלח! תודה לצופה המסור/ה 👀</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <img src="hopa-logo.png" alt="הופה">
+  הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · <a href="mifgash-zoom.html">חזרה לדף המפגש</a>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(id){return document.getElementById(id)};
+var STORE='mifgashCheder';
+var st={}; try{st=JSON.parse(localStorage.getItem(STORE)||'{}')}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(st))}catch(e){}}
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1800)}
+var EXEC='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+function sendStore(id,obj){
+  obj.ts=Date.now();
+  fetch(EXEC,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({action:'intakeSubmit',school:id,json:JSON.stringify(obj)}).toString()});
+}
+/* שדות שנשמרים מקומית */
+var fields=['e_know','e_dont','e_first','n1','n2','n3','n4','o_insight'];
+if(!st.gid){st.gid=Math.random().toString(36).slice(2,6);save()}
+fields.forEach(function(id){var el=$(id);if(!el)return;if(st[id])el.value=st[id];el.addEventListener('input',function(){st[id]=el.value;save()})});
+
+/* בחירת חדר */
+var roomsEl=$('rooms');
+for(var i=1;i<=8;i++){
+  var b=document.createElement('button');b.textContent=i;b.dataset.r=i;
+  b.addEventListener('click',function(){st.room=+this.dataset.r;save();paintRoom()});
+  roomsEl.appendChild(b);
+}
+function paintRoom(){
+  [].forEach.call(roomsEl.children,function(b){b.classList.toggle('on',+b.dataset.r===st.room)});
+  $('roomStatus').innerHTML=st.room?'אנחנו <b>חדר '+st.room+'</b> 🚪':'עוד לא נבחר חדר.';
+}
+paintRoom();
+function needRoom(){if(!st.room){toast('בחרו קודם את מספר החדר למעלה');window.scrollTo({top:0,behavior:'smooth'});return true}return false}
+
+/* המעטפה */
+$('sendEnv').addEventListener('click',function(){
+  if(needRoom())return;
+  var v=function(id){return ($(id).value||'').trim()};
+  if(!v('e_know')&&!v('e_dont')&&!v('e_first')){toast('כתבו קודם את התשובות');return}
+  sendStore('env_'+st.room,{room:st.room,know:v('e_know'),dont:v('e_dont'),first:v('e_first')});
+  $('envDone').style.display='block';
+  toast('נשלח למליאה 📬');
+});
+
+/* הגרלת תפקידים — דטרמיניסטית: אותם שמות + אותו חדר = אותה תוצאה בכל מכשיר */
+function seedHash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function mulberry32(a){return function(){a|=0;a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
+function doLottery(){
+  if(needRoom())return;
+  var names=['n1','n2','n3','n4'].map(function(id){return ($(id).value||'').trim()}).filter(Boolean);
+  if(names.length<3){toast('צריך לפחות שלושה שמות להגרלה');return}
+  var sorted=names.slice().sort();
+  var rnd=mulberry32(seedHash('cheder'+st.room+'|'+sorted.join('|')));
+  var pool=sorted.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t}
+  st.roles={alon:pool[0],rakaz:pool[1],tzofe:pool.slice(2).join(' + ')};save();
+  paintRoles();
+  toast('הוגרל! 🎲');
+}
+function paintRoles(){
+  if(!st.roles)return;
+  $('roleAlon').textContent=st.roles.alon;
+  $('roleRakaz').textContent=st.roles.rakaz;
+  $('roleTzofe').textContent=st.roles.tzofe;
+  $('gateName').textContent=st.roles.alon;
+  $('gateName2').textContent=st.roles.alon;
+  $('rolesOut').style.display='block';
+  $('secretGate').style.display='block';
+}
+$('lottery').addEventListener('click',doLottery);
+paintRoles();
+$('openSecret').addEventListener('click',function(){
+  $('secretCard').style.display='block';
+  this.parentNode.parentNode.style.display='none';
+});
+
+/* הצופה */
+$('sendObs').addEventListener('click',function(){
+  if(needRoom())return;
+  var checks=[].map.call(document.querySelectorAll('#obsBox input[type=checkbox]:checked'),function(c){return c.dataset.c});
+  var insight=($('o_insight').value||'').trim();
+  if(!checks.length&&!insight){toast('סמנו או כתבו משהו קודם');return}
+  sendStore('obs_'+st.room+'_'+st.gid,{room:st.room,roles:st.roles||{},checks:checks.join(' · '),insight:insight});
+  $('obsDone').style.display='block';
+  toast('נשלח 📬');
+});
+</script>
+</body>
+</html>

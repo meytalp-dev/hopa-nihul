@@ -38,6 +38,8 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .task b{font-weight:800}
 .chat-line{background:var(--ink);color:#fff;border-radius:20px;padding:26px 40px;font-size:42px;font-weight:700;margin-top:34px;display:inline-block}
 .chat-line::before{content:"✍️ בצ'אט: ";color:var(--yellow)}
+.page-line{background:var(--ink);color:#fff;border-radius:20px;padding:26px 40px;font-size:42px;font-weight:700;margin-top:34px;display:inline-block}
+.page-line::before{content:"📱 בדף: ";color:var(--yellow)}
 .dark{background:var(--ink);color:#fff}
 .dark h1,.dark h2{color:#fff}
 .dark h1 i,.dark h2 i{color:var(--yellow)}
@@ -47,10 +49,6 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .pinkbg h1 i,.pinkbg h2 i{color:var(--yellow)}
 .pinkbg .sub{color:#ffd9ea}
 .yellowbg{background:var(--yellow)}
-.stat-row{display:flex;gap:70px;margin-top:60px}
-.stat{flex:1;text-align:center;border-radius:32px;padding:60px 30px}
-.stat .v{font-size:190px;font-weight:900;line-height:1}
-.stat .l{font-size:40px;font-weight:700;margin-top:18px;line-height:1.35}
 .cols{display:flex;gap:44px;margin-top:56px}
 .col{flex:1;border-radius:28px;padding:44px 40px;text-align:center}
 .col .em{font-size:88px;line-height:1}
@@ -62,9 +60,6 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .tl-card h3{font-size:52px;font-weight:900;text-align:center;margin-top:24px}
 .tl-card p{font-size:31px;line-height:1.45;margin-top:18px;font-weight:500}
 .g-bg{background:var(--green)}.o-bg{background:var(--orange)}.r-bg{background:var(--red)}
-.poll-colors{display:flex;gap:90px;justify-content:center;margin-top:80px}
-.poll-colors div{text-align:center;font-size:52px;font-weight:900}
-.poll-colors span{display:block;width:220px;height:220px;border-radius:50%;margin:0 auto 26px;box-shadow:0 18px 50px rgba(0,0,0,.22)}
 .q4{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:56px}
 .q4 div{background:#fff;border:5px solid var(--line);border-radius:28px;padding:38px 42px;font-size:38px;line-height:1.4;font-weight:500}
 .q4 div b{display:block;font-size:44px;font-weight:900;margin-bottom:8px}
@@ -94,6 +89,34 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .hero{font-size:150px;line-height:1}
 .gal-btn{display:inline-block;align-self:flex-start;margin-top:44px;background:var(--pink);color:#fff;text-decoration:none;font-size:40px;font-weight:800;padding:26px 46px;border-radius:20px;box-shadow:0 12px 30px rgba(232,52,138,.35)}
 .gal-btn:hover{background:var(--pink-deep)}
+/* ── חי: ענן, הצבעות, משפטים, תשובות חדרים ── */
+.live-cloud{display:flex;flex-wrap:wrap;gap:18px 44px;align-items:center;justify-content:center;margin-top:50px;min-height:420px}
+.live-cloud:empty::before{content:"ממתין למילים שלכם…";color:#ffd9ea;font-size:44px;font-weight:700}
+.live-cloud b{font-weight:900;line-height:1.15;white-space:nowrap;color:#fff}
+.vote-row{display:flex;gap:110px;justify-content:center;margin-top:70px}
+.vote-row .vc{text-align:center}
+.vote-row .vc span{display:block;width:200px;height:200px;border-radius:50%;margin:0 auto 22px;box-shadow:0 18px 50px rgba(0,0,0,.22)}
+.vote-row .vc .cnt{font-size:110px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;filter:blur(26px);transition:filter .6s}
+.vote-row .vc .lbl{font-size:40px;font-weight:900;margin-top:8px}
+.revealed .vote-row .vc .cnt{filter:none}
+.reveal-btn{margin-top:60px;align-self:center;font:inherit;font-size:44px;font-weight:900;border:none;border-radius:22px;padding:24px 70px;cursor:pointer;background:var(--yellow);color:var(--ink);box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.revealed .reveal-btn{display:none}
+.vote-note{font-size:30px;color:var(--gray);margin-top:26px;text-align:center}
+.rooms-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin-top:46px;width:100%;align-items:start}
+.room-card{background:#FAF7F9;border:4px solid var(--line);border-radius:24px;padding:24px 20px;text-align:center}
+.room-card.migzar{border-color:var(--ink);background:#fff}
+.room-card .rn{font-size:52px;font-weight:900;line-height:1}
+.room-card .lead{display:inline-block;background:var(--ink);color:var(--yellow);border-radius:99px;padding:4px 18px;font-size:24px;font-weight:800;margin-top:10px}
+.room-card ul{list-style:none;margin-top:16px;padding:0}
+.room-card li{font-size:25px;font-weight:600;line-height:1.5;border-top:1px solid var(--line);padding:7px 0}
+.env-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:50px;width:100%}
+.env-grid div{background:#FAF7F9;border:4px solid var(--line);border-radius:22px;padding:24px 30px;font-size:30px;line-height:1.4;text-align:right}
+.env-grid b{color:var(--pink-deep);font-size:26px;display:block;margin-bottom:4px}
+.env-grid:empty::before{content:"ממתין לתשובות מהחדרים…";color:#bbb;font-size:38px;font-weight:700;grid-column:1/-1;text-align:center}
+.snt-list{display:flex;flex-direction:column;gap:22px;margin-top:50px;width:100%;max-height:560px;overflow:hidden}
+.snt-list div{background:rgba(255,255,255,.14);border-radius:20px;padding:22px 36px;font-size:38px;line-height:1.35;font-weight:700;color:#fff;text-align:right}
+.snt-list div small{color:var(--yellow);font-weight:800;margin-right:10px;font-size:28px}
+.snt-list:empty::before{content:"ממתין למשפטים שלכם…";color:#ffd9ea;font-size:44px;font-weight:700;text-align:center}
 footer.hud{position:fixed;bottom:18px;right:24px;z-index:10;display:flex;gap:10px;align-items:center;color:#888;font-size:14px;font-weight:700}
 footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:16px}
 </style>
@@ -113,28 +136,32 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 2 · לירון -->
-<section class="slide dark">
+<!-- 2 · גלריה (בכניסה) -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">בזמן הכניסה · מי בחדר</span>
+  <h2>גלריית <i>הרכזים</i></h2>
+  <p class="sub">על המסך: הפוסטרים שיצרתם ברישום — הערכים, תמונת החזון וכוח-העל של כל אחד ואחת.</p>
+  <a class="gal-btn" href="mifgash-galeria.html" target="_blank">▶ הפעלת הגלריה האוטומטית — 19 הרכזים וכוחות-העל שלהם</a>
+  <div class="task">
+    מצאו בפוסטרים <b>ערך אחד של מישהו אחר שהוא גם שלכם</b>.<br>
+    האדם שבחרתם — בן/בת הזוג שלכם לזוגות של סוף המפגש.
+  </div>
+  <div class="chat-line">השם שלי · הערך · של מי</div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 3 · לירון -->
+<section class="slide dark center">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker">פתיחה · לירון גולן, מנכ"לית הופה</span>
-    <h2>למה אנחנו כאן</h2>
-    <div class="stat-row">
-      <div class="stat" style="background:#2a2a2a">
-        <div class="v" style="color:var(--red)">80%</div>
-        <div class="l">מהצעירים שלנו מוכרים לרווחה<br>כשאין ליווי אחרי י"ב</div>
-      </div>
-      <div class="stat" style="background:#2a2a2a">
-        <div class="v" style="color:var(--yellow)">10%</div>
-        <div class="l">כשיש מי שמלווה אותם<br>בשנים שאחרי</div>
-      </div>
-    </div>
-    <p class="sub" style="margin-top:56px">ההבדל בין המספרים האלה — זה אתם.</p>
+    <span class="kicker" style="align-self:center">פתיחה · לירון גולן, מנכ"לית הופה</span>
+    <h2 style="font-size:100px;line-height:1.3;margin-top:60px">קהילה יוצרת <i>קהילה</i>.<br>קהילה יוצרת <i>משמעות</i>.</h2>
   </div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 3 · נאוה -->
+<!-- 4 · נאוה -->
 <section class="slide center">
   <div class="bar"></div>
   <div class="body">
@@ -144,31 +171,45 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 4 · קהילה: מילה אחת -->
-<section class="slide pinkbg center">
-  <div class="body">
-    <h1>מהי <i>קהילה</i><br>עבורכם?</h1>
-    <div class="chat-line" style="align-self:center;margin-top:70px">מילה אחת. רק אחת.</div>
-    <p class="sub" style="margin-top:44px">עוד רגע נראה את כל המילים של כולנו על מסך אחד</p>
+<!-- 5 · נהלים -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">מיטל · 10 דק'</span>
+  <h2>נהלים <i>ותשתיות</i></h2>
+  <div class="big-list" style="margin-top:60px">
+    <div><div class="n">🗂️</div><div><b>הפורטל של בית הספר</b> — שם גרים המאגר, הרמזור והתיעוד. הקישור האישי בקבוצת הצוות.</div></div>
+    <div><div class="n">📋</div><div><b>תוכנית העבודה בדף אחד</b> — איך ממלאים, מתי, ומה קורה איתה.</div></div>
+    <div><div class="n">⏱️</div><div><b>מסגרת התפקיד</b> — 2 שעות שבועיות, ומה נכנס בהן.</div></div>
+    <div><div class="n">💬</div><div><b>ערוצי הקשר</b> — פורום הרכזים בוואטסאפ, ובארי כאיש הקשר למענים.</div></div>
+  </div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 6 · קהילה: ענן חי -->
+<section class="slide pinkbg center" id="cloudSlide">
+  <div class="body" style="justify-content:flex-start;padding-top:20px;width:100%">
+    <h1 style="font-size:96px">מהי <i>קהילה</i> עבורכם?</h1>
+    <p class="sub" style="margin-top:20px">כתבו מילה אחת בסעיף 3 בדף ולחצו "שליחה לענן" — והיא תופיע כאן ✨</p>
+    <div class="live-cloud" id="liveCloud"></div>
   </div>
 </section>
 
-<!-- 5 · הקהילה הסודית שלי -->
+<!-- 7 · הקהילה שלי -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">1 · מהי קהילה עבורכם</span>
-  <h2>הקהילה <i>הסודית</i> שלי</h2>
+  <span class="kicker">3 · מהי קהילה עבורכם</span>
+  <h2>הקהילה <i>שלי</i></h2>
   <p class="sub">לכל אחד מאיתנו יש אחת — ולאו דווקא מהעבודה: קבוצת הכדורגל של יום שלישי, הוואטסאפ של ההורים, חברי הילדות, קהילת האוהדים.</p>
   <div class="big-list">
     <div><div class="n">1</div><div>אני שייך/ת לקהילת <b>___</b></div></div>
     <div><div class="n">2</div><div>היא <b>נותנת לי</b> ___</div></div>
     <div><div class="n">3</div><div>היא <b>מייצרת אצלי שייכות</b> ככה: ___</div></div>
   </div>
-  <div class="chat-line">מלאו בסעיף 1 בדף · הדביקו בצ'אט + אימוג'י של הקהילה ⚽🎸🏠</div>
+  <div class="page-line">מלאו בסעיף 3 בדף ולחצו "שליחה להופה" — מגיע ישירות אלינו</div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 6 · הגשר -->
+<!-- 8 · הגשר -->
 <section class="slide dark center">
   <div class="body">
     <h2 style="font-size:86px;line-height:1.25">מה שהקהילות שלכם נותנות לכם —<br>ביטחון, שפה, מישהו ששם לב כשנעלמים —<br><i>זה בדיוק מה שאנחנו בונים השנה לבוגרים.</i></h2>
@@ -176,25 +217,10 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 7 · גלריה -->
+<!-- 9 · התיק של אלון -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">2 · מי בחדר</span>
-  <h2>גלריית <i>הרכזים</i></h2>
-  <p class="sub">על המסך: הפוסטרים שיצרתם ברישום — הערכים, תמונת החזון וכוח-העל של כל אחד ואחת.</p>
-  <a class="gal-btn" href="mifgash-galeria.html" target="_blank">▶ הפעלת הגלריה האוטומטית — 19 הרכזים וכוחות-העל שלהם</a>
-  <div class="task">
-    מצאו בפוסטרים <b>ערך אחד של מישהו אחר שהוא גם שלכם</b>.<br>
-    האדם שבחרתם — בן/בת הזוג שלכם לחדרים היום.
-  </div>
-  <div class="chat-line">השם שלי · הערך · של מי</div>
-  <img class="logo" src="hopa-logo.png" alt="הופה">
-</section>
-
-<!-- 8 · התיק של אלון -->
-<section class="slide">
-  <div class="bar"></div>
-  <span class="kicker">3 · המעטפה</span>
+  <span class="kicker">4 · המעטפה</span>
   <h2>התיק של <i>אלון</i></h2>
   <div class="file-card">
     <div class="file-head">
@@ -212,24 +238,49 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 9 · חדרים 3 שאלות -->
+<!-- 10 · חדרים: המעטפה -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">3 · המעטפה · חדרים של 4 · 6 דקות</span>
+  <span class="kicker">4 · המעטפה · חדרים של 4 · 6 דקות</span>
   <h2>שלוש שאלות על אלון</h2>
-  <div class="big-list" style="margin-top:70px">
+  <div class="big-list" style="margin-top:50px">
     <div><div class="n">1</div><div>מה אנחנו <b>יודעים</b> עליו?</div></div>
     <div><div class="n">2</div><div>מה אנחנו <b>לא יודעים</b> — ומאוד היינו רוצים לדעת?</div></div>
     <div><div class="n">3</div><div>מה <b>הפעולה הראשונה</b> שהייתם עושים מחר בבוקר?</div></div>
   </div>
-  <p class="sub" style="margin-top:56px">כתבו את הפעולה הראשונה גם בדף — נחזור אליה בסוף.</p>
+  <div class="page-line">עונים יחד ב<b>דף החדר</b> (הקישור בצ'אט) — בוחרים את מספר החדר ושולחים</div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 10 · רמזור -->
+<!-- 10ב · חלוקת חדרים סבב 1 -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">4 · שיטת עבודה #1</span>
+  <span class="kicker">המעטפה · מצאו את השם שלכם ובחרו את החדר</span>
+  <h2>חלוקת <i>החדרים</i></h2>
+  <div class="rooms-grid">
+    <div class="room-card migzar"><div class="rn">1</div><div class="lead">אסמאא</div><ul><li>זהור אלעוברה</li><li>סאמר מיעארי</li><li>מוחמד גזאל</li><li>היאם אזברגה</li><li>עלי עותמאן</li><li>ראניה חגו</li><li>מוניר עבדאלהאדי</li><li>רשא סייד אחמד</li></ul></div>
+    <div class="room-card"><div class="rn">2</div><div class="lead">לירון</div><ul><li>מוניק איפרח ממן</li><li>אביחי חריר</li><li>מריה דיאב</li><li>יעקב גרונספלד</li></ul></div>
+    <div class="room-card"><div class="rn">3</div><div class="lead">מיטל</div><ul><li>מור</li><li>טליה ברנע</li><li>ריקי מסס</li><li>שירן עוגן</li></ul></div>
+    <div class="room-card"><div class="rn">4</div><div class="lead">בארי</div><ul><li>לי ארנן</li><li>טוהר מרסדס כהן</li><li>מלשה חנין</li><li>טל מילוא</li></ul></div>
+    <div class="room-card"><div class="rn">5</div><div class="lead">ברכה</div><ul><li>טלי יונה</li><li>לבנה גיל בן חמו</li><li>סיגל דדון</li></ul></div>
+  </div>
+  <p class="sub" style="margin-top:30px;font-size:30px">נכנסים לחדר לפי המספר · מי שלא מופיע ברשימה — כותב/ת בצ'אט ומקבל/ת חדר</p>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 11 · תשובות החדרים -->
+<section class="slide" id="envSlide">
+  <div class="bar"></div>
+  <span class="kicker">4 · המעטפה · חוזרים למליאה</span>
+  <h2>מה החדרים <i>ענו</i> — הפעולה הראשונה</h2>
+  <div class="env-grid" id="envGrid"></div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 12 · רמזור -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">5 · שיטת עבודה #1</span>
   <h2>המאגר החי <i>והרמזור</i></h2>
   <p class="sub">כל בוגר מקבל צבע. הצבע קובע את קצב הקשר — והוא לא תווית, הוא זז.</p>
   <div class="tl-row">
@@ -240,25 +291,26 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 11 · סקר 1 -->
-<section class="slide center">
+<!-- 13 · הצבעה 1 -->
+<section class="slide center" id="vote1Slide">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker" style="align-self:center">סקר זום</span>
+    <span class="kicker" style="align-self:center">הצבעה · לוחצים על צבע בסעיף 5 בדף</span>
     <h1 style="font-size:104px">איזה צבע אלון <i>עכשיו?</i></h1>
-    <div class="poll-colors">
-      <div><span style="background:var(--green)"></span>ירוק</div>
-      <div><span style="background:var(--orange)"></span>כתום</div>
-      <div><span style="background:var(--red)"></span>אדום</div>
+    <div class="vote-row">
+      <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v1g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
+      <div class="vc"><span style="background:var(--orange)"></span><div class="cnt" id="v1o" style="color:var(--orange)">0</div><div class="lbl">כתום</div></div>
+      <div class="vc"><span style="background:var(--red)"></span><div class="cnt" id="v1r" style="color:var(--red)">0</div><div class="lbl">אדום</div></div>
     </div>
-    <p class="sub" style="margin-top:60px">זכרו את התוצאה. נחזור אליה עוד רבע שעה.</p>
+    <button class="reveal-btn" data-reveal="vote1Slide">🥁 גילוי התוצאה</button>
+    <div class="vote-note" id="v1note">ממתין להצבעות…</div>
   </div>
 </section>
 
-<!-- 12 · 4 השאלות -->
+<!-- 14 · 4 השאלות -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">5 · שיטת עבודה #2</span>
+  <span class="kicker">6 · שיטת עבודה #2</span>
   <h2>השיחה הראשונה: <i>4 השאלות</i></h2>
   <p class="sub">כ-15 דקות. נפתחת ב<b>"נוח לך לדבר עכשיו?"</b> · האווירה חשובה מהטופס · נסגרת ב<b>"מה הצעד הבא שלך?"</b></p>
   <div class="q4">
@@ -270,35 +322,53 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 13 · סימולציה -->
+<!-- 15 · סימולציה -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">5 · חדרים של 3 · 10 דקות</span>
+  <span class="kicker">6 · חדרים של 3 · 10 דקות</span>
   <h2>מתקשרים <i>לאלון</i></h2>
   <div class="cols">
-    <div class="col" style="background:var(--ink);color:#fff"><div class="em">🤫</div><h3 style="color:var(--yellow)">אלון</h3><p style="color:#ccc">רק הוא פותח את הכרטיס השחור שבדף. אף אחד אחר לא מציץ!</p></div>
+    <div class="col" style="background:var(--ink);color:#fff"><div class="em">🤫</div><h3 style="color:var(--yellow)">אלון</h3><p style="color:#ccc">רק מי שהוגרל פותח/ת את הכרטיס השחור. אף אחד אחר לא מציץ!</p></div>
     <div class="col" style="background:var(--pink-soft)"><div class="em">📞</div><h3>הרכז/ת</h3><p>מנהל/ת את השיחה: 4 השאלות, לפי הסדר, 7 דקות.</p></div>
-    <div class="col" style="background:var(--yellow-soft)"><div class="em">👀</div><h3>הצופה</h3><p>עוקב/ת עם הצ'ק-ליסט שבדף ומשקף/ת אחרי השיחה.</p></div>
+    <div class="col" style="background:var(--yellow-soft)"><div class="em">👀</div><h3>הצופה</h3><p>ממלא/ת את הצ'ק-ליסט הדיגיטלי בדף החדר ושולח/ת.</p></div>
   </div>
-  <p class="sub" style="margin-top:50px">בוחרים תפקיד רק בתוך החדר · 7 דקות שיחה + 3 דקות שיחה על השיחה</p>
+  <div class="page-line">ב<b>דף החדר · חלק ב'</b>: כתבו את השמות ולחצו "הגרלת תפקידים" 🎲</div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 14 · סקר 2 -->
-<section class="slide center">
+<!-- 15ב · חלוקת חדרים סבב 2 -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">השיחה · חלוקה חדשה — פוגשים אנשים אחרים</span>
+  <h2>חלוקת <i>החדרים</i> לשיחה</h2>
+  <div class="rooms-grid">
+    <div class="room-card migzar"><div class="rn">1</div><div class="lead">אסמאא</div><ul><li>זהור אלעוברה</li><li>סאמר מיעארי</li><li>מוחמד גזאל</li><li>היאם אזברגה</li><li>עלי עותמאן</li><li>ראניה חגו</li><li>מוניר עבדאלהאדי</li><li>רשא סייד אחמד</li></ul></div>
+    <div class="room-card"><div class="rn">2</div><div class="lead">מיטל</div><ul><li>מוניק איפרח ממן</li><li>טליה ברנע</li><li>טלי יונה</li><li>טל מילוא</li></ul></div>
+    <div class="room-card"><div class="rn">3</div><div class="lead">לירון</div><ul><li>אביחי חריר</li><li>מור</li><li>לבנה גיל בן חמו</li></ul></div>
+    <div class="room-card"><div class="rn">4</div><div class="lead">בארי</div><ul><li>מריה דיאב</li><li>לי ארנן</li><li>טוהר מרסדס כהן</li><li>שירן עוגן</li></ul></div>
+    <div class="room-card"><div class="rn">5</div><div class="lead">ברכה</div><ul><li>יעקב גרונספלד</li><li>ריקי מסס</li><li>מלשה חנין</li><li>סיגל דדון</li></ul></div>
+  </div>
+  <p class="sub" style="margin-top:30px;font-size:30px">בחדר של 4 — שני צופים · חדר 1 מתחלק בפנים לשתי קבוצות, אפשר בערבית</p>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 16 · הצבעה 2 -->
+<section class="slide center" id="vote2Slide">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker" style="align-self:center">סקר זום · אחרי השיחה</span>
+    <span class="kicker" style="align-self:center">הצבעה · אחרי השיחה · סעיף 6 בדף</span>
     <h1 style="font-size:104px">ואיזה צבע אלון <i>עכשיו?</i></h1>
-    <div class="poll-colors">
-      <div><span style="background:var(--green)"></span>ירוק</div>
-      <div><span style="background:var(--orange)"></span>כתום</div>
-      <div><span style="background:var(--red)"></span>אדום</div>
+    <div class="vote-row">
+      <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v2g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
+      <div class="vc"><span style="background:var(--orange)"></span><div class="cnt" id="v2o" style="color:var(--orange)">0</div><div class="lbl">כתום</div></div>
+      <div class="vc"><span style="background:var(--red)"></span><div class="cnt" id="v2r" style="color:var(--red)">0</div><div class="lbl">אדום</div></div>
     </div>
+    <button class="reveal-btn" data-reveal="vote2Slide">🥁 גילוי התוצאה</button>
+    <div class="vote-note" id="v2note">ממתין להצבעות…</div>
   </div>
 </section>
 
-<!-- 15 · הרמזור חי -->
+<!-- 17 · הרמזור חי -->
 <section class="slide pinkbg center">
   <div class="body">
     <h2 style="font-size:96px;line-height:1.25">הרמזור חי.<br><i>השיחה היא מה שמזיז אותו.</i></h2>
@@ -306,34 +376,33 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   </div>
 </section>
 
-<!-- 16 · מאגר המענים -->
+<!-- 18 · מאגר המענים -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">6 · שיטת עבודה #3</span>
+  <span class="kicker">7 · שיטת עבודה #3</span>
   <h2>"אני רוצה קורס, אבל אין כסף": <i>מאגר המענים</i></h2>
   <p class="sub"><b>אתם מתווכים, לא מומחים.</b> התפקיד: לדעת שיש מאגר, למצוא בו מהר, ולוודא שהחיבור עבד.</p>
   <div class="links-big">
-    <div>שער המענים לרכזי בוגרים<span>meytalp-dev.github.io/hopa-nihul/manim-bogrim.html</span></div>
-    <div>המאגר המלא · לפי קטגוריה ואזור<span>hopa.org.il</span></div>
+    <div>hopa.org.il<span>מאגר המענים · סננו לפי קטגוריה והאזור שלכם</span></div>
   </div>
-  <div class="task" style="margin-top:44px">3 דקות, לבד, טלפון ביד: מצאו לאלון <b>מענה אמיתי אחד</b> והדביקו בצ'אט.</div>
+  <div class="task" style="margin-top:44px">3 דקות, לבד, טלפון ביד: מצאו לאלון <b>מענה אמיתי אחד באזור שלכם</b> והדביקו בצ'אט.</div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 17 · טיימר -->
+<!-- 19 · טיימר -->
 <section class="slide dark center">
   <div class="body">
-    <h2 style="font-size:80px">מוצאים מענה לאלון 🔎</h2>
+    <h2 style="font-size:80px">מוצאים מענה לאלון באזור שלכם 🔎</h2>
     <div class="timer-box" id="bigTimer">3:00<small>לחיצה: התחלה / איפוס</small></div>
     <p class="sub" style="margin-top:44px">✍️ מדביקים בצ'אט את השם או הקישור</p>
   </div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 18 · מדרג -->
+<!-- 20 · מדרג -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">7 · שיטת עבודה #4</span>
+  <span class="kicker">8 · שיטת עבודה #4</span>
   <h2>מדרג <i>הסיוע</i></h2>
   <p class="sub">לא כל צורך דורש טלפון של הרכז/ת. עולים במדרג רק כשצריך.</p>
   <div class="ladder-row">
@@ -345,10 +414,10 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 19 · תיעוד -->
+<!-- 21 · תיעוד -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">7 · שיטת עבודה #4</span>
+  <span class="kicker">8 · שיטת עבודה #4</span>
   <h2>שורת <i>התיעוד</i></h2>
   <p class="sub">שתי שורות אחרי כל שיחה: <b>תאריך · נושאים · צרכים שעלו · מה סוכם · צבע</b></p>
   <div class="doc-example">
@@ -356,45 +425,31 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     סוכם: שולחת פרטי מלגה + השלמת בגרות עד יום ה', שיחה חוזרת בעוד שבועיים. <b>צבע: כתום.</b>
   </div>
   <p class="sub" style="margin-top:44px">"כשאני מתקשר אחרי תקופה אני זוכר הכול — וזה מאוד משמעותי עבורו."</p>
-  <div class="chat-line">כתבו את השורה שלכם בדף והדביקו בצ'אט</div>
+  <div class="chat-line">כתבו את השורה שלכם בסעיף 8 בדף והדביקו בצ'אט</div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 20 · הפסקה -->
-<section class="slide yellowbg center">
-  <div class="body">
-    <div class="hero">☕</div>
-    <h1 style="margin-top:40px">הפסקה</h1>
-    <p class="sub" style="color:#333;font-weight:700;font-size:48px;margin-top:30px">חוזרים ב-12:38 בדיוק — ואז עוברים מאלון אליכם</p>
-  </div>
-  <img class="logo" src="hopa-logo.png" alt="הופה">
-</section>
-
-<!-- 21 · השנה שלי -->
+<!-- 22 · השנה שלי -->
 <section class="slide">
   <div class="bar"></div>
-  <span class="kicker">8 · מאלון אליכם</span>
+  <span class="kicker">9 · מאלון אליכם</span>
   <h2>השנה שלי <i>בדף אחד</i></h2>
-  <p class="sub">6 דקות לבד בסעיף 8 בדף · 4 דקות בזוגות מהגלריה · ואז שולחים.</p>
-  <div class="big-list" style="margin-top:44px">
-    <div><div class="n">1</div><div>כמה בוגרים יש לי במאגר — וכמה מהם <b>בקשר איתי היום</b>?</div></div>
-    <div><div class="n">2</div><div><b>3 הפעולות הראשונות</b> שלי בספטמבר</div></div>
-    <div><div class="n">3</div><div>מה אני <b>צריך/ה מהופה</b> כדי שזה יקרה?</div></div>
-    <div><div class="n">4</div><div>ובכנות: מה מהשיטה <b>לא יעבוד לי ב-2 שעות שבועיות</b>?</div></div>
-  </div>
-  <div class="chat-line" style="background:var(--green)">בסוף: "שליחה להופה בוואטסאפ" — זה הבסיס לשיחה האישית איתכם בספטמבר</div>
+  <p class="sub">6 דקות לבד · 4 דקות בזוגות מהגלריה · ואז שולחים. מה שתשלחו הוא נקודת הפתיחה של השיחה האישית איתכם בספטמבר.</p>
+  <div class="page-line" style="margin-top:70px;font-size:50px">מלאו את <b>סעיף 9</b> בדף המפגש ולחצו "שליחה להופה 📬"</div>
+  <p class="sub" style="margin-top:40px">meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html — הקישור בצ'אט</p>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
-<!-- 22 · סגירה -->
-<section class="slide pinkbg center">
-  <div class="body">
-    <h1 style="font-size:100px">משפט אחד<br><i>שאני לוקח/ת מהיום</i></h1>
-    <div class="chat-line" style="align-self:center;margin-top:60px;background:#fff;color:var(--ink)">כתבו בצ'אט 👇 ואז מצלמות פתוחות לצילום קבוצתי 📸</div>
+<!-- 23 · סגירה: משפטים חיים -->
+<section class="slide pinkbg center" id="sntSlide">
+  <div class="body" style="justify-content:flex-start;padding-top:10px;width:100%">
+    <h1 style="font-size:84px">משפט אחד <i>שאני לוקח/ת מהיום</i></h1>
+    <p class="sub" style="margin-top:16px">כתבו בסעיף 10 בדף ולחצו שליחה — המשפט עולה לכאן ✨ ואז מצלמות פתוחות לצילום קבוצתי 📸</p>
+    <div class="snt-list" id="sntList"></div>
   </div>
 </section>
 
-<!-- 23 · מה הלאה -->
+<!-- 24 · מה הלאה -->
 <section class="slide">
   <div class="bar"></div>
   <span class="kicker">להתראות</span>
@@ -412,7 +467,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 
 <footer class="hud">
   <button id="prevB">▶ הקודם</button>
-  <span id="counter">1 / 23</span>
+  <span id="counter">1 / 26</span>
   <button id="nextB">הבא ◀</button>
   <button id="fsB">מסך מלא ⛶</button>
 </footer>
@@ -443,7 +498,7 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='End')show(slides.length-1);
 });
 document.getElementById('stage').addEventListener('click',function(e){
-  if(e.target.closest('#bigTimer')||e.target.closest('a'))return;
+  if(e.target.closest('#bigTimer')||e.target.closest('a')||e.target.closest('.reveal-btn'))return;
   show(cur+1);
 });
 // קפיצה לשקף לפי מספר בכתובת: mifgash-zoom-slides.html#7
@@ -455,6 +510,77 @@ function paintT(){var m=Math.floor(T/60),s=T%60;tEl.childNodes[0].nodeValue=m+':
 tEl.addEventListener('click',function(){
   if(tick){clearInterval(tick);tick=null;T=180;paintT();return}
   tick=setInterval(function(){T--;paintT();if(T<=0){clearInterval(tick);tick=null;T=180;tEl.childNodes[0].nodeValue='נגמר הזמן!'}},1000);
+});
+
+/* ── נתונים חיים מדף המפגש ודפי החדרים ── */
+var EXEC='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var SECRET='hopa-nihul-2026';
+var COLORS=['#FFF200','#fff','#FFD9EA','#FFE9A8','#D9FFE8'];
+function jsonp(params){return new Promise(function(res,rej){
+  var cb='cb'+Math.random().toString(36).slice(2,8);
+  var s=document.createElement('script');
+  var done=function(){delete window[cb];s.remove()};
+  window[cb]=function(d){done();res(d)};
+  s.onerror=function(){done();rej(new Error('jsonp'))};
+  s.src=EXEC+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+  document.body.appendChild(s);
+})}
+function renderCloud(el,words){
+  var count={},order=[];
+  words.forEach(function(w){var k=w.replace(/\s+/g,' ');if(!count[k]){count[k]=0;order.push(k)}count[k]++});
+  el.innerHTML='';
+  order.forEach(function(w,i){
+    var b=document.createElement('b');
+    b.textContent=w;
+    var n=Math.min(count[w],5);
+    b.style.fontSize=(48+(n-1)*30)+'px';
+    b.style.color=COLORS[i%COLORS.length];
+    b.style.transform='rotate('+((i%2?1:-1)*(i%3))+'deg)';
+    el.appendChild(b);
+  });
+}
+var busy=false;
+function poll(){
+  if(busy||document.hidden)return;busy=true;
+  jsonp({action:'storeAll',secret:SECRET}).then(function(r){
+    busy=false;
+    if(!r||!r.ok)return;
+    var words=[],env={},snts=[],v={tl1:{g:0,o:0,r:0},tl2:{g:0,o:0,r:0}};
+    Object.keys(r.store||{}).forEach(function(k){
+      var o=r.store[k]||{};
+      if(o.del)return;
+      if(k.indexOf('intake_wc_')===0&&o.word)words.push(String(o.word));
+      else if(k.indexOf('intake_tl1_')===0&&v.tl1[o.c]!==undefined)v.tl1[o.c]++;
+      else if(k.indexOf('intake_tl2_')===0&&v.tl2[o.c]!==undefined)v.tl2[o.c]++;
+      else if(k.indexOf('intake_env_')===0&&o.room)env[o.room]=o;
+      else if(k.indexOf('intake_snt_')===0&&o.text)snts.push(o);
+    });
+    renderCloud(document.getElementById('liveCloud'),words);
+    ['1','2'].forEach(function(n){
+      var c=v['tl'+n],tot=c.g+c.o+c.r;
+      document.getElementById('v'+n+'g').textContent=c.g;
+      document.getElementById('v'+n+'o').textContent=c.o;
+      document.getElementById('v'+n+'r').textContent=c.r;
+      document.getElementById('v'+n+'note').textContent=tot?tot+' הצבעות נכנסו':'ממתין להצבעות…';
+    });
+    var eg=document.getElementById('envGrid');eg.innerHTML='';
+    Object.keys(env).sort(function(a,b){return a-b}).forEach(function(room){
+      var d=document.createElement('div');
+      d.innerHTML='<b>חדר '+room+'</b>'+(env[room].first||'—');
+      eg.appendChild(d);
+    });
+    snts.sort(function(a,b){return (a.ts||0)-(b.ts||0)});
+    var sl=document.getElementById('sntList');sl.innerHTML='';
+    snts.slice(-10).forEach(function(s){
+      var d=document.createElement('div');
+      d.innerHTML='"'+String(s.text).replace(/</g,'&lt;')+'"'+(s.name?' <small>· '+String(s.name).replace(/</g,'&lt;')+'</small>':'');
+      sl.appendChild(d);
+    });
+  }).catch(function(){busy=false});
+}
+poll();setInterval(poll,6000);
+document.querySelectorAll('.reveal-btn').forEach(function(b){
+  b.addEventListener('click',function(){document.getElementById(b.dataset.reveal).classList.add('revealed')});
 });
 </script>
 </body>
