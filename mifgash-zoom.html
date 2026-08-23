@@ -504,14 +504,14 @@ function storePoll(){
       var o=r.store[k]||{};
       if(o.del)return;
       if(k.indexOf('intake_wc_')===0&&o.word){wcSeen[k]=1;ws.push(String(o.word));return}
-      if(k.indexOf('intake_tl1_')===0&&v.tl1[o.c]!==undefined){v.tl1[o.c]++;return}
-      if(k.indexOf('intake_tl2_')===0&&v.tl2[o.c]!==undefined){v.tl2[o.c]++;return}
+      if(k.indexOf('intake_tl1_')===0&&o.s!=='m'&&v.tl1[o.c]!==undefined){v.tl1[o.c]++;return}
+      if(k.indexOf('intake_tl2_')===0&&o.s!=='m'&&v.tl2[o.c]!==undefined){v.tl2[o.c]++;return}
     });
     wcWords=ws;wcDraw();
     ['tl1','tl2'].forEach(function(key){
       var el=$(key+'live');if(!el)return;
       var c=v[key],tot=c.g+c.o+c.r;
-      if(st[key]&&tot){el.style.display='block';el.innerHTML='עד עכשיו: 🟢 '+c.g+' · 🟠 '+c.o+' · 🔴 '+c.r+' <small style="color:var(--gray);font-weight:500">('+tot+' הצבעות)</small>'}
+      if(st[key]&&tot){el.style.display='block';el.innerHTML='עד עכשיו על אלון: 🟢 '+c.g+' · 🟠 '+c.o+' · 🔴 '+c.r+' <small style="color:var(--gray);font-weight:500">('+tot+' הצבעות)</small>'}
       else el.style.display='none';
     });
   }).catch(function(){pollBusy=false});

@@ -106,6 +106,9 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .reveal-btn{margin-top:60px;align-self:center;font:inherit;font-size:44px;font-weight:900;border:none;border-radius:22px;padding:24px 70px;cursor:pointer;background:var(--yellow);color:var(--ink);box-shadow:0 12px 30px rgba(0,0,0,.25)}
 .revealed .reveal-btn{display:none}
 .vote-note{font-size:30px;color:var(--gray);margin-top:26px;text-align:center}
+.story-tabs{display:flex;gap:20px;justify-content:center;margin-top:36px}
+.story-tabs button{font:inherit;font-size:32px;font-weight:900;border:4px solid var(--line);background:#fff;color:var(--gray);border-radius:999px;padding:14px 46px;cursor:pointer;transition:.15s}
+.story-tabs button.on{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 10px 26px rgba(232,52,138,.35)}
 .rooms-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin-top:46px;width:100%;align-items:start}
 .room-card{background:#FAF7F9;border:4px solid var(--line);border-radius:24px;padding:24px 20px;text-align:center}
 .room-card.migzar{border-color:var(--ink);background:#fff}
@@ -311,7 +314,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <div class="bar"></div>
   <div class="body">
     <span class="kicker" style="align-self:center">הצבעה · לוחצים על צבע בדף המפגש, סעיף 5</span>
-    <h1 style="font-size:104px">איזה צבע אלון <i>עכשיו?</i></h1>
+    <h1 style="font-size:104px">איזה צבע <span id="v1name">אלון</span> <i>עכשיו?</i></h1>
+    <div class="story-tabs" data-vote="1"><button class="on" data-story="a">אלון · המליאה</button><button data-story="m">מוחמד · חדר המגזר</button></div>
     <div class="vote-row">
       <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v1g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
       <div class="vc"><span style="background:var(--orange)"></span><div class="cnt" id="v1o" style="color:var(--orange)">0</div><div class="lbl">כתום</div></div>
@@ -375,7 +379,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <div class="bar"></div>
   <div class="body">
     <span class="kicker" style="align-self:center">הצבעה · אחרי השיחה · דף המפגש, סעיף 6</span>
-    <h1 style="font-size:104px">ואיזה צבע אלון <i>עכשיו?</i></h1>
+    <h1 style="font-size:104px">ואיזה צבע <span id="v2name">אלון</span> <i>עכשיו?</i></h1>
+    <div class="story-tabs" data-vote="2"><button class="on" data-story="a">אלון · המליאה</button><button data-story="m">מוחמד · חדר המגזר</button></div>
     <div class="vote-row">
       <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v2g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
       <div class="vc"><span style="background:var(--orange)"></span><div class="cnt" id="v2o" style="color:var(--orange)">0</div><div class="lbl">כתום</div></div>
@@ -519,7 +524,7 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='End')show(slides.length-1);
 });
 document.getElementById('stage').addEventListener('click',function(e){
-  if(e.target.closest('#bigTimer')||e.target.closest('a')||e.target.closest('.reveal-btn')||e.target.closest('.qrbox'))return;
+  if(e.target.closest('#bigTimer')||e.target.closest('a')||e.target.closest('.reveal-btn')||e.target.closest('.qrbox')||e.target.closest('.story-tabs'))return;
   show(cur+1);
 });
 // קפיצה לשקף לפי מספר בכתובת: mifgash-zoom-slides.html#7
@@ -561,30 +566,48 @@ function renderCloud(el,words){
   });
 }
 var busy=false;
+var lastVotes=null,storySel={1:'a',2:'a'};
+function paintVotes(){
+  if(!lastVotes)return;
+  ['1','2'].forEach(function(n){
+    var c=lastVotes['tl'+n][storySel[n]],tot=c.g+c.o+c.r;
+    document.getElementById('v'+n+'g').textContent=c.g;
+    document.getElementById('v'+n+'o').textContent=c.o;
+    document.getElementById('v'+n+'r').textContent=c.r;
+    document.getElementById('v'+n+'note').textContent=tot?tot+' הצבעות נכנסו':'ממתין להצבעות…';
+  });
+}
+document.querySelectorAll('.story-tabs').forEach(function(t){
+  var n=t.dataset.vote;
+  t.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      storySel[n]=b.dataset.story;
+      t.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
+      document.getElementById('v'+n+'name').textContent=b.dataset.story==='m'?'מוחמד':'אלון';
+      paintVotes();
+    });
+  });
+});
 function poll(){
   if(busy||document.hidden)return;busy=true;
   jsonp({action:'storeAll',secret:SECRET}).then(function(r){
     busy=false;
     if(!r||!r.ok)return;
-    var words=[],env={},snts=[],kbs=[],v={tl1:{g:0,o:0,r:0},tl2:{g:0,o:0,r:0}};
+    var words=[],env={},snts=[],kbs=[],
+        v={tl1:{a:{g:0,o:0,r:0},m:{g:0,o:0,r:0}},tl2:{a:{g:0,o:0,r:0},m:{g:0,o:0,r:0}}};
+    var addVote=function(t,o){var s=o.s==='m'?'m':'a';if(t[s][o.c]!==undefined)t[s][o.c]++};
     Object.keys(r.store||{}).forEach(function(k){
       var o=r.store[k]||{};
       if(o.del)return;
       if(k.indexOf('intake_wc_')===0&&o.word)words.push(String(o.word));
-      else if(k.indexOf('intake_tl1_')===0&&v.tl1[o.c]!==undefined)v.tl1[o.c]++;
-      else if(k.indexOf('intake_tl2_')===0&&v.tl2[o.c]!==undefined)v.tl2[o.c]++;
+      else if(k.indexOf('intake_tl1_')===0)addVote(v.tl1,o);
+      else if(k.indexOf('intake_tl2_')===0)addVote(v.tl2,o);
       else if(k.indexOf('intake_env_')===0&&o.room)env[o.room]=o;
       else if(k.indexOf('intake_snt_')===0&&o.text)snts.push(o);
       else if(k.indexOf('intake_kb_')===0&&o.name)kbs.push(o);
     });
     renderCloud(document.getElementById('liveCloud'),words);
-    ['1','2'].forEach(function(n){
-      var c=v['tl'+n],tot=c.g+c.o+c.r;
-      document.getElementById('v'+n+'g').textContent=c.g;
-      document.getElementById('v'+n+'o').textContent=c.o;
-      document.getElementById('v'+n+'r').textContent=c.r;
-      document.getElementById('v'+n+'note').textContent=tot?tot+' הצבעות נכנסו':'ממתין להצבעות…';
-    });
+    lastVotes=v;paintVotes();
     var eg=document.getElementById('envGrid');eg.innerHTML='';
     Object.keys(env).sort(function(a,b){return a-b}).forEach(function(room){
       var d=document.createElement('div');
