@@ -88,9 +88,9 @@ footer img{height:34px;display:block;margin:0 auto 6px}
 </section>
 
 <section id="envelope">
-  <div class="sec-head"><div class="num">א</div><div><h2>המעטפה: שלוש שאלות על אלון</h2><small>חדרים של 4 · 6 דקות</small></div></div>
-  <p class="hint">התיק המלא של אלון נמצא בסעיף 4 של דף המפגש. עונים יחד, אחד/ת מקליד/ה. התשובות מגיעות ישירות אלינו ועולות על המסך בחזרה למליאה.</p>
-  <label>1 · מה אנחנו <b>יודעים</b> על אלון?</label>
+  <div class="sec-head"><div class="num">א</div><div><h2>המעטפה: שלוש שאלות על <span class="storyName">אלון</span></h2><small>חדרים של 4 · 6 דקות</small></div></div>
+  <p class="hint" id="envHint">התיק המלא של אלון נמצא בסעיף 4 של דף המפגש. עונים יחד, אחד/ת מקליד/ה. התשובות מגיעות ישירות אלינו ועולות על המסך בחזרה למליאה.</p>
+  <label>1 · מה אנחנו <b>יודעים</b> על <span class="storyName">אלון</span>?</label>
   <textarea id="e_know" placeholder="עובדות מהתיק, לא פרשנויות"></textarea>
   <label>2 · מה אנחנו <b>לא יודעים</b> — ומאוד היינו רוצים לדעת?</label>
   <textarea id="e_dont" placeholder="מה חסר לנו כדי באמת להבין איפה הוא"></textarea>
@@ -101,7 +101,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
 </section>
 
 <section id="simulation">
-  <div class="sec-head"><div class="num">ב</div><div><h2>מתקשרים לאלון</h2><small>חדרים של 3 · 7 דקות שיחה + 3 דקות עליה</small></div></div>
+  <div class="sec-head"><div class="num">ב</div><div><h2>מתקשרים ל<span class="storyName">אלון</span></h2><small>חדרים של 3 · 7 דקות שיחה + 3 דקות עליה</small></div></div>
   <p class="hint">כתבו את השמות שלכם (3 או 4) ולחצו הגרלה. הדף מגריל מי אלון, מי הרכז/ת ומי הצופה — <b>אותה הגרלה תצא לכולם בחדר</b>, אז כל אחד יכול לפתוח את הדף אצלו ולראות את אותן תוצאות. בחדר של 4 יש שני צופים. חדר 1 (המגזר): מתחלקים לשתי קבוצות, וכל קבוצה עושה הגרלה עם השמות שלה.</p>
   <label>מי בקבוצה? <small>(שם פרטי מספיק · השדה הרביעי רק אם אתם ארבעה)</small></label>
   <input id="n1" placeholder="שם ראשון">
@@ -111,7 +111,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
   <div class="row"><button class="btn big dark" id="lottery">🎲 הגרלת תפקידים</button></div>
 
   <div class="roles-out" id="rolesOut">
-    <div class="role alon"><span class="em">🤫</span><div><b id="roleAlon"></b> — אלון, הבוגר<small>רק את/ה פותח/ת את הכרטיס השחור למטה. השאר לא מציצים!</small></div></div>
+    <div class="role alon"><span class="em">🤫</span><div><b id="roleAlon"></b> — <span class="storyName">אלון</span>, הבוגר<small>רק את/ה פותח/ת את הכרטיס השחור למטה. השאר לא מציצים!</small></div></div>
     <div class="role"><span class="em">📞</span><div><b id="roleRakaz"></b> — הרכז/ת<small>מנהל/ת את השיחה: "נוח לך לדבר עכשיו?" → מסלול → כסף → חיים → חיבור → "מה הצעד הבא שלך?"</small></div></div>
     <div class="role"><span class="em">👀</span><div><b id="roleTzofe"></b> — הצופה<small>עוקב/ת עם הצ'ק-ליסט למטה ומשקף/ת אחרי השיחה</small></div></div>
   </div>
@@ -130,6 +130,16 @@ footer img{height:34px;display:block;margin:0 auto 6px}
       • לא ידעת שיש השלמת בגרות בחינם, מכינות קדם-צבאיות, או שהופה יכולה לעזור עם מלגה לקורס.<br>
       • המתמטיקה מביכה אותך. תגיד "לא משנה, אין לי ראש לזה" ותנסה לעבור נושא.<br><br>
       <b>הכלל שלך:</b> תענה קצר ("סבבה", "בסדר", "עובד"). תיפתח רק אם הרכז/ת שואל/ת ישירות על כסף, על מה קורה עד פברואר, או על הבית. אם שואלים טוב, אתה נותן. אם לא, השיחה נגמרת ב"טוב, תודה שהתקשרת".
+    </div>
+    <div class="secret" id="secretCardM">
+      <b>מה שמוחמד יודע ואף אחד עוד לא (לעיניך בלבד):</b><br>
+      • אתה "בסדר", עונה קצר. שמח שהתקשרו אליך — ולא תגיד את זה.<br>
+      • סיימת עם <b>תעודת מקצוע באוטוטרוניקה</b>, אבל אתה לא רוצה מוסך — ראית אצל בן דוד שלך איך זה נראה: שעות ארוכות, שכר נמוך, בלי קידום.<br>
+      • מה שאתה באמת רוצה: <b>תחום הרכב החשמלי, או ללמוד הנדסאי</b> — אבל בלי בגרות אתה בטוח שאין לך סיכוי, אז אתה לא אומר את זה בקול.<br>
+      • בינתיים אתה עוזר לאבא בעבודות מזדמנות ונותן חלק מהכסף בבית. אמא לוחצת שתמצא "משהו רציני".<br>
+      • לא שמעת על השלמת בגרות בחינם, על מרכזי ריאן להכוון תעסוקתי, או על קורסי הסבה — ולא ידעת שהופה יכולה לעזור.<br>
+      • זה שאין לך בגרות מביך אותך. אם שואלים על לימודים תגיד "זה לא בשבילי" ותחליף נושא.<br><br>
+      <b>הכלל שלך:</b> תענה קצר ("בסדר", "מסתדר"). תיפתח רק אם הרכז/ת שואל/ת ישירות מה היית רוצה באמת, למה לא מוסך, או איך בבית. אם שואלים טוב, אתה נותן. אם לא, השיחה נגמרת ב"טוב, תודה שהתקשרת".
     </div>
   </div>
 
@@ -185,7 +195,20 @@ for(var i=1;i<=8;i++){
 }
 function paintRoom(){
   [].forEach.call(roomsEl.children,function(b){b.classList.toggle('on',+b.dataset.r===st.room)});
-  $('roomStatus').innerHTML=st.room?'אנחנו <b>חדר '+st.room+'</b> 🚪':'עוד לא נבחר חדר.';
+  $('roomStatus').innerHTML=st.room?(st.room===1?'אנחנו <b>חדר 1 — חדר המגזר עם אסמאא</b> 🚪 הסיפור שלנו: <b>מוחמד</b>':'אנחנו <b>חדר '+st.room+'</b> 🚪'):'עוד לא נבחר חדר.';
+  applyStory();
+}
+/* חדר 1 (המגזר, אסמאא) עובד עם הסיפור של מוחמד במקום אלון */
+function applyStory(){
+  var m=st.room===1;
+  document.querySelectorAll('.storyName').forEach(function(n){n.textContent=m?'מוחמד':'אלון'});
+  $('envHint').textContent=m
+    ?'התיק של מוחמד — במצגת של אסמאא (מוצג בחדר). עונים יחד, אחד/ת מקליד/ה. התשובות מגיעות ישירות אלינו ועולות על המסך בחזרה למליאה.'
+    :'התיק המלא של אלון נמצא בסעיף 4 של דף המפגש. עונים יחד, אחד/ת מקליד/ה. התשובות מגיעות ישירות אלינו ועולות על המסך בחזרה למליאה.';
+  if($('secretCard').style.display==='block'||$('secretCardM').style.display==='block'){
+    $('secretCard').style.display=m?'none':'block';
+    $('secretCardM').style.display=m?'block':'none';
+  }
 }
 paintRoom();
 function needRoom(){if(!st.room){toast('בחרו קודם את מספר החדר למעלה');window.scrollTo({top:0,behavior:'smooth'});return true}return false}
@@ -228,7 +251,7 @@ function paintRoles(){
 $('lottery').addEventListener('click',doLottery);
 paintRoles();
 $('openSecret').addEventListener('click',function(){
-  $('secretCard').style.display='block';
+  $(st.room===1?'secretCardM':'secretCard').style.display='block';
   this.parentNode.parentNode.style.display='none';
 });
 

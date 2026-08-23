@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת חדר המגזר · הסיפור של מוחמד · מפגש רכזי הבוגרים #1 · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --green:#22A55B; --orange:#F5941F; --red:#E03A3A;
+  --ink:#141414; --gray:#666; --line:#eee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-webkit-font-smoothing:antialiased}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1920px;height:1080px;position:relative;flex:0 0 auto;background:#fff;box-shadow:0 0 60px rgba(0,0,0,.5)}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:90px 120px;background:#fff;color:var(--ink)}
+.slide.on{display:flex}
+.slide .bar{position:absolute;top:0;right:0;left:0;height:16px;background:linear-gradient(90deg,var(--pink),var(--yellow))}
+.slide .logo{position:absolute;bottom:44px;left:60px;height:64px;opacity:.92}
+.slide .kicker{display:inline-block;background:var(--yellow);color:var(--ink);padding:8px 28px;border-radius:99px;font-weight:800;font-size:28px;align-self:flex-start}
+.slide h1{font-size:112px;font-weight:900;line-height:1.08;margin-top:34px}
+.slide h1 i{font-style:normal;color:var(--pink)}
+.slide h2{font-size:72px;font-weight:900;line-height:1.12;margin-top:28px}
+.slide h2 i{font-style:normal;color:var(--pink)}
+.slide .sub{font-size:38px;color:var(--gray);margin-top:26px;line-height:1.5;font-weight:500}
+.slide .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+.big-list{margin-top:50px;display:flex;flex-direction:column;gap:30px}
+.big-list div{display:flex;align-items:flex-start;gap:26px;font-size:46px;line-height:1.35;font-weight:500}
+.big-list .n{flex:0 0 auto;width:66px;height:66px;border-radius:50%;background:var(--pink);color:#fff;font-weight:900;font-size:36px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.big-list b{font-weight:800}
+.task{background:var(--pink-soft);border:5px solid var(--pink);border-radius:28px;padding:40px 50px;font-size:46px;line-height:1.45;margin-top:50px;font-weight:500}
+.task::before{content:"המשימה";display:block;font-weight:900;color:var(--pink-deep);font-size:28px;margin-bottom:10px;letter-spacing:1px}
+.task b{font-weight:800}
+.page-line{background:var(--ink);color:#fff;border-radius:20px;padding:26px 40px;font-size:42px;font-weight:700;margin-top:34px;display:inline-block}
+.page-line::before{content:"📱 בדף החדר: ";color:var(--yellow)}
+.dark{background:var(--ink);color:#fff}
+.dark h1,.dark h2{color:#fff}
+.dark h1 i,.dark h2 i{color:var(--yellow)}
+.dark .sub{color:#bbb}
+.pinkbg{background:var(--pink);color:#fff}
+.pinkbg h1,.pinkbg h2{color:#fff}
+.pinkbg h1 i,.pinkbg h2 i{color:var(--yellow)}
+.pinkbg .sub{color:#ffd9ea}
+.cols{display:flex;gap:44px;margin-top:56px}
+.col{flex:1;border-radius:28px;padding:44px 40px;text-align:center}
+.col .em{font-size:88px;line-height:1}
+.col h3{font-size:46px;font-weight:900;margin-top:18px}
+.col p{font-size:32px;line-height:1.45;margin-top:14px;color:var(--gray);font-weight:500}
+.q4{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:56px}
+.q4 div{background:#fff;border:5px solid var(--line);border-radius:28px;padding:38px 42px;font-size:38px;line-height:1.4;font-weight:500}
+.q4 div b{display:block;font-size:44px;font-weight:900;margin-bottom:8px}
+.file-card{border:6px solid var(--ink);border-radius:32px;overflow:hidden;margin-top:50px}
+.file-head{background:var(--yellow);padding:34px 46px;display:flex;align-items:center;gap:34px}
+.file-head .av{width:110px;height:110px;border-radius:50%;background:var(--ink);color:var(--yellow);font-size:56px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.file-head h3{font-size:52px;font-weight:900}
+.file-head small{display:block;font-size:32px;font-weight:600;color:#333;margin-top:4px}
+.file-facts{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:40px 46px;background:#fff}
+.file-facts div{background:#FAF7F9;border-radius:20px;padding:26px 30px;font-size:34px;line-height:1.4;font-weight:500}
+.file-facts b{display:block;color:var(--pink-deep);font-size:26px;font-weight:800;margin-bottom:4px}
+.poll-colors{display:flex;gap:90px;justify-content:center;margin-top:80px}
+.poll-colors div{text-align:center;font-size:52px;font-weight:900}
+.poll-colors span{display:block;width:220px;height:220px;border-radius:50%;margin:0 auto 26px;box-shadow:0 18px 50px rgba(0,0,0,.22)}
+.links-big{display:flex;flex-direction:column;gap:26px;margin-top:56px}
+.links-big div{background:#FAF7F9;border:4px solid var(--line);border-radius:22px;padding:30px 40px;font-size:40px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.links-big span{color:var(--gray);font-weight:500;font-size:30px;text-align:left}
+.center{align-items:center;text-align:center;justify-content:center}
+.center .body{align-items:center}
+.gal-btn{display:inline-block;align-self:flex-start;margin-top:30px;background:var(--pink);color:#fff;text-decoration:none;font-size:34px;font-weight:800;padding:20px 38px;border-radius:20px;box-shadow:0 12px 30px rgba(232,52,138,.35)}
+.gal-btn:hover{background:var(--pink-deep)}
+.qrbox{position:absolute;bottom:40px;right:60px;display:flex;align-items:center;gap:20px;background:#fff;border:4px solid var(--line);border-radius:20px;padding:14px 22px;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:5}
+.qrbox img{width:150px;height:150px;display:block}
+.qrbox .t{font-size:27px;font-weight:800;line-height:1.35;text-align:right;color:var(--ink)}
+.qrbox .t small{display:block;color:var(--gray);font-weight:600;font-size:21px;direction:ltr;text-align:right}
+footer.hud{position:fixed;bottom:18px;right:24px;z-index:10;display:flex;gap:10px;align-items:center;color:#888;font-size:14px;font-weight:700}
+footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:16px}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- 1 · שער -->
+<section class="slide on">
+  <div class="bar"></div>
+  <div class="body">
+    <span class="kicker">חדר 1 · עם אסמאא · אפשר בערבית 🤍</span>
+    <h1>הסיפור של<br><i>מוחמד</i></h1>
+    <p class="sub">בוגר אחד, שנה אחת · מפגש רכזי הבוגרים #1 · 24.8.2026</p>
+  </div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 2 · התיק של מוחמד -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">המעטפה</span>
+  <h2>התיק של <i>מוחמד</i></h2>
+  <div class="file-card">
+    <div class="file-head">
+      <div class="av">م</div>
+      <div><h3>מוחמד · בן 18 וחצי</h3><small>בוגר י"ב תשפ"ו, בית הספר שלכם · מגמת אוטוטרוניקה</small></div>
+    </div>
+    <div class="file-facts">
+      <div><b>תעודות</b>סיים י"ב בלי תעודת בגרות · יש תעודת מקצוע באוטוטרוניקה</div>
+      <div><b>תעסוקה</b>מחפש עבודה — אבל אומר שלא במוסך</div>
+      <div><b>עכשיו</b>עוזר לאבא בעבודות מזדמנות, נותן חלק מהכסף בבית</div>
+      <div><b>קשר</b>בוואטסאפ עונה "הכל בסדר, מסתדר" ו-👍</div>
+    </div>
+  </div>
+  <p class="sub" style="margin-top:36px">זה כל מה שיש במאגר. <b>מה הייתם עושים?</b></p>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 3 · שלוש שאלות -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">המעטפה · 6 דקות · עונים יחד</span>
+  <h2>שלוש שאלות על מוחמד</h2>
+  <div class="big-list" style="margin-top:50px">
+    <div><div class="n">1</div><div>מה אנחנו <b>יודעים</b> עליו?</div></div>
+    <div><div class="n">2</div><div>מה אנחנו <b>לא יודעים</b> — ומאוד היינו רוצים לדעת?</div></div>
+    <div><div class="n">3</div><div>מה <b>הפעולה הראשונה</b> שהיינו עושים מחר בבוקר?</div></div>
+  </div>
+  <a class="gal-btn" href="mifgash-cheder.html" target="_blank">🚪 דף החדר — בוחרים חדר 1, עונים ושולחים · mifgash-cheder.html</a>
+  <div class="qrbox"><div class="t">דף החדר 🚪<small>mifgash-cheder.html · חדר 1</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 4 · איזה צבע מוחמד -->
+<section class="slide center">
+  <div class="bar"></div>
+  <div class="body">
+    <span class="kicker" style="align-self:center">הרמזור של הופה</span>
+    <h1 style="font-size:104px">איזה צבע מוחמד <i>עכשיו?</i></h1>
+    <div class="poll-colors">
+      <div><span style="background:var(--green)"></span>ירוק</div>
+      <div><span style="background:var(--orange)"></span>כתום</div>
+      <div><span style="background:var(--red)"></span>אדום</div>
+    </div>
+    <p class="sub" style="margin-top:60px">מרימים יד / כותבים בצ'אט של החדר. זכרו את התשובה — נחזור אליה אחרי השיחה.</p>
+  </div>
+</section>
+
+<!-- 5 · 4 השאלות -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">שיטת העבודה · שיחת מעקב</span>
+  <h2>השיחה הראשונה: <i>4 השאלות</i></h2>
+  <p class="sub">כ-15 דקות. נפתחת ב<b>"נוח לך לדבר עכשיו?"</b> · האווירה חשובה מהטופס · נסגרת ב<b>"מה הצעד הבא שלך?"</b></p>
+  <div class="q4">
+    <div><b>🧭 מסלול</b>איפה אתה עכשיו — עבודה / לימודים / הכשרה? מה השלב הבא ומתי?</div>
+    <div><b>💰 כסף וזכויות</b>מלגות, קורסים במימון, זכאויות שלא מומשו, חובות שמעיקים?</div>
+    <div><b>🏠 חיים</b>משפחה, בית, איך אתה מרגיש באמת? מקשיבים גם למה שלא נאמר.</div>
+    <div><b>🔗 חיבור</b>למה אפשר לחבר אותך עכשיו — מענה, הכשרה, מעסיק, בוגר אחר?</div>
+  </div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 6 · מתקשרים למוחמד -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">סימולציה · שתי קבוצות בחדר · 7 + 3 דקות</span>
+  <h2>מתקשרים <i>למוחמד</i></h2>
+  <div class="cols">
+    <div class="col" style="background:var(--ink);color:#fff"><div class="em">🤫</div><h3 style="color:var(--yellow)">מוחמד</h3><p style="color:#ccc">רק מי שהוגרל פותח/ת את הכרטיס השחור בדף החדר. אף אחד אחר לא מציץ!</p></div>
+    <div class="col" style="background:var(--pink-soft)"><div class="em">📞</div><h3>הרכז/ת</h3><p>מנהל/ת את השיחה: 4 השאלות, לפי הסדר, 7 דקות.</p></div>
+    <div class="col" style="background:var(--yellow-soft)"><div class="em">👀</div><h3>הצופה</h3><p>ממלא/ת את הצ'ק-ליסט הדיגיטלי בדף החדר ושולח/ת.</p></div>
+  </div>
+  <div class="page-line">חלק ב' · מתחלקים לשתי קבוצות, כל קבוצה כותבת שמות ולוחצת "הגרלת תפקידים" 🎲 (בחדר 1 הדף מציג את הכרטיס של מוחמד)</div>
+  <div class="qrbox"><div class="t">דף החדר 🎲<small>mifgash-cheder.html · חדר 1</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 7 · ואיזה צבע עכשיו -->
+<section class="slide pinkbg center">
+  <div class="body">
+    <h1 style="font-size:100px">ואיזה צבע מוחמד <i>עכשיו?</i></h1>
+    <p class="sub" style="margin-top:50px">מה גילינו שלא היה בתיק? איזו שאלה אחת שינתה את השיחה?</p>
+    <h2 style="font-size:64px;margin-top:70px">הרמזור חי. <i>השיחה היא מה שמזיז אותו.</i></h2>
+  </div>
+</section>
+
+<!-- 8 · מענים למוחמד -->
+<section class="slide">
+  <div class="bar"></div>
+  <span class="kicker">מאגר המענים · אתם מתווכים, לא מומחים</span>
+  <h2>מה יש <i>למוחמד</i> באזור שלכם?</h2>
+  <div class="links-big">
+    <div>hopa.org.il<span>מאגר המענים · סננו לפי קטגוריה והאזור שלכם</span></div>
+    <div>מרכזי ריאן<span>הכוון תעסוקתי לחברה הערבית, הדרוזית והבדואית — ליווי אישי חינם</span></div>
+    <div>השלמת בגרות + קורסי הסבה<span>בחינם דרך זרוע העבודה · והופה עוזרת עם מלגות</span></div>
+  </div>
+  <div class="task" style="margin-top:40px">מצאו למוחמד <b>מענה אמיתי אחד באזור שלכם</b> — לעבודה שהוא באמת רוצה, לא סתם "משהו".</div>
+  <div class="qrbox"><div class="t">מאגר המענים<small>hopa.org.il</small></div><img src="qr-hopa.png" alt="QR hopa.org.il"></div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+<!-- 9 · חוזרים למליאה -->
+<section class="slide dark center">
+  <div class="body">
+    <h2 style="font-size:90px;line-height:1.3">מוחמד הוא לא "מקרה".<br><i>הוא בוגר עם תוכנית שאף אחד עוד לא שאל עליה.</i></h2>
+    <p class="sub" style="margin-top:50px">חוזרים למליאה 👈 ממשיכים עם כולם</p>
+  </div>
+  <img class="logo" src="hopa-logo.png" alt="הופה">
+</section>
+
+</div></div>
+
+<footer class="hud">
+  <button id="prevB">▶ הקודם</button>
+  <span id="counter">1 / 9</span>
+  <button id="nextB">הבא ◀</button>
+  <button id="fsB">מסך מלא ⛶</button>
+</footer>
+
+<script>
+var slides=[].slice.call(document.querySelectorAll('.slide')),cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,j){s.classList.toggle('on',j===cur)});
+  document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+}
+function fit(){
+  var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);
+  document.getElementById('stage').style.transform='scale('+s+')';
+}
+document.getElementById('stage').style.transformOrigin='center center';
+window.addEventListener('resize',fit);fit();
+document.getElementById('nextB').addEventListener('click',function(){show(cur+1)});
+document.getElementById('prevB').addEventListener('click',function(){show(cur-1)});
+document.getElementById('fsB').addEventListener('click',function(){
+  if(document.fullscreenElement)document.exitFullscreen();
+  else document.documentElement.requestFullscreen();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown'||e.key==='Enter'){e.preventDefault();show(cur+1)}
+  else if(e.key==='ArrowRight'||e.key==='PageUp'||e.key==='Backspace'){e.preventDefault();show(cur-1)}
+  else if(e.key==='Home')show(0);
+  else if(e.key==='End')show(slides.length-1);
+});
+document.getElementById('stage').addEventListener('click',function(e){
+  if(e.target.closest('a')||e.target.closest('.qrbox'))return;
+  show(cur+1);
+});
+var h=parseInt(location.hash.slice(1),10);
+if(h>=1&&h<=slides.length)show(h-1);
+</script>
+</body>
+</html>
