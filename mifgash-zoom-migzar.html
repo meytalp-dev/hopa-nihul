@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מפגש רכזי הבוגרים #1 · חדר המגזר · הסיפור של מוחמד · הופה</title>
+<title>מפגש רכזי הבוגרים #1 · החדר עם אסמאא · הסיפור של מוחמד · הופה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -124,7 +124,7 @@ footer img{height:36px;display:block;margin:0 auto 6px}
 
 <header class="wrap">
   <img src="hopa-logo.png" alt="הופה">
-  <div class="tag">מפגש #1 · גרסת חדר המגזר · עם אסמאא 🤍</div>
+  <div class="tag">מפגש #1 · החדר עם אסמאא 🤍</div>
   <h1>בוגר אחד, <span>שנה אחת</span></h1>
   <div class="meet">
     <div>📅 <b>יום שני 24.8.2026</b></div>
@@ -178,7 +178,7 @@ footer img{height:36px;display:block;margin:0 auto 6px}
     <li><b>הפורטל של בית הספר</b> — שם גרים המאגר, הרמזור והתיעוד. הקישור האישי שלכם נשלח בקבוצת הצוות (מי שאין לו — כותב לנו ומקבל בפרטי). הפורטל עובד גם <b>בערבית</b> (כפתור השפה למעלה).</li>
     <li><b>תוכנית העבודה בדף אחד</b> — איך ממלאים, מתי, ומה קורה איתה אחר כך.</li>
     <li><b>מסגרת התפקיד</b> — 2 שעות שבועיות, ומה נכנס בהן.</li>
-    <li><b>ערוצי הקשר</b> — פורום רכזי הבוגרים בוואטסאפ, בארי כאיש הקשר למענים, <b>ואסמאא כרכזת המגזר שלכם</b>.</li>
+    <li><b>ערוצי הקשר</b> — פורום רכזי הבוגרים בוואטסאפ, בארי כאיש הקשר למענים, <b>ואסמאא — הרכזת שמלווה אתכם</b>.</li>
   </ul>
 </section>
 
@@ -232,7 +232,7 @@ footer img{height:36px;display:block;margin:0 auto 6px}
     </div>
   </div>
 
-  <div class="box zoom">כל חדר המגזר יחד עם אסמאא · אפשר בערבית · התשובות עולות על המסך בחזרה למליאה.</div>
+  <div class="box zoom">כל החדר יחד עם אסמאא · אפשר בערבית · התשובות עולות על המסך בחזרה למליאה.</div>
   <div class="box task">
     בחדר, פתחו יחד את <b>דף החדר</b>, בחרו <b>חדר 1</b>, וענו על שלוש השאלות:
     מה אנחנו <b>יודעים</b> על מוחמד? מה אנחנו <b>לא יודעים</b>? מה <b>הפעולה הראשונה</b> מחר בבוקר?
@@ -373,7 +373,7 @@ footer img{height:36px;display:block;margin:0 auto 6px}
   <h3>מה קורה אחרי המפגש</h3>
   <ul>
     <li>פורום רכזי הבוגרים בוואטסאפ: שם נשלחות ההזדמנויות, שם שואלים.</li>
-    <li>אסמאא בקשר איתכם כרכזת המגזר — לכל שאלה, גם בערבית.</li>
+    <li>אסמאא בקשר איתכם — לכל שאלה, גם בערבית.</li>
     <li>שיחה אישית עם כל רכז/ת בספטמבר, על בסיס "השנה שלי" ששלחתם.</li>
     <li>המפגש הבא: התאריך יישלח בפורום.</li>
   </ul>
@@ -429,7 +429,7 @@ document.querySelectorAll('.tl').forEach(function(tl){
   function paint(){bs.forEach(function(b){b.classList.toggle('on',st[key]===colorOf(b))});var d=$(key+'desc');if(d)d.textContent=st[key]?TLD[st[key]]:'';compare()}
   bs.forEach(function(b){b.addEventListener('click',function(){
     st[key]=colorOf(b);save();paint();
-    sendStore(key+'_'+DEV,{c:st[key],s:'m'});
+    sendStore(key+'_'+DEV,{c:st[key]});
     toast('הבחירה שלכם נספרה 🗳️');
     setTimeout(storePoll,3000);
   })});
@@ -506,14 +506,14 @@ function storePoll(){
       var o=r.store[k]||{};
       if(o.del)return;
       if(k.indexOf('intake_wc_')===0&&o.word){wcSeen[k]=1;ws.push(String(o.word));return}
-      if(k.indexOf('intake_tl1_')===0&&o.s==='m'&&v.tl1[o.c]!==undefined){v.tl1[o.c]++;return}
-      if(k.indexOf('intake_tl2_')===0&&o.s==='m'&&v.tl2[o.c]!==undefined){v.tl2[o.c]++;return}
+      if(k.indexOf('intake_tl1_')===0&&v.tl1[o.c]!==undefined){v.tl1[o.c]++;return}
+      if(k.indexOf('intake_tl2_')===0&&v.tl2[o.c]!==undefined){v.tl2[o.c]++;return}
     });
     wcWords=ws;wcDraw();
     ['tl1','tl2'].forEach(function(key){
       var el=$(key+'live');if(!el)return;
       var c=v[key],tot=c.g+c.o+c.r;
-      if(st[key]&&tot){el.style.display='block';el.innerHTML='עד עכשיו על מוחמד: 🟢 '+c.g+' · 🟠 '+c.o+' · 🔴 '+c.r+' <small style="color:var(--gray);font-weight:500">('+tot+' הצבעות)</small>'}
+      if(st[key]&&tot){el.style.display='block';el.innerHTML='עד עכשיו: 🟢 '+c.g+' · 🟠 '+c.o+' · 🔴 '+c.r+' <small style="color:var(--gray);font-weight:500">('+tot+' הצבעות)</small>'}
       else el.style.display='none';
     });
   }).catch(function(){pollBusy=false});
