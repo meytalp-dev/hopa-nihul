@@ -63,6 +63,9 @@ textarea{min-height:70px;resize:vertical}
 .check label{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:15px;margin:8px 0;cursor:pointer}
 .check input{width:20px;height:20px;margin-top:3px;flex:0 0 auto;accent-color:var(--pink)}
 .pill{display:inline-block;background:var(--yellow);border-radius:99px;padding:2px 12px;font-weight:800;font-size:13px}
+.story-banner{display:none;margin:14px auto 0;background:var(--pink-soft);border:3px solid var(--pink);border-radius:14px;padding:10px 18px;font-weight:800;font-size:16px;line-height:1.4}
+.story-banner.m{background:var(--yellow);border-color:var(--ink)}
+.story-banner a{color:inherit;font-weight:600;font-size:13px;display:block;margin-top:2px}
 .toast{position:fixed;bottom:18px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
 .toast.show{opacity:1}
 footer{text-align:center;color:var(--gray);font-size:13.5px;margin-top:40px;line-height:1.7}
@@ -77,6 +80,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
   <div class="tag">מפגש רכזי הבוגרים #1 · 24.8</div>
   <h1>דף <span>החדר</span></h1>
   <p class="hint">הדף של החדר שלכם בזום. קודם כל: באיזה חדר אתם? (מספר החדר מופיע בכותרת חלון הזום)</p>
+  <div class="story-banner" id="storyBanner"></div>
 </header>
 
 <main class="wrap">
@@ -102,7 +106,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
 
 <section id="simulation">
   <div class="sec-head"><div class="num">ב</div><div><h2>מתקשרים ל<span class="storyName">אלון</span></h2><small>חדרים של 3 · 7 דקות שיחה + 3 דקות עליה</small></div></div>
-  <p class="hint">כתבו את השמות שלכם (3 או 4) ולחצו הגרלה. הדף מגריל מי אלון, מי הרכז/ת ומי הצופה — <b>אותה הגרלה תצא לכולם בחדר</b>, אז כל אחד יכול לפתוח את הדף אצלו ולראות את אותן תוצאות. בחדר של 4 יש שני צופים. חדר 1 (המגזר): מתחלקים לשתי קבוצות, וכל קבוצה עושה הגרלה עם השמות שלה.</p>
+  <p class="hint">כתבו את השמות שלכם (3 או 4) ולחצו הגרלה. הדף מגריל מי <span class="storyName">אלון</span>, מי הרכז/ת ומי הצופה — <b>אותה הגרלה תצא לכולם בחדר</b>, אז כל אחד יכול לפתוח את הדף אצלו ולראות את אותן תוצאות. בחדר של 4 יש שני צופים. חדר 1 (המגזר): מתחלקים לשתי קבוצות, וכל קבוצה עושה הגרלה עם השמות שלה.</p>
   <label>מי בקבוצה? <small>(שם פרטי מספיק · השדה הרביעי רק אם אתם ארבעה)</small></label>
   <input id="n1" placeholder="שם ראשון">
   <input id="n2" placeholder="שם שני" style="margin-top:8px">
@@ -117,7 +121,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
   </div>
 
   <div class="secret-gate" id="secretGate">
-    <h3>הכרטיס השחור של אלון</h3>
+    <h3>הכרטיס השחור של <span class="storyName">אלון</span></h3>
     <div class="box" style="border-color:var(--ink)">
       <b id="gateName"></b>, זה בשבילך בלבד. כולם מסתכלים הצידה?
       <div class="row"><button class="btn dark" id="openSecret">אני <span id="gateName2"></span> — פתיחת הכרטיס 🤫</button></div>
@@ -151,7 +155,7 @@ footer img{height:34px;display:block;margin:0 auto 6px}
     <label><input type="checkbox" data-c="חיים/בית נשאל">🏠 חיים / בית נשאל</label>
     <label><input type="checkbox" data-c="חיבור למענה הוצע">🔗 חיבור למענה הוצע</label>
     <label><input type="checkbox" data-c="לא ויתר אחרי מילה אחת">הרכז/ת לא ויתר/ה אחרי תשובה של מילה אחת</label>
-    <label><input type="checkbox" data-c="שיקוף כוח">שיקוף של כוח או הצלחה של אלון</label>
+    <label><input type="checkbox" data-c="שיקוף כוח">שיקוף של כוח או הצלחה של <span class="storyName">אלון</span></label>
     <label><input type="checkbox" data-c="נסגר בצעד הבא">נסגר ב"מה הצעד הבא שלך?" + מה הרכז/ת עושה</label>
     <label><input type="checkbox" data-c="בערך 7 דקות">משך: בערך 7 דקות ולא 20</label>
     <label style="display:block;margin-top:12px">מה גילינו שלא היה בתיק? איזו שאלה אחת שינתה את השיחה?</label>
@@ -196,6 +200,14 @@ for(var i=1;i<=8;i++){
 function paintRoom(){
   [].forEach.call(roomsEl.children,function(b){b.classList.toggle('on',+b.dataset.r===st.room)});
   $('roomStatus').innerHTML=st.room?(st.room===1?'אנחנו <b>חדר 1 — חדר המגזר עם אסמאא</b> 🚪 הסיפור שלנו: <b>מוחמד</b>':'אנחנו <b>חדר '+st.room+'</b> 🚪'):'עוד לא נבחר חדר.';
+  var sb=$('storyBanner');
+  if(st.room){
+    var m=st.room===1;
+    sb.style.display='block';
+    sb.classList.toggle('m',m);
+    sb.innerHTML=(m?'🚪 חדר 1 · חדר המגזר · עובדים עם <b>הסיפור של מוחמד</b>':'🚪 חדר '+st.room+' · עובדים עם <b>הסיפור של אלון</b>')+'<a href="#" id="switchRoom">לא החדר שלכם? לחצו להחלפה</a>';
+    $('switchRoom').addEventListener('click',function(e){e.preventDefault();st.room=null;save();paintRoom();window.scrollTo({top:0,behavior:'smooth'})});
+  } else sb.style.display='none';
   applyStory();
 }
 /* חדר 1 (המגזר, אסמאא) עובד עם הסיפור של מוחמד במקום אלון */
