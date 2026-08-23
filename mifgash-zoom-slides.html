@@ -92,8 +92,6 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .center{align-items:center;text-align:center;justify-content:center}
 .center .body{align-items:center}
 .hero{font-size:150px;line-height:1}
-.gal-btn{display:inline-block;align-self:flex-start;margin-top:44px;background:var(--pink);color:#fff;text-decoration:none;font-size:40px;font-weight:800;padding:26px 46px;border-radius:20px;box-shadow:0 12px 30px rgba(232,52,138,.35)}
-.gal-btn:hover{background:var(--pink-deep)}
 footer.hud{position:fixed;bottom:18px;right:24px;z-index:10;display:flex;gap:10px;align-items:center;color:#888;font-size:14px;font-weight:700}
 footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:16px}
 </style>
@@ -138,7 +136,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 <section class="slide center">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker" style="align-self:center">אורחת</span>
+    <span class="kicker" style="align-self:center">מייסדת הופה · מנכ"לית קרן ברלוביץ</span>
     <h1 style="margin-top:44px">נאוה <i>גינזבורג</i></h1>
   </div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
@@ -181,8 +179,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <div class="bar"></div>
   <span class="kicker">2 · מי בחדר</span>
   <h2>גלריית <i>הרכזים</i></h2>
-  <p class="sub">על המסך: הפוסטרים שיצרתם ברישום — הערכים, תמונת החזון וכוח-העל של כל אחד ואחת.</p>
-  <a class="gal-btn" href="mifgash-galeria.html" target="_blank">▶ הפעלת הגלריה האוטומטית — 19 הרכזים וכוחות-העל שלהם</a>
+  <p class="sub">על המסך: הפוסטרים שיצרתם ברישום — הערכים, תמונת החזון והפתגם של כל אחד ואחת.</p>
   <div class="task">
     מצאו בפוסטרים <b>ערך אחד של מישהו אחר שהוא גם שלכם</b>.<br>
     האדם שבחרתם — בן/בת הזוג שלכם לחדרים היום.
@@ -446,9 +443,6 @@ document.getElementById('stage').addEventListener('click',function(e){
   if(e.target.closest('#bigTimer')||e.target.closest('a'))return;
   show(cur+1);
 });
-// קפיצה לשקף לפי מספר בכתובת: mifgash-zoom-slides.html#7
-var h=parseInt(location.hash.slice(1),10);
-if(h>=1&&h<=slides.length)show(h-1);
 // טיימר 3 דקות בשקף המענים
 var T=180,tick=null,tEl=document.getElementById('bigTimer');
 function paintT(){var m=Math.floor(T/60),s=T%60;tEl.childNodes[0].nodeValue=m+':'+(s<10?'0':'')+s}
