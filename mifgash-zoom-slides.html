@@ -39,7 +39,7 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .chat-line{background:var(--ink);color:#fff;border-radius:20px;padding:26px 40px;font-size:42px;font-weight:700;margin-top:34px;display:inline-block}
 .chat-line::before{content:"✍️ בצ'אט: ";color:var(--yellow)}
 .page-line{background:var(--ink);color:#fff;border-radius:20px;padding:26px 40px;font-size:42px;font-weight:700;margin-top:34px;display:inline-block}
-.page-line::before{content:"📱 בדף: ";color:var(--yellow)}
+.page-line::before{content:"📱 בדף המפגש: ";color:var(--yellow)}
 .dark{background:var(--ink);color:#fff}
 .dark h1,.dark h2{color:#fff}
 .dark h1 i,.dark h2 i{color:var(--yellow)}
@@ -89,6 +89,10 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .hero{font-size:150px;line-height:1}
 .gal-btn{display:inline-block;align-self:flex-start;margin-top:44px;background:var(--pink);color:#fff;text-decoration:none;font-size:40px;font-weight:800;padding:26px 46px;border-radius:20px;box-shadow:0 12px 30px rgba(232,52,138,.35)}
 .gal-btn:hover{background:var(--pink-deep)}
+.qrbox{position:absolute;bottom:40px;right:60px;display:flex;align-items:center;gap:20px;background:#fff;border:4px solid var(--line);border-radius:20px;padding:14px 22px;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:5}
+.qrbox img{width:150px;height:150px;display:block}
+.qrbox .t{font-size:27px;font-weight:800;line-height:1.35;text-align:right;color:var(--ink)}
+.qrbox .t small{display:block;color:var(--gray);font-weight:600;font-size:21px;direction:ltr;text-align:right}
 /* ── חי: ענן, הצבעות, משפטים, תשובות חדרים ── */
 .live-cloud{display:flex;flex-wrap:wrap;gap:18px 44px;align-items:center;justify-content:center;margin-top:50px;min-height:420px}
 .live-cloud:empty::before{content:"ממתין למילים שלכם…";color:#ffd9ea;font-size:44px;font-weight:700}
@@ -133,6 +137,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <p class="sub">יום שני 24.8.2026 · 11:00–13:00 · זום<br>
     📱 פתחו את דף המפגש בטלפון: <b style="color:var(--pink-deep)">meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html</b> (הקישור בצ'אט)</p>
   </div>
+  <div class="qrbox"><div class="t">דף המפגש 📱<small>סרקו, או מהקישור בצ'אט</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -189,9 +194,10 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 <section class="slide pinkbg center" id="cloudSlide">
   <div class="body" style="justify-content:flex-start;padding-top:20px;width:100%">
     <h1 style="font-size:96px">מהי <i>קהילה</i> עבורכם?</h1>
-    <p class="sub" style="margin-top:20px">כתבו מילה אחת בסעיף 3 בדף ולחצו "שליחה לענן" — והיא תופיע כאן ✨</p>
+    <p class="sub" style="margin-top:20px">כתבו מילה אחת ב<b style="color:#fff">דף המפגש · סעיף 3</b> ולחצו "שליחה לענן" — והיא תופיע כאן ✨</p>
     <div class="live-cloud" id="liveCloud"></div>
   </div>
+  <div class="qrbox"><div class="t">כותבים את המילה כאן 👈<small>mifgash-zoom.html · סעיף 3</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
 </section>
 
 <!-- 7 · הקהילה שלי -->
@@ -205,7 +211,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div><div class="n">2</div><div>היא <b>נותנת לי</b> ___</div></div>
     <div><div class="n">3</div><div>היא <b>מייצרת אצלי שייכות</b> ככה: ___</div></div>
   </div>
-  <div class="page-line">מלאו בסעיף 3 בדף ולחצו "שליחה להופה" — מגיע ישירות אלינו</div>
+  <div class="page-line">מלאו בסעיף 3 ולחצו "שליחה להופה" — מגיע ישירות אלינו</div>
+  <div class="qrbox"><div class="t">דף המפגש · סעיף 3<small>mifgash-zoom.html</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -248,7 +255,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div><div class="n">2</div><div>מה אנחנו <b>לא יודעים</b> — ומאוד היינו רוצים לדעת?</div></div>
     <div><div class="n">3</div><div>מה <b>הפעולה הראשונה</b> שהייתם עושים מחר בבוקר?</div></div>
   </div>
-  <div class="page-line">עונים יחד ב<b>דף החדר</b> (הקישור בצ'אט) — בוחרים את מספר החדר ושולחים</div>
+  <a class="gal-btn" href="mifgash-cheder.html" target="_blank" style="margin-top:30px;font-size:34px;padding:20px 38px">🚪 דף החדר — עונים יחד ושולחים · mifgash-cheder.html</a>
+  <div class="qrbox"><div class="t">דף החדר 🚪<small>mifgash-cheder.html</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -265,6 +273,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div class="room-card"><div class="rn">5</div><div class="lead">ברכה</div><ul><li>טלי יונה</li><li>לבנה גיל בן חמו</li><li>סיגל דדון</li></ul></div>
   </div>
   <p class="sub" style="margin-top:30px;font-size:30px">נכנסים לחדר לפי המספר · מי שלא מופיע ברשימה — כותב/ת בצ'אט ומקבל/ת חדר</p>
+  <div class="qrbox"><div class="t">דף החדר 🚪<small>mifgash-cheder.html</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -295,7 +304,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 <section class="slide center" id="vote1Slide">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker" style="align-self:center">הצבעה · לוחצים על צבע בסעיף 5 בדף</span>
+    <span class="kicker" style="align-self:center">הצבעה · לוחצים על צבע בדף המפגש, סעיף 5</span>
     <h1 style="font-size:104px">איזה צבע אלון <i>עכשיו?</i></h1>
     <div class="vote-row">
       <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v1g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
@@ -305,6 +314,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <button class="reveal-btn" data-reveal="vote1Slide">🥁 גילוי התוצאה</button>
     <div class="vote-note" id="v1note">ממתין להצבעות…</div>
   </div>
+  <div class="qrbox"><div class="t">מצביעים בדף המפגש<small>mifgash-zoom.html · סעיף 5</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
 </section>
 
 <!-- 14 · 4 השאלות -->
@@ -332,7 +342,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div class="col" style="background:var(--pink-soft)"><div class="em">📞</div><h3>הרכז/ת</h3><p>מנהל/ת את השיחה: 4 השאלות, לפי הסדר, 7 דקות.</p></div>
     <div class="col" style="background:var(--yellow-soft)"><div class="em">👀</div><h3>הצופה</h3><p>ממלא/ת את הצ'ק-ליסט הדיגיטלי בדף החדר ושולח/ת.</p></div>
   </div>
-  <div class="page-line">ב<b>דף החדר · חלק ב'</b>: כתבו את השמות ולחצו "הגרלת תפקידים" 🎲</div>
+  <a class="gal-btn" href="mifgash-cheder.html#simulation" target="_blank" style="margin-top:30px;font-size:34px;padding:20px 38px">🎲 דף החדר · חלק ב' — שמות ← הגרלת תפקידים · mifgash-cheder.html</a>
+  <div class="qrbox"><div class="t">דף החדר 🎲<small>mifgash-cheder.html</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -349,6 +360,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div class="room-card"><div class="rn">5</div><div class="lead">ברכה</div><ul><li>יעקב גרונספלד</li><li>ריקי מסס</li><li>מלשה חנין</li><li>סיגל דדון</li></ul></div>
   </div>
   <p class="sub" style="margin-top:30px;font-size:30px">בחדר של 4 — שני צופים · חדר 1 מתחלק בפנים לשתי קבוצות, אפשר בערבית</p>
+  <div class="qrbox"><div class="t">דף החדר 🎲<small>mifgash-cheder.html</small></div><img src="qr-cheder.png" alt="QR דף החדר"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -356,7 +368,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 <section class="slide center" id="vote2Slide">
   <div class="bar"></div>
   <div class="body">
-    <span class="kicker" style="align-self:center">הצבעה · אחרי השיחה · סעיף 6 בדף</span>
+    <span class="kicker" style="align-self:center">הצבעה · אחרי השיחה · דף המפגש, סעיף 6</span>
     <h1 style="font-size:104px">ואיזה צבע אלון <i>עכשיו?</i></h1>
     <div class="vote-row">
       <div class="vc"><span style="background:var(--green)"></span><div class="cnt" id="v2g" style="color:var(--green)">0</div><div class="lbl">ירוק</div></div>
@@ -366,6 +378,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <button class="reveal-btn" data-reveal="vote2Slide">🥁 גילוי התוצאה</button>
     <div class="vote-note" id="v2note">ממתין להצבעות…</div>
   </div>
+  <div class="qrbox"><div class="t">מצביעים בדף המפגש<small>mifgash-zoom.html · סעיף 6</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
 </section>
 
 <!-- 17 · הרמזור חי -->
@@ -386,6 +399,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div>hopa.org.il<span>מאגר המענים · סננו לפי קטגוריה והאזור שלכם</span></div>
   </div>
   <div class="task" style="margin-top:44px">3 דקות, לבד, טלפון ביד: מצאו לאלון <b>מענה אמיתי אחד באזור שלכם</b> והדביקו בצ'אט.</div>
+  <div class="qrbox"><div class="t">מאגר המענים<small>hopa.org.il</small></div><img src="qr-hopa.png" alt="QR hopa.org.il"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -436,7 +450,7 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
   <h2>השנה שלי <i>בדף אחד</i></h2>
   <p class="sub">6 דקות לבד · 4 דקות בזוגות מהגלריה · ואז שולחים. מה שתשלחו הוא נקודת הפתיחה של השיחה האישית איתכם בספטמבר.</p>
   <div class="page-line" style="margin-top:70px;font-size:50px">מלאו את <b>סעיף 9</b> בדף המפגש ולחצו "שליחה להופה 📬"</div>
-  <p class="sub" style="margin-top:40px">meytalp-dev.github.io/hopa-nihul/mifgash-zoom.html — הקישור בצ'אט</p>
+  <div class="qrbox"><div class="t">דף המפגש · סעיף 9<small>mifgash-zoom.html</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
 
@@ -444,9 +458,10 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
 <section class="slide pinkbg center" id="sntSlide">
   <div class="body" style="justify-content:flex-start;padding-top:10px;width:100%">
     <h1 style="font-size:84px">משפט אחד <i>שאני לוקח/ת מהיום</i></h1>
-    <p class="sub" style="margin-top:16px">כתבו בסעיף 10 בדף ולחצו שליחה — המשפט עולה לכאן ✨ ואז מצלמות פתוחות לצילום קבוצתי 📸</p>
+    <p class="sub" style="margin-top:16px">כתבו ב<b style="color:#fff">דף המפגש · סעיף 10</b> ולחצו שליחה — המשפט עולה לכאן ✨ ואז מצלמות פתוחות לצילום קבוצתי 📸</p>
     <div class="snt-list" id="sntList"></div>
   </div>
+  <div class="qrbox"><div class="t">דף המפגש · סעיף 10<small>mifgash-zoom.html</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
 </section>
 
 <!-- 24 · מה הלאה -->
@@ -498,7 +513,7 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='End')show(slides.length-1);
 });
 document.getElementById('stage').addEventListener('click',function(e){
-  if(e.target.closest('#bigTimer')||e.target.closest('a')||e.target.closest('.reveal-btn'))return;
+  if(e.target.closest('#bigTimer')||e.target.closest('a')||e.target.closest('.reveal-btn')||e.target.closest('.qrbox'))return;
   show(cur+1);
 });
 // קפיצה לשקף לפי מספר בכתובת: mifgash-zoom-slides.html#7
