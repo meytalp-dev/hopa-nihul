@@ -121,6 +121,11 @@ body{font-family:'Rubik',Arial,sans-serif;background:#1a1a1a;overflow:hidden;-we
 .snt-list div{background:rgba(255,255,255,.14);border-radius:20px;padding:22px 36px;font-size:38px;line-height:1.35;font-weight:700;color:#fff;text-align:right}
 .snt-list div small{color:var(--yellow);font-weight:800;margin-right:10px;font-size:28px}
 .snt-list:empty::before{content:"ממתין למשפטים שלכם…";color:#ffd9ea;font-size:44px;font-weight:700;text-align:center}
+.kb-live{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;width:100%;max-height:360px;overflow:hidden}
+.kb-live div{background:var(--pink-soft);border-right:8px solid var(--pink);border-radius:18px;padding:14px 24px;font-size:28px;line-height:1.35;font-weight:600;color:var(--ink);text-align:right}
+.kb-live div b{color:var(--pink-deep);font-weight:900}
+.kb-live div small{display:block;color:var(--gray);font-weight:600;font-size:23px;margin-top:2px}
+.kb-live:empty::before{content:"התשובות שלכם יופיעו כאן חי ✨";color:var(--gray);font-size:32px;font-weight:700;grid-column:1/-1;text-align:center;padding-top:20px}
 footer.hud{position:fixed;bottom:18px;right:24px;z-index:10;display:flex;gap:10px;align-items:center;color:#888;font-size:14px;font-weight:700}
 footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:16px}
 </style>
@@ -211,7 +216,8 @@ footer.hud button{font:inherit;font-weight:800;background:#333;color:#fff;border
     <div><div class="n">2</div><div>היא <b>נותנת לי</b> ___</div></div>
     <div><div class="n">3</div><div>היא <b>מייצרת אצלי שייכות</b> ככה: ___</div></div>
   </div>
-  <div class="page-line">מלאו בסעיף 3 ולחצו "שליחה להופה" — מגיע ישירות אלינו</div>
+  <div class="kb-live" id="kbLive"></div>
+  <div class="page-line">מלאו בסעיף 3 ולחצו "שליחה להופה" — והתשובות מופיעות כאן על המסך 🫶</div>
   <div class="qrbox"><div class="t">דף המפגש · סעיף 3<small>mifgash-zoom.html</small></div><img src="qr-mifgash.png" alt="QR דף המפגש"></div>
   <img class="logo" src="hopa-logo.png" alt="הופה">
 </section>
@@ -560,7 +566,7 @@ function poll(){
   jsonp({action:'storeAll',secret:SECRET}).then(function(r){
     busy=false;
     if(!r||!r.ok)return;
-    var words=[],env={},snts=[],v={tl1:{g:0,o:0,r:0},tl2:{g:0,o:0,r:0}};
+    var words=[],env={},snts=[],kbs=[],v={tl1:{g:0,o:0,r:0},tl2:{g:0,o:0,r:0}};
     Object.keys(r.store||{}).forEach(function(k){
       var o=r.store[k]||{};
       if(o.del)return;
@@ -569,6 +575,7 @@ function poll(){
       else if(k.indexOf('intake_tl2_')===0&&v.tl2[o.c]!==undefined)v.tl2[o.c]++;
       else if(k.indexOf('intake_env_')===0&&o.room)env[o.room]=o;
       else if(k.indexOf('intake_snt_')===0&&o.text)snts.push(o);
+      else if(k.indexOf('intake_kb_')===0&&o.name)kbs.push(o);
     });
     renderCloud(document.getElementById('liveCloud'),words);
     ['1','2'].forEach(function(n){
@@ -583,6 +590,15 @@ function poll(){
       var d=document.createElement('div');
       d.innerHTML='<b>חדר '+room+'</b>'+(env[room].first||'—');
       eg.appendChild(d);
+    });
+    var e=function(t){return String(t).replace(/</g,'&lt;')},cut=function(t,n){t=String(t);return t.length>n?t.slice(0,n-1)+'…':t};
+    kbs.sort(function(a,b){return (a.ts||0)-(b.ts||0)});
+    var kl=document.getElementById('kbLive');kl.innerHTML='';
+    kbs.slice(-4).forEach(function(o){
+      var d=document.createElement('div');
+      d.innerHTML=(o.who?'<b>'+e(o.who)+'</b> · ':'')+e(cut(o.name,40))
+        +'<small>'+(o.gives?'נותנת לי: '+e(cut(o.gives,60)):'')+(o.gives&&o.belong?' · ':'')+(o.belong?'שייכות: '+e(cut(o.belong,60)):'')+'</small>';
+      kl.appendChild(d);
     });
     snts.sort(function(a,b){return (a.ts||0)-(b.ts||0)});
     var sl=document.getElementById('sntList');sl.innerHTML='';
