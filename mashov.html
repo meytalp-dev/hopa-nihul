@@ -317,13 +317,23 @@ async function submit(){
     heart:state.heart.trim(),
     meeting:'מפגש רכזי בוגרים #1 · 24.8.2026 · זום'
   };
+  var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
   try{
-    await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams({action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)}).toString()});
+    // תשובה ארוכה במיוחד לא נכנסת ל-URL של JSONP — ישר לפוסט
+    if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
+    // שליחה עם אישור מהשרת + ניסיונות חוזרים (שרתי גוגל נופלים לפעמים לרגע)
+    await jsonpRetry(params,5,function(att){if(att>1)btn.textContent='שולח… ('+att+')'});
     state.sent=true;save();renderDone();window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
-    btn.disabled=false;btn.textContent='שליחת המשוב 💌';
-    errEl.textContent='לא הצלחנו לשלוח — בדקו חיבור לאינטרנט ונסו שוב. התשובות שלך שמורות.';
+    // מוצא אחרון: שליחה עיוורת בפוסט — עדיף מלאבד את התשובה
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams(params).toString()});
+      state.sent=true;save();renderDone();window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e2){
+      btn.disabled=false;btn.textContent='שליחת המשוב 💌';
+      errEl.textContent='לא הצלחנו לשלוח — בדקו חיבור לאינטרנט ונסו שוב. התשובות שלך שמורות.';
+    }
   }
 }
 
@@ -339,25 +349,47 @@ function renderDone(){
 }
 
 /* ---------- admin (?admin=hopa) ---------- */
-function jsonp(params){
+function jsonp(params,tmo){
   return new Promise(function(res,rej){
     var cb='cb'+Math.random().toString(36).slice(2);
     params=Object.assign({},params,{callback:cb});
     var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
     s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
-    window[cb]=function(d){delete window[cb];s.remove();res(d)};
-    s.onerror=function(){delete window[cb];s.remove();rej(new Error('network'))};
+    s.onerror=function(){cl();rej(new Error('network'))};
     document.head.appendChild(s);
   });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+/* שרתי Apps Script של גוגל מחזירים לפעמים 404 רגעי — לכן כל קריאה מנסה שוב לבד */
+async function jsonpRetry(params,tries,onAttempt){
+  var err;
+  for(var i=1;i<=(tries||5);i++){
+    if(onAttempt)onAttempt(i);
+    try{
+      var r=await jsonp(params,25000);
+      if(r&&r.ok)return r;
+      err=new Error((r&&r.error)||'שגיאת שרת');
+    }catch(e){err=e}
+    await delay(800+i*700);
+  }
+  throw err||new Error('נכשל');
 }
 async function renderAdmin(){
   $('heroTitle').textContent='משוב מפגש #1 · ניהול';
   $('heroSub').textContent='כל התשובות, חי מהגיליון · למיטל ולצוות';
   document.querySelector('main .in').classList.add('adm');
-  app.innerHTML='<div class="card"><p class="hint">טוען תשובות…</p></div>';
+  app.innerHTML='<div class="card"><p class="hint" id="loadStat">טוען תשובות…</p></div>';
   var store;
-  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET});if(!r.ok)throw new Error(r.error||'err');store=r.store}
-  catch(e){app.innerHTML='<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון ('+esc(e.message)+'). נסו לרענן.</p></div>';return}
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(att){
+      var el=$('loadStat');if(el)el.textContent=att===1?'טוען תשובות…':'השרת של גוגל מתעצל — מנסה שוב ('+att+'/6)…';
+    });
+    store=r.store;
+  }
+  catch(e){app.innerHTML='<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון גם אחרי 6 ניסיונות ('+esc(e.message)+') — זו תקלה זמנית של גוגל, נסו שוב בעוד דקה. <button class="btn ghost" onclick="location.reload()">🔄 נסו שוב</button></p></div>';return}
   var items=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
     .map(function(k){return store[k]||{}}).filter(function(x){return x.who})
     .sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
