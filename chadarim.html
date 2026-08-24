@@ -112,7 +112,7 @@
       <li><b>בזמן בלוקים 7–8 (~12:20):</b> Recreate → 11 חדרים → לשבץ זוגות ל"השנה שלי" (12:45). עדיפות לזוגות שנוצרו בצ'אט של הכניסה (המפעילה רשמה אותם עד 11:05); מי שנשאר בלי זוג — לפי חלוקת הגיבוי למטה.</li>
       <li>מי שמתנתק/ת וחוזר — זום לא מחזיר אותו לחדר אוטומטית. לשבץ ידנית מחדש לפי הדף.</li>
     </ol>
-    <div class="infobox">💡 לכל חדר יש אחראי/ת קבוצה מהצוות: מיטל, לירון, בארי, אסמאא וברכה (מסומנים בשחור-צהוב). חדר 1 בשני הסבבים הוא החדר עם אסמאא: כל 8 רכזי החברה הערבית, הדרוזית והבדואית. מי שמשמש/ת כמפעילה משבצת קודם את כולם לחדרים ורק אז מצטרפת לחדר שלה.</div>
+    <div class="infobox">💡 לכל חדר יש אחראי/ת קבוצה מהצוות: מיטל, בארי, אסמאא וברכה (מסומנים בשחור-צהוב). חדר 1 בשני הסבבים הוא החדר עם אסמאא: כל 8 רכזי החברה הערבית, הדרוזית והבדואית. מי שמשמש/ת כמפעילה משבצת קודם את כולם לחדרים ורק אז מצטרפת לחדר שלה.</div>
     <div class="live" id="live">🔄 בודק מול גיליון ההרשמה…</div>
     <div class="warnbox" id="newreg" style="display:none"></div>
   </div>
@@ -195,7 +195,6 @@ var PEOPLE = {
   shiran:  {n:"שירן עוגן", s:"יוצר עתיד פלמחים"},
   tal:     {n:"טל מילוא", s:"מרכז תורני נחלים"},
   meital:  {n:"מיטל", s:"צוות הופה", staff:1},
-  liron:   {n:"לירון", s:"צוות הופה", staff:1},
   bari:    {n:"בארי", s:"צוות הופה", staff:1},
   asmaa:   {n:"אסמאא", s:"צוות הופה", staff:1},
   bracha:  {n:"ברכה", s:"צוות הופה", staff:1}
@@ -203,17 +202,15 @@ var PEOPLE = {
 var DEFAULT = {
   r1: [
     ["zohar","samer","mohamad","hiam","ali","rania","munir","rasha"],
-    ["monique","avichai","maria","yaakov"],
-    ["mor","talia","riki","shiran"],
-    ["lee","tohar","malsha","tal"],
-    ["taliy","livna","sigal"]
+    ["monique","mor","talia","riki","shiran"],
+    ["avichai","lee","tohar","malsha","tal"],
+    ["maria","yaakov","taliy","livna","sigal"]
   ],
   r2: [
     ["zohar","samer","mohamad","hiam","ali","rania","munir","rasha"],
-    ["monique","talia","taliy","tal"],
-    ["avichai","mor","livna"],
-    ["maria","lee","tohar","shiran"],
-    ["yaakov","riki","malsha","sigal"]
+    ["monique","talia","taliy","tal","livna"],
+    ["maria","lee","tohar","shiran","mor"],
+    ["yaakov","riki","malsha","sigal","avichai"]
   ],
   r3: [
     ["monique","sigal"],["mor","hiam"],["avichai","maria"],["talia","rania"],["lee","tohar"],
@@ -222,10 +219,10 @@ var DEFAULT = {
   ]
 };
 var DEFAULT_LEADS = {
-  r1: ["asmaa","liron","meital","bari","bracha"],
-  r2: ["asmaa","meital","liron","bari","bracha"]
+  r1: ["asmaa","meital","bari","bracha"],
+  r2: ["asmaa","meital","bari","bracha"]
 };
-var LS_KEY = "hopa-chadarim-24-8-v4";
+var LS_KEY = "hopa-chadarim-24-8-v5";
 var state = load();
 function load(){
   try{ var s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.rooms && s.out && s.leads) return s; }catch(e){}
@@ -255,7 +252,7 @@ function render(){
       if(rid==="r2"){
         var roles = document.createElement("div");
         roles.className = "roles";
-        roles.textContent = room.length >= 5 ? "חדר גדול — מתחלקים בפנים לשלישייה ורביעייה, כל קבוצה: אלון · רכז/ת · צופה/ים" : (room.length === 4 ? "תפקידים: אלון · רכז/ת · 2 צופים" : "תפקידים: אלון · רכז/ת · צופה");
+        roles.textContent = room.length >= 6 ? "חדר גדול — מתחלקים בפנים לשלישייה ורביעייה, כל קבוצה: אלון · רכז/ת · צופה/ים" : (room.length === 5 ? "תפקידים: אלון · רכז/ת · 3 צופים" : room.length === 4 ? "תפקידים: אלון · רכז/ת · 2 צופים" : "תפקידים: אלון · רכז/ת · צופה");
         div.appendChild(roles);
       }
       host.appendChild(div);
