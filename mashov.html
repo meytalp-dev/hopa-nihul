@@ -100,7 +100,8 @@
   details.conn{margin-top:12px;font-size:13px}
   details.conn summary{cursor:pointer;color:var(--muted);font-weight:600}
   details.conn input{width:100%;max-width:420px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;direction:ltr;margin-top:6px;display:block}
-  .mrow .sentmark{font-size:12px;color:var(--ok);font-weight:700}
+  .mrow .sentmark{font-size:12px;font-weight:700;cursor:pointer;user-select:none;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);background:#fafafa;transition:.15s}
+  .mrow .sentmark.on{color:#fff;background:var(--ok);border-color:var(--ok)}
   .mrow .failmark{font-size:12px;color:#d9534f;font-weight:700}
   .msgbox textarea{min-height:110px;font-size:13.5px}
   .bar{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:5px}
@@ -425,7 +426,7 @@ async function renderAdmin(){
   '<div class="card"><h2>נושאים מבוקשים למפגשים הבאים</h2>'+topicCounts.map(function(x){return barRow(x.t,x.n,tMax)}).join('')+'</div>'+
   '<div class="card msgbox"><h2>📣 תזכורת בוואטסאפ למי שטרם ענה ('+missing.length+')</h2>'+
     (missing.length?
-      '<p class="hint">אפשר לערוך את ההודעה — <code>{שם}</code> יוחלף בשם הפרטי. <b>🚀 ישיר</b> = נשלח מיד מהוואטסאפ של מיטל, בלי לפתוח כלום. 💬 = פתיחת וואטסאפ רגילה (גיבוי).</p>'+
+      '<p class="hint">אפשר לערוך את ההודעה — <code>{שם}</code> יוחלף בשם הפרטי. <b>🚀 ישיר</b> = נשלח מיד מהוואטסאפ של מיטל, בלי לפתוח כלום. 💬 = פתיחת וואטסאפ רגילה (גיבוי). התג <b>✓ נשלח</b> נדלק אוטומטית רק אחרי שליחה ישירה שאושרה — ואפשר גם ללחוץ עליו כדי לסמן/לבטל ידנית. "שליחה לכולם" מדלגת על מי שמסומן ✓.</p>'+
       '<textarea id="waMsg">'+esc(waMsgGet())+'</textarea>'+
       '<div class="connline">'+
         '<button class="btn direct" id="sendAllBtn">🚀 שליחה ישירה לכולם</button>'+
@@ -484,11 +485,13 @@ async function sendApiRetry(params){
   throw err||new Error('נכשל');
 }
 function msgFor(name){return (($('waMsg')||{}).value||waMsgGet()).replace(/\{שם\}/g,firstName(name))}
-function markSent(name){
-  var s=waSent();s[name]=1;localStorage.setItem(WA_LS.sent,JSON.stringify(s));
+function setSent(name,on){
+  var s=waSent();if(on)s[name]=1;else delete s[name];
+  localStorage.setItem(WA_LS.sent,JSON.stringify(s));
   var row=document.querySelector('.mrow[data-name="'+CSS.escape(name)+'"]');
-  if(row)row.querySelector('.sentmark').style.display='';
+  if(row){var m=row.querySelector('.sentmark');m.classList.toggle('on',!!on);m.textContent=on?'✓ נשלח':'סמני נשלח'}
 }
+function markSent(name){setSent(name,true)}
 function markFail(row,why){
   if(!row)return;
   var f=row.querySelector('.failmark');
@@ -528,7 +531,7 @@ function missingRow(p){
     '<input inputmode="tel" placeholder="05X-XXXXXXX" value="'+esc(ph)+'" class="'+(d?'':'empty')+'">'+
     '<button class="btn direct" data-direct'+((d&&SEND.url)?'':' disabled')+'>🚀 ישיר</button>'+
     '<a class="btn wa'+(d?'':' off')+'" target="_blank" href="'+(d?waLink(d,p.n):'#')+'">💬</a>'+
-    '<span class="sentmark"'+(sent?'':' style="display:none"')+'>✓ נשלח</span>'+
+    '<span class="sentmark'+(sent?' on':'')+'" title="לחיצה מסמנת/מבטלת">'+(sent?'✓ נשלח':'סמני נשלח')+'</span>'+
   '</div>';
 }
 function waLink(d,name){
@@ -579,10 +582,8 @@ function bindMissing(){
       if(db)db.disabled=!(SEND.url&&d);
     };
     if(db)db.onclick=function(){sendDirect(name)};
-    btn.onclick=function(){
-      if(btn.classList.contains('off'))return false;
-      markSent(name);
-    };
+    // ה-💬 רק פותח וואטסאפ — הוא כבר לא מסמן "נשלח" לבד (זה גרם לסימוני שווא)
+    row.querySelector('.sentmark').onclick=function(){setSent(name,!waSent()[name])};
   });
 }
 function refreshWaLinks(){
