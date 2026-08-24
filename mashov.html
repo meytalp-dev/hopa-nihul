@@ -91,6 +91,15 @@
   .btn.wa{background:#25D366;color:#fff;font-size:13.5px;padding:8px 14px;border-radius:10px}
   .btn.wa:hover{background:#1da851}
   .btn.wa.off{opacity:.4;pointer-events:none}
+  .btn.direct{background:var(--pink);color:#fff;font-size:13.5px;padding:8px 14px;border-radius:10px}
+  .btn.direct:hover{background:var(--pink-dark)}
+  .btn.direct:disabled{opacity:.4;cursor:default}
+  .connline{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 2px}
+  .connstat{font-size:12.5px;font-weight:600}
+  .connstat.on{color:var(--ok)}.connstat.off{color:#d9534f}
+  details.conn{margin-top:12px;font-size:13px}
+  details.conn summary{cursor:pointer;color:var(--muted);font-weight:600}
+  details.conn input{width:100%;max-width:420px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;direction:ltr;margin-top:6px;display:block}
   .mrow .sentmark{font-size:12px;color:var(--ok);font-weight:700}
   .msgbox textarea{min-height:110px;font-size:13.5px}
   .bar{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:5px}
@@ -383,9 +392,20 @@ async function renderAdmin(){
   '<div class="card"><h2>נושאים מבוקשים למפגשים הבאים</h2>'+topicCounts.map(function(x){return barRow(x.t,x.n,tMax)}).join('')+'</div>'+
   '<div class="card msgbox"><h2>📣 תזכורת בוואטסאפ למי שטרם ענה ('+missing.length+')</h2>'+
     (missing.length?
-      '<p class="hint">אפשר לערוך את ההודעה — <code>{שם}</code> יוחלף בשם הפרטי. לחיצה על הכפתור פותחת וואטסאפ עם ההודעה מוכנה, נשאר רק לשלוח.</p>'+
+      '<p class="hint">אפשר לערוך את ההודעה — <code>{שם}</code> יוחלף בשם הפרטי. <b>🚀 ישיר</b> = נשלח מיד מהוואטסאפ של מיטל, בלי לפתוח כלום. 💬 = פתיחת וואטסאפ רגילה (גיבוי).</p>'+
       '<textarea id="waMsg">'+esc(waMsgGet())+'</textarea>'+
-      '<div id="mlist">'+missing.map(missingRow).join('')+'</div>'
+      '<div class="connline">'+
+        '<button class="btn direct" id="sendAllBtn">🚀 שליחה ישירה לכולם</button>'+
+        '<span class="hint" id="bulkStat" style="margin:0"></span>'+
+        '<span class="connstat" id="connStat"></span>'+
+      '</div>'+
+      '<div id="mlist">'+missing.map(missingRow).join('')+'</div>'+
+      '<details class="conn"><summary>⚙️ חיבור שרת השליחה (פעם אחת)</summary>'+
+        '<p class="hint">אותו חיבור כמו בדף התזכורות — אם התחברת שם, זה כבר עובד גם כאן.</p>'+
+        '<input id="s_url" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(SEND.url)+'">'+
+        '<input id="s_secret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="'+esc(SEND.secret)+'">'+
+        '<button class="btn ghost" id="s_save" style="margin-top:8px">שמירת החיבור</button>'+
+      '</details>'
       :'<div class="missing"><span style="background:#e8f8ef;border-color:#b8e6c9;color:#14613b">כולם ענו! 🎉</span></div>')+
   '</div>'+
   '<div class="card"><h2>כל התשובות ('+items.length+')</h2>'+
@@ -402,6 +422,44 @@ async function renderAdmin(){
 }
 /* ---- שליחת תזכורות וואטסאפ (מסך ניהול) ---- */
 var WA_LS={msg:'hopa_mashov1_wamsg',phones:'hopa_mashov1_phones',sent:'hopa_mashov1_wasent'};
+/* שרת השליחה הישירה (Apps Script → Green API, הוואטסאפ של מיטל) — אותם מפתחות כמו בדף התזכורות */
+var SEND={url:localStorage.getItem('hopa_send_url')||'',secret:localStorage.getItem('hopa_send_secret')||''};
+var sjn=0;
+function sendApi(params,tmo){
+  return new Promise(function(res,rej){
+    if(!SEND.url){rej(new Error('לא חובר שרת שליחה'));return}
+    var cb='mscb_'+(sjn++);var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||60000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=SEND.url+(SEND.url.indexOf('?')>-1?'&':'?')+new URLSearchParams(Object.assign({},params,{secret:SEND.secret,callback:cb})).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.body.appendChild(s);
+  });
+}
+function msgFor(name){return (($('waMsg')||{}).value||waMsgGet()).replace(/\{שם\}/g,firstName(name))}
+function markSent(name){
+  var s=waSent();s[name]=1;localStorage.setItem(WA_LS.sent,JSON.stringify(s));
+  var row=document.querySelector('.mrow[data-name="'+CSS.escape(name)+'"]');
+  if(row)row.querySelector('.sentmark').style.display='';
+}
+async function sendDirect(name,quiet){
+  var d=digits(phoneOf(name));if(!d){if(!quiet)toast('אין טלפון ל'+firstName(name));return false}
+  var row=document.querySelector('.mrow[data-name="'+CSS.escape(name)+'"]');
+  var btn=row&&row.querySelector('[data-direct]');
+  if(btn){btn.disabled=true;btn.textContent='⏳'}
+  try{
+    var r=await sendApi({action:'send',chatIds:d+'@c.us',message:msgFor(name)},90000);
+    if(!r||!r.ok||Number(r.sent)<1)throw new Error((r&&r.error)||'לא נשלח');
+    markSent(name);if(btn)btn.textContent='🚀 ישיר';
+    if(!quiet)toast('נשלח ל'+firstName(name)+' ✔');
+    return true;
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='🚀 ישיר'}
+    if(!quiet)toast('שליחה נכשלה: '+e.message);
+    return false;
+  }finally{if(btn)btn.disabled=false}
+}
 function waMsgGet(){return localStorage.getItem(WA_LS.msg)||DEFAULT_MSG}
 function waPhones(){try{return JSON.parse(localStorage.getItem(WA_LS.phones))||{}}catch(e){return{}}}
 function waSent(){try{return JSON.parse(localStorage.getItem(WA_LS.sent))||{}}catch(e){return{}}}
@@ -413,29 +471,60 @@ function missingRow(p){
   return '<div class="mrow" data-name="'+esc(p.n)+'">'+
     '<span class="nm">'+esc(p.n)+'<small>'+esc(p.s)+'</small></span>'+
     '<input inputmode="tel" placeholder="05X-XXXXXXX" value="'+esc(ph)+'" class="'+(d?'':'empty')+'">'+
-    '<a class="btn wa'+(d?'':' off')+'" target="_blank" href="'+(d?waLink(d,p.n):'#')+'">💬 וואטסאפ</a>'+
-    (sent?'<span class="sentmark">✓ נשלח</span>':'')+
+    '<button class="btn direct" data-direct'+((d&&SEND.url)?'':' disabled')+'>🚀 ישיר</button>'+
+    '<a class="btn wa'+(d?'':' off')+'" target="_blank" href="'+(d?waLink(d,p.n):'#')+'">💬</a>'+
+    '<span class="sentmark"'+(sent?'':' style="display:none"')+'>✓ נשלח</span>'+
   '</div>';
 }
 function waLink(d,name){
   var msg=(($('waMsg')||{}).value||waMsgGet()).replace(/\{שם\}/g,firstName(name));
   return 'https://wa.me/'+d+'?text='+encodeURIComponent(msg);
 }
+function connRender(){
+  var el=$('connStat');if(!el)return;
+  el.className='connstat '+(SEND.url?'on':'off');
+  el.textContent=SEND.url?'🟢 מחובר לשרת השליחה':'🔴 שליחה ישירה לא מחוברת — פתחי ⚙️ למטה';
+  var all=$('sendAllBtn');if(all)all.disabled=!SEND.url;
+  Array.prototype.forEach.call(document.querySelectorAll('.mrow'),function(row){
+    var b=row.querySelector('[data-direct]');
+    if(b)b.disabled=!(SEND.url&&digits(phoneOf(row.dataset.name)));
+  });
+}
 function bindMissing(){
   var msgEl=$('waMsg');if(msgEl)msgEl.oninput=function(){localStorage.setItem(WA_LS.msg,this.value);refreshWaLinks()};
+  connRender();
+  var sv=$('s_save');if(sv)sv.onclick=function(){
+    SEND.url=$('s_url').value.trim();SEND.secret=$('s_secret').value.trim();
+    localStorage.setItem('hopa_send_url',SEND.url);localStorage.setItem('hopa_send_secret',SEND.secret);
+    connRender();toast(SEND.url?'החיבור נשמר ✔':'החיבור נמחק');
+  };
+  var all=$('sendAllBtn');if(all)all.onclick=async function(){
+    var targets=Array.prototype.map.call(document.querySelectorAll('.mrow'),function(r){return r.dataset.name})
+      .filter(function(n){return digits(phoneOf(n))&&!waSent()[n]});
+    if(!targets.length){toast('אין למי לשלוח — לכולם נשלח או שחסר טלפון');return}
+    if(!confirm('לשלוח עכשיו תזכורת מהוואטסאפ של מיטל ל-'+targets.length+' רכזים?'))return;
+    all.disabled=true;var ok=0,st=$('bulkStat');
+    for(var i=0;i<targets.length;i++){
+      st.textContent='שולח '+(i+1)+'/'+targets.length+' — '+firstName(targets[i])+'…';
+      if(await sendDirect(targets[i],true))ok++;
+      await new Promise(function(r){setTimeout(r,1500)});
+    }
+    st.textContent='נשלחו '+ok+' מתוך '+targets.length;all.disabled=false;
+  };
   var host=$('mlist');if(!host)return;
   Array.prototype.forEach.call(host.querySelectorAll('.mrow'),function(row){
-    var name=row.dataset.name,inp=row.querySelector('input'),btn=row.querySelector('a.wa');
+    var name=row.dataset.name,inp=row.querySelector('input'),btn=row.querySelector('a.wa'),db=row.querySelector('[data-direct]');
     inp.oninput=function(){
       var o=waPhones();o[name]=this.value;localStorage.setItem(WA_LS.phones,JSON.stringify(o));
       var d=digits(this.value);
       inp.classList.toggle('empty',!d);btn.classList.toggle('off',!d);
       btn.href=d?waLink(d,name):'#';
+      if(db)db.disabled=!(SEND.url&&d);
     };
+    if(db)db.onclick=function(){sendDirect(name)};
     btn.onclick=function(){
       if(btn.classList.contains('off'))return false;
-      var s=waSent();s[name]=1;localStorage.setItem(WA_LS.sent,JSON.stringify(s));
-      if(!row.querySelector('.sentmark')){var m=document.createElement('span');m.className='sentmark';m.textContent='✓ נשלח';row.appendChild(m)}
+      markSent(name);
     };
   });
 }
