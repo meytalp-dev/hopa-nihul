@@ -101,6 +101,7 @@
   details.conn summary{cursor:pointer;color:var(--muted);font-weight:600}
   details.conn input{width:100%;max-width:420px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;direction:ltr;margin-top:6px;display:block}
   .mrow .sentmark{font-size:12px;color:var(--ok);font-weight:700}
+  .mrow .failmark{font-size:12px;color:#d9534f;font-weight:700}
   .msgbox textarea{min-height:110px;font-size:13.5px}
   .bar{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:5px}
   .bar .track{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
@@ -469,11 +470,30 @@ function sendApi(params,tmo){
     document.body.appendChild(s);
   });
 }
+/* גם שרת השליחה הוא Apps Script — אותם נפילות 404 רגעיות, אותו פתרון: ניסיונות חוזרים */
+async function sendApiRetry(params){
+  var err;
+  for(var i=1;i<=4;i++){
+    try{
+      var r=await sendApi(params,45000);
+      if(r&&r.ok)return r;
+      err=new Error((r&&r.error)||'שגיאת שרת');
+    }catch(e){err=e}
+    await delay(1000+i*1000);
+  }
+  throw err||new Error('נכשל');
+}
 function msgFor(name){return (($('waMsg')||{}).value||waMsgGet()).replace(/\{שם\}/g,firstName(name))}
 function markSent(name){
   var s=waSent();s[name]=1;localStorage.setItem(WA_LS.sent,JSON.stringify(s));
   var row=document.querySelector('.mrow[data-name="'+CSS.escape(name)+'"]');
   if(row)row.querySelector('.sentmark').style.display='';
+}
+function markFail(row,why){
+  if(!row)return;
+  var f=row.querySelector('.failmark');
+  if(!f){f=document.createElement('span');f.className='failmark';row.appendChild(f)}
+  f.textContent='✗ לא נשלח'+(why?' ('+why+')':'')+' — נסו שוב';
 }
 async function sendDirect(name,quiet){
   var d=digits(phoneOf(name));if(!d){if(!quiet)toast('אין טלפון ל'+firstName(name));return false}
@@ -481,13 +501,16 @@ async function sendDirect(name,quiet){
   var btn=row&&row.querySelector('[data-direct]');
   if(btn){btn.disabled=true;btn.textContent='⏳'}
   try{
-    var r=await sendApi({action:'send',chatIds:d+'@c.us',message:msgFor(name)},90000);
-    if(!r||!r.ok||Number(r.sent)<1)throw new Error((r&&r.error)||'לא נשלח');
-    markSent(name);if(btn)btn.textContent='🚀 ישיר';
+    var r=await sendApiRetry({action:'send',chatIds:d+'@c.us',message:msgFor(name)});
+    if(Number(r.sent)<1)throw new Error(r.error||'השרת סירב');
+    markSent(name);
+    var f=row&&row.querySelector('.failmark');if(f)f.remove();
+    if(btn)btn.textContent='🚀 ישיר';
     if(!quiet)toast('נשלח ל'+firstName(name)+' ✔');
     return true;
   }catch(e){
-    if(btn){btn.disabled=false;btn.textContent='🚀 ישיר'}
+    if(btn)btn.textContent='🚀 ישיר';
+    markFail(row,e.message);
     if(!quiet)toast('שליחה נכשלה: '+e.message);
     return false;
   }finally{if(btn)btn.disabled=false}
@@ -535,13 +558,15 @@ function bindMissing(){
       .filter(function(n){return digits(phoneOf(n))&&!waSent()[n]});
     if(!targets.length){toast('אין למי לשלוח — לכולם נשלח או שחסר טלפון');return}
     if(!confirm('לשלוח עכשיו תזכורת מהוואטסאפ של מיטל ל-'+targets.length+' רכזים?'))return;
-    all.disabled=true;var ok=0,st=$('bulkStat');
+    all.disabled=true;var ok=0,failed=[],st=$('bulkStat');
     for(var i=0;i<targets.length;i++){
       st.textContent='שולח '+(i+1)+'/'+targets.length+' — '+firstName(targets[i])+'…';
-      if(await sendDirect(targets[i],true))ok++;
-      await new Promise(function(r){setTimeout(r,1500)});
+      if(await sendDirect(targets[i],true))ok++;else failed.push(firstName(targets[i]));
+      // הפסקה נדיבה בין הודעות — גם נגד חסימות ספאם של וואטסאפ
+      if(i<targets.length-1)await delay(4000);
     }
-    st.textContent='נשלחו '+ok+' מתוך '+targets.length;all.disabled=false;
+    st.textContent='נשלחו '+ok+' מתוך '+targets.length+(failed.length?' · נכשלו: '+failed.join(', ')+' — לחצי שוב על הכפתור לניסיון נוסף (ישלח רק להם)':'');
+    all.disabled=false;
   };
   var host=$('mlist');if(!host)return;
   Array.prototype.forEach.call(host.querySelectorAll('.mrow'),function(row){
