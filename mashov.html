@@ -439,6 +439,9 @@ async function renderAdmin(){
         '<input id="s_url" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(SEND.url)+'">'+
         '<input id="s_secret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="'+esc(SEND.secret)+'">'+
         '<button class="btn ghost" id="s_save" style="margin-top:8px">שמירת החיבור</button>'+
+      '</details>'+
+      '<details class="conn"><summary>🪵 יומן שליחה (לאבחון תקלות)</summary>'+
+        '<pre id="sendlog" style="direction:rtl;text-align:right;font-size:11.5px;background:#f8f8fa;border-radius:10px;padding:10px;max-height:220px;overflow:auto;white-space:pre-wrap;margin-top:6px">עדיין לא נשלח כלום בדף הזה</pre>'+
       '</details>'
       :'<div class="missing"><span style="background:#e8f8ef;border-color:#b8e6c9;color:#14613b">כולם ענו! 🎉</span></div>')+
   '</div>'+
@@ -471,15 +474,33 @@ function sendApi(params,tmo){
     document.body.appendChild(s);
   });
 }
+/* יומן שליחה — נראה בדף וגם נשמר לגיליון, כדי שאפשר יהיה לאבחן תקלות מרחוק */
+var SENDLOG=[];
+function logSend(entry){
+  entry=Object.assign({t:new Date().toISOString().slice(11,19)},entry);
+  SENDLOG.push(entry);
+  var box=$('sendlog');
+  if(box){box.textContent=SENDLOG.map(function(e){return e.t+' · '+(e.m||JSON.stringify(e))}).join('\n');box.scrollTop=box.scrollHeight}
+  // שמירה שקטה לגיליון (fire-and-forget) — לצורך אבחון מרחוק
+  try{
+    fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams({action:'intakeSubmit',school:KEY_PREFIX+'sendlog',
+        json:JSON.stringify({_log:1,url:SEND.url,ua:navigator.userAgent.slice(0,60),entries:SENDLOG.slice(-100)})}).toString()});
+  }catch(e){}
+}
 /* גם שרת השליחה הוא Apps Script — אותם נפילות 404 רגעיות, אותו פתרון: ניסיונות חוזרים */
-async function sendApiRetry(params){
+async function sendApiRetry(params,who){
   var err;
   for(var i=1;i<=4;i++){
     try{
       var r=await sendApi(params,45000);
+      logSend({m:(who||'')+' ניסיון '+i+' → תשובת שרת: '+JSON.stringify(r)});
       if(r&&r.ok)return r;
       err=new Error((r&&r.error)||'שגיאת שרת');
-    }catch(e){err=e}
+    }catch(e){
+      logSend({m:(who||'')+' ניסיון '+i+' → כשל רשת: '+e.message});
+      err=e;
+    }
     await delay(1000+i*1000);
   }
   throw err||new Error('נכשל');
@@ -504,7 +525,7 @@ async function sendDirect(name,quiet){
   var btn=row&&row.querySelector('[data-direct]');
   if(btn){btn.disabled=true;btn.textContent='⏳'}
   try{
-    var r=await sendApiRetry({action:'send',chatIds:d+'@c.us',message:msgFor(name)});
+    var r=await sendApiRetry({action:'send',chatIds:d+'@c.us',message:msgFor(name)},firstName(name)+' ('+d+')');
     if(Number(r.sent)<1)throw new Error(r.error||'השרת סירב');
     markSent(name);
     var f=row&&row.querySelector('.failmark');if(f)f.remove();
@@ -561,6 +582,7 @@ function bindMissing(){
       .filter(function(n){return digits(phoneOf(n))&&!waSent()[n]});
     if(!targets.length){toast('אין למי לשלוח — לכולם נשלח או שחסר טלפון');return}
     if(!confirm('לשלוח עכשיו תזכורת מהוואטסאפ של מיטל ל-'+targets.length+' רכזים?'))return;
+    logSend({m:'▶ שליחה לכולם ('+targets.length+') · שרת: '+(SEND.url?SEND.url.slice(0,70)+'…':'לא מוגדר!')});
     all.disabled=true;var ok=0,failed=[],st=$('bulkStat');
     for(var i=0;i<targets.length;i++){
       st.textContent='שולח '+(i+1)+'/'+targets.length+' — '+firstName(targets[i])+'…';
