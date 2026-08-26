@@ -104,7 +104,8 @@
 /* ===================== הגדרות ===================== */
 const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 const GS_SECRET = 'hopa-nihul-2026';
-const STORE_KEY = 'dd_sendlist';                       // מפתח בגיליון "נתונים"
+const STORE_KEY = 'dd_sendlist';
+let SHEET_URL = '';                                    // הגיליון למדור בצה"ל (נבנה בדף הניהול)                       // מפתח בגיליון "נתונים"
 const FORM_URL = 'https://meytalp-dev.github.io/hopa-nihul/derech-david.html';
 const ADMIN_URL = FORM_URL + '?admin=hopa';
 const PIN = 'hopa';                                     // נזכר במכשיר אחרי פעם אחת
@@ -197,6 +198,7 @@ async function load(){
     if(!r.ok) throw new Error(r.error||'err');
     const st = r.store||{};
     if (st[STORE_KEY] && Array.isArray(st[STORE_KEY].students)) DATA = Object.assign(DATA, st[STORE_KEY]);
+    SHEET_URL = (st['dd_sheet_id'] && st['dd_sheet_id'].url) || '';
     SUBMITTED = {};
     Object.keys(st).filter(k=>k.startsWith('intake_dd_')).forEach(k=>{ const x=st[k]; if(x && x.name && !x._test && x.phone) SUBMITTED[digits(x.phone)] = {name:x.name, ts:x.ts}; });
   }catch(e){ app.innerHTML = `<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון (${esc(e.message)}). נסו לרענן.</p></div>`; return; }
@@ -286,6 +288,7 @@ function render(){
     <input class="field" id="q" placeholder="חיפוש שם / טלפון…" value="${esc(query)}">
     ${nextNew && !WA.url ? `<a class="btn wa" id="next" href="${waHref(nextNew)}" target="_blank" rel="noopener" data-id="${esc(nextNew.id)}">💬 שלח לבא בתור: ${esc(nextNew.name.split(' ')[0])}</a>` : ''}
     <a class="btn outline" href="${ADMIN_URL}" target="_blank" rel="noopener">📥 לתשובות שהתקבלו</a>
+    <a class="btn outline" href="${SHEET_URL || ADMIN_URL}" target="_blank" rel="noopener" title="הגיליון שנשלח לרכזת התוכנית — רק מי שאישר/ה ומילא/ה">📊 הגיליון למדור בצה"ל</a>
   </div>
 
   <div class="list">

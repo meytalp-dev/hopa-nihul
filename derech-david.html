@@ -116,6 +116,11 @@
   .it details{font-size:14px}
   .it summary{cursor:pointer;color:var(--pink-dark);font-weight:600}
   .gen{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .adm h2{font-size:17px;margin:0 0 6px}
+  .chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);white-space:nowrap}
+  .chk input{width:17px;height:17px;accent-color:var(--pink)}
+  .who{font-size:13px;color:var(--muted);margin-top:8px}
+  .who span{background:var(--bg);border-radius:99px;padding:3px 10px;margin-inline-end:6px;display:inline-block;direction:ltr}
   .gen .field{padding:9px 12px;font-size:15px}
   .link-out{background:var(--bg);border-radius:12px;padding:10px;font-size:13px;word-break:break-all;margin-top:8px;direction:ltr;text-align:left}
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
@@ -371,7 +376,10 @@ function jsonp(params){
     document.head.appendChild(s);
   });
 }
-let ITEMS = [];
+let ITEMS = [], APPROVED = {}, SENDLIST = [], SHEET = null, SHEET_PEOPLE = [], ONLY_APPR = false;
+const ddKey  = v => { let d = String(v==null?'':v).replace(/\D/g,''); if (d.indexOf('972')===0) d = '0'+d.slice(3); return d.slice(-9); };
+const ddNorm = v => String(v==null?'':v).replace(/\s+/g,' ').trim();
+const isApproved = x => !!(APPROVED[ddKey(x.phone)] || APPROVED['n:'+ddNorm(x.name)]);
 async function renderAdmin(){
   document.getElementById('heroTitle').textContent = 'הפניות לדרך דוד · ניהול';
   document.getElementById('heroSub').textContent = 'כל הפניות שהתקבלו מהטופס, חי מהגיליון';
@@ -380,21 +388,26 @@ async function renderAdmin(){
   let store;
   try { const r = await jsonp({action:'storeAll', secret:GS_SECRET}); if(!r.ok) throw new Error(r.error||'err'); store = r.store; }
   catch(e){ app.innerHTML = `<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון (${esc(e.message)}). נסו לרענן.</p></div>`; return; }
+  const sl = store['dd_sendlist'] || {};
+  SENDLIST = sl.students || [];
+  APPROVED = {}; SENDLIST.forEach(s=>{ const k=ddKey(s.phone); if(k) APPROVED[k]=s; const nm=ddNorm(s.name); if(nm) APPROVED['n:'+nm]=s; });
+  SHEET = store['dd_sheet_id'] || null;
   ITEMS = Object.keys(store).filter(k=>k.startsWith('intake_'+KEY_PREFIX)).map(k=>Object.assign({_key:k}, store[k]||{})).filter(x=>x.name && !x._test).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
   drawAdmin();
 }
 function drawAdmin(){
   const q = (document.getElementById('q')||{}).value || '';
   const fs = (document.getElementById('fs')||{}).value || '';
-  const list = ITEMS.filter(x => (!q || JSON.stringify(x).includes(q)) && (!fs || (x.status||'חדש')===fs));
+  const list = ITEMS.filter(x => (!q || JSON.stringify(x).includes(q)) && (!fs || (x.status||'חדש')===fs) && (!ONLY_APPR || isApproved(x)));
   const cnt = s => ITEMS.filter(x=>(x.status||'חדש')===s).length;
   const base = location.href.split('?')[0];
-  app.innerHTML = `
+  app.innerHTML = sheetCard() + `
   <div class="card">
     <div class="stat"><div>סה"כ<b>${ITEMS.length}</b></div>${STATUSES.map(s=>`<div>${esc(s)}<b>${cnt(s)}</b></div>`).join('')}</div>
     <div class="tools">
       <input class="field" id="q" placeholder="חיפוש: שם / בי"ס / טלפון…" value="${esc(q)}">
       <select class="field" id="fs"><option value="">כל הסטטוסים</option>${STATUSES.map(s=>`<option ${fs===s?'selected':''}>${esc(s)}</option>`).join('')}</select>
+      <label class="chk"><input type="checkbox" id="onlyAppr" ${ONLY_APPR?'checked':''}> רק מי שאישר/ה</label>
       <button class="btn outline" id="csv">⬇ CSV</button>
       <button class="btn outline" id="refresh">↻ רענון</button>
       <a class="btn outline" href="derech-david-send.html">📤 דף השליחה לתלמידים</a>
@@ -413,6 +426,8 @@ function drawAdmin(){
   <div class="items">${list.map(cardHtml).join('') || '<div class="card"><p class="hint">אין הפניות להצגה.</p></div>'}</div>`;
   document.getElementById('q').oninput = ()=>{ const v=document.getElementById('q').value; drawAdmin(); const el=document.getElementById('q'); el.value=v; el.focus(); el.setSelectionRange(v.length,v.length); };
   document.getElementById('fs').onchange = drawAdmin;
+  document.getElementById('onlyAppr').onchange = e=>{ ONLY_APPR = e.target.checked; drawAdmin(); };
+  wireSheet();
   document.getElementById('refresh').onclick = renderAdmin;
   document.getElementById('csv').onclick = exportCsv;
   const mk = ()=>{ const p=new URLSearchParams(); const s=document.getElementById('gSchool').value, r=document.getElementById('gRakez').value.trim(), t=document.getElementById('gTel').value.trim(); if(s)p.set('school',s); if(r)p.set('rakez',r); if(t)p.set('tel',t); const u=base+(p.toString()?'?'+p.toString():''); document.getElementById('gOut').textContent=u; document.getElementById('gWa').href='https://wa.me/?text='+encodeURIComponent('היי! זה הקישור להפנייה לתוכנית "דרך דוד" של צה"ל דרך הופה — כמה שאלות קצרות, פחות מ-3 דקות:\n'+u); return u; };
@@ -428,14 +443,90 @@ function drawAdmin(){
     drawAdmin();
   });
 }
+
+/* ===== הגיליון למדור "דרך דוד" — רק מי שאישר/ה וגם מילא/ה ===== */
+const SHEET_MSG = u => 'היי! מצורף גיליון ההפניות של עמותת הופה לתוכנית "דרך דוד" — הפרטים המלאים של המלש"בים שאישרו הצטרפות ומילאו את טופס ההפנייה, לפי סעיפי הטופס שלכם.\nהגיליון מתעדכן אוטומטית עם כל פנייה חדשה, ויש בו שתי עמודות צהובות בסוף שמורות לעדכון הסטטוס מצדכם:\n' + u;
+function sheetCard(){
+  const inSheet = ITEMS.filter(isApproved);
+  const noAppr  = ITEMS.filter(x=>!isApproved(x));
+  const filled  = {}; inSheet.forEach(x=>{ filled[ddKey(x.phone)]=1; filled['n:'+ddNorm(x.name)]=1; });
+  const pending = SENDLIST.filter(s=>!(filled[ddKey(s.phone)] || filled['n:'+ddNorm(s.name)]));
+  const url = SHEET && SHEET.url ? SHEET.url : '';
+  const wa  = 'https://wa.me/?text=' + encodeURIComponent(SHEET_MSG(url));
+  const ml  = 'mailto:?subject=' + encodeURIComponent('הפניות מלש"בים מעמותת הופה — תוכנית "דרך דוד"') + '&body=' + encodeURIComponent(SHEET_MSG(url));
+  return `
+  <div class="card">
+    <h2>📊 הגיליון לרכזת התוכנית בצה"ל</h2>
+    <p class="hint">גיליון גוגל <b>נפרד</b> שנבנה מהטופס ומכיל <b>רק מי שאישר/ה הצטרפות ל"נערי דוד" וגם מילא/ה את טופס ההפנייה</b>. משתפים אותו עם הרכזת — בלי לחשוף שום נתון אחר של הופה. כל פנייה חדשה נכנסת לגיליון לבד.</p>
+    <div class="stat">
+      <div>בגיליון — אישרו ומילאו<b>${inSheet.length}</b></div>
+      <div>אישרו וטרם מילאו<b>${pending.length}</b></div>
+      <div>מילאו בלי אישור<b>${noAppr.length}</b></div>
+    </div>
+    <div class="tools">
+      <button class="btn primary" id="ddBuild">🔄 ${url?'רענון הגיליון':'צור את הגיליון'}</button>
+      ${url?`<a class="btn outline" href="${esc(url)}" target="_blank" rel="noopener">📄 פתח את הגיליון</a>
+      <button class="btn outline" id="ddCopy">📋 העתק קישור</button>
+      <a class="btn outline" href="${wa}" target="_blank" rel="noopener">💬 שלח לרכזת בוואטסאפ</a>
+      <a class="btn outline" href="${ml}">✉️ מייל לרכזת</a>`:''}
+    </div>
+    ${url?`<div class="link-out">${esc(url)}</div>`:'<p class="hint">הגיליון עוד לא נוצר — לחצי "צור את הגיליון" פעם אחת.</p>'}
+    <details style="margin-top:10px"><summary>🔑 הרשאת גישה לרכזת (מומלץ — במקום קישור פתוח לכל אחד)</summary>
+      <p class="hint">הגיליון סגור. מזינים כאן את המייל של הרכזת והיא תוכל לפתוח אותו — רק היא. מכיוון שיש כאן תעודות זהות — לא לשתף בקישור פתוח.</p>
+      <div class="gen">
+        <input class="field" id="ddEmail" placeholder="המייל של רכזת התוכנית" inputmode="email" dir="ltr">
+        <select class="field" id="ddRole"><option value="view">צפייה בלבד</option><option value="edit">צפייה + מילוי סטטוס בעמודות הצהובות</option></select>
+      </div>
+      <div class="tools" style="margin-top:8px"><button class="btn outline" id="ddShareBtn">➕ תן גישה</button></div>
+      ${SHEET_PEOPLE.length?`<div class="who">בעלי גישה: ${SHEET_PEOPLE.map(u=>`<span>${esc(u.email)} · ${esc(u.role)}</span>`).join('')}</div>`:''}
+    </details>
+    ${pending.length?`<details style="margin-top:8px"><summary>⏳ אישרו וטרם מילאו את הטופס (${pending.length})</summary>
+      <p class="hint">לא נכנסים לגיליון עד שימלאו: ${pending.map(x=>esc(x.name)+(x.school?' ('+esc(x.school)+')':'')).join(' · ')}</p>
+      <a class="btn outline" href="derech-david-send.html">📤 שלח להם תזכורת</a></details>`:''}
+    ${noAppr.length?`<details style="margin-top:8px"><summary>❗ מילאו אבל לא ברשימת המאשרים (${noAppr.length})</summary>
+      <p class="hint">לא נשלחים למדור: ${noAppr.map(x=>esc(x.name)).join(' · ')}. אם הם כן מאשרים — להוסיף אותם בדף השליחה ולרענן.</p></details>`:''}
+  </div>`;
+}
+function wireSheet(){
+  const b = document.getElementById('ddBuild');
+  b.onclick = async ()=>{
+    b.disabled = true; const t = b.textContent; b.textContent = 'בונה את הגיליון…';
+    try {
+      const r = await jsonp({action:'ddSheet', secret:GS_SECRET});
+      if (!r.ok) throw new Error(r.error||'err');
+      SHEET = {id:r.id, url:r.url}; SHEET_PEOPLE = r.people || [];
+      toast('הגיליון עודכן — ' + r.rows + ' הפניות');
+    } catch(e){ toast('שגיאה: ' + e.message); b.disabled = false; b.textContent = t; return; }
+    drawAdmin();
+  };
+  const c = document.getElementById('ddCopy');
+  if (c) c.onclick = ()=> navigator.clipboard.writeText(SHEET.url).then(()=>toast('הקישור הועתק'));
+  const sb = document.getElementById('ddShareBtn');
+  sb.onclick = async ()=>{
+    const email = document.getElementById('ddEmail').value.trim();
+    const role  = document.getElementById('ddRole').value;
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('מייל לא תקין');
+    sb.disabled = true; sb.textContent = 'משתף…';
+    try {
+      const r = await jsonp({action:'ddShare', secret:GS_SECRET, email:email, role:role});
+      if (!r.ok) throw new Error(r.error||'err');
+      SHEET = SHEET || {}; SHEET.url = r.url; SHEET_PEOPLE = r.people || [];
+      toast('ניתנה גישה ל-' + email);
+    } catch(e){ toast('שגיאה: ' + e.message); sb.disabled = false; sb.textContent = '➕ תן גישה'; return; }
+    drawAdmin();
+  };
+}
 function cardHtml(x){
   const d = x.ts ? new Date(x.ts) : null;
   const when = d ? d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'2-digit'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}) : '';
   const tel = String(x.phone||'').replace(/\D/g,''); const wa = tel ? 'https://wa.me/972'+tel.replace(/^0/,'') : '#';
   const tzavOk = /כן/.test(x.tzav||'');
   const mail = 'mailto:?subject='+encodeURIComponent('טופס הפניית מלש"ב לתוכנית "דרך דוד" — '+(x.name||''))+'&body='+encodeURIComponent(formText(x));
+  const appr = isApproved(x);
   return `<div class="it">
-    <h3><span>${esc(x.name)}</span><span class="tag ${tzavOk?'ok':'no'}">${tzavOk?'✓ צו ראשון':'✗ עדיין בלי צו ראשון'}</span></h3>
+    <h3><span>${esc(x.name)}</span><span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+      <span class="tag ${appr?'ok':'no'}" title="${appr?'ברשימת המאשרים מלוח נערי דוד':'מילא/ה אבל לא ברשימת המאשרים — לא נכנס/ת לגיליון למדור'}">${appr?'✓ אישר/ה':'לא ברשימת המאשרים'}</span>
+      <span class="tag ${tzavOk?'ok':'no'}">${tzavOk?'✓ צו ראשון':'✗ עדיין בלי צו ראשון'}</span></span></h3>
     <div class="meta">${esc(when)} · ${esc(x.school||'')}${x.rakez?' · רכז/ת: '+esc(x.rakez):''}</div>
     <div class="kv"><b>ת"ז:</b> ${esc(x.tz)} · <b>טלפון:</b> <a href="tel:${esc(x.phone)}">${esc(x.phone)}</a><br><b>כתובת:</b> ${esc(x.address)}</div>
     <div class="kv"><b>סיבת הפנייה:</b> ${esc(x.reason)}</div>
