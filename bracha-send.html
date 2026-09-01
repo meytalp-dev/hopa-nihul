@@ -240,7 +240,7 @@ function rowHtml(s){
     <div class="who"><b>${esc(s.sc)}</b> ${done?`<span class="tag ok">✓ נשלח ${esc(fmtDate(done.ts))}</span>`:''}<span>${esc(sub)}</span></div>
     <div class="acts">
       ${WA.url && m ? `<button class="btn wa sm ${done?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${done?'שוב':'שלח'}</button>` : ''}
-      ${s.grp ? `<button class="btn ${WA.url&&m?'outline':'wa'} sm ${done&&!(WA.url&&m)?'again':''}" data-copyopen="${esc(s.id)}" title="מעתיק את הברכה ופותח את הקבוצה — נשאר רק להדביק">📋 העתק ופתח קבוצה</button>`
+      ${s.grp ? `<button class="btn ${WA.url&&m?'outline':'wa'} sm ${done&&!(WA.url&&m)?'again':''}" data-copyopen="${esc(s.id)}" title="מעתיק את הברכה ופותח את הקבוצה — נשאר רק להדביק">📋 העתק ופתח</button><a class="btn outline sm" href="${esc(s.grp)}" target="_blank" rel="noopener" data-openonly="${esc(s.id)}" title="פתיחת הקבוצה בלי טקסט — לצירוף התמונה מהגלריה">👥 פתח לתמונה</a>`
               : `<button class="btn outline sm" data-copyonly="${esc(s.id)}">📋 העתק ברכה</button>`}
       <button class="swap" data-swap="${esc(s.id)}" title="החלפת שפת הברכה">⇄ ${other}</button>
       ${done?`<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון">↩</button>`:''}
@@ -257,7 +257,8 @@ function sectionHtml(sec){
     <div class="imgrow">
       <a href="${IMG[sec]}" target="_blank" rel="noopener"><img src="${sec==='he'?'bracha-he.png':'bracha-ar.png'}" alt=""></a>
       <div class="acts">
-        <a class="btn outline sm" href="${IMG[sec]}" target="_blank" rel="noopener">🖼 פתיחת התמונה (לחיצה ארוכה = שמירה)</a>
+        <a class="btn primary sm" href="${sec==='he'?'bracha-he.png':'bracha-ar.png'}" download="${sec==='he'?'ברכת-פתיחת-שנה':'ברכת-פתיחת-שנה-ערבית'}.png">⬇️ הורדת התמונה</a>
+        <a class="btn outline sm" href="${IMG[sec]}" target="_blank" rel="noopener">🖼 פתיחה (לחיצה ארוכה = שמירה)</a>
         <button class="btn outline sm" data-copy-msg="${sec}">📋 העתקת נוסח כללי (בלי שם בי"ס)</button>
         ${WA.url && GROUPS ? `<button class="btn primary sm" data-sendall="${sec}" ${WA.busy||!matched?'disabled':''}>⚡ שלח לכל הקבוצות שנותרו (${matched})</button><span class="hint" id="waProg-${sec}" style="margin:0"></span>`:''}
       </div>
@@ -271,7 +272,7 @@ function sectionHtml(sec){
 }
 function render(){
   app.innerHTML = `
-  <div class="card" style="padding:12px 16px"><p class="hint" style="margin:0">💡 איך זה עובד: <b>📋 העתק ופתח קבוצה</b> מעתיק את הברכה (עם קישור לתמונה) ופותח את קבוצת הצוות — נשאר רק להדביק ולשלוח. עם חיבור לוואטסאפ (למטה) אפשר גם ⚡ לשלוח ישירות בלי לפתוח כלום. כפתור ⇄ מחליף שפה לבית ספר בודד.</p></div>
+  <div class="card" style="padding:12px 16px"><p class="hint" style="margin:0">💡 <b>לשליחת התמונה בלבד (בלי מלל):</b> ⬇️ הורידי את התמונה פעם אחת לגלריה, ואז בכל בית ספר <b>👥 פתח לתמונה</b> פותח את קבוצת הצוות — מצרפים את התמונה מהגלריה ושולחים. מי שרוצה גם טקסט: <b>📋 העתק ופתח</b>. כפתור ⇄ מחליף שפה לבית ספר בודד.</p></div>
   ${sectionHtml('he')}
   ${sectionHtml('ar')}
   <div class="card direct ${WA.url?'on':''}">
@@ -288,6 +289,7 @@ function render(){
   app.querySelectorAll('[data-msg]').forEach(t=>t.oninput=e=>{ MSGS[t.dataset.msg]=e.target.value; localStorage.setItem(t.dataset.msg==='he'?LS.msgHe:LS.msgAr, e.target.value); });
   app.querySelectorAll('[data-copy-msg]').forEach(b=>b.onclick=()=>{ const sec=b.dataset.copyMsg; const txt=MSGS[sec].replace(/ ?(של|في) \{בית_ספר\}/g,'').replace(/\{בית_ספר\}/g,'').replace(/\{תמונה\}/g,IMG[sec]); navigator.clipboard.writeText(txt).then(()=>toast('הנוסח הועתק ✓')); });
   app.querySelectorAll('[data-copyopen]').forEach(b=>b.onclick=()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.copyopen); navigator.clipboard.writeText(msgFor(s)).then(()=>{ toast('הברכה הועתקה — נפתחת הקבוצה, הדביקי ושלחי'); markSent(s.id,'copy'); setTimeout(()=>{ window.open(s.grp,'_blank'); render(); }, 500); }); });
+  app.querySelectorAll('a[data-openonly]').forEach(a=>a.addEventListener('click',()=>{ markSent(a.dataset.openonly,'img'); setTimeout(render,400); }));
   app.querySelectorAll('[data-copyonly]').forEach(b=>b.onclick=()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.copyonly); navigator.clipboard.writeText(msgFor(s)).then(()=>{ toast('הברכה הועתקה ✓'); markSent(s.id,'copy'); render(); }); });
   app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(s); toast('נשלח לקבוצת '+s.sc+' ✓'); render(); }catch(e){ toast('לא נשלח: '+e.message); render(); } });
   app.querySelectorAll('[data-sendall]').forEach(b=>b.onclick=()=>sendAllDirect(b.dataset.sendall));
