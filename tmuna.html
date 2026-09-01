@@ -69,10 +69,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:var(--pink)}
       <input type="file" id="file" accept="image/*" hidden>
     </div>
 
-    <label class="consent"><input type="checkbox" id="consent">
-      <span>אני מאשר/ת שהתמונה תופיע בפוסט של הופה בפייסבוק ובאינסטגרם 💛</span></label>
-
-    <button class="btn" id="send" disabled>שליחת התמונה למיטל 🚀</button>
+    <button class="btn" id="send" disabled style="margin-top:16px">שליחת התמונה למיטל 🚀</button>
     <div class="prog" id="prog"><div class="bar"><div class="fill" id="fill"></div></div><div class="pt" id="pt">שולח…</div></div>
     <div class="err" id="err"></div>
   </div>
@@ -169,9 +166,8 @@ $('file').onchange=function(){
   };
   rd.readAsDataURL(f);
 };
-$('consent').onchange=check;
 document.addEventListener('input',check);
-function check(){$('send').disabled=!(dataUrl&&$('consent').checked)}
+function check(){$('send').disabled=!dataUrl}
 function showErr(t){$('err').style.display='block';$('err').textContent=t}
 
 /* ---------- שליחה: חלוקה לחלקים + מטא בסוף ---------- */
@@ -210,7 +206,7 @@ $('send').onclick=async function(){
       await postRetry(KEY_PREFIX+me.id+'-p'+i,{d:b64.slice(i*CHUNK,(i+1)*CHUNK)},3);
     }
     $('pt').textContent='כמעט שם…';$('fill').style.width='92%';
-    await postRetry(KEY_PREFIX+me.id,{n:me.n,s:me.s,parts:parts,mime:mime,consent:1,ts:new Date().toISOString(),ua:navigator.userAgent.slice(0,80)},3);
+    await postRetry(KEY_PREFIX+me.id,{n:me.n,s:me.s,parts:parts,mime:mime,ts:new Date().toISOString(),ua:navigator.userAgent.slice(0,80)},3);
     $('fill').style.width='100%';
     localStorage.setItem('tmuna_sent',me.id);
     $('doneImg').src=dataUrl;
