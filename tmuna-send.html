@@ -42,9 +42,13 @@ textarea:focus,input:focus{outline:none;border-color:var(--pink)}
 .btn.dis,.btn:disabled{opacity:.4;pointer-events:none}
 .mark{font-size:12.5px;color:#5c4b55;display:flex;gap:5px;align-items:center;cursor:pointer}
 .mark input{accent-color:var(--ok);width:17px;height:17px}
-.chips{display:flex;gap:7px;flex-wrap:wrap}
-.chip{background:#f2fbf6;border:1.5px solid #bfe8d2;border-radius:99px;padding:5px 12px;font-size:12.5px}
-.chip small{color:#5e8a72}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1.5px solid #bfe8d2;background:#f7fcf9;border-radius:12px;padding:9px 12px;margin-bottom:8px;flex-wrap:wrap}
+.hrow .hv{color:var(--ok);font-weight:900;margin-inline-end:6px}
+.hrow b{font-size:14px}
+.hrow .hsc{font-size:12.5px;color:#5e8a72;margin-inline-start:8px}
+.hrow .hex{display:block;font-size:11.5px;color:#8aa695;margin-top:2px}
+.hacts{display:flex;align-items:center;gap:9px}
+.hph{font-size:13px;color:#456;direction:ltr}
 .conn{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .conn input{border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;flex:1;min-width:170px}
 .dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-inline-end:5px}
@@ -123,9 +127,9 @@ textarea:focus,input:focus{outline:none;border-color:var(--pink)}
   </div>
 
   <div class="card">
-    <h2>✅ כבר יש לנו תמונה (מטופס המפגש)</h2>
-    <div class="chips" id="haveList"></div>
-    <div class="hint">התמונות האלה כבר שמורות בריפו (photos/00–18) — לא צריך לבקש שוב, אלא אם רוצים תמונה טרייה יותר.</div>
+    <h2>✅ כבר יש לנו תמונה — שמות וטלפונים</h2>
+    <div id="haveList"></div>
+    <div class="hint">התמונות שמורות בריפו (photos/00–18) — לא צריך לבקש שוב. כפתור 💬 פותח שיחה רגילה בוואטסאפ (בלי הודעה מוכנה).</div>
   </div>
 </div>
 
@@ -151,20 +155,29 @@ var MISSING=[
  {id:'chushen',   sc:'תיכון חושן',                    c:'ברכי',          ph:'0528697690'},
  {id:'nevemidbar',sc:'דרור נווה מדבר',               c:'תמרה גילאוני',  ph:'0504222996', note:'אולי כבר מכוסה — היאם אזברגה נרשמה למפגש עם הטלפון של תמרה. כדאי לוודא מי בתמונה'}
 ];
-/* יש תמונה — מהגלריה של המפגש (photos/00–18) */
-var HAVE=[
- 'מוניק איפרח ממן · עמל רמת דוד','מור · עמל רמת דוד','אביחי חריר · מוצקין','זהור אלעוברה · רהט',
- 'טליה ברנע · תיכון שיח','לי ארנן · ת"א-יפו','טלי יונה · צור ברק','מריה דיאב · אורט כרמל',
- 'מלשה חנין · אורט כרמל','סאמר מיעארי · סחנין','מוחמד גזאל (מנהל) · סחנין','היאם אזברגה · נווה מדבר',
- 'ריקי מסס · אשדוד','עלי עותמאן · ביר אלמכסור','טוהר מרסדס כהן · מרום עכו','ראניה חגו · לקייה',
- 'לבנה גיל בן חמו · מגשימים כרמיאל','יעקב גרונספלד · בית הערבה','מוניר עבדאלהאדי · טורעאן'
+/* יש תמונה — רכזים/ות עם טלפון (התמונות מטופס המפגש, photos/00–18) */
+var HAVEP=[
+ {c:'יעקב גרונספלד',   sc:'אורט בית הערבה',           ph:'0546995254'},
+ {c:'טלי יונה',        sc:'אורט צור ברק',              ph:'0548080808'},
+ {c:'אביחי חריר',      sc:'עתיד שמיים קריית מוצקין',   ph:'0503139150'},
+ {c:'טוהר מרסדס כהן',  sc:'אורט מרום עכו',             ph:'0508282032'},
+ {c:'חנין (מלשה)',     sc:'אורט כרמל חיפה',            ph:'0532417145', ex:'בתמונות גם מריה דיאב'},
+ {c:'מוניר זרעיני',    sc:'מנאראת טורעאן',             ph:'0546959114'},
+ {c:'ריקי מסס',        sc:'יוצר עמל טכנולוגי אשדוד',   ph:'0544441300'},
+ {c:'מוניק איפרח ממן', sc:'עמל רמת דוד',               ph:'0509883385', ex:'בתמונות גם מור'},
+ {c:'רניה חגו',        sc:'טכנולוגי לקייה',            ph:'0504708424'},
+ {c:'טליה ברנע',       sc:'תיכון שיח',                 ph:'0548069898'},
+ {c:'לי ארנן',         sc:'התיכון החברתי תל אביב-יפו', ph:'0503450755'},
+ {c:'זהור אלעוברה',    sc:'עמל טכנולוגי רהט',          ph:'0547918502'},
+ {c:'לבנה בן חמו',     sc:'עתיד יוצר מגשימים כרמיאל',  ph:'0504400956'},
+ {c:'עלי עותמאן',      sc:'עתיד אבדאע ביר אלמכסור',    ph:'', ex:'אין לנו טלפון'}
 ];
 
 var DEFAULT_MSG=
 'היי {שם} 👋\n'+
 'לכבוד פתיחת השנה אנחנו מכינים פוסט חגיגי לפייסבוק ולאינסטגרם של הופה — עם התמונות של כל רכזי ורכזות הבוגרים שלנו 💛\n'+
 'חסרה לנו רק התמונה שלך!\n\n'+
-'זה לוקח חצי דקה — נכנסים, מעלים תמונה (סלפי מצוין 🤳) ומאשרים:\n'+
+'זה לוקח חצי דקה — נכנסים ומעלים תמונה (סלפי מצוין 🤳):\n'+
 '{קישור}\n\n'+
 'תודה ענקית 🙏\n'+
 'מיטל, הופה';
@@ -204,7 +217,7 @@ $('#code').addEventListener('keydown',function(e){if(e.key==='Enter')$('#enter')
 function render(){
   var got=MISSING.filter(function(s){return state.got[s.id]});
   var still=MISSING.filter(function(s){return !state.got[s.id]});
-  $('#stHave').textContent=HAVE.length;
+  $('#stHave').textContent=HAVEP.length;
   $('#stNew').textContent=state.photos.length;
   $('#stMiss').textContent=still.length;
   $('#stSent').textContent=still.filter(function(s){return state.sent[s.id]}).length;
@@ -230,7 +243,14 @@ function render(){
     '</div>';
   }).join('');
 
-  $('#haveList').innerHTML=HAVE.map(function(h){var p=h.split(' · ');return '<span class="chip">'+esc(p[0])+' <small>· '+esc(p[1]||'')+'</small></span>'}).join('');
+  $('#haveList').innerHTML=HAVEP.map(function(h){
+    var d=digits(h.ph);
+    return '<div class="hrow">'+
+      '<div class="hwho"><span class="hv">✔</span><b>'+esc(h.c)+'</b><span class="hsc">'+esc(h.sc)+'</span>'+(h.ex?'<span class="hex">'+esc(h.ex)+'</span>':'')+'</div>'+
+      '<div class="hacts"><span class="hph">'+esc(pretty(h.ph)||'—')+'</span>'+
+      (d?'<a class="btn wa" style="padding:7px 11px;font-size:13px" href="https://wa.me/'+d+'" target="_blank" rel="noopener">💬</a>':'')+
+      '</div></div>';
+  }).join('');
 
   var on=!!(state.url&&state.secret);
   $('#connDot').className='dot '+(on?'on':'off');
