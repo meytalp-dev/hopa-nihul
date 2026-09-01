@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שליחת ברכת פתיחת השנה · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --wa:#25D366;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 14px 60px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:21px;font-weight:800;line-height:1.25}
+  .hero p{margin:0;opacity:.92;font-size:14px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-top:14px}
+  .card h2{margin:0 0 4px;font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 small{font-weight:400;color:var(--muted);font-size:13px}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  textarea.field{min-height:150px;resize:vertical;line-height:1.55}
+  .btn{border-radius:12px;padding:10px 16px;font-size:15px;font-weight:700;transition:transform .1s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .btn:active{transform:scale(.97)}
+  .btn.primary{background:var(--pink);color:#fff;box-shadow:0 6px 18px rgba(232,52,138,.3)}
+  .btn.outline{border:2px solid var(--line);background:#fff;color:var(--ink)}
+  .btn.wa{background:var(--wa);color:#fff;box-shadow:0 6px 16px rgba(37,211,102,.3)}
+  .btn.wa.again{background:#fff;color:#1a9c4a;border:2px solid #b8ecc9;box-shadow:none}
+  .btn.sm{padding:7px 12px;font-size:13px;border-radius:10px}
+  .btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+  details summary{cursor:pointer;color:var(--pink-dark);font-weight:600;font-size:14px;margin:6px 0}
+
+  .sector{border-top:6px solid var(--yellow)}
+  .sector.ar{border-top-color:var(--pink)}
+  .imgrow{display:flex;gap:12px;align-items:flex-start;margin:10px 0}
+  .imgrow img{width:110px;border-radius:12px;box-shadow:var(--shadow);flex-shrink:0}
+  .imgrow .acts{display:flex;flex-direction:column;gap:8px}
+
+  .card.direct{border:2px dashed #cfe9d8}
+  .card.direct.on{border:2px solid #b8ecc9;background:#f3fcf6}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .row{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+
+  .list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .stu{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-right:5px solid var(--line)}
+  .stu.sent{border-right-color:var(--ok)}
+  .stu .who{flex:1;min-width:150px}
+  .stu .who b{font-size:16px}
+  .stu .who span{display:block;font-size:12.5px;color:var(--muted)}
+  .tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+  .tag.ok{background:var(--ok-soft);color:#137a4a}
+  .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .swap{font-size:12px;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:3px 9px}
+  .nocoord{color:var(--muted);font-size:13px;background:var(--bg);border-radius:12px;padding:8px 12px;margin-top:8px}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
+  .foot a{color:var(--pink-dark);text-decoration:none;font-weight:600}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+  .toast.on{opacity:1}
+  .gate{max-width:360px;margin:60px auto;text-align:center}
+  .gate input{text-align:center;font-size:22px;letter-spacing:4px}
+  @media (max-width:560px){.row{grid-template-columns:1fr}.stu .acts{width:100%;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>🌅 ברכת פתיחת שנת הלימודים</h1>
+      <p>שליחה אישית לכל רכז/ת — עברית למגזר היהודי, ערבית למגזר הערבי-בדואי-דרוזי</p>
+    </div>
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== נתונים ===================== */
+const BASE = 'https://meytalp-dev.github.io/hopa-nihul/';
+const IMG = { he: BASE + 'bracha-he.png', ar: BASE + 'bracha-ar.png' };
+const PIN = 'hopa';
+
+const MSG_HE = `היי {שם} 🌅
+פתיחת שנת לימודים טובה ומשמעותית!
+
+היום, כשכל בתי הספר נפתחים מחדש, אנחנו זוכרים דווקא את מי שכבר יצא מהשער. השנה, בזכותך, לכל בוגרת ובוגר יש כתובת: מישהו שיודע את השם, שמרים טלפון ושואל "מה שלומך".
+
+"וְדַע, שֶׁהָאָדָם צָרִיךְ לַעֲבֹר עַל גֶּשֶׁר צַר מְאֹד מְאֹד, וְהַכְּלָל וְהָעִקָּר שֶׁלֹּא יִתְפַּחֵד כְּלָל" (רבי נחמן מברסלב)
+
+שתהיה שנה של שיחות טובות, דלתות פתוחות, ובוגרים שיודעים שיש מי שהולך איתם.
+יוצאים לדרך ביחד! 💛
+לירון, מיטל, בארי, אסמאא וברכה, צוות הופה
+
+{תמונה}`;
+
+const MSG_AR = `أهلاً {שם} 🌅
+افتتاح سنة دراسية مباركة ومليئة بالمعنى!
+
+اليوم، بينما تفتح كل المدارس أبوابها من جديد، نتذكّر نحن بالذات من خرجوا من البوابة. هذه السنة، بفضلك، لكل خرّيجة وخرّيج عنوان: شخص يعرف الاسم، يرفع السماعة ويسأل «كيف حالك؟».
+
+«الرفيق قبل الطريق» — مثل عربي أصيل
+
+نتمنى لنا جميعاً سنة مليئة بالمحادثات الطيبة، بالأبواب المفتوحة، وبخرّيجين يعرفون أن هناك من يمشي معهم.
+ننطلق معاً! 💛
+ليرون، ميتال، باري، أسماء وبراخا — طاقم هوبا
+
+{תמונה}`;
+
+const COORDS = [
+ {id:'bethaarava', name:'יעקב גרונספלד', sc:'אורט בית הערבה', ph:'0546995254', sec:'he'},
+ {id:'zurbarak',   name:'טלי יונה',      sc:'אורט צור ברק', ph:'0548080808', sec:'he'},
+ {id:'motzkin',    name:'אביחי חריר',    sc:'עתיד שמיים קריית מוצקין', ph:'0503139150', sec:'he'},
+ {id:'akko',       name:'טוהר',          sc:'אורט מרום עכו', ph:'0508282032', sec:'he'},
+ {id:'beitshean',  name:'חן',            sc:'אורט מגשימים בית שאן', ph:'0526851485', sec:'he'},
+ {id:'ashkelon',   name:'סיגל דדון',     sc:'אורט אדיבי אשקלון', ph:'0537780196', sec:'he'},
+ {id:'nechalim',   name:'טל מילוא',      sc:'מרכז תורני טכנולוגי נחלים', ph:'0584040949', sec:'he'},
+ {id:'ashdod',     name:'ריקי מסס',      sc:'יוצר עמל טכנולוגי אשדוד', ph:'0544441300', sec:'he'},
+ {id:'ramatdavid', name:'מוניק איפרח ממן', sc:'עמל רמת דוד', ph:'0509883385', sec:'he'},
+ {id:'siach',      name:'טליה ברנע',     sc:'תיכון שיח', ph:'0548069898', sec:'he'},
+ {id:'palmachim',  name:'שירן עוגן',     sc:'יוצר עתיד פלמחים', ph:'0549789029', sec:'he'},
+ {id:'tlv',        name:'לי ארנן',       sc:'התיכון החברתי תל אביב-יפו', ph:'0503450755', sec:'he'},
+ {id:'karmiel',    name:'לבנה בן חמו',   sc:'עתיד יוצר מגשימים כרמיאל', ph:'0504400956', sec:'he'},
+ {id:'mitzpe',     name:'ענבל לוי',      sc:'התיכון החברתי מצפה רמון', ph:'0546738573', sec:'he'},
+ {id:'drorgalil',  name:'רינה שריד',     sc:'דרור גליל (קיבוץ רביד)', ph:'0546738232', sec:'he'},
+ {id:'turan',      name:'מוניר זרעיני',  sc:'מנאראת טורעאן', ph:'0546959114', sec:'ar'},
+ {id:'sakhnin',    name:'סוזן',          sc:'טכנולוגי אלאמאני סחנין', ph:'0508784131', sec:'ar'},
+ {id:'lakiya',     name:'רניה',          sc:'טכנולוגי לקייה', ph:'0504708424', sec:'ar'},
+ {id:'julis',      name:'בהייה מולא',    sc:"יוצר עתיד בנות ג'וליס", ph:'0546699072', sec:'ar'},
+ {id:'rahat',      name:'זהור אלעוברה', sc:'עמל טכנולוגי רהט', ph:'0547918502', sec:'ar'},
+ {id:'yarka',      name:'רשא סייד אחמד', sc:"תיכון ח'טוואת ירכא אבו סנאן", ph:'0505455077', sec:'ar'},
+ {id:'nevemidbar', name:'תמרה גילאוני',  sc:'דרור נווה מדבר', ph:'0504222996', sec:'ar'},
+ {id:'carmel',     name:'חנין',          sc:'אורט כרמל חיפה', ph:'0532417145', sec:'ar'},
+];
+const NO_COORD = ['עתיד אבדאע ביר אלמכסור','טכנולוגי אלמסתקבל תל שבע','אולפנת עתיד בת עמי'];
+
+/* ===================== מצב ===================== */
+const LS = { msgHe:'bracha_msg_he', msgAr:'bracha_msg_ar', sent:'bracha_sent', swap:'bracha_swap', pin:'hopa_bracha_pin' };
+let MSGS = { he: localStorage.getItem(LS.msgHe)||MSG_HE, ar: localStorage.getItem(LS.msgAr)||MSG_AR };
+let SENT = {}; try{ SENT = JSON.parse(localStorage.getItem(LS.sent)||'{}'); }catch(e){}
+let SWAP = {}; try{ SWAP = JSON.parse(localStorage.getItem(LS.swap)||'{}'); }catch(e){}
+
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2200); }
+const waNum = p => '972' + String(p).replace(/\D/g,'').replace(/^0/,'');
+const secOf = c => SWAP[c.id] ? (c.sec==='he'?'ar':'he') : c.sec;
+const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+
+function msgFor(c){
+  const lang = secOf(c);
+  const first = (c.name||'').trim().split(/\s+/)[0]||'';
+  return MSGS[lang].replace(/\{שם\}/g, first).replace(/\{תמונה\}/g, IMG[lang]);
+}
+function waHref(c){ return 'https://wa.me/' + waNum(c.ph) + '?text=' + encodeURIComponent(msgFor(c)); }
+function markSent(id, via){ SENT[id]={ts:new Date().toISOString(), via:via||'wa'}; localStorage.setItem(LS.sent, JSON.stringify(SENT)); }
+
+/* ---- שליחה ישירה (Green API דרך ה-Apps Script — אותם מפתחות כמו hodaot.html) ---- */
+const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
+const WA = { url: localStorage.getItem(MLS.url)||'', secret: localStorage.getItem(MLS.secret)||'', busy:false, stop:false };
+let jsonpN = 0;
+function waJsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    if(!WA.url){ rej(new Error('לא מחובר')); return; }
+    const cb='wacb_'+(jsonpN++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{cleanup(); rej(new Error('timeout'));}, tmo||45000);
+    function cleanup(){ try{delete window[cb]}catch(e){window[cb]=undefined} s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{cleanup(); res(d);};
+    s.src = WA.url + (WA.url.includes('?')?'&':'?') + new URLSearchParams(Object.assign({}, params, {secret:WA.secret, callback:cb})).toString();
+    s.onerror=()=>{cleanup(); rej(new Error('network'));};
+    document.body.appendChild(s);
+  });
+}
+async function sendDirect(c){
+  const r = await waJsonp({ action:'send', chatIds: waNum(c.ph)+'@c.us', message: msgFor(c) }, 60000);
+  if(!r || !r.ok || !r.sent) throw new Error((r&&r.error)||'לא נשלח');
+  markSent(c.id,'direct');
+}
+async function sendAllDirect(sec){
+  const list = COORDS.filter(c=>secOf(c)===sec && !SENT[c.id]);
+  if(!list.length){ toast('אין למי לשלוח — כולם קיבלו'); return; }
+  if(!confirm(`לשלוח עכשיו את הברכה ל-${list.length} רכזים/ות מהוואטסאפ המחובר?`)) return;
+  WA.busy=true; WA.stop=false; let ok=0, fail=[];
+  for(let i=0;i<list.length;i++){
+    if(WA.stop) break;
+    const c=list[i]; setProgress(sec, `שולח ל${c.name}… (${i+1}/${list.length})`);
+    try{ await sendDirect(c); ok++; localStorage.setItem(LS.sent, JSON.stringify(SENT)); }catch(e){ fail.push(c.name+' ('+e.message+')'); }
+    if(i<list.length-1) await new Promise(r=>setTimeout(r,1800));
+  }
+  WA.busy=false; render();
+  toast(`נשלחו ${ok} מתוך ${list.length}` + (fail.length?' · נכשלו: '+fail.join(', '):''));
+}
+function setProgress(sec,t){ const el=document.getElementById('waProg-'+sec); if(el) el.textContent=t; }
+async function testConnection(){
+  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret); toast('מחובר ✓'); render(); } else throw new Error((r&&r.error)||'err'); }
+  catch(e){ toast('החיבור נכשל: '+e.message); }
+}
+
+/* ===================== רינדור ===================== */
+function rowHtml(c){
+  const done = SENT[c.id];
+  const other = secOf(c)==='he' ? 'לגרסה הערבית' : 'לגרסה העברית';
+  return `<div class="stu ${done?'sent':''}">
+    <div class="who"><b>${esc(c.name)}</b> ${done?`<span class="tag ok">✓ נשלח ${esc(fmtDate(done.ts))}</span>`:''}<span>${esc(c.sc)} · <a href="tel:${esc(c.ph)}" style="color:inherit;text-decoration:none">${esc(c.ph)}</a></span></div>
+    <div class="acts">
+      ${WA.url ? `<button class="btn wa sm ${done?'again':''}" data-direct="${esc(c.id)}" ${WA.busy?'disabled':''}>⚡ ${done?'שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(c)}" target="_blank" rel="noopener" data-wa="${esc(c.id)}">💬</a>`
+                : `<a class="btn wa sm ${done?'again':''}" href="${waHref(c)}" target="_blank" rel="noopener" data-wa="${esc(c.id)}">💬 ${done?'שלח שוב':'שלח בוואטסאפ'}</a>`}
+      <button class="swap" data-swap="${esc(c.id)}" title="החלפת שפת הברכה">⇄ ${other}</button>
+      ${done?`<button class="btn outline sm" data-unsend="${esc(c.id)}" title="בטל סימון">↩</button>`:''}
+    </div>
+  </div>`;
+}
+function sectionHtml(sec){
+  const list = COORDS.filter(c=>secOf(c)===sec);
+  const sent = list.filter(c=>SENT[c.id]).length;
+  const title = sec==='he' ? '🕊️ המגזר היהודי — הברכה בעברית' : '🌍 המגזר הערבי-בדואי-דרוזי — الرفيق قبل الطريق';
+  return `<div class="card sector ${sec}">
+    <h2>${title} <small>${sent}/${list.length} נשלחו</small></h2>
+    <div class="imgrow">
+      <a href="${IMG[sec]}" target="_blank" rel="noopener"><img src="${sec==='he'?'bracha-he.png':'bracha-ar.png'}" alt=""></a>
+      <div class="acts">
+        <a class="btn outline sm" href="${IMG[sec]}" target="_blank" rel="noopener">🖼 פתיחת התמונה (לחיצה ארוכה = שמירה)</a>
+        <button class="btn outline sm" data-copy-msg="${sec}">📋 העתקת נוסח הברכה</button>
+        ${WA.url?`<button class="btn primary sm" data-sendall="${sec}" ${WA.busy?'disabled':''}>⚡ שלח לכל מי שנותר (${list.length-sent})</button><span class="hint" id="waProg-${sec}" style="margin:0"></span>`:''}
+      </div>
+    </div>
+    <details><summary>✏️ עריכת נוסח ההודעה</summary>
+      <textarea class="field" data-msg="${sec}" ${sec==='ar'?'dir="rtl" style="text-align:right"':''}>${esc(MSGS[sec])}</textarea>
+      <p class="hint" style="margin-top:6px">משתנים: <b>{שם}</b> שם פרטי · <b>{תמונה}</b> קישור לתמונת הברכה. נשמר במכשיר הזה.</p>
+    </details>
+    <div class="list">${list.map(rowHtml).join('')}</div>
+    ${sec==='ar' ? `<div class="nocoord">🕐 עדיין בלי רכז/ת בוגרים: ${NO_COORD.map(esc).join(' · ')}</div>` : ''}
+  </div>`;
+}
+function render(){
+  app.innerHTML = `
+  ${sectionHtml('he')}
+  ${sectionHtml('ar')}
+  <div class="card direct ${WA.url?'on':''}">
+    <h2>⚡ שליחה ישירה <small>${WA.url?'מחובר לוואטסאפ של הופה':'חיבור לוואטסאפ המחובר — שליחה בלי לפתוח חלון לכל אחד'}</small></h2>
+    ${WA.url ? `<div class="toolbar">${WA.busy?'<button class="btn outline" id="stopAll">⏹ עצור</button>':''}<button class="btn outline sm" id="disconnect" style="margin-inline-start:auto">ניתוק</button></div>
+      <p class="hint" style="margin:8px 0 0">ההודעה יוצאת כטקסט + קישור לתמונת הברכה. יש השהיה של כ-2 שניות בין הודעה להודעה.</p>`
+    : `<p class="hint">אותו חיבור כמו בדף <a href="hodaot.html" target="_blank" rel="noopener">שליחת הודעות לקבוצות</a> — אם כבר התחברת שם במכשיר הזה, זה מתחבר לבד.</p>
+      <div class="row"><input class="field" id="waUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(WA.url)}"><input class="field" id="waSecret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="${esc(WA.secret)}"></div>
+      <div class="toolbar"><button class="btn primary" id="waConnect">התחברות</button><span class="hint" style="margin:0">בלי חיבור — הכפתורים הירוקים פותחים וואטסאפ רגיל.</span></div>`}
+  </div>
+  <div class="foot"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · פתאום הכל נראה אפשרי!</div>`;
+
+  /* wiring */
+  app.querySelectorAll('[data-msg]').forEach(t=>t.oninput=e=>{ MSGS[t.dataset.msg]=e.target.value; localStorage.setItem(t.dataset.msg==='he'?LS.msgHe:LS.msgAr, e.target.value); refreshLinks(); });
+  app.querySelectorAll('[data-copy-msg]').forEach(b=>b.onclick=()=>{ const sec=b.dataset.copyMsg; const txt=MSGS[sec].replace(/ ?\{שם\}/g,'').replace(/\{תמונה\}/g,IMG[sec]); navigator.clipboard.writeText(txt).then(()=>toast('הנוסח הועתק ✓')); });
+  app.querySelectorAll('a[data-wa]').forEach(a=>a.addEventListener('click',()=>{ markSent(a.dataset.wa,'wa'); setTimeout(render,400); }));
+  app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const c=COORDS.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(c); toast('נשלח ל'+c.name+' ✓'); render(); }catch(e){ toast('לא נשלח: '+e.message); render(); } });
+  app.querySelectorAll('[data-sendall]').forEach(b=>b.onclick=()=>sendAllDirect(b.dataset.sendall));
+  app.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>{ const id=b.dataset.swap; SWAP[id]=!SWAP[id]; if(!SWAP[id]) delete SWAP[id]; localStorage.setItem(LS.swap, JSON.stringify(SWAP)); render(); });
+  app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ delete SENT[b.dataset.unsend]; localStorage.setItem(LS.sent, JSON.stringify(SENT)); render(); });
+  const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית…'); };
+  const wc=document.getElementById('waConnect'); if(wc) wc.onclick=()=>{ WA.url=document.getElementById('waUrl').value.trim(); WA.secret=document.getElementById('waSecret').value.trim(); if(!WA.url||!WA.secret){ toast('צריך כתובת וסיסמה'); return; } testConnection(); };
+  const dc=document.getElementById('disconnect'); if(dc) dc.onclick=()=>{ if(confirm('לנתק את החיבור במכשיר הזה?')){ localStorage.removeItem(MLS.url); localStorage.removeItem(MLS.secret); WA.url=''; WA.secret=''; render(); } };
+}
+function refreshLinks(){ app.querySelectorAll('a[data-wa]').forEach(a=>{ const c=COORDS.find(x=>x.id===a.dataset.wa); if(c) a.href=waHref(c); }); }
+
+/* ===================== שער ===================== */
+function gate(){
+  if (localStorage.getItem(LS.pin)===PIN) return render();
+  app.innerHTML = `<div class="card gate"><h2 style="justify-content:center">🔒 דף לצוות הופה</h2><p class="hint">הקלידו את קוד הצוות פעם אחת במכשיר הזה</p><input class="field" id="pin" type="password" autocomplete="off"><button class="btn primary" id="go" style="margin-top:10px;width:100%">כניסה</button><p class="hint" id="pinErr" style="margin-top:8px"></p></div>`;
+  const go=()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ localStorage.setItem(LS.pin,PIN); render(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
+  document.getElementById('go').onclick=go; document.getElementById('pin').addEventListener('keydown',e=>{ if(e.key==='Enter') go(); }); document.getElementById('pin').focus();
+}
+gate();
+</script>
+</body>
+</html>
