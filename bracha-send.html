@@ -52,7 +52,7 @@
   .sector.ar{border-top-color:var(--pink)}
   .imgrow{display:flex;gap:12px;align-items:flex-start;margin:10px 0}
   .imgrow img{width:110px;border-radius:12px;box-shadow:var(--shadow);flex-shrink:0}
-  .imgrow .acts{display:flex;flex-direction:column;gap:8px}
+  .imgrow .acts{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 
   .card.direct{border:2px dashed #cfe9d8}
   .card.direct.on{border:2px solid #b8ecc9;background:#f3fcf6}
@@ -63,13 +63,12 @@
   .stu{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-right:5px solid var(--line)}
   .stu.sent{border-right-color:var(--ok)}
   .stu .who{flex:1;min-width:150px}
-  .stu .who b{font-size:16px}
+  .stu .who b{font-size:15.5px}
   .stu .who span{display:block;font-size:12.5px;color:var(--muted)}
   .tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
   .tag.ok{background:var(--ok-soft);color:#137a4a}
   .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .swap{font-size:12px;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:3px 9px}
-  .nocoord{color:var(--muted);font-size:13px;background:var(--bg);border-radius:12px;padding:8px 12px;margin-top:8px}
   .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
   .foot a{color:var(--pink-dark);text-decoration:none;font-weight:600}
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
@@ -84,7 +83,7 @@
   <div class="hero-in">
     <div>
       <h1>🌅 ברכת פתיחת שנת הלימודים</h1>
-      <p>שליחה אישית לכל רכז/ת — עברית למגזר היהודי, ערבית למגזר הערבי-בדואי-דרוזי</p>
+      <p>שליחה לקבוצות צוות הופה בבתי הספר — עברית למגזר היהודי, ערבית למגזר הערבי-בדואי-דרוזי</p>
     </div>
     <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
   </div>
@@ -98,10 +97,10 @@ const BASE = 'https://meytalp-dev.github.io/hopa-nihul/';
 const IMG = { he: BASE + 'bracha-he.png', ar: BASE + 'bracha-ar.png' };
 const PIN = 'hopa';
 
-const MSG_HE = `היי {שם} 🌅
+const MSG_HE = `בוקר טוב, צוות הופה של {בית_ספר} 🌅
 פתיחת שנת לימודים טובה ומשמעותית!
 
-היום, כשכל בתי הספר נפתחים מחדש, אנחנו זוכרים דווקא את מי שכבר יצא מהשער. השנה, בזכותך, לכל בוגרת ובוגר יש כתובת: מישהו שיודע את השם, שמרים טלפון ושואל "מה שלומך".
+היום, כשבית הספר נפתח מחדש, אנחנו זוכרים דווקא את מי שכבר יצא מהשער. השנה, בזכותכם, לכל בוגרת ובוגר יש כתובת: מישהו שיודע את השם, שמרים טלפון ושואל "מה שלומך".
 
 "וְדַע, שֶׁהָאָדָם צָרִיךְ לַעֲבֹר עַל גֶּשֶׁר צַר מְאֹד מְאֹד, וְהַכְּלָל וְהָעִקָּר שֶׁלֹּא יִתְפַּחֵד כְּלָל" (רבי נחמן מברסלב)
 
@@ -111,10 +110,10 @@ const MSG_HE = `היי {שם} 🌅
 
 {תמונה}`;
 
-const MSG_AR = `أهلاً {שם} 🌅
+const MSG_AR = `صباح الخير لطاقم هوبا في {בית_ספר} 🌅
 افتتاح سنة دراسية مباركة ومليئة بالمعنى!
 
-اليوم، بينما تفتح كل المدارس أبوابها من جديد، نتذكّر نحن بالذات من خرجوا من البوابة. هذه السنة، بفضلك، لكل خرّيجة وخرّيج عنوان: شخص يعرف الاسم، يرفع السماعة ويسأل «كيف حالك؟».
+اليوم، بينما تفتح المدرسة أبوابها من جديد، نتذكّر نحن بالذات من خرجوا من البوابة. هذه السنة، بفضلكم، لكل خرّيجة وخرّيج عنوان: شخص يعرف الاسم، يرفع السماعة ويسأل «كيف حالك؟».
 
 «الرفيق قبل الطريق» — مثل عربي أصيل
 
@@ -124,53 +123,55 @@ const MSG_AR = `أهلاً {שם} 🌅
 
 {תמונה}`;
 
-const COORDS = [
- {id:'bethaarava', name:'יעקב גרונספלד', sc:'אורט בית הערבה', ph:'0546995254', sec:'he'},
- {id:'zurbarak',   name:'טלי יונה',      sc:'אורט צור ברק', ph:'0548080808', sec:'he'},
- {id:'motzkin',    name:'אביחי חריר',    sc:'עתיד שמיים קריית מוצקין', ph:'0503139150', sec:'he'},
- {id:'akko',       name:'טוהר',          sc:'אורט מרום עכו', ph:'0508282032', sec:'he'},
- {id:'beitshean',  name:'חן',            sc:'אורט מגשימים בית שאן', ph:'0526851485', sec:'he'},
- {id:'ashkelon',   name:'סיגל דדון',     sc:'אורט אדיבי אשקלון', ph:'0537780196', sec:'he'},
- {id:'nechalim',   name:'טל מילוא',      sc:'מרכז תורני טכנולוגי נחלים', ph:'0584040949', sec:'he'},
- {id:'ashdod',     name:'ריקי מסס',      sc:'יוצר עמל טכנולוגי אשדוד', ph:'0544441300', sec:'he'},
- {id:'ramatdavid', name:'מוניק איפרח ממן', sc:'עמל רמת דוד', ph:'0509883385', sec:'he'},
- {id:'siach',      name:'טליה ברנע',     sc:'תיכון שיח', ph:'0548069898', sec:'he'},
- {id:'palmachim',  name:'שירן עוגן',     sc:'יוצר עתיד פלמחים', ph:'0549789029', sec:'he'},
- {id:'tlv',        name:'לי ארנן',       sc:'התיכון החברתי תל אביב-יפו', ph:'0503450755', sec:'he'},
- {id:'karmiel',    name:'לבנה בן חמו',   sc:'עתיד יוצר מגשימים כרמיאל', ph:'0504400956', sec:'he'},
- {id:'mitzpe',     name:'ענבל לוי',      sc:'התיכון החברתי מצפה רמון', ph:'0546738573', sec:'he'},
- {id:'drorgalil',  name:'רינה שריד',     sc:'דרור גליל (קיבוץ רביד)', ph:'0546738232', sec:'he'},
- {id:'turan',      name:'מוניר זרעיני',  sc:'מנאראת טורעאן', ph:'0546959114', sec:'ar'},
- {id:'sakhnin',    name:'סוזן',          sc:'טכנולוגי אלאמאני סחנין', ph:'0508784131', sec:'ar'},
- {id:'lakiya',     name:'רניה',          sc:'טכנולוגי לקייה', ph:'0504708424', sec:'ar'},
- {id:'julis',      name:'בהייה מולא',    sc:"יוצר עתיד בנות ג'וליס", ph:'0546699072', sec:'ar'},
- {id:'rahat',      name:'זהור אלעוברה', sc:'עמל טכנולוגי רהט', ph:'0547918502', sec:'ar'},
- {id:'yarka',      name:'רשא סייד אחמד', sc:"תיכון ח'טוואת ירכא אבו סנאן", ph:'0505455077', sec:'ar'},
- {id:'nevemidbar', name:'תמרה גילאוני',  sc:'דרור נווה מדבר', ph:'0504222996', sec:'ar'},
- {id:'carmel',     name:'חנין',          sc:'אורט כרמל חיפה', ph:'0532417145', sec:'ar'},
+/* קבוצות הצוות לפי דף התזכורת (tizkoret.html) — grp = קישור הזמנה לקבוצה */
+const SCHOOLS = [
+ {id:'bethaarava', sc:'אורט בית הערבה', keys:['בית הערבה','הערבה'], sec:'he', grp:'https://chat.whatsapp.com/J08bYaI0OQsIChjvbZ4bKZ'},
+ {id:'zurbarak',   sc:'אורט צור ברק', keys:['צור ברק'], sec:'he', grp:'https://chat.whatsapp.com/I5pxElQRVOa1k9dxLOo5Zz'},
+ {id:'motzkin',    sc:'עתיד שמיים קריית מוצקין', keys:['מוצקין'], sec:'he', grp:'https://chat.whatsapp.com/EpQOaxiQsrW2vatlYTqLn7'},
+ {id:'akko',       sc:'אורט מרום עכו', keys:['מרום','עכו'], sec:'he', grp:'https://chat.whatsapp.com/Hc5ElMYaDHcGDoSCEVDJjf'},
+ {id:'beitshean',  sc:'אורט מגשימים בית שאן', keys:['בית שאן'], sec:'he', grp:'https://chat.whatsapp.com/CLsLCDhmjYD4pVsV8cCagM'},
+ {id:'ashkelon',   sc:'אורט אדיבי אשקלון', keys:['אשקלון','אדיבי'], sec:'he', grp:'https://chat.whatsapp.com/I0MoDIeeSoQE1frFGOTSKB'},
+ {id:'nechalim',   sc:'מרכז תורני טכנולוגי נחלים', keys:['נחלים'], sec:'he', grp:'https://chat.whatsapp.com/GH6DeFFP2aIL1qk1c6QXbw'},
+ {id:'ashdod',     sc:'יוצר עמל טכנולוגי אשדוד', keys:['אשדוד'], sec:'he', grp:'https://chat.whatsapp.com/HHifhAFuBiWJ9ddpRPamnZ'},
+ {id:'ramatdavid', sc:'עמל רמת דוד', keys:['רמת דוד'], sec:'he', grp:'https://chat.whatsapp.com/ISjFCUIc51n9Htjs8QKa4C'},
+ {id:'siach',      sc:'תיכון שיח', keys:['שיח','עמקה'], sec:'he', grp:'https://chat.whatsapp.com/IhToin5XAxuFo0RkL1Yoqs'},
+ {id:'palmachim',  sc:'יוצר עתיד פלמחים', keys:['פלמחים'], sec:'he', grp:''},
+ {id:'tlv',        sc:'התיכון החברתי תל אביב-יפו', keys:['תל אביב'], sec:'he', grp:'https://chat.whatsapp.com/H4YjdHrcEDF5IyrKGaWQmC'},
+ {id:'karmiel',    sc:'עתיד יוצר מגשימים כרמיאל', keys:['כרמיאל'], sec:'he', grp:'https://chat.whatsapp.com/HLfjBtx1PkfDeG6beUkMiv'},
+ {id:'mitzpe',     sc:'התיכון החברתי מצפה רמון', keys:['מצפה רמון','רמון'], sec:'he', grp:'https://chat.whatsapp.com/Eqy8J9J0kYrK9Mn8pkC4hX'},
+ {id:'drorgalil',  sc:'דרור גליל (קיבוץ רביד)', keys:['דרור גליל','רביד'], sec:'he', grp:''},
+ {id:'turan',      sc:'מנאראת טורעאן', keys:['טורעאן','טוראען','מנאראת'], sec:'ar', grp:'https://chat.whatsapp.com/BgZFsZdK1ukIdOj0LAmF4q'},
+ {id:'sakhnin',    sc:'טכנולוגי אלאמאני סחנין', keys:['סחנין'], sec:'ar', grp:'https://chat.whatsapp.com/DkhOjtuWOMqDcSh9VnZLKQ'},
+ {id:'lakiya',     sc:'טכנולוגי לקייה', keys:['לקייה','לקיה'], sec:'ar', grp:'https://chat.whatsapp.com/JNsS0xRkYxICPrcrJZZbZO'},
+ {id:'julis',      sc:"יוצר עתיד בנות ג'וליס", keys:["ג'וליס",'ג׳וליס','גוליס'], sec:'ar', grp:'https://chat.whatsapp.com/HfV73OsEnYx7GQ17JM96ov'},
+ {id:'rahat',      sc:'עמל טכנולוגי רהט', keys:['רהט'], sec:'ar', grp:'https://chat.whatsapp.com/H8kP4xsPGUfE59MHt3HqUd'},
+ {id:'yarka',      sc:"תיכון ח'טוואת ירכא אבו סנאן", keys:['ירכא','טוואת','חטוואת'], sec:'ar', grp:'https://chat.whatsapp.com/BSHBsimSYE2C358EjQ41O4'},
+ {id:'nevemidbar', sc:'דרור נווה מדבר', keys:['נווה מדבר'], sec:'ar', grp:'https://chat.whatsapp.com/H2jSmUeAiwxI8CSwD8OChP'},
+ {id:'carmel',     sc:'אורט כרמל חיפה', keys:['כרמל'], sec:'ar', grp:'https://chat.whatsapp.com/GRD38vb9sTUC9jSBjkIpTc'},
+ {id:'birmaksur',  sc:'עתיד אבדאע ביר אלמכסור', keys:['אלמכסור','אבדאע'], sec:'ar', grp:''},
+ {id:'telsheva',   sc:'טכנולוגי אלמסתקבל תל שבע', keys:['תל שבע','אלמסתקבל','אלמוסתקבל'], sec:'ar', grp:''},
 ];
-const NO_COORD = ['עתיד אבדאע ביר אלמכסור','טכנולוגי אלמסתקבל תל שבע','אולפנת עתיד בת עמי'];
 
 /* ===================== מצב ===================== */
-const LS = { msgHe:'bracha_msg_he', msgAr:'bracha_msg_ar', sent:'bracha_sent', swap:'bracha_swap', pin:'hopa_bracha_pin' };
+const LS = { msgHe:'bracha_grp_msg_he', msgAr:'bracha_grp_msg_ar', sent:'bracha_grp_sent', swap:'bracha_grp_swap', pin:'hopa_bracha_pin' };
 let MSGS = { he: localStorage.getItem(LS.msgHe)||MSG_HE, ar: localStorage.getItem(LS.msgAr)||MSG_AR };
 let SENT = {}; try{ SENT = JSON.parse(localStorage.getItem(LS.sent)||'{}'); }catch(e){}
 let SWAP = {}; try{ SWAP = JSON.parse(localStorage.getItem(LS.swap)||'{}'); }catch(e){}
+let GROUPS = null;      // הקבוצות מהגשר (לשונית ניהול בגיליון)
+let MATCH = {};         // school id -> {chatId, label}
 
 const app = document.getElementById('app');
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2200); }
-const waNum = p => '972' + String(p).replace(/\D/g,'').replace(/^0/,'');
-const secOf = c => SWAP[c.id] ? (c.sec==='he'?'ar':'he') : c.sec;
+const secOf = s => SWAP[s.id] ? (s.sec==='he'?'ar':'he') : s.sec;
 const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+const nrm = t => String(t||'').replace(/["'׳״`־\-–—.]/g,'').replace(/\s+/g,' ').trim();
 
-function msgFor(c){
-  const lang = secOf(c);
-  const first = (c.name||'').trim().split(/\s+/)[0]||'';
-  return MSGS[lang].replace(/\{שם\}/g, first).replace(/\{תמונה\}/g, IMG[lang]);
+function msgFor(s){
+  const lang = secOf(s);
+  return MSGS[lang].replace(/\{בית_ספר\}/g, s.sc).replace(/\{תמונה\}/g, IMG[lang]);
 }
-function waHref(c){ return 'https://wa.me/' + waNum(c.ph) + '?text=' + encodeURIComponent(msgFor(c)); }
-function markSent(id, via){ SENT[id]={ts:new Date().toISOString(), via:via||'wa'}; localStorage.setItem(LS.sent, JSON.stringify(SENT)); }
+function markSent(id, via){ SENT[id]={ts:new Date().toISOString(), via:via||'copy'}; localStorage.setItem(LS.sent, JSON.stringify(SENT)); }
 
 /* ---- שליחה ישירה (Green API דרך ה-Apps Script — אותם מפתחות כמו hodaot.html) ---- */
 const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
@@ -188,20 +189,36 @@ function waJsonp(params, tmo){
     document.body.appendChild(s);
   });
 }
-async function sendDirect(c){
-  const r = await waJsonp({ action:'send', chatIds: waNum(c.ph)+'@c.us', message: msgFor(c) }, 60000);
+async function loadGroups(){
+  try{
+    const r = await waJsonp({action:'groups'});
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    GROUPS = (r.groups||[]).filter(g=>g.chatId);
+    MATCH = {};
+    SCHOOLS.forEach(s=>{
+      const teams = GROUPS.filter(g=>g.type==='צוות');
+      let g = teams.find(x=>nrm(x.school)===nrm(s.sc)) ||
+              teams.find(x=>s.keys.some(k=>nrm(x.school).includes(nrm(k))||nrm(x.label).includes(nrm(k))));
+      if(g) MATCH[s.id]={chatId:g.chatId, label:g.label};
+    });
+  }catch(e){ GROUPS=null; }
+  render();
+}
+async function sendDirect(s){
+  const m = MATCH[s.id]; if(!m) throw new Error('לא נמצאה קבוצה');
+  const r = await waJsonp({ action:'send', chatIds: m.chatId, message: msgFor(s) }, 60000);
   if(!r || !r.ok || !r.sent) throw new Error((r&&r.error)||'לא נשלח');
-  markSent(c.id,'direct');
+  markSent(s.id,'direct');
 }
 async function sendAllDirect(sec){
-  const list = COORDS.filter(c=>secOf(c)===sec && !SENT[c.id]);
-  if(!list.length){ toast('אין למי לשלוח — כולם קיבלו'); return; }
-  if(!confirm(`לשלוח עכשיו את הברכה ל-${list.length} רכזים/ות מהוואטסאפ המחובר?`)) return;
+  const list = SCHOOLS.filter(s=>secOf(s)===sec && !SENT[s.id] && MATCH[s.id]);
+  if(!list.length){ toast('אין קבוצות מחוברות שנותרו במדור הזה'); return; }
+  if(!confirm(`לשלוח עכשיו את הברכה ל-${list.length} קבוצות צוות מהוואטסאפ המחובר?`)) return;
   WA.busy=true; WA.stop=false; let ok=0, fail=[];
   for(let i=0;i<list.length;i++){
     if(WA.stop) break;
-    const c=list[i]; setProgress(sec, `שולח ל${c.name}… (${i+1}/${list.length})`);
-    try{ await sendDirect(c); ok++; localStorage.setItem(LS.sent, JSON.stringify(SENT)); }catch(e){ fail.push(c.name+' ('+e.message+')'); }
+    const s=list[i]; setProgress(sec, `שולח ל${s.sc}… (${i+1}/${list.length})`);
+    try{ await sendDirect(s); ok++; }catch(e){ fail.push(s.sc+' ('+e.message+')'); }
     if(i<list.length-1) await new Promise(r=>setTimeout(r,1800));
   }
   WA.busy=false; render();
@@ -209,27 +226,31 @@ async function sendAllDirect(sec){
 }
 function setProgress(sec,t){ const el=document.getElementById('waProg-'+sec); if(el) el.textContent=t; }
 async function testConnection(){
-  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret); toast('מחובר ✓'); render(); } else throw new Error((r&&r.error)||'err'); }
+  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret); toast('מחובר ✓'); loadGroups(); } else throw new Error((r&&r.error)||'err'); }
   catch(e){ toast('החיבור נכשל: '+e.message); }
 }
 
 /* ===================== רינדור ===================== */
-function rowHtml(c){
-  const done = SENT[c.id];
-  const other = secOf(c)==='he' ? 'לגרסה הערבית' : 'לגרסה העברית';
+function rowHtml(s){
+  const done = SENT[s.id];
+  const m = MATCH[s.id];
+  const other = secOf(s)==='he' ? 'לגרסה הערבית' : 'לגרסה העברית';
+  const sub = m ? '💬 '+m.label : (GROUPS ? 'לא נמצאה קבוצת צוות בגשר' : (s.grp ? 'קבוצת הצוות (קישור)' : 'אין קישור לקבוצה — העתקה ידנית'));
   return `<div class="stu ${done?'sent':''}">
-    <div class="who"><b>${esc(c.name)}</b> ${done?`<span class="tag ok">✓ נשלח ${esc(fmtDate(done.ts))}</span>`:''}<span>${esc(c.sc)} · <a href="tel:${esc(c.ph)}" style="color:inherit;text-decoration:none">${esc(c.ph)}</a></span></div>
+    <div class="who"><b>${esc(s.sc)}</b> ${done?`<span class="tag ok">✓ נשלח ${esc(fmtDate(done.ts))}</span>`:''}<span>${esc(sub)}</span></div>
     <div class="acts">
-      ${WA.url ? `<button class="btn wa sm ${done?'again':''}" data-direct="${esc(c.id)}" ${WA.busy?'disabled':''}>⚡ ${done?'שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(c)}" target="_blank" rel="noopener" data-wa="${esc(c.id)}">💬</a>`
-                : `<a class="btn wa sm ${done?'again':''}" href="${waHref(c)}" target="_blank" rel="noopener" data-wa="${esc(c.id)}">💬 ${done?'שלח שוב':'שלח בוואטסאפ'}</a>`}
-      <button class="swap" data-swap="${esc(c.id)}" title="החלפת שפת הברכה">⇄ ${other}</button>
-      ${done?`<button class="btn outline sm" data-unsend="${esc(c.id)}" title="בטל סימון">↩</button>`:''}
+      ${WA.url && m ? `<button class="btn wa sm ${done?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${done?'שוב':'שלח'}</button>` : ''}
+      ${s.grp ? `<button class="btn ${WA.url&&m?'outline':'wa'} sm ${done&&!(WA.url&&m)?'again':''}" data-copyopen="${esc(s.id)}" title="מעתיק את הברכה ופותח את הקבוצה — נשאר רק להדביק">📋 העתק ופתח קבוצה</button>`
+              : `<button class="btn outline sm" data-copyonly="${esc(s.id)}">📋 העתק ברכה</button>`}
+      <button class="swap" data-swap="${esc(s.id)}" title="החלפת שפת הברכה">⇄ ${other}</button>
+      ${done?`<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון">↩</button>`:''}
     </div>
   </div>`;
 }
 function sectionHtml(sec){
-  const list = COORDS.filter(c=>secOf(c)===sec);
-  const sent = list.filter(c=>SENT[c.id]).length;
+  const list = SCHOOLS.filter(s=>secOf(s)===sec);
+  const sent = list.filter(s=>SENT[s.id]).length;
+  const matched = list.filter(s=>MATCH[s.id] && !SENT[s.id]).length;
   const title = sec==='he' ? '🕊️ המגזר היהודי — הברכה בעברית' : '🌍 המגזר הערבי-בדואי-דרוזי — الرفيق قبل الطريق';
   return `<div class="card sector ${sec}">
     <h2>${title} <small>${sent}/${list.length} נשלחו</small></h2>
@@ -237,51 +258,52 @@ function sectionHtml(sec){
       <a href="${IMG[sec]}" target="_blank" rel="noopener"><img src="${sec==='he'?'bracha-he.png':'bracha-ar.png'}" alt=""></a>
       <div class="acts">
         <a class="btn outline sm" href="${IMG[sec]}" target="_blank" rel="noopener">🖼 פתיחת התמונה (לחיצה ארוכה = שמירה)</a>
-        <button class="btn outline sm" data-copy-msg="${sec}">📋 העתקת נוסח הברכה</button>
-        ${WA.url?`<button class="btn primary sm" data-sendall="${sec}" ${WA.busy?'disabled':''}>⚡ שלח לכל מי שנותר (${list.length-sent})</button><span class="hint" id="waProg-${sec}" style="margin:0"></span>`:''}
+        <button class="btn outline sm" data-copy-msg="${sec}">📋 העתקת נוסח כללי (בלי שם בי"ס)</button>
+        ${WA.url && GROUPS ? `<button class="btn primary sm" data-sendall="${sec}" ${WA.busy||!matched?'disabled':''}>⚡ שלח לכל הקבוצות שנותרו (${matched})</button><span class="hint" id="waProg-${sec}" style="margin:0"></span>`:''}
       </div>
     </div>
     <details><summary>✏️ עריכת נוסח ההודעה</summary>
-      <textarea class="field" data-msg="${sec}" ${sec==='ar'?'dir="rtl" style="text-align:right"':''}>${esc(MSGS[sec])}</textarea>
-      <p class="hint" style="margin-top:6px">משתנים: <b>{שם}</b> שם פרטי · <b>{תמונה}</b> קישור לתמונת הברכה. נשמר במכשיר הזה.</p>
+      <textarea class="field" data-msg="${sec}" dir="rtl" style="text-align:right">${esc(MSGS[sec])}</textarea>
+      <p class="hint" style="margin-top:6px">משתנים: <b>{בית_ספר}</b> שם בית הספר · <b>{תמונה}</b> קישור לתמונת הברכה. נשמר במכשיר הזה.</p>
     </details>
     <div class="list">${list.map(rowHtml).join('')}</div>
-    ${sec==='ar' ? `<div class="nocoord">🕐 עדיין בלי רכז/ת בוגרים: ${NO_COORD.map(esc).join(' · ')}</div>` : ''}
   </div>`;
 }
 function render(){
   app.innerHTML = `
+  <div class="card" style="padding:12px 16px"><p class="hint" style="margin:0">💡 איך זה עובד: <b>📋 העתק ופתח קבוצה</b> מעתיק את הברכה (עם קישור לתמונה) ופותח את קבוצת הצוות — נשאר רק להדביק ולשלוח. עם חיבור לוואטסאפ (למטה) אפשר גם ⚡ לשלוח ישירות בלי לפתוח כלום. כפתור ⇄ מחליף שפה לבית ספר בודד.</p></div>
   ${sectionHtml('he')}
   ${sectionHtml('ar')}
   <div class="card direct ${WA.url?'on':''}">
-    <h2>⚡ שליחה ישירה <small>${WA.url?'מחובר לוואטסאפ של הופה':'חיבור לוואטסאפ המחובר — שליחה בלי לפתוח חלון לכל אחד'}</small></h2>
-    ${WA.url ? `<div class="toolbar">${WA.busy?'<button class="btn outline" id="stopAll">⏹ עצור</button>':''}<button class="btn outline sm" id="disconnect" style="margin-inline-start:auto">ניתוק</button></div>
-      <p class="hint" style="margin:8px 0 0">ההודעה יוצאת כטקסט + קישור לתמונת הברכה. יש השהיה של כ-2 שניות בין הודעה להודעה.</p>`
+    <h2>⚡ שליחה ישירה <small>${WA.url ? (GROUPS?`מחובר · זוהו ${Object.keys(MATCH).length} קבוצות צוות`:'מחובר — טוען קבוצות…') : 'חיבור לוואטסאפ המחובר — שליחה בלי לפתוח כל קבוצה'}</small></h2>
+    ${WA.url ? `<div class="toolbar">${WA.busy?'<button class="btn outline" id="stopAll">⏹ עצור</button>':''}<button class="btn outline sm" id="reloadGroups">🔄 רענון קבוצות</button><button class="btn outline sm" id="disconnect" style="margin-inline-start:auto">ניתוק</button></div>
+      <p class="hint" style="margin:8px 0 0">ההודעה יוצאת כטקסט + קישור לתמונת הברכה, לקבוצת הצוות שזוהתה לכל בית ספר. יש השהיה של כ-2 שניות בין קבוצה לקבוצה.</p>`
     : `<p class="hint">אותו חיבור כמו בדף <a href="hodaot.html" target="_blank" rel="noopener">שליחת הודעות לקבוצות</a> — אם כבר התחברת שם במכשיר הזה, זה מתחבר לבד.</p>
       <div class="row"><input class="field" id="waUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(WA.url)}"><input class="field" id="waSecret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="${esc(WA.secret)}"></div>
-      <div class="toolbar"><button class="btn primary" id="waConnect">התחברות</button><span class="hint" style="margin:0">בלי חיבור — הכפתורים הירוקים פותחים וואטסאפ רגיל.</span></div>`}
+      <div class="toolbar"><button class="btn primary" id="waConnect">התחברות</button><span class="hint" style="margin:0">גם בלי חיבור — "העתק ופתח קבוצה" עובד מצוין.</span></div>`}
   </div>
   <div class="foot"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · פתאום הכל נראה אפשרי!</div>`;
 
   /* wiring */
-  app.querySelectorAll('[data-msg]').forEach(t=>t.oninput=e=>{ MSGS[t.dataset.msg]=e.target.value; localStorage.setItem(t.dataset.msg==='he'?LS.msgHe:LS.msgAr, e.target.value); refreshLinks(); });
-  app.querySelectorAll('[data-copy-msg]').forEach(b=>b.onclick=()=>{ const sec=b.dataset.copyMsg; const txt=MSGS[sec].replace(/ ?\{שם\}/g,'').replace(/\{תמונה\}/g,IMG[sec]); navigator.clipboard.writeText(txt).then(()=>toast('הנוסח הועתק ✓')); });
-  app.querySelectorAll('a[data-wa]').forEach(a=>a.addEventListener('click',()=>{ markSent(a.dataset.wa,'wa'); setTimeout(render,400); }));
-  app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const c=COORDS.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(c); toast('נשלח ל'+c.name+' ✓'); render(); }catch(e){ toast('לא נשלח: '+e.message); render(); } });
+  app.querySelectorAll('[data-msg]').forEach(t=>t.oninput=e=>{ MSGS[t.dataset.msg]=e.target.value; localStorage.setItem(t.dataset.msg==='he'?LS.msgHe:LS.msgAr, e.target.value); });
+  app.querySelectorAll('[data-copy-msg]').forEach(b=>b.onclick=()=>{ const sec=b.dataset.copyMsg; const txt=MSGS[sec].replace(/ ?(של|في) \{בית_ספר\}/g,'').replace(/\{בית_ספר\}/g,'').replace(/\{תמונה\}/g,IMG[sec]); navigator.clipboard.writeText(txt).then(()=>toast('הנוסח הועתק ✓')); });
+  app.querySelectorAll('[data-copyopen]').forEach(b=>b.onclick=()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.copyopen); navigator.clipboard.writeText(msgFor(s)).then(()=>{ toast('הברכה הועתקה — נפתחת הקבוצה, הדביקי ושלחי'); markSent(s.id,'copy'); setTimeout(()=>{ window.open(s.grp,'_blank'); render(); }, 500); }); });
+  app.querySelectorAll('[data-copyonly]').forEach(b=>b.onclick=()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.copyonly); navigator.clipboard.writeText(msgFor(s)).then(()=>{ toast('הברכה הועתקה ✓'); markSent(s.id,'copy'); render(); }); });
+  app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const s=SCHOOLS.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(s); toast('נשלח לקבוצת '+s.sc+' ✓'); render(); }catch(e){ toast('לא נשלח: '+e.message); render(); } });
   app.querySelectorAll('[data-sendall]').forEach(b=>b.onclick=()=>sendAllDirect(b.dataset.sendall));
   app.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>{ const id=b.dataset.swap; SWAP[id]=!SWAP[id]; if(!SWAP[id]) delete SWAP[id]; localStorage.setItem(LS.swap, JSON.stringify(SWAP)); render(); });
   app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ delete SENT[b.dataset.unsend]; localStorage.setItem(LS.sent, JSON.stringify(SENT)); render(); });
-  const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית…'); };
+  const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי הקבוצה הנוכחית…'); };
+  const rg=document.getElementById('reloadGroups'); if(rg) rg.onclick=()=>{ GROUPS=null; render(); loadGroups(); };
   const wc=document.getElementById('waConnect'); if(wc) wc.onclick=()=>{ WA.url=document.getElementById('waUrl').value.trim(); WA.secret=document.getElementById('waSecret').value.trim(); if(!WA.url||!WA.secret){ toast('צריך כתובת וסיסמה'); return; } testConnection(); };
-  const dc=document.getElementById('disconnect'); if(dc) dc.onclick=()=>{ if(confirm('לנתק את החיבור במכשיר הזה?')){ localStorage.removeItem(MLS.url); localStorage.removeItem(MLS.secret); WA.url=''; WA.secret=''; render(); } };
+  const dc=document.getElementById('disconnect'); if(dc) dc.onclick=()=>{ if(confirm('לנתק את החיבור במכשיר הזה?')){ localStorage.removeItem(MLS.url); localStorage.removeItem(MLS.secret); WA.url=''; WA.secret=''; GROUPS=null; MATCH={}; render(); } };
 }
-function refreshLinks(){ app.querySelectorAll('a[data-wa]').forEach(a=>{ const c=COORDS.find(x=>x.id===a.dataset.wa); if(c) a.href=waHref(c); }); }
 
 /* ===================== שער ===================== */
 function gate(){
-  if (localStorage.getItem(LS.pin)===PIN) return render();
+  if (localStorage.getItem(LS.pin)===PIN){ render(); if(WA.url) loadGroups(); return; }
   app.innerHTML = `<div class="card gate"><h2 style="justify-content:center">🔒 דף לצוות הופה</h2><p class="hint">הקלידו את קוד הצוות פעם אחת במכשיר הזה</p><input class="field" id="pin" type="password" autocomplete="off"><button class="btn primary" id="go" style="margin-top:10px;width:100%">כניסה</button><p class="hint" id="pinErr" style="margin-top:8px"></p></div>`;
-  const go=()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ localStorage.setItem(LS.pin,PIN); render(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
+  const go=()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ localStorage.setItem(LS.pin,PIN); render(); if(WA.url) loadGroups(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
   document.getElementById('go').onclick=go; document.getElementById('pin').addEventListener('keydown',e=>{ if(e.key==='Enter') go(); }); document.getElementById('pin').focus();
 }
 gate();
