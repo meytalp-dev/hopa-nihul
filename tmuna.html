@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>התמונה שלך לפוסט של הופה 📸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--yellow:#FFF200;--ink:#2b2b33;--line:#f0d9e6;--bg:#fff7fb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Rubik',Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding:18px 14px 50px}
+.wrap{max-width:480px;margin:0 auto}
+.card{background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px 18px;box-shadow:0 8px 30px rgba(232,52,138,.08)}
+.logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:14px}
+.logo img{height:44px}
+h1{font-size:22px;font-weight:900;text-align:center;line-height:1.35;margin-bottom:6px}
+h1 .hl{background:linear-gradient(transparent 55%,var(--yellow) 55%);padding:0 3px}
+.sub{text-align:center;color:#77606d;font-size:14.5px;line-height:1.55;margin-bottom:18px}
+label.fl{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input[type=text],select{width:100%;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;font-size:16px;background:#fff}
+input[type=text]:focus,select:focus{outline:none;border-color:var(--pink)}
+.greet{background:linear-gradient(135deg,#fff0f7,#fffbe0);border:2px solid var(--line);border-radius:16px;padding:14px 16px;text-align:center;margin-bottom:6px}
+.greet b{color:var(--pink);font-size:18px}
+.greet .sc{color:#77606d;font-size:13.5px;margin-top:2px}
+.photoZone{margin:18px 0 4px;text-align:center}
+.circle{width:190px;height:190px;border-radius:50%;margin:0 auto;border:4px dashed var(--pink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;background:#fff0f7;overflow:hidden;position:relative;transition:.2s}
+.circle:active{transform:scale(.97)}
+.circle.has{border-style:solid;background:#fff}
+.circle img{width:100%;height:100%;object-fit:cover}
+.circle .emo{font-size:44px}
+.circle .txt{font-size:13.5px;font-weight:700;color:var(--pink);padding:0 18px;line-height:1.4}
+.retake{display:inline-block;margin-top:10px;background:none;border:none;color:var(--pink);font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:underline}
+.consent{display:flex;gap:10px;align-items:flex-start;background:#fffbe0;border:2px solid #f3e9a9;border-radius:14px;padding:12px 14px;margin:16px 0;font-size:14px;line-height:1.5}
+.consent input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--pink)}
+.btn{width:100%;border:none;border-radius:16px;padding:16px;font:inherit;font-size:18px;font-weight:900;cursor:pointer;background:var(--pink);color:#fff;box-shadow:0 6px 18px rgba(232,52,138,.35);transition:.2s}
+.btn:disabled{opacity:.45;box-shadow:none;cursor:default}
+.btn:active:not(:disabled){transform:scale(.98)}
+.prog{display:none;margin-top:14px}
+.prog .bar{height:12px;background:#ffe3f1;border-radius:99px;overflow:hidden}
+.prog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--pink),#ff7ab8);border-radius:99px;transition:width .3s}
+.prog .pt{text-align:center;font-size:13px;color:#77606d;margin-top:6px}
+.err{display:none;background:#fdecec;border:2px solid #f5b8b8;color:#a33;border-radius:14px;padding:12px 14px;font-size:14px;margin-top:12px;line-height:1.5}
+.done{display:none;text-align:center;padding:10px 0}
+.done .big{font-size:64px;animation:pop .5s}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.done h2{font-size:22px;font-weight:900;margin:8px 0 6px}
+.done p{color:#77606d;font-size:14.5px;line-height:1.6}
+.done img{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--yellow);margin:14px 0 4px}
+.foot{text-align:center;margin-top:18px;font-size:12.5px;color:#b08ba0}
+.foot a{color:var(--pink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" id="formCard">
+    <div class="logo"><img src="hopa-logo.png" alt="הופה" onerror="this.style.display='none'"></div>
+    <h1>התמונה שלך <span class="hl">לפוסט של הופה</span> 📸</h1>
+    <p class="sub">אנחנו מכינים פוסט חגיגי לפתיחת השנה עם כל רכזי ורכזות הבוגרים שלנו — וחסרה לנו רק התמונה שלך! זה לוקח חצי דקה 💛</p>
+
+    <div id="who"></div>
+
+    <div class="photoZone">
+      <div class="circle" id="circle">
+        <span class="emo">🤳</span>
+        <span class="txt">לחיצה כאן לצילום סלפי או לבחירת תמונה</span>
+      </div>
+      <button class="retake" id="retake" style="display:none">📷 החלפת התמונה</button>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+
+    <label class="consent"><input type="checkbox" id="consent">
+      <span>אני מאשר/ת שהתמונה תופיע בפוסט של הופה בפייסבוק ובאינסטגרם 💛</span></label>
+
+    <button class="btn" id="send" disabled>שליחת התמונה למיטל 🚀</button>
+    <div class="prog" id="prog"><div class="bar"><div class="fill" id="fill"></div></div><div class="pt" id="pt">שולח…</div></div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div class="card done" id="doneCard">
+    <div class="big">🌞</div>
+    <h2>התמונה הגיעה למיטל!</h2>
+    <img id="doneImg" alt="">
+    <p>תודה ענקית 💛 נתראה בפוסט!</p>
+    <button class="retake" id="again">📷 שליחת תמונה אחרת במקום</button>
+  </div>
+
+  <div class="foot">עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
+</div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var KEY_PREFIX='tmuna1-';
+var CHUNK=18000;
+
+/* רכזי ורכזות הבוגרים — לקישורים אישיים (?id=) */
+var PEOPLE=[
+ {id:'ashkelon',  n:'סיגל דדון',      s:'אורט אדיבי אשקלון'},
+ {id:'beitshean', n:'חן עמרן',        s:'אורט מגשימים בית שאן'},
+ {id:'sakhnin',   n:'סוזן',           s:'טכנולוגי אלאמאני סחנין'},
+ {id:'nechalim',  n:'טל מילוא',       s:'מרכז תורני טכנולוגי נחלים'},
+ {id:'julis',     n:'בהייה מולא',     s:"יוצר עתיד בנות ג'וליס"},
+ {id:'palmachim', n:'שירן עוגן',      s:'יוצר עתיד פלמחים'},
+ {id:'yarka',     n:'רשא סייד אחמד',  s:"תיכון ח'טוואת ירכא אבו סנאן"},
+ {id:'mitzpe',    n:'ענבל לוי',       s:'התיכון החברתי מצפה רמון'},
+ {id:'drorgalil', n:'רינה שריד',      s:'דרור גליל (קיבוץ רביד)'},
+ {id:'chushen',   n:'ברכי',           s:'תיכון חושן'},
+ {id:'nevemidbar',n:'תמרה גילאוני',   s:'דרור נווה מדבר'},
+ {id:'bethaarava',n:'יעקב גרונספלד',  s:'אורט בית הערבה'},
+ {id:'zurbarak',  n:'טלי יונה',       s:'אורט צור ברק'},
+ {id:'motzkin',   n:'אביחי חריר',     s:'עתיד שמיים קריית מוצקין'},
+ {id:'akko',      n:'טוהר',           s:'אורט מרום עכו'},
+ {id:'carmel',    n:'חנין',           s:'אורט כרמל חיפה'},
+ {id:'turan',     n:'מוניר זרעיני',   s:'מנאראת טורעאן'},
+ {id:'ashdod',    n:'ריקי מסס',       s:'יוצר עמל טכנולוגי אשדוד'},
+ {id:'ramatdavid',n:'מוניק איפרח ממן',s:'עמל רמת דוד'},
+ {id:'lakiya',    n:'רניה',           s:'טכנולוגי לקייה'},
+ {id:'siach',     n:'טליה ברנע',      s:'תיכון שיח'},
+ {id:'tlv',       n:'לי ארנן',        s:'התיכון החברתי תל אביב-יפו'},
+ {id:'rahat',     n:'זהור אלעוברה',   s:'עמל טכנולוגי רהט'},
+ {id:'karmiel',   n:'לבנה בן חמו',    s:'עתיד יוצר מגשימים כרמיאל'},
+ {id:'birmaksur', n:'עלי עותמאן',     s:'עתיד אבדאע ביר אלמכסור'},
+ {id:'telsheva',  n:'',               s:'טכנולוגי אלמסתקבל תל שבע'},
+ {id:'batami',    n:'',               s:'אולפנת עתיד בת עמי'}
+];
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var qs=new URLSearchParams(location.search);
+var person=PEOPLE.find(function(p){return p.id===qs.get('id')})||null;
+var dataUrl='', me={id:'',n:'',s:''};
+
+/* ---------- מי ממלא ---------- */
+if(person){
+  me={id:person.id,n:person.n,s:person.s};
+  var first=(person.n||'').split(' ')[0];
+  $('who').innerHTML='<div class="greet"><b>היי '+esc(first||'לך')+' 👋</b><div class="sc">'+esc(person.s)+'</div></div>'+
+    (person.n?'':'<label class="fl">איך קוראים לך?</label><input type="text" id="nm" placeholder="שם מלא">');
+}else{
+  var opts=PEOPLE.map(function(p){return '<option value="'+p.id+'">'+esc(p.s)+'</option>'}).join('');
+  $('who').innerHTML='<label class="fl">איך קוראים לך?</label><input type="text" id="nm" placeholder="שם מלא">'+
+    '<label class="fl">מאיזה בית ספר?</label><select id="sc"><option value="">בחירת בית ספר…</option>'+opts+'<option value="other">אחר</option></select>';
+}
+
+/* ---------- בחירת תמונה ודחיסה ---------- */
+$('circle').onclick=function(){$('file').click()};
+$('retake').onclick=function(){$('file').click()};
+$('file').onchange=function(){
+  var f=this.files&&this.files[0]; if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var max=700, w=img.width, h=img.height;
+      if(Math.max(w,h)>max){var k=max/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k)}
+      var cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      var q=0.82, out=cv.toDataURL('image/jpeg',q);
+      while(out.length>100000&&q>0.45){q-=0.08;out=cv.toDataURL('image/jpeg',q)}
+      while(out.length>100000&&w>320){w=Math.round(w*0.85);h=Math.round(h*0.85);cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);out=cv.toDataURL('image/jpeg',q)}
+      dataUrl=out;
+      $('circle').classList.add('has');
+      $('circle').innerHTML='<img src="'+dataUrl+'" alt="">';
+      $('retake').style.display='inline-block';
+      check();
+    };
+    img.onerror=function(){showErr('לא הצלחנו לקרוא את התמונה — נסו תמונה אחרת')};
+    img.src=rd.result;
+  };
+  rd.readAsDataURL(f);
+};
+$('consent').onchange=check;
+document.addEventListener('input',check);
+function check(){$('send').disabled=!(dataUrl&&$('consent').checked)}
+function showErr(t){$('err').style.display='block';$('err').textContent=t}
+
+/* ---------- שליחה: חלוקה לחלקים + מטא בסוף ---------- */
+function post(key,obj){
+  var body=new URLSearchParams({action:'intakeSubmit',school:key,json:JSON.stringify(obj)}).toString();
+  return fetch(EXEC_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+    .then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||'שגיאה');return true})
+    .catch(function(){ /* אם CORS חסום — שליחה עיוורת, עדיף מכלום */
+      return fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(function(){return true});
+    });
+}
+function postRetry(key,obj,tries){
+  return post(key,obj).catch(function(e){
+    if(tries<=1)throw e;
+    return new Promise(function(r){setTimeout(r,1200)}).then(function(){return postRetry(key,obj,tries-1)});
+  });
+}
+$('send').onclick=async function(){
+  $('err').style.display='none';
+  var nmEl=$('nm'), scEl=$('sc');
+  if(nmEl&&nmEl.value.trim())me.n=nmEl.value.trim();
+  if(scEl){var p=PEOPLE.find(function(x){return x.id===scEl.value});me.id=scEl.value||'';me.s=p?p.s:(scEl.value==='other'?'אחר':'')}
+  if(!me.n){showErr('חסר שם — כתבו איך קוראים לכם 🙂');return}
+  if(!me.id){showErr('חסר בית ספר — בחרו מהרשימה');return}
+  if(me.id==='other')me.id='x'+(localStorage.getItem('tmuna_xid')||Date.now().toString(36));
+  localStorage.setItem('tmuna_xid',me.id.replace(/^x/,''));
+
+  var b64=dataUrl.split('base64,')[1], mime=(dataUrl.match(/^data:([^;]+);/)||[])[1]||'image/jpeg';
+  var parts=Math.ceil(b64.length/CHUNK);
+  this.disabled=true;this.textContent='שולח…';
+  $('prog').style.display='block';
+  try{
+    for(var i=0;i<parts;i++){
+      $('pt').textContent='שולח… ('+(i+1)+'/'+(parts+1)+')';
+      $('fill').style.width=Math.round((i)/(parts+1)*100)+'%';
+      await postRetry(KEY_PREFIX+me.id+'-p'+i,{d:b64.slice(i*CHUNK,(i+1)*CHUNK)},3);
+    }
+    $('pt').textContent='כמעט שם…';$('fill').style.width='92%';
+    await postRetry(KEY_PREFIX+me.id,{n:me.n,s:me.s,parts:parts,mime:mime,consent:1,ts:new Date().toISOString(),ua:navigator.userAgent.slice(0,80)},3);
+    $('fill').style.width='100%';
+    localStorage.setItem('tmuna_sent',me.id);
+    $('doneImg').src=dataUrl;
+    $('formCard').style.display='none';$('doneCard').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    showErr('לא הצלחנו לשלוח — בדקו חיבור לאינטרנט ונסו שוב. התמונה עדיין כאן, לא צריך לבחור מחדש.');
+    this.disabled=false;this.textContent='שליחת התמונה למיטל 🚀';
+    $('prog').style.display='none';
+  }
+};
+$('again').onclick=function(){
+  $('doneCard').style.display='none';$('formCard').style.display='block';
+  $('file').click();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>איסוף תמונות לפוסט — ניהול · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--yellow:#FFF200;--ink:#2b2b33;--line:#f0d9e6;--bg:#fff7fb;--ok:#1d9d5f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Rubik',Arial,sans-serif;background:var(--bg);color:var(--ink);padding:20px 14px 60px}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:24px;font-weight:900;text-align:center;margin-bottom:4px}
+h1 .hl{background:linear-gradient(transparent 55%,var(--yellow) 55%);padding:0 3px}
+.sub{text-align:center;color:#77606d;font-size:14px;margin-bottom:18px}
+.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 6px 24px rgba(232,52,138,.06)}
+.card h2{font-size:17px;font-weight:900;margin-bottom:10px}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 18px;text-align:center;min-width:100px}
+.stat b{display:block;font-size:26px;color:var(--pink)}
+.stat span{font-size:12.5px;color:#77606d}
+textarea{width:100%;border:2px solid var(--line);border-radius:14px;padding:12px;font:inherit;font-size:14.5px;min-height:150px;line-height:1.55;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--pink)}
+.hint{font-size:12.5px;color:#a3849a;margin-top:6px;line-height:1.5}
+.row{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.row.sent{background:#f2fbf6;border-color:#bfe8d2}
+.row.got{background:#fffde8;border-color:#efe28a}
+.num{width:34px;height:34px;border-radius:50%;background:#ffe3f1;color:var(--pink);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px}
+.row.got .num{background:var(--yellow);color:#6b6200}
+.sc{font-weight:900;font-size:15px}
+.nm{font-size:13.5px;color:#5c4b55;margin-top:1px}
+.note{display:inline-block;background:#fff3cd;border-radius:8px;padding:2px 8px;font-size:12px;color:#7a6410;margin-top:5px}
+.phone input{border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;font:inherit;font-size:14px;width:140px;direction:ltr;text-align:right}
+.phone input.empty{border-color:#f5b8b8;background:#fff5f5}
+.acts{display:flex;gap:7px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.btn{border:none;border-radius:12px;padding:9px 13px;font:inherit;font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-block;color:#fff;transition:.15s}
+.btn:active{transform:scale(.96)}
+.btn.wa{background:#25D366}
+.btn.pink{background:var(--pink)}
+.btn.ghost{background:#fff;color:var(--pink);border:2px solid var(--line)}
+.btn.dis,.btn:disabled{opacity:.4;pointer-events:none}
+.mark{font-size:12.5px;color:#5c4b55;display:flex;gap:5px;align-items:center;cursor:pointer}
+.mark input{accent-color:var(--ok);width:17px;height:17px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:#f2fbf6;border:1.5px solid #bfe8d2;border-radius:99px;padding:5px 12px;font-size:12.5px}
+.chip small{color:#5e8a72}
+.conn{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.conn input{border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;flex:1;min-width:170px}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-inline-end:5px}
+.dot.on{background:var(--ok)}.dot.off{background:#ccc}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+#bulkStat{font-size:13px;color:#77606d}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.gcard{border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center;background:#fff}
+.gcard img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--yellow)}
+.gcard .gn{font-weight:900;font-size:14px;margin-top:8px}
+.gcard .gs{font-size:12px;color:#77606d;margin-bottom:8px}
+.gcard .gt{font-size:11px;color:#b08ba0;margin-top:5px}
+.toast{position:fixed;bottom:22px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:11px 22px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:9}
+.toast.show{opacity:1}
+.toast.ok{background:var(--ok)}.toast.bad{background:#c0392b}
+.gate{max-width:340px;margin:80px auto;text-align:center}
+.gate input{width:100%;border:2px solid var(--line);border-radius:14px;padding:13px;font:inherit;font-size:18px;text-align:center;margin:14px 0}
+.warnbox{background:#fff3cd;border:2px solid #efe28a;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.5;margin-top:10px}
+.okbox{background:#f2fbf6;border:2px solid #bfe8d2;border-radius:12px;padding:10px 14px;font-size:13.5px;margin-top:10px}
+@media(max-width:640px){.row{grid-template-columns:1fr}.num{display:none}.acts{justify-content:flex-start}}
+</style>
+</head>
+<body>
+<div class="gate card" id="gate">
+  <h1>🔒</h1>
+  <p>דף ניהול — איסוף תמונות לפוסט</p>
+  <input type="password" id="code" placeholder="קוד כניסה">
+  <button class="btn pink" id="enter" style="width:100%;padding:13px;font-size:16px">כניסה</button>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+  <h1>איסוף תמונות <span class="hl">לפוסט של הופה</span> 📸</h1>
+  <p class="sub">שולחים לכל רכז/ת קישור אישי — הם מעלים תמונה, והיא מופיעה כאן למטה 💛</p>
+
+  <div class="stats">
+    <div class="stat"><b id="stHave">—</b><span>יש תמונה</span></div>
+    <div class="stat"><b id="stNew">—</b><span>הגיעו מהדף</span></div>
+    <div class="stat"><b id="stMiss">—</b><span>עדיין חסרות</span></div>
+    <div class="stat"><b id="stSent">—</b><span>נשלחה בקשה</span></div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ נוסח ההודעה</h2>
+    <textarea id="msg"></textarea>
+    <div class="hint">אפשר לערוך חופשי. <b>{שם}</b> = שם פרטי · <b>{בית_ספר}</b> = בית הספר · <b>{קישור}</b> = הקישור האישי של כל רכז/ת (נכנס אוטומטית). <button class="btn ghost" id="resetMsg" style="padding:4px 10px;font-size:12px">איפוס נוסח</button></div>
+  </div>
+
+  <div class="card">
+    <h2>⚡ שליחה ישירה מהוואטסאפ שלך <span style="font-weight:400;font-size:13px">(<span class="dot" id="connDot"></span><span id="connTxt"></span>)</span></h2>
+    <div class="conn">
+      <input id="m_url" placeholder="כתובת ה-Apps Script של השליחה (…/exec)">
+      <input id="m_secret" type="password" placeholder="סיסמת שליחה">
+      <button class="btn pink" id="m_connect">שמירה</button>
+    </div>
+    <div class="hint">אותו חיבור כמו בדף התזכורת — אם התחברת שם, זה כבר מחובר. כפתורי 💬 עובדים תמיד גם בלי זה.</div>
+  </div>
+
+  <div class="card">
+    <h2>📤 למי לשלוח — חסרות תמונות <span id="missCnt" style="font-weight:400;font-size:13px;color:#77606d"></span></h2>
+    <div id="list"></div>
+    <div class="toolbar">
+      <button class="btn pink" id="sendAll">⚡ שליחה לכל מי שעוד לא נשלח</button>
+      <button class="btn ghost" id="resetSent">איפוס סימוני "נשלח"</button>
+      <span id="bulkStat"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📥 תמונות שהגיעו מהדף</h2>
+    <div class="toolbar" style="margin:0 0 12px">
+      <button class="btn pink" id="pull">🔄 משיכת התמונות</button>
+      <button class="btn ghost" id="dlAll" style="display:none">⬇️ הורדת כולן</button>
+      <span class="hint" id="pullStat"></span>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+
+  <div class="card">
+    <h2>✅ כבר יש לנו תמונה (מטופס המפגש)</h2>
+    <div class="chips" id="haveList"></div>
+    <div class="hint">התמונות האלה כבר שמורות בריפו (photos/00–18) — לא צריך לבקש שוב, אלא אם רוצים תמונה טרייה יותר.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='tmuna1-';
+var PAGE_BASE='https://meytalp-dev.github.io/hopa-nihul/tmuna.html';
+
+/* חסרות תמונה — יעדי השליחה */
+var MISSING=[
+ {id:'ashkelon',  sc:'אורט אדיבי אשקלון',            c:'סיגל דדון',     ph:'0537780196'},
+ {id:'beitshean', sc:'אורט מגשימים בית שאן',          c:'חן עמרן',       ph:'0526851485'},
+ {id:'sakhnin',   sc:'טכנולוגי אלאמאני סחנין',        c:'סוזן',          ph:'0508784131', note:'יש תמונות של סאמר ושל המנהל — לא של סוזן. המספר אצלנו הוא של סאמר'},
+ {id:'nechalim',  sc:'מרכז תורני טכנולוגי נחלים',     c:'טל מילוא',      ph:'0584040949'},
+ {id:'julis',     sc:"יוצר עתיד בנות ג'וליס",          c:'בהייה מולא',    ph:'0546699072'},
+ {id:'palmachim', sc:'יוצר עתיד פלמחים',              c:'שירן עוגן',     ph:'0549789029'},
+ {id:'yarka',     sc:"תיכון ח'טוואת ירכא אבו סנאן",    c:'רשא סייד אחמד', ph:'0505455077'},
+ {id:'mitzpe',    sc:'התיכון החברתי מצפה רמון',       c:'ענבל לוי',      ph:'0546738573'},
+ {id:'drorgalil', sc:'דרור גליל (קיבוץ רביד)',        c:'רינה שריד',     ph:'0546738232'},
+ {id:'chushen',   sc:'תיכון חושן',                    c:'ברכי',          ph:'0528697690'},
+ {id:'nevemidbar',sc:'דרור נווה מדבר',               c:'תמרה גילאוני',  ph:'0504222996', note:'אולי כבר מכוסה — היאם אזברגה נרשמה למפגש עם הטלפון של תמרה. כדאי לוודא מי בתמונה'}
+];
+/* יש תמונה — מהגלריה של המפגש (photos/00–18) */
+var HAVE=[
+ 'מוניק איפרח ממן · עמל רמת דוד','מור · עמל רמת דוד','אביחי חריר · מוצקין','זהור אלעוברה · רהט',
+ 'טליה ברנע · תיכון שיח','לי ארנן · ת"א-יפו','טלי יונה · צור ברק','מריה דיאב · אורט כרמל',
+ 'מלשה חנין · אורט כרמל','סאמר מיעארי · סחנין','מוחמד גזאל (מנהל) · סחנין','היאם אזברגה · נווה מדבר',
+ 'ריקי מסס · אשדוד','עלי עותמאן · ביר אלמכסור','טוהר מרסדס כהן · מרום עכו','ראניה חגו · לקייה',
+ 'לבנה גיל בן חמו · מגשימים כרמיאל','יעקב גרונספלד · בית הערבה','מוניר עבדאלהאדי · טורעאן'
+];
+
+var DEFAULT_MSG=
+'היי {שם} 👋\n'+
+'לכבוד פתיחת השנה אנחנו מכינים פוסט חגיגי לפייסבוק ולאינסטגרם של הופה — עם התמונות של כל רכזי ורכזות הבוגרים שלנו 💛\n'+
+'חסרה לנו רק התמונה שלך!\n\n'+
+'זה לוקח חצי דקה — נכנסים, מעלים תמונה (סלפי מצוין 🤳) ומאשרים:\n'+
+'{קישור}\n\n'+
+'תודה ענקית 🙏\n'+
+'מיטל, הופה';
+
+/* ---------- מצב ---------- */
+var LS={msg:'hopa_tm_msg',sent:'hopa_tm_sent',phones:'hopa_tm_phones',ok:'hopa_tm_ok',url:'hopa_send_url',secret:'hopa_send_secret'};
+var $=function(s){return document.querySelector(s)};
+var state={
+  msg:localStorage.getItem(LS.msg)||DEFAULT_MSG,
+  sent:JSON.parse(localStorage.getItem(LS.sent)||'{}'),
+  phones:JSON.parse(localStorage.getItem(LS.phones)||'{}'),
+  url:localStorage.getItem(LS.url)||'', secret:localStorage.getItem(LS.secret)||'',
+  got:{}, photos:[]
+};
+function save(k,v){localStorage.setItem(LS[k],typeof v==='string'?v:JSON.stringify(v))}
+function toast(t,c){var el=$('#toast');el.textContent=t;el.className='toast show '+(c||'');clearTimeout(el._t);el._t=setTimeout(function(){el.className='toast'},2600)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function digits(p){var d=String(p||'').replace(/\D/g,'');if(d.indexOf('972')===0)return d;if(d.indexOf('0')===0)d=d.slice(1);return d?'972'+d:''}
+function pretty(p){var d=digits(p);return d?('0'+d.slice(3)).replace(/^(\d{3})(\d{3})(\d{4})$/,'$1-$2-$3'):''}
+function firstName(n){return String(n||'').split(/[\s\/]+/)[0]||''}
+function phoneOf(s){return state.phones[s.id]!==undefined?state.phones[s.id]:(s.ph||'')}
+function linkOf(s){return PAGE_BASE+'?id='+s.id}
+function buildMsg(s){
+  return state.msg.replace(/\{שם\}/g,firstName(s.c)).replace(/\{בית_ספר\}/g,s.sc).replace(/\{קישור\}/g,linkOf(s)).replace(/\n{3,}/g,'\n\n').trim();
+}
+
+/* ---------- שער ---------- */
+function open(){$('#gate').style.display='none';$('#app').style.display='block';init()}
+if(localStorage.getItem(LS.ok)==='1')open();
+$('#enter').onclick=function(){
+  if($('#code').value.trim().toLowerCase()==='hopa'){localStorage.setItem(LS.ok,'1');open()}
+  else toast('קוד שגוי','bad');
+};
+$('#code').addEventListener('keydown',function(e){if(e.key==='Enter')$('#enter').click()});
+
+/* ---------- רינדור ---------- */
+function render(){
+  var got=MISSING.filter(function(s){return state.got[s.id]});
+  var still=MISSING.filter(function(s){return !state.got[s.id]});
+  $('#stHave').textContent=HAVE.length;
+  $('#stNew').textContent=state.photos.length;
+  $('#stMiss').textContent=still.length;
+  $('#stSent').textContent=still.filter(function(s){return state.sent[s.id]}).length;
+  $('#missCnt').textContent='· '+still.length+' רכזים/ות';
+
+  $('#list').innerHTML=MISSING.map(function(s,i){
+    var ph=phoneOf(s), d=digits(ph), got=!!state.got[s.id];
+    var wa=d?'https://wa.me/'+d+'?text='+encodeURIComponent(buildMsg(s)):'#';
+    return '<div class="row '+(got?'got':(state.sent[s.id]?'sent':''))+'" data-id="'+s.id+'">'+
+      '<div class="num">'+(got?'✔':(i+1))+'</div>'+
+      '<div class="who">'+
+        '<div class="sc">'+esc(s.sc)+(got?' <span class="note" style="background:#fff9c9">📸 התמונה הגיעה!</span>':'')+'</div>'+
+        '<div class="nm">'+esc(s.c)+'</div>'+
+        '<div class="phone" style="margin-top:5px">📱 <input value="'+esc(pretty(ph))+'" placeholder="05X-XXXXXXX" inputmode="tel" data-ph="'+s.id+'" class="'+(d?'':'empty')+'"></div>'+
+        (s.note?'<div><span class="note">'+esc(s.note)+'</span></div>':'')+
+      '</div>'+
+      '<div class="acts">'+
+        '<a class="btn wa '+(d?'':'dis')+'" href="'+wa+'" '+(d?'target="_blank" rel="noopener"':'aria-disabled="true"')+' data-wa="'+s.id+'">💬 וואטסאפ</a>'+
+        '<button class="btn pink" data-auto="'+s.id+'" '+((state.url&&state.secret&&d)?'':'disabled')+' title="שליחה מהוואטסאפ של מיטל">⚡ שלח</button>'+
+        '<button class="btn ghost" data-copy="'+s.id+'">📋</button>'+
+        '<label class="mark"><input type="checkbox" data-mark="'+s.id+'" '+(state.sent[s.id]?'checked':'')+'> נשלח</label>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  $('#haveList').innerHTML=HAVE.map(function(h){var p=h.split(' · ');return '<span class="chip">'+esc(p[0])+' <small>· '+esc(p[1]||'')+'</small></span>'}).join('');
+
+  var on=!!(state.url&&state.secret);
+  $('#connDot').className='dot '+(on?'on':'off');
+  $('#connTxt').textContent=on?'מחובר':'לא מחובר';
+  $('#sendAll').disabled=!on;
+}
+
+/* ---------- שליחה ישירה (Green API דרך Apps Script) ---------- */
+var jn=0;
+function api(params,tmo){return new Promise(function(res,rej){
+  if(!state.url){rej(new Error('no-url'));return}
+  var cb='tmcb_'+(jn++);var s=document.createElement('script');
+  var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||60000);
+  function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+  window[cb]=function(d){cl();res(d)};
+  var q=new URLSearchParams(Object.assign({},params,{secret:state.secret,callback:cb})).toString();
+  s.src=state.url+(state.url.indexOf('?')>-1?'&':'?')+q;
+  s.onerror=function(){cl();rej(new Error('network'))};
+  document.body.appendChild(s);
+})}
+async function autoSend(s,quiet){
+  var d=digits(phoneOf(s));if(!d){toast('אין טלפון','bad');return false}
+  var btn=document.querySelector('[data-auto="'+s.id+'"]');if(btn){btn.disabled=true;btn.textContent='⏳'}
+  try{
+    var r=await api({action:'send',chatIds:d+'@c.us',message:buildMsg(s)},90000);
+    if(!r||!r.ok||r.sent<1)throw new Error((r&&r.error)||'לא נשלח');
+    state.sent[s.id]=true;save('sent',state.sent);
+    if(!quiet)toast('נשלח ל'+firstName(s.c)+' ✔','ok');return true;
+  }catch(e){if(!quiet)toast('שליחה נכשלה: '+e.message,'bad');return false}
+  finally{render()}
+}
+
+/* ---------- משיכת תמונות (JSONP storeAll) ---------- */
+function storeAll(){return new Promise(function(res,rej){
+  var cb='tmsa_'+(jn++);var s=document.createElement('script');
+  var t=setTimeout(function(){cl();rej(new Error('timeout'))},45000);
+  function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+  window[cb]=function(d){cl();res(d)};
+  s.src=EXEC_URL+'?'+new URLSearchParams({action:'storeAll',secret:GS_SECRET,callback:cb}).toString();
+  s.onerror=function(){cl();rej(new Error('network'))};
+  document.head.appendChild(s);
+})}
+async function pull(){
+  $('#pullStat').textContent='מושך…';
+  try{
+    var r=await storeAll();
+    if(!r||!r.ok)throw new Error((r&&r.error)||'שגיאה');
+    var store=r.store||{};
+    var pre='intake_'+KEY_PREFIX;
+    state.photos=[];state.got={};
+    Object.keys(store).forEach(function(k){
+      if(k.indexOf(pre)!==0)return;
+      var rest=k.slice(pre.length);
+      if(/-p\d+$/.test(rest))return;               // חלק של תמונה — לא מטא
+      var meta=store[k];if(!meta||!meta.parts)return;
+      var b64='';var okAll=true;
+      for(var i=0;i<meta.parts;i++){
+        var ck=store[pre+rest+'-p'+i];
+        if(!ck||typeof ck.d!=='string'){okAll=false;break}
+        b64+=ck.d;
+      }
+      if(!okAll)return;
+      state.photos.push({id:rest,n:meta.n||'',s:meta.s||'',ts:meta.ts||'',src:'data:'+(meta.mime||'image/jpeg')+';base64,'+b64});
+      state.got[rest]=true;
+    });
+    state.photos.sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
+    $('#pullStat').textContent=state.photos.length?('התקבלו '+state.photos.length+' תמונות · עודכן '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})):'עדיין לא הגיעו תמונות מהדף';
+    $('#dlAll').style.display=state.photos.length?'inline-block':'none';
+    $('#gal').innerHTML=state.photos.map(function(p,i){
+      var when=p.ts?new Date(p.ts).toLocaleString('he-IL',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+      return '<div class="gcard"><img src="'+p.src+'" alt="">'+
+        '<div class="gn">'+esc(p.n)+'</div><div class="gs">'+esc(p.s)+'</div>'+
+        '<a class="btn pink" style="font-size:12.5px" download="'+esc((p.n||p.id).replace(/[\\/:*?"<>|]/g,' '))+'.jpg" href="'+p.src+'">⬇️ הורדה</a>'+
+        (when?'<div class="gt">'+when+'</div>':'')+'</div>';
+    }).join('');
+    render();
+  }catch(e){
+    $('#pullStat').textContent='לא הצלחתי למשוך — '+e.message+'. נסי שוב.';
+  }
+}
+
+/* ---------- אירועים ---------- */
+function init(){
+  $('#msg').value=state.msg;
+  $('#m_url').value=state.url;$('#m_secret').value=state.secret;
+  render();pull();
+}
+$('#msg').addEventListener('input',function(){state.msg=$('#msg').value;save('msg',state.msg);render()});
+$('#resetMsg').onclick=function(){if(confirm('להחזיר את נוסח ברירת המחדל?')){state.msg=DEFAULT_MSG;$('#msg').value=DEFAULT_MSG;save('msg',DEFAULT_MSG);render()}};
+$('#resetSent').onclick=function(){if(confirm('לאפס את כל סימוני "נשלח"?')){state.sent={};save('sent',{});render()}};
+$('#m_connect').onclick=function(){
+  state.url=$('#m_url').value.trim();state.secret=$('#m_secret').value.trim();
+  localStorage.setItem(LS.url,state.url);localStorage.setItem(LS.secret,state.secret);
+  render();toast(state.url?'החיבור נשמר':'החיבור נמחק');
+};
+$('#pull').onclick=pull;
+$('#dlAll').onclick=function(){
+  state.photos.forEach(function(p,i){
+    setTimeout(function(){
+      var a=document.createElement('a');a.href=p.src;a.download=(p.n||p.id).replace(/[\\/:*?"<>|]/g,' ')+'.jpg';
+      document.body.appendChild(a);a.click();a.remove();
+    },i*400);
+  });
+};
+$('#list').addEventListener('click',function(e){
+  var wa=e.target.closest('[data-wa]');
+  if(wa){if(wa.getAttribute('aria-disabled')){e.preventDefault();toast('חסר טלפון','bad');return}
+    var id=wa.dataset.wa;setTimeout(function(){state.sent[id]=true;save('sent',state.sent);render()},400);return}
+  var cp=e.target.closest('[data-copy]');
+  if(cp){var s=MISSING.find(function(x){return x.id===cp.dataset.copy});var txt=buildMsg(s);
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){toast('ההודעה הועתקה ✔','ok')})
+    .catch(function(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('ההודעה הועתקה ✔','ok')}catch(_){toast('לא ניתן להעתיק','bad')}ta.remove()});return}
+  var au=e.target.closest('[data-auto]');
+  if(au&&!au.disabled){var s2=MISSING.find(function(x){return x.id===au.dataset.auto});
+    if(confirm('לשלוח עכשיו הודעה ל-'+s2.c+' ('+pretty(phoneOf(s2))+') מהוואטסאפ שלך?'))autoSend(s2);return}
+});
+$('#list').addEventListener('change',function(e){
+  var m=e.target.closest('[data-mark]');if(m){state.sent[m.dataset.mark]=m.checked;save('sent',state.sent);render()}
+});
+$('#list').addEventListener('input',function(e){
+  var p=e.target.closest('[data-ph]');if(!p)return;
+  state.phones[p.dataset.ph]=p.value.trim();save('phones',state.phones);
+  var s=MISSING.find(function(x){return x.id===p.dataset.ph});var row=p.closest('.row');var d=digits(p.value);
+  p.classList.toggle('empty',!d);
+  var a=row.querySelector('[data-wa]');
+  if(d){a.href='https://wa.me/'+d+'?text='+encodeURIComponent(buildMsg(s));a.target='_blank';a.rel='noopener';a.classList.remove('dis');a.removeAttribute('aria-disabled')}
+  else{a.href='#';a.classList.add('dis');a.setAttribute('aria-disabled','true')}
+  var b=row.querySelector('[data-auto]');if(b)b.disabled=!(state.url&&state.secret&&d);
+});
+$('#sendAll').onclick=async function(){
+  var targets=MISSING.filter(function(s){return !state.got[s.id]&&!state.sent[s.id]&&digits(phoneOf(s))});
+  if(!targets.length){toast('אין למי לשלוח','bad');return}
+  if(!confirm('לשלוח בקשת תמונה ל-'+targets.length+' רכזים/ות מהוואטסאפ שלך?'))return;
+  this.disabled=true;var ok=0;
+  for(var i=0;i<targets.length;i++){
+    $('#bulkStat').textContent='שולח '+(i+1)+'/'+targets.length+' — '+targets[i].sc+'…';
+    if(await autoSend(targets[i],true))ok++;
+    await new Promise(function(r){setTimeout(r,1500)});
+  }
+  $('#bulkStat').textContent='הסתיים: נשלחו '+ok+' מתוך '+targets.length+'.';
+  toast('נשלחו '+ok+'/'+targets.length,ok===targets.length?'ok':'bad');render();
+};
+</script>
+</body>
+</html>
