@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · גורמים קהילתיים — מניעת נשירה</title>
+<meta name="description" content="מי הקב&quot;ס, מי מפעיל את היל&quot;ה, מי בשפ&quot;ח ומי ברווחה — לכל אחד מחמשת בתי הספר בתחום מניעת הנשירה. עם טלפון ומייל.">
+<meta property="og:title" content="הופה · גורמים קהילתיים — מניעת נשירה 14–18">
+<meta property="og:description" content="מיפוי הגורמים ברשות לכל בית ספר: קב&quot;ס, קידום נוער, שפ&quot;ח, רווחה ומתנ&quot;ס.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --accent:#7E57C2; --accent-deep:#5E35B1; --accent-soft:#F1ECFA;
+  --r-md:16px; --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --maxw:940px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep);text-decoration-thickness:1.5px;text-underline-offset:3px}
+h1,h2,h3,h4{line-height:1.2;margin:0;letter-spacing:-.02em;font-weight:800}
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.hero{position:relative;padding:52px 0 34px;overflow:hidden;
+  background:radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+    radial-gradient(900px 460px at 4% 4%, rgba(126,87,194,.14), transparent 60%), #FFFFFF;
+  border-bottom:1px solid var(--line)}
+.hero-grid{position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(rgba(17,17,17,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,17,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);
+  mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent)}
+.hero .wrap{position:relative}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:48px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:16px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.issue{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;color:var(--ink-2);
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px}
+.issue b{color:var(--accent-deep);font-weight:800}
+.kicker{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.16em;
+  color:var(--accent-deep);background:var(--accent-soft);border-radius:999px;padding:7px 16px;margin-bottom:18px}
+h1.title{font-size:clamp(32px,6.2vw,52px);font-weight:900;letter-spacing:-.035em;max-width:19ch}
+h1.title .hl{background:linear-gradient(180deg,transparent 62%, var(--yellow) 62%, var(--yellow) 94%, transparent 94%);padding:0 4px}
+.lede{font-size:clamp(16px,2.2vw,19px);color:var(--ink-2);max-width:62ch;margin-top:18px}
+section{padding:42px 0}
+.sec-h{margin-bottom:22px}
+.sec-h .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.14em;color:var(--accent-deep);margin-bottom:8px}
+.sec-h h2{font-size:clamp(24px,4vw,32px);font-weight:900;letter-spacing:-.03em}
+.sec-h p{color:var(--ink-2);margin:10px 0 0;max-width:66ch}
+.callout{background:var(--yellow-soft);border:1px solid #F3E9A0;border-radius:var(--r-md);padding:16px 20px;margin:18px 0}
+.callout b{color:#7A6A00}
+.tabs{position:sticky;top:6px;z-index:50;padding:12px 0;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:8px;flex-wrap:wrap}
+.tab{cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;border-radius:999px;padding:8px 15px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink-2);transition:all .12s ease}
+.tab:hover{border-color:var(--ink)}
+.tab.on{color:#fff;border-color:transparent}
+.grp{margin-bottom:30px}
+.grp > h3{font-size:19px;font-weight:900;letter-spacing:-.02em}
+.grp > .src{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px;margin-bottom:14px}
+.cards{display:grid;gap:11px}
+.p{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px}
+.p.key{border-inline-start:4px solid var(--accent);background:var(--accent-soft)}
+.p .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.p b{font-size:17px;font-weight:800;letter-spacing:-.02em}
+.p .role{font-size:14px;color:var(--accent-deep);font-weight:700}
+.p .why{margin:8px 0 0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.p .acts{margin-top:11px;display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;text-decoration:none;
+  border-radius:999px;padding:7px 13px;border:1.5px solid var(--line);color:var(--ink-2);background:#fff}
+.btn:hover{border-color:var(--ink)}
+.btn.wa{background:#25D366;border-color:#25D366;color:#fff}
+.btn.mail{background:var(--accent);border-color:var(--accent);color:#fff}
+.star{font-size:11.5px;font-weight:800;color:var(--accent-deep);background:#fff;border:1px solid #D9CEF0;
+  border-radius:999px;padding:3px 9px}
+.natgrid{display:grid;gap:12px}
+.nat{background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px}
+.nat h3{font-size:17.5px;font-weight:800}
+.nat .org{font-size:13px;color:var(--accent-deep);font-weight:700;margin-top:3px}
+.nat p{margin:9px 0 0;font-size:15px;color:var(--ink-2);line-height:1.55}
+footer{border-top:1px solid var(--line);padding:34px 0 60px;background:var(--tint)}
+.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.foot .note{font-size:13.5px;color:var(--muted);max-width:62ch}
+@media (max-width:600px){ body{font-size:16px} }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה">
+        <span class="org"><b>הופה</b><span>מרחב הזדמנויות לצעירים</span></span>
+      </a>
+      <span class="issue">עודכן <b>2.9.2026</b></span>
+    </div>
+    <span class="kicker">מניעת נשירה · גורמים קהילתיים</span>
+    <h1 class="title">מי <span class="hl">הכתובת ברשות</span> לכל בית ספר</h1>
+    <p class="lede">לפני שמחפשים עמותה — יש ברשות המקומית אנשים שזה התפקיד שלהם, במימון המדינה.
+      הקב"ס, יחידת קידום הנוער, השפ"ח והרווחה. כאן הם, עם שם, טלפון ומייל.</p>
+  </div>
+</header>
+
+<div class="tabs"><div class="wrap" id="tabs"></div></div>
+
+<section style="padding-top:26px"><div class="wrap" id="body"></div></section>
+
+<section style="background:var(--tint);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="eyebrow">רקע</div>
+      <h2>מה כל תפקיד עושה</h2>
+      <p>כדי לדעת למי לפנות ובאיזה שלב.</p>
+    </div>
+    <div class="natgrid" id="nat"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+      <p class="note">כל הפרטים נאספו מאתרי הרשויות עצמן (ספרי טלפונים רשמיים) ומאתרי משרד החינוך.
+        באשקלון ובבית שאן פרטי הקב"ס לא פורסמו — לבקש דרך המוקד ואגף החינוך. בעלי תפקידים מתחלפים — לאמת לפני שליחה.</p>
+    </div>
+    <span class="issue">הופה · <b>מניעת נשירה 14–18</b></span>
+  </div>
+</footer>
+
+<script>
+const K = [{"school": "מבואות חרמון", "area": "גליל עליון · מ.א. מבואות החרמון + קריית שמונה", "color": "#7E57C2", "note": "בית הספר החדש בתחום. אין לו עדיין מיפוי גורמים קהילתיים — זה המיפוי הראשון.", "groups": [{"title": "מ.א. מבואות החרמון — הרשות שבה נמצא בית הספר", "src": "ספר הטלפונים הרשמי של המועצה", "items": [{"n": "אביגיל אליהו", "r": "קב\"ס — קצינת ביקור סדיר", "p": "04-6818065", "e": "Kabas@mvhr.org.il", "key": true, "why": "הכתובת הראשונה לכל תלמיד בהיעדרויות חוזרות או בנשירה סמויה. חוק לימוד חובה מחייב אותה לטפל."}, {"n": "מיכאל אשטו טמסגן", "r": "רכז חינוך מיוחד ונוער בסיכון", "p": "055-6644127", "e": "michaelet@brancoweiss.org.il", "key": true, "why": "התפקיד הכי קרוב לתחום — מחזיק את התמונה של הנערים בסיכון במועצה."}, {"n": "מירב בראונר", "r": "מנהלת מחלקת חינוך", "p": "04-6818033 · 050-8861096", "e": "ChinuchM@mvhr.org.il", "why": "אישור תוכנית עבודה ומשאבים ברמת המועצה."}, {"n": "אלי הגלילי", "r": "מנהל השירות הפסיכולוגי החינוכי (שפ\"ח)", "p": "04-6818016", "e": "elih@mvhr.org.il", "why": "אבחונים והתערבות רגשית לתלמידים בסיכון."}, {"n": "לילי שוחט חטיאל", "r": "מנהלת שירותים חברתיים (רווחה)", "p": "04-6818022 · 052-3787501", "e": "LiliS@mvhr.org.il", "why": "ועדות תכנון-טיפול, מסגרות חוץ-ביתיות, טיפול במשפחה."}, {"n": "קרן רובינשטיין", "r": "מנהלת מחלקת נוער", "p": "04-6818020", "e": "noar@mvhr.org.il", "why": "חינוך בלתי פורמלי — עוגן לתלמיד שאיבד חיבור לכיתה."}, {"n": "גיא קמינסקי", "r": "מנהל מח' חינוך קהילתי, מתנ\"ס", "p": "04-6818036 · 052-5540409", "e": "m-noar@mvhr.org.il", "why": "מסגרות אחר-הצהריים והפעלות."}, {"n": "לבנת גיגי", "r": "מנכ\"לית המתנ\"ס", "p": "04-6818036 · 052-4038854", "e": "matnas.ceo@mvhr.org.il", "why": "שותפה להפעלת תוכניות ביישוב."}, {"n": "דורון אלקולומברי", "r": "עו\"ס צעירים 18–26", "p": "04-6818021 · 050-2056129", "e": "DoronE@mvhr.org.il", "why": "הרצף אחרי י\"ב — חיבור לתוכנית הבוגרים של הופה."}, {"n": "רננה גרסיה", "r": "רכזת יחידת מתנדבים", "p": "04-6012659 · 050-2592041", "e": "mitnadvim@mvhr.org.il", "why": "מקור למערך חונכות מתנדבים."}]}, {"title": "קריית שמונה — שירותי הסביבה", "src": "ספר הטלפונים של עיריית קריית שמונה", "items": [{"n": "חגית פרי", "r": "קב\"ס — על-יסודי", "p": "04-6003605", "e": "chagit.p@k-8.co.il", "key": true, "why": "הקב\"סית של גילאי התיכון בעיר הסמוכה — רלוונטית לתלמידים שגרים בקריית שמונה."}, {"n": "רעות אלקובי", "r": "רכזת רצף חינוכי", "p": "04-6036800", "e": "raot.a@k-8.co.il", "key": true, "why": "\"רצף חינוכי\" = בדיוק המעברים שבהם תלמידים נושרים (ט'→י')."}, {"n": "אסנת רון רסקי", "r": "מנהלת אגף חינוך", "p": "04-6003601", "e": "asnat.ron@k-8.co.il", "why": ""}, {"n": "מיכאל יעקבי", "r": "מנהל שפ\"ח", "p": "04-6949587", "e": "micha.y@k-8.co.il", "why": ""}, {"n": "חווה וורמסר", "r": "מנהלת מח' חינוך מיוחד", "p": "04-6003608", "e": "chava.w@k-8.co.il", "why": ""}, {"n": "לירון טלקר", "r": "סגנית מנהלת שירותים חברתיים", "p": "04-6908596", "e": "liron.t@k-8.co.il", "why": ""}, {"n": "שני סומך-עטיה", "r": "מנהלת מרכז צעירים ותעסוקה", "p": "04-6036818", "e": "shani.s@k-8.co.il", "why": ""}, {"n": "לין יהב", "r": "מנהלת מח' ילדים ונוער", "p": "—", "e": "lin.y@k-8.co.il", "why": ""}]}, {"title": "מרכז משאבים — מיסודו של פרופ' מולי להד", "src": "עמותה רשומה 580154888 · קריית שמונה", "items": [{"n": "מרכז משאבים", "r": "חוסן, התערבות במשבר והכשרת צוותים", "p": "04-6900600 · 04-6950740", "e": "cspc@icspc.org", "key": true, "why": "מרכז החוסן המוביל בגליל. עליית הנוער 7, ת.ד. 797 קריית שמונה. עובד ישירות מול בתי ספר."}, {"n": "יחידת חוסן", "r": "פנייה ישירה", "p": "058-6576740", "e": "hosen@icspc.org", "why": ""}]}]}, {"school": "אורט מרום עכו", "area": "עכו", "color": "#3D7DD8", "note": "", "groups": [{"title": "עיריית עכו", "src": "ספר הטלפונים הרשמי של העירייה", "items": [{"n": "אנה שבת", "r": "מנהלת היחידה לביקור סדיר (קב\"ס)", "p": "04-9956127", "e": "anna@akko.muni.il", "key": true, "why": "הכתובת לאיתור ולטיפול בהיעדרויות ובנשירה."}, {"n": "יוסף אבו חמאם", "r": "מנהל היחידה לקידום נוער (היל\"ה)", "p": "04-9818674 · 051-2600590", "e": "yosefhamam@walla.co.il", "key": true, "why": "היל\"ה = המסגרת שמחזירה נערים שנשרו להשלמת השכלה ובגרות. שותף מרכזי."}, {"n": "פזית לנקרי", "r": "מנהלת שירות פסיכולוגי חינוכי", "p": "04-9915657", "e": "pazit-l@akko.muni.il", "why": ""}, {"n": "נורית אגיוייב", "r": "ראש מינהל שירותים חברתיים", "p": "04-9956018", "e": "nurit@akko.muni.il", "why": ""}, {"n": "קרן גאון-מזוז", "r": "מנהלת יחידת הנוער העירונית", "p": "04-9956200", "e": "keren@akko.muni.il", "why": ""}, {"n": "אלי חביב", "r": "מנהל אגף נוער וצעירים", "p": "04-9917477", "e": "eli_h@akko.muni.il", "why": ""}, {"n": "יאיר אוחיון", "r": "ראש מינהל חינוך", "p": "04-9956040", "e": "yair-o@akko.muni.il", "why": ""}, {"n": "סאמר קדורה", "r": "מנהל תוכנית \"עיר ללא אלימות\"", "p": "04-9917551", "e": "", "why": "רלוונטי לתלמידים שהנשירה שלהם קשורה לאלימות או לעבריינות."}]}]}, {"school": "אורט בית הערבה", "area": "ירושלים", "color": "#3BA55C", "note": "", "groups": [{"title": "עיריית ירושלים", "src": "אתר עיריית ירושלים", "items": [{"n": "החטיבה לקידום נוער וצעירים", "r": "קידום נוער / היל\"ה · גילאי 14–26", "p": "02-6578472", "e": "", "key": true, "why": "הלני המלכה 9. מענה טלפוני א'–ה' 8:00–15:00, קבלת קהל בתיאום. מסגרות חינוכיות, השלמת השכלה, העסקת נוער, טיפול בהתמכרויות."}, {"n": "היחידה לביקור סדיר (קב\"ס)", "r": "מנח\"י — מינהל חינוך ירושלים", "p": "מוקד 106", "e": "", "key": true, "why": "לבקש את הקב\"סית של האזור הגיאוגרפי של בית הספר. היועצת בבית הספר תדע את השם."}, {"n": "מרכז ייעוץ וטיפול של קידום נוער", "r": "מרכז טיפולי", "p": "—", "e": "", "why": "יפו 26, כיכר ספרא בניין 13, מרכז העיר."}, {"n": "מרכז ייעוץ לנוער — עיריית ירושלים", "r": "ייעוץ מקצועי לנוער ירושלמי", "p": "02-6578190", "e": "", "why": "כבר קיים במאגר המענים של הופה."}, {"n": "השירות הפסיכולוגי החינוכי (שפ\"ח)", "r": "דרך מנח\"י", "p": "מוקד 106", "e": "", "why": ""}]}]}, {"school": "אורט אדיבי אשקלון", "area": "אשקלון", "color": "#F5A623", "note": "אתר העירייה עבר לדומיין חדש (ashkelon.muni.gov.il) ופרטי אנשי הקשר לא זמינים בו כרגע. הפנייה — דרך המוקד.", "groups": [{"title": "עיריית אשקלון", "src": "אתר העירייה ומוקד 106", "items": [{"n": "היחידה לביקור סדיר", "r": "קב\"ס · גן עד י\"ב (3–18)", "p": "מוקד 106 · 08-6792211", "e": "", "key": true, "why": "מטפלת באי-ביקור סדיר, היעדרות, שוטטות וניידות בין בתי ספר; מפעילה מערך תמיכה לימודית לתלמידים בסכנת נשירה ומאתרת תלמידים חסרי מסגרת. לבקש את הקב\"סית של אורט אדיבי."}, {"n": "התוכנית הלאומית 360° — מחוז דרום", "r": "רונית פרטוש, מנהלת התוכנית במחוז", "p": "—", "e": "ronitpa@education.gov.il", "key": true, "why": "למחוז דרום 17 רכזים אזוריים, אחד מהם לאשקלון. זו הדרך המהירה לחבר את בית הספר לסל 360°."}, {"n": "מוקד עירוני 106", "r": "24 שעות", "p": "08-6792211 · וואטסאפ 054-9908011", "e": "", "why": "דרך המוקד מגיעים לאגף החינוך, לשפ\"ח ולשירותים החברתיים."}, {"n": "אגף החינוך", "r": "קבלת קהל בתיאום מראש", "p": "דרך מוקד 106", "e": "", "why": ""}]}]}, {"school": "אורט מגשימים בית שאן", "area": "בית שאן · עמק המעיינות", "color": "#E8348A", "note": "פרטי הקב\"ס והיל\"ה לא פורסמו באתר העירייה — לבקש דרך מזכירות אגף החינוך.", "groups": [{"title": "עיריית בית שאן ועמק המעיינות", "src": "אתרי הרשויות", "items": [{"n": "אגף חינוך, רווחה ונוער — עיריית בית שאן", "r": "מזכירת האגף", "p": "04-6489416", "e": "", "key": true, "why": "מכאן מקבלים את פרטי הקב\"ס ויחידת קידום הנוער. רכז טכני: 04-6489440."}, {"n": "מתנ\"ס עמק המעיינות", "r": "דפנה ארזי, מזכירות", "p": "04-6848220", "e": "matnas@maianot.co.il", "why": "חינוך בלתי פורמלי לתלמידים מיישובי המועצה האזורית."}, {"n": "המרכזים הקהילתיים של בית שאן", "r": "החברה למתנ\"סים", "p": "דרך העירייה", "e": "", "why": ""}]}]}];
+const NAT = [{"n": "קצין ביקור סדיר (קב\"ס)", "org": "משרד החינוך · ברשות המקומית", "p": "", "d": "כ-720 קב\"סים ברשויות. מתוקף חוק לימוד חובה תש\"ט-1949 — אחראים לאתר תלמידים בסכנת נשירה, לאכוף ביקור סדיר ולתאם התערבות עם עו\"ס, פסיכולוגים, קציני מבחן ועובדי קידום נוער.", "u": "https://pob.education.gov.il/municipal-services/main-youth-at-risk/kabasim/", "tag": "ממשלתי"}, {"n": "היל\"ה — קידום נוער", "org": "משרד החינוך · אגף חינוך ילדים ונוער בסיכון", "p": "", "d": "רשת הביטחון של המערכת. גילאי 12–19 (עד 20 בהוצאה מהבית). מסלולי השלמת 8/9/10 שנות לימוד, תעודת 12 שנות לימוד, תעודה טכנולוגית-מקצועית ובגרות. כולל \"חממות\" — התערבות קצרת-טווח, ו\"גשרים\" — עבודה מונעת בתוך בית הספר. פועלת ב-150 רשויות עם כ-750 עובדים חינוכיים-טיפוליים וכ-1,500 מורים.", "u": "https://pob.education.gov.il/municipal-services/main-youth-at-risk/youth-promotion-info/", "tag": "ממשלתי"}, {"n": "מנ\"ע — מניעת נשירה עכשיו", "org": "משרד החינוך", "p": "", "d": "תוכנית לחטיבות ולעל-יסודי להתמודדות שיטתית עם נשירה. מיועדת לתלמידים בסכנת נשירה או עם קשיים לימודיים, חברתיים, רגשיים ותחושת ניכור. המטרה: חיזוק שייכות לבית הספר והעלאת הישגים.", "u": "https://minhal-pedagogy.education.gov.il/units/risk/", "tag": "ממשלתי"}, {"n": "מפתנים ומח\"טים", "org": "משרד החינוך", "p": "", "d": "מפתן — בית ספר בעל אוריינטציה חינוכית-טיפולית לנוער בכיתות ח'–י\"ב שנשר. מח\"ט — מרכז חינוך טכנולוגי לתלמידים שהתקשו להתמיד בבית ספר מקיף. אלה המסגרות החלופיות כשחזרה לכיתה הרגילה לא מתאפשרת.", "u": "https://minhal-pedagogy.education.gov.il/units/risk/", "tag": "ממשלתי"}, {"n": "כיתות מב\"ר, אתגר ואומץ", "org": "משרד החינוך", "p": "", "d": "כיתות קטנות בתוך בית הספר הרגיל, לתלמידים עם פוטנציאל שמתקשים במסלול הרגיל — מסלול מוגן לבגרות בלי לצאת מהמסגרת.", "u": "https://minhal-pedagogy.education.gov.il/units/risk/", "tag": "ממשלתי"}, {"n": "התוכנית הלאומית 360° לילדים ונוער בסיכון", "org": "בין-משרדית · משרד הרווחה מוביל", "p": "", "d": "מנגנון בין-משרדי ורשת ביטחון לילדים בסיכון ולהוריהם, פועל ברשויות עם רכזים אזוריים. במחוז דרום: רונית פרטוש (ronitpa@education.gov.il), 17 רכזים אזוריים כולל אשקלון. מערכת טפסים: 360.molsa.gov.il", "u": "https://www.molsa.gov.il/", "tag": "ממשלתי"}, {"n": "קו לנוער", "org": "עמותה רשומה 580425841", "p": "", "d": "כתובת ומקור מידע מרכזי על כל השירותים לבני נוער בסיכון ובמצוקה ולמשפחותיהם — מי נותן מה ואיפה.", "u": "", "tag": "עמותה"}, {"n": "ער\"ן — עזרה ראשונה נפשית", "org": "קו סיוע ארצי", "p": "1201", "d": "תמיכה רגשית אנונימית לנוער, בטלפון ובאונליין. כבר במאגר הופה.", "u": "https://www.eran.org.il/", "tag": "קו חירום"}, {"n": "מוקד \"קול לכולם\"", "org": "משרד החינוך", "p": "", "d": "שירות תמיכה רגשית לתלמידים מטעם משרד החינוך. כבר במאגר הופה.", "u": "https://students.education.gov.il/studies-general-info/studies-online/emotional-support", "tag": "קו חירום"}];
+let cur = 0;
+const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const phones = p => (p||'').split('·').map(x=>x.replace(/[^0-9]/g,'')).filter(x=>x.length>=9);
+
+function tabs(){
+  document.getElementById('tabs').innerHTML = K.map((s,i) =>
+    `<button class="tab ${i===cur?'on':''}" ${i===cur?`style="background:${s.color}"`:''} data-i="${i}">${esc(s.school)}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b => b.onclick = () => { cur = +b.dataset.i; tabs(); body(); });
+}
+
+function body(){
+  const s = K[cur];
+  let h = `<div class="sec-h"><div class="eyebrow">${esc(s.area)}</div><h2>${esc(s.school)}</h2></div>`;
+  if(s.note) h += `<div class="callout"><b>שימו לב:</b> ${esc(s.note)}</div>`;
+  h += s.groups.map(g => `<div class="grp">
+    <h3>${esc(g.title)}</h3><div class="src">מקור: ${esc(g.src)}</div>
+    <div class="cards">${g.items.map(it => {
+      const acts = [];
+      const ps = phones(it.p);
+      ps.forEach(d => acts.push(`<a class="btn" href="tel:${d}">☎ ${d.replace(/^(\d{2,3})(\d+)$/,'$1-$2')}</a>`));
+      if(!ps.length && it.p && it.p !== '—') acts.push(`<span class="btn">${esc(it.p)}</span>`);
+      const mob = ps.find(d => d.length === 10 && d.startsWith('05'));
+      if(mob) acts.push(`<a class="btn wa" href="https://wa.me/972${mob.slice(1)}" target="_blank" rel="noopener">וואטסאפ</a>`);
+      if(it.e) acts.push(`<a class="btn mail" href="mailto:${esc(it.e)}?subject=${encodeURIComponent('הופה — מניעת נשירה, ' + s.school)}">✉ ${esc(it.e)}</a>`);
+      return `<div class="p ${it.key?'key':''}">
+        <div class="top"><b>${esc(it.n)}</b><span class="role">${esc(it.r)}</span>${it.key?'<span class="star">כתובת מרכזית</span>':''}</div>
+        ${it.why?`<p class="why">${esc(it.why)}</p>`:''}
+        ${acts.length?`<div class="acts">${acts.join('')}</div>`:''}
+      </div>`;
+    }).join('')}</div></div>`).join('');
+  document.getElementById('body').innerHTML = h;
+}
+
+document.getElementById('nat').innerHTML = NAT.map(x => `<div class="nat">
+  <h3>${esc(x.n)}</h3><div class="org">${esc(x.org)}${x.p?' · '+esc(x.p):''}</div>
+  <p>${esc(x.d)}</p>${x.u?`<div class="acts" style="margin-top:11px"><a class="btn" href="${esc(x.u)}" target="_blank" rel="noopener">לפרטים ↗</a></div>`:''}
+</div>`).join('');
+
+tabs(); body();
+</script>
+</body>
+</html>
