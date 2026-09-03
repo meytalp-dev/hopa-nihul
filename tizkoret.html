@@ -270,15 +270,21 @@ const FORUM_MSG=
    ============================================================ */
 const LS={msg:'hopa_tz_msg',link:'hopa_tz_link',sent:'hopa_tz_sent',phones:'hopa_tz_phones',url:'hopa_send_url',secret:'hopa_send_secret'};
 const $=s=>document.querySelector(s);
+/* גישה בטוחה לאחסון: בדפדפני נייד שחוסמים "עוגיות ונתוני אתרים" (ספארי · דפדפן פנימי
+   של וואטסאפ · גלישה פרטית) עצם הפנייה ל-localStorage זורקת שגיאה ומפילה את כל הדף.
+   כאן הכל עטוף — הדף ייטען גם בלי אחסון, פשוט בלי לזכור טיוטה בין ביקורים. */
+function lsGet(k){try{return window.localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{window.localStorage.setItem(k,v);return true;}catch(e){return false;}}
+function lsJSON(k){try{return JSON.parse(lsGet(k)||'{}')||{};}catch(e){return {};}}
 const state={
-  msg:localStorage.getItem(LS.msg)||DEFAULT_MSG,
-  link:localStorage.getItem(LS.link)||'',
-  sent:JSON.parse(localStorage.getItem(LS.sent)||'{}'),
-  phones:JSON.parse(localStorage.getItem(LS.phones)||'{}'),
-  url:localStorage.getItem(LS.url)||'', secret:localStorage.getItem(LS.secret)||'',
+  msg:lsGet(LS.msg)||DEFAULT_MSG,
+  link:lsGet(LS.link)||'',
+  sent:lsJSON(LS.sent),
+  phones:lsJSON(LS.phones),
+  url:lsGet(LS.url)||'', secret:lsGet(LS.secret)||'',
   reg:{}, live:false, regRows:[]
 };
-function save(k,v){localStorage.setItem(LS[k],typeof v==='string'?v:JSON.stringify(v));}
+function save(k,v){lsSet(LS[k],typeof v==='string'?v:JSON.stringify(v));}
 function toast(t,c){const el=$('#toast');el.textContent=t;el.className='toast show '+(c||'');clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',2600);}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function digits(p){let d=String(p||'').replace(/\D/g,'');if(d.startsWith('972'))return d;if(d.startsWith('0'))d=d.slice(1);return d?'972'+d:'';}
@@ -409,7 +415,7 @@ $('#msg').addEventListener('input',()=>{state.msg=$('#msg').value;save('msg',sta
 $('#link').addEventListener('input',()=>{state.link=$('#link').value.trim();save('link',state.link);render();});
 $('#resetMsg').onclick=()=>{if(confirm('להחזיר את נוסח ברירת המחדל?')){state.msg=DEFAULT_MSG;$('#msg').value=DEFAULT_MSG;save('msg',DEFAULT_MSG);render();}};
 $('#resetSent').onclick=()=>{if(confirm('לאפס את כל סימוני "נשלח"?')){state.sent={};save('sent',{});render();}};
-$('#m_connect').onclick=()=>{state.url=$('#m_url').value.trim();state.secret=$('#m_secret').value.trim();localStorage.setItem(LS.url,state.url);localStorage.setItem(LS.secret,state.secret);render();toast(state.url?'החיבור נשמר':'החיבור נמחק');};
+$('#m_connect').onclick=()=>{state.url=$('#m_url').value.trim();state.secret=$('#m_secret').value.trim();lsSet(LS.url,state.url);lsSet(LS.secret,state.secret);render();toast(state.url?'החיבור נשמר':'החיבור נמחק');};
 
 $('#list').addEventListener('click',e=>{
   const wa=e.target.closest('[data-wa]');

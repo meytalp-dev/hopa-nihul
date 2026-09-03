@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תזכורת לטופס המיילים · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --bad:#d9534f; --wa:#25D366;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 14px 70px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center;flex:none}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:21px;font-weight:800;line-height:1.25}
+  .hero p{margin:4px 0 0;opacity:.92;font-size:14px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-top:14px}
+  .card h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 small{font-weight:400;color:var(--muted);font-size:13px}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .hint.tight{margin:0}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  textarea.field{min-height:132px;resize:vertical;line-height:1.55}
+  .btn{border-radius:12px;padding:10px 16px;font-size:15px;font-weight:700;transition:transform .1s;white-space:nowrap}
+  .btn:active{transform:scale(.97)}
+  .btn.primary{background:var(--pink);color:#fff;box-shadow:0 6px 18px rgba(232,52,138,.3)}
+  .btn.outline{border:2px solid var(--line);background:#fff}
+  .btn.wa{background:var(--wa);color:#fff;box-shadow:0 6px 16px rgba(37,211,102,.3)}
+  .btn.direct{background:var(--ink);color:#fff}
+  .btn.sm{padding:8px 12px;font-size:13.5px;border-radius:10px}
+  .btn:disabled{opacity:.45;cursor:default;box-shadow:none}
+  .tokens{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+  .tok{background:var(--bg);border-radius:99px;padding:3px 10px;font-size:12px;color:var(--muted)}
+  .tok b{color:var(--ink);font-family:monospace}
+  details summary{cursor:pointer;color:var(--pink-dark);font-weight:600;font-size:14px;margin:8px 0 0}
+
+  .card.direct-card{border:2px dashed #cfe9d8}
+  .card.direct-card.on{border:2px solid #b8ecc9;background:#f3fcf6}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:99px;background:var(--bad);margin-inline-end:5px}
+  .dot.on{background:var(--ok)}
+
+  .stats{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+  .st{background:#fff;border-radius:14px;padding:9px 13px;font-size:13px;color:var(--muted);box-shadow:var(--shadow);border:2px solid transparent;cursor:pointer;text-align:center;min-width:78px}
+  .st b{display:block;color:var(--ink);font-size:21px;font-weight:800;line-height:1.15}
+  .st.on{border-color:var(--pink)}
+  .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:12px}
+  .bar i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .3s}
+
+  .list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+  .sc{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-right:5px solid var(--line)}
+  .sc.sent{border-right-color:#f5c542}
+  .sc.done{border-right-color:var(--ok)}
+  .sc .who{flex:1;min-width:180px}
+  .sc .who b{font-size:15.5px;display:block}
+  .sc .who span{display:block;font-size:13px;color:var(--muted)}
+  .sc .who span a{color:var(--muted);text-decoration:none}
+  .tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+  .tag.gray{background:var(--bg);color:var(--muted)}
+  .tag.yel{background:var(--yellow-soft);color:#7a6a00}
+  .tag.ok{background:var(--ok-soft);color:#137a4a}
+  .tag.warn{background:#fdecea;color:#a8322c}
+  .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .empty{text-align:center;color:var(--muted);padding:26px 10px}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
+  .foot a{color:var(--pink-dark);text-decoration:none;font-weight:600}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;max-width:92vw;text-align:center}
+  .toast.on{opacity:1}
+  .toast.bad{background:var(--bad)}
+  .toast.ok{background:#137a4a}
+  @media (max-width:620px){
+    .sc .acts{width:100%;justify-content:flex-start}
+    .sc .who{min-width:100%}
+    .btn{padding:11px 15px}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>תזכורת לטופס המיילים</h1>
+      <p>מי שטרם מילא/ה — הודעה אישית בוואטסאפ עם הקישור לטופס שלו/ה</p>
+    </div>
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+</header>
+<main class="wrap" id="app"><div class="card"><p class="hint tight">טוען…</p></div></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== הגדרות ===================== */
+const API_URL   = 'https://hopadash.vercel.app/api/rishum';   // מי מילא + טלפונים (קריאה בלבד)
+const EXEC_URL  = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET = 'hopa-nihul-2026';
+const STORE_KEY = 'rk_sendstate';                             // מי כבר קיבל/ה תזכורת + נוסח ההודעה
+const FORM_URL  = 'https://meytalp-dev.github.io/hopa-nihul/rishum.html';
+const ADMIN_URL = FORM_URL + '?admin=hopa';
+
+/* רשימת בתי הספר כפי שהיא בטופס עצמו — כדי שהקישור יבחר את בית הספר מראש.
+   שמות הבורד לא זהים (סמל מוסד, גרשיים), ולכן ההתאמה מנורמלת. */
+const FORM_SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מבואות חרמון שבילי הצפון','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים כרמיאל','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
+
+const DEFAULT_MSG = `היי {שם} 👋 זו מיטל מהופה.
+פותחים את תשפ״ז, ואני רוצה לוודא שכל העדכונים, החומרים והמענים מגיעים אליכם ישר למייל ולא נעלמים בוואטסאפ.
+
+דקה אחת, טופס אחד — המייל שלך והמייל של המנהל/ת:
+{קישור}
+
+תודה רבה! 💛`;
+
+/* ===================== מצב ===================== */
+let SCHOOLS = [];                                  // מהבורד: שם, רכז/ת, טלפונים, האם מילא/ה
+let UPDATED = '';
+let STATE = { msg: DEFAULT_MSG, sent: {} };        // נשמר בגיליון — זמין גם מהמחשב וגם מהנייד
+let filter = 'todo', query = '';
+
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t,kind){ const el=document.getElementById('toast'); el.textContent=t; el.className='toast on'+(kind?' '+kind:''); clearTimeout(el._t); el._t=setTimeout(()=>el.className='toast',2400); }
+const digits = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+const waNum  = p => '972' + digits(p).replace(/^0/,'');
+const firstName = n => String(n||'').trim().split(/\s+/)[0] || '';
+const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+const normS = s => String(s==null?'':s).replace(/["'׳״`]/g,'').replace(/\d+/g,'').replace(/\s+/g,' ').trim();
+
+/* ===================== JSONP לגיליון ===================== */
+let jn = 0;
+function jsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='rscb_'+(jn++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{cl(); rej(new Error('timeout'));}, tmo||45000);
+    function cl(){ try{delete window[cb]}catch(e){window[cb]=undefined} s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{cl(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{cl(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+let saveT;
+function save(silent){
+  clearTimeout(saveT);
+  saveT=setTimeout(async()=>{
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams({action:'storeSet',secret:GS_SECRET,key:STORE_KEY,json:JSON.stringify(STATE)}).toString()});
+      if(!silent) toast('נשמר ✓','ok');
+    }catch(e){ toast('לא נשמר — בדקי אינטרנט','bad'); }
+  },400);
+}
+
+/* ===================== שליחה ישירה (Green API דרך ה-Apps Script) ===================== */
+/* אותם מפתחות localStorage כמו שאר דפי השליחה — מי שחיברה פעם אחת מחוברת בכל הדפים */
+const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
+const WA = { url: localStorage.getItem(MLS.url)||'', secret: localStorage.getItem(MLS.secret)||'', busy:false, stop:false };
+function waJsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    if(!WA.url){ rej(new Error('לא מחובר')); return; }
+    const cb='wacb_'+(jn++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{cl(); rej(new Error('timeout'));}, tmo||60000);
+    function cl(){ try{delete window[cb]}catch(e){window[cb]=undefined} s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{cl(); res(d);};
+    s.src = WA.url + (WA.url.indexOf('?')>-1?'&':'?') + new URLSearchParams(Object.assign({},params,{secret:WA.secret,callback:cb})).toString();
+    s.onerror=()=>{cl(); rej(new Error('network'));};
+    document.body.appendChild(s);
+  });
+}
+async function testConnection(){
+  WA.url=(document.getElementById('waUrl').value||'').trim();
+  WA.secret=(document.getElementById('waSecret').value||'').trim();
+  if(!WA.url){ toast('צריך להדביק כתובת /exec','bad'); return; }
+  try{
+    const r=await waJsonp({action:'groups'},30000);
+    if(!r||!r.ok) throw new Error((r&&r.error)||'שגיאה');
+    localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret);
+    toast('מחובר ✓','ok'); render();
+  }catch(e){ toast('החיבור נכשל: '+e.message,'bad'); }
+}
+async function sendDirect(s, quiet){
+  const ph = phoneOf(s);
+  if(!ph){ if(!quiet) toast('אין טלפון לבית הספר הזה','bad'); return false; }
+  const btn=document.querySelector('[data-direct="'+cssId(s.n)+'"]');
+  if(btn){ btn.disabled=true; btn.textContent='⏳'; }
+  try{
+    const r=await waJsonp({action:'send',chatIds:waNum(ph)+'@c.us',message:msgFor(s)},90000);
+    if(!r||!r.ok||!r.sent) throw new Error((r&&r.error)||'לא נשלח');
+    STATE.sent[s.n]=new Date().toISOString(); save(true);
+    if(!quiet) toast('נשלח ל'+(firstName(whoOf(s))||s.n)+' ✔','ok');
+    return true;
+  }catch(e){
+    if(!quiet) toast('שליחה נכשלה: '+e.message,'bad');
+    return false;
+  }finally{ render(); }
+}
+async function sendAllDirect(){
+  const list = shownList().filter(s=>statusOf(s)==='todo' && phoneOf(s));
+  if(!list.length){ toast('אין למי לשלוח בתצוגה הזו'); return; }
+  if(!confirm('לשלוח עכשיו '+list.length+' תזכורות מהוואטסאפ המחובר?\n\nההודעה תצא אחת-אחת, בהפרש של שנייה וחצי.')) return;
+  WA.busy=true; WA.stop=false; let ok=0; const fail=[];
+  for(let i=0;i<list.length;i++){
+    if(WA.stop) break;
+    const s=list[i];
+    const el=document.getElementById('waProg'); if(el) el.textContent='שולח ל'+s.n+'… ('+(i+1)+'/'+list.length+')';
+    const done = await sendDirect(s,true);
+    if(done) ok++; else fail.push(s.n);
+    if(i<list.length-1) await new Promise(r=>setTimeout(r,1800));
+  }
+  WA.busy=false; render();
+  toast('נשלחו '+ok+' מתוך '+list.length+(fail.length?' · נכשלו: '+fail.join(', '):''), fail.length?'bad':'ok');
+}
+
+/* ===================== הודעה וקישור ===================== */
+const toks = s => normS(s).split(' ').filter(w=>w.length>1);
+function formSchoolFor(name){
+  const t=normS(name); if(!t) return '';
+  let hit = FORM_SCHOOLS.find(x=>normS(x)===t);
+  if(hit) return hit;
+  hit = FORM_SCHOOLS.find(x=>{ const o=normS(x); return o&&(o.indexOf(t)!==-1||t.indexOf(o)!==-1); });
+  if(hit) return hit;
+  /* "תיכון אלאמאני סחנין 54100" בבורד מול "תיכון טכנולוגי אלאמאני סחנין" בטופס —
+     אף אחד לא מכיל את השני, אבל כל המילים של האחד נמצאות בשני. */
+  const tt=toks(name); if(tt.length<2) return '';
+  let best='', extra=Infinity;
+  FORM_SCHOOLS.forEach(x=>{
+    const ot=toks(x);
+    if(!(tt.every(w=>ot.indexOf(w)!==-1) || ot.every(w=>tt.indexOf(w)!==-1))) return;
+    const d=Math.abs(ot.length-tt.length);
+    if(d<extra){ extra=d; best=x; }
+  });
+  return best;
+}
+function linkFor(s){
+  const fs=formSchoolFor(s.n);
+  return FORM_URL + (fs ? '?school='+encodeURIComponent(fs) : '');
+}
+function whoOf(s){ return s.coord || s.mgr || ''; }
+function phoneOf(s){ return s.coordPhone || s.mgrPhone || ''; }
+function msgFor(s){
+  return (STATE.msg||DEFAULT_MSG)
+    .replace(/\{שם\}/g, firstName(whoOf(s)))
+    .replace(/\{שם מלא\}/g, whoOf(s))
+    .replace(/\{בית ספר\}/g, s.n)
+    .replace(/\{קישור\}/g, linkFor(s));
+}
+function waHref(s){ return 'https://wa.me/'+waNum(phoneOf(s))+'?text='+encodeURIComponent(msgFor(s)); }
+const cssId = n => String(n).replace(/[^֐-׿a-zA-Z0-9]/g,'_');
+
+/* ===================== טעינה ===================== */
+async function load(){
+  app.innerHTML='<div class="card"><p class="hint tight">טוען את הרשימה — מי מילא/ה ומה הטלפונים…</p></div>';
+  let apiOk=false;
+  try{
+    const j = await (await fetch(API_URL,{cache:'no-store'})).json();
+    SCHOOLS = j.schools||[]; UPDATED = j.updated||'';
+    apiOk = !!SCHOOLS.length;
+  }catch(e){}
+  // נוסח ההודעה ומי כבר קיבל/ה תזכורת — מהגיליון, כדי שיהיה זהה בנייד ובמחשב
+  try{
+    const r = await jsonp({action:'storeAll',secret:GS_SECRET});
+    if(r && r.ok){
+      const st = r.store||{};
+      if(st[STORE_KEY]) STATE = Object.assign({msg:DEFAULT_MSG,sent:{}}, st[STORE_KEY]);
+      if(!apiOk){
+        // גיבוי: בלי הבורד אין טלפונים, אבל אפשר להראות מי מילא/ה
+        const filled = Object.keys(st).filter(k=>k.indexOf('intake_rk_')===0).map(k=>st[k]).filter(x=>x&&x.school);
+        SCHOOLS = FORM_SCHOOLS.map(n=>{
+          const f = filled.find(x=>normS(x.school)===normS(n));
+          return {n:n, coord:f?((f.coordFirst||'')+' '+(f.coordLast||'')).trim():'', coordPhone:'', mgr:'', mgrPhone:'', filled:!!f, filledAt:f?f.ts:''};
+        });
+      }
+    }
+  }catch(e){}
+  if(!SCHOOLS.length){
+    app.innerHTML='<div class="card"><h2>לא הצלחתי לטעון</h2><p class="hint">אף מקור לא ענה. אפשר לרענן, או לפתוח את <a href="'+ADMIN_URL+'" target="_blank" rel="noopener">דף המעקב</a> ישירות.</p><button class="btn primary" onclick="load()">ניסיון נוסף</button></div>';
+    return;
+  }
+  render();
+}
+
+/* ===================== רינדור ===================== */
+function statusOf(s){
+  if(s.filled) return 'done';
+  if(STATE.sent[s.n]) return 'sent';
+  return 'todo';
+}
+function shownList(){
+  return SCHOOLS.filter(s=>{
+    const st=statusOf(s);
+    if(filter==='todo' && st==='done') return false;         // "לטיפול" = טרם מילאו (כולל מי שקיבל תזכורת)
+    if(filter==='sent' && st!=='sent') return false;
+    if(filter==='done' && st!=='done') return false;
+    if(query && (s.n+' '+whoOf(s)+' '+phoneOf(s)).indexOf(query)===-1) return false;
+    return true;
+  });
+}
+function render(){
+  const total=SCHOOLS.length;
+  const done=SCHOOLS.filter(s=>statusOf(s)==='done').length;
+  const sent=SCHOOLS.filter(s=>statusOf(s)==='sent').length;
+  const todo=SCHOOLS.filter(s=>statusOf(s)==='todo').length;
+  const noPhone=SCHOOLS.filter(s=>!s.filled && !phoneOf(s)).length;
+  const connected=!!(WA.url&&WA.secret);
+  const shown=shownList();
+  const pct=total?Math.round(done/total*100):0;
+
+  app.innerHTML = `
+  <div class="card">
+    <h2>📊 מצב המילוי <small>${UPDATED?'עודכן '+fmtDate(UPDATED):''}</small></h2>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <div class="stats">
+      <button class="st ${filter==='todo'?'on':''}" data-f="todo"><b>${todo+sent}</b>טרם מילאו</button>
+      <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${sent}</b>נשלחה תזכורת</button>
+      <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${done}</b>מילאו</button>
+      <button class="st ${filter==='all'?'on':''}" data-f="all"><b>${total}</b>הכל</button>
+    </div>
+    ${noPhone?`<p class="hint" style="margin-top:10px">${noPhone} בתי ספר בלי טלפון בבורד — אצלם אפשר רק להעתיק את ההודעה ולשלוח ידנית.</p>`:''}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button class="btn outline sm" id="reload">🔄 רענון</button>
+      <a class="btn outline sm" href="${ADMIN_URL}" target="_blank" rel="noopener">📋 דף המעקב</a>
+      <a class="btn outline sm" href="${FORM_URL}" target="_blank" rel="noopener">📝 הטופס</a>
+    </div>
+  </div>
+
+  <div class="card direct-card ${connected?'on':''}">
+    <h2>⚡ שליחה ישירה מהוואטסאפ שלך <small><span class="dot ${connected?'on':''}"></span>${connected?'מחובר':'לא מחובר'}</small></h2>
+    ${connected?`
+      <p class="hint">ההודעות יוצאות מהמספר שלך, אחת-אחת, בלי לפתוח את וואטסאפ בכלל.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn direct" id="sendAll" ${WA.busy?'disabled':''}>🚀 שליחה לכל מי שטרם מילא/ה (${shown.filter(s=>statusOf(s)==='todo'&&phoneOf(s)).length})</button>
+        ${WA.busy?`<button class="btn outline" id="stopAll">✋ עצירה</button>`:''}
+        <span class="hint tight" id="waProg"></span>
+      </div>
+      <details><summary>שינוי החיבור</summary>
+        <div style="display:grid;gap:8px;margin-top:8px">
+          <input class="field" id="waUrl" placeholder="כתובת /exec של גשר השליחה" value="${esc(WA.url)}">
+          <input class="field" id="waSecret" placeholder="סיסמה" value="${esc(WA.secret)}">
+          <button class="btn outline" id="waTest">בדיקת חיבור</button>
+        </div>
+      </details>`
+    :`
+      <p class="hint">בלי חיבור אפשר לשלוח דרך כפתור הוואטסאפ הרגיל בכל שורה. עם חיבור — הכל יוצא לבד.</p>
+      <div style="display:grid;gap:8px">
+        <input class="field" id="waUrl" placeholder="כתובת /exec של גשר השליחה" value="${esc(WA.url)}">
+        <input class="field" id="waSecret" placeholder="סיסמה" value="${esc(WA.secret)}">
+        <button class="btn outline" id="waTest">בדיקת חיבור</button>
+      </div>`}
+  </div>
+
+  <div class="card">
+    <h2>✉️ ההודעה <small>נשמרת בגיליון — זהה בנייד ובמחשב</small></h2>
+    <textarea class="field" id="msg">${esc(STATE.msg||DEFAULT_MSG)}</textarea>
+    <div class="tokens">
+      <span class="tok">משתנים:</span>
+      <span class="tok"><b>{שם}</b> שם פרטי של הרכז/ת</span>
+      <span class="tok"><b>{שם מלא}</b></span>
+      <span class="tok"><b>{בית ספר}</b></span>
+      <span class="tok"><b>{קישור}</b> קישור לטופס עם בית הספר מסומן מראש</span>
+    </div>
+    <p class="hint" style="margin-top:8px">${shown.length?'תצוגה מקדימה על '+esc(shown[0].n)+':':''}</p>
+    ${shown.length?`<div style="background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13.5px;white-space:pre-wrap">${esc(msgFor(shown[0]))}</div>`:''}
+  </div>
+
+  <div class="card">
+    <h2>🏫 בתי הספר <small>${shown.length} בתצוגה</small></h2>
+    <input class="field" id="q" placeholder="חיפוש בית ספר או רכז/ת…" value="${esc(query)}">
+    <div class="list">
+      ${shown.length?shown.map(rowHtml).join(''):'<div class="empty">אין בתי ספר בתצוגה הזו 🎉</div>'}
+    </div>
+  </div>
+
+  <div class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>`;
+
+  wire();
+}
+function rowHtml(s){
+  const st=statusOf(s);
+  const ph=phoneOf(s);
+  const who=whoOf(s);
+  const viaMgr = !s.coordPhone && !!s.mgrPhone;
+  const tag = st==='done'?`<span class="tag ok">מילא/ה ✓${s.filledAt?' · '+fmtDate(s.filledAt):''}</span>`
+            : st==='sent'?`<span class="tag yel">תזכורת נשלחה · ${fmtDate(STATE.sent[s.n])}</span>`
+            : `<span class="tag gray">טרם מילא/ה</span>`;
+  return `<div class="sc ${st}">
+    <div class="who">
+      <b>${esc(s.n)}</b>
+      <span>${who?esc(who):'<i>אין שם רכז/ת בבורד</i>'}${ph?' · <a href="tel:'+esc(digits(ph))+'" dir="ltr">'+esc(ph)+'</a>':''}${viaMgr?' · <span class="tag warn">הטלפון של המנהל/ת</span>':''}</span>
+      <span style="margin-top:3px">${tag}</span>
+    </div>
+    <div class="acts">
+      ${st!=='done'&&ph&&WA.url?`<button class="btn direct sm" data-direct="${cssId(s.n)}">🚀 ישיר</button>`:''}
+      ${st!=='done'&&ph?`<a class="btn wa sm" href="${waHref(s)}" target="_blank" rel="noopener" data-mark="${cssId(s.n)}">וואטסאפ</a>`:''}
+      <button class="btn outline sm" data-copy="${cssId(s.n)}">העתקה</button>
+      ${st==='sent'?`<button class="btn outline sm" data-undo="${cssId(s.n)}">בטלי סימון</button>`:''}
+    </div>
+  </div>`;
+}
+function byId(id){ return SCHOOLS.find(s=>cssId(s.n)===id); }
+function wire(){
+  document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ filter=b.dataset.f; render(); });
+  const rl=document.getElementById('reload'); if(rl) rl.onclick=()=>load();
+  const q=document.getElementById('q');
+  if(q) q.oninput=()=>{ query=q.value.trim(); const p=q.selectionStart; render(); const n=document.getElementById('q'); if(n){n.focus(); try{n.setSelectionRange(p,p)}catch(e){}} };
+  const msg=document.getElementById('msg');
+  if(msg) msg.onchange=()=>{ STATE.msg=msg.value; save(); render(); };
+  const t=document.getElementById('waTest'); if(t) t.onclick=testConnection;
+  const sa=document.getElementById('sendAll'); if(sa) sa.onclick=sendAllDirect;
+  const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית'); };
+  document.querySelectorAll('[data-direct]').forEach(b=>b.onclick=()=>sendDirect(byId(b.dataset.direct)));
+  document.querySelectorAll('[data-mark]').forEach(a=>a.onclick=()=>{
+    const s=byId(a.dataset.mark); if(!s) return;
+    STATE.sent[s.n]=new Date().toISOString(); save(true); setTimeout(render,400);
+  });
+  document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{
+    const s=byId(b.dataset.copy); if(!s) return;
+    try{ await navigator.clipboard.writeText(msgFor(s)); toast('ההודעה הועתקה ✓','ok'); }
+    catch(e){ toast('לא הצלחתי להעתיק','bad'); }
+  });
+  document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>{
+    const s=byId(b.dataset.undo); if(!s) return;
+    delete STATE.sent[s.n]; save(true); render();
+  });
+}
+
+load();
+</script>
+</body>
+</html>
