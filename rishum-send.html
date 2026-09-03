@@ -118,8 +118,44 @@ const ADMIN_URL = FORM_URL + '?admin=hopa';
    שמות הבורד לא זהים (סמל מוסד, גרשיים), ולכן ההתאמה מנורמלת. */
 const FORM_SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מבואות חרמון שבילי הצפון','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים כרמיאל','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
 
+/* ===================== מצב רשימות הבוגרים לכל בית ספר =====================
+   ממופה לפי השם **כפי שהוא בבורד** (מה ש-/api/schools מחזיר), לא לפי שם הרשימה —
+   כדי שלא תהיה שום התאמה מטושטשת בטקסט שנשלח החוצה לבתי הספר.
+   המקור: טאב "רשימות בוגרים" בהופה דש, נכון ל-2.9.2026. נוסח פונה-לבית-ספר:
+   רק מה שהם צריכים להשלים, בלי הערות פנימיות. */
+const ALUMNI = {
+  /* --- שלחו, והרשימה מלאה --- */
+  'אורט צור ברק':        {state:'ok',   t:'הרשימה שקיבלנו מכם מלאה: 50 בוגרים עם תעודת זהות וטלפון. תודה.'},
+  'מנאראת טורעאן':       {state:'ok',   t:'הרשימה שקיבלנו מכם מלאה: 37 בוגרים עם תעודת זהות וטלפון. תודה.'},
+  'אורט בית הערבה':      {state:'ok',   t:'הרשימה שקיבלנו מכם מלאה: תעודת זהות וטלפון לכולם. תודה.'},
+
+  /* --- שלחו, וחסרים פרטים --- */
+  'אורט מרום עכו':       {state:'gaps', t:'מתוך 354 הבוגרים שקיבלנו מכם, ל-4 אין מספר טלפון: אלבין שגייב, ולרי רקיטיאנסקי, לירון נעים ורחלי עזריה.'},
+  'התיכון החברתי תל אביב יפו': {state:'gaps', t:'מתוך 121 הבוגרים שקיבלנו מכם, ל-5 אין מספר טלפון: אמה פסי, גיל באום, טל בן צבי זלמן, עומרי לבינסון ורוני מישריקי. בנוסף לא קיבלנו מגדר ועיר מגורים לאף אחד.'},
+  'תיכון אלאמאני סחנין 54100': {state:'gaps', t:'מתוך 75 הבוגרים שקיבלנו מכם, ל-3 אין מספר טלפון: מוחמד שיני, עדי חוסין וריאן שלאעטה. בנוסף קיבלנו רק את מחזור תשפ"ו, ונשמח לקבל גם את המחזורים הקודמים.'},
+  'עתיד שמיים מוצקין':   {state:'gaps', t:'מתוך 141 הבוגרים שקיבלנו מכם, ל-3 אין תעודת זהות: אור סוויסה, בוגדן דוחוטה וויקטור ז\'מנקוב.'},
+  'עתיד יוצר מגשימים':   {state:'gaps', t:'מתוך 193 הבוגרים שקיבלנו מכם, לאף אחד אין מספר טלפון. הקובץ שקיבלנו לא כלל טלפונים בכלל. בנוסף חסרים לנו בוגרי תשפ"א, ויש 3 תעודות זהות לא תקינות.'},
+  'עתיד יוצר מגשימים בית שאן': {state:'gaps', t:'מתוך 77 הבוגרים שקיבלנו מכם, לאף אחד אין תעודת זהות, ול-30 מהם גם אין טלפון. בלי תעודת זהות אי אפשר לזהות בוגר בוודאות.'},
+  'אורט אדיבי אשקלון':   {state:'gaps', t:'מתוך 297 הבוגרים שקיבלנו מכם, ל-244 אין תעודת זהות.'}
+
+  /* כל השאר: טרם שלחו רשימה — נופלים לברירת המחדל למטה */
+};
+const ALUMNI_MISSING = 'עוד לא קיבלנו מכם את רשימת הבוגרים. אנחנו צריכים קובץ עם שם מלא, תעודת זהות, תאריך לידה ומספר טלפון לכל בוגר, וזה מה שיאפשר לנו להתחיל לפעול.';
+const ALUMNI_FIX     = ' נשמח שתשלימו ותשלחו לנו חזרה, ואם יש לכם גם תאריך לידה לכל בוגר זה יעזור מאוד.';
+const ALUMNI_OK_ADD  = ' אם הצטרפו בוגרים או מחזורים מאז, נשמח לקבל גם אותם.';
+function alumniOf(name){
+  const a = ALUMNI[name];
+  if(!a) return {state:'missing', t:ALUMNI_MISSING};
+  if(a.state==='gaps') return {state:'gaps', t:a.t+ALUMNI_FIX};
+  return {state:'ok', t:a.t+ALUMNI_OK_ADD};
+}
+
 /* בלי סימני שאלה ובלי תווים מיוחדים (גרשיים עבריים, מקף ארוך) — הם לא תמיד
    מוצגים נכון בוואטסאפ, ואצל חלק מהמכשירים הופכים לסימני שאלה. */
+/* אותה מפה כמו ב-rishum.html — קוד קצר לכל בית ספר, כדי שהקישור בוואטסאפ יהיה נקי. */
+const CODES = {"ashkelon":"אורט אדיבי אשקלון","haaraba":"אורט בית הערבה","carmel":"אורט כרמל חיפה","akko":"אורט מרום עכו","tzurbarak":"אורט צור ברק","drorgalil":"דרור גליל","navemidbar":"דרור נווה מדבר","mitzperamon":"התיכון החברתי מצפה רמון","telaviv":"התיכון החברתי תל אביב יפו","telsheva":"טכנולוגי אלמסתקבל תל שבע","lakiya":"טכנולוגי לקייה","hermon":"מבואות חרמון שבילי הצפון","turan":"מנאראת טורעאן","nehalim":"מרכז תורני טכנולוגי נחלים","rahat":"עמל טכנולוגי רהט","natzrat":"עמל נצרת","ramatdavid":"עמל רמת דוד","birmaksur":"עתיד אבדאע ביר אלמכסור","karmiel":"עתיד יוצר מגשימים כרמיאל","beitshean":"עתיד יוצר מגשימים בית שאן","motzkin":"עתיד שמיים מוצקין","yarka":"תיכון ח׳טוואת ירכא אבו סנאן","hoshen":"תיכון חושן","sakhnin":"תיכון טכנולוגי אלאמאני סחנין","ashdod":"תיכון יוצר עמל טכנולוגי אשדוד","julis":"תיכון יוצר עתיד בנות ג׳וליס","palmachim":"תיכון יוצר עתיד פלמחים","sheikh":"תיכון שיח"};
+const SLUG_OF = Object.fromEntries(Object.entries(CODES).map(([k,v])=>[v,k]));
+
 const DEFAULT_MSG = `היי {שם} 👋 זו מיטל מהופה.
 
 עולה לאוויר מערכת בוגרים חדשה. היא תרכז את כל נתוני הבוגרים של {בית ספר} במקום אחד, תיתן לכם לנטר את הנתונים לאורך השנה ולפעול לפי מה שרואים בזמן אמת.
@@ -127,12 +163,24 @@ const DEFAULT_MSG = `היי {שם} 👋 זו מיטל מהופה.
 כדי לפתוח לכם גישה אני צריכה את המייל שלך ואת המייל של המנהל/ת. דקה אחת, טופס אחד:
 {קישור}
 
+ועוד משהו: {בוגרים}
+
+תודה רבה 💛`;
+
+/* בית ספר שכבר מילא את הטופס אבל עדיין חייב לנו רשימת בוגרים —
+   אין טעם לבקש ממנו מיילים שוב. הדף בוחר לבד את הנוסח הנכון. */
+const DEFAULT_MSG_ALUMNI = `היי {שם} 👋 זו מיטל מהופה, ותודה שהשארת לנו את המיילים.
+
+עולה לאוויר מערכת בוגרים חדשה. היא תרכז את כל נתוני הבוגרים של {בית ספר} במקום אחד, תיתן לכם לנטר את הנתונים לאורך השנה ולפעול לפי מה שרואים בזמן אמת.
+
+ועוד משהו: {בוגרים}
+
 תודה רבה 💛`;
 
 /* ===================== מצב ===================== */
 let SCHOOLS = [];                                  // מהבורד: שם, רכז/ת, טלפונים, האם מילא/ה
 let UPDATED = '';
-let STATE = { msg: DEFAULT_MSG, sent: {} };        // נשמר בגיליון — זמין גם מהמחשב וגם מהנייד
+let STATE = { msg: DEFAULT_MSG, msgAlumni: DEFAULT_MSG_ALUMNI, sent: {} };        // נשמר בגיליון — זמין גם מהמחשב וגם מהנייד
 let filter = 'todo', query = '';
 
 const app = document.getElementById('app');
@@ -217,8 +265,9 @@ async function sendDirect(s, quiet){
     return false;
   }finally{ render(); }
 }
+function bulkList(){ return shownList().filter(s=>needsMsg(s) && phoneOf(s) && !STATE.sent[s.n]); }
 async function sendAllDirect(){
-  const list = shownList().filter(s=>statusOf(s)==='todo' && phoneOf(s));
+  const list = bulkList();
   if(!list.length){ toast('אין למי לשלוח בתצוגה הזו'); return; }
   if(!confirm('לשלוח עכשיו '+list.length+' תזכורות מהוואטסאפ המחובר?\n\nההודעה תצא אחת-אחת, בהפרש של שנייה וחצי.')) return;
   WA.busy=true; WA.stop=false; let ok=0; const fail=[];
@@ -256,15 +305,23 @@ function formSchoolFor(name){
 }
 function linkFor(s){
   const fs=formSchoolFor(s.n);
-  return FORM_URL + (fs ? '?school='+encodeURIComponent(fs) : '');
+  const code=fs?SLUG_OF[fs]:'';
+  /* קוד קצר במקום השם המקודד — הקישור בהודעה נשאר קריא ולא שרשרת %D7% */
+  return FORM_URL + (code ? '?s='+code : (fs ? '?school='+encodeURIComponent(fs) : ''));
 }
+/* בבורד יש שם עם סמל מוסד בסוף ("... סחנין 54100") — לא שולחים את זה לבית הספר */
+function niceName(n){ return String(n||'').replace(/\s*\d{4,}\s*$/,'').trim(); }
 function whoOf(s){ return s.coord || s.mgr || ''; }
 function phoneOf(s){ return s.coordPhone || s.mgrPhone || ''; }
+/* למי בכלל יש מה להגיד: או שלא מילא/ה את הטופס, או שרשימת הבוגרים שלו/ה חסרה */
+function needsMsg(s){ return !s.filled || alumniOf(s.n).state!=='ok'; }
 function msgFor(s){
-  return (STATE.msg||DEFAULT_MSG)
+  const tpl = s.filled ? (STATE.msgAlumni||DEFAULT_MSG_ALUMNI) : (STATE.msg||DEFAULT_MSG);
+  return tpl
     .replace(/\{שם\}/g, firstName(whoOf(s)))
     .replace(/\{שם מלא\}/g, whoOf(s))
-    .replace(/\{בית ספר\}/g, s.n)
+    .replace(/\{בית ספר\}/g, niceName(s.n))
+    .replace(/\{בוגרים\}/g, alumniOf(s.n).t)
     .replace(/\{קישור\}/g, linkFor(s));
 }
 function waHref(s){ return 'https://wa.me/'+waNum(phoneOf(s))+'?text='+encodeURIComponent(msgFor(s)); }
@@ -284,7 +341,7 @@ async function load(){
     const r = await jsonp({action:'storeAll',secret:GS_SECRET});
     if(r && r.ok){
       const st = r.store||{};
-      if(st[STORE_KEY]) STATE = Object.assign({msg:DEFAULT_MSG,sent:{}}, st[STORE_KEY]);
+      if(st[STORE_KEY]) STATE = Object.assign({msg:DEFAULT_MSG,msgAlumni:DEFAULT_MSG_ALUMNI,sent:{}}, st[STORE_KEY]);
       if(!apiOk){
         // גיבוי: בלי הבורד אין טלפונים, אבל אפשר להראות מי מילא/ה
         const filled = Object.keys(st).filter(k=>k.indexOf('intake_rk_')===0).map(k=>st[k]).filter(x=>x&&x.school);
@@ -314,6 +371,7 @@ function shownList(){
     if(filter==='todo' && st==='done') return false;         // "לטיפול" = טרם מילאו (כולל מי שקיבל תזכורת)
     if(filter==='sent' && st!=='sent') return false;
     if(filter==='done' && st!=='done') return false;
+    if(filter==='alumni' && alumniOf(s.n).state==='ok') return false;
     if(query && (s.n+' '+whoOf(s)+' '+phoneOf(s)).indexOf(query)===-1) return false;
     return true;
   });
@@ -324,6 +382,7 @@ function render(){
   const sent=SCHOOLS.filter(s=>statusOf(s)==='sent').length;
   const todo=SCHOOLS.filter(s=>statusOf(s)==='todo').length;
   const noPhone=SCHOOLS.filter(s=>!s.filled && !phoneOf(s)).length;
+  const alGaps=SCHOOLS.filter(s=>alumniOf(s.n).state!=='ok').length;
   const connected=!!(WA.url&&WA.secret);
   const shown=shownList();
   const pct=total?Math.round(done/total*100):0;
@@ -335,6 +394,7 @@ function render(){
     <div class="stats">
       <button class="st ${filter==='todo'?'on':''}" data-f="todo"><b>${todo+sent}</b>טרם מילאו</button>
       <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${sent}</b>נשלחה תזכורת</button>
+      <button class="st ${filter==='alumni'?'on':''}" data-f="alumni"><b>${alGaps}</b>חסר בוגרים</button>
       <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${done}</b>מילאו</button>
       <button class="st ${filter==='all'?'on':''}" data-f="all"><b>${total}</b>הכל</button>
     </div>
@@ -351,7 +411,7 @@ function render(){
     ${connected?`
       <p class="hint">ההודעות יוצאות מהמספר שלך, אחת-אחת, בלי לפתוח את וואטסאפ בכלל.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <button class="btn direct" id="sendAll" ${WA.busy?'disabled':''}>🚀 שליחה לכל מי שטרם מילא/ה (${shown.filter(s=>statusOf(s)==='todo'&&phoneOf(s)).length})</button>
+        <button class="btn direct" id="sendAll" ${WA.busy?'disabled':''}>🚀 שליחה לכל מי שחסר לו משהו (${bulkList().length})</button>
         ${WA.busy?`<button class="btn outline" id="stopAll">✋ עצירה</button>`:''}
         <span class="hint tight" id="waProg"></span>
       </div>
@@ -372,13 +432,19 @@ function render(){
   </div>
 
   <div class="card">
-    <h2>✉️ ההודעה <small>נשמרת בגיליון — זהה בנייד ובמחשב</small></h2>
-    <textarea class="field" id="msg">${esc(STATE.msg||DEFAULT_MSG)}</textarea>
+    <h2>✉️ ההודעה <small>נשמרת בגיליון, זהה בנייד ובמחשב</small></h2>
+    <p class="hint tight">למי שטרם מילא/ה את הטופס:</p>
+    <textarea class="field" id="msg" style="margin-top:6px">${esc(STATE.msg||DEFAULT_MSG)}</textarea>
+    <details><summary>נוסח שני: למי שכבר מילא/ה אבל חייב/ת לנו רשימת בוגרים</summary>
+      <p class="hint tight" style="margin-top:6px">הדף בוחר לבד את הנוסח הנכון לכל בית ספר, בלי לבקש מיילים ממי שכבר שלח/ה.</p>
+      <textarea class="field" id="msgAl" style="margin-top:6px">${esc(STATE.msgAlumni||DEFAULT_MSG_ALUMNI)}</textarea>
+    </details>
     <div class="tokens">
       <span class="tok">משתנים:</span>
       <span class="tok"><b>{שם}</b> שם פרטי של הרכז/ת</span>
       <span class="tok"><b>{שם מלא}</b></span>
       <span class="tok"><b>{בית ספר}</b></span>
+      <span class="tok"><b>{בוגרים}</b> מה חסר בדיוק ברשימת הבוגרים שלהם</span>
       <span class="tok"><b>{קישור}</b> קישור לטופס עם בית הספר מסומן מראש</span>
     </div>
     <p class="hint" style="margin-top:8px">${shown.length?'תצוגה מקדימה על '+esc(shown[0].n)+':':''}</p>
@@ -405,15 +471,19 @@ function rowHtml(s){
   const tag = st==='done'?`<span class="tag ok">מילא/ה ✓${s.filledAt?' · '+fmtDate(s.filledAt):''}</span>`
             : st==='sent'?`<span class="tag yel">תזכורת נשלחה · ${fmtDate(STATE.sent[s.n])}</span>`
             : `<span class="tag gray">טרם מילא/ה</span>`;
+  const al = alumniOf(s.n);
+  const alTag = al.state==='ok'?`<span class="tag ok">בוגרים: רשימה מלאה</span>`
+              : al.state==='gaps'?`<span class="tag yel">בוגרים: חסרים פרטים</span>`
+              : `<span class="tag warn">בוגרים: לא נשלחה רשימה</span>`;
   return `<div class="sc ${st}">
     <div class="who">
       <b>${esc(s.n)}</b>
       <span>${who?esc(who):'<i>אין שם רכז/ת בבורד</i>'}${ph?' · <a href="tel:'+esc(digits(ph))+'" dir="ltr">'+esc(ph)+'</a>':''}${viaMgr?' · <span class="tag warn">הטלפון של המנהל/ת</span>':''}</span>
-      <span style="margin-top:3px">${tag}</span>
+      <span style="margin-top:3px;display:flex;gap:5px;flex-wrap:wrap">${tag}${alTag}</span>
     </div>
     <div class="acts">
-      ${st!=='done'&&ph&&WA.url?`<button class="btn direct sm" data-direct="${cssId(s.n)}">🚀 ישיר</button>`:''}
-      ${st!=='done'&&ph?`<a class="btn wa sm" href="${waHref(s)}" target="_blank" rel="noopener" data-mark="${cssId(s.n)}">וואטסאפ</a>`:''}
+      ${needsMsg(s)&&ph&&WA.url?`<button class="btn direct sm" data-direct="${cssId(s.n)}">🚀 ישיר</button>`:''}
+      ${needsMsg(s)&&ph?`<a class="btn wa sm" href="${waHref(s)}" target="_blank" rel="noopener" data-mark="${cssId(s.n)}">וואטסאפ</a>`:''}
       <button class="btn outline sm" data-copy="${cssId(s.n)}">העתקה</button>
       ${st==='sent'?`<button class="btn outline sm" data-undo="${cssId(s.n)}">בטלי סימון</button>`:''}
     </div>
@@ -427,6 +497,8 @@ function wire(){
   if(q) q.oninput=()=>{ query=q.value.trim(); const p=q.selectionStart; render(); const n=document.getElementById('q'); if(n){n.focus(); try{n.setSelectionRange(p,p)}catch(e){}} };
   const msg=document.getElementById('msg');
   if(msg) msg.onchange=()=>{ STATE.msg=msg.value; save(); render(); };
+  const msgAl=document.getElementById('msgAl');
+  if(msgAl) msgAl.onchange=()=>{ STATE.msgAlumni=msgAl.value; save(); render(); };
   const t=document.getElementById('waTest'); if(t) t.onclick=testConnection;
   const sa=document.getElementById('sendAll'); if(sa) sa.onclick=sendAllDirect;
   const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית'); };
