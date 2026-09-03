@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>רישום רכזי בוגרים · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --bad:#d9534f;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+    --shadow-lg:0 12px 40px rgba(43,43,51,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:560px;margin:0 auto;padding:0 14px 40px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .site{color:#fff;font-size:12px;opacity:.85;text-decoration:none}
+  .hero h1{margin:0;font-size:22px;font-weight:800;line-height:1.25}
+  .hero p{margin:0;opacity:.93;font-size:14px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:20px 18px;margin-top:16px}
+  .sect{margin:0 0 6px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .sect .dot{width:9px;height:9px;border-radius:99px;background:var(--yellow);box-shadow:0 0 0 3px var(--yellow-soft)}
+  .sect.b .dot{background:var(--pink);box-shadow:0 0 0 3px var(--pink-soft)}
+  .hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+  .f{margin-bottom:13px}
+  .f label{display:block;font-size:13.5px;font-weight:600;margin-bottom:5px}
+  .f .req{color:var(--pink)}
+  input,select{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:13px;background:#fff;transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-soft)}
+  input.bad{border-color:var(--bad);background:#fff7f7}
+  .row{display:flex;gap:10px}
+  .row>.f{flex:1;min-width:0}
+  .sep{height:1px;background:var(--line);margin:20px 0}
+  .btn{display:block;width:100%;background:var(--pink);color:#fff;font-size:17px;font-weight:800;border-radius:15px;padding:15px;box-shadow:0 6px 18px rgba(232,52,138,.28);transition:transform .12s,opacity .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:disabled{opacity:.55;transform:none;cursor:default}
+  .err{color:var(--bad);font-size:13.5px;margin-top:10px;min-height:19px;text-align:center;font-weight:600}
+  .foot{text-align:center;font-size:12px;color:var(--muted);margin-top:18px}
+  .foot a{font-weight:700}
+
+  .done{text-align:center;padding:34px 20px}
+  .done .em{font-size:52px;line-height:1;margin-bottom:8px}
+  .done h2{margin:0 0 8px;font-size:22px;font-weight:800}
+  .done p{margin:0 0 6px;color:var(--muted);font-size:14.5px}
+  .again{margin-top:16px;background:none;border:1.5px solid var(--line);border-radius:13px;padding:11px 20px;font-weight:700;font-size:14px;color:var(--pink-dark)}
+
+  /* תצוגת ניהול */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 7px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th{font-size:11.5px;color:var(--muted);font-weight:700;white-space:nowrap}
+  td.em{direction:ltr;text-align:right;font-size:12.5px;word-break:break-all}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tool{background:var(--yellow);color:#000;font-weight:800;font-size:13px;border-radius:11px;padding:9px 15px}
+  .tool.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .stat{display:inline-block;background:var(--pink-soft);color:var(--pink-dark);font-weight:800;border-radius:99px;padding:4px 13px;font-size:13px;margin-bottom:12px}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:13px;font-size:14px;font-weight:600;transition:transform .25s;z-index:9}
+  .toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="brand">
+      <span class="logobox"><img src="hopa-logo.png" alt="הופה"></span>
+      <a class="site" href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il ↗</a>
+    </div>
+    <h1 id="h1">רישום רכזי בוגרים</h1>
+    <p id="sub">כמה פרטים קצרים, ואתם בפנים 💛</p>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== הגדרות ===================== */
+const EXEC_URL   = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET  = 'hopa-nihul-2026';   // לתצוגת הניהול בלבד
+const KEY_PREFIX = 'rk_';               // בגיליון "נתונים": intake_rk_<id>
+const ADMIN_PARAM= 'hopa';              // rishum.html?admin=hopa
+const DRAFT_KEY  = 'hopa_rishum_draft_v1';
+
+const SCHOOLS = ['אולפנת עתיד בת עמי','אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מבואות חרמון שבילי הצפון','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים כרמיאל','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
+
+const qs   = new URLSearchParams(location.search);
+const PRE  = { school: qs.get('school') || '' };
+const app  = document.getElementById('app');
+const esc  = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const okMail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim());
+
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); setTimeout(()=>el.classList.remove('on'),2200); }
+
+/* ===================== הטופס ===================== */
+const FIELDS = [
+  {k:'school',   l:'בית הספר',                t:'select'},
+  {k:'cFirst',   l:'השם הפרטי שלך',           t:'text', ac:'given-name'},
+  {k:'cLast',    l:'שם המשפחה שלך',           t:'text', ac:'family-name'},
+  {k:'cMail',    l:'המייל שלך',               t:'email',ac:'email'},
+  {k:'mFirst',   l:'שם פרטי של המנהל/ת',      t:'text'},
+  {k:'mLast',    l:'שם משפחה של המנהל/ת',     t:'text'},
+  {k:'mMail',    l:'המייל של המנהל/ת',        t:'email'}
+];
+
+let state = load();
+function load(){ try{ return JSON.parse(localStorage.getItem(DRAFT_KEY)) || {a:{school:PRE.school},sent:false}; }catch(e){ return {a:{school:PRE.school},sent:false}; } }
+function save(){ try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); }catch(e){} }
+
+function field(f){
+  const v = esc(state.a[f.k]||'');
+  if(f.t==='select') return `<div class="f"><label for="${f.k}">${f.l} <span class="req">*</span></label>
+    <select id="${f.k}"><option value="">בחרו מהרשימה…</option>
+      ${SCHOOLS.map(s=>`<option value="${esc(s)}"${state.a.school===s?' selected':''}>${esc(s)}</option>`).join('')}
+    </select></div>`;
+  return `<div class="f"><label for="${f.k}">${f.l} <span class="req">*</span></label>
+    <input id="${f.k}" type="${f.t}" value="${v}" ${f.ac?`autocomplete="${f.ac}"`:''}
+      ${f.t==='email'?'inputmode="email" dir="ltr" style="text-align:right"':''}></div>`;
+}
+
+function renderForm(){
+  app.innerHTML = `
+  <form class="card" id="frm" novalidate>
+    <div class="sect"><span class="dot"></span>בית הספר</div>
+    <p class="hint">כדי שנדע מי מילא/ה — בוחרים מהרשימה.</p>
+    ${field(FIELDS[0])}
+    <div class="sep"></div>
+    <div class="sect"><span class="dot"></span>רכז/ת הבוגרים</div>
+    <p class="hint">הפרטים שלך.</p>
+    <div class="row">${field(FIELDS[1])}${field(FIELDS[2])}</div>
+    ${field(FIELDS[3])}
+    <div class="sep"></div>
+    <div class="sect b"><span class="dot"></span>מנהל/ת בית הספר</div>
+    <p class="hint">כדי שגם המנהל/ת יקבלו גישה למערכת.</p>
+    <div class="row">${field(FIELDS[4])}${field(FIELDS[5])}</div>
+    ${field(FIELDS[6])}
+    <div class="sep"></div>
+    <button class="btn" id="go" type="submit">שליחה 🚀</button>
+    <div class="err" id="err"></div>
+  </form>
+  <div class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> — פתאום הכל נראה אפשרי!</div>`;
+
+  FIELDS.forEach(f=>{
+    const el=document.getElementById(f.k);
+    el.oninput = el.onchange = ()=>{ state.a[f.k]=el.value; el.classList.remove('bad'); save(); };
+  });
+  document.getElementById('frm').onsubmit = e => { e.preventDefault(); submit(); };
+}
+
+async function submit(){
+  const err=document.getElementById('err'); err.textContent='';
+  let bad=null;
+  for(const f of FIELDS){
+    const el=document.getElementById(f.k), v=(state.a[f.k]||'').trim();
+    const invalid = !v || (f.t==='email' && !okMail(v));
+    el.classList.toggle('bad', invalid);
+    if(invalid && !bad) bad=f;
+  }
+  if(bad){
+    err.textContent = bad.t==='email' && (state.a[bad.k]||'').trim() ? 'כתובת המייל לא נראית תקינה' : 'צריך למלא את כל השדות';
+    document.getElementById(bad.k).focus(); return;
+  }
+  const btn=document.getElementById('go'); btn.disabled=true; btn.textContent='שולח…';
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  const a = state.a;
+  const payload = {
+    name: (a.cFirst+' '+a.cLast).trim(),          // שדה חובה לתצוגת הניהול
+    school: a.school,
+    coordFirst: a.cFirst.trim(), coordLast: a.cLast.trim(), coordMail: a.cMail.trim(),
+    mgrFirst: a.mFirst.trim(),  mgrLast: a.mLast.trim(),   mgrMail: a.mMail.trim(),
+    ts: new Date().toISOString()
+  };
+  try{
+    await fetch(EXEC_URL, { method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({ action:'intakeSubmit', school: KEY_PREFIX+id, json: JSON.stringify(payload) }).toString() });
+    state.sent=true; save(); renderDone(a);
+  }catch(e){
+    btn.disabled=false; btn.textContent='שליחה 🚀';
+    err.textContent='לא הצלחנו לשלוח — בדקו חיבור לאינטרנט ונסו שוב. הפרטים שמורים.';
+  }
+}
+
+function renderDone(a){
+  document.getElementById('h1').textContent='תודה!';
+  document.getElementById('sub').textContent='הפרטים התקבלו';
+  app.innerHTML = `
+  <div class="card done">
+    <div class="em">💛</div>
+    <h2>נרשמת, ${esc((a.cFirst||'').trim())}!</h2>
+    <p>קיבלנו את הפרטים שלך ושל המנהל/ת מ<b>${esc(a.school)}</b>.</p>
+    <p>נפתח לכם גישה למערכת ונעדכן במייל.</p>
+    <button class="again" id="again">מילוי עבור בית ספר נוסף</button>
+  </div>
+  <div class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>`;
+  document.getElementById('again').onclick=()=>{
+    state={a:{},sent:false}; save();
+    document.getElementById('h1').textContent='רישום רכזי בוגרים';
+    document.getElementById('sub').textContent='כמה פרטים קצרים, ואתם בפנים 💛';
+    renderForm(); window.scrollTo({top:0,behavior:'smooth'});
+  };
+}
+
+/* ===================== תצוגת ניהול ===================== */
+function jsonp(params){
+  return new Promise((res,rej)=>{
+    const cb='cb_'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    window[cb]=d=>{ res(d); delete window[cb]; s.remove(); };
+    s.onerror=()=>{ rej(new Error('network')); delete window[cb]; s.remove(); };
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    document.body.appendChild(s);
+  });
+}
+
+async function renderAdmin(){
+  document.getElementById('h1').textContent='רישום רכזי בוגרים — ניהול';
+  document.getElementById('sub').textContent='מי כבר מילא/ה';
+  app.innerHTML='<div class="card"><p class="hint">טוען…</p></div>';
+  let store={};
+  try{ const r=await jsonp({action:'storeAll', secret:GS_SECRET}); if(!r.ok) throw 0; store=r.store; }
+  catch(e){ app.innerHTML='<div class="card"><p class="err">לא הצלחנו לטעון את הנתונים.</p></div>'; return; }
+
+  const rows = Object.keys(store).filter(k=>k.startsWith('intake_'+KEY_PREFIX))
+    .map(k=>store[k]||{}).filter(x=>x.school)
+    .sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+
+  const filled = new Set(rows.map(r=>r.school));
+  const missing = SCHOOLS.filter(s=>!filled.has(s));
+
+  app.innerHTML = `
+  <div class="card">
+    <span class="stat">${rows.length} רישומים · ${filled.size} מתוך ${SCHOOLS.length} בתי ספר</span>
+    <div class="tools">
+      <button class="tool" id="csv">הורדת CSV</button>
+      <button class="tool ghost" id="mails">העתקת כל המיילים</button>
+    </div>
+    ${rows.length?`<table><thead><tr><th>בית ספר</th><th>רכז/ת</th><th>מייל רכז/ת</th><th>מנהל/ת</th><th>מייל מנהל/ת</th></tr></thead><tbody>
+      ${rows.map(r=>`<tr>
+        <td>${esc(r.school)}</td>
+        <td>${esc((r.coordFirst||'')+' '+(r.coordLast||''))}</td>
+        <td class="em">${esc(r.coordMail)}</td>
+        <td>${esc((r.mgrFirst||'')+' '+(r.mgrLast||''))}</td>
+        <td class="em">${esc(r.mgrMail)}</td></tr>`).join('')}
+    </tbody></table>`:'<p class="hint">עדיין אין רישומים.</p>'}
+  </div>
+  ${missing.length?`<div class="card">
+    <div class="sect b"><span class="dot"></span>טרם מילאו · ${missing.length}</div>
+    <p class="hint">${missing.map(esc).join(' · ')}</p></div>`:''}
+  <div class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>`;
+
+  document.getElementById('csv').onclick=()=>{
+    const head=['בית ספר','שם פרטי רכז/ת','שם משפחה רכז/ת','מייל רכז/ת','שם פרטי מנהל/ת','שם משפחה מנהל/ת','מייל מנהל/ת','נשלח'];
+    const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+    const csv=[head.map(q).join(',')].concat(rows.map(r=>[r.school,r.coordFirst,r.coordLast,r.coordMail,r.mgrFirst,r.mgrLast,r.mgrMail,r.ts].map(q).join(','))).join('\r\n');
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));
+    a.download='רישום-רכזי-בוגרים.csv'; a.click();
+  };
+  document.getElementById('mails').onclick=()=>{
+    const all=rows.flatMap(r=>[r.coordMail,r.mgrMail]).filter(Boolean);
+    navigator.clipboard.writeText([...new Set(all)].join(', ')); toast('הועתקו '+new Set(all).size+' מיילים');
+  };
+}
+
+/* ===================== התחלה ===================== */
+if(qs.get('admin')===ADMIN_PARAM) renderAdmin();
+else if(state.sent) renderDone(state.a);
+else renderForm();
+</script>
+</body>
+</html>
