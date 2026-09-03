@@ -169,7 +169,12 @@ function save(silent){
 /* ===================== שליחה ישירה (Green API דרך ה-Apps Script) ===================== */
 /* אותם מפתחות localStorage כמו שאר דפי השליחה — מי שחיברה פעם אחת מחוברת בכל הדפים */
 const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
-const WA = { url: localStorage.getItem(MLS.url)||'', secret: localStorage.getItem(MLS.secret)||'', busy:false, stop:false };
+/* גישה בטוחה לאחסון: בדפדפני נייד שחוסמים "עוגיות ונתוני אתרים" (ספארי · הדפדפן
+   הפנימי של וואטסאפ · גלישה פרטית) עצם הפנייה ל-localStorage זורקת שגיאה ומפילה
+   את כל הדף. הכל עטוף — הדף ייטען גם בלי אחסון, פשוט בלי לזכור את החיבור. */
+function lsGet(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ window.localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+const WA = { url: lsGet(MLS.url)||'', secret: lsGet(MLS.secret)||'', busy:false, stop:false };
 function waJsonp(params, tmo){
   return new Promise((res,rej)=>{
     if(!WA.url){ rej(new Error('לא מחובר')); return; }
@@ -189,7 +194,7 @@ async function testConnection(){
   try{
     const r=await waJsonp({action:'groups'},30000);
     if(!r||!r.ok) throw new Error((r&&r.error)||'שגיאה');
-    localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret);
+    lsSet(MLS.url,WA.url); lsSet(MLS.secret,WA.secret);
     toast('מחובר ✓','ok'); render();
   }catch(e){ toast('החיבור נכשל: '+e.message,'bad'); }
 }
