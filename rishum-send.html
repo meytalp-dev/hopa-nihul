@@ -68,6 +68,7 @@
   .sc{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-right:5px solid var(--line)}
   .sc.sent{border-right-color:#f5c542}
   .sc.done{border-right-color:var(--ok)}
+  .sc.have{border-right-color:#7fb069}
   .sc .who{flex:1;min-width:180px}
   .sc .who b{font-size:15.5px;display:block}
   .sc .who span{display:block;font-size:13px;color:var(--muted)}
@@ -193,10 +194,20 @@ const DEFAULT_MSG_ALUMNI = `היי {שם} 👋 זו מיטל מהופה, ותו�
 
 תודה רבה 💛`;
 
+/* יש לנו כבר את המייל שלהם בבורד (מיטל השלימה ידנית), אבל הם לא מילאו את
+   הטופס — אז לא מודים להם על מיילים שלא הם שלחו, רק מבקשים את מה שבאמת חסר. */
+const DEFAULT_MSG_HAVE = `היי {שם} 👋 זו מיטל מהופה.
+
+עולה לאוויר מערכת בוגרים חדשה. היא תרכז את כל נתוני הבוגרים של {בית ספר} במקום אחד, תיתן לכם לנטר את הנתונים לאורך השנה ולפעול לפי מה שרואים בזמן אמת.
+
+ועוד משהו: {בוגרים}
+
+תודה רבה 💛`;
+
 /* ===================== מצב ===================== */
 let SCHOOLS = [];                                  // מהבורד: שם, רכז/ת, טלפונים, האם מילא/ה
 let UPDATED = '';
-let STATE = { msg: DEFAULT_MSG, msgAlumni: DEFAULT_MSG_ALUMNI, sent: {} };        // נשמר בגיליון — זמין גם מהמחשב וגם מהנייד
+let STATE = { msg: DEFAULT_MSG, msgAlumni: DEFAULT_MSG_ALUMNI, msgHave: DEFAULT_MSG_HAVE, sent: {} };        // נשמר בגיליון — זמין גם מהמחשב וגם מהנייד
 let filter = 'todo', query = '';
 
 const app = document.getElementById('app');
@@ -329,10 +340,15 @@ function linkFor(s){
 function niceName(n){ return String(n||'').replace(/\s*\d{4,}\s*$/,'').trim(); }
 function whoOf(s){ return s.coord || s.mgr || ''; }
 function phoneOf(s){ return s.coordPhone || s.mgrPhone || ''; }
-/* למי בכלל יש מה להגיד: או שלא מילא/ה את הטופס, או שרשימת הבוגרים שלו/ה חסרה */
-function needsMsg(s){ return !s.filled || alumniOf(s.n).state!=='ok'; }
+/* "לא מילא/ה את הטופס" ו"אין לנו מייל" זה לא אותו דבר: לחלק מבתי הספר
+   המיילים כבר יושבים בבורד (מיטל השלימה אותם ידנית), ואין מה לבקש מהם. */
+function haveMails(s){ return !!(s.hasCoordMail && s.hasMgrMail); }
+/* למי בכלל יש מה להגיד: או שחסר לנו מייל, או שרשימת הבוגרים שלו/ה חסרה */
+function needsMsg(s){ return (!s.filled && !haveMails(s)) || alumniOf(s.n).state!=='ok'; }
 function msgFor(s){
-  const tpl = s.filled ? (STATE.msgAlumni||DEFAULT_MSG_ALUMNI) : (STATE.msg||DEFAULT_MSG);
+  const tpl = s.filled ? (STATE.msgAlumni||DEFAULT_MSG_ALUMNI)
+            : haveMails(s) ? (STATE.msgHave||DEFAULT_MSG_HAVE)
+            : (STATE.msg||DEFAULT_MSG);
   return tpl
     .replace(/\{שם\}/g, firstName(whoOf(s)))
     .replace(/\{שם מלא\}/g, whoOf(s))
@@ -357,13 +373,15 @@ async function load(){
     const r = await jsonp({action:'storeAll',secret:GS_SECRET});
     if(r && r.ok){
       const st = r.store||{};
-      if(st[STORE_KEY]) STATE = Object.assign({msg:DEFAULT_MSG,msgAlumni:DEFAULT_MSG_ALUMNI,sent:{}}, st[STORE_KEY]);
+      if(st[STORE_KEY]) STATE = Object.assign({msg:DEFAULT_MSG,msgAlumni:DEFAULT_MSG_ALUMNI,msgHave:DEFAULT_MSG_HAVE,sent:{}}, st[STORE_KEY]);
       if(!apiOk){
         // גיבוי: בלי הבורד אין טלפונים, אבל אפשר להראות מי מילא/ה
         const filled = Object.keys(st).filter(k=>k.indexOf('intake_rk_')===0).map(k=>st[k]).filter(x=>x&&x.school);
         SCHOOLS = FORM_SCHOOLS.map(n=>{
           const f = filled.find(x=>normS(x.school)===normS(n));
-          return {n:n, coord:f?((f.coordFirst||'')+' '+(f.coordLast||'')).trim():'', coordPhone:'', mgr:'', mgrPhone:'', filled:!!f, filledAt:f?f.ts:''};
+          return {n:n, coord:f?((f.coordFirst||'')+' '+(f.coordLast||'')).trim():'', coordPhone:'', mgr:'', mgrPhone:'',
+                  hasCoordMail:!!(f&&f.coordMail), hasMgrMail:!!(f&&f.mgrMail), coordMailSrc:f?'form':'',
+                  filled:!!f, filledAt:f?f.ts:''};
         });
       }
     }
@@ -378,13 +396,15 @@ async function load(){
 /* ===================== רינדור ===================== */
 function statusOf(s){
   if(s.filled) return 'done';
+  if(haveMails(s)) return 'have';        // המיילים כבר אצלנו — לא מבקשים שוב
   if(STATE.sent[s.n]) return 'sent';
   return 'todo';
 }
 function shownList(){
   return SCHOOLS.filter(s=>{
     const st=statusOf(s);
-    if(filter==='todo' && st==='done') return false;         // "לטיפול" = טרם מילאו (כולל מי שקיבל תזכורת)
+    if(filter==='todo' && st!=='todo' && st!=='sent') return false;   // "חסר מייל" = כולל מי שקיבל תזכורת
+    if(filter==='have' && st!=='have') return false;
     if(filter==='sent' && st!=='sent') return false;
     if(filter==='done' && st!=='done') return false;
     if(filter==='alumni' && alumniOf(s.n).state==='ok') return false;
@@ -397,7 +417,8 @@ function render(){
   const done=SCHOOLS.filter(s=>statusOf(s)==='done').length;
   const sent=SCHOOLS.filter(s=>statusOf(s)==='sent').length;
   const todo=SCHOOLS.filter(s=>statusOf(s)==='todo').length;
-  const noPhone=SCHOOLS.filter(s=>!s.filled && !phoneOf(s)).length;
+  const have=SCHOOLS.filter(s=>statusOf(s)==='have').length;
+  const noPhone=SCHOOLS.filter(s=>statusOf(s)==='todo'&&!phoneOf(s)).length;
   const alGaps=SCHOOLS.filter(s=>alumniOf(s.n).state!=='ok').length;
   const connected=!!(WA.url&&WA.secret);
   const shown=shownList();
@@ -408,7 +429,8 @@ function render(){
     <h2>📊 מצב המילוי <small>${UPDATED?'עודכן '+fmtDate(UPDATED):''}</small></h2>
     <div class="bar"><i style="width:${pct}%"></i></div>
     <div class="stats">
-      <button class="st ${filter==='todo'?'on':''}" data-f="todo"><b>${todo+sent}</b>טרם מילאו</button>
+      <button class="st ${filter==='todo'?'on':''}" data-f="todo"><b>${todo+sent}</b>חסר לנו מייל</button>
+      <button class="st ${filter==='have'?'on':''}" data-f="have"><b>${have}</b>המייל כבר אצלנו</button>
       <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${sent}</b>נשלחה תזכורת</button>
       <button class="st ${filter==='alumni'?'on':''}" data-f="alumni"><b>${alGaps}</b>חסר בוגרים</button>
       <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${done}</b>מילאו</button>
@@ -455,6 +477,10 @@ function render(){
       <p class="hint tight" style="margin-top:6px">הדף בוחר לבד את הנוסח הנכון לכל בית ספר, בלי לבקש מיילים ממי שכבר שלח/ה.</p>
       <textarea class="field" id="msgAl" style="margin-top:6px">${esc(STATE.msgAlumni||DEFAULT_MSG_ALUMNI)}</textarea>
     </details>
+    <details><summary>נוסח שלישי: למי שהמייל שלו/ה כבר אצלנו מהלוח, בלי שמילא/ה טופס</summary>
+      <p class="hint tight" style="margin-top:6px">אותו דבר, רק בלי להודות להם על מיילים שלא הם שלחו.</p>
+      <textarea class="field" id="msgHv" style="margin-top:6px">${esc(STATE.msgHave||DEFAULT_MSG_HAVE)}</textarea>
+    </details>
     <div class="tokens">
       <span class="tok">משתנים:</span>
       <span class="tok"><b>{שם}</b> שם פרטי של הרכז/ת</span>
@@ -485,8 +511,9 @@ function rowHtml(s){
   const who=whoOf(s);
   const viaMgr = !s.coordPhone && !!s.mgrPhone;
   const tag = st==='done'?`<span class="tag ok">מילא/ה ✓${s.filledAt?' · '+fmtDate(s.filledAt):''}</span>`
+            : st==='have'?`<span class="tag ok">המייל אצלנו${s.coordMailSrc==='board'?' · מהלוח':''}</span>`
             : st==='sent'?`<span class="tag yel">תזכורת נשלחה · ${fmtDate(STATE.sent[s.n])}</span>`
-            : `<span class="tag gray">טרם מילא/ה</span>`;
+            : `<span class="tag gray">חסר מייל</span>`;
   const al = alumniOf(s.n);
   const alTag = al.state==='ok'?`<span class="tag ok">בוגרים: רשימה מלאה</span>`
               : al.state==='gaps'?`<span class="tag yel">בוגרים: חסרים פרטים</span>`
@@ -515,6 +542,8 @@ function wire(){
   if(msg) msg.onchange=()=>{ STATE.msg=msg.value; save(); render(); };
   const msgAl=document.getElementById('msgAl');
   if(msgAl) msgAl.onchange=()=>{ STATE.msgAlumni=msgAl.value; save(); render(); };
+  const msgHv=document.getElementById('msgHv');
+  if(msgHv) msgHv.onchange=()=>{ STATE.msgHave=msgHv.value; save(); render(); };
   const t=document.getElementById('waTest'); if(t) t.onclick=testConnection;
   const sa=document.getElementById('sendAll'); if(sa) sa.onclick=sendAllDirect;
   const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית'); };
