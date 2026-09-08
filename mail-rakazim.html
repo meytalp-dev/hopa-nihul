@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>בקשת מייל מרכזי בוגרים · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --bad:#d9534f; --wa:#25D366;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 14px 70px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center;flex:none}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:21px;font-weight:800;line-height:1.25}
+  .hero p{margin:4px 0 0;opacity:.92;font-size:14px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-top:14px}
+  .card h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 small{font-weight:400;color:var(--muted);font-size:13px}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .hint.tight{margin:0}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  textarea.field{min-height:170px;resize:vertical;line-height:1.6}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14.5px;text-decoration:none;transition:transform .1s,filter .15s;white-space:nowrap}
+  .btn:active{transform:scale(.97)}
+  .btn.sm{padding:7px 12px;font-size:13.5px;border-radius:10px}
+  .btn.primary{background:var(--pink);color:#fff}
+  .btn.outline{border:2px solid var(--line);color:var(--ink);background:#fff}
+  .btn.wa{background:var(--wa);color:#fff}
+  .btn.direct{background:var(--ink);color:var(--yellow)}
+  .btn[disabled]{opacity:.55;pointer-events:none}
+
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#d6d0da;margin-inline-end:5px;vertical-align:1px}
+  .dot.on{background:var(--ok)}
+
+  .list{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+  .sc{border:2px solid var(--line);border-radius:15px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .sc.done{border-color:var(--ok);background:var(--ok-soft)}
+  .who{min-width:190px;flex:1}
+  .who b{display:block;font-size:15px}
+  .who span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+  .who a{color:var(--muted);text-decoration:none}
+  .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;background:var(--line);color:var(--muted)}
+  .tag.ok{background:#cdf0dd;color:#12784a}
+  .tokens{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .tok{font-size:11.5px;background:var(--bg);border-radius:999px;padding:3px 9px;color:var(--muted)}
+  .tok b{color:var(--ink);font-weight:600}
+  .prev{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13.5px;white-space:pre-wrap;margin-top:8px}
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
+
+  .toast{position:fixed;inset-inline:0;bottom:16px;margin:0 auto;width:max-content;max-width:90%;background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;transform:translateY(12px);transition:.2s;pointer-events:none;z-index:9}
+  .toast.on{opacity:1;transform:none}
+  .toast.ok{background:var(--ok)} .toast.bad{background:var(--bad)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>המייל של רכזי הבוגרים</h1>
+      <p>שש בקשות קצרות — רק כתובת מייל אחת מכל אחד</p>
+    </div>
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+</header>
+
+<div class="wrap"><div id="app"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   מי חסר — נבדק מול לוח המונדיי (בורד 5100678272) ב-8.9.2026.
+   אלה ששת הרכזים היחידים שאין להם מייל בלוח. כל השאר סגורים.
+   כשמישהו מוסר מייל — מכניסים אותו ללוח (טאב רשימת התפוצה
+   בהופה דש) ומוחקים אותו מהרשימה כאן.
+   ============================================================ */
+const RAKAZIM = [
+  {n:'מרכז תורני טכנולוגי נחלים',        c:'טל מילוא',       ph:'0584040949'},
+  {n:'מנאראת טורעאן',                    c:'מוניר זרעיני',   ph:'0546959114'},
+  {n:'תיכון יוצר עמל טכנולוגי אשדוד',    c:'ריקי מסס',       ph:'0544441300'},
+  {n:'עמל טכנולוגי רהט',                 c:'זהור אלעוברה',   ph:'0547918502'},
+  {n:'תיכון ח׳טוואת ירכא אבו סנאן',      c:'רשא סייד אחמד',  ph:'0505455077'},
+  {n:'עתיד יוצר מגשימים בית שאן',        c:'חן עמרן',        ph:'0526851485'}
+];
+
+/* בלי סימני שאלה ובלי מקף ארוך — בחלק מהמכשירים הם יוצאים סימני שאלה בוואטסאפ */
+const DEFAULT_MSG = `היי {שם} 👋 זו מיטל מהופה.
+
+אני משלימה את פרטי הקשר של כל רכזי הבוגרים, ורק כתובת המייל שלך חסרה לי.
+
+אפשר פשוט להשיב לי כאן בהודעה עם המייל, וזהו. דבר אחד קטן ואנחנו סגורים.
+
+תודה רבה 💛`;
+
+const MSG_KEY = 'hopa_mailrk_msg', SENT_KEY = 'hopa_mailrk_sent';
+/* דפדפני נייד שחוסמים נתוני אתרים זורקים שגיאה על עצם הפנייה לאחסון — הכל עטוף */
+function lsGet(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ window.localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+
+let MSG = lsGet(MSG_KEY) || DEFAULT_MSG;
+let SENT = {};
+try{ SENT = JSON.parse(lsGet(SENT_KEY)||'{}') || {}; }catch(e){ SENT = {}; }
+
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t,kind){ const el=document.getElementById('toast'); el.textContent=t; el.className='toast on'+(kind?' '+kind:''); clearTimeout(el._t); el._t=setTimeout(()=>el.className='toast',2400); }
+const digits = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+const waNum  = p => '972' + digits(p).replace(/^0/,'');
+const firstName = n => String(n||'').trim().split(/\s+/)[0] || '';
+const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+const cssId = n => String(n).replace(/[^֐-׿a-zA-Z0-9]/g,'_');
+
+function msgFor(s){
+  return String(MSG||DEFAULT_MSG)
+    .replace(/\{שם מלא\}/g, s.c)
+    .replace(/\{שם\}/g, firstName(s.c))
+    .replace(/\{בית ספר\}/g, s.n);
+}
+function waHref(s){ return 'https://wa.me/'+waNum(s.ph)+'?text='+encodeURIComponent(msgFor(s)); }
+
+/* ===================== שליחה ישירה (Green API דרך ה-Apps Script) ===================== */
+/* אותם מפתחות localStorage כמו שאר דפי השליחה — מי שחיברה פעם אחת מחוברת בכולם */
+const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
+const WA = { url: lsGet(MLS.url)||'', secret: lsGet(MLS.secret)||'', stop:false, busy:false };
+let jn = 0;
+function waJsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    if(!WA.url){ rej(new Error('לא מחובר')); return; }
+    const cb='wacb_'+(jn++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{cl(); rej(new Error('timeout'));}, tmo||60000);
+    function cl(){ try{delete window[cb]}catch(e){window[cb]=undefined} s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{cl(); res(d);};
+    s.src = WA.url + (WA.url.indexOf('?')>-1?'&':'?') + new URLSearchParams(Object.assign({},params,{secret:WA.secret,callback:cb})).toString();
+    s.onerror=()=>{cl(); rej(new Error('network'));};
+    document.body.appendChild(s);
+  });
+}
+async function testConnection(){
+  WA.url=(document.getElementById('waUrl').value||'').trim();
+  WA.secret=(document.getElementById('waSecret').value||'').trim();
+  if(!WA.url){ toast('צריך להדביק כתובת exec של הגשר','bad'); return; }
+  try{
+    const r=await waJsonp({action:'groups'},30000);
+    if(!r||!r.ok) throw new Error((r&&r.error)||'שגיאה');
+    lsSet(MLS.url,WA.url); lsSet(MLS.secret,WA.secret);
+    toast('מחובר ✓','ok'); render();
+  }catch(e){ toast('החיבור נכשל: '+e.message,'bad'); }
+}
+function markSent(s){ SENT[s.n]=new Date().toISOString(); lsSet(SENT_KEY,JSON.stringify(SENT)); }
+async function sendDirect(s, quiet){
+  const btn=document.querySelector('[data-direct="'+cssId(s.n)+'"]');
+  if(btn){ btn.disabled=true; btn.textContent='⏳'; }
+  try{
+    const r=await waJsonp({action:'send',chatIds:waNum(s.ph)+'@c.us',message:msgFor(s)},90000);
+    if(!r||!r.ok||!r.sent) throw new Error((r&&r.error)||'לא נשלח');
+    markSent(s);
+    if(!quiet) toast('נשלח ל'+(firstName(s.c)||s.n)+' ✔','ok');
+    return true;
+  }catch(e){
+    if(!quiet) toast('שליחה נכשלה: '+e.message,'bad');
+    return false;
+  }finally{ render(); }
+}
+async function sendAllDirect(){
+  const list = RAKAZIM.filter(s=>!SENT[s.n]);
+  if(!list.length){ toast('שלחת כבר לכולם 🎉'); return; }
+  if(!confirm('לשלוח עכשיו '+list.length+' הודעות מהוואטסאפ המחובר?\n\nההודעות יוצאות אחת-אחת, בהפרש של שנייה וחצי.')) return;
+  WA.busy=true; WA.stop=false; let ok=0; const fail=[];
+  for(let i=0;i<list.length;i++){
+    if(WA.stop) break;
+    const s=list[i];
+    const el=document.getElementById('waProg'); if(el) el.textContent='שולח ל'+s.c+'… ('+(i+1)+'/'+list.length+')';
+    const done = await sendDirect(s,true);
+    if(done) ok++; else fail.push(s.n);
+    if(i<list.length-1) await new Promise(r=>setTimeout(r,1800));
+  }
+  WA.busy=false; render();
+  toast('נשלחו '+ok+' מתוך '+list.length+(fail.length?' · נכשלו: '+fail.join(', '):''), fail.length?'bad':'ok');
+}
+
+/* ===================== רינדור ===================== */
+function rowHtml(s){
+  const done = !!SENT[s.n];
+  return `<div class="sc ${done?'done':''}">
+    <div class="who">
+      <b>${esc(s.c)}</b>
+      <span>${esc(s.n)} · <a href="tel:${esc(s.ph)}" dir="ltr">${esc(s.ph)}</a></span>
+      ${done?`<span style="margin-top:4px"><span class="tag ok">נשלח · ${fmtDate(SENT[s.n])}</span></span>`:''}
+    </div>
+    <div class="acts">
+      ${WA.url?`<button class="btn direct sm" data-direct="${cssId(s.n)}">🚀 ישיר</button>`:''}
+      <a class="btn wa sm" href="${waHref(s)}" target="_blank" rel="noopener" data-mark="${cssId(s.n)}">וואטסאפ</a>
+      <button class="btn outline sm" data-copy="${cssId(s.n)}">העתקה</button>
+      ${done?`<button class="btn outline sm" data-undo="${cssId(s.n)}">בטלי סימון</button>`:''}
+    </div>
+  </div>`;
+}
+function render(){
+  const left = RAKAZIM.filter(s=>!SENT[s.n]).length;
+  const connected = !!WA.url;
+  app.innerHTML = `
+  <div class="card">
+    <h2>⚡ שליחה ישירה מהוואטסאפ שלך <small><span class="dot ${connected?'on':''}"></span>${connected?'מחובר':'לא מחובר'}</small></h2>
+    ${connected?`
+      <p class="hint tight">כפתור <b>🚀 ישיר</b> שולח בלי לפתוח את וואטסאפ בכלל. אפשר גם הכל בבת אחת.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;align-items:center">
+        <button class="btn primary" id="sendAll" ${WA.busy?'disabled':''}>שליחה לכל ${left} שנותרו</button>
+        ${WA.busy?`<button class="btn outline" id="stopAll">עצירה</button><span class="hint tight" id="waProg"></span>`:''}
+      </div>
+      <details style="margin-top:9px"><summary class="hint tight" style="cursor:pointer">שינוי חיבור</summary>
+        <div style="display:grid;gap:8px;margin-top:8px">
+          <input class="field" id="waUrl" placeholder="כתובת exec של גשר השליחה" value="${esc(WA.url)}">
+          <input class="field" id="waSecret" placeholder="סיסמה" value="${esc(WA.secret)}">
+          <button class="btn outline" id="waTest">בדיקת חיבור</button>
+        </div>
+      </details>`
+    :`
+      <p class="hint">בלי חיבור אפשר לשלוח דרך כפתור הוואטסאפ הירוק בכל שורה — הוא פותח את השיחה עם ההודעה מוכנה. עם חיבור לגשר, הכל יוצא לבד.</p>
+      <div style="display:grid;gap:8px">
+        <input class="field" id="waUrl" placeholder="כתובת exec של גשר השליחה" value="">
+        <input class="field" id="waSecret" placeholder="סיסמה" value="">
+        <button class="btn outline" id="waTest">בדיקת חיבור</button>
+      </div>`}
+  </div>
+
+  <div class="card">
+    <h2>✉️ ההודעה</h2>
+    <p class="hint tight">קצרה בכוונה — בקשה אחת בלי טופס ובלי קישור, כדי שאפשר יהיה פשוט להשיב עליה.</p>
+    <textarea class="field" id="msg" style="margin-top:8px">${esc(MSG)}</textarea>
+    <div class="tokens">
+      <span class="tok">משתנים:</span>
+      <span class="tok"><b>{שם}</b> שם פרטי</span>
+      <span class="tok"><b>{שם מלא}</b></span>
+      <span class="tok"><b>{בית ספר}</b></span>
+    </div>
+    <p class="hint" style="margin:9px 0 0">תצוגה מקדימה על ${esc(RAKAZIM[0].c)}:</p>
+    <div class="prev">${esc(msgFor(RAKAZIM[0]))}</div>
+  </div>
+
+  <div class="card">
+    <h2>🏫 מי חסר <small>${left} מתוך ${RAKAZIM.length} עדיין לא קיבלו</small></h2>
+    <p class="hint tight">לכל השאר כבר יש מייל בלוח. כשמישהו משיב, מכניסים את המייל דרך טאב <b>רשימת תפוצה</b> ב<a href="https://hopadash.vercel.app/" target="_blank" rel="noopener">הופה דש</a>.</p>
+    <div class="list">${RAKAZIM.map(rowHtml).join('')}</div>
+  </div>
+
+  <div class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>`;
+  wire();
+}
+const byId = id => RAKAZIM.find(s=>cssId(s.n)===id);
+function wire(){
+  const m=document.getElementById('msg');
+  if(m) m.onchange=()=>{ MSG=m.value; lsSet(MSG_KEY,MSG); render(); };
+  const t=document.getElementById('waTest'); if(t) t.onclick=testConnection;
+  const sa=document.getElementById('sendAll'); if(sa) sa.onclick=sendAllDirect;
+  const so=document.getElementById('stopAll'); if(so) so.onclick=()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית'); };
+  document.querySelectorAll('[data-direct]').forEach(b=>b.onclick=()=>sendDirect(byId(b.dataset.direct)));
+  /* פתיחת וואטסאפ מסמנת כנשלח — הדף עצמו לא יודע אם ההודעה יצאה, אבל זה מספיק לעקוב */
+  document.querySelectorAll('[data-mark]').forEach(a=>a.onclick=()=>{ markSent(byId(a.dataset.mark)); setTimeout(render,600); });
+  document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>{ delete SENT[byId(b.dataset.undo).n]; lsSet(SENT_KEY,JSON.stringify(SENT)); render(); });
+  document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{
+    const s=byId(b.dataset.copy);
+    try{ await navigator.clipboard.writeText(msgFor(s)); toast('ההודעה הועתקה ✓','ok'); }
+    catch(e){ toast('לא הצלחתי להעתיק','bad'); }
+  });
+}
+render();
+</script>
+</body>
+</html>
