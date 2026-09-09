@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>משוב · מפגשי הרכזים 14.10 ו-21.10 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;--shadow:0 4px 18px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  button,textarea,input,select{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:680px;margin:0 auto;padding:0 16px}
+  .in.adm{max-width:1000px}
+
+  header{background:#111;color:#fff;padding:18px 0 26px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:40px;display:block}
+  header h1{margin:0;font-size:22px;font-weight:900}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:2px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+
+  main{padding:18px 0 40px}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px}
+  .card h2{margin:0 0 2px;font-size:16.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h2 .num{background:var(--pink-soft);color:var(--pink-dark);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:800;flex:none}
+  .hint{font-size:13px;color:var(--muted);margin:2px 0 10px}
+  input[type=text],textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+  input:focus,textarea:focus{border-color:var(--pink)}
+  textarea{min-height:82px;resize:vertical}
+  .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 165px}
+  label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:8px 0 4px}
+
+  .scale{display:flex;gap:8px;justify-content:space-between}
+  .scale button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 4px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s}
+  .scale button .e{font-size:26px;line-height:1;filter:grayscale(1);opacity:.55;transition:.15s}
+  .scale button .l{font-size:11px;color:var(--muted);font-weight:600}
+  .scale button:hover{border-color:var(--pink)}
+  .scale button.on{border-color:var(--pink);background:var(--pink-soft)}
+  .scale button.on .e{filter:none;opacity:1;transform:scale(1.12)}
+  .scale button.on .l{color:var(--pink-dark)}
+
+  .toggle{display:flex;gap:8px}
+  .toggle button{flex:1;border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px 8px;font-weight:800;font-size:14px;cursor:pointer}
+  .toggle button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+  .chips button:hover{border-color:var(--pink)}
+  .chips button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:14px 30px;font-weight:800;font-size:16.5px;cursor:pointer}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 24px rgba(232,52,138,.33)}
+  .btn.pink:disabled{opacity:.6;cursor:default}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:8px 14px;border-radius:10px;font-weight:700}
+  .send{margin-top:18px;text-align:center}
+  .err{color:#d9534f;font-size:13.5px;margin-top:8px;min-height:18px;font-weight:600}
+  .req{color:var(--pink);font-weight:800}
+
+  .done{text-align:center;padding:38px 18px}
+  .done .big{font-size:64px;line-height:1}
+  .done h2{justify-content:center;font-size:22px;margin-top:10px}
+  .done p{color:var(--muted);font-size:15px}
+  .nextbox{margin:16px auto 0;max-width:390px;background:var(--pink-soft);border-radius:14px;padding:12px 16px;font-weight:700;color:var(--pink-dark)}
+  .nextbox small{display:block;font-weight:500;color:var(--ink);opacity:.75;margin-top:2px}
+
+  .stat{display:flex;gap:10px;flex-wrap:wrap}
+  .stat>div{background:var(--pink-soft);border-radius:12px;padding:8px 16px;font-size:13px;color:var(--pink-dark);font-weight:600;text-align:center}
+  .stat b{display:block;font-size:22px;color:var(--ink)}
+  .cmp{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .cmp>div{flex:1 1 210px;border-radius:15px;padding:15px 17px;color:#fff}
+  .cmp .h{font-size:13.5px;font-weight:700;opacity:.85}
+  .cmp .v{font-size:38px;font-weight:900;line-height:1.1}
+  .cmp .s{font-size:12.5px;opacity:.75;margin-top:4px}
+  .cmp .a{background:#E8348A}.cmp .b{background:#1f1f26}
+  .bar{display:flex;align-items:center;gap:10px;margin-top:7px;font-size:13.5px}
+  .bar .track{flex:1;height:11px;background:#f0ecf3;border-radius:999px;overflow:hidden}
+  .bar .fill{display:block;height:100%;background:var(--pink);border-radius:999px}
+  .bar .n{width:26px;text-align:center;font-weight:800}
+  .resp{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+  .resp .who{font-weight:800;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .resp .who .tag{font-size:11.5px;border-radius:999px;padding:2px 10px;font-weight:800}
+  .resp .who .tag.h{background:var(--pink-soft);color:var(--pink-dark)}
+  .resp .who .tag.n{background:#eef4ff;color:#26548f}
+  .resp .row{font-size:13.5px;margin-top:6px}
+  .resp .row b{color:var(--pink-dark)}
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1 id="heroTitle">משוב</h1><div class="sub" id="heroSub">מפגשי הרכזים · ליווי בוגרים</div></div>
+  </div>
+  <div class="meet" id="heroMeet">2 דקות · ממש עוזר לנו</div>
+</div></header>
+
+<main class="in" id="wrap"><div id="app"></div></main>
+
+<footer class="in" style="text-align:center;color:#7d7d8a;font-size:12.5px;padding:0 16px 40px">
+  תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+</footer>
+<div id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='mashov2-';
+var ADMIN_PARAM='hopa';
+var LS_KEY='hopa-mashov2-draft';
+
+var WORKED=['הבוגר שסיפר','״הבוגר שאני זוכר/ת״ וההצבעה','המספרים והמחקר','החדרים בזום',
+  'שיחת הטלפון עם בוגר','קיר הבוגרים','תחנת המאגר','תחנת השיחה','תחנת המענים והמדרג',
+  '״הדף שלי״','האנשים והאווירה'];
+var TOPICS=['מלגות וזכויות','תעסוקה והכשרות','בניית מאגר בוגרים','תרגול שיחות','עבודה עם קבוצות וואטסאפ',
+  'חיבור לגורמים בקהילה','בוגרים בשירות ואחריו','למידת עמיתים והצלחות','כלים דיגיטליים ומעקב'];
+var RATE_L=['ממש לא','פחות','בסדר','טוב','מעולה!'],RATE_E=['😕','😐','🙂','😃','🤩'];
+
+var app=document.getElementById('app'),qs=new URLSearchParams(location.search);
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},1900)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries,onA){
+  var e;
+  for(var i=1;i<=(tries||5);i++){
+    if(onA)onA(i);
+    try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאת שרת')}catch(x){e=x}
+    await delay(800+i*700);
+  }
+  throw e||new Error('נכשל');
+}
+
+var state=load();
+function load(){
+  try{var s=JSON.parse(lsGet(LS_KEY));if(s&&s.id)return s}catch(e){}
+  return {id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+    who:'',school:'',inHopa:null,called:null,rate:0,useful:0,worked:[],improve:'',topics:[],heart:'',sent:false};
+}
+function save(){lsSet(LS_KEY,JSON.stringify(state))}
+function scaleBtns(v){return RATE_E.map(function(e,i){return '<button type="button" data-v="'+(i+1)+'"'+(v===i+1?' class="on"':'')+'><span class="e">'+e+'</span><span class="l">'+RATE_L[i]+'</span></button>'}).join('')}
+function chipBtns(list,sel){return list.map(function(t){return '<button type="button" data-v="'+esc(t)+'"'+(sel.indexOf(t)>-1?' class="on"':'')+'>'+esc(t)+'</button>'}).join('')}
+
+function render(){
+  if(state.sent){renderDone();return}
+  app.innerHTML=
+  '<div class="card"><h2><span class="num">1</span>מי ממלא/ת? <span class="req">*</span></h2>'+
+    '<div class="two"><div><label class="fl">שם</label><input type="text" id="who" value="'+esc(state.who)+'" maxlength="40"></div>'+
+    '<div><label class="fl">בית ספר</label><input type="text" id="school" value="'+esc(state.school)+'" maxlength="45"></div></div>'+
+    '<label class="fl">אני חלק מתוכנית הבוגרים של הופה <span class="req">*</span></label>'+
+    '<div class="toggle" id="inHopa"><button data-v="1"'+(state.inHopa===1?' class="on"':'')+'>כן</button>'+
+      '<button data-v="0"'+(state.inHopa===0?' class="on"':'')+'>לא</button></div>'+
+    '<p class="hint" style="margin-top:8px">חשוב לנו לדעת אם המפגש עבד גם למי שלא בתוכנית.</p></div>'+
+
+  '<div class="card"><h2><span class="num">2</span>איך היו המפגשים בסך הכול? <span class="req">*</span></h2><div class="scale" id="rate">'+scaleBtns(state.rate)+'</div></div>'+
+  '<div class="card"><h2><span class="num">3</span>יצאת עם משהו מעשי לעבודה שלך? <span class="req">*</span></h2><div class="scale" id="useful">'+scaleBtns(state.useful)+'</div></div>'+
+
+  '<div class="card"><h2><span class="num">4</span>עשית את שיחת הטלפון עם בוגר?</h2>'+
+    '<div class="toggle" id="called"><button data-v="1"'+(state.called===1?' class="on"':'')+'>✅ כן</button>'+
+    '<button data-v="0"'+(state.called===0?' class="on"':'')+'>🙈 לא</button></div></div>'+
+
+  '<div class="card"><h2><span class="num">5</span>מה הכי עבד?</h2><p class="hint">אפשר לסמן כמה שרוצים</p>'+
+    '<div class="chips" id="worked">'+chipBtns(WORKED,state.worked)+'</div></div>'+
+  '<div class="card"><h2><span class="num">6</span>דבר אחד לשפר</h2>'+
+    '<textarea id="improve" placeholder="מה היה חסר? מה היית משנה?">'+esc(state.improve)+'</textarea></div>'+
+  '<div class="card"><h2><span class="num">7</span>נושאים למפגשים הבאים</h2>'+
+    '<div class="chips" id="topics">'+chipBtns(TOPICS,state.topics)+'</div></div>'+
+  '<div class="card"><h2><span class="num">8</span>עוד משהו על הלב? 💛</h2>'+
+    '<textarea id="heart" placeholder="מילה טובה, מחשבה, רעיון — הכול מתקבל באהבה">'+esc(state.heart)+'</textarea></div>'+
+  '<div class="send"><button class="btn pink" id="sendBtn">שליחת המשוב 💌</button><div class="err" id="err"></div></div>';
+
+  ['who','school','improve','heart'].forEach(function(k){
+    $(k).addEventListener('input',function(){state[k]=this.value;save()});
+  });
+  ['inHopa','called'].forEach(function(k){
+    [].slice.call($(k).children).forEach(function(b){
+      b.onclick=function(){state[k]=Number(b.dataset.v);save();
+        [].slice.call($(k).children).forEach(function(x){x.classList.toggle('on',x===b)})};
+    });
+  });
+  ['rate','useful'].forEach(function(k){
+    [].slice.call($(k).children).forEach(function(b){
+      b.onclick=function(){state[k]=Number(b.dataset.v);save();
+        [].slice.call($(k).children).forEach(function(x){x.classList.toggle('on',x===b)})};
+    });
+  });
+  [['worked','worked'],['topics','topics']].forEach(function(p){
+    [].slice.call($(p[0]).children).forEach(function(b){
+      b.onclick=function(){var v=b.dataset.v,a=state[p[1]],i=a.indexOf(v);
+        if(i>-1)a.splice(i,1);else a.push(v);b.classList.toggle('on');save()};
+    });
+  });
+  $('sendBtn').onclick=submit;
+}
+
+async function submit(){
+  var btn=$('sendBtn'),e=$('err');e.textContent='';
+  if(!state.who.trim()||!state.school.trim()){e.textContent='צריך שם ובית ספר.';return}
+  if(state.inHopa===null){e.textContent='סמנו אם אתם בתוכנית הבוגרים.';return}
+  if(!state.rate||!state.useful){e.textContent='שני הדירוגים חובה 🙂';return}
+  btn.disabled=true;btn.textContent='שולח…';
+  var payload={who:state.who.trim(),school:state.school.trim(),inHopa:state.inHopa,called:state.called,
+    rate:state.rate,useful:state.useful,worked:state.worked,improve:state.improve.trim(),
+    topics:state.topics,heart:state.heart.trim(),ts:new Date().toISOString(),
+    meeting:'מפגשי רכזים 14.10 + 21.10 · 2026'};
+  var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
+  try{
+    if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
+    await jsonpRetry(params,5,function(a){if(a>1)btn.textContent='שולח… ('+a+')'});
+    state.sent=true;save();renderDone();scrollTo({top:0,behavior:'smooth'});
+  }catch(x){
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});
+      state.sent=true;save();renderDone();scrollTo({top:0,behavior:'smooth'});
+    }catch(x2){
+      btn.disabled=false;btn.textContent='שליחת המשוב 💌';
+      e.textContent='לא הצלחנו לשלוח — בדקו אינטרנט ונסו שוב. התשובות שמורות.';
+    }
+  }
+}
+function renderDone(){
+  app.innerHTML='<div class="card done"><div class="big">💛</div><h2>תודה!</h2>'+
+    '<p>כל מילה כאן נכנסת לתכנון המפגש הבא.</p>'+
+    '<div class="nextbox">16.12.2026 · זום 13:30<small>נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</small></div></div>';
+}
+
+/* ---------- ניהול ---------- */
+async function renderAdmin(){
+  $('heroTitle').textContent='משוב · ניהול';
+  $('heroSub').textContent='מפגשי 14.10 ו-21.10 · חי מהגיליון';
+  $('heroMeet').textContent='למיטל ולצוות';
+  $('wrap').classList.add('adm');
+  app.innerHTML='<div class="card"><p class="hint" id="ls">טוען…</p></div>';
+  var store;
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(a){
+      var el=$('ls');if(el)el.textContent=a===1?'טוען…':'השרת של גוגל מתעצל — ניסיון '+a+'/6…';});
+    store=r.store;
+  }catch(e){app.innerHTML='<div class="card"><p class="hint">לא נטען ('+esc(e.message)+'). <button class="btn ghost" onclick="location.reload()">🔄</button></p></div>';return}
+
+  var items=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
+    .map(function(k){return store[k]||{}}).filter(function(x){return x.who})
+    .sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
+  var hopa=items.filter(function(x){return Number(x.inHopa)===1});
+  var other=items.filter(function(x){return Number(x.inHopa)===0});
+  var avg=function(l,k){return l.length?(l.reduce(function(s,x){return s+(Number(x[k])||0)},0)/l.length).toFixed(1):'—'};
+  var cnt=function(l,k,v){return l.filter(function(x){return (x[k]||[]).indexOf(v)>-1}).length};
+  var wMax=Math.max.apply(null,[1].concat(WORKED.map(function(t){return cnt(items,'worked',t)})));
+  var tMax=Math.max.apply(null,[1].concat(TOPICS.map(function(t){return cnt(items,'topics',t)})));
+  var bar=function(l,n,m){return '<div class="bar"><span style="width:210px;font-weight:600">'+esc(l)+'</span><span class="track"><span class="fill" style="width:'+(m?Math.round(n/m*100):0)+'%"></span></span><span class="n">'+n+'</span></div>'};
+
+  app.innerHTML=
+  '<div class="card"><div class="stat">'+
+    '<div>ענו<b>'+items.length+'</b></div>'+
+    '<div>דירוג כללי<b>'+avg(items,'rate')+'</b></div>'+
+    '<div>ערך מעשי<b>'+avg(items,'useful')+'</b></div>'+
+    '<div>עשו את השיחה<b>'+items.filter(function(x){return Number(x.called)===1}).length+'</b></div>'+
+  '</div>'+
+  '<h2 style="margin-top:16px">האם המפגש עבד לשתי הקבוצות?</h2>'+
+  '<div class="cmp">'+
+    '<div class="a"><div class="h">רכזי הופה ('+hopa.length+')</div><div class="v">'+avg(hopa,'useful')+'</div><div class="s">ערך מעשי · דירוג כללי '+avg(hopa,'rate')+'</div></div>'+
+    '<div class="b"><div class="h">לא בתוכנית ('+other.length+')</div><div class="v">'+avg(other,'useful')+'</div><div class="s">ערך מעשי · דירוג כללי '+avg(other,'rate')+'</div></div>'+
+  '</div>'+
+  '<p class="hint" style="margin-top:10px">אם הפער בערך המעשי גדול מ-0.7 — המפגש הבא צריך תיקון מבני, לא רק שיפוץ תוכן.</p>'+
+  '<div style="text-align:left;margin-top:10px"><button class="btn ghost" onclick="location.reload()">🔄 רענון</button> <button class="btn ghost" id="csv">⬇️ CSV</button></div></div>'+
+
+  '<div class="card"><h2>מה הכי עבד</h2>'+WORKED.map(function(t){return bar(t,cnt(items,'worked',t),wMax)}).join('')+'</div>'+
+  '<div class="card"><h2>נושאים מבוקשים</h2>'+TOPICS.map(function(t){return bar(t,cnt(items,'topics',t),tMax)}).join('')+'</div>'+
+  '<div class="card"><h2>כל התשובות ('+items.length+')</h2>'+
+    (items.length?items.map(function(x){
+      return '<div class="resp"><div class="who">'+esc(x.who)+
+        '<span class="tag '+(Number(x.inHopa)===1?'h">הופה':'n">לא בתוכנית')+'</span>'+
+        '<span style="font-weight:500;color:#7d7d8a;font-size:13px">'+esc(x.school)+'</span>'+
+        '<span style="margin-inline-start:auto">'+(RATE_E[(x.rate||1)-1]||'')+'</span></div>'+
+        (x.improve?'<div class="row"><b>לשפר:</b> '+esc(x.improve)+'</div>':'')+
+        (x.heart?'<div class="row"><b>מהלב:</b> '+esc(x.heart)+'</div>':'')+
+      '</div>';
+    }).join(''):'<p class="hint">עדיין אין תשובות.</p>')+'</div>';
+
+  $('csv').onclick=function(){
+    var head=['שם','בית ספר','בתוכנית','עשה שיחה','דירוג','ערך מעשי','מה עבד','לשפר','נושאים','מהלב','זמן'];
+    var rows=items.map(function(x){return [x.who,x.school,Number(x.inHopa)===1?'כן':'לא',Number(x.called)===1?'כן':'לא',x.rate,x.useful,(x.worked||[]).join(' | '),x.improve,(x.topics||[]).join(' | '),x.heart,x.ts]});
+    var csv='﻿'+[head].concat(rows).map(function(r){return r.map(function(c){return '"'+String(c==null?'':c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='mashov-mifgashim-2.csv';a.click();
+  };
+}
+
+if(qs.get('admin')===ADMIN_PARAM)renderAdmin();else render();
+</script>
+</body>
+</html>

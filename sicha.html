@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>השיחה שלי · בוגר אחד, שיחה אחת · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;
+    --shadow:0 4px 18px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  button,textarea,input,select{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:680px;margin:0 auto;padding:0 16px}
+  .in.adm{max-width:1040px}
+
+  header{background:#111;color:#fff;padding:18px 0 24px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:38px;display:block}
+  header h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.3px}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:3px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+
+  main{padding:16px 0 60px}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px}
+  .card h2{margin:0 0 2px;font-size:16.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h2 .num{background:var(--pink-soft);color:var(--pink-dark);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:800;flex:none}
+  .hint{font-size:13px;color:var(--muted);margin:2px 0 10px}
+  input[type=text],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink);outline:none;transition:.15s}
+  input:focus,textarea:focus,select:focus{border-color:var(--pink)}
+  textarea{min-height:78px;resize:vertical;line-height:1.55}
+  .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 170px}
+  label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s;color:var(--ink)}
+  .chips button:hover{border-color:var(--pink)}
+  .chips button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+
+  .quotebox{border:2px solid var(--yellow);background:#fffdf0;border-radius:16px;padding:14px}
+  .quotebox h2{color:#8a7500}
+  .quotebox textarea{border-color:#f0e08a;background:#fff;font-size:16px;font-weight:600;min-height:88px}
+
+  .toggle{display:flex;gap:8px;margin-top:10px}
+  .toggle button{flex:1;border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px 8px;font-weight:800;font-size:14px;cursor:pointer;transition:.15s}
+  .toggle button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:13px 28px;font-weight:800;font-size:16px;cursor:pointer;transition:.15s;text-decoration:none}
+  .btn:active{transform:scale(.97)}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.32)}
+  .btn.pink:hover{background:var(--pink-dark)}
+  .btn.pink:disabled{opacity:.55;cursor:default}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:9px 16px;border-radius:11px;font-weight:700}
+  .send{margin-top:18px;text-align:center}
+  .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
+  .req{color:var(--pink);font-weight:800}
+
+  .done{text-align:center;padding:40px 18px}
+  .done .big{font-size:66px;line-height:1}
+  .done h2{justify-content:center;font-size:22px;margin-top:10px}
+  .done p{color:var(--muted);font-size:15px}
+  .nextbox{margin:16px auto 0;max-width:400px;background:var(--pink-soft);border-radius:14px;padding:13px 16px;font-weight:700;color:var(--pink-dark)}
+  .nextbox small{display:block;font-weight:500;color:var(--ink);opacity:.75;margin-top:3px}
+
+  /* admin */
+  .stat{display:flex;gap:10px;flex-wrap:wrap}
+  .stat>div{background:var(--pink-soft);border-radius:12px;padding:9px 18px;font-size:13px;color:var(--pink-dark);font-weight:600;text-align:center}
+  .stat b{display:block;font-size:24px;color:var(--ink)}
+  .bar{display:flex;align-items:center;gap:10px;margin-top:7px;font-size:13.5px}
+  .bar .track{flex:1;height:11px;background:#f0ecf3;border-radius:999px;overflow:hidden}
+  .bar .fill{display:block;height:100%;background:var(--pink);border-radius:999px}
+  .bar .n{width:26px;text-align:center;font-weight:800}
+  .qrow{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+  .qrow .q{font-size:15.5px;font-weight:700;line-height:1.5}
+  .qrow .meta{font-size:12.5px;color:var(--muted);margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
+  .qrow .meta span{background:#f6f2f7;border-radius:999px;padding:2px 10px;font-weight:700}
+  .nocall{background:#fff8dc;border:1.5px solid #f6dc7a}
+
+  /* הדפסת כרטיסים לקיר */
+  .pcards{display:none}
+  @media print{
+    body{background:#fff}
+    header,nav,footer,.noprint{display:none!important}
+    .pcards{display:block}
+    .pcard{page-break-inside:avoid;border:3px solid #E8348A;border-radius:18px;padding:26px 24px;margin:0 0 14px;min-height:150px;display:flex;flex-direction:column;justify-content:center}
+    .pcard .q{font-size:24px;font-weight:800;line-height:1.4}
+    .pcard .m{margin-top:14px;font-size:13px;color:#7d7d8a;font-weight:700}
+    .in.adm{max-width:none;padding:0}
+    .card{box-shadow:none;padding:0;margin:0}
+  }
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transform:translateY(14px);transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <div class="hrow">
+      <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+      <div>
+        <h1 id="heroTitle">השיחה שלי</h1>
+        <div class="sub" id="heroSub">בוגר אחד · שיחת טלפון אחת · שלוש שאלות</div>
+      </div>
+    </div>
+    <div class="meet" id="heroMeet">לקראת המפגש · 21.10 · בני ברק</div>
+  </div>
+</header>
+
+<main class="in" id="wrap"><div id="app"></div></main>
+
+<footer class="in noprint" style="text-align:center;color:#7d7d8a;font-size:12.5px;padding:0 16px 40px">
+  תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='sicha-';
+var ADMIN_PARAM='hopa';
+var LS_KEY='hopa-sicha-draft';
+
+var THEMES=['מסלול — צבא/לימודים/עבודה','כסף וזכויות','חיים — דיור, משפחה, רגש','בדידות','בגרות חסרה','שירות ומה אחריו'];
+var NOCALL=['אין לי טלפונים של בוגרים','לא ידעתי מה להגיד','לא היה לי זמן','התקשרתי והוא לא ענה','לא הרגשתי בנוח'];
+
+var app=document.getElementById('app'),qs=new URLSearchParams(location.search);
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},2000)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(params,tries,onAttempt){
+  var err;
+  for(var i=1;i<=(tries||5);i++){
+    if(onAttempt)onAttempt(i);
+    try{var r=await jsonp(params,25000);if(r&&r.ok)return r;err=new Error((r&&r.error)||'שגיאת שרת')}
+    catch(e){err=e}
+    await delay(800+i*700);
+  }
+  throw err||new Error('נכשל');
+}
+
+/* ---------- state ---------- */
+var state=load();
+function load(){
+  try{var s=JSON.parse(lsGet(LS_KEY));if(s&&s.id)return s}catch(e){}
+  return {id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+    called:null,who:'',school:'',bogerName:'',year:'',
+    a1:'',a2:'',a3:'',quote:'',themes:[],nocall:[],nocallOther:'',sent:false};
+}
+function save(){lsSet(LS_KEY,JSON.stringify(state))}
+
+function chipBtns(list,sel){
+  return list.map(function(t){return '<button type="button" data-v="'+esc(t)+'"'+(sel.indexOf(t)>-1?' class="on"':'')+'>'+esc(t)+'</button>'}).join('');
+}
+function bindChips(id,arrName){
+  var box=$(id);if(!box)return;
+  [].slice.call(box.children).forEach(function(b){
+    b.onclick=function(){
+      var v=b.dataset.v,arr=state[arrName],i=arr.indexOf(v);
+      if(i>-1)arr.splice(i,1);else arr.push(v);
+      b.classList.toggle('on');save();
+    };
+  });
+}
+
+/* ---------- form ---------- */
+function render(){
+  if(state.sent){renderDone();return}
+  app.innerHTML=
+  '<div class="card">'+
+    '<h2><span class="num">1</span>הספקת להתקשר לבוגר/ת? <span class="req">*</span></h2>'+
+    '<p class="hint">שתי התשובות בסדר גמור — שתיהן עוזרות לנו.</p>'+
+    '<div class="toggle" id="called">'+
+      '<button data-v="1"'+(state.called===1?' class="on"':'')+'>✅ כן, דיברתי</button>'+
+      '<button data-v="0"'+(state.called===0?' class="on"':'')+'>🙈 לא יצא לי</button>'+
+    '</div>'+
+  '</div>'+
+  '<div id="branch"></div>';
+
+  [].slice.call($('called').children).forEach(function(b){
+    b.onclick=function(){
+      state.called=Number(b.dataset.v);save();
+      [].slice.call($('called').children).forEach(function(x){x.classList.toggle('on',x===b)});
+      renderBranch();
+      setTimeout(function(){$('branch').scrollIntoView({behavior:'smooth',block:'start'})},60);
+    };
+  });
+  if(state.called!==null)renderBranch();
+}
+
+function whoCard(){
+  return '<div class="card">'+
+    '<h2><span class="num">2</span>מי ממלא/ת? <span class="req">*</span></h2>'+
+    '<div class="two">'+
+      '<div><label class="fl">שם מלא</label><input type="text" id="who" value="'+esc(state.who)+'" maxlength="40"></div>'+
+      '<div><label class="fl">בית הספר</label><input type="text" id="school" value="'+esc(state.school)+'" maxlength="45"></div>'+
+    '</div>'+
+  '</div>';
+}
+
+function renderBranch(){
+  var b=$('branch');
+  if(state.called===0){
+    b.innerHTML=whoCard()+
+    '<div class="card nocall">'+
+      '<h2><span class="num">3</span>מה עצר אותך?</h2>'+
+      '<p class="hint">זה לא מבחן. התשובות האלה הן בדיוק החסמים שנפתור בבני ברק.</p>'+
+      '<div class="chips" id="nocall">'+chipBtns(NOCALL,state.nocall)+'</div>'+
+      '<label class="fl">משהו אחר?</label>'+
+      '<input type="text" id="nocallOther" value="'+esc(state.nocallOther)+'" placeholder="לא חובה" maxlength="120">'+
+    '</div>'+
+    '<div class="send"><button class="btn pink" id="sendBtn">שליחה</button><div class="err" id="err"></div></div>';
+    bindChips('nocall','nocall');
+  }else{
+    b.innerHTML=whoCard()+
+    '<div class="card">'+
+      '<h2><span class="num">3</span>עם מי דיברת?</h2>'+
+      '<p class="hint">השם נשאר אצלנו לצורך מעקב בלבד — הוא לא יופיע על שום קיר ובשום מצגת.</p>'+
+      '<div class="two">'+
+        '<div><label class="fl">שם פרטי של הבוגר/ת</label><input type="text" id="bogerName" value="'+esc(state.bogerName)+'" maxlength="25"></div>'+
+        '<div><label class="fl">שנת סיום</label><input type="text" id="year" value="'+esc(state.year)+'" placeholder="למשל: תשפ״ו" maxlength="12"></div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="card">'+
+      '<h2><span class="num">4</span>שלוש השאלות</h2>'+
+      '<label class="fl">1 · מה את/ה עושה עכשיו?</label>'+
+      '<textarea id="a1" placeholder="בקצרה — צבא, לימודים, עבודה, כלום…">'+esc(state.a1)+'</textarea>'+
+      '<label class="fl">2 · מה הכי קשה כרגע?</label>'+
+      '<textarea id="a2" placeholder="מה הוא/היא אמר/ה">'+esc(state.a2)+'</textarea>'+
+      '<label class="fl">3 · מה היית רוצה שבית הספר היה עושה בשבילך בשנה האחרונה?</label>'+
+      '<textarea id="a3" placeholder="התשובה הזאת היא בדרך כלל הכי מעניינת">'+esc(state.a3)+'</textarea>'+
+    '</div>'+
+
+    '<div class="card quotebox">'+
+      '<h2>💬 המשפט <span class="req">*</span></h2>'+
+      '<p class="hint">משפט אחד <b>שהוא אמר</b>, במילים שלו, שנשאר לך. זה מה שייתלה על הקיר ב-21.10 — בלי שם ובלי בית ספר.</p>'+
+      '<textarea id="quote" placeholder="&rdquo;…&ldquo;" maxlength="220">'+esc(state.quote)+'</textarea>'+
+    '</div>'+
+
+    '<div class="card">'+
+      '<h2><span class="num">5</span>על מה הייתה השיחה?</h2>'+
+      '<p class="hint">אפשר לסמן כמה שרוצים</p>'+
+      '<div class="chips" id="themes">'+chipBtns(THEMES,state.themes)+'</div>'+
+    '</div>'+
+    '<div class="send"><button class="btn pink" id="sendBtn">שליחה 💛</button><div class="err" id="err"></div></div>';
+    bindChips('themes','themes');
+  }
+  ['who','school','bogerName','year','a1','a2','a3','quote','nocallOther'].forEach(function(k){
+    var el=$(k);if(el)el.addEventListener('input',function(){state[k]=this.value;save()});
+  });
+  $('sendBtn').onclick=submit;
+}
+
+async function submit(){
+  var btn=$('sendBtn'),errEl=$('err');errEl.textContent='';
+  if(!state.who.trim()||!state.school.trim()){errEl.textContent='צריך שם ובית ספר.';return}
+  if(state.called===1&&!state.quote.trim()){errEl.textContent='המשפט הוא הלב של זה — אפילו חצי משפט.';return}
+  if(state.called===0&&!state.nocall.length&&!state.nocallOther.trim()){errEl.textContent='סמנו לפחות סיבה אחת.';return}
+  btn.disabled=true;btn.textContent='שולח…';
+
+  var payload={
+    called:state.called,who:state.who.trim(),school:state.school.trim(),
+    bogerName:state.bogerName.trim(),year:state.year.trim(),
+    a1:state.a1.trim(),a2:state.a2.trim(),a3:state.a3.trim(),
+    quote:state.quote.trim(),themes:state.themes,
+    nocall:state.nocall.concat(state.nocallOther.trim()?[state.nocallOther.trim()]:[]),
+    ts:new Date().toISOString(),
+    meeting:'משימת ביניים · 14.10 → 21.10'
+  };
+  var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
+  try{
+    if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
+    await jsonpRetry(params,5,function(att){if(att>1)btn.textContent='שולח… ('+att+')'});
+    state.sent=true;save();renderDone();window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});
+      state.sent=true;save();renderDone();window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e2){
+      btn.disabled=false;btn.textContent='שליחה 💛';
+      errEl.textContent='לא הצלחנו לשלוח — בדקו אינטרנט ונסו שוב. התשובות שלך שמורות.';
+    }
+  }
+}
+
+function renderDone(){
+  app.innerHTML='<div class="card done">'+
+    '<div class="big">'+(state.called===1?'💛':'🙏')+'</div>'+
+    '<h2>'+(state.called===1?'תודה. המשפט הזה ייתלה על הקיר.':'תודה שאמרת את זה.')+'</h2>'+
+    '<p>'+(state.called===1
+      ? 'ב-21.10 אנחנו פותחים את המפגש מהמשפטים האלה — בלי שמות ובלי בתי ספר.'
+      : 'החסם שסימנת הוא בדיוק מה שנעבוד עליו בתחנות בבני ברק.')+'</p>'+
+    '<div class="nextbox">21.10.2026 · בני ברק · מפגש פרונטלי<small>תבואו עם מה ששמעתם</small></div>'+
+    '<div style="margin-top:20px"><button class="btn ghost" id="again">מילוי על בוגר נוסף</button></div>'+
+  '</div>';
+  $('again').onclick=function(){
+    var w=state.who,s=state.school;
+    try{localStorage.removeItem(LS_KEY)}catch(e){}
+    state={id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+      called:null,who:w,school:s,bogerName:'',year:'',a1:'',a2:'',a3:'',quote:'',themes:[],nocall:[],nocallOther:'',sent:false};
+    save();render();window.scrollTo({top:0,behavior:'smooth'});
+  };
+}
+
+/* ---------- ניהול ---------- */
+async function renderAdmin(){
+  $('heroTitle').textContent='השיחות · ניהול';
+  $('heroSub').textContent='כל מה שהבוגרים אמרו · חי מהגיליון';
+  $('heroMeet').textContent='למיטל ולצוות';
+  $('wrap').classList.add('adm');
+  app.innerHTML='<div class="card"><p class="hint" id="loadStat">טוען…</p></div>';
+  var store;
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(a){
+      var el=$('loadStat');if(el)el.textContent=a===1?'טוען…':'השרת של גוגל מתעצל — מנסה שוב ('+a+'/6)…';
+    });
+    store=r.store;
+  }catch(e){
+    app.innerHTML='<div class="card"><p class="hint">לא הצלחתי לטעון אחרי 6 ניסיונות ('+esc(e.message)+'). <button class="btn ghost" onclick="location.reload()">🔄 נסו שוב</button></p></div>';return;
+  }
+  var all=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
+    .map(function(k){return store[k]||{}}).filter(function(x){return x.who})
+    .sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
+  var done=all.filter(function(x){return Number(x.called)===1});
+  var not=all.filter(function(x){return Number(x.called)===0});
+  var schools={};all.forEach(function(x){schools[x.school]=1});
+
+  var cnt=function(list,key,val){return list.filter(function(x){return (x[key]||[]).indexOf(val)>-1}).length};
+  var tMax=Math.max.apply(null,[1].concat(THEMES.map(function(t){return cnt(done,'themes',t)})));
+  var nMax=Math.max.apply(null,[1].concat(NOCALL.map(function(t){return cnt(not,'nocall',t)})));
+  var bar=function(l,n,max){return '<div class="bar"><span style="width:210px;font-weight:600">'+esc(l)+'</span><span class="track"><span class="fill" style="width:'+(max?Math.round(n/max*100):0)+'%"></span></span><span class="n">'+n+'</span></div>'};
+
+  var ready=done.length>=25;
+  app.innerHTML=
+  '<div class="card noprint">'+
+    '<div class="stat">'+
+      '<div>שיחות שבוצעו<b>'+done.length+'</b></div>'+
+      '<div>לא יצא<b>'+not.length+'</b></div>'+
+      '<div>בתי ספר<b>'+Object.keys(schools).length+'</b></div>'+
+      '<div>ציטוטים לקיר<b>'+done.filter(function(x){return x.quote}).length+'</b></div>'+
+    '</div>'+
+    '<div style="margin-top:12px;padding:11px 14px;border-radius:12px;font-weight:700;font-size:14px;'+
+      (ready?'background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b">✅ מעל 25 שיחות — הקיר ב-21.10 עומד על עצמו. אין צורך בבנק הציטוטים.'
+            :'background:#fff8dc;border:1.5px solid #f6dc7a;color:#6b5300">⚠️ פחות מ-25 שיחות. אם זה המצב ב-19.10 — מפעילים את בנק ציטוטי הגיבוי המודפס.')+
+    '</div>'+
+    '<div style="text-align:left;margin-top:12px">'+
+      '<button class="btn ghost" onclick="location.reload()">🔄 רענון</button> '+
+      '<button class="btn ghost" id="printBtn">🖨️ הדפסת כרטיסים לקיר</button> '+
+      '<button class="btn ghost" id="csvBtn">⬇️ CSV</button>'+
+    '</div>'+
+  '</div>'+
+  '<div class="card noprint"><h2>על מה הייתה השיחה</h2>'+THEMES.map(function(t){return bar(t,cnt(done,'themes',t),tMax)}).join('')+'</div>'+
+  (not.length?'<div class="card noprint"><h2>מה עצר את מי שלא התקשר</h2>'+NOCALL.map(function(t){return bar(t,cnt(not,'nocall',t),nMax)}).join('')+'</div>':'')+
+  '<div class="card noprint"><h2>הציטוטים ('+done.length+')</h2>'+
+    (done.length?done.map(function(x){
+      return '<div class="qrow"><div class="q">&rdquo;'+esc(x.quote)+'&ldquo;</div>'+
+        '<div class="meta"><span>'+esc(x.school||'—')+'</span>'+
+        (x.year?'<span>'+esc(x.year)+'</span>':'')+
+        (x.themes||[]).map(function(t){return '<span>'+esc(t.split(' —')[0])+'</span>'}).join('')+
+        '</div>'+
+        (x.a3?'<div class="meta" style="font-size:13px;color:#1f1f26"><b style="color:#c02673">רצה מבית הספר:</b> '+esc(x.a3)+'</div>':'')+
+      '</div>';
+    }).join(''):'<p class="hint">עדיין אין שיחות.</p>')+
+  '</div>'+
+  '<div class="pcards">'+done.filter(function(x){return x.quote}).map(function(x){
+      return '<div class="pcard"><div class="q">&rdquo;'+esc(x.quote)+'&ldquo;</div>'+
+        '<div class="m">בוגר/ת '+esc(x.year||'')+' · נאמר בשיחה בשבוע שלפני המפגש</div></div>';
+    }).join('')+'</div>';
+
+  $('printBtn').onclick=function(){window.print()};
+  $('csvBtn').onclick=function(){
+    var head=['התקשר','שם','בית ספר','בוגר','שנה','מה עושה','מה קשה','מה רצה מביה"ס','ציטוט','תמות','חסמים','זמן'];
+    var rows=all.map(function(x){return [Number(x.called)===1?'כן':'לא',x.who,x.school,x.bogerName,x.year,x.a1,x.a2,x.a3,x.quote,(x.themes||[]).join(' | '),(x.nocall||[]).join(' | '),x.ts]});
+    var csv='﻿'+[head].concat(rows).map(function(r){return r.map(function(c){return '"'+String(c==null?'':c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='sichot-bogrim.csv';a.click();
+  };
+}
+
+if(qs.get('admin')===ADMIN_PARAM)renderAdmin();else render();
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>איפה הם עכשיו? · מצגת 14.10 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26}
+  *{box-sizing:border-box}html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif}
+  #stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  #deck{width:1920px;height:1080px;transform-origin:center;position:relative;background:#fff}
+  .s{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:110px 130px;background:#fff;color:var(--ink)}
+  .s.on{display:flex}
+  .s.dark{background:#111;color:#fff}
+  .s.pinkbg{background:var(--pink);color:#fff}
+  .s.yellowbg{background:var(--yellow);color:#111}
+
+  .kick{font-size:30px;font-weight:800;color:var(--pink);letter-spacing:.5px;margin-bottom:22px}
+  .s.dark .kick,.s.pinkbg .kick{color:var(--yellow)}
+  h1{font-size:130px;font-weight:900;margin:0;line-height:1.02;letter-spacing:-3px}
+  h2{font-size:88px;font-weight:900;margin:0 0 30px;line-height:1.1;letter-spacing:-2px}
+  h3{font-size:54px;font-weight:800;margin:0 0 18px}
+  p.big{font-size:46px;font-weight:600;line-height:1.4;margin:0}
+  p.med{font-size:36px;font-weight:500;line-height:1.5;margin:0}
+  .sub{font-size:38px;font-weight:500;opacity:.7;margin-top:26px}
+
+  .quote{border-inline-start:14px solid var(--yellow);padding-inline-start:38px;font-size:56px;font-weight:700;line-height:1.35}
+  .s.yellowbg .quote{border-color:#111}
+
+  .three{display:flex;gap:34px;margin-top:20px}
+  .three>div{flex:1;background:#f6f2f7;border-radius:34px;padding:44px 38px}
+  .s.dark .three>div{background:#1c1c24}
+  .three .n{font-size:110px;font-weight:900;color:var(--pink);line-height:1}
+  .s.dark .three .n{color:var(--yellow)}
+  .three .l{font-size:31px;font-weight:600;margin-top:14px;line-height:1.35}
+  .three .src{font-size:22px;opacity:.5;margin-top:18px}
+
+  .lvls{display:flex;flex-direction:column;gap:22px;margin-top:14px}
+  .lvl{display:flex;align-items:center;gap:30px;border-radius:26px;padding:30px 38px;background:#f6f2f7}
+  .lvl .dot{width:26px;height:26px;border-radius:50%;flex:none}
+  .lvl .t{font-size:44px;font-weight:900;width:330px;flex:none}
+  .lvl .d{font-size:30px;font-weight:500;flex:1;line-height:1.35}
+  .lvl .c{font-size:26px;font-weight:800;color:var(--pink-dark);flex:none}
+
+  .wall{display:flex;flex-wrap:wrap;gap:16px;align-content:flex-start;margin-top:26px;max-height:640px;overflow:hidden}
+  .wall span{background:#f6f2f7;border-radius:999px;padding:14px 30px;font-size:34px;font-weight:800}
+  .s.dark .wall span{background:#1c1c24}
+  .wall span i{font-style:normal;font-weight:400;opacity:.55;font-size:29px}
+
+  .votes{display:flex;gap:34px;margin-top:40px}
+  .votes>div{flex:1;background:#1c1c24;border-radius:34px;padding:52px 30px;text-align:center}
+  .votes .pc{font-size:132px;font-weight:900;color:var(--yellow);line-height:1}
+  .votes .lb{font-size:34px;font-weight:700;margin-top:10px}
+  .votes .ct{font-size:24px;opacity:.5;margin-top:8px}
+  .blur{filter:blur(26px);transition:filter .8s}
+
+  .qlist{display:flex;flex-direction:column;gap:26px;margin-top:16px}
+  .qlist div{background:#f6f2f7;border-radius:24px;padding:30px 36px;font-size:40px;font-weight:700}
+  .s.dark .qlist div{background:#1c1c24}
+  .qlist div b{color:var(--pink);margin-inline-end:14px}
+  .s.dark .qlist div b{color:var(--yellow)}
+
+  .rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:26px}
+  .room{background:#f6f2f7;border-radius:22px;padding:22px 26px}
+  .room h4{margin:0 0 10px;font-size:28px;font-weight:900;color:var(--pink-dark)}
+  .room ul{margin:0;padding-inline-start:24px;font-size:22px;line-height:1.45}
+
+  .logo{position:absolute;top:52px;inset-inline-start:64px;height:56px;opacity:.9}
+  .s.dark .logo,.s.pinkbg .logo{filter:brightness(0) invert(1)}
+  .pg{position:absolute;bottom:44px;inset-inline-end:64px;font-size:23px;font-weight:800;opacity:.35}
+  .tmr{position:absolute;bottom:44px;inset-inline-start:64px;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--pink)}
+  .s.dark .tmr{color:var(--yellow)}
+  .live{position:absolute;top:56px;inset-inline-end:64px;font-size:24px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:10px}
+  .s.dark .live{color:var(--yellow)}
+  .live i{width:14px;height:14px;border-radius:50%;background:currentColor;animation:bl 1.6s infinite}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+  #hint{position:fixed;bottom:14px;inset-inline:0;text-align:center;color:#666;font-size:13px;font-family:Rubik,Arial;z-index:5}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 1 -->
+<div class="s dark"><div class="kick">מפגש רכזים · 14.10.2026</div>
+  <h1>איפה הם<br>עכשיו?</h1>
+  <div class="sub">ליווי בוגרים · רכזים חברתיים ורכזי בוגרים · תוכנית הבוגרים של הופה</div></div>
+
+<!-- 2 -->
+<div class="s yellowbg"><div class="quote">אנחנו מבקשים מכם שעה וחצי כדי לדבר על אנשים<br>שכבר לא נמצאים בבית הספר שלכם.<br><br>בלי ציונים, בלי נוכחות, בלי מדידה מבחוץ.</div>
+  <p class="big" style="margin-top:50px"><b>מה שנעשה בשבילם — נעשה כי בחרנו, לא כי חייבים.</b></p></div>
+
+<!-- 3 -->
+<div class="s"><h2>מי בחדר</h2>
+  <div class="three">
+    <div><div class="n">64</div><div class="l">רכזים חברתיים</div></div>
+    <div><div class="n">25</div><div class="l">בתוכנית הבוגרים של הופה</div></div>
+    <div><div class="n">39</div><div class="l">לא בתוכנית</div></div>
+  </div>
+  <p class="big" style="margin-top:50px">המפגש בנוי לשתי הקבוצות — <b>ולא בנוי לשכנע אף אחד להצטרף לשום דבר.</b></p></div>
+
+<!-- 4 -->
+<div class="s pinkbg"><div class="kick">סעיף 1 בדף</div>
+  <h2>הבוגר שאני זוכר/ת</h2>
+  <p class="big">בחרו בוגר או בוגרת אחת מהמחזור שסיים ביוני — <b>שאתם זוכרים בשם.</b><br>
+  לא הכי מצטיין ולא הכי בעייתי. מישהו שנשאר לכם בראש.</p>
+  <p class="med" style="margin-top:44px;opacity:.85">כותבים בדף: שם פרטי + מילה אחת על מה קרה לו.</p></div>
+
+<!-- 5 — חי -->
+<div class="s dark" data-live="wall"><div class="live"><i></i> חי</div>
+  <div class="kick">הבוגרים שלנו</div>
+  <h3 id="wallCount">— שמות</h3>
+  <div class="wall" id="wall"></div></div>
+
+<!-- 6 -->
+<div class="s yellowbg"><h2 style="font-size:104px">ועכשיו השאלה</h2>
+  <p class="big" style="font-size:64px;font-weight:800">האם את/ה יודע/ת <u>בוודאות</u><br>מה הוא עושה היום?</p>
+  <p class="med" style="margin-top:50px;opacity:.7">מצביעים בסעיף 1 בדף</p></div>
+
+<!-- 7 — חי -->
+<div class="s dark" data-live="vote"><div class="live"><i></i> חי</div>
+  <h2>יודע/ת בוודאות?</h2>
+  <div class="votes blur" id="votes"></div>
+  <p class="med" style="margin-top:38px;opacity:.55">רווח או קליק לגילוי · מקש R לטשטוש מחדש</p></div>
+
+<!-- 8 -->
+<div class="s pinkbg"><div class="quote" style="border-color:#fff;font-size:64px">
+  אלה בני אדם.<br>את רובם ליוויתם ארבע שנים.<br><br><b>ואת רובם איבדנו תוך ארבעה חודשים.</b></div></div>
+
+<!-- 9 -->
+<div class="s"><div class="kick">12 דקות</div><h2>בוגר אמיתי</h2>
+  <div class="qlist">
+    <div><b>1</b>איך נראה השבוע הראשון אחרי הטקס?</div>
+    <div><b>2</b>מישהו מבית הספר יצר איתך קשר אחרי שסיימת?</div>
+    <div><b>3</b>מה היה הכי קשה בשנה הראשונה — שלא ידעת שיהיה קשה?</div>
+    <div><b>4</b>משפט אחד לרכז אחד בחדר הזה.</div>
+  </div></div>
+
+<!-- 10 -->
+<div class="s dark"><div class="kick">מה שהמחקר אומר</div><h2>שלושה מספרים</h2>
+  <div class="three">
+    <div><div class="n">+19</div><div class="l">נקודות אחוז בסיום תואר — בזכות ליווי אחרי התיכון</div><div class="src">KIPP · מחקר Mathematica</div></div>
+    <div><div class="n">+10</div><div class="l">נקודות אחוז — בניסוי מבוקר (RCT)</div><div class="src">Bottom Line</div></div>
+    <div><div class="n">112</div><div class="l">מוסדות ו-99 רכזי בוגרים בישראל — זה כבר קיים כאן</div><div class="src">״יש לך כתובת״ · ג׳וינט</div></div>
+  </div></div>
+
+<!-- 11 -->
+<div class="s yellowbg"><h2>והחור</h2>
+  <p class="big" style="font-size:52px">במחקר שעשינו באוגוסט 2026 <b>לא מצאנו מערך ליווי בוגרים מוסדר</b> באף אחת מרשתות החינוך הגדולות בישראל.</p>
+  <div class="quote" style="border-color:#111;margin-top:56px;font-size:52px">אין לזה עדיין תשובה מערכתית.<br><b>מה שיקרה עם הבוגרים שלכם תלוי בכם.</b></div></div>
+
+<!-- 12 -->
+<div class="s pinkbg"><div class="kick">25 דקות · חדרים</div>
+  <h2>מה כבר יש לי?</h2>
+  <p class="big">אילו נקודות קשר עם בוגרים <u>כבר קיימות</u> אצלכם בבית הספר —<br>גם אם אף אחד לא קורא לזה ״ליווי בוגרים״?</p>
+  <p class="med" style="margin-top:40px;opacity:.85">קבוצת וואטסאפ של המחזור · בוגרים שחוזרים להתנדב · מורה שנשארה בקשר · הטקס · רשימת טלפונים אצל המזכירות · עמוד פייסבוק</p></div>
+
+<!-- 13 -->
+<div class="s"><h2>בחדר</h2>
+  <div class="qlist">
+    <div><b>3′</b>סבב שמות — שם, בית ספר, כמה שנים בתפקיד</div>
+    <div><b>12′</b>כל אחד נותן נקודת קשר אחת ומקליד לדף (סעיף 4)</div>
+    <div><b>7′</b>רכזי הופה עונים על שאלה אחת: ״מה עשינו עם זה אצלנו?״</div>
+    <div><b>3′</b>מנסחים משפט אחד לדיווח</div>
+  </div>
+  <p class="med" style="margin-top:36px;opacity:.6">קודם בוחרים מספר חדר בדף המלווה.</p></div>
+
+<!-- 14 — חי -->
+<div class="s" data-live="rooms"><div class="live"><i></i> חי</div>
+  <div class="kick">מה שכבר יש לנו</div><h2 id="roomsCount">נקודות קשר</h2>
+  <div class="rooms" id="rooms"></div></div>
+
+<!-- 15 -->
+<div class="s"><h2>שלוש רמות</h2>
+  <div class="lvls">
+    <div class="lvl"><span class="dot" style="background:#22b573"></span><span class="t">1 · לא לאבד</span>
+      <span class="d">מאגר מינימלי שנאסף <b>בי״ב</b> · קבוצת מחזור · טקס מעבר</span><span class="c">שעתיים ביוני</span></div>
+    <div class="lvl"><span class="dot" style="background:#f0a500"></span><span class="t">2 · לדעת להפנות</span>
+      <span class="d">מאגר המענים של הופה — פתוח, חינם, בלי חברות</span><span class="c">20 דקות ללמוד</span></div>
+    <div class="lvl"><span class="dot" style="background:#E8348A"></span><span class="t">3 · ללוות</span>
+      <span class="d">רמזור · שיחת 4 השאלות · מדרג סיוע · פורטל ותיעוד</span><span class="c">תפקיד בשעות</span></div>
+  </div>
+  <p class="big" style="margin-top:44px">רוב הערך ברמה 1 ו-2. <b>שתיהן פתוחות לכולכם מהיום, בלי לדבר איתנו בכלל.</b></p></div>
+
+<!-- 16 -->
+<div class="s yellowbg" data-timer="240"><div class="kick">4 דקות</div>
+  <h2>חיפוש חי</h2>
+  <p class="big" style="font-size:56px">היכנסו ל-<b>hopa.org.il</b><br>וחפשו מענה אחד באזור שלכם<br>לצורך אמיתי שאתם מכירים.</p>
+  <span class="tmr" id="tmr">04:00</span></div>
+
+<!-- 17 — חי -->
+<div class="s dark" data-live="mane"><div class="live"><i></i> חי</div>
+  <div class="kick">מה מצאנו</div><h3 id="maneCount">— מענים</h3>
+  <div class="wall" id="mane"></div></div>
+
+<!-- 18 -->
+<div class="s pinkbg"><div class="kick">עד 21.10</div>
+  <h1 style="font-size:104px">בוגר אחד.<br>שיחה אחת.<br>שלוש שאלות.</h1></div>
+
+<!-- 19 -->
+<div class="s"><h2>שלוש השאלות</h2>
+  <div class="qlist">
+    <div><b>1</b>מה את/ה עושה עכשיו?</div>
+    <div><b>2</b>מה הכי קשה כרגע?</div>
+    <div><b>3</b>מה היית רוצה שבית הספר היה עושה בשבילך בשנה האחרונה?</div>
+  </div>
+  <p class="big" style="margin-top:44px">ואז — משפט אחד <b>שהוא אמר</b>, בדף ״השיחה שלי״.</p>
+  <p class="med" style="margin-top:20px;opacity:.6">ב-21.10 אנחנו פותחים את המפגש מהמשפטים האלה. בלי שמות, בלי בתי ספר.</p></div>
+
+<!-- 20 — חי -->
+<div class="s dark" data-live="mesima"><div class="live"><i></i> חי</div>
+  <div class="kick">מי מתקשר למי</div><h3 id="mesCount">— רכזים בחרו בוגר</h3>
+  <div class="wall" id="mes"></div></div>
+
+<!-- 21 -->
+<div class="s yellowbg"><h1 style="font-size:110px">21.10<br>בני ברק</h1>
+  <p class="big" style="margin-top:44px;font-size:56px"><b>תבואו עם מה ששמעתם.</b></p></div>
+
+<!-- 22 -->
+<div class="s dark"><div class="kick">🚪 הדלת</div>
+  <p class="big" style="font-size:50px">25 מכם בתוכנית הבוגרים של הופה.<br><br>
+  מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים בסעיף 7 בדף, ואחזור אליו.</p>
+  <p class="med" style="margin-top:46px;opacity:.5">זה הכול. לא נדבר על זה יותר.</p></div>
+
+<!-- 23 -->
+<div class="s pinkbg"><div class="kick">רק רכזי הופה · +10 דקות</div>
+  <h2>אתם מארחים את התחנות</h2>
+  <div class="qlist">
+    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">א׳</b>המאגר — ״אי אפשר ללוות את מי שאין לך את הטלפון שלו״</div>
+    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">ב׳</b>השיחה — 4 השאלות + סימולציה</div>
+    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">ג׳</b>מענים ומדרג — יידוע ← תיווך ← סנגור ← ליווי</div>
+  </div>
+  <div class="quote" style="border-color:#fff;margin-top:50px;font-size:48px">אתם לא מרצים.<br><b>אתם מספרים מה קרה אצלכם.</b></div></div>
+
+</div></div>
+<div id="hint">← → או רווח · F מסך מלא · R טשטוש מחדש · #מספר בכתובת קופץ לשקף</div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='m2-';
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+var slides=[].slice.call(document.querySelectorAll('.s'));
+slides.forEach(function(s,i){
+  var l=document.createElement('img');l.className='logo';l.src='hopa-logo.png';l.alt='';s.appendChild(l);
+  var p=document.createElement('div');p.className='pg';p.textContent=(i+1)+' / '+slides.length;s.appendChild(p);
+});
+var cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,j){s.classList.toggle('on',j===cur)});
+  location.hash=String(cur+1);
+  if(slides[cur].dataset.live)poll();
+  var td=slides[cur].dataset.timer;
+  if(td)startTimer(Number(td));else stopTimer();
+}
+function fit(){
+  var k=Math.min(innerWidth/1920,innerHeight/1080);
+  $('deck').style.transform='scale('+k+')';
+}
+addEventListener('resize',fit);fit();
+addEventListener('keydown',function(e){
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown')show(cur+1);
+  else if(e.key==='ArrowRight'||e.key==='PageUp')show(cur-1);
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  else if(e.key==='r'||e.key==='R'){var v=$('votes');if(v)v.classList.add('blur')}
+  else if(e.key==='Home')show(0);
+});
+addEventListener('click',function(){
+  var v=$('votes');
+  if(slides[cur].dataset.live==='vote'&&v&&v.classList.contains('blur')){v.classList.remove('blur');return}
+  show(cur+1);
+});
+show(location.hash?Number(location.hash.slice(1))-1:0);
+
+/* ---- טיימר ---- */
+var tk=null,tv=240;
+function stopTimer(){if(tk){clearInterval(tk);tk=null}}
+function startTimer(sec){
+  stopTimer();tv=sec;paintT();
+  tk=setInterval(function(){tv--;paintT();if(tv<=0)stopTimer()},1000);
+}
+function paintT(){var e=$('tmr');if(e)e.textContent=String(Math.floor(tv/60)).padStart(2,'0')+':'+String(Math.max(0,tv%60)).padStart(2,'0')}
+
+/* ---- נתונים חיים ---- */
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||22000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+var STORE={};
+function items(kind){
+  var pre='intake_'+KEY_PREFIX+kind+'-';
+  return Object.keys(STORE).filter(function(k){return k.indexOf(pre)===0})
+    .map(function(k){return STORE[k]||{}}).filter(function(x){return !x.del})
+    .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
+}
+function draw(){
+  var b=items('bogrim');
+  $('wall').innerHTML=b.slice(-46).map(function(x){return '<span>'+esc(x.name)+(x.word?' <i>'+esc(x.word)+'</i>':'')+'</span>'}).join('');
+  $('wallCount').textContent=b.length+' שמות';
+
+  var k=items('know'),v={yes:0,guess:0,no:0};
+  k.forEach(function(x){if(v[x.v]!==undefined)v[x.v]++});
+  var tot=k.length||1;
+  $('votes').innerHTML=
+    '<div><div class="pc">'+Math.round(v.yes/tot*100)+'%</div><div class="lb">יודע/ת בוודאות</div><div class="ct">'+v.yes+' רכזים</div></div>'+
+    '<div><div class="pc">'+Math.round(v.guess/tot*100)+'%</div><div class="lb">מנחש/ת</div><div class="ct">'+v.guess+'</div></div>'+
+    '<div><div class="pc">'+Math.round(v.no/tot*100)+'%</div><div class="lb">לא יודע/ת</div><div class="ct">'+v.no+'</div></div>';
+
+  var r=items('nekuda'),byRoom={};
+  r.forEach(function(x){(byRoom[x.room]=byRoom[x.room]||[]).push(x.text)});
+  $('rooms').innerHTML=Object.keys(byRoom).sort().slice(0,8).map(function(rm){
+    return '<div class="room"><h4>חדר '+esc(rm)+'</h4><ul>'+byRoom[rm].slice(0,7).map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div>';
+  }).join('');
+  $('roomsCount').textContent=r.length+' נקודות קשר שכבר קיימות';
+
+  var m=items('mane');
+  $('mane').innerHTML=m.slice(-30).map(function(x){return '<span>'+(x.city?'<i>'+esc(x.city)+' · </i>':'')+esc(x.found)+'</span>'}).join('');
+  $('maneCount').textContent=m.length+' מענים';
+
+  var c=items('mesima');
+  $('mes').innerHTML=c.slice(-50).map(function(x){return '<span>'+esc(x.who)+'</span>'}).join('');
+  $('mesCount').textContent=c.length+' רכזים בחרו בוגר';
+}
+var busy=false;
+async function poll(){
+  if(busy)return;busy=true;
+  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;draw()}}catch(e){}
+  busy=false;
+}
+poll();
+setInterval(function(){if(!document.hidden&&slides[cur].dataset.live)poll()},7000);
+</script>
+</body>
+</html>

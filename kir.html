@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קיר הבוגרים · 21.10 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#e6e2ea}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:#111;color:#fff;line-height:1.45}
+  button,input,textarea,select{font-family:inherit;font-size:inherit}
+
+  .top{display:flex;align-items:center;gap:16px;padding:16px 26px;background:#000;flex-wrap:wrap}
+  .top img{height:38px}
+  .top h1{margin:0;font-size:21px;font-weight:900}
+  .top .sub{font-size:13px;opacity:.6}
+  .top .right{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .top button{border:1.5px solid #333;background:#1a1a22;color:#fff;border-radius:10px;padding:7px 14px;font-weight:800;font-size:13px;cursor:pointer}
+  .top button.on{background:var(--pink);border-color:var(--pink)}
+  .live{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--yellow)}
+  .live i{width:10px;height:10px;border-radius:50%;background:currentColor;animation:bl 1.6s infinite}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+
+  /* ---- קיר ---- */
+  #wall{columns:4;column-gap:18px;padding:20px 26px 60px}
+  @media(max-width:1400px){#wall{columns:3}}
+  @media(max-width:1000px){#wall{columns:2}}
+  @media(max-width:660px){#wall{columns:1}}
+  .q{break-inside:avoid;background:#1c1c24;border-radius:20px;padding:22px 24px;margin:0 0 18px;
+     border-inline-start:6px solid var(--pink);animation:in .5s ease}
+  .q.t-money{border-color:#f0a500}.q.t-life{border-color:#4a9fe0}.q.t-alone{border-color:#9b6fd4}
+  .q.t-bagrut{border-color:#22b573}.q.t-army{border-color:#e07a5f}
+  @keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .q .txt{font-size:23px;font-weight:700;line-height:1.42}
+  .q .meta{margin-top:14px;font-size:12.5px;color:#8a8a99;display:flex;gap:7px;flex-wrap:wrap}
+  .q .meta span{background:#252530;border-radius:999px;padding:3px 11px;font-weight:700}
+
+  /* ---- תמות ---- */
+  #themes{display:none;padding:26px;gap:16px;flex-wrap:wrap}
+  #themes.on{display:flex}
+  .th{flex:1 1 250px;background:#1c1c24;border-radius:22px;padding:24px 26px;border-top:7px solid var(--pink)}
+  .th b{display:block;font-size:56px;font-weight:900;color:var(--yellow);line-height:1}
+  .th .l{font-size:20px;font-weight:700;margin-top:8px}
+  .th .p{font-size:14px;color:#8a8a99;margin-top:5px}
+
+  /* ---- הוספה ---- */
+  #add{display:none;max-width:620px;margin:0 auto;padding:26px}
+  #add.on{display:block}
+  #add h2{font-size:22px;font-weight:900;margin:0 0 6px}
+  #add p{color:#9a9aa8;font-size:14px;margin:0 0 16px}
+  #add label{display:block;font-size:13px;font-weight:700;color:#8a8a99;margin:14px 0 5px}
+  #add textarea,#add input,#add select{width:100%;border:1.5px solid #333;background:#1a1a22;color:#fff;border-radius:13px;padding:12px 14px;outline:none}
+  #add textarea{min-height:100px;font-size:17px;font-weight:600;resize:vertical}
+  #add textarea:focus,#add input:focus,#add select:focus{border-color:var(--pink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chips button{border:1.5px solid #333;background:#1a1a22;color:#fff;border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:700;cursor:pointer}
+  .chips button.on{background:var(--pink);border-color:var(--pink)}
+  .bigbtn{width:100%;margin-top:20px;border:none;background:var(--pink);color:#fff;border-radius:15px;padding:15px;font-size:17px;font-weight:800;cursor:pointer}
+  .bigbtn:disabled{opacity:.5}
+  .err{color:#ff8a8a;font-size:13.5px;font-weight:700;margin-top:9px;min-height:16px}
+  .note{background:#241b20;border:1.5px solid #4a2b3c;border-radius:13px;padding:12px 15px;font-size:13.5px;color:#e0b8cd;margin-top:16px}
+
+  .empty{text-align:center;padding:80px 20px;color:#66667a}
+  .empty .e{font-size:64px}
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:var(--pink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:800;font-size:15px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <img src="hopa-logo.png" alt="הופה">
+  <div>
+    <h1>מה הבוגרים אמרו לנו השבוע</h1>
+    <div class="sub">מפגש רכזים · 21.10.2026 · בני ברק</div>
+  </div>
+  <div class="right">
+    <span class="live"><i></i> <span id="cnt">0</span> ציטוטים</span>
+    <button data-v="wall" class="on">קיר</button>
+    <button data-v="themes">תמות</button>
+    <button data-v="add">➕ הוספה</button>
+  </div>
+</div>
+
+<div id="wall"></div>
+<div id="themes"></div>
+
+<div id="add">
+  <h2>ציטוט מהשולחן</h2>
+  <p>משפט אחד <b>שהבוגר/ת אמר/ה</b>, במילים שלו. בלי שמות ובלי שם בית הספר.</p>
+  <label>המשפט</label>
+  <textarea id="a_q" maxlength="220" placeholder="&rdquo;…&ldquo;"></textarea>
+  <label>על מה זה? (אפשר כמה)</label>
+  <div class="chips" id="a_th"></div>
+  <label>מספר שולחן (לא חובה)</label>
+  <input type="text" id="a_tbl" maxlength="8" placeholder="למשל: 5">
+  <button class="bigbtn" id="a_send">תלייה על הקיר</button>
+  <div class="err" id="a_err"></div>
+  <div class="note">🔒 על הקיר לא מופיעים שמות של בוגרים ולא שמות בתי ספר — כדי שהבוגרים שלנו יוכלו לדבר בחופשיות.</div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var SICHA_PREFIX='sicha-';    /* השיחות שמולאו לפני המפגש */
+var KIR_PREFIX='kir-';        /* ציטוטים שנוספו בשולחנות ביום המפגש */
+
+var THEMES=[
+  {k:'מסלול',c:'t-path',   d:'צבא · לימודים · עבודה'},
+  {k:'כסף',   c:'t-money',  d:'מלגות · זכויות · חובות'},
+  {k:'חיים',  c:'t-life',   d:'דיור · משפחה · רגש'},
+  {k:'בדידות',c:'t-alone',  d:'אין למי לפנות'},
+  {k:'בגרות חסרה',c:'t-bagrut',d:'השלמות · תעודה'},
+  {k:'שירות', c:'t-army',   d:'לפני, במהלך ואחרי'}
+];
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2200)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+var devId=lsGet('hopa-kir-dev');
+if(!devId){devId=Date.now().toString(36)+Math.random().toString(36).slice(2,7);lsSet('hopa-kir-dev',devId)}
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
+
+/* ---- טאבים ---- */
+[].slice.call(document.querySelectorAll('.top button')).forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('.top button').forEach(function(x){x.classList.toggle('on',x===b)});
+    var v=b.dataset.v;
+    $('wall').style.display=v==='wall'?'':'none';
+    $('themes').classList.toggle('on',v==='themes');
+    $('add').classList.toggle('on',v==='add');
+  };
+});
+
+/* ---- טופס הוספה ---- */
+var picked=[];
+$('a_th').innerHTML=THEMES.map(function(t){return '<button type="button" data-v="'+esc(t.k)+'">'+esc(t.k)+'</button>'}).join('');
+[].slice.call($('a_th').children).forEach(function(b){
+  b.onclick=function(){
+    var v=b.dataset.v,i=picked.indexOf(v);
+    if(i>-1)picked.splice(i,1);else picked.push(v);
+    b.classList.toggle('on');
+  };
+});
+$('a_send').onclick=async function(){
+  var q=$('a_q').value.trim();
+  if(!q){$('a_err').textContent='כתבו את המשפט.';return}
+  $('a_err').textContent='';
+  var btn=this;btn.disabled=true;btn.textContent='תולה…';
+  var payload={quote:q,themes:picked.slice(),table:$('a_tbl').value.trim(),ts:new Date().toISOString(),src:'שולחן'};
+  var params={action:'intakeSubmit',school:KIR_PREFIX+devId+'-'+Date.now().toString(36),json:JSON.stringify(payload)};
+  var ok=false;
+  try{await jsonpRetry(params,4);ok=true}
+  catch(e){
+    try{await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});ok=true}catch(e2){}
+  }
+  btn.disabled=false;btn.textContent='תלייה על הקיר';
+  if(ok){
+    $('a_q').value='';$('a_tbl').value='';
+    picked=[];[].slice.call($('a_th').children).forEach(function(b){b.classList.remove('on')});
+    toast('נתלה על הקיר 💛');poll();
+  }else $('a_err').textContent='לא נשלח — נסו שוב.';
+};
+
+/* ---- קריאה ---- */
+var STORE={};
+function collect(){
+  var out=[];
+  Object.keys(STORE).forEach(function(k){
+    var x=STORE[k]||{};if(x.del)return;
+    if(k.indexOf('intake_'+SICHA_PREFIX)===0&&Number(x.called)===1&&x.quote)
+      out.push({q:x.quote,themes:x.themes||[],year:x.year||'',src:'שיחה לפני המפגש',ts:x.ts});
+    else if(k.indexOf('intake_'+KIR_PREFIX)===0&&x.quote)
+      out.push({q:x.quote,themes:x.themes||[],table:x.table||'',src:'שולחן במפגש',ts:x.ts});
+  });
+  return out.sort(function(a,b){return String(b.ts||'').localeCompare(String(a.ts||''))});
+}
+function themeClass(themes){
+  for(var i=0;i<THEMES.length;i++)
+    for(var j=0;j<themes.length;j++)
+      if(String(themes[j]).indexOf(THEMES[i].k)===0)return THEMES[i].c;
+  return '';
+}
+function draw(){
+  var list=collect();
+  $('cnt').textContent=list.length;
+  $('wall').innerHTML=list.length?list.map(function(x){
+    return '<div class="q '+themeClass(x.themes)+'">'+
+      '<div class="txt">&rdquo;'+esc(x.q)+'&ldquo;</div>'+
+      '<div class="meta">'+
+        (x.themes||[]).map(function(t){return '<span>'+esc(String(t).split(' —')[0])+'</span>'}).join('')+
+        (x.year?'<span>'+esc(x.year)+'</span>':'')+
+        (x.table?'<span>שולחן '+esc(x.table)+'</span>':'')+
+      '</div></div>';
+  }).join(''):'<div class="empty"><div class="e">💬</div><p>הקיר עדיין ריק.<br>ברגע שרכזים ימלאו את דף ״השיחה שלי״ — הציטוטים יופיעו כאן לבד.</p></div>';
+
+  var tot=list.length||1;
+  $('themes').innerHTML=THEMES.map(function(t){
+    var n=list.filter(function(x){return (x.themes||[]).some(function(y){return String(y).indexOf(t.k)===0})}).length;
+    return '<div class="th" style="border-color:'+({'t-money':'#f0a500','t-life':'#4a9fe0','t-alone':'#9b6fd4','t-bagrut':'#22b573','t-army':'#e07a5f'}[t.c]||'#E8348A')+'">'+
+      '<b>'+n+'</b><div class="l">'+esc(t.k)+'</div><div class="p">'+esc(t.d)+' · '+Math.round(n/tot*100)+'% מהציטוטים</div></div>';
+  }).join('');
+}
+var busy=false;
+async function poll(){
+  if(busy)return;busy=true;
+  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;draw()}}catch(e){}
+  busy=false;
+}
+poll();
+setInterval(function(){if(!document.hidden)poll()},9000);
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תוכנית הבוגרים של בית הספר שלי · דף אחד</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26;--muted:#7d7d8a;--line:#d8d3dd}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:#e9e5ec;color:var(--ink)}
+  .bar{background:#111;color:#fff;padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .bar h1{margin:0;font-size:17px;font-weight:800}
+  .bar .sp{margin-inline-start:auto}
+  .bar button{border:none;background:var(--yellow);color:#111;border-radius:10px;padding:9px 20px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+  .bar small{opacity:.6;font-size:12.5px}
+
+  .page{width:210mm;min-height:297mm;background:#fff;margin:16px auto;padding:16mm 15mm;box-shadow:0 6px 30px rgba(0,0,0,.15)}
+
+  .head{display:flex;align-items:flex-start;gap:14px;border-bottom:3px solid var(--pink);padding-bottom:12px}
+  .head img{height:44px}
+  .head h2{margin:0;font-size:25px;font-weight:900;letter-spacing:-.5px;line-height:1.1}
+  .head .s{font-size:13px;color:var(--muted);margin-top:3px}
+  .head .date{margin-inline-start:auto;text-align:left;font-size:12px;color:var(--muted);font-weight:700}
+
+  .who{display:flex;gap:12px;margin-top:14px}
+  .who>div{flex:1}
+  .lbl{font-size:11.5px;font-weight:800;color:var(--pink-dark);margin-bottom:3px}
+  .line{border-bottom:1.5px solid var(--line);height:26px}
+
+  h3{font-size:16px;font-weight:900;margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+  h3 .n{background:var(--pink);color:#fff;width:23px;height:23px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+  h3 small{font-weight:500;color:var(--muted);font-size:12.5px}
+
+  .act{display:flex;gap:10px;align-items:flex-end;margin-top:9px}
+  .act .num{width:26px;height:26px;border:2px solid var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--pink-dark);flex:none;margin-bottom:2px}
+  .act .what{flex:1}
+  .act .when{width:34mm}
+
+  .note{background:#fffdf0;border:1.5px solid #f0e08a;border-radius:11px;padding:9px 12px;font-size:12.5px;margin-top:8px}
+  .note b{color:#8a7500}
+  .box{border:1.5px solid var(--line);border-radius:11px;height:24mm;margin-top:8px}
+  .box.sm{height:15mm}
+
+  .foot{margin-top:22px;border-top:2px solid var(--line);padding-top:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .foot .big{background:var(--pink);color:#fff;border-radius:12px;padding:11px 16px;font-weight:900;font-size:14px}
+  .foot .t{font-size:12.5px;color:var(--muted);flex:1;min-width:150px}
+  .foot .t b{color:var(--ink)}
+
+  @media print{
+    body{background:#fff}
+    .bar{display:none}
+    .page{width:auto;min-height:0;margin:0;padding:12mm 12mm;box-shadow:none}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>תוכנית הבוגרים של בית הספר שלי</h1>
+  <small>דף אחד · למילוי ביד במפגש 21.10</small>
+  <span class="sp"></span>
+  <button onclick="window.print()">🖨️ הדפסה</button>
+</div>
+
+<div class="page">
+  <div class="head">
+    <img src="hopa-logo.png" alt="הופה">
+    <div>
+      <h2>תוכנית הבוגרים<br>של בית הספר שלי</h2>
+      <div class="s">מפגש רכזים · 21.10.2026 · בני ברק</div>
+    </div>
+    <div class="date">שם:<br><span style="display:inline-block;border-bottom:1.5px solid var(--line);width:42mm;height:16px"></span><br><br>
+      בית ספר:<br><span style="display:inline-block;border-bottom:1.5px solid var(--line);width:42mm;height:16px"></span></div>
+  </div>
+
+  <h3><span class="n">1</span>שלוש פעולות עד חנוכה <small>· עם תאריך לכל אחת</small></h3>
+  <div class="act"><span class="num">1</span><div class="what"><div class="lbl">מה אני עושה</div><div class="line"></div></div><div class="when"><div class="lbl">מתי</div><div class="line"></div></div></div>
+  <div class="act"><span class="num">2</span><div class="what"><div class="line"></div></div><div class="when"><div class="line"></div></div></div>
+  <div class="act"><span class="num">3</span><div class="what"><div class="line"></div></div><div class="when"><div class="line"></div></div></div>
+  <div class="note"><b>רעיונות מהתחנות:</b> לאסוף טלפונים מי״ב לפני הטקס · לפתוח קבוצת מחזור · להתקשר ל-5 בוגרים · לבדוק מי זכאי לקרן גרוס (נסגרת 15.12) · לשבת עם היועצת</div>
+
+  <h3><span class="n">2</span>מי השותף/ה שלי בבית הספר <small>· בשם</small></h3>
+  <div class="line" style="margin-top:6px"></div>
+  <div class="note"><b>רכז לבד לא שורד.</b> יועצת? מחנכת י״ב? מזכירה שמחזיקה את הרשימות? אם אין שם — זה החסם הראשון שלך.</div>
+
+  <h3><span class="n">3</span>החסם האמיתי שלי <small>· ומה הצעד הקטן שעוקף אותו</small></h3>
+  <div class="box"></div>
+
+  <h3><span class="n">4</span>בוגר אחד שאני מתקשר/ת אליו השבוע</h3>
+  <div class="box sm"></div>
+
+  <div class="foot">
+    <span class="big">16.12 · זום 13:30</span>
+    <div class="t">נפתח בשאלה אחת: <b>מי עשה לפחות פעולה אחת מהדף הזה.</b><br>
+      צלמו את הדף בנייד ושלחו לעצמכם בוואטסאפ.</div>
+    <div class="t" style="text-align:left"><b>הופה</b> · hopa.org.il</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מה שמעתי · מפגש 21.10 · בני ברק · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;
+    --shadow:0 4px 18px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  button,input,textarea,select{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:720px;margin:0 auto;padding:0 16px}
+
+  header{background:#111;color:#fff;padding:18px 0 24px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:38px;display:block}
+  header h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.3px}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:3px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+  .meet small{font-weight:500;opacity:.75}
+
+  nav.toc{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 2px 10px rgba(31,31,38,.05)}
+  nav.toc .in{display:flex;gap:6px;overflow-x:auto;padding-top:9px;padding-bottom:9px}
+  nav.toc a{flex:none;text-decoration:none;color:var(--muted);font-size:12.5px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+  nav.toc a.on{background:var(--pink);border-color:var(--pink);color:#fff}
+
+  main{padding:16px 0 60px}
+  section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+  .sec-head .num{background:var(--pink);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex:none;margin-top:2px}
+  .sec-head h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.2px}
+  .sec-head small{display:block;color:var(--muted);font-size:13px;font-weight:500;margin-top:1px}
+  .sec-head .time{margin-inline-start:auto;background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:800;flex:none;white-space:nowrap}
+
+  p{margin:0 0 10px}
+  .quote{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 12px 12px 0;padding:12px 14px;font-size:15px;font-weight:600;margin:12px 0}
+  .callout{background:var(--pink-soft);border-radius:14px;padding:13px 15px;margin:12px 0;font-size:14.5px}
+  .callout b{color:var(--pink-dark)}
+  .callout.y{background:#fffdf0;border:1.5px solid #f6e98a}
+  .callout.g{background:#e8f8ef;border:1.5px solid #b8e6c9}
+  ul{margin:6px 0 12px;padding-inline-start:22px}li{margin-bottom:5px}
+
+  .st{border:2px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+  .st.a{border-color:#b8e6c9}.st.b{border-color:#f6dc7a}.st.c{border-color:#f5c2dd}
+  .st h3{margin:0 0 3px;font-size:17px;font-weight:900}
+  .st .tag{display:inline-block;border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:800;margin-bottom:8px}
+  .st.a .tag{background:#e8f8ef;color:#14613b}.st.b .tag{background:#fffdf0;color:#6b5300}.st.c .tag{background:var(--pink-soft);color:var(--pink-dark)}
+  .st .lead{font-size:14.5px;font-weight:600;color:var(--muted);margin-bottom:10px}
+
+  .q4{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .q4 div{border:1.5px solid var(--line);border-radius:13px;padding:11px 13px}
+  .q4 b{display:block;font-size:15px;font-weight:900}
+  .q4 span{font-size:13.5px;color:var(--muted)}
+
+  .steps{display:flex;gap:6px;align-items:stretch;margin:12px 0;flex-wrap:wrap}
+  .steps div{flex:1 1 120px;background:#f6f2f7;border-radius:12px;padding:11px 9px;text-align:center;font-size:13.5px;font-weight:800;position:relative}
+  .steps div small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .steps div:nth-child(1){background:#e8f8ef}.steps div:nth-child(2){background:#fffdf0}
+  .steps div:nth-child(3){background:#fff2f8}.steps div:nth-child(4){background:var(--pink);color:#fff}
+  .steps div:nth-child(4) small{color:rgba(255,255,255,.8)}
+
+  input[type=text],textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+  input:focus,textarea:focus{border-color:var(--pink)}
+  textarea{min-height:70px;resize:vertical}
+  label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;text-decoration:none}
+  .btn:active{transform:scale(.97)}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.3)}
+  .btn.yellow{background:var(--yellow);color:#111}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:9px 16px;border-radius:11px;font-weight:700}
+  .btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+  .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
+
+  .agenda{display:flex;flex-direction:column;gap:7px}
+  .agenda div{display:flex;gap:11px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:9px 12px}
+  .agenda .t{background:#111;color:var(--yellow);border-radius:8px;padding:3px 9px;font-weight:900;font-size:12.5px;flex:none}
+  .agenda .n{font-weight:700;font-size:14px;flex:1}
+  .agenda .d{color:var(--muted);font-size:12.5px;flex:none}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1>מה שמעתי</h1><div class="sub">מפגש רכזים · ליווי בוגרים · כנס הרכזים החברתיים</div></div>
+  </div>
+  <div class="meet">21.10.2026 · בני ברק <small>שעתיים</small></div>
+</div></header>
+
+<nav class="toc"><div class="in" id="toc"></div></nav>
+
+<main class="in">
+
+  <section id="s0">
+    <div class="sec-head"><div class="num">0</div><div><h2>לוח הזמנים</h2><small>שעתיים</small></div></div>
+    <div class="agenda">
+      <div><span class="t">10′</span><span class="n">כניסה לשולחנות</span><span class="d">משובצים מראש</span></div>
+      <div><span class="t">20′</span><span class="n">מה שמעתי מהבוגר שלי</span><span class="d">סבב + כרטיס לקיר</span></div>
+      <div><span class="t">10′</span><span class="n">הקיר מדבר</span><span class="d">מליאה</span></div>
+      <div><span class="t">45′</span><span class="n">עולם קפה · 3 תחנות</span><span class="d">15 דק׳ כל אחת</span></div>
+      <div><span class="t">25′</span><span class="n">הדף שלי</span><span class="d">אישי + זוגות</span></div>
+      <div><span class="t">10′</span><span class="n">סגירה</span><span class="d"></span></div>
+    </div>
+  </section>
+
+  <section id="s1">
+    <div class="sec-head"><div class="num">1</div><div><h2>מה שמעתי מהבוגר שלי</h2><small>סבב בשולחן · כ-100 שניות לאדם</small></div><div class="time">20 דק'</div></div>
+    <p>לא סיכום השיחה — <b>המשפט</b>. מה הוא אמר, ואיך זה נחת עליך.</p>
+    <div class="callout">בסוף הסבב: השולחן בוחר <b>ציטוט אחד</b>, כותב אותו על כרטיס גדול ותולה על הקיר.<br>
+    <small style="color:var(--muted)">בלי שם הבוגר ובלי שם בית הספר.</small></div>
+    <div class="callout g"><b>לא הספקת להתקשר?</b> מקשיבים בסבב, ובסוף עונים בשולחן על שאלה אחת: <i>״למה לא יצא לך?״</i> — התשובה הזאת שווה בדיוק כמו ציטוט.</div>
+    <div class="btnrow">
+      <a class="btn yellow" href="kir.html" target="_blank" rel="noopener">🧱 קיר הבוגרים</a>
+      <a class="btn ghost" href="sicha.html" target="_blank" rel="noopener">📞 עדיין לא מילאתי</a>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head"><div class="num">2</div><div><h2>הקיר מדבר</h2><small>מליאה</small></div><div class="time">10 דק'</div></div>
+    <p>קוראים 6–7 ציטוטים בקול, וממפים לתמות: <b>מסלול · כסף · חיים · בדידות · בגרות חסרה · שירות</b>.</p>
+    <div class="quote">ארבע התמות הראשונות הן בדיוק ארבע השאלות שרכז בוגרים שואל בכל שיחה. לא המצאנו את זה — <b>הבוגרים שלכם הכתיבו את זה השבוע.</b></div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head"><div class="num">3</div><div><h2>עולם קפה</h2><small>3 תחנות · 15 דקות כל אחת · רכזי הופה מארחים</small></div><div class="time">45 דק'</div></div>
+
+    <div class="st a">
+      <span class="tag">תחנה א׳</span>
+      <h3>המאגר</h3>
+      <div class="lead">אי אפשר ללוות את מי שאין לך את הטלפון שלו.</div>
+      <p><b>מה המינימום:</b> שם · טלפון · שנת סיום. זהו. כל השאר בונוס.</p>
+      <div class="callout y"><b>התובנה שהופכת את התחנה:</b> לא אוספים אחרי שהם הולכים. אוספים <b>בי״ב, שבועיים לפני הטקס</b>, כשהם עדיין יושבים מולך. אחרי הטקס שיעור האיסוף צונח.</div>
+      <p><b>איך:</b> QR על השקף בשיעור אחרון · טופס אחד · ההורים כגיבוי · ו<b>תאריך גיוס</b> — הפרט היחיד שכמעט אי אפשר להשיג אחר כך.</p>
+      <p><b>הסכמה:</b> משפט הסכמה קצר בטופס — למה אנחנו שומרים, מי רואה, ואיך מבקשים להסיר.</p>
+      <div class="btnrow"><button class="btn ghost" id="csvBtn">⬇️ תבנית מאגר (Excel/CSV)</button></div>
+      <label class="fl">מתי אני אוסף מהמחזור הנוכחי?</label>
+      <input type="text" id="p_when" placeholder="תאריך + באיזה שיעור" maxlength="60">
+    </div>
+
+    <div class="st b">
+      <span class="tag">תחנה ב׳</span>
+      <h3>השיחה</h3>
+      <div class="lead">15 דקות · פרוטוקול 4 השאלות</div>
+      <div class="q4">
+        <div><b>🧭 מסלול</b><span>איפה את/ה עכשיו — צבא / שירות / לימודים / עבודה? מה השלב הבא ומתי?</span></div>
+        <div><b>💰 כסף וזכויות</b><span>מלגות פתוחות, פיקדון, זכאויות שלא מומשו, חובות שמעיקים?</span></div>
+        <div><b>🏠 חיים</b><span>דיור, משפחה, איך את/ה מרגיש/ה באמת? (מקשיבים גם למה שלא נאמר)</span></div>
+        <div><b>🔗 חיבור</b><span>למה אפשר לחבר אותך עכשיו — מענה מהמאגר, אירוע, בוגר/ת אחר/ת?</span></div>
+      </div>
+      <div class="callout y"><b>שלושת העקרונות — מה שמבדיל שיחה מתשאול:</b>
+        <ul style="margin-top:6px">
+          <li>מתחילים מהתקוות, לא מהחששות</li>
+          <li>משקפים כוחות — <i>״שיחה טובה היא שיחה שבה הבוגר לומד על צדדים חזקים שלו״</i></li>
+          <li>מדברים על <b>הפרק הבא</b>, לא על ״כל החיים״ — ומסיימים ב״מה הצעד הבא שלך?״ + עדכון המאגר</li>
+        </ul>
+      </div>
+      <p><b>סימולציה בזוגות, 4 דקות לכל אחד.</b> אחד רכז, אחד בוגר — עם כרטיס מצב אמיתי מהקיר.</p>
+      <p style="color:var(--muted);font-size:13.5px"><b>הדיבוב:</b> איפה נתקעתם? כמעט תמיד — הרצון לפתור במקום להקשיב.</p>
+    </div>
+
+    <div class="st c">
+      <span class="tag">תחנה ג׳</span>
+      <h3>מענים ומדרג</h3>
+      <div class="lead">מה עושים עם מה ששמעת</div>
+      <div class="steps">
+        <div>יידוע<small>סיפרתי שקיים</small></div>
+        <div>תיווך<small>חיברתי בפועל</small></div>
+        <div>סנגור<small>נלחמתי מולם</small></div>
+        <div>ליווי<small>עד שנפתר</small></div>
+      </div>
+      <div class="callout"><b>הכלל:</b> חיבור למענה בלי מעקב לא נחשב. בודקים שהקשר נוצר ושהצורך באמת נענה — ואם לא, מחפשים מענה אחר.</div>
+      <p><b>עובדים על 3 מקרים אמיתיים מהקיר</b> — בזוגות, מול <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> בנייד:
+      באיזו מדרגה אנחנו? מה המענה? מי בבית הספר עוזר לי בזה?</p>
+      <div class="callout y"><b>הגבולות — נאמר בפירוש:</b> לא מעבירים כסף אישי · לא מלווים כספית · סיוע כלכלי רק דרך מענים, מלגות וזכויות · ובכל סימן למצוקה נפשית חריפה — התייעצות וחיבור לגורם טיפולי <b>עוד באותו יום</b>.</div>
+      <div class="callout"><b>הצומת הקרוב: קרן גרוס נסגרת ב-15.12.</b> מי שיוצא מכאן ולא עושה כלום — הבוגרים שלו מפספסים אותה השנה.</div>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head"><div class="num">4</div><div><h2>הדף שלי</h2><small>3 פעולות עד חנוכה</small></div><div class="time">25 דק'</div></div>
+    <p>ממלאים בשקט על הדף המודפס. אפשר גם כאן — ואז זה חוזר אליכם ב-16.12.</p>
+
+    <label class="fl">שם + בית ספר</label>
+    <input type="text" id="p_who" placeholder="כדי שנדע למי לחזור" maxlength="70">
+
+    <label class="fl">פעולה 1 + תאריך</label>
+    <input type="text" id="p_a1" maxlength="110">
+    <label class="fl">פעולה 2 + תאריך</label>
+    <input type="text" id="p_a2" maxlength="110">
+    <label class="fl">פעולה 3 + תאריך</label>
+    <input type="text" id="p_a3" maxlength="110">
+
+    <label class="fl">מי השותף/ה שלי בבית הספר — בשם</label>
+    <input type="text" id="p_partner" placeholder="יועצת? מחנכת י״ב? מזכירה?" maxlength="60">
+    <div class="callout" style="margin-top:8px"><b>רכז לבד לא שורד.</b> אם אין שם — זה החסם הראשון.</div>
+
+    <label class="fl">החסם האמיתי שלי — ומה הצעד הקטן שעוקף אותו</label>
+    <textarea id="p_block"></textarea>
+
+    <label class="fl">בוגר אחד שאני מתקשר/ת אליו השבוע</label>
+    <input type="text" id="p_boger" placeholder="שם פרטי" maxlength="25">
+
+    <div class="btnrow">
+      <button class="btn pink" id="p_send">שמירה 💛</button>
+      <a class="btn ghost" href="tochnit.html" target="_blank" rel="noopener">🖨️ הדף להדפסה</a>
+    </div>
+    <div class="err" id="p_err"></div>
+
+    <div class="callout y" style="margin-top:14px"><b>בזוגות:</b> מקריאים זה לזה. תפקיד המקשיב — <b>שאלה אחת בלבד:</b> <i>״מה הכי סביר שימנע ממך לעשות את זה?״</i></div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head"><div class="num">5</div><div><h2>סגירה</h2><small></small></div><div class="time">10 דק'</div></div>
+    <ul>
+      <li>הקיר מצולם ונשלח לכולם</li>
+      <li>תבנית המאגר · פרוטוקול 4 השאלות · שלוש הרמות · קישור למענים</li>
+      <li><b>16.12, זום 13:30</b> — נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</li>
+    </ul>
+    <div class="btnrow">
+      <a class="btn yellow" href="mashov2.html" target="_blank" rel="noopener">💬 משוב על המפגש</a>
+      <a class="btn ghost" href="kartis.html" target="_blank" rel="noopener">🎴 כרטיס הכיס</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="in">
+  תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+</footer>
+<div id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var KEY_PREFIX='tochnit-';
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2100)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+var SECS=[['s0','לוח זמנים'],['s1','מה שמעתי'],['s2','הקיר'],['s3','עולם קפה'],['s4','הדף שלי'],['s5','סגירה']];
+$('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
+var links=[].slice.call($('toc').querySelectorAll('a'));
+addEventListener('scroll',function(){
+  var y=scrollY+120,cur=0;
+  SECS.forEach(function(s,i){var el=$(s[0]);if(el&&el.offsetTop<=y)cur=i});
+  links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
+},{passive:true});
+
+/* תבנית המאגר */
+$('csvBtn').onclick=function(){
+  var head=['שם פרטי','שם משפחה','טלפון','שנת סיום','מגמה','תאריך גיוס','הערות'];
+  var demo=[['(דוגמה) נועה','לוי','0501234567','תשפ״ו','תקשורת','2027-03-15','ביקשה מידע על מכינה']];
+  var csv='﻿'+[head].concat(demo).map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\r\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='תבנית-מאגר-בוגרים.csv';a.click();
+  toast('הורד ✓ פותחים באקסל');
+};
+
+/* טיוטה מקומית */
+var F=['p_who','p_a1','p_a2','p_a3','p_partner','p_block','p_boger','p_when'];
+F.forEach(function(k){
+  var el=$(k);if(!el)return;
+  el.value=lsGet('hopa-m3-'+k)||'';
+  el.addEventListener('input',function(){lsSet('hopa-m3-'+k,this.value)});
+});
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
+
+var myId=lsGet('hopa-m3-id');
+if(!myId){myId=Date.now().toString(36)+Math.random().toString(36).slice(2,6);lsSet('hopa-m3-id',myId)}
+
+$('p_send').onclick=async function(){
+  var who=$('p_who').value.trim();
+  if(!who){$('p_err').textContent='צריך שם ובית ספר כדי שנוכל לחזור אליך ב-16.12.';return}
+  $('p_err').textContent='';
+  var btn=this;btn.disabled=true;btn.textContent='שומר…';
+  var payload={who:who,
+    a1:$('p_a1').value.trim(),a2:$('p_a2').value.trim(),a3:$('p_a3').value.trim(),
+    partner:$('p_partner').value.trim(),block:$('p_block').value.trim(),
+    boger:$('p_boger').value.trim(),collectWhen:$('p_when').value.trim(),
+    ts:new Date().toISOString(),meeting:'מפגש 21.10.2026 · בני ברק'};
+  var params={action:'intakeSubmit',school:KEY_PREFIX+myId,json:JSON.stringify(payload)};
+  var ok=false;
+  try{await jsonpRetry(params,4);ok=true}
+  catch(e){try{await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});ok=true}catch(e2){}}
+  btn.disabled=false;btn.textContent='שמירה 💛';
+  if(ok)toast('נשמר ✓ נדבר על זה ב-16.12');
+  else $('p_err').textContent='לא נשמר — נסו שוב. מה שכתבתם שמור במכשיר.';
+};
+</script>
+</body>
+</html>
