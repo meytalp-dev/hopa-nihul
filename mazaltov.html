@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>מזל טוב · המערכת שלכם מוכנה — שליחה לקבוצות הצוות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --bad:#d9534f; --bad-soft:#fdecea;
+    --warn:#8a6d00; --warn-soft:#fff8e6; --warn-line:#ffe08a;
+    --wa:#25D366;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:880px;margin:0 auto;padding:0 14px 100px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:18px 18px 22px;box-shadow:var(--shadow)}
+  .hero-in{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center;flex:none}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:20px;font-weight:800;line-height:1.25}
+  .hero p{margin:4px 0 0;opacity:.92;font-size:13.5px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-top:14px}
+  .card h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .hint.tight{margin:0}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  .field.ltr{direction:ltr;text-align:left}
+  textarea.field{min-height:230px;resize:vertical;line-height:1.65;font-size:14.5px}
+  label.lbl{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+  select.field{appearance:none;background:#fff}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14.5px;text-decoration:none;transition:transform .1s,filter .15s;white-space:nowrap}
+  .btn:active{transform:scale(.97)}
+  .btn.sm{padding:8px 12px;font-size:13.5px;border-radius:10px}
+  .btn.primary{background:var(--pink);color:#fff}
+  .btn.outline{border:2px solid var(--line);color:var(--ink);background:#fff}
+  .btn.wa{background:var(--wa);color:#fff}
+  .btn.direct{background:var(--ink);color:var(--yellow)}
+  .btn.ghost{color:var(--muted);font-weight:600}
+  .btn[disabled]{opacity:.45;pointer-events:none}
+
+  .bar{position:sticky;top:0;z-index:20;background:rgba(246,242,247,.94);backdrop-filter:blur(8px);padding:10px 0 8px;margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .bar .field{flex:1;min-width:150px;padding:9px 12px}
+  .pill{background:#fff;border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;white-space:nowrap}
+  .pill b{color:var(--pink)}
+
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--bad);flex:none}
+  .dot.on{background:var(--ok)}
+  .waline{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-top:8px}
+
+  .school{background:var(--card);border-radius:20px;box-shadow:var(--shadow);margin-top:12px;overflow:hidden;border:2px solid transparent}
+  .school.done{border-color:var(--ok);background:linear-gradient(#fff,#fbfffd)}
+  .school-head{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer}
+  .school-head h3{margin:0;font-size:16px;font-weight:700;flex:1;line-height:1.3}
+  .school-head .count{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;white-space:nowrap;flex:none}
+  .school-head .chev{color:var(--muted);font-size:15px;transition:transform .18s;flex:none}
+  .school.open .chev{transform:rotate(180deg)}
+  .school-body{display:none;padding:0 16px 16px}
+  .school.open .school-body{display:block}
+  .yrs{font-size:12.5px;color:var(--muted);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:5px}
+  .yr{background:#f4f1f6;border-radius:8px;padding:3px 8px;font-weight:600;color:var(--ink)}
+
+  .gaps{background:var(--warn-soft);border:1px solid var(--warn-line);color:var(--warn);border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+  .gaps b{font-weight:800}
+  .gaps ul{margin:6px 0 0;padding-inline-start:18px}
+  .clean{background:var(--ok-soft);color:#12794c;border-radius:12px;padding:9px 12px;font-size:13px;margin-bottom:10px;font-weight:600}
+
+  .grpline{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+  .grpline select{flex:1;min-width:180px;padding:9px 12px;font-size:14px}
+  .grpline .tag{font-size:12.5px;color:var(--muted);font-weight:600;flex:none}
+
+  .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+  .prev{display:none;white-space:pre-wrap;background:#faf7fb;border:1px dashed var(--line);border-radius:12px;padding:12px;font-size:14px;margin-top:10px;line-height:1.65}
+  .prev.on{display:block}
+  .stamp{margin-top:9px;font-size:12.5px;color:var(--ok);font-weight:700}
+
+  .toast{position:fixed;inset-inline:0;bottom:18px;margin:0 auto;width:max-content;max-width:90vw;background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;transform:translateY(12px);transition:.22s;pointer-events:none;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+  .toast.on{opacity:1;transform:none}
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px;line-height:1.8}
+  details.setup summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}
+  details.setup summary::-webkit-details-marker{display:none}
+  details.setup summary::before{content:'⚙️ ';}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>מזל טוב — המערכת שלכם מוכנה 🎉</h1>
+      <p>הודעה אישית לכל בית ספר, ישר לקבוצת הצוות בוואטסאפ</p>
+    </div>
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===== חיבור הגשר ===== -->
+  <div class="card">
+    <details class="setup" id="setupBox">
+      <summary>חיבור לוואטסאפ ובחירת קבוצות</summary>
+      <p class="hint" style="margin-top:8px">כדי לשלוח ישירות לקבוצת הצוות — בלי לפתוח וואטסאפ ידנית. אלה אותם פרטים כמו בשאר דפי השליחה של הופה; אם כבר התחברת פעם אחת בנייד הזה, זה נשמר.</p>
+      <label class="lbl">כתובת הגשר (Apps Script)</label>
+      <input class="field ltr" id="waUrl" placeholder="https://script.google.com/macros/s/…/exec">
+      <label class="lbl">סוד</label>
+      <input class="field ltr" id="waSecret" placeholder="secret">
+      <div class="acts">
+        <button class="btn primary sm" id="waTest">🔌 התחברות וטעינת קבוצות</button>
+        <button class="btn outline sm" id="waReload">🔄 רענון רשימת הקבוצות</button>
+      </div>
+      <div class="waline"><span class="dot" id="waDot"></span><span id="waState">לא מחובר — אפשר עדיין להשתמש בכפתורי "וואטסאפ" ו"העתקה"</span></div>
+    </details>
+  </div>
+
+  <!-- ===== נוסח ההודעה ===== -->
+  <div class="card">
+    <h2>נוסח ההודעה</h2>
+    <p class="hint">אפשר לערוך. מה שבסוגריים מתחלף לבד לכל בית ספר:
+      <b>{ביתספר}</b> · <b>{בוגרים}</b> · <b>{משנה}</b> · <b>{עדשנה}</b> · <b>{מחזורים}</b> · <b>{חסר}</b> (נכתב רק אם באמת חסר משהו).</p>
+    <textarea class="field" id="tpl"></textarea>
+    <div class="acts">
+      <button class="btn outline sm" id="tplReset">↩️ חזרה לנוסח המקורי</button>
+    </div>
+  </div>
+
+  <!-- ===== סרגל ===== -->
+  <div class="bar">
+    <input class="field" id="q" placeholder="חיפוש בית ספר…">
+    <span class="pill">בתי ספר <b id="cAll">0</b></span>
+    <span class="pill">נשלחו <b id="cSent">0</b></span>
+    <span class="pill">בוגרים <b id="cAlumni">0</b></span>
+  </div>
+
+  <div id="list"></div>
+
+  <p class="foot">
+    הופה — <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a><br>
+    מערכת הבוגרים: <a href="https://hopa.org.il/admin" target="_blank" rel="noopener">hopa.org.il/admin</a>
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =======================================================================
+   נתוני בתי הספר — צילום מצב של מאגר הבוגרים.
+   מקור: GET /api/admin/alumni/summary  (עדכון אחרון: DATA_DATE למטה)
+   ======================================================================= */
+const DATA_DATE = '9.9.2026';
+
+/* years: המחזורים כפי שהם רשומים במערכת, מהוותיק לחדש.
+   gaps:  מה חסר ברשימות — נכנס להודעה. מערך ריק = אין מה לבקש. */
+const SCHOOLS = [
+  { name:'תיכון אורט בית הערבה ירושלים', alumni:438,
+    years:['תשע"ט','תש"פ','תשפ"א','תשפ"ב','תשפ"ג','תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'אורט מרום עכו', alumni:354,
+    years:['תשע"ח','תשע"ט','תש"פ','תשפ"א','תשפ"ב','תשפ"ג','תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'אורט אדיבי אשקלון', alumni:296,
+    years:['תשפ"ב','תשפ"ג','תשפ"ד','תשפ"ה'], gaps:[] },
+  { name:'עתיד מגשימים כרמיאל', alumni:237,
+    years:['תשפ"א','תשפ"ב','תשפ"ג','תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'עתיד קריית מוצקין', alumni:141,
+    years:['תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'תיכון חברתי תל אביב דרור', alumni:121,
+    years:['תשפ"ג','תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'חושן', alumni:109,
+    years:['תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'תיכון שיח', alumni:80,
+    years:['תשפ"ג','תשפ"ד','תשפ"ה','תשפ"ו'], gaps:[] },
+  { name:'אורט מגשימים בית שאן', alumni:77,
+    years:[], gaps:[] },
+  { name:'סחנין אלאמאני', alumni:75,
+    years:['תשפ"ו'], gaps:[] },
+  { name:'עמל רמת דוד', alumni:70,
+    years:[], gaps:[] },
+  { name:'אורט צור ברק', alumni:50,
+    years:[], gaps:[] },
+  { name:'תיכון אהרון גוטווירט', alumni:36,
+    years:[], gaps:[] },
+  { name:'דרור נווה מדבר', alumni:20,
+    years:['תשפ"ו'], gaps:[] },
+  { name:'עתיד אבדאע ביר אלמכסור', alumni:19,
+    years:[], gaps:[] }
+];
+
+/* ===================== נוסח ברירת מחדל ===================== */
+const DEFAULT_TPL = `מזל טוב! 🎉 המערכת שלכם מוכנה.
+
+{בוגרים} הבוגרים של {ביתספר} כבר נמצאים במערכת הבוגרים של הופה — {מחזורים}.
+
+אנחנו רוצים לתאם איתכם פגישה קצרה כדי להסביר על המערכת ולתת לכם את שם המשתמש והסיסמה שלכם, כדי שתוכלו להתחיל לעבוד איתה.
+
+{חסר}מתי נוח לכם השבוע? 🙂`;
+
+/* הפסקה שמתווספת רק כשחסר משהו ברשימות */
+const GAP_INTRO = 'בנוסף — ברשימות שקיבלנו עדיין חסרים כמה פרטים:';
+const GAP_OUTRO = 'אם יש לכם את המידע הזה, נשמח לקבל — ונעבור על זה גם יחד בפגישה.';
+
+/* ===================== שמירה מקומית — עם הגנה, הדפדפן של וואטסאפ זורק שגיאה ===================== */
+const LS_KEY = 'hopa_mazaltov_v1';
+const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };   /* אותם מפתחות כמו שאר דפי השליחה */
+
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+let ST = { grp:{}, sent:{}, tpl:DEFAULT_TPL };
+(function load(){
+  try{
+    const raw = lsGet(LS_KEY);
+    if(raw){ const d = JSON.parse(raw)||{}; ST = Object.assign(ST, d); }
+  }catch(e){}
+  if(!ST.tpl) ST.tpl = DEFAULT_TPL;
+  if(!ST.grp) ST.grp = {};
+  if(!ST.sent) ST.sent = {};
+})();
+let saveT;
+function save(){ clearTimeout(saveT); saveT = setTimeout(()=>lsSet(LS_KEY, JSON.stringify(ST)), 250); }
+
+/* ===================== עזרים ===================== */
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2400); }
+const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+
+/* מפתח יציב לכל בית ספר (לשמירה מקומית) */
+const keyOf = s => 'sc' + SCHOOLS.indexOf(s);
+
+/* ניסוח המחזורים: "משנת תשפ״ד ועד תשפ״ו" / "ממחזור תשפ״ו" / ריק אם לא ידוע */
+function yearsPhrase(s){
+  const y = s.years || [];
+  if(!y.length) return '';
+  if(y.length === 1) return 'מחזור ' + y[0];
+  return 'משנת ' + y[0] + ' ועד שנת ' + y[y.length-1];
+}
+
+/* פסקת החוסרים — נבנית רק אם יש gaps */
+function gapsPhrase(s){
+  const g = s.gaps || [];
+  if(!g.length) return '';
+  return GAP_INTRO + '\n' + g.map(t=>'• ' + t).join('\n') + '\n\n' + GAP_OUTRO + '\n\n';
+}
+
+function msgFor(s){
+  const yp = yearsPhrase(s);
+  return (ST.tpl||DEFAULT_TPL)
+    .replaceAll('{ביתספר}', s.name)
+    .replaceAll('{בוגרים}', String(s.alumni))
+    .replaceAll('{מחזורים}', yp || 'מכל המחזורים שקיבלנו')
+    .replaceAll('{משנה}', (s.years&&s.years[0]) || '')
+    .replaceAll('{עדשנה}', (s.years&&s.years[s.years.length-1]) || '')
+    .replaceAll('{חסר}', gapsPhrase(s))
+    /* אם המשתנה {מחזורים} יצא ריק — לנקות רווח כפול או מקף תלוי */
+    .replace(/ +\n/g,'\n')
+    .replace(/\n{3,}/g,'\n\n');
+}
+
+async function copy(text){
+  try{ await navigator.clipboard.writeText(text); return true; }
+  catch(e){
+    try{
+      const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); return true;
+    }catch(e2){ return false; }
+  }
+}
+
+/* ===================== גשר הוואטסאפ (Green API דרך ה-Apps Script) ===================== */
+const WA = { url: lsGet(MLS.url)||'', secret: lsGet(MLS.secret)||'', ok:false, groups:[] };
+let jsonpN = 0;
+function waJsonp(params, tmo){
+  return new Promise((res,rej)=>{
+    if(!WA.url){ rej(new Error('לא מחובר')); return; }
+    const cb='wacb_'+(jsonpN++); const s=document.createElement('script');
+    const timer=setTimeout(()=>{ cleanup(); rej(new Error('timeout')); }, tmo||45000);
+    function cleanup(){ try{ delete window[cb]; }catch(e){ window[cb]=undefined; } s.remove(); clearTimeout(timer); }
+    window[cb]=d=>{ cleanup(); res(d); };
+    s.src = WA.url + (WA.url.includes('?')?'&':'?') + new URLSearchParams(Object.assign({}, params, {secret:WA.secret, callback:cb})).toString();
+    s.onerror=()=>{ cleanup(); rej(new Error('network')); };
+    document.body.appendChild(s);
+  });
+}
+
+/* טעינת קבוצות: קודם הרשימה המנוהלת מהגיליון, ואם אפשר גם כל הקבוצות מהוואטסאפ */
+async function waLoadGroups(){
+  const seen = new Set(); const out = [];
+  const push = (g, curated) => {
+    const id = g.chatId || g.id; if(!id || seen.has(id)) return;
+    seen.add(id); out.push({ chatId:id, name:g.name||id, type:g.type||'', curated:!!curated });
+  };
+  const r = await waJsonp({action:'groups'});
+  if(!r || !r.ok) throw new Error((r&&r.error)||'שגיאה בטעינת הקבוצות');
+  (r.groups||[]).forEach(g=>push(g,true));
+  try{
+    const ra = await waJsonp({action:'allgroups'});
+    if(ra && ra.ok) (ra.groups||[]).forEach(g=>push(g,false));
+  }catch(_){}
+  WA.groups = out;
+}
+
+/* התאמה אוטומטית של בית ספר לקבוצת הצוות שלו, לפי מילים משותפות בשם */
+const STOP = new Set(['תיכון','בית','ספר','אורט','עתיד','עמל','דרור','יוצר','הופה','צוות','קבוצת','בוגרים','מרחב','ה']);
+function words(t){
+  return String(t||'').replace(/["'׳״]/g,'').split(/[\s\-־,·|()\[\]]+/).filter(w=>w.length>1 && !STOP.has(w));
+}
+function autoMatch(s){
+  const sw = words(s.name); if(!sw.length) return '';
+  let best='', bestScore=0;
+  for(const g of WA.groups){
+    const gw = new Set(words(g.name));
+    let hit = 0; sw.forEach(w=>{ if(gw.has(w)) hit++; });
+    if(!hit) continue;
+    let score = hit * 10;
+    if(g.type === 'צוות') score += 6;          /* מעדיפים קבוצת צוות על קבוצת בוגרים */
+    if(g.curated) score += 3;                   /* ומעדיפים את הרשימה המנוהלת */
+    if(/בוגרים/.test(g.name) && g.type!=='צוות') score -= 4;
+    if(score > bestScore){ bestScore = score; best = g.chatId; }
+  }
+  return bestScore >= 10 ? best : '';
+}
+function applyAutoMatch(){
+  let n = 0;
+  SCHOOLS.forEach(s=>{
+    const k = keyOf(s);
+    if(ST.grp[k]) return;                       /* לא דורסים בחירה ידנית */
+    const m = autoMatch(s);
+    if(m){ ST.grp[k] = m; n++; }
+  });
+  save();
+  return n;
+}
+
+async function waTest(){
+  WA.url = document.getElementById('waUrl').value.trim();
+  WA.secret = document.getElementById('waSecret').value.trim();
+  if(!WA.url){ toast('צריך למלא את כתובת הגשר'); return; }
+  document.getElementById('waState').textContent = 'מתחבר…';
+  try{
+    await waLoadGroups();
+    lsSet(MLS.url, WA.url); lsSet(MLS.secret, WA.secret);
+    WA.ok = true; waState();
+    const n = applyAutoMatch();
+    render();
+    toast('מחובר ✓ ' + WA.groups.length + ' קבוצות' + (n?' · שויכו '+n+' בתי ספר':''));
+  }catch(e){ WA.ok=false; WA.groups=[]; waState(); toast('החיבור נכשל: '+e.message); }
+}
+function waState(){
+  document.getElementById('waDot').classList.toggle('on', WA.ok);
+  document.getElementById('waState').textContent = WA.ok
+    ? ('מחובר — ' + WA.groups.length + ' קבוצות נטענו, אפשר לשלוח ישירות')
+    : 'לא מחובר — אפשר עדיין להשתמש בכפתורי "וואטסאפ" ו"העתקה"';
+}
+
+async function sendDirect(s){
+  const chatId = ST.grp[keyOf(s)];
+  if(!chatId) throw new Error('לא נבחרה קבוצה');
+  const r = await waJsonp({ action:'send', chatIds: chatId, message: msgFor(s) }, 60000);
+  if(!r || !r.ok || !r.sent) throw new Error((r&&r.error)||'לא נשלח');
+}
+
+/* ===================== תצוגה ===================== */
+const listEl = document.getElementById('list');
+let query = '';
+
+function groupSelect(s){
+  const k = keyOf(s), cur = ST.grp[k]||'';
+  if(!WA.ok){
+    return '<div class="grpline"><span class="tag">קבוצת הצוות:</span>' +
+           '<span class="hint tight">התחברי לגשר למעלה כדי לבחור קבוצה ולשלוח ישירות.</span></div>';
+  }
+  const opts = ['<option value="">— בחרי קבוצה —</option>'].concat(
+    WA.groups.map(g=>`<option value="${esc(g.chatId)}"${g.chatId===cur?' selected':''}>${esc(g.name)}${g.type?' · '+esc(g.type):''}</option>`)
+  ).join('');
+  return `<div class="grpline"><span class="tag">קבוצת הצוות:</span><select class="field" data-grp="${k}">${opts}</select></div>`;
+}
+
+function gapsHtml(s){
+  const g = s.gaps||[];
+  if(!g.length) return '<div class="clean">✓ הרשימות מלאות — אין מה לבקש להשלמה</div>';
+  return '<div class="gaps"><b>נכנס להודעה כבקשת השלמה:</b><ul>' +
+         g.map(t=>'<li>'+esc(t)+'</li>').join('') + '</ul></div>';
+}
+
+function schoolHtml(s){
+  const k = keyOf(s), sent = ST.sent[k];
+  const canSend = WA.ok && !!ST.grp[k];
+  const yrs = (s.years&&s.years.length)
+    ? '<div class="yrs"><span>מחזורים במערכת:</span>' + s.years.map(y=>`<span class="yr">${esc(y)}</span>`).join('') + '</div>'
+    : '<div class="yrs">אין פילוח מחזורים במערכת לבית הספר הזה — ההודעה תיכתב בלי טווח שנים.</div>';
+  return `
+  <div class="school${sent?' done':''}" data-k="${k}">
+    <div class="school-head" data-toggle>
+      <span class="count">${s.alumni} בוגרים</span>
+      <h3>${esc(s.name)}</h3>
+      <span class="chev">▾</span>
+    </div>
+    <div class="school-body">
+      ${yrs}
+      ${gapsHtml(s)}
+      ${groupSelect(s)}
+      <div class="acts">
+        <button class="btn direct sm" data-direct="${k}" ${canSend?'':'disabled'}>🚀 ישיר לקבוצה</button>
+        <button class="btn wa sm" data-wa="${k}">💬 וואטסאפ</button>
+        <button class="btn outline sm" data-copymsg="${k}">📋 העתקה</button>
+        <button class="btn ghost sm" data-prev="${k}">👁️ תצוגה</button>
+        <button class="btn ghost sm" data-sent="${k}">${sent?'↩️ ביטול':'✓ נשלח'}</button>
+      </div>
+      ${sent?`<div class="stamp">נשלח ${fmtDate(sent)}</div>`:''}
+      <div class="prev">${esc(msgFor(s))}</div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const q = query.trim();
+  const html = SCHOOLS.filter(s=>!q || s.name.includes(q)).map(schoolHtml).join('');
+  listEl.innerHTML = html || '<div class="card"><p class="hint tight">לא נמצא בית ספר שמתאים לחיפוש.</p></div>';
+  wire();
+  counters();
+}
+
+function counters(){
+  document.getElementById('cAll').textContent = SCHOOLS.length;
+  document.getElementById('cSent').textContent = SCHOOLS.filter(s=>ST.sent[keyOf(s)]).length;
+  document.getElementById('cAlumni').textContent = SCHOOLS.reduce((a,s)=>a+s.alumni,0).toLocaleString('he-IL');
+}
+
+function byK(k){ return SCHOOLS[+String(k).replace('sc','')]; }
+
+function wire(){
+  listEl.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.onclick = () => el.closest('.school').classList.toggle('open');
+  });
+
+  listEl.querySelectorAll('[data-grp]').forEach(el=>{
+    el.onchange = () => {
+      ST.grp[el.dataset.grp] = el.value; save();
+      const card = el.closest('.school');
+      const btn = card.querySelector('[data-direct]');
+      if(btn) btn.disabled = !(WA.ok && el.value);
+    };
+    el.onclick = e => e.stopPropagation();
+  });
+
+  listEl.querySelectorAll('[data-prev]').forEach(el=>{
+    el.onclick = () => {
+      const p = el.closest('.school-body').querySelector('.prev');
+      p.textContent = msgFor(byK(el.dataset.prev));
+      p.classList.toggle('on');
+    };
+  });
+
+  listEl.querySelectorAll('[data-copymsg]').forEach(el=>{
+    el.onclick = async () => {
+      const ok = await copy(msgFor(byK(el.dataset.copymsg)));
+      toast(ok ? 'ההודעה הועתקה 📋' : 'ההעתקה נכשלה — פתחי "תצוגה" והעתיקי ידנית');
+    };
+  });
+
+  listEl.querySelectorAll('[data-wa]').forEach(el=>{
+    el.onclick = async () => {
+      const s = byK(el.dataset.wa);
+      await copy(msgFor(s));
+      toast('ההודעה הועתקה — בחרי את הקבוצה בוואטסאפ והדביקי');
+      window.open('https://wa.me/', '_blank', 'noopener');
+    };
+  });
+
+  listEl.querySelectorAll('[data-direct]').forEach(el=>{
+    el.onclick = async () => {
+      const k = el.dataset.direct, s = byK(k);
+      const orig = el.textContent;
+      el.disabled = true; el.textContent = 'שולח…';
+      try{
+        await sendDirect(s);
+        ST.sent[k] = new Date().toISOString(); save();
+        toast('נשלח לקבוצה ✓');
+        render();
+      }catch(e){
+        el.disabled = false; el.textContent = orig;
+        toast('לא נשלח: ' + e.message);
+      }
+    };
+  });
+
+  listEl.querySelectorAll('[data-sent]').forEach(el=>{
+    el.onclick = () => {
+      const k = el.dataset.sent;
+      if(ST.sent[k]) delete ST.sent[k]; else ST.sent[k] = new Date().toISOString();
+      save(); render();
+    };
+  });
+}
+
+/* ===================== חיווט כללי ===================== */
+document.getElementById('tpl').value = ST.tpl;
+document.getElementById('tpl').addEventListener('input', e=>{
+  ST.tpl = e.target.value; save();
+  listEl.querySelectorAll('.prev.on').forEach(p=>{
+    p.textContent = msgFor(byK(p.closest('.school').dataset.k));
+  });
+});
+document.getElementById('tplReset').onclick = () => {
+  ST.tpl = DEFAULT_TPL; document.getElementById('tpl').value = DEFAULT_TPL; save(); render();
+  toast('הנוסח הוחזר');
+};
+document.getElementById('q').addEventListener('input', e=>{ query = e.target.value; render(); });
+document.getElementById('waTest').onclick = waTest;
+document.getElementById('waReload').onclick = async () => {
+  if(!WA.url){ toast('קודם התחברי'); return; }
+  try{ await waLoadGroups(); WA.ok = true; waState(); applyAutoMatch(); render(); toast('רשימת הקבוצות רועננה'); }
+  catch(e){ toast('הרענון נכשל: ' + e.message); }
+};
+
+/* התחברות אוטומטית אם כבר נשמרו פרטי הגשר בנייד הזה */
+(async function boot(){
+  document.getElementById('waUrl').value = WA.url;
+  document.getElementById('waSecret').value = WA.secret;
+  render();
+  if(WA.url){
+    try{ await waLoadGroups(); WA.ok = true; waState(); applyAutoMatch(); render(); }
+    catch(e){ waState(); document.getElementById('setupBox').open = true; }
+  }else{
+    waState();
+    document.getElementById('setupBox').open = true;
+  }
+})();
+</script>
+</body>
+</html>
