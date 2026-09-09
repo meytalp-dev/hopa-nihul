@@ -62,6 +62,8 @@
   .school-head .count{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;white-space:nowrap;flex:none}
   .school-head .chev{color:var(--muted);font-size:15px;transition:transform .18s;flex:none}
   .school.open .chev{transform:rotate(180deg)}
+  .school.demo{border-color:var(--warn-line);background:linear-gradient(#fff,#fffdf5)}
+  .school-head .count.demo{background:var(--warn-soft);color:var(--warn)}
   .school-body{display:none;padding:0 16px 16px}
   .school.open .school-body{display:block}
 
@@ -224,9 +226,27 @@ const listEl = document.getElementById('list');
 let query = '';
 
 function schoolHtml(s){
+  /* נתוני הדגמה — מוצג ככרטיס אזהרה בלי הודעה ובלי כפתורי שליחה */
+  if(s.demo){
+    return `
+    <div class="school demo" data-s="${esc(s.slug)}">
+      <div class="school-head" data-toggle>
+        <span class="count demo">לא לשליחה</span>
+        <h3>${esc(s.name)}</h3>
+        <span class="chev">▾</span>
+      </div>
+      <div class="school-body">
+        <div class="gaps"><b>⚠️ ${s.alumni} הרשומות של בית הספר הזה הן נתוני הדגמה.</b><br>
+          ${esc(s.demoWhy||'')}<br><br>
+          לא הכנתי כאן הודעה — אין מה לבשר לבית הספר עד שיועלו הבוגרים האמיתיים,
+          ואת רשומות ההדגמה כדאי למחוק מהמערכת.</div>
+      </div>
+    </div>`;
+  }
+
   const sent = ST.sent[s.slug];
   const noData = !(s.years && s.years.length)
-    ? '<div class="nodata">אין במערכת פילוח מחזורים לבית הספר הזה, ולכן ההודעה נכתבת בלי טווח שנים.</div>' : '';
+    ? '<div class="nodata">לרוב הבוגרים כאן אין שנת סיום רשומה במערכת, ולכן ההודעה נכתבת בלי טווח שנים ומבקשת את הפרטים החסרים.</div>' : '';
   const gaps = (s.gaps && s.gaps.length)
     ? '<div class="gaps"><b>נכנס להודעה כבקשת השלמה:</b> ' + s.gaps.map(esc).join(' · ') + '</div>'
     : '<div class="clean">✓ הרשימות מלאות — ההודעה נשלחת בלי בקשת השלמה</div>';
@@ -262,9 +282,11 @@ function render(){
 }
 
 function counters(){
-  document.getElementById('cAll').textContent = SCHOOLS.length;
-  document.getElementById('cSent').textContent = SCHOOLS.filter(s=>ST.sent[s.slug]).length;
-  document.getElementById('cAlumni').textContent = SCHOOLS.reduce((a,s)=>a+s.alumni,0).toLocaleString('he-IL');
+  /* נתוני ההדגמה לא נספרים — אחרת המונה מבטיח בוגרים שלא קיימים */
+  const real = sendableSchools();
+  document.getElementById('cAll').textContent = real.length;
+  document.getElementById('cSent').textContent = real.filter(s=>ST.sent[s.slug]).length;
+  document.getElementById('cAlumni').textContent = real.reduce((a,s)=>a+s.alumni,0).toLocaleString('he-IL');
 }
 
 const bySlug = slug => SCHOOLS.find(s=>s.slug===slug);

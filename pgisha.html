@@ -141,7 +141,7 @@ function save(){ try{ lsSet(LS_KEY, JSON.stringify(state)); }catch(e){} }
 
 /* ===================== ניתוב ===================== */
 if(params.get('admin') === ADMIN_PARAM){ renderAdmin(); }
-else if(!school){ renderNoSchool(); }
+else if(!school || school.demo){ renderNoSchool(); }
 else if(state.sent){ renderDone(); }
 else { renderForm(); }
 
@@ -154,7 +154,7 @@ function renderNoSchool(){
     <h2>נראה שהקישור לא שלם</h2>
     <p class="hint">כל בית ספר מקבל קישור אישי משלו. אם הגעתם לכאן בטעות — בחרו את בית הספר שלכם מהרשימה:</p>
     <div class="opts">
-      ${SCHOOLS.map(s=>`<a class="opt" href="?s=${encodeURIComponent(s.slug)}">${esc(s.name)}</a>`).join('')}
+      ${sendableSchools().map(s=>`<a class="opt" href="?s=${encodeURIComponent(s.slug)}">${esc(s.name)}</a>`).join('')}
     </div>
   </div>`;
 }
@@ -350,14 +350,15 @@ async function renderAdmin(){
   const latest = {};
   rows.forEach(r => { if(!latest[r.school]) latest[r.school] = r; });
   const answered = new Set(Object.keys(latest));
-  const missing  = SCHOOLS.filter(s => !answered.has(s.name));
+  const REAL     = sendableSchools();
+  const missing  = REAL.filter(s => !answered.has(s.name));
 
   const fmt = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
   const tel = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
 
   app.innerHTML = `
   <div class="card">
-    <span class="stat">${answered.size} מתוך ${SCHOOLS.length} בתי ספר ענו · ${rows.length} תשובות</span>
+    <span class="stat">${answered.size} מתוך ${REAL.length} בתי ספר ענו · ${rows.length} תשובות</span>
     <div class="tools">
       <button class="btn outline sm" id="csv">⬇️ הורדת CSV</button>
       <button class="btn outline sm" id="reload">🔄 רענון</button>
