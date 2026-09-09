@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מזל טוב — המערכת שלכם מוכנה · קביעת פגישה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#2b2b33; --muted:#8a8a95; --line:#ece7ef;
+    --bg:#f6f2f7; --card:#ffffff;
+    --ok:#22b573; --ok-soft:#e6f8ef; --bad:#d9534f;
+    --warn:#8a6d00; --warn-soft:#fff8e6; --warn-line:#ffe08a;
+    --shadow:0 4px 18px rgba(43,43,51,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100dvh}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit;font-size:16px}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:660px;margin:0 auto;padding:0 14px 80px}
+  .wide{max-width:1100px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 26px 26px;padding:20px 18px 24px;box-shadow:var(--shadow);text-align:center}
+  .hero-in{max-width:660px;margin:0 auto}
+  .logobox{background:#fff;border-radius:13px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center;margin-bottom:12px}
+  .logobox img{height:34px;display:block;max-width:160px}
+  .hero h1{margin:0;font-size:23px;font-weight:800;line-height:1.25}
+  .hero p{margin:6px 0 0;opacity:.94;font-size:14.5px}
+
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:18px;margin-top:14px}
+  .card h2{margin:0 0 6px;font-size:18px;font-weight:700}
+  .hint{color:var(--muted);font-size:13.5px;margin:0 0 12px}
+  .hint.tight{margin:0}
+
+  .big{background:linear-gradient(135deg,var(--yellow-soft),#fff);border:2px solid var(--yellow);border-radius:20px;padding:18px;margin-top:14px;text-align:center}
+  .big .num{font-size:46px;font-weight:800;color:var(--pink-dark);line-height:1.05}
+  .big .lbl{font-size:15px;font-weight:700;margin-top:2px}
+  .big .yrs{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:700}
+
+  .gaps{background:var(--warn-soft);border:1px solid var(--warn-line);color:var(--warn);border-radius:14px;padding:13px 15px;font-size:14px;margin-top:14px}
+  .gaps b{font-weight:800}
+  .gaps ul{margin:8px 0 0;padding-inline-start:20px}
+  .gaps li{margin-bottom:3px}
+
+  label.lbl{display:block;font-size:13.5px;font-weight:600;color:var(--muted);margin:12px 0 5px}
+  .field{width:100%;border:2px solid var(--line);border-radius:12px;padding:11px 13px;background:#fff;outline:none;transition:border .15s}
+  .field:focus{border-color:var(--pink)}
+  .field.ltr{direction:ltr;text-align:left}
+  textarea.field{min-height:88px;resize:vertical}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:460px){ .two{grid-template-columns:1fr} }
+
+  .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:5px}
+  .opt{border:2px solid var(--line);border-radius:12px;padding:9px 14px;font-size:14px;font-weight:600;background:#fff;transition:.15s}
+  .opt.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:13px;padding:13px 22px;font-weight:700;font-size:16px;text-decoration:none;transition:transform .1s,filter .15s}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:var(--pink);color:#fff;width:100%;margin-top:16px}
+  .btn.outline{border:2px solid var(--line);color:var(--ink);background:#fff}
+  .btn.sm{padding:8px 13px;font-size:13.5px;border-radius:10px}
+  .btn[disabled]{opacity:.5;pointer-events:none}
+  .err{color:var(--bad);font-size:13.5px;margin-top:10px;font-weight:600}
+
+  .done{text-align:center}
+  .done .em{font-size:52px;line-height:1}
+  .done h2{margin:10px 0 6px;font-size:22px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+  th,td{padding:9px 8px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12.5px;font-weight:700;white-space:nowrap}
+  .tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .stat{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:6px 13px;font-size:13.5px;font-weight:800;display:inline-block}
+  .miss{background:#f4f1f6;border-radius:12px;padding:11px 13px;font-size:13.5px;margin-top:12px}
+  .miss b{color:var(--ink)}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+  .toast{position:fixed;inset-inline:0;bottom:18px;margin:0 auto;width:max-content;max-width:90vw;background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;transform:translateY(12px);transition:.22s;pointer-events:none;z-index:60}
+  .toast.on{opacity:1;transform:none}
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px;line-height:1.9}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-in">
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+    <h1 id="h1">מזל טוב! 🎉</h1>
+    <p id="sub">המערכת שלכם מוכנה</p>
+  </div>
+</div>
+
+<div class="wrap" id="wrap">
+  <div id="app"><div class="card"><p class="hint tight">טוען…</p></div></div>
+  <p class="foot">הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="mazaltov-data.js"></script>
+<script>
+/* ===================== הגדרות ===================== */
+const EXEC_URL   = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET  = 'hopa-nihul-2026';   /* לתצוגת הניהול בלבד */
+const ADMIN_PARAM= 'hopa';              /* pgisha.html?admin=hopa */
+const KEY_PREFIX = 'pg_';               /* בגיליון "נתונים": intake_pg_<id> */
+
+const DAYS  = ['ראשון','שני','שלישי','רביעי','חמישי'];
+const TIMES = ['בוקר (8:00–11:00)','צהריים (11:00–14:00)','אחה"צ (14:00–17:00)'];
+const HOWS  = ['בזום','אצלנו בבית הספר','לא משנה'];
+
+/* ===================== עזרים ===================== */
+const $  = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2400); }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+const params = new URLSearchParams(location.search);
+
+/* ===================== מצב ===================== */
+const slug = (params.get('s')||'').trim();
+const school = schoolBySlug(slug);
+const LS_KEY = 'hopa_pgisha_' + (slug||'x');
+let state = { a:{ days:[], times:[], how:'' }, sent:false };
+(function load(){
+  try{ const raw = lsGet(LS_KEY); if(raw) state = Object.assign(state, JSON.parse(raw)||{}); }catch(e){}
+  if(!state.a) state.a = {};
+  if(!Array.isArray(state.a.days))  state.a.days  = [];
+  if(!Array.isArray(state.a.times)) state.a.times = [];
+})();
+function save(){ try{ lsSet(LS_KEY, JSON.stringify(state)); }catch(e){} }
+
+/* ===================== ניתוב ===================== */
+if(params.get('admin') === ADMIN_PARAM){ renderAdmin(); }
+else if(!school){ renderNoSchool(); }
+else if(state.sent){ renderDone(); }
+else { renderForm(); }
+
+/* ===================== אין בית ספר בקישור ===================== */
+function renderNoSchool(){
+  $('#h1').textContent = 'קביעת פגישה';
+  $('#sub').textContent = 'מערכת הבוגרים של הופה';
+  app.innerHTML = `
+  <div class="card">
+    <h2>נראה שהקישור לא שלם</h2>
+    <p class="hint">כל בית ספר מקבל קישור אישי משלו. אם הגעתם לכאן בטעות — בחרו את בית הספר שלכם מהרשימה:</p>
+    <div class="opts">
+      ${SCHOOLS.map(s=>`<a class="opt" href="?s=${encodeURIComponent(s.slug)}">${esc(s.name)}</a>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* ===================== הטופס ===================== */
+function renderForm(){
+  const a = state.a;
+  const yp = yearsPhrase(school);
+  const gapsHtml = (school.gaps && school.gaps.length) ? `
+    <div class="gaps">
+      <b>לפני הפגישה — בקשה קטנה 🙏</b>
+      <div style="margin-top:5px">ברשימות שקיבלנו מכם עדיין חסרים כמה פרטים:</div>
+      <ul>${school.gaps.map(g=>`<li>${esc(g)}</li>`).join('')}</ul>
+      <div style="margin-top:8px">אם המידע הזה זמין אצלכם — נשמח לקבל אותו, ונעבור על זה גם יחד בפגישה.</div>
+    </div>` : '';
+
+  app.innerHTML = `
+  <div class="big">
+    <div class="num">${school.alumni}</div>
+    <div class="lbl">בוגרים של ${esc(school.name)} כבר במערכת</div>
+    ${yp ? `<div class="yrs">${esc(yp)}</div>` : ''}
+    ${(school.years&&school.years.length) ? `<div class="chips">${school.years.map(y=>`<span class="chip">${esc(y)}</span>`).join('')}</div>` : ''}
+  </div>
+
+  <div class="card">
+    <h2>בואו נתאם פגישה קצרה</h2>
+    <p class="hint">בפגישה נסביר איך המערכת עובדת ונמסור לכם את שם המשתמש והסיסמה שלכם, כדי שתוכלו להתחיל לעבוד איתה. זה לוקח כחצי שעה.</p>
+
+    <label class="lbl">שם איש/אשת הקשר <span style="color:var(--bad)">*</span></label>
+    <input class="field" id="f_name" value="${esc(a.name||'')}" placeholder="שם מלא">
+
+    <div class="two">
+      <div>
+        <label class="lbl">תפקיד</label>
+        <input class="field" id="f_role" value="${esc(a.role||'')}" placeholder="רכז/ת בוגרים / מנהל/ת">
+      </div>
+      <div>
+        <label class="lbl">טלפון <span style="color:var(--bad)">*</span></label>
+        <input class="field ltr" id="f_phone" value="${esc(a.phone||'')}" placeholder="050-0000000" inputmode="tel">
+      </div>
+    </div>
+
+    <label class="lbl">מייל (לא חובה)</label>
+    <input class="field ltr" id="f_mail" value="${esc(a.mail||'')}" placeholder="name@example.com" inputmode="email">
+
+    <label class="lbl">אילו ימים נוחים לכם? <span style="color:var(--bad)">*</span></label>
+    <div class="opts" id="o_days">
+      ${DAYS.map(d=>`<button class="opt${a.days.includes(d)?' on':''}" data-day="${esc(d)}">${esc(d)}</button>`).join('')}
+    </div>
+
+    <label class="lbl">ובאילו שעות? <span style="color:var(--bad)">*</span></label>
+    <div class="opts" id="o_times">
+      ${TIMES.map(t=>`<button class="opt${a.times.includes(t)?' on':''}" data-time="${esc(t)}">${esc(t)}</button>`).join('')}
+    </div>
+
+    <label class="lbl">איך נוח לכם להיפגש?</label>
+    <div class="opts" id="o_how">
+      ${HOWS.map(h=>`<button class="opt${a.how===h?' on':''}" data-how="${esc(h)}">${esc(h)}</button>`).join('')}
+    </div>
+
+    <label class="lbl">משהו שנשמח לדעת מראש? (לא חובה)</label>
+    <textarea class="field" id="f_note" placeholder="מי עוד יצטרף, שאלות, אילוצים בלוח הזמנים…">${esc(a.note||'')}</textarea>
+
+    ${gapsHtml}
+
+    <button class="btn primary" id="go">שליחה 🚀</button>
+    <div class="err" id="err"></div>
+    <p class="hint tight" style="margin-top:10px">נחזור אליכם עם הצעה לשעה מדויקת.</p>
+  </div>`;
+
+  /* בחירות */
+  $('#o_days').onclick = e => {
+    const b = e.target.closest('[data-day]'); if(!b) return;
+    const d = b.dataset.day, i = state.a.days.indexOf(d);
+    if(i>-1) state.a.days.splice(i,1); else state.a.days.push(d);
+    b.classList.toggle('on'); save();
+  };
+  $('#o_times').onclick = e => {
+    const b = e.target.closest('[data-time]'); if(!b) return;
+    const t = b.dataset.time, i = state.a.times.indexOf(t);
+    if(i>-1) state.a.times.splice(i,1); else state.a.times.push(t);
+    b.classList.toggle('on'); save();
+  };
+  $('#o_how').onclick = e => {
+    const b = e.target.closest('[data-how]'); if(!b) return;
+    state.a.how = (state.a.how === b.dataset.how) ? '' : b.dataset.how;
+    $('#o_how').querySelectorAll('.opt').forEach(x=>x.classList.toggle('on', x.dataset.how===state.a.how));
+    save();
+  };
+  [['f_name','name'],['f_role','role'],['f_phone','phone'],['f_mail','mail'],['f_note','note']].forEach(([id,k])=>{
+    $('#'+id).addEventListener('input', e=>{ state.a[k] = e.target.value; save(); });
+  });
+  $('#go').onclick = submit;
+}
+
+async function submit(){
+  const a = state.a, err = $('#err');
+  err.textContent = '';
+  const bad =
+    !String(a.name||'').trim()          ? {id:'f_name',  m:'צריך שם של איש/אשת קשר'} :
+    String(a.phone||'').replace(/\D/g,'').length < 9 ? {id:'f_phone', m:'צריך טלפון תקין'} :
+    !a.days.length                      ? {id:'o_days',  m:'בחרו לפחות יום אחד'} :
+    !a.times.length                     ? {id:'o_times', m:'בחרו לפחות טווח שעות אחד'} : null;
+  if(bad){
+    err.textContent = bad.m;
+    const el = document.getElementById(bad.id);
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    if(el.focus) try{ el.focus(); }catch(e){}
+    return;
+  }
+
+  const btn = $('#go'); btn.disabled = true; btn.textContent = 'שולח…';
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  const payload = {
+    name:   String(a.name).trim(),          /* שדה חובה לתצוגת הניהול */
+    school: school.name,
+    slug:   school.slug,
+    alumni: school.alumni,
+    role:   String(a.role||'').trim(),
+    phone:  String(a.phone).trim(),
+    mail:   String(a.mail||'').trim(),
+    days:   a.days.join(', '),
+    times:  a.times.join(', '),
+    how:    a.how||'',
+    note:   String(a.note||'').trim(),
+    ts:     new Date().toISOString()
+  };
+  try{
+    await fetch(EXEC_URL, { method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({ action:'intakeSubmit', school: KEY_PREFIX+id, json: JSON.stringify(payload) }).toString() });
+    state.sent = true; save(); renderDone();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    btn.disabled = false; btn.textContent = 'שליחה 🚀';
+    err.textContent = 'לא הצלחנו לשלוח — בדקו חיבור לאינטרנט ונסו שוב. מה שמילאתם שמור.';
+  }
+}
+
+function renderDone(){
+  $('#h1').textContent = 'תודה! 💛';
+  $('#sub').textContent = 'קיבלנו את הפרטים';
+  const a = state.a;
+  app.innerHTML = `
+  <div class="card done">
+    <div class="em">📅</div>
+    <h2>נתאם ונחזור אליכם</h2>
+    <p class="hint" style="margin-bottom:0">
+      רשמנו ש<b>${esc(school.name)}</b> פנוי/ה ב${esc(a.days.join(', '))}, ${esc(a.times.join(', '))}${a.how?' · '+esc(a.how):''}.<br>
+      ניצור קשר עם ${esc(a.name)} בטלפון ${esc(a.phone)} עם הצעה לשעה מדויקת.
+    </p>
+    <button class="btn outline sm" id="again" style="margin-top:16px">תיקון הפרטים</button>
+  </div>`;
+  $('#again').onclick = () => { state.sent = false; save(); $('#h1').textContent='מזל טוב! 🎉'; $('#sub').textContent='המערכת שלכם מוכנה'; renderForm(); window.scrollTo({top:0,behavior:'smooth'}); };
+}
+
+/* ===================== תצוגת ניהול ===================== */
+function jsonp(p){
+  return new Promise((res,rej)=>{
+    const cb='cb_'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const t=setTimeout(()=>{ rej(new Error('timeout')); try{delete window[cb];}catch(e){} s.remove(); }, 45000);
+    window[cb]=d=>{ clearTimeout(t); res(d); try{delete window[cb];}catch(e){} s.remove(); };
+    s.onerror=()=>{ clearTimeout(t); rej(new Error('network')); try{delete window[cb];}catch(e){} s.remove(); };
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},p)).toString();
+    document.body.appendChild(s);
+  });
+}
+
+async function renderAdmin(){
+  document.getElementById('wrap').classList.add('wide');
+  $('#h1').textContent = 'קביעת פגישות — ניהול';
+  $('#sub').textContent = 'מי כבר ביקש פגישה';
+  app.innerHTML = '<div class="card"><p class="hint tight">טוען…</p></div>';
+
+  let store = {};
+  try{
+    const r = await jsonp({action:'storeAll', secret:GS_SECRET});
+    if(!r || !r.ok) throw new Error('err');
+    store = r.store || {};
+  }catch(e){
+    app.innerHTML = '<div class="card"><p class="err">לא הצלחנו לטעון את הנתונים. נסי לרענן.</p></div>';
+    return;
+  }
+
+  const rows = Object.keys(store)
+    .filter(k => k.indexOf('intake_'+KEY_PREFIX) === 0)
+    .map(k => store[k]||{})
+    .filter(x => x.name && x.school)
+    .sort((a,b) => String(b.ts).localeCompare(String(a.ts)));
+
+  /* תשובה אחרונה לכל בית ספר — אם מישהו מילא פעמיים, סופרים פעם אחת */
+  const latest = {};
+  rows.forEach(r => { if(!latest[r.school]) latest[r.school] = r; });
+  const answered = new Set(Object.keys(latest));
+  const missing  = SCHOOLS.filter(s => !answered.has(s.name));
+
+  const fmt = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+  const tel = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+
+  app.innerHTML = `
+  <div class="card">
+    <span class="stat">${answered.size} מתוך ${SCHOOLS.length} בתי ספר ענו · ${rows.length} תשובות</span>
+    <div class="tools">
+      <button class="btn outline sm" id="csv">⬇️ הורדת CSV</button>
+      <button class="btn outline sm" id="reload">🔄 רענון</button>
+    </div>
+
+    ${rows.length ? `<div class="tblwrap"><table>
+      <thead><tr>
+        <th>בית ספר</th><th>איש קשר</th><th>טלפון</th><th>ימים</th><th>שעות</th><th>איך</th><th>הערה</th><th>מתי נשלח</th>
+      </tr></thead>
+      <tbody>${rows.map(r=>`<tr>
+        <td><b>${esc(r.school)}</b><br><span style="color:var(--muted);font-size:12px">${esc(r.alumni||'')} בוגרים</span></td>
+        <td>${esc(r.name)}${r.role?`<br><span style="color:var(--muted);font-size:12px">${esc(r.role)}</span>`:''}</td>
+        <td><a href="tel:${esc(tel(r.phone))}">${esc(r.phone)}</a>${r.mail?`<br><a href="mailto:${esc(r.mail)}" style="font-size:12px">${esc(r.mail)}</a>`:''}</td>
+        <td>${esc(r.days)}</td>
+        <td>${esc(r.times)}</td>
+        <td>${esc(r.how)}</td>
+        <td style="max-width:220px;white-space:pre-wrap">${esc(r.note)}</td>
+        <td style="white-space:nowrap;color:var(--muted);font-size:12.5px">${esc(fmt(r.ts))}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>` : '<p class="hint" style="margin-top:12px">עדיין אף בית ספר לא ענה.</p>'}
+
+    ${missing.length ? `<div class="miss"><b>עוד לא ענו (${missing.length}):</b><br>${missing.map(s=>esc(s.name)).join(' · ')}</div>` : '<div class="miss">✓ כל בתי הספר ענו.</div>'}
+  </div>`;
+
+  $('#reload').onclick = () => location.reload();
+  $('#csv').onclick = () => {
+    const head = ['בית ספר','בוגרים','איש קשר','תפקיד','טלפון','מייל','ימים','שעות','איך','הערה','נשלח'];
+    const q = v => '"' + String(v==null?'':v).replace(/"/g,'""') + '"';
+    const body = rows.map(r => [r.school,r.alumni,r.name,r.role,r.phone,r.mail,r.days,r.times,r.how,r.note,fmt(r.ts)].map(q).join(','));
+    const csv = '﻿' + [head.map(q).join(',')].concat(body).join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download = 'פגישות-בתי-ספר.csv'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+    toast('הקובץ ירד');
+  };
+}
+</script>
+</body>
+</html>
