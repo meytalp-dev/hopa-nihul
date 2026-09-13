@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>לוח משימות צוות הבוגרים · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --ink:#1d1b20; --muted:#6b6770; --line:#ece6ea;
+    --bg:#faf7f9; --card:#fff; --ok:#1f9d55; --ok-soft:#e6f6ec; --warn:#b7791f; --warn-soft:#fff7e0;
+    --shadow:0 6px 22px rgba(60,20,40,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+  a{color:var(--pink-dark)}
+  button{font-family:inherit;cursor:pointer}
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:16px 18px 20px;border-radius:0 0 24px 24px;box-shadow:var(--shadow)}
+  .hero-top{display:flex;align-items:center;gap:12px;justify-content:space-between;max-width:980px;margin:0 auto}
+  .hero-top img{height:42px;background:#fff;border-radius:12px;padding:4px 8px}
+  .hero h1{margin:10px auto 2px;font-size:22px;max-width:980px}
+  .hero p{margin:0 auto;opacity:.92;font-size:14px;max-width:980px}
+  .sync{font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px;white-space:nowrap}
+  .sync.err{background:#fff;color:#b00020}
+  .wrap{max-width:980px;margin:0 auto;padding:14px}
+  .who{display:flex;gap:8px;flex-wrap:wrap;margin:14px auto 0;max-width:980px}
+  .who button{border:2px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:99px;padding:6px 14px;font-size:14px;font-weight:600}
+  .who button.on{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;position:sticky;top:0;background:var(--bg);z-index:5}
+  .tabs button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-weight:600;font-size:14px;white-space:nowrap;color:var(--ink)}
+  .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+  .card h2{margin:0 0 6px;font-size:18px}
+  .card h3{margin:0;font-size:16px}
+  .muted{color:var(--muted);font-size:13px}
+  .rules{background:var(--warn-soft);border:1px solid #f3e2a6}
+  .rules ol{margin:6px 0 0;padding-inline-start:20px}
+  .rules li{margin:3px 0}
+  .focus{border-inline-start:6px solid var(--pink)}
+  .person-h{display:flex;align-items:center;gap:10px;margin:18px 0 8px}
+  .person-h .av{width:36px;height:36px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-weight:800}
+  .person-h h2{margin:0;font-size:19px}
+  .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;flex:1;min-width:80px}
+  .bar i{display:block;height:100%;background:var(--ok)}
+  .task{display:flex;gap:10px;align-items:flex-start;padding:10px 4px;border-top:1px solid var(--line)}
+  .task:first-of-type{border-top:0}
+  .task input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok);margin-top:1px;flex:none;cursor:pointer}
+  .task .tx{flex:1;min-width:0}
+  .task .tt{font-weight:500}
+  .task .dd{font-size:13px;color:var(--muted);margin-top:2px}
+  .task.done .tt{text-decoration:line-through;color:#9a959d}
+  .task.done .dd{text-decoration:line-through}
+  .task .meta{font-size:12px;color:var(--ok);margin-top:3px}
+  .task .note{font-size:12.5px;background:var(--ok-soft);border-radius:8px;padding:4px 8px;margin-top:4px;text-decoration:none}
+  .task .ops{display:flex;gap:4px;flex:none}
+  .task .ops button{border:0;background:transparent;font-size:15px;padding:2px 4px;opacity:.55}
+  .task .ops button:hover{opacity:1}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:99px;padding:1px 8px;margin-inline-start:6px;vertical-align:middle}
+  .tag.p{background:var(--pink-soft);color:var(--pink-dark)}
+  .tag.y{background:var(--yellow);color:var(--ink)}
+  .tag.g{background:var(--ok-soft);color:var(--ok)}
+  .tag.w{background:var(--warn-soft);color:var(--warn)}
+  .schools{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+  .school{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:14px}
+  .school .sh{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:6px}
+  .school .badge{font-size:12px;font-weight:700;border-radius:10px;padding:3px 9px;white-space:nowrap}
+  .badge.has{background:var(--ok-soft);color:var(--ok)}
+  .badge.none{background:#ffe9ea;color:#b00020}
+  .grp{font-size:12px;font-weight:700;color:var(--pink-dark);margin:10px 0 0;letter-spacing:.2px}
+  .btn{border:0;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14px}
+  .btn.pink{background:var(--pink);color:#fff}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.ok{background:var(--ok);color:#fff}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ov{position:fixed;inset:0;background:rgba(20,10,20,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+  .dlg{background:#fff;border-radius:20px;padding:20px;max-width:440px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.35);max-height:92vh;overflow:auto}
+  .dlg h3{margin:0 0 8px;font-size:18px}
+  label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+  input[type=text],input[type=password],textarea,select{width:100%;font-family:inherit;font-size:15px;border:1px solid #d9d2d7;border-radius:10px;padding:9px 10px;background:#fff}
+  textarea{min-height:80px;resize:vertical}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-size:14px;box-shadow:var(--shadow);max-width:92vw}
+  .toast.bad{background:#b00020}
+  .sum-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .sum-list{margin:4px 0 10px;padding-inline-start:20px}
+  .sum-list li{margin:3px 0}
+  .kpis{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .kpi{background:var(--bg);border-radius:12px;padding:8px 12px;min-width:110px}
+  .kpi b{font-size:22px;display:block}
+  pre.copy{white-space:pre-wrap;background:var(--bg);border-radius:12px;padding:12px;font-family:inherit;font-size:13.5px;max-height:320px;overflow:auto}
+  footer{text-align:center;padding:24px 10px 40px;font-size:13px;color:var(--muted)}
+  @media (max-width:520px){.hero h1{font-size:19px}.card{padding:13px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+    <span id="sync" class="sync">טוען…</span>
+  </div>
+  <h1>לוח משימות · צוות הבוגרים</h1>
+  <p>מיטל · לירון · בארי · אסמאא — כל סימון נשמר ומשותף לכולם</p>
+  <div class="who" id="who"></div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs" id="tabs">
+    <button data-tab="tasks" class="on">📋 משימות</button>
+    <button data-tab="schools">🏫 בתי הספר</button>
+    <button data-tab="summary">🗓️ סיכום שבועי</button>
+  </nav>
+
+  <section id="tab-tasks"></section>
+  <section id="tab-schools" hidden></section>
+  <section id="tab-summary" hidden></section>
+</main>
+
+<footer>
+  עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+</footer>
+
+<script>
+/* =====================================================================
+   לוח משימות צוות הבוגרים — הופה
+   שמירה: גיליון "נתונים" של דף הניהול (Apps Script), מפתח לכל משימה: lakh_t_<id>
+   מייל למיטל בסיום משימה: action=lakhDone (דורש את התוספת ב-Code.gs)
+   ===================================================================== */
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const MEITAL_EMAIL = 'meytalp@bethaarava.ort.org.il';
+const KEY_PREFIX = 'lakh_t_';
+const DATA_DATE = '9.9.2026';
+
+/* localStorage עטוף — בדפדפן של וואטסאפ בנייד הגישה עלולה לזרוק */
+const LS = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+
+const PEOPLE = [
+  { key:'meital', name:'מיטל' },
+  { key:'liron',  name:'לירון' },
+  { key:'bari',   name:'בארי' },
+  { key:'asmaa',  name:'אסמאא' }
+];
+const PNAME = Object.fromEntries(PEOPLE.map(p=>[p.key,p.name]));
+
+/* ---------- בתי הספר (מצב נכון ל-9.9.2026 — מספרים בלבד, בלי פרטי בוגרים) ----------
+   alumni = כמה בוגרים יש בהופה סקיור · gaps = מה חסר · waAl = יש קבוצת וואטסאפ בוגרים
+   lostData = הנתון היה בקובץ המקורי ונעלם במערכת — לא לבקש שוב מביה"ס לפני בדיקה עם מיטל */
+const SCHOOLS = [
+  // ---- אסמאא: החברה הערבית, הבדואית והדרוזית ----
+  { c:'lqy', owner:'asmaa', n:'טכנולוגי לקייה', coord:'ראניה', alumni:0 },
+  { c:'jul', owner:'asmaa', n:'יוצר עתיד בנות ג׳וליס', coord:'בהייה', alumni:0 },
+  { c:'skh', owner:'asmaa', n:'אלאמאני סח׳נין', coord:'סוזן', alumni:75, gaps:{phone:3} },
+  { c:'tur', owner:'asmaa', n:'מנאראת טורעאן', coord:'מוניר', alumni:0, listAtMeital:37 },
+  { c:'nvm', owner:'asmaa', n:'דרור נווה מדבר', coord:'היאם', alumni:20, gaps:{phone:20, year:19} },
+  { c:'bir', owner:'asmaa', n:'עתיד אבדאע ביר אלמכסור', coord:'עלי', alumni:19 },
+  { c:'rht', owner:'asmaa', n:'עמל טכנולוגי רהט', coord:'זהור', alumni:0 },
+  { c:'hai', owner:'asmaa', n:'אורט כרמל חיפה', coord:'חנין', alumni:0 },
+  { c:'yrk', owner:'asmaa', n:'ח׳טוואת ירכא אבו סנאן', coord:'רשא', alumni:0 },
+  // ---- בארי: שאר בתי הספר ----
+  { c:'bha', owner:'bari', n:'אורט בית הערבה', coord:'יעקב', alumni:438, gaps:{phone:7}, waAl:true, form:'fNhxNpBj26us' },
+  { c:'ako', owner:'bari', n:'אורט מרום עכו', coord:'טוהר', alumni:354, gaps:{phone:2}, waAl:true, form:'2oEYozRRNLus' },
+  { c:'ash', owner:'bari', n:'אורט אדיבי אשקלון', coord:'סיגל', alumni:296, gaps:{id:161}, waAl:true, form:'4yqCmdoFBDus' },
+  { c:'krm', owner:'bari', n:'עתיד יוצר מגשימים כרמיאל', coord:'לבנה', alumni:237, gaps:{phone:105} },
+  { c:'mot', owner:'bari', n:'עתיד שמיים מוצקין', coord:'אביחי', alumni:141, gaps:{id:3, year:2}, waAl:true, form:'wbcapmr8RZus' },
+  { c:'tlv', owner:'bari', n:'התיכון החברתי תל אביב־יפו', coord:'לי', alumni:121, gaps:{phone:5} },
+  { c:'hsh', owner:'bari', n:'תיכון חושן', coord:'ברכי', alumni:109, gaps:{phone:105, year:104}, lostData:true },
+  { c:'sia', owner:'bari', n:'תיכון שיח', coord:'טליה', alumni:80, gaps:{phone:78, year:78}, lostData:true },
+  { c:'bsh', owner:'bari', n:'עתיד יוצר מגשימים בית שאן', coord:'חן', alumni:77, gaps:{id:77, phone:30}, waAl:true, form:'bBWnRDYD2nus' },
+  { c:'rmd', owner:'bari', n:'עמל רמת דוד', coord:'מוניק', alumni:70 },
+  { c:'adt', owner:'bari', n:'יוצר עמל טכנולוגי אשדוד', coord:'ריקי', alumni:66, gaps:{id:7, phone:4} },
+  { c:'tzb', owner:'bari', n:'אורט צור ברק', coord:'טלי', alumni:50, waAl:true, form:'ki3biGmocKus' },
+  { c:'plm', owner:'bari', n:'יוצר עתיד פלמחים', coord:'שירן', alumni:0 },
+  { c:'nhl', owner:'bari', n:'מרכז תורני טכנולוגי נחלים', coord:'טל', alumni:0 },
+  { c:'drg', owner:'bari', n:'דרור גליל', coord:'רינה', alumni:0 },
+  { c:'mzr', owner:'bari', n:'התיכון החברתי מצפה רמון', coord:'', alumni:0 }
+];
+
+/* משימות קבועות (לא לפי בית ספר). owner: bari/asmaa/meital/liron. להוסיף כאן = מופיע לכולם */
+const STATIC_TASKS = [
+  // משימות מלירון לאסמאא — יתווספו כאן
+];
+
+/* ---------- יצירת המשימות לכל בית ספר ---------- */
+function schoolTasks(s){
+  const t = [], id = k => 's_'+s.c+'_'+k, coord = s.coord ? ('ל'+s.coord) : 'לרכז/ת';
+  // 1) רשימת בוגרים
+  if (!s.alumni){
+    if (s.listAtMeital){
+      t.push({ id:id('list'), grp:'רשימת בוגרים', title:`הרשימה כבר אצל מיטל (${s.listAtMeital} בוגרים) — לא לבקש שוב`, details:'ממתינה לייבוא. אין צורך לפנות לבית הספר בנושא הזה.', focus:true });
+    } else {
+      t.push({ id:id('list'), grp:'רשימת בוגרים', title:`להשיג רשימת בוגרים — פנייה אישית ${coord}`, details:'בהודעה פרטית, לא בקבוצת הרכזים. מבקשים: שם, טלפון, ת״ז, תאריך לידה, שנת סיום.', focus:true });
+      t.push({ id:id('sent'), grp:'רשימת בוגרים', title:'הקובץ התקבל והועבר למיטל לייבוא', details:'את הקובץ שולחים ישירות למיטל — לא מעלים ללוח ולא לקבוצות.' });
+    }
+  }
+  // 2) השלמת פרטים חסרים
+  const g = s.gaps || {};
+  const lost = s.lostData ? ' ⚠️ לפני שפונים לביה״ס — לבדוק עם מיטל: ייתכן שהנתון נשלח ונעלם אצלנו.' : '';
+  if (g.phone) t.push({ id:id('phone'), grp:'השלמת פרטים', title:`להשלים ${g.phone} טלפונים חסרים`, details:'את רשימת השמות מקבלים ממיטל.'+lost });
+  if (g.id)    t.push({ id:id('tz'),    grp:'השלמת פרטים', title:`להשלים ${g.id} תעודות זהות חסרות`, details:'הכי מהיר: לבקש מביה״ס דוח אלפון של המחזור ולא מילוי ידני.' });
+  if (g.year)  t.push({ id:id('year'),  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.'+lost });
+  if (s.alumni) t.push({ id:id('bday'), grp:'השלמת פרטים', title:'לבדוק שיש תאריכי לידה — ולהשלים מה שחסר', details:'בודקים בהופה סקיור במסך ניהול בוגרים.' });
+  // 3) קבוצת וואטסאפ + שאלון מיפוי
+  if (!s.waAl) t.push({ id:id('wa'), grp:'קבוצת וואטסאפ ומיפוי', title:`להקים קבוצת וואטסאפ לבוגרים יחד ${coord}`, details:'הרכז/ת מנהל/ת את הקבוצה, הופה מצטרפת. אחרי ההקמה — לשלוח את שאלון המיפוי בקבוצה.', focus:true });
+  t.push({ id:id('quest'), grp:'קבוצת וואטסאפ ומיפוי', title: s.waAl ? 'לשלוח שאלון מיפוי בקבוצת הבוגרים הקיימת' : 'לשלוח שאלון מיפוי בקבוצה החדשה',
+           details: s.form ? '' : 'את קישור השאלון לבית הספר הזה מקבלים ממיטל.', link: s.form ? 'https://forms12grade.fillout.com/t/'+s.form : '', focus: !!s.waAl });
+  t.push({ id:id('track'), grp:'קבוצת וואטסאפ ומיפוי', title:'מעקב: מי ענה על השאלון ומי לא — ופנייה אישית למי שלא ענה', details:'אחרי שבוע מהשליחה. בלוח כותבים רק כמה ענו, בלי שמות.' });
+  return t.map(x => Object.assign(x, { owner:s.owner, school:s.c, schoolName:s.n }));
+}
+
+/* ---------- שבוע (ראשון עד שבת) ---------- */
+function weekStart(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-x.getDay()); return x; }
+function wkey(d){ const x = weekStart(d); return x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0'); }
+function fmtD(d){ return d.getDate()+'.'+(d.getMonth()+1); }
+
+/* סבב מענים — פעמיים בשבוע, לבארי ולאסמאא */
+function recurringTasks(refDate){
+  const k = wkey(refDate), out = [];
+  ['bari','asmaa'].forEach(o => {
+    out.push({ id:`r_${o}_${k}_1`, owner:o, week:k, grp:'סבב מענים', recurring:true, focus:true,
+      title:'סבב מענים #1 השבוע (ראשון–שלישי)',
+      details:'לעבור על קבוצות המענים ועל מה שלירון שלחה → מענה עם דד-ליין (קורס/תוכנית) נשלח לקבוצות הרכזים או לקבוצות הצוות הרלוונטיות · מענה קבוע (מלגה/עמותה/שירות) נשלח לקבוצה "הכנסת מענים לאתר הופה". בסימון כותבים כמה מענים הופצו ולאן.' });
+    out.push({ id:`r_${o}_${k}_2`, owner:o, week:k, grp:'סבב מענים', recurring:true, focus:true,
+      title:'סבב מענים #2 השבוע (רביעי–חמישי)',
+      details:'אותו תהליך כמו בסבב הראשון — רק מה שהגיע מאז.' });
+  });
+  return out;
+}
+
+/* ---------- מצב ---------- */
+let SECRET = LS.get('hopa_api_secret') || '';
+let ME = LS.get('lakh_me') || '';
+let TAB = LS.get('lakh_tab') || 'tasks';
+let REC = {};          // id -> רשומה שמורה {done,doneAt,doneBy,note,...}
+let loaded = false;
+
+(function readHashKey(){
+  const m = location.hash.match(/k=([^&]+)/);
+  if (m){ SECRET = decodeURIComponent(m[1]); LS.set('hopa_api_secret', SECRET); history.replaceState(null,'',location.pathname+location.search); }
+})();
+
+function allTasks(refDate){
+  const list = [];
+  SCHOOLS.forEach(s => list.push(...schoolTasks(s)));
+  list.push(...recurringTasks(refDate || new Date()));
+  STATIC_TASKS.forEach(t => list.push(Object.assign({ grp:'משימות' }, t)));
+  Object.values(REC).forEach(r => { if (r && r.custom && !r.deleted) list.push(Object.assign({ grp:'משימות' }, r)); });
+  return list.map(t => Object.assign({}, t, stateOf(t.id)));
+}
+function stateOf(id){ const r = REC[id] || {}; return { done:!!r.done, doneAt:r.doneAt||0, doneBy:r.doneBy||'', note:r.note||'' }; }
+
+/* ---------- תקשורת ---------- */
+function jsonp(params){
+  return new Promise((res, rej) => {
+    const cb = 'lk_' + Math.random().toString(36).slice(2);
+    const s = document.createElement('script');
+    const q = new URLSearchParams(Object.assign({}, params, { secret:SECRET, callback:cb }));
+    const timer = setTimeout(() => { cleanup(); rej(new Error('timeout')); }, 25000);
+    function cleanup(){ clearTimeout(timer); try{ delete window[cb]; }catch(e){} s.remove(); }
+    window[cb] = d => { cleanup(); res(d); };
+    s.onerror = () => { cleanup(); rej(new Error('net')); };
+    s.src = EXEC_URL + '?' + q.toString();
+    document.head.appendChild(s);
+  });
+}
+function postWrite(params){
+  const body = new URLSearchParams(Object.assign({}, params, { secret:SECRET })).toString();
+  return fetch(EXEC_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body });
+}
+function setSync(txt, bad){ const el = document.getElementById('sync'); el.textContent = txt; el.className = 'sync' + (bad ? ' err' : ''); }
+
+async function load(){
+  if (!SECRET){ await askSecret(); }
+  setSync('טוען…');
+  try {
+    let r = await jsonp({ action:'storeAll' });
+    if (r && r.ok === false && /unauth/i.test(r.error||'')){
+      SECRET = ''; toast('הסיסמה לא נכונה — נסו שוב', true);
+      await askSecret(); r = await jsonp({ action:'storeAll' });
+    }
+    if (!r || !r.ok) throw new Error('bad');
+    const next = {};
+    Object.keys(r.store || {}).forEach(k => { if (k.indexOf(KEY_PREFIX) === 0 && r.store[k]) next[k.slice(KEY_PREFIX.length)] = r.store[k]; });
+    // שומרים שינויים מקומיים שעוד לא הגיעו לשרת
+    Object.keys(REC).forEach(id => { if (REC[id] && REC[id]._pending && (!next[id] || (next[id].updatedAt||0) < REC[id].updatedAt)) next[id] = REC[id]; });
+    REC = next; loaded = true;
+    LS.set('lakh_cache', JSON.stringify(REC));
+    setSync('מסונכרן ✓');
+    saveCatalog();
+  } catch(e){
+    try { REC = JSON.parse(LS.get('lakh_cache')) || {}; } catch(_){ REC = {}; }
+    setSync('אין חיבור — מוצג עותק שמור', true);
+  }
+  render();
+}
+
+function saveRec(id, rec){
+  rec.updatedAt = Date.now(); rec.updatedBy = ME; rec._pending = true;
+  REC[id] = rec; LS.set('lakh_cache', JSON.stringify(REC));
+  const clean = Object.assign({}, rec); delete clean._pending;
+  return postWrite({ action:'storeSet', key:KEY_PREFIX+id, json:JSON.stringify(clean) })
+    .then(() => { setSync('נשמר ✓'); })
+    .catch(() => { setSync('לא נשמר — נסו שוב', true); toast('השמירה נכשלה. בדקו חיבור ונסו שוב', true); });
+}
+
+/* רשימת כל המשימות (בלי סטטוס) — כדי שהמייל של יום ראשון יידע מה נשאר פתוח */
+function saveCatalog(){
+  const lastWeek = new Date(); lastWeek.setDate(lastWeek.getDate()-7);
+  const items = [];
+  const push = t => items.push({ id:t.id, owner:t.owner, title:t.title, school:t.schoolName||'', week:t.week||'' });
+  SCHOOLS.forEach(s => schoolTasks(s).forEach(push));
+  recurringTasks(lastWeek).forEach(push); recurringTasks(new Date()).forEach(push);
+  STATIC_TASKS.forEach(push);
+  const json = JSON.stringify({ items, savedAt:Date.now() });
+  const sig = String(json.length) + items.length + wkey(new Date());
+  if (LS.get('lakh_catalog_sig') === sig) return;
+  postWrite({ action:'storeSet', key:'lakh_catalog', json }).then(() => LS.set('lakh_catalog_sig', sig)).catch(()=>{});
+}
+
+/* ---------- ממשק ---------- */
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toast(msg, bad){
+  const t = document.createElement('div'); t.className = 'toast' + (bad ? ' bad' : ''); t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 3600);
+}
+function when(ts){ if (!ts) return ''; const d = new Date(ts); return fmtD(d)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+
+function renderWho(){
+  const el = document.getElementById('who');
+  el.innerHTML = '<span style="align-self:center;font-size:13px;opacity:.9">מי את/ה?</span>' +
+    PEOPLE.map(p => `<button data-me="${p.key}" class="${ME===p.key?'on':''}">${p.name}</button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => { ME = b.dataset.me; LS.set('lakh_me', ME); render(); });
+}
+
+function taskRow(t, opts){
+  opts = opts || {};
+  const link = t.link ? ` · <a href="${esc(t.link)}" target="_blank" rel="noopener">קישור לשאלון</a>` : '';
+  const school = opts.showSchool && t.schoolName ? `<span class="tag p">${esc(t.schoolName)}</span>` : '';
+  const who = opts.showOwner ? `<span class="tag y">${esc(PNAME[t.owner]||t.owner)}</span>` : '';
+  const custom = (REC[t.id] && REC[t.id].custom) ? `<div class="ops"><button title="מחיקה" data-del="${esc(t.id)}">🗑️</button></div>` : '';
+  return `<div class="task ${t.done?'done':''}">
+    <input type="checkbox" ${t.done?'checked':''} data-chk="${esc(t.id)}" aria-label="סימון כבוצע">
+    <div class="tx">
+      <div class="tt">${esc(t.title)}${school}${who}</div>
+      ${t.details ? `<div class="dd">${esc(t.details)}${link}</div>` : (link ? `<div class="dd">${link.slice(3)}</div>` : '')}
+      ${t.done ? `<div class="meta">✓ ${esc(PNAME[t.doneBy]||t.doneBy||'')} · ${when(t.doneAt)}</div>` : ''}
+      ${t.done && t.note ? `<div class="note">${esc(t.note)}</div>` : ''}
+    </div>${custom}
+  </div>`;
+}
+
+/* בפוקוס: קודם איסוף רשימות, אחר כך הקמת קבוצות, ואז שאלוני מיפוי */
+function FOCUS_ORDER(t){ const k = t.id.split('_').pop(); return ({list:0, wa:1, quest:2})[k] ?? 3; }
+function progress(list){ const d = list.filter(t=>t.done).length; return { d, n:list.length, pct: list.length ? Math.round(d*100/list.length) : 0 }; }
+
+function renderTasks(){
+  const el = document.getElementById('tab-tasks');
+  const tasks = allTasks();
+  const viewers = (ME === 'bari' || ME === 'asmaa') ? [ME] : ['bari','asmaa','meital','liron'];
+  let html = `
+  <div class="card rules">
+    <h2>איך עובדים עם הלוח</h2>
+    <ol>
+      <li>בוחרים למעלה את השם שלך (פעם אחת בכל מכשיר).</li>
+      <li>סיימת משימה? מסמנים ✓, כותבים משפט קצר מה נעשה ולוחצים <b>שליחה</b>. המשימה נמחקת בקו והעדכון מגיע למיטל במייל.</li>
+      <li><b>רשימות בוגרים מבקשים רק בפנייה אישית לרכז/ת</b>, לא בקבוצת הרכזים.</li>
+      <li>סבב מענים <b>פעמיים בשבוע</b>. בכל יום ראשון יש סיכום של מה נעשה בשבוע שעבר ומה עוד פתוח.</li>
+      <li>בלוח לא כותבים שמות, טלפונים או ת״ז של בוגרים. קבצים שולחים ישירות למיטל.</li>
+    </ol>
+    <div class="row" style="margin-top:10px"><button class="btn pink" id="addBtn">➕ הוספת משימה</button>
+    <a class="btn ghost" href="kvutzot.html" target="_blank" rel="noopener" style="text-decoration:none">💬 קבוצות המענים</a></div>
+  </div>`;
+
+  viewers.forEach(o => {
+    const mine = tasks.filter(t => t.owner === o && (!t.recurring || t.week === wkey(new Date())));
+    if (!mine.length && (o === 'meital' || o === 'liron')) {
+      html += `<div class="person-h"><div class="av">${PNAME[o][0]}</div><h2>${PNAME[o]}</h2></div><div class="card muted">אין משימות כרגע. אפשר להוסיף בכפתור ➕.</div>`;
+      return;
+    }
+    const pr = progress(mine.filter(t => !t.school));
+    const prS = progress(mine.filter(t => t.school));
+    html += `<div class="person-h"><div class="av">${PNAME[o][0]}</div><h2>${PNAME[o]}</h2>
+      <div class="bar" title="בתי ספר"><i style="width:${prS.pct}%"></i></div><span class="muted">${prS.d}/${prS.n} בבתי הספר</span></div>`;
+
+    const focus = mine.filter(t => t.focus && !t.done);
+    const rec = mine.filter(t => t.recurring);
+    const custom = mine.filter(t => !t.school && !t.recurring);
+    if (rec.length) html += `<div class="card focus"><h3>🔁 סבב מענים השבוע <span class="muted">(${fmtD(weekStart(new Date()))} והלאה)</span></h3>${rec.map(t=>taskRow(t)).join('')}</div>`;
+    const focusSchool = mine.filter(t => t.focus && t.school).sort((a,b) => (a.done - b.done) || (FOCUS_ORDER(a) - FOCUS_ORDER(b)));
+    if (focusSchool.length) html += `<div class="card focus"><h3>🔥 בפוקוס עכשיו: רשימות בוגרים, קבוצות וואטסאפ ושאלוני מיפוי</h3>${focusSchool.map(t=>taskRow(t,{showSchool:true})).join('')}
+      <div class="muted" style="margin-top:6px">כל שאר המשימות לפי בית ספר (השלמת טלפונים, ת״ז ותאריכי לידה) נמצאות בלשונית 🏫 בתי הספר.</div></div>`;
+    if (custom.length) html += `<div class="card"><h3>📌 משימות נוספות</h3>${custom.map(t=>taskRow(t,{showSchool:true})).join('')}</div>`;
+  });
+  el.innerHTML = html;
+  document.getElementById('addBtn').onclick = openAdd;
+}
+
+function renderSchools(){
+  const el = document.getElementById('tab-schools');
+  const owners = (ME === 'bari' || ME === 'asmaa') ? [ME] : ['asmaa','bari'];
+  let html = `<div class="card muted">מספרי הבוגרים ומה חסר נכונים ל-${DATA_DATE} (מהופה סקיור). כשמשיגים או משלימים משהו מסמנים ✓, והשורה נמחקת בקו.</div>`;
+  owners.forEach(o => {
+    const list = SCHOOLS.filter(s => s.owner === o);
+    const withA = list.filter(s => s.alumni), without = list.filter(s => !s.alumni);
+    html += `<div class="person-h"><div class="av">${PNAME[o][0]}</div><h2>בתי הספר של ${PNAME[o]}</h2><span class="muted">${list.length} בתי ספר</span></div>`;
+    const block = (title, arr) => {
+      if (!arr.length) return '';
+      let h = `<h3 style="margin:10px 2px 8px">${title} <span class="muted">(${arr.length})</span></h3><div class="schools">`;
+      arr.forEach(s => {
+        const ts = schoolTasks(s).map(t => Object.assign(t, stateOf(t.id)));
+        const pr = progress(ts);
+        const badge = s.alumni ? `<span class="badge has">${s.alumni} בוגרים</span>` : `<span class="badge none">אין בוגרים עדיין</span>`;
+        const grps = [...new Set(ts.map(t => t.grp))];
+        h += `<div class="school"><div class="sh"><div><h3>${esc(s.n)}</h3><div class="muted">${s.coord ? 'רכז/ת: '+esc(s.coord)+' · ' : ''}${s.waAl ? 'יש קבוצת בוגרים ✓' : 'אין קבוצת בוגרים'}</div></div>${badge}</div>
+          <div class="row"><div class="bar"><i style="width:${pr.pct}%"></i></div><span class="muted">${pr.d}/${pr.n}</span></div>
+          ${grps.map(g => `<div class="grp">${esc(g)}</div>` + ts.filter(t => t.grp === g).map(t => taskRow(t)).join('')).join('')}
+        </div>`;
+      });
+      return h + '</div>';
+    };
+    html += block('✅ בתי ספר שכבר יש בהם בוגרים', withA);
+    html += block('⭕ בתי ספר שעדיין אין בהם בוגרים', without);
+  });
+  el.innerHTML = html;
+}
+
+/* ---------- סיכום שבועי ---------- */
+let SUM_OFFSET = -1;   // -1 = השבוע שעבר, 0 = השבוע הנוכחי
+function summaryData(offset){
+  const ref = new Date(); ref.setDate(ref.getDate() + 7*offset);
+  const from = weekStart(ref), to = new Date(from); to.setDate(to.getDate()+7);
+  const tasks = allTasks(ref).filter(t => !t.recurring || t.week === wkey(ref));
+  const by = {};
+  ['bari','asmaa','meital','liron'].forEach(o => {
+    const mine = tasks.filter(t => t.owner === o);
+    const done = mine.filter(t => t.done && t.doneAt >= from.getTime() && t.doneAt < to.getTime());
+    const open = mine.filter(t => !t.done);
+    by[o] = { done, open, focusOpen: open.filter(t => t.focus) };
+  });
+  return { from, to, by };
+}
+function summaryText(sd){
+  const end = new Date(sd.to); end.setDate(end.getDate()-1);
+  let s = `📋 סיכום שבועי · צוות הבוגרים\n${fmtD(sd.from)}–${fmtD(end)}\n`;
+  ['bari','asmaa','meital','liron'].forEach(o => {
+    const b = sd.by[o]; if (!b.done.length && !b.open.length) return;
+    s += `\n*${PNAME[o]}*\n✅ נעשה (${b.done.length}):\n`;
+    s += b.done.length ? b.done.map(t => `• ${t.schoolName ? t.schoolName+' — ' : ''}${t.title}${t.note ? ' ('+t.note+')' : ''}`).join('\n') : '• —';
+    s += `\n⏳ עוד פתוח (${b.open.length})` + (b.focusOpen.length ? `, מתוכן בפוקוס:\n` + b.focusOpen.map(t => `• ${t.schoolName ? t.schoolName+' — ' : ''}${t.title}`).join('\n') : '') + '\n';
+  });
+  return s;
+}
+function renderSummary(){
+  const el = document.getElementById('tab-summary');
+  const sd = summaryData(SUM_OFFSET);
+  const end = new Date(sd.to); end.setDate(end.getDate()-1);
+  let html = `<div class="card"><div class="sum-h"><h2>🗓️ סיכום שבוע ${fmtD(sd.from)}–${fmtD(end)}</h2>
+    <div class="row"><button class="btn ghost" id="sPrev">→ שבוע קודם</button><button class="btn ghost" id="sNext" ${SUM_OFFSET>=0?'disabled':''}>שבוע הבא ←</button></div></div>
+    <div class="muted">בכל יום ראשון בבוקר הסיכום של השבוע שעבר נשלח גם במייל.</div></div>`;
+  ['bari','asmaa','meital','liron'].forEach(o => {
+    const b = sd.by[o]; if (!b.done.length && !b.open.length) return;
+    html += `<div class="card"><h2>${PNAME[o]}</h2>
+      <div class="kpis"><div class="kpi"><b style="color:var(--ok)">${b.done.length}</b>נעשו בשבוע</div><div class="kpi"><b>${b.open.length}</b>עוד פתוחות</div><div class="kpi"><b style="color:var(--pink-dark)">${b.focusOpen.length}</b>פתוחות בפוקוס</div></div>
+      <div class="grp">✅ מה נעשה</div>
+      ${b.done.length ? '<ul class="sum-list">'+b.done.map(t=>`<li>${t.schoolName?'<b>'+esc(t.schoolName)+'</b> — ':''}${esc(t.title)}${t.note?' <span class="muted">('+esc(t.note)+')</span>':''}</li>`).join('')+'</ul>' : '<div class="muted">לא סומנו משימות בשבוע הזה.</div>'}
+      <div class="grp">⏳ עוד לא נעשה (בפוקוס)</div>
+      ${b.focusOpen.length ? '<ul class="sum-list">'+b.focusOpen.map(t=>`<li>${t.schoolName?'<b>'+esc(t.schoolName)+'</b> — ':''}${esc(t.title)}</li>`).join('')+'</ul>' : '<div class="muted">כל משימות הפוקוס הושלמו 🎉</div>'}
+      ${b.open.length > b.focusOpen.length ? `<div class="muted">ועוד ${b.open.length - b.focusOpen.length} משימות השלמת פרטים ומעקב בלשונית בתי הספר.</div>` : ''}
+    </div>`;
+  });
+  html += `<div class="card"><h3>להעתקה לוואטסאפ</h3><pre class="copy" id="sumTxt">${esc(summaryText(sd))}</pre>
+    <div class="row"><button class="btn pink" id="sCopy">📋 העתקה</button></div></div>`;
+  el.innerHTML = html;
+  document.getElementById('sPrev').onclick = () => { SUM_OFFSET--; renderSummary(); };
+  document.getElementById('sNext').onclick = () => { if (SUM_OFFSET < 0){ SUM_OFFSET++; renderSummary(); } };
+  document.getElementById('sCopy').onclick = () => {
+    const txt = summaryText(sd);
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('הועתק ✓')).catch(() => {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById('sumTxt'));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('מסומן — העתיקו ידנית');
+    });
+  };
+}
+
+function render(){
+  renderWho();
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === TAB));
+  ['tasks','schools','summary'].forEach(k => document.getElementById('tab-'+k).hidden = (k !== TAB));
+  if (TAB === 'tasks') renderTasks();
+  if (TAB === 'schools') renderSchools();
+  if (TAB === 'summary') renderSummary();
+}
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('button[data-tab]'); if (!b) return;
+  TAB = b.dataset.tab; LS.set('lakh_tab', TAB); render();
+});
+
+/* סימון / ביטול / מחיקה */
+document.addEventListener('change', e => {
+  const id = e.target.dataset && e.target.dataset.chk; if (!id) return;
+  e.target.checked = !e.target.checked;   // מחכים לאישור בחלון
+  if (!ME){ toast('קודם בוחרים למעלה מי את/ה', true); window.scrollTo({top:0,behavior:'smooth'}); return; }
+  const t = allTasks().find(x => x.id === id); if (!t) return;
+  if (t.done) undoDone(t); else openDone(t);
+});
+document.addEventListener('click', e => {
+  const id = e.target.dataset && e.target.dataset.del; if (!id) return;
+  if (!confirm('למחוק את המשימה?')) return;
+  const r = Object.assign({}, REC[id], { deleted:true });
+  saveRec(id, r); render();
+});
+
+function overlay(html){
+  const ov = document.createElement('div'); ov.className = 'ov';
+  ov.innerHTML = `<div class="dlg" role="dialog">${html}</div>`;
+  ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov); return ov;
+}
+
+function openDone(t){
+  const ov = overlay(`<h3>✓ סימון כבוצע</h3>
+    <div><b>${esc(t.title)}</b>${t.schoolName ? ' · '+esc(t.schoolName) : ''}</div>
+    <label for="dNote">מה נעשה? (משפט קצר, בלי פרטי בוגרים)</label>
+    <textarea id="dNote" placeholder="למשל: הרכזת שלחה קובץ עם 42 בוגרים, העברתי למיטל"></textarea>
+    <div class="row" style="margin-top:14px"><button class="btn ok" id="dSend">✓ סיימתי — שליחה למיטל</button><button class="btn ghost" id="dCancel">ביטול</button></div>`);
+  const ta = ov.querySelector('#dNote'); setTimeout(() => ta.focus(), 50);
+  ov.querySelector('#dCancel').onclick = () => ov.remove();
+  ov.querySelector('#dSend').onclick = async () => {
+    const note = ta.value.trim();
+    const btn = ov.querySelector('#dSend'); btn.disabled = true; btn.textContent = 'שולח…';
+    const base = Object.assign({}, REC[t.id] || {});
+    const rec = Object.assign(base, { done:true, doneAt:Date.now(), doneBy:ME, note });
+    await saveRec(t.id, rec);
+    render();
+    const mailBody = `${PNAME[ME]} סימנ/ה משימה כבוצעה:\n\n${t.schoolName ? 'בית ספר: '+t.schoolName+'\n' : ''}משימה: ${t.title}\n${note ? 'מה נעשה: '+note+'\n' : ''}\nללוח: ${location.origin + location.pathname}`;
+    const subject = `✓ ${PNAME[ME]} סיימ/ה: ${t.schoolName ? t.schoolName+' — ' : ''}${t.title}`;
+    let mailed = false;
+    try {
+      const r = await jsonp({ action:'lakhDone', who:PNAME[ME], subject, body:mailBody });
+      mailed = !!(r && r.mailed);
+    } catch(e){}
+    ov.remove();
+    if (mailed) { toast('נשמר ונשלח למיטל ✓'); return; }
+    // גיבוי — אם השרת עוד לא עודכן: שליחת מייל מהמכשיר
+    const o2 = overlay(`<h3>נשמר בלוח ✓</h3><div class="muted">השליחה האוטומטית עדיין לא פעילה. לחצו כדי לשלוח את העדכון למיטל במייל:</div>
+      <div class="row" style="margin-top:14px"><a class="btn pink" style="text-decoration:none" href="mailto:${MEITAL_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}">✉️ שליחה במייל</a><button class="btn ghost" id="o2c">סגירה</button></div>`);
+    o2.querySelector('#o2c').onclick = () => o2.remove();
+  };
+}
+
+function undoDone(t){
+  const ov = overlay(`<h3>לבטל את הסימון?</h3><div>${esc(t.title)}</div>
+    <div class="row" style="margin-top:14px"><button class="btn pink" id="uYes">כן, להחזיר לפתוחה</button><button class="btn ghost" id="uNo">לא</button></div>`);
+  ov.querySelector('#uNo').onclick = () => ov.remove();
+  ov.querySelector('#uYes').onclick = () => {
+    const rec = Object.assign({}, REC[t.id] || {}, { done:false, doneAt:0, doneBy:'', note:'' });
+    saveRec(t.id, rec); ov.remove(); render();
+  };
+}
+
+function openAdd(){
+  if (!ME){ toast('קודם בוחרים למעלה מי את/ה', true); return; }
+  const opts = SCHOOLS.map(s => `<option value="${s.c}">${esc(s.n)}</option>`).join('');
+  const defOwner = (ME === 'bari' || ME === 'asmaa') ? ME : 'bari';
+  const ov = overlay(`<h3>➕ משימה חדשה</h3>
+    <label for="aOwner">למי</label>
+    <select id="aOwner">${PEOPLE.map(p => `<option value="${p.key}" ${p.key===defOwner?'selected':''}>${p.name}</option>`).join('')}</select>
+    <label for="aTitle">המשימה</label><input type="text" id="aTitle" placeholder="מה צריך לעשות">
+    <label for="aDet">פירוט (לא חובה)</label><textarea id="aDet" placeholder="איך עושים, למי פונים, עד מתי"></textarea>
+    <label for="aSch">בית ספר (לא חובה)</label><select id="aSch"><option value="">— כללי —</option>${opts}</select>
+    <label style="display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="aFocus" style="width:18px;height:18px"> בפוקוס (מופיע גם בסיכום השבועי כדחוף)</label>
+    <div class="row" style="margin-top:14px"><button class="btn pink" id="aSave">הוספה</button><button class="btn ghost" id="aCancel">ביטול</button></div>`);
+  ov.querySelector('#aCancel').onclick = () => ov.remove();
+  ov.querySelector('#aSave').onclick = () => {
+    const title = ov.querySelector('#aTitle').value.trim();
+    if (!title){ toast('חסר תיאור משימה', true); return; }
+    const sc = SCHOOLS.find(s => s.c === ov.querySelector('#aSch').value);
+    const id = 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+    const rec = { id, custom:true, owner:ov.querySelector('#aOwner').value, title, details:ov.querySelector('#aDet').value.trim(),
+      schoolName: sc ? sc.n : '', focus: ov.querySelector('#aFocus').checked, createdBy:ME, createdAt:Date.now(), done:false };
+    saveRec(id, rec); ov.remove(); render(); toast('המשימה נוספה ✓');
+  };
+}
+
+function askSecret(){
+  return new Promise(res => {
+    const ov = overlay(`<div style="font-size:34px;text-align:center">🔒</div><h3 style="text-align:center">סיסמת הלוח</h3>
+      <div class="muted" style="text-align:center">אותה סיסמה של דף הניהול. נשמרת במכשיר הזה בלבד.</div>
+      <input type="password" id="sPw" autocomplete="off" autocapitalize="off" spellcheck="false" style="margin-top:12px;direction:ltr;text-align:left">
+      <div class="row" style="margin-top:14px"><button class="btn pink" id="sOk" style="flex:1">כניסה</button></div>`);
+    const go = () => { const v = ov.querySelector('#sPw').value.trim(); if (!v) return; SECRET = v; LS.set('hopa_api_secret', v); ov.remove(); res(); };
+    ov.querySelector('#sOk').onclick = go;
+    ov.querySelector('#sPw').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+    setTimeout(() => ov.querySelector('#sPw').focus(), 50);
+  });
+}
+
+try { REC = JSON.parse(LS.get('lakh_cache')) || {}; } catch(e){ REC = {}; }
+render();
+load();
+setInterval(() => { if (!document.querySelector('.ov') && !document.hidden) load(); }, 60000);
+</script>
+</body>
+</html>
