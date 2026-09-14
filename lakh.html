@@ -131,7 +131,7 @@
 const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 const MEITAL_EMAIL = 'meytalp@bethaarava.ort.org.il';
 const KEY_PREFIX = 'lakh_t_';
-const DATA_DATE = '9.9.2026';
+const DATA_DATE = '14.9.2026';
 
 /* localStorage עטוף — בדפדפן של וואטסאפ בנייד הגישה עלולה לזרוק */
 const LS = {
@@ -149,14 +149,14 @@ const PNAME = Object.fromEntries(PEOPLE.map(p=>[p.key,p.name]));
 
 /* ---------- בתי הספר (מצב נכון ל-9.9.2026 — מספרים בלבד, בלי פרטי בוגרים) ----------
    alumni = כמה בוגרים יש בהופה סקיור · gaps = מה חסר · waAl = יש קבוצת וואטסאפ בוגרים
-   lostData = הנתון היה בקובץ המקורי ונעלם במערכת — לא לבקש שוב מביה"ס לפני בדיקה עם מיטל */
+   bdayOk = תאריכי הלידה אומתו מלאים (שיח/חושן/נווה מדבר שוחזרו 14.9.2026 מקבצי המקור) */
 const SCHOOLS = [
   // ---- אסמאא: החברה הערבית, הבדואית והדרוזית ----
   { c:'lqy', owner:'asmaa', n:'טכנולוגי לקייה', coord:'ראניה', alumni:0 },
   { c:'jul', owner:'asmaa', n:'יוצר עתיד בנות ג׳וליס', coord:'בהייה', alumni:0 },
   { c:'skh', owner:'asmaa', n:'אלאמאני סח׳נין', coord:'סוזן', alumni:75, gaps:{phone:3} },
   { c:'tur', owner:'asmaa', n:'מנאראת טורעאן', coord:'מוניר', alumni:0, listAtMeital:37 },
-  { c:'nvm', owner:'asmaa', n:'דרור נווה מדבר', coord:'היאם', alumni:20, gaps:{phone:20, year:19} },
+  { c:'nvm', owner:'asmaa', n:'דרור נווה מדבר', coord:'היאם', alumni:20, gaps:{phone:20}, bdayOk:true },
   { c:'bir', owner:'asmaa', n:'עתיד אבדאע ביר אלמכסור', coord:'עלי', alumni:19 },
   { c:'rht', owner:'asmaa', n:'עמל טכנולוגי רהט', coord:'זהור', alumni:0 },
   { c:'hai', owner:'asmaa', n:'אורט כרמל חיפה', coord:'חנין', alumni:0 },
@@ -168,8 +168,8 @@ const SCHOOLS = [
   { c:'krm', owner:'bari', n:'עתיד יוצר מגשימים כרמיאל', coord:'לבנה', alumni:237, gaps:{phone:105} },
   { c:'mot', owner:'bari', n:'עתיד שמיים מוצקין', coord:'אביחי', alumni:141, gaps:{id:3, year:2}, waAl:true },
   { c:'tlv', owner:'bari', n:'התיכון החברתי תל אביב־יפו', coord:'לי', alumni:121, gaps:{phone:5} },
-  { c:'hsh', owner:'bari', n:'תיכון חושן', coord:'ברכי', alumni:109, gaps:{phone:105, year:104}, lostData:true },
-  { c:'sia', owner:'bari', n:'תיכון שיח', coord:'טליה', alumni:80, gaps:{phone:78, year:78}, lostData:true },
+  { c:'hsh', owner:'bari', n:'תיכון חושן', coord:'ברכי', alumni:109, gaps:{phone:6}, bdayOk:true },
+  { c:'sia', owner:'bari', n:'תיכון שיח', coord:'טליה', alumni:80, gaps:{phone:5}, bdayOk:true },
   { c:'bsh', owner:'bari', n:'עתיד יוצר מגשימים בית שאן', coord:'חן', alumni:77, gaps:{id:77, phone:30}, waAl:true },
   { c:'rmd', owner:'bari', n:'עמל רמת דוד', coord:'מוניק', alumni:70 },
   { c:'adt', owner:'bari', n:'יוצר עמל טכנולוגי אשדוד', coord:'ריקי', alumni:66, gaps:{id:7, phone:4} },
@@ -205,11 +205,10 @@ function schoolTasks(s){
   }
   // 2) השלמת פרטים חסרים
   const g = s.gaps || {};
-  const lost = s.lostData ? ' ⚠️ לפני שפונים לביה״ס — לבדוק עם מיטל: ייתכן שהנתון נשלח ונעלם אצלנו.' : '';
-  if (g.phone) t.push({ id:id('phone'), grp:'השלמת פרטים', title:`להשלים ${g.phone} טלפונים חסרים`, details:'את רשימת השמות מקבלים ממיטל.'+lost });
+  if (g.phone) t.push({ id:id('phone'), grp:'השלמת פרטים', title:`להשלים ${g.phone} טלפונים חסרים`, details:'את רשימת השמות מקבלים ממיטל.' });
   if (g.id)    t.push({ id:id('tz'),    grp:'השלמת פרטים', title:`להשלים ${g.id} תעודות זהות חסרות`, details:'הכי מהיר: לבקש מביה״ס דוח אלפון של המחזור ולא מילוי ידני.' });
-  if (g.year)  t.push({ id:id('year'),  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.'+lost });
-  if (s.alumni) t.push({ id:id('bday'), grp:'השלמת פרטים', title:'לבדוק שיש תאריכי לידה — ולהשלים מה שחסר', details:'בודקים בהופה סקיור במסך ניהול בוגרים.' });
+  if (g.year)  t.push({ id:id('year'),  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.' });
+  if (s.alumni && !s.bdayOk) t.push({ id:id('bday'), grp:'השלמת פרטים', title:'לבדוק שיש תאריכי לידה — ולהשלים מה שחסר', details:'בודקים בהופה סקיור במסך ניהול בוגרים.' });
   // 3) קבוצת וואטסאפ + שאלון מיפוי
   if (!s.waAl) t.push({ id:id('wa'), grp:'קבוצת וואטסאפ ומיפוי', title:`להקים קבוצת וואטסאפ לבוגרים יחד ${coord}`, details:'הרכז/ת פותח/ת ומנהל/ת את הקבוצה, הופה מצטרפת. אם צריך עזרה — לסייע בפתיחת הקבוצה, בניסוח ההודעה הראשונה ובהכנסת הבוגרים. אחרי ההקמה — לעדכן את מיטל, והיא ולירון ישלחו את שאלון המיפוי.', focus:true });
   t.push({ id:id('track'), grp:'קבוצת וואטסאפ ומיפוי', focus: !!s.waAl,
