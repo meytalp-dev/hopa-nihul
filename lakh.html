@@ -152,7 +152,7 @@ const PEOPLE = [
 ];
 const PNAME = Object.fromEntries(PEOPLE.map(p=>[p.key,p.name]));
 
-/* ---------- בתי הספר (מצב נכון ל-9.9.2026 — מספרים בלבד, בלי פרטי בוגרים) ----------
+/* ---------- בתי הספר (מספרים מהופה סקיור 14.9.2026 — מספרים בלבד, בלי פרטי בוגרים) ----------
    alumni = כמה בוגרים יש בהופה סקיור · gaps = מה חסר · waAl = יש קבוצת וואטסאפ בוגרים
    bdayOk = תאריכי הלידה אומתו מלאים (שיח/חושן/נווה מדבר שוחזרו 14.9.2026 מקבצי המקור) */
 const SCHOOLS = [
@@ -164,13 +164,13 @@ const SCHOOLS = [
   { c:'nvm', owner:'asmaa', n:'דרור נווה מדבר', coord:'היאם', alumni:20, gaps:{phone:20}, bdayOk:true },
   { c:'bir', owner:'asmaa', n:'עתיד אבדאע ביר אלמכסור', coord:'עלי', alumni:19 },
   { c:'rht', owner:'asmaa', n:'עמל טכנולוגי רהט', coord:'זהור', alumni:0 },
-  { c:'hai', owner:'asmaa', n:'אורט כרמל חיפה', coord:'חנין', alumni:0 },
+  { c:'hai', owner:'asmaa', n:'אורט כרמל חיפה', coord:'חנין', alumni:57 },
   { c:'yrk', owner:'asmaa', n:'ח׳טוואת ירכא אבו סנאן', coord:'רשא', alumni:0 },
   // ---- בארי: שאר בתי הספר ----
-  { c:'bha', owner:'bari', n:'אורט בית הערבה', coord:'יעקב', alumni:438, gaps:{phone:7}, waAl:true },
-  { c:'ako', owner:'bari', n:'אורט מרום עכו', coord:'טוהר', alumni:354, gaps:{phone:2}, waAl:true },
-  { c:'ash', owner:'bari', n:'אורט אדיבי אשקלון', coord:'סיגל', alumni:296, gaps:{id:161}, waAl:true },
-  { c:'krm', owner:'bari', n:'עתיד יוצר מגשימים כרמיאל', coord:'לבנה', alumni:237, gaps:{phone:105} },
+  { c:'bha', owner:'bari', n:'אורט בית הערבה', coord:'יעקב', alumni:438, gaps:{phone:11, year:15}, waAl:true },
+  { c:'ako', owner:'bari', n:'אורט מרום עכו', coord:'טוהר', alumni:354, gaps:{phone:4}, waAl:true },
+  { c:'ash', owner:'bari', n:'אורט אדיבי אשקלון', coord:'סיגל', alumni:296, gaps:{id:243, phone:1}, waAl:true },
+  { c:'krm', owner:'bari', n:'עתיד יוצר מגשימים כרמיאל', coord:'לבנה', alumni:237, gaps:{phone:131} },
   { c:'mot', owner:'bari', n:'עתיד שמיים מוצקין', coord:'אביחי', alumni:141, gaps:{id:3, year:2}, waAl:true },
   { c:'tlv', owner:'bari', n:'התיכון החברתי תל אביב־יפו', coord:'לי', alumni:121, gaps:{phone:5} },
   { c:'hsh', owner:'bari', n:'תיכון חושן', coord:'ברכי', alumni:109, gaps:{phone:6}, bdayOk:true },
@@ -337,7 +337,8 @@ async function load(){
     // שומרים שינויים מקומיים שעוד לא הגיעו לשרת
     Object.keys(REC).forEach(id => { if (REC[id] && REC[id]._pending && (!next[id] || (next[id].updatedAt||0) < REC[id].updatedAt)) next[id] = REC[id]; });
     REC = next; loaded = true;
-    GAPS = (r.store && r.store.lakh_gaps) || null;
+    GAPS = {};
+    Object.keys(r.store || {}).forEach(k => { if (k.indexOf('lakh_gaps_') === 0 && r.store[k]) GAPS[k.slice(10)] = r.store[k]; });
     LS.set('lakh_cache', JSON.stringify(REC));
     setSync('מסונכרן ✓');
     saveCatalog();
@@ -410,15 +411,15 @@ function taskRow(t, opts){
 /* רשימת השמות בתוך משימת השלמת פרטים (שם · מחזור · מגמה, בלי טלפון ות״ז) */
 function gapList(t){
   if (!t.gap) return '';
-  const sc = GAPS && GAPS.schools && GAPS.schools[t.school];
-  const arr = sc && sc[t.gap];
+  const sc = GAPS && GAPS[t.school];
+  const arr = sc && sc.gaps && sc.gaps[t.gap];
   if (!arr || !arr.length) return loaded ? '' : '<div class="meta">רשימת השמות תופיע אחרי החיבור לשרת</div>';
   const got = new Set((REC[t.id] && REC[t.id].got) || []);
   const n = arr.filter(x => got.has(x.k)).length;
   return `<details class="gaps" ${OPEN_GAPS.has(t.id) ? 'open' : ''} data-gaps="${esc(t.id)}"><summary>👥 רשימת השמות (${n}/${arr.length} הושלמו)</summary>
     ${arr.map(x => `<label class="gap ${got.has(x.k)?'ok':''}"><input type="checkbox" data-got="${esc(t.id)}" data-k="${esc(x.k)}" ${got.has(x.k)?'checked':''}>
       <span>${esc(x.n)}</span><span class="muted">${esc([x.y, x.m].filter(Boolean).join(' · '))}</span></label>`).join('')}
-    <div class="meta">נכון ל-${esc(GAPS.date || DATA_DATE)}</div></details>`;
+    <div class="meta">מהופה סקיור, נכון ל-${esc(sc.date || DATA_DATE)}</div></details>`;
 }
 const OPEN_GAPS = new Set();
 document.addEventListener('toggle', e => {
