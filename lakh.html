@@ -162,18 +162,18 @@ const SCHOOLS = [
   { c:'hai', owner:'asmaa', n:'אורט כרמל חיפה', coord:'חנין', alumni:0 },
   { c:'yrk', owner:'asmaa', n:'ח׳טוואת ירכא אבו סנאן', coord:'רשא', alumni:0 },
   // ---- בארי: שאר בתי הספר ----
-  { c:'bha', owner:'bari', n:'אורט בית הערבה', coord:'יעקב', alumni:438, gaps:{phone:7}, waAl:true, form:'fNhxNpBj26us' },
-  { c:'ako', owner:'bari', n:'אורט מרום עכו', coord:'טוהר', alumni:354, gaps:{phone:2}, waAl:true, form:'2oEYozRRNLus' },
-  { c:'ash', owner:'bari', n:'אורט אדיבי אשקלון', coord:'סיגל', alumni:296, gaps:{id:161}, waAl:true, form:'4yqCmdoFBDus' },
+  { c:'bha', owner:'bari', n:'אורט בית הערבה', coord:'יעקב', alumni:438, gaps:{phone:7}, waAl:true },
+  { c:'ako', owner:'bari', n:'אורט מרום עכו', coord:'טוהר', alumni:354, gaps:{phone:2}, waAl:true },
+  { c:'ash', owner:'bari', n:'אורט אדיבי אשקלון', coord:'סיגל', alumni:296, gaps:{id:161}, waAl:true },
   { c:'krm', owner:'bari', n:'עתיד יוצר מגשימים כרמיאל', coord:'לבנה', alumni:237, gaps:{phone:105} },
-  { c:'mot', owner:'bari', n:'עתיד שמיים מוצקין', coord:'אביחי', alumni:141, gaps:{id:3, year:2}, waAl:true, form:'wbcapmr8RZus' },
+  { c:'mot', owner:'bari', n:'עתיד שמיים מוצקין', coord:'אביחי', alumni:141, gaps:{id:3, year:2}, waAl:true },
   { c:'tlv', owner:'bari', n:'התיכון החברתי תל אביב־יפו', coord:'לי', alumni:121, gaps:{phone:5} },
   { c:'hsh', owner:'bari', n:'תיכון חושן', coord:'ברכי', alumni:109, gaps:{phone:105, year:104}, lostData:true },
   { c:'sia', owner:'bari', n:'תיכון שיח', coord:'טליה', alumni:80, gaps:{phone:78, year:78}, lostData:true },
-  { c:'bsh', owner:'bari', n:'עתיד יוצר מגשימים בית שאן', coord:'חן', alumni:77, gaps:{id:77, phone:30}, waAl:true, form:'bBWnRDYD2nus' },
+  { c:'bsh', owner:'bari', n:'עתיד יוצר מגשימים בית שאן', coord:'חן', alumni:77, gaps:{id:77, phone:30}, waAl:true },
   { c:'rmd', owner:'bari', n:'עמל רמת דוד', coord:'מוניק', alumni:70 },
   { c:'adt', owner:'bari', n:'יוצר עמל טכנולוגי אשדוד', coord:'ריקי', alumni:66, gaps:{id:7, phone:4} },
-  { c:'tzb', owner:'bari', n:'אורט צור ברק', coord:'טלי', alumni:50, waAl:true, form:'ki3biGmocKus' },
+  { c:'tzb', owner:'bari', n:'אורט צור ברק', coord:'טלי', alumni:50, waAl:true },
   { c:'plm', owner:'bari', n:'יוצר עתיד פלמחים', coord:'שירן', alumni:0 },
   { c:'nhl', owner:'bari', n:'מרכז תורני טכנולוגי נחלים', coord:'טל', alumni:0 },
   { c:'drg', owner:'bari', n:'דרור גליל', coord:'רינה', alumni:0 },
@@ -186,9 +186,9 @@ const STATIC_TASKS = [
   { id:'st_asmaa_intro', owner:'asmaa', focus:true,
     title:'היכרות: להציג את עצמך בקבוצות הוואטסאפ של הרכזים והמנהלים',
     details:'להסביר בקצרה את התפקיד שלך ואת העבודה של הופה עם הבוגרים.' },
-  { id:'st_asmaa_quest', owner:'asmaa',
-    title:'שאלון הבוגרים: לקבל מלירון את הנוסח והתרגום לערבית ולהתחיל להפיץ',
-    details:'אחרי שהנוסח מגיע, שולחים אותו בקבוצות הבוגרים של בתי הספר (המשימות לפי בית ספר בלשונית 🏫).' }
+  { id:'st_asmaa_quest2', owner:'asmaa',
+    title:'שאלון הבוגרים: לקבל מלירון את הנוסח המתורגם לערבית',
+    details:'את השאלון שולחות מיטל ולירון. הנוסח בערבית נחוץ לך כדי למלא את השאלון בטלפון יחד עם בוגרים שלא ענו.' }
 ];
 
 /* ---------- יצירת המשימות לכל בית ספר ---------- */
@@ -211,10 +211,10 @@ function schoolTasks(s){
   if (g.year)  t.push({ id:id('year'),  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.'+lost });
   if (s.alumni) t.push({ id:id('bday'), grp:'השלמת פרטים', title:'לבדוק שיש תאריכי לידה — ולהשלים מה שחסר', details:'בודקים בהופה סקיור במסך ניהול בוגרים.' });
   // 3) קבוצת וואטסאפ + שאלון מיפוי
-  if (!s.waAl) t.push({ id:id('wa'), grp:'קבוצת וואטסאפ ומיפוי', title:`להקים קבוצת וואטסאפ לבוגרים יחד ${coord}`, details:'הרכז/ת פותח/ת ומנהל/ת את הקבוצה, הופה מצטרפת. אם צריך עזרה — לסייע בפתיחת הקבוצה, בניסוח ההודעה הראשונה ובהכנסת הבוגרים. אחרי ההקמה — לשלוח את שאלון המיפוי בקבוצה.', focus:true });
-  t.push({ id:id('quest'), grp:'קבוצת וואטסאפ ומיפוי', title: s.waAl ? 'לשלוח שאלון מיפוי בקבוצת הבוגרים הקיימת' : 'לשלוח שאלון מיפוי בקבוצה החדשה',
-           details: s.form ? '' : (s.owner === 'asmaa' ? 'השאלון בעברית ובערבית בהכנה אצל לירון — שולחים כשהנוסח מגיע.' : 'את קישור השאלון לבית הספר הזה מקבלים ממיטל.'), link: s.form ? 'https://forms12grade.fillout.com/t/'+s.form : '', focus: !!s.waAl });
-  t.push({ id:id('track'), grp:'קבוצת וואטסאפ ומיפוי', title:'מעקב: מי ענה על השאלון ומי לא — ופנייה אישית למי שלא ענה', details:'אחרי שבוע מהשליחה. בלוח כותבים רק כמה ענו, בלי שמות.' });
+  if (!s.waAl) t.push({ id:id('wa'), grp:'קבוצת וואטסאפ ומיפוי', title:`להקים קבוצת וואטסאפ לבוגרים יחד ${coord}`, details:'הרכז/ת פותח/ת ומנהל/ת את הקבוצה, הופה מצטרפת. אם צריך עזרה — לסייע בפתיחת הקבוצה, בניסוח ההודעה הראשונה ובהכנסת הבוגרים. אחרי ההקמה — לעדכן את מיטל, והיא ולירון ישלחו את שאלון המיפוי.', focus:true });
+  t.push({ id:id('track'), grp:'קבוצת וואטסאפ ומיפוי', focus: !!s.waAl,
+    title:'לוודא שהבוגרים עונים על שאלון המיפוי — ולהתקשר למי שלא ענה',
+    details:'את השאלון שולחות מיטל ולירון (הוא נמצא בדף של בית הספר באתר הופה). התפקיד שלך: לבדוק מי לא ענה, ליצור איתו קשר טלפוני ולמלא את השאלון יחד איתו בשיחה. בסימון כותבים כמה בוגרים מולאו, בלי שמות.' });
   // 4) מיפוי גורמים קהילתיים ברשות (משימה מלירון לאסמאא)
   if (s.owner === 'asmaa') t.push({ id:id('kehila'), grp:'גורמים קהילתיים ברשות', title:'למפות את הגורמים המקומיים שיכולים לסייע',
     details:'הרשות המקומית, מחלקת צעירים, מרכז צעירים, רווחה, עו״ס, תעסוקה, מלגות, עמותות וגורמים קהילתיים נוספים. בסימון כותבים כמה גורמים נמצאו.' });
@@ -363,7 +363,7 @@ function taskRow(t, opts){
 }
 
 /* בפוקוס: קודם איסוף רשימות, אחר כך הקמת קבוצות, ואז שאלוני מיפוי */
-function FOCUS_ORDER(t){ const k = t.id.split('_').pop(); return ({list:0, wa:1, quest:2})[k] ?? 3; }
+function FOCUS_ORDER(t){ const k = t.id.split('_').pop(); return ({list:0, wa:1, track:2})[k] ?? 3; }
 function progress(list){ const d = list.filter(t=>t.done).length; return { d, n:list.length, pct: list.length ? Math.round(d*100/list.length) : 0 }; }
 
 function renderTasks(){
@@ -400,7 +400,7 @@ function renderTasks(){
     const custom = mine.filter(t => !t.school && !t.recurring);
     if (rec.length) html += `<div class="card focus"><h3>🔁 סבב מענים השבוע <span class="muted">(${fmtD(weekStart(new Date()))} והלאה)</span></h3>${rec.map(t=>taskRow(t)).join('')}</div>`;
     const focusSchool = mine.filter(t => t.focus && t.school).sort((a,b) => (a.done - b.done) || (FOCUS_ORDER(a) - FOCUS_ORDER(b)));
-    if (focusSchool.length) html += `<div class="card focus"><h3>🔥 בפוקוס עכשיו: רשימות בוגרים, קבוצות וואטסאפ ושאלוני מיפוי</h3>${focusSchool.map(t=>taskRow(t,{showSchool:true})).join('')}
+    if (focusSchool.length) html += `<div class="card focus"><h3>🔥 בפוקוס עכשיו: רשימות בוגרים, קבוצות וואטסאפ ומעקב אחרי מי שלא ענה על השאלון</h3>${focusSchool.map(t=>taskRow(t,{showSchool:true})).join('')}
       <div class="muted" style="margin-top:6px">כל שאר המשימות לפי בית ספר (השלמת טלפונים, ת״ז ותאריכי לידה) נמצאות בלשונית 🏫 בתי הספר.</div></div>`;
     if (custom.length) html += `<div class="card"><h3>📌 משימות נוספות</h3>${custom.map(t=>taskRow(t,{showSchool:true})).join('')}</div>`;
   });
