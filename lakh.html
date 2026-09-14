@@ -413,10 +413,10 @@ function gapList(t){
   if (!t.gap) return '';
   const sc = GAPS && GAPS[t.school];
   const arr = sc && sc.gaps && sc.gaps[t.gap];
-  if (!arr || !arr.length) return loaded ? '' : '<div class="meta">רשימת השמות תופיע אחרי החיבור לשרת</div>';
+  if (!arr || !arr.length) return loaded ? '<div class="meta">⚠️ רשימת השמות עוד לא הועלתה ללוח (מיטל מעלה אותה)</div>' : '<div class="meta">רשימת השמות תופיע אחרי החיבור לשרת</div>';
   const got = new Set((REC[t.id] && REC[t.id].got) || []);
   const n = arr.filter(x => got.has(x.k)).length;
-  return `<details class="gaps" ${OPEN_GAPS.has(t.id) ? 'open' : ''} data-gaps="${esc(t.id)}"><summary>👥 רשימת השמות (${n}/${arr.length} הושלמו)</summary>
+  return `<details class="gaps" ${OPEN_GAPS.has(t.id) ? 'open' : ''} data-gaps="${esc(t.id)}"><summary>👥 למי חסר — ${arr.length - n} נשארו (${n}/${arr.length} הושלמו)</summary>
     ${arr.map(x => `<label class="gap ${got.has(x.k)?'ok':''}"><input type="checkbox" data-got="${esc(t.id)}" data-k="${esc(x.k)}" ${got.has(x.k)?'checked':''}>
       <span>${esc(x.n)}</span><span class="muted">${esc([x.y, x.m].filter(Boolean).join(' · '))}</span></label>`).join('')}
     <div class="meta">מהופה סקיור, נכון ל-${esc(sc.date || DATA_DATE)}</div></details>`;
