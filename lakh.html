@@ -180,6 +180,28 @@ const SCHOOLS = [
   { c:'mzr', owner:'bari', n:'התיכון החברתי מצפה רמון', coord:'', alumni:0 }
 ];
 
+/* היקף משרה ושבוע עבודה מומלץ (משרה מלאה = 42 ש׳ בשבוע). הצעה — מיטל יכולה לשנות כאן */
+const WORKLOAD = {
+  bari: { pct:'חצי משרה', hours:21, perDay:'כ-4 שעות ביום', plan:[
+    { h:3, t:'סבב מענים ×2', d:'1.5 שעות בכל סבב (ראשון–שלישי, רביעי–חמישי)' },
+    { h:6, t:'מעקב אחרי השאלון + שיחות טלפון', d:'בתי הספר עם קבוצת בוגרים: לבדוק מי לא ענה, להתקשר ולמלא יחד' },
+    { h:5, t:'רשימות בוגרים וקבוצות וואטסאפ', d:'פנייה אישית ל-4 בתי הספר בלי בוגרים + ליווי רכזים בהקמת קבוצות' },
+    { h:5, t:'השלמת פרטים חסרים', d:'קודם אשקלון (ת״ז) וכרמיאל (טלפונים) — שם החוסרים הכי גדולים' },
+    { h:2, t:'עדכון הלוח ותיאום עם מיטל', d:'לסמן משימות, לכתוב מה נעשה, שאלות למיטל' }
+  ]},
+  asmaa: { pct:'שליש משרה', hours:14, perDay:'כ-3 שעות ביום', plan:[
+    { h:2, t:'סבב מענים ×2', d:'שעה בכל סבב — עם דגש על מענים בערבית ובמגזר' },
+    { h:4, t:'רשימות בוגרים', d:'פנייה אישית לרכזים ב-5 בתי הספר בלי בוגרים (טורעאן כבר אצל מיטל)' },
+    { h:3, t:'קבוצות וואטסאפ לבוגרים', d:'לעזור לרכזים לפתוח, לנסח הודעה ראשונה ולהכניס בוגרים' },
+    { h:3, t:'מיפוי גורמים קהילתיים', d:'בית ספר אחד או שניים בכל שבוע' },
+    { h:2, t:'מעקב שאלון, השלמת פרטים ועדכון הלוח', d:'כולל 20 הטלפונים החסרים בנווה מדבר' }
+  ]}
+};
+const PRIORITY = {
+  bari:  ['סבב המענים — לא מדלגים עליו', 'רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'שיחות טלפון לבוגרים שלא ענו על השאלון', 'קבוצות וואטסאפ', 'השלמת פרטים חסרים'],
+  asmaa: ['שבוע ראשון: היכרות בקבוצות הרכזים והמנהלים', 'סבב המענים — לא מדלגים עליו', 'רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'קבוצות וואטסאפ', 'מיפוי גורמים קהילתיים', 'מעקב שאלון והשלמת פרטים']
+};
+
 /* משימות קבועות (לא לפי בית ספר). owner: bari/asmaa/meital/liron. להוסיף כאן = מופיע לכולם */
 const STATIC_TASKS = [
   // ---- משימות שלירון כתבה לאסמאא (14.9.2026) ----
@@ -365,6 +387,18 @@ function taskRow(t, opts){
 function FOCUS_ORDER(t){ const k = t.id.split('_').pop(); return ({list:0, wa:1, track:2})[k] ?? 3; }
 function progress(list){ const d = list.filter(t=>t.done).length; return { d, n:list.length, pct: list.length ? Math.round(d*100/list.length) : 0 }; }
 
+function workloadCard(o){
+  const w = WORKLOAD[o], total = w.plan.reduce((s,x) => s + x.h, 0);
+  return `<details class="card" open><summary style="cursor:pointer;font-weight:700;font-size:16px">⏱️ שבוע העבודה של ${PNAME[o]}: ${w.pct} · ${w.hours} שעות בשבוע <span class="muted">(${w.perDay})</span></summary>
+    <div style="margin-top:10px">${w.plan.map(x => `<div style="margin:8px 0">
+      <div class="row" style="justify-content:space-between"><b>${esc(x.t)}</b><span class="tag y">${x.h} ש׳</span></div>
+      <div class="bar" style="margin:4px 0"><i style="width:${Math.round(x.h*100/total)}%;background:var(--pink)"></i></div>
+      <div class="muted">${esc(x.d)}</div></div>`).join('')}</div>
+    <div class="grp" style="margin-top:12px">סדר עדיפויות — כשאין זמן לכל מה שבשבוע</div>
+    <ol style="margin:4px 0 0;padding-inline-start:20px">${PRIORITY[o].map(p => `<li>${esc(p)}</li>`).join('')}</ol>
+  </details>`;
+}
+
 function renderTasks(){
   const el = document.getElementById('tab-tasks');
   const tasks = allTasks();
@@ -394,7 +428,7 @@ function renderTasks(){
     html += `<div class="person-h"><div class="av">${PNAME[o][0]}</div><h2>${PNAME[o]}</h2>
       <div class="bar" title="בתי ספר"><i style="width:${prS.pct}%"></i></div><span class="muted">${prS.d}/${prS.n} בבתי הספר</span></div>`;
 
-    const focus = mine.filter(t => t.focus && !t.done);
+    if (WORKLOAD[o]) html += workloadCard(o);
     const rec = mine.filter(t => t.recurring);
     const custom = mine.filter(t => !t.school && !t.recurring);
     if (rec.length) html += `<div class="card focus"><h3>🔁 סבב מענים השבוע <span class="muted">(${fmtD(weekStart(new Date()))} והלאה)</span></h3>${rec.map(t=>taskRow(t)).join('')}</div>`;
