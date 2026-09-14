@@ -75,6 +75,11 @@
   .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
   .btn.ok{background:var(--ok);color:#fff}
   .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  details.gaps{margin-top:8px;background:#fff7fb;border:1px solid #f3d3e4;border-radius:10px;padding:6px 10px}
+  details.gaps summary{cursor:pointer;font-weight:600;font-size:14px;padding:4px 0}
+  label.gap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 0;border-top:1px solid #f6e3ee;font-size:14px;cursor:pointer}
+  label.gap input{width:20px;height:20px;flex:none}
+  label.gap.ok span:first-of-type{text-decoration:line-through;opacity:.6}
   .ov{position:fixed;inset:0;background:rgba(20,10,20,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
   .dlg{background:#fff;border-radius:20px;padding:20px;max-width:440px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.35);max-height:92vh;overflow:auto}
   .dlg h3{margin:0 0 8px;font-size:18px}
@@ -183,23 +188,21 @@ const SCHOOLS = [
 /* היקף משרה ושבוע עבודה מומלץ (משרה מלאה = 42 ש׳ בשבוע). הצעה — מיטל יכולה לשנות כאן */
 const WORKLOAD = {
   bari: { pct:'חצי משרה', hours:21, perDay:'כ-4 שעות ביום', plan:[
-    { h:3, t:'סבב מענים ×2', d:'1.5 שעות בכל סבב (ראשון–שלישי, רביעי–חמישי)' },
-    { h:6, t:'מעקב אחרי השאלון + שיחות טלפון', d:'בתי הספר עם קבוצת בוגרים: לבדוק מי לא ענה, להתקשר ולמלא יחד' },
-    { h:5, t:'רשימות בוגרים וקבוצות וואטסאפ', d:'פנייה אישית ל-4 בתי הספר בלי בוגרים + ליווי רכזים בהקמת קבוצות' },
-    { h:5, t:'השלמת פרטים חסרים', d:'קודם אשקלון (ת״ז) וכרמיאל (טלפונים) — שם החוסרים הכי גדולים' },
+    { h:7, t:'מעקב אחרי השאלון + שיחות טלפון', d:'בתי הספר עם קבוצת בוגרים: לבדוק מי לא ענה, להתקשר ולמלא יחד' },
+    { h:6, t:'רשימות בוגרים וקבוצות וואטסאפ', d:'פנייה אישית ל-4 בתי הספר בלי בוגרים + ליווי רכזים בהקמת קבוצות' },
+    { h:6, t:'השלמת פרטים חסרים', d:'קודם אשקלון (ת״ז) וכרמיאל (טלפונים) — שם החוסרים הכי גדולים' },
     { h:2, t:'עדכון הלוח ותיאום עם מיטל', d:'לסמן משימות, לכתוב מה נעשה, שאלות למיטל' }
   ]},
   asmaa: { pct:'שליש משרה', hours:14, perDay:'כ-3 שעות ביום', plan:[
-    { h:2, t:'סבב מענים ×2', d:'שעה בכל סבב — עם דגש על מענים בערבית ובמגזר' },
-    { h:4, t:'רשימות בוגרים', d:'פנייה אישית לרכזים ב-5 בתי הספר בלי בוגרים (טורעאן כבר אצל מיטל)' },
+    { h:5, t:'רשימות בוגרים', d:'פנייה אישית לרכזים ב-5 בתי הספר בלי בוגרים (טורעאן כבר אצל מיטל)' },
     { h:3, t:'קבוצות וואטסאפ לבוגרים', d:'לעזור לרכזים לפתוח, לנסח הודעה ראשונה ולהכניס בוגרים' },
-    { h:3, t:'מיפוי גורמים קהילתיים', d:'בית ספר אחד או שניים בכל שבוע' },
+    { h:4, t:'מיפוי גורמים קהילתיים', d:'בית ספר אחד או שניים בכל שבוע' },
     { h:2, t:'מעקב שאלון, השלמת פרטים ועדכון הלוח', d:'כולל 20 הטלפונים החסרים בנווה מדבר' }
   ]}
 };
 const PRIORITY = {
-  bari:  ['סבב המענים — לא מדלגים עליו', 'רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'שיחות טלפון לבוגרים שלא ענו על השאלון', 'קבוצות וואטסאפ', 'השלמת פרטים חסרים'],
-  asmaa: ['שבוע ראשון: היכרות בקבוצות הרכזים והמנהלים', 'סבב המענים — לא מדלגים עליו', 'רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'קבוצות וואטסאפ', 'מיפוי גורמים קהילתיים', 'מעקב שאלון והשלמת פרטים']
+  bari:  ['רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'שיחות טלפון לבוגרים שלא ענו על השאלון', 'קבוצות וואטסאפ', 'השלמת פרטים חסרים'],
+  asmaa: ['שבוע ראשון: היכרות בקבוצות הרכזים והמנהלים', 'רשימות בוגרים מבתי הספר שאין בהם בוגרים', 'קבוצות וואטסאפ', 'מיפוי גורמים קהילתיים', 'מעקב שאלון והשלמת פרטים']
 };
 
 /* משימות קבועות (לא לפי בית ספר). owner: bari/asmaa/meital/liron. להוסיף כאן = מופיע לכולם */
@@ -227,9 +230,10 @@ function schoolTasks(s){
   }
   // 2) השלמת פרטים חסרים
   const g = s.gaps || {};
-  if (g.phone) t.push({ id:id('phone'), grp:'השלמת פרטים', title:`להשלים ${g.phone} טלפונים חסרים`, details:'את רשימת השמות מקבלים ממיטל.' });
-  if (g.id)    t.push({ id:id('tz'),    grp:'השלמת פרטים', title:`להשלים ${g.id} תעודות זהות חסרות`, details:'הכי מהיר: לבקש מביה״ס דוח אלפון של המחזור ולא מילוי ידני.' });
-  if (g.year)  t.push({ id:id('year'),  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.' });
+  const GAPTIP = ' מסמנים ✓ ליד כל שם שהושלם. את הפרטים עצמם שולחים למיטל בהודעה פרטית — לא כותבים אותם בלוח.';
+  if (g.phone) t.push({ id:id('phone'), gap:'phone', grp:'השלמת פרטים', title:`להשלים ${g.phone} טלפונים חסרים`, details:'מבקשים מהרכז/ת את הטלפונים של הבוגרים ברשימה.'+GAPTIP });
+  if (g.id)    t.push({ id:id('tz'),    gap:'id',    grp:'השלמת פרטים', title:`להשלים ${g.id} תעודות זהות חסרות`, details:'הכי מהיר: לבקש מביה״ס דוח אלפון של המחזור ולא מילוי ידני.'+GAPTIP });
+  if (g.year)  t.push({ id:id('year'),  gap:'year',  grp:'השלמת פרטים', title:`להשלים שנת סיום ל-${g.year} בוגרים`, details:'בפורמט עברי: תשפ״ד / תשפ״ה / תשפ״ו.'+GAPTIP });
   if (s.alumni && !s.bdayOk) t.push({ id:id('bday'), grp:'השלמת פרטים', title:'לבדוק שיש תאריכי לידה — ולהשלים מה שחסר', details:'בודקים בהופה סקיור במסך ניהול בוגרים.' });
   // 3) קבוצת וואטסאפ + שאלון מיפוי
   if (!s.waAl) t.push({ id:id('wa'), grp:'קבוצת וואטסאפ ומיפוי', title:`להקים קבוצת וואטסאפ לבוגרים יחד ${coord}`, details:'הרכז/ת פותח/ת ומנהל/ת את הקבוצה, הופה מצטרפת. אם צריך עזרה — לסייע בפתיחת הקבוצה, בניסוח ההודעה הראשונה ובהכנסת הבוגרים. אחרי ההקמה — לעדכן את מיטל, והיא ולירון ישלחו את שאלון המיפוי.', focus:true });
@@ -247,8 +251,10 @@ function weekStart(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.g
 function wkey(d){ const x = weekStart(d); return x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0'); }
 function fmtD(d){ return d.getDate()+'.'+(d.getMonth()+1); }
 
-/* סבב מענים — פעמיים בשבוע, לבארי ולאסמאא */
+/* סבב מענים — פעמיים בשבוע, לבארי ולאסמאא. כבוי כרגע (מיטל, 14.9.2026) — להחזיר: MANIM_ROUNDS = true */
+const MANIM_ROUNDS = false;
 function recurringTasks(refDate){
+  if (!MANIM_ROUNDS) return [];
   const k = wkey(refDate), out = [];
   ['bari','asmaa'].forEach(o => {
     out.push({ id:`r_${o}_${k}_1`, owner:o, week:k, grp:'סבב מענים', recurring:true, focus:true,
@@ -265,7 +271,8 @@ function recurringTasks(refDate){
 let SECRET = LS.get('hopa_api_secret') || '';
 let ME = LS.get('lakh_me') || '';
 let TAB = LS.get('lakh_tab') || 'tasks';
-let REC = {};          // id -> רשומה שמורה {done,doneAt,doneBy,note,...}
+let REC = {};          // id -> רשומה שמורה {done,doneAt,doneBy,note,got:[...],...}
+let GAPS = null;       // רשימות השמות של החוסרים — נטען מהגיליון רק אחרי סיסמה, לא נשמר במכשיר
 let loaded = false;
 
 (function readHashKey(){
@@ -284,12 +291,12 @@ function allTasks(refDate){
 function stateOf(id){ const r = REC[id] || {}; return { done:!!r.done, doneAt:r.doneAt||0, doneBy:r.doneBy||'', note:r.note||'' }; }
 
 /* ---------- תקשורת ---------- */
-function jsonp(params){
+function jsonp(params, ms){
   return new Promise((res, rej) => {
     const cb = 'lk_' + Math.random().toString(36).slice(2);
     const s = document.createElement('script');
     const q = new URLSearchParams(Object.assign({}, params, { secret:SECRET, callback:cb }));
-    const timer = setTimeout(() => { cleanup(); rej(new Error('timeout')); }, 25000);
+    const timer = setTimeout(() => { cleanup(); rej(new Error('timeout')); }, ms || 45000);
     function cleanup(){ clearTimeout(timer); try{ delete window[cb]; }catch(e){} s.remove(); }
     window[cb] = d => { cleanup(); res(d); };
     s.onerror = () => { cleanup(); rej(new Error('net')); };
@@ -301,29 +308,45 @@ function postWrite(params){
   const body = new URLSearchParams(Object.assign({}, params, { secret:SECRET })).toString();
   return fetch(EXEC_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body });
 }
-function setSync(txt, bad){ const el = document.getElementById('sync'); el.textContent = txt; el.className = 'sync' + (bad ? ' err' : ''); }
+function setSync(txt, bad){
+  const el = document.getElementById('sync'); el.textContent = txt; el.className = 'sync' + (bad ? ' err' : '');
+  el.style.cursor = bad ? 'pointer' : ''; el.onclick = bad ? () => { if (!loading) load(); } : null;
+}
 
+/* טעינה עם ניסיון חוזר: בנייד (במיוחד בדפדפן של וואטסאפ) הבקשה הראשונה לגוגל נתקעת לפעמים */
+let loading = false;
 async function load(){
-  if (!SECRET){ await askSecret(); }
-  setSync('טוען…');
+  if (loading) return;
+  loading = true;
   try {
-    let r = await jsonp({ action:'storeAll' });
-    if (r && r.ok === false && /unauth/i.test(r.error||'')){
-      SECRET = ''; toast('הסיסמה לא נכונה — נסו שוב', true);
-      await askSecret(); r = await jsonp({ action:'storeAll' });
+    if (!SECRET){ await askSecret(); }
+    let r = null, lastErr = null;
+    for (let attempt = 1; attempt <= 3; attempt++){
+      setSync(attempt === 1 ? 'טוען…' : `טוען… (ניסיון ${attempt})`);
+      try { r = await jsonp({ action:'storeAll', t:Date.now() }); lastErr = null; }
+      catch(e){ lastErr = e; continue; }
+      if (r && r.ok === false && /unauth/i.test(r.error||'')){
+        SECRET = ''; LS.set('hopa_api_secret', '');
+        await askSecret('הסיסמה לא נכונה — נסו שוב'); attempt = 0; continue;
+      }
+      break;
     }
-    if (!r || !r.ok) throw new Error('bad');
+    if (lastErr || !r || !r.ok) throw (lastErr || new Error(r && r.error || 'bad'));
     const next = {};
     Object.keys(r.store || {}).forEach(k => { if (k.indexOf(KEY_PREFIX) === 0 && r.store[k]) next[k.slice(KEY_PREFIX.length)] = r.store[k]; });
     // שומרים שינויים מקומיים שעוד לא הגיעו לשרת
     Object.keys(REC).forEach(id => { if (REC[id] && REC[id]._pending && (!next[id] || (next[id].updatedAt||0) < REC[id].updatedAt)) next[id] = REC[id]; });
     REC = next; loaded = true;
+    GAPS = (r.store && r.store.lakh_gaps) || null;
     LS.set('lakh_cache', JSON.stringify(REC));
     setSync('מסונכרן ✓');
     saveCatalog();
   } catch(e){
-    try { REC = JSON.parse(LS.get('lakh_cache')) || {}; } catch(_){ REC = {}; }
-    setSync('אין חיבור — מוצג עותק שמור', true);
+    if (!loaded){ try { REC = JSON.parse(LS.get('lakh_cache')) || {}; } catch(_){ REC = {}; } }
+    const why = (e && e.message === 'timeout') ? 'השרת לא ענה בזמן' : (e && e.message === 'net') ? 'אין אינטרנט או שהחיבור נחסם' : 'תקלה בשרת';
+    setSync(`${why} · לחצו כאן לנסות שוב`, true);
+  } finally {
+    loading = false;
   }
   render();
 }
@@ -379,9 +402,29 @@ function taskRow(t, opts){
       ${t.details ? `<div class="dd">${esc(t.details)}${link}</div>` : (link ? `<div class="dd">${link.slice(3)}</div>` : '')}
       ${t.done ? `<div class="meta">✓ ${esc(PNAME[t.doneBy]||t.doneBy||'')} · ${when(t.doneAt)}</div>` : ''}
       ${t.done && t.note ? `<div class="note">${esc(t.note)}</div>` : ''}
+      ${gapList(t)}
     </div>${custom}
   </div>`;
 }
+
+/* רשימת השמות בתוך משימת השלמת פרטים (שם · מחזור · מגמה, בלי טלפון ות״ז) */
+function gapList(t){
+  if (!t.gap) return '';
+  const sc = GAPS && GAPS.schools && GAPS.schools[t.school];
+  const arr = sc && sc[t.gap];
+  if (!arr || !arr.length) return loaded ? '' : '<div class="meta">רשימת השמות תופיע אחרי החיבור לשרת</div>';
+  const got = new Set((REC[t.id] && REC[t.id].got) || []);
+  const n = arr.filter(x => got.has(x.k)).length;
+  return `<details class="gaps" ${OPEN_GAPS.has(t.id) ? 'open' : ''} data-gaps="${esc(t.id)}"><summary>👥 רשימת השמות (${n}/${arr.length} הושלמו)</summary>
+    ${arr.map(x => `<label class="gap ${got.has(x.k)?'ok':''}"><input type="checkbox" data-got="${esc(t.id)}" data-k="${esc(x.k)}" ${got.has(x.k)?'checked':''}>
+      <span>${esc(x.n)}</span><span class="muted">${esc([x.y, x.m].filter(Boolean).join(' · '))}</span></label>`).join('')}
+    <div class="meta">נכון ל-${esc(GAPS.date || DATA_DATE)}</div></details>`;
+}
+const OPEN_GAPS = new Set();
+document.addEventListener('toggle', e => {
+  const id = e.target.dataset && e.target.dataset.gaps; if (!id) return;
+  if (e.target.open) OPEN_GAPS.add(id); else OPEN_GAPS.delete(id);
+}, true);
 
 /* בפוקוס: קודם איסוף רשימות, אחר כך הקמת קבוצות, ואז שאלוני מיפוי */
 function FOCUS_ORDER(t){ const k = t.id.split('_').pop(); return ({list:0, wa:1, track:2})[k] ?? 3; }
@@ -410,11 +453,11 @@ function renderTasks(){
       <li>בוחרים למעלה את השם שלך (פעם אחת בכל מכשיר).</li>
       <li>סיימת משימה? מסמנים ✓, כותבים משפט קצר מה נעשה ולוחצים <b>שליחה</b>. המשימה נמחקת בקו והעדכון מגיע למיטל במייל.</li>
       <li><b>רשימות בוגרים מבקשים רק בפנייה אישית לרכז/ת</b>, לא בקבוצת הרכזים.</li>
-      <li>סבב מענים <b>פעמיים בשבוע</b>. בכל יום ראשון יש סיכום של מה נעשה בשבוע שעבר ומה עוד פתוח.</li>
+      <li>בכל יום ראשון יש סיכום של מה נעשה בשבוע שעבר ומה עוד פתוח.</li>
       <li>בלוח לא כותבים שמות, טלפונים או ת״ז של בוגרים. קבצים שולחים ישירות למיטל.</li>
     </ol>
     <div class="row" style="margin-top:10px"><button class="btn pink" id="addBtn">➕ הוספת משימה</button>
-    <a class="btn ghost" href="kvutzot.html" target="_blank" rel="noopener" style="text-decoration:none">💬 קבוצות המענים</a></div>
+</div>
   </div>`;
 
   viewers.forEach(o => {
@@ -543,6 +586,16 @@ document.getElementById('tabs').addEventListener('click', e => {
 
 /* סימון / ביטול / מחיקה */
 document.addEventListener('change', e => {
+  const gid = e.target.dataset && e.target.dataset.got;
+  if (gid){
+    if (!ME){ e.target.checked = !e.target.checked; toast('קודם בוחרים למעלה מי את/ה', true); window.scrollTo({top:0,behavior:'smooth'}); return; }
+    const rec = Object.assign({}, REC[gid] || {});
+    const got = new Set(rec.got || []);
+    if (e.target.checked) got.add(e.target.dataset.k); else got.delete(e.target.dataset.k);
+    rec.got = [...got];
+    saveRec(gid, rec); render();
+    return;
+  }
   const id = e.target.dataset && e.target.dataset.chk; if (!id) return;
   e.target.checked = !e.target.checked;   // מחכים לאישור בחלון
   if (!ME){ toast('קודם בוחרים למעלה מי את/ה', true); window.scrollTo({top:0,behavior:'smooth'}); return; }
@@ -628,9 +681,9 @@ function openAdd(){
   };
 }
 
-function askSecret(){
+function askSecret(msg){
   return new Promise(res => {
-    const ov = overlay(`<div style="font-size:34px;text-align:center">🔒</div><h3 style="text-align:center">סיסמת הלוח</h3>
+    const ov = overlay(`<div style="font-size:34px;text-align:center">🔒</div><h3 style="text-align:center">סיסמת הלוח</h3>${msg ? `<div style="text-align:center;color:#c0392b;font-weight:600;margin-bottom:6px">${esc(msg)}</div>` : ''}
       <div class="muted" style="text-align:center">אותה סיסמה של דף הניהול. נשמרת במכשיר הזה בלבד.</div>
       <input type="password" id="sPw" autocomplete="off" autocapitalize="off" spellcheck="false" style="margin-top:12px;direction:ltr;text-align:left">
       <div class="row" style="margin-top:14px"><button class="btn pink" id="sOk" style="flex:1">כניסה</button></div>`);
@@ -644,6 +697,7 @@ function askSecret(){
 try { REC = JSON.parse(LS.get('lakh_cache')) || {}; } catch(e){ REC = {}; }
 render();
 load();
+document.addEventListener('visibilitychange', () => { if (!document.hidden && !document.querySelector('.ov')) load(); });
 setInterval(() => { if (!document.querySelector('.ov') && !document.hidden) load(); }, 60000);
 </script>
 </body>
