@@ -76,6 +76,14 @@
   .tag.gray{background:var(--bg);color:var(--muted)}
   .tag.yel{background:var(--yellow-soft);color:#7a6a00}
   .tag.ok{background:var(--ok-soft);color:#137a4a}
+  .tag.pink{background:var(--pink-soft);color:var(--pink-dark)}
+  .tag.blue{background:#e8f0fe;color:#2856b8}
+  .stu.reach{border-right-color:#7aa2f7;background:#fafcff}
+  .stu .note{display:block;font-size:13px;color:#5a5a66;background:var(--bg);border-radius:10px;padding:5px 10px;margin-top:6px}
+  .stu .note.urgent{background:#fdecec;color:#a33}
+  .btn.ok{background:var(--ok);color:#fff}
+  .sec{margin:18px 4px 0;font-size:15px;font-weight:700;color:var(--ink)}
+  .sec small{font-weight:400;color:var(--muted);font-size:13px}
   .acts{display:flex;gap:6px;align-items:center}
   .empty{text-align:center;color:var(--muted);padding:26px 10px}
   .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
@@ -92,7 +100,7 @@
   <div class="hero-in">
     <div>
       <h1>שליחת שאלון "דרך דוד" לתלמידים</h1>
-      <p>מי שאישר/ה השתתפות → הודעה אישית בוואטסאפ עם הקישור לשאלון</p>
+      <p>מי שאישר/ה או אמר/ה שרוצה → הודעה אישית בוואטסאפ עם הקישור לשאלון · מי שבארי עוד לא תפס → לנסות שוב</p>
     </div>
     <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
   </div>
@@ -109,7 +117,7 @@ let SHEET_URL = '';                                    // הגיליון למד�
 const FORM_URL = 'https://meytalp-dev.github.io/hopa-nihul/derech-david.html';
 const ADMIN_URL = FORM_URL + '?admin=hopa';
 const PIN = 'hopa';                                     // נזכר במכשיר אחרי פעם אחת
-const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
+const SCHOOLS = ['אולפנת עתיד בת עמי','אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו','טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים','עמל טכנולוגי רהט','עמל נצרת','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים','עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן','תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס','תיכון יוצר עתיד פלמחים','תיכון שיח'];
 const DEFAULT_MSG = `היי {שם} 👋 זו {רכז} מהופה.
 שמחים שאישרת להשתתף בתוכנית "דרך דוד" 💛
 כדי שנוכל להעביר את הפנייה שלך למדור, צריך למלא שאלון קצר — פחות מ-3 דקות, ישר מהטלפון:
@@ -143,7 +151,7 @@ async function sendDirect(s){
   s.sentAt = new Date().toISOString(); s.sentVia = 'direct';
 }
 async function sendAllDirect(){
-  const list = DATA.students.filter(s=>statusOf(s)==='new');
+  const list = DATA.students.filter(s=>canSend(s) && statusOf(s)==='new');
   if(!list.length){ toast('אין למי לשלוח — כולם קיבלו'); return; }
   if(!confirm(`לשלוח עכשיו ${list.length} הודעות אישיות מהוואטסאפ המחובר?\n\nההודעה תצא בשם: ${DATA.rakez||'הצוות'}`)) return;
   WA.busy=true; WA.stop=false; let ok=0, fail=[];
@@ -170,15 +178,25 @@ const digits = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
 const waNum = p => '972' + digits(p).replace(/^0/,'');
 const fmtDate = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'}) + ' ' + d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
 
-function jsonp(params){
+/* גוגל מחזיר לפעמים דף שגיאה במקום תשובה — ה-callback לא נקרא לעולם. לכן: זמן קצוב + ניסיון חוזר. */
+function jsonpOnce(params, tmo){
   return new Promise((res,rej)=>{
     const cb='cb'+Math.random().toString(36).slice(2);
-    window[cb]=d=>{delete window[cb]; s.remove(); res(d);};
     const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
     s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
-    s.onerror=()=>{delete window[cb]; s.remove(); rej(new Error('network'));};
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
     document.head.appendChild(s);
   });
+}
+async function jsonp(params){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await jsonpOnce(params, 25000); }
+    catch(e){ err=e; const h=document.querySelector('#app .hint'); if(h && i<4) h.textContent=`גוגל מתעכב — מנסה שוב (${i+1}/4)…`; }
+  }
+  throw err;
 }
 let saveT;
 function save(silent){
@@ -220,17 +238,22 @@ function msgFor(s){
 function waHref(s){ return 'https://wa.me/' + waNum(s.phone) + '?text=' + encodeURIComponent(msgFor(s)); }
 
 /* ===================== רינדור ===================== */
+/* stage: '' = אישר/ה בטופס ההסכמה · 'wants' = אמר/ה לבארי שרוצה (טרם אישר/ה בטופס) · 'reach' = בארי עוד לא תפס — לא שולחים קישור */
+const canSend = s => s.stage !== 'reach';
 function statusOf(s){
   if (SUBMITTED[digits(s.phone)]) return 'done';
+  if (s.stage === 'reach') return 'reach';
   if (s.sentAt) return 'sent';
   return 'new';
 }
 function render(){
   const list = DATA.students;
-  const counts = { all:list.length, new:0, sent:0, done:0 };
+  const counts = { all:list.length, new:0, sent:0, done:0, reach:0 };
   list.forEach(s=>counts[statusOf(s)]++);
-  const shown = list.filter(s => (filter==='all' || statusOf(s)===filter) && (!query || (s.name+' '+s.phone+' '+(s.school||'')).includes(query)));
-  const nextNew = list.find(s=>statusOf(s)==='new');
+  const match = s => (filter==='all' || statusOf(s)===filter) && (!query || (s.name+' '+s.phone+' '+(s.school||'')+' '+(s.note||'')).includes(query));
+  const shownSend = list.filter(s => canSend(s) && match(s));
+  const shownReach = list.filter(s => !canSend(s) && match(s));
+  const nextNew = list.find(s=>canSend(s) && statusOf(s)==='new');
 
   app.innerHTML = `
   <div class="card">
@@ -268,6 +291,7 @@ function render(){
     <button class="st ${filter==='new'?'on':''}" data-f="new"><b>${counts.new}</b>עוד לא נשלח</button>
     <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${counts.sent}</b>נשלח, מחכים למילוי</button>
     <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${counts.done}</b>✓ מילאו את השאלון</button>
+    <button class="st ${filter==='reach'?'on':''}" data-f="reach"><b>${counts.reach}</b>📞 בארי עוד לא תפס</button>
   </div>
   <div class="card direct ${WA.url?'on':''}">
     <h2>⚡ שליחה ישירה <small>${WA.url ? 'מחובר לוואטסאפ של הופה — בלי לפתוח חלון לכל אחד' : 'שליחה אוטומטית מהוואטסאפ המחובר, בלי לפתוח חלון לכל תלמיד'}</small></h2>
@@ -291,9 +315,12 @@ function render(){
     <a class="btn outline" href="${SHEET_URL || ADMIN_URL}" target="_blank" rel="noopener" title="הגיליון שנשלח לרכזת התוכנית — רק מי שאישר/ה ומילא/ה">📊 הגיליון למדור בצה"ל</a>
   </div>
 
+  ${filter!=='reach' ? `<div class="sec">📨 לשליחת השאלון <small>אישרו או אמרו לבארי שרוצים</small></div>
   <div class="list">
-    ${shown.length ? shown.map(rowHtml).join('') : `<div class="card empty">${list.length ? 'אין תלמידים בסינון הזה' : 'הרשימה ריקה — הוסיפו תלמיד/ה למעלה או הדביקו רשימה שלמה'}</div>`}
-  </div>
+    ${shownSend.length ? shownSend.map(rowHtml).join('') : `<div class="card empty">${list.length ? 'אין תלמידים בסינון הזה' : 'הרשימה ריקה — הוסיפו תלמיד/ה למעלה או הדביקו רשימה שלמה'}</div>`}
+  </div>` : ''}
+  ${(filter==='all'||filter==='reach') && shownReach.length ? `<div class="sec">📞 בארי עוד לא תפס <small>לא נשלח קישור. אחרי שיחה: "רוצה" מעביר לשליחה, "לא רוצה" מוריד מהרשימה</small></div>
+  <div class="list">${shownReach.map(reachHtml).join('')}</div>` : ''}
   <div class="foot"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · פתאום הכל נראה אפשרי!</div>`;
 
   /* wiring */
@@ -316,6 +343,9 @@ function render(){
   app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const s=DATA.students.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(s); save(true); toast('נשלח ל'+s.name+' ✓'); render(); }catch(e){ b.disabled=false; b.textContent='⚡ שלח'; toast('לא נשלח: '+e.message); } });
   app.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.del); if(confirm('להסיר את '+s.name+' מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
   app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.unsend); s.sentAt=''; save(); render(); });
+  app.querySelectorAll('[data-wants]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.wants); s.stage='wants'; s.reachedAt=new Date().toISOString(); save(); render(); toast(s.name+' עבר/ה לשליחת השאלון'); });
+  app.querySelectorAll('[data-nowant]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.nowant); if(confirm(s.name+' לא רוצה — להוריד מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
+  app.querySelectorAll('[data-note]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.note); const t=prompt('הערה על '+s.name+':', s.note||''); if(t!==null){ s.note=t.trim(); save(); render(); } });
   app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(msgFor(s)).then(()=>toast('ההודעה הועתקה')); });
 }
 function refreshLinks(){ app.querySelectorAll('a[data-id]').forEach(a=>{ const s=DATA.students.find(x=>x.id===a.dataset.id); if(s) a.href=waHref(s); }); }
@@ -323,13 +353,27 @@ function rowHtml(s){
   const st = statusOf(s);
   const sub = SUBMITTED[digits(s.phone)];
   const tag = st==='done' ? `<span class="tag ok">✓ מילא/ה ${esc(fmtDate(sub.ts))}</span>` : st==='sent' ? `<span class="tag yel">נשלח ${esc(fmtDate(s.sentAt))}</span>` : `<span class="tag gray">עוד לא נשלח</span>`;
+  const stageTag = s.stage==='wants' ? ' <span class="tag pink">אמר/ה שרוצה</span>' : '';
   return `<div class="stu ${st}">
-    <div class="who"><b>${esc(s.name)}</b> ${tag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span></div>
+    <div class="who"><b>${esc(s.name)}</b> ${tag}${stageTag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note">${esc(s.note)}</span>`:''}</div>
     <div class="acts">
       ${st==='done' ? '' : (WA.url ? `<button class="btn wa sm ${st==='sent'?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${st==='sent'?'שלח שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}" title="פתיחה בוואטסאפ רגיל">💬</a>` : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`)}
       <button class="btn outline sm" data-copy="${esc(s.id)}" title="העתק הודעה">📋</button>
       ${st==='sent' ? `<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון נשלח">↩</button>` : ''}
       <button class="btn sm danger" data-del="${esc(s.id)}" title="הסר">✕</button>
+    </div>
+  </div>`;
+}
+function reachHtml(s){
+  const urgent = /דחו?פ/.test(s.note||'');
+  return `<div class="stu reach">
+    <div class="who"><b>${esc(s.name)}</b> <span class="tag blue">עוד לא נתפס/ה</span><span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note ${urgent?'urgent':''}">${urgent?'🔴 ':''}${esc(s.note)}</span>`:''}</div>
+    <div class="acts">
+      <a class="btn outline sm" href="tel:${esc(s.phone)}" title="התקשרות">📞</a>
+      <a class="btn outline sm" href="https://wa.me/${waNum(s.phone)}" target="_blank" rel="noopener" title="פתיחת צ'אט בוואטסאפ (בלי קישור לשאלון)">💬</a>
+      <button class="btn outline sm" data-note="${esc(s.id)}" title="עריכת הערה">✏️</button>
+      <button class="btn ok sm" data-wants="${esc(s.id)}">✔ רוצה</button>
+      <button class="btn sm danger" data-nowant="${esc(s.id)}">✕ לא רוצה</button>
     </div>
   </div>`;
 }
