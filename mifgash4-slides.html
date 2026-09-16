@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצעד הראשון · מצגת 5.11 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26}
+  *{box-sizing:border-box}html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif}
+  #stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  #deck{width:1920px;height:1080px;transform-origin:center;position:relative;background:#fff;flex:none}
+  .s{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:110px 130px;background:#fff;color:var(--ink)}
+  .s.on{display:flex}
+  .s.dark{background:#111;color:#fff}
+  .s.pinkbg{background:var(--pink);color:#fff}
+  .s.yellowbg{background:var(--yellow);color:#111}
+
+  .kick{font-size:30px;font-weight:800;color:var(--pink);letter-spacing:.5px;margin-bottom:22px}
+  .s.dark .kick,.s.pinkbg .kick{color:var(--yellow)}
+  h1{font-size:130px;font-weight:900;margin:0;line-height:1.02;letter-spacing:-3px}
+  h2{font-size:88px;font-weight:900;margin:0 0 30px;line-height:1.1;letter-spacing:-2px}
+  h3{font-size:54px;font-weight:800;margin:0 0 18px}
+  p.big{font-size:46px;font-weight:600;line-height:1.4;margin:0}
+  p.med{font-size:36px;font-weight:500;line-height:1.5;margin:0}
+  .sub{font-size:38px;font-weight:500;opacity:.7;margin-top:26px}
+  .quote{border-inline-start:14px solid var(--yellow);padding-inline-start:38px;font-size:56px;font-weight:700;line-height:1.35}
+  .s.yellowbg .quote{border-color:#111}
+
+  .wall{display:flex;flex-wrap:wrap;gap:16px;align-content:flex-start;margin-top:26px;max-height:640px;overflow:hidden}
+  .wall span{background:#1c1c24;border-radius:999px;padding:14px 30px;font-size:32px;font-weight:700}
+  .s:not(.dark) .wall span{background:#f6f2f7}
+  .wall span i{font-style:normal;font-weight:400;opacity:.55;font-size:27px}
+
+  .votes{display:flex;gap:30px;margin-top:40px}
+  .votes>div{flex:1;background:#1c1c24;border-radius:34px;padding:48px 24px;text-align:center}
+  .votes .pc{font-size:120px;font-weight:900;color:var(--yellow);line-height:1}
+  .votes .lb{font-size:34px;font-weight:700;margin-top:10px}
+  .votes .ct{font-size:24px;opacity:.5;margin-top:8px}
+  .blur{filter:blur(26px);transition:filter .8s}
+
+  .qlist{display:flex;flex-direction:column;gap:24px;margin-top:16px}
+  .qlist div{background:#f6f2f7;border-radius:24px;padding:28px 36px;font-size:40px;font-weight:700}
+  .s.dark .qlist div{background:#1c1c24}
+  .qlist div b{color:var(--pink);margin-inline-end:14px}
+  .s.dark .qlist div b{color:var(--yellow)}
+  .qlist div small{display:block;font-size:28px;font-weight:500;opacity:.6;margin-top:6px}
+
+  .grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:20px}
+  .grid4>div{background:#f6f2f7;border-radius:30px;padding:34px 40px;display:flex;align-items:center;gap:28px}
+  .s.dark .grid4>div{background:#1c1c24}
+  .grid4 .e{font-size:84px}
+  .grid4 .r{font-size:30px;font-weight:800;color:var(--pink)}
+  .s.dark .grid4 .r{color:var(--yellow)}
+  .grid4 .t{font-size:40px;font-weight:800;line-height:1.25}
+
+  .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:22px}
+  .col{background:#1c1c24;border-radius:24px;padding:24px 26px}
+  .col h4{margin:0 0 12px;font-size:30px;font-weight:900;color:var(--yellow)}
+  .col ul{margin:0;padding-inline-start:26px;font-size:23px;line-height:1.45}
+
+  .bignum{font-size:260px;font-weight:900;color:var(--yellow);line-height:1;letter-spacing:-6px}
+
+  .logo{position:absolute;top:52px;inset-inline-start:64px;height:56px;opacity:.9}
+  .s.dark .logo,.s.pinkbg .logo{filter:brightness(0) invert(1)}
+  .pg{position:absolute;bottom:44px;inset-inline-end:64px;font-size:23px;font-weight:800;opacity:.35}
+  .tmr{position:absolute;bottom:44px;inset-inline-start:64px;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--pink)}
+  .s.dark .tmr,.s.pinkbg .tmr{color:var(--yellow)}
+  .live{position:absolute;top:56px;inset-inline-end:64px;font-size:24px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:10px}
+  .s.dark .live{color:var(--yellow)}
+  .live i{width:14px;height:14px;border-radius:50%;background:currentColor;animation:bl 1.6s infinite}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+  #hint{position:fixed;bottom:14px;inset-inline:0;text-align:center;color:#666;font-size:13px;font-family:Rubik,Arial;z-index:5}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 1 -->
+<div class="s dark"><div class="kick">מפגש רכזים · 5.11.2026</div>
+  <h1>הצעד<br>הראשון</h1>
+  <div class="sub">ליווי בוגרים · רכזים חברתיים ורכזי בוגרים · תוכנית הבוגרים של הופה</div></div>
+
+<!-- 2 -->
+<div class="s yellowbg"><div class="quote">לפני שבועיים כתבתם שלוש פעולות לפני חנוכה.<br>היום אנחנו בדיוק באמצע הדרך.</div>
+  <p class="big" style="margin-top:56px"><b>היום לא מביאים תוכן חדש. היום עובדים על החסמים.</b></p></div>
+
+<!-- 3 -->
+<div class="s pinkbg"><div class="kick">סעיף 1 בדף</div>
+  <h2>כמה כבר עשיתי?</h2>
+  <p class="big">מתוך שלוש הפעולות שכתבתי על ״הדף שלי״ ב-21.10.</p>
+  <p class="med" style="margin-top:44px;opacity:.85">״עוד לא אף אחת״ היא תשובה לגיטימית לגמרי. ממנה מתחילים.</p></div>
+
+<!-- 4 — חי -->
+<div class="s dark" data-live="vote"><div class="live"><i></i> חי</div>
+  <h2>כמה פעולות?</h2>
+  <div class="votes blur" id="votes"></div>
+  <p class="med" style="margin-top:38px;opacity:.55">רווח או קליק לגילוי · מקש R לטשטוש מחדש</p></div>
+
+<!-- 5 — חי -->
+<div class="s dark" data-live="asiti"><div class="live"><i></i> חי</div>
+  <div class="kick">מה כבר קרה</div><h3 id="asitiCount">— פעולות</h3>
+  <div class="wall" id="asiti"></div></div>
+
+<!-- 6 -->
+<div class="s"><div class="kick">30 דקות · חדרים</div><h2>מרפאת חסמים</h2>
+  <div class="grid4">
+    <div><span class="e">📵</span><div><div class="r">חדרים 1–2</div><div class="t">אין לי טלפונים של בוגרים</div></div></div>
+    <div><span class="e">🧍</span><div><div class="r">חדרים 3–4</div><div class="t">אין לי שותף/ה בבית הספר</div></div></div>
+    <div><span class="e">⏳</span><div><div class="r">חדרים 5–6</div><div class="t">אין לי זמן</div></div></div>
+    <div><span class="e">📞</span><div><div class="r">חדרים 7–8</div><div class="t">לא ענו / לא ידעתי מה להגיד</div></div></div>
+  </div></div>
+
+<!-- 7 -->
+<div class="s dark" data-timer="780"><div class="kick">התייעצות עמיתים · 2 סבבים</div><h2>בחדר</h2>
+  <div class="qlist">
+    <div><b>3′</b>מציג/ה את המקרה<small>כולם שותקים</small></div>
+    <div><b>3′</b>שאלות הבהרה בלבד<small>עצות מחכות</small></div>
+    <div><b>5′</b>עצות בגוף ראשון<small>״אצלנו ניסינו…״</small></div>
+    <div><b>2′</b>המציג/ה בוחר/ת דבר אחד, ומתי</div>
+  </div>
+  <span class="tmr" id="tmr780">13:00</span></div>
+
+<!-- 8 — חי -->
+<div class="s dark" data-live="nisayon"><div class="live"><i></i> חי</div>
+  <div class="kick">מה מנסים השבוע</div><h3 id="nisCount">— ניסיונות</h3>
+  <div class="cols" id="nis"></div></div>
+
+<!-- 9 -->
+<div class="s pinkbg"><div class="kick">25 דקות</div>
+  <h2>צומת המלגות</h2>
+  <p class="big">בחודשים הקרובים נסגרות הגשות למלגות סטודנטים, ביניהן קרן גרוס.<br><b>בוגר שלא שמע עליהן בזמן מפספס אותן השנה.</b></p>
+  <p class="med" style="margin-top:40px;opacity:.85">לא צריך להיות בתוכנית של הופה כדי להפנות אליהן.</p></div>
+
+<!-- 10 -->
+<div class="s"><h2>שלושה צעדים</h2>
+  <div class="qlist">
+    <div><b>1</b>עד 5 בוגרים שלומדים או מתחילים ללמוד<small>ראשי תיבות · נשמר רק במכשיר שלך</small></div>
+    <div><b>2</b>מלגה אחת שמתאימה להם, ב-hopa.org.il<small>ומועד הסגירה מהאתר של המלגה עצמה</small></div>
+    <div><b>3</b>הודעת וואטסאפ, עוד היום<small>הנוסח בסעיף 3 בדף</small></div>
+  </div></div>
+
+<!-- 11 -->
+<div class="s yellowbg" data-timer="360"><div class="kick">6 דקות</div>
+  <h2>מחפשים מלגה</h2>
+  <p class="big" style="font-size:56px"><b>hopa.org.il</b> → מלגות<br>אחת שמתאימה לפחות לבוגר אחד שלך.</p>
+  <span class="tmr" id="tmr360">06:00</span></div>
+
+<!-- 12 — חי -->
+<div class="s dark" data-live="milga"><div class="live"><i></i> חי</div>
+  <div class="kick">השבוע</div>
+  <div class="bignum" id="msgNum">0</div>
+  <p class="big" style="margin-top:10px">בוגרים ישמעו על מלגה שלא היו שומעים עליה</p>
+  <div class="wall" id="milga" style="max-height:300px"></div></div>
+
+<!-- 13 — חי -->
+<div class="s dark" data-live="shutaf"><div class="live"><i></i> חי</div>
+  <div class="kick">סעיף 4 בדף</div>
+  <h2>יש לי שותף/ה בשם?</h2>
+  <div class="votes" id="shutaf"></div></div>
+
+<!-- 14 -->
+<div class="s"><div class="kick">שיחה של 5 דקות</div><h2>שלושה משפטים</h2>
+  <div class="qlist">
+    <div><b>1</b>מה ראיתי<small>ציטוט אחד של בוגר, מהקיר של 21.10</small></div>
+    <div><b>2</b>מה אני מבקש/ת, וזה קטן<small>10 דקות בשיעור · רשימת טלפונים · בוגר אחד שהיא דואגת לו</small></div>
+    <div><b>3</b>עד מתי<small>בקשה בלי תאריך נשכחת</small></div>
+  </div></div>
+
+<!-- 15 -->
+<div class="s pinkbg" data-timer="360"><div class="kick">זוגות · 6 דקות</div>
+  <h2>תרגול</h2>
+  <p class="big">אחד/ת מבקש/ת. השני/ה משחק/ת את היועצת העסוקה.<br><b>אחרי 3 דקות מתחלפים.</b></p>
+  <span class="tmr" id="tmr360b">06:00</span></div>
+
+<!-- 16 — חי -->
+<div class="s dark" data-live="haba"><div class="live"><i></i> חי</div>
+  <div class="kick">הצעד הבא · עם תאריך</div><h3 id="habaCount">— צעדים</h3>
+  <div class="wall" id="haba"></div></div>
+
+<!-- 17 -->
+<div class="s yellowbg"><h1 style="font-size:110px">16.12<br>זום 13:30</h1>
+  <p class="big" style="margin-top:44px;font-size:56px"><b>נפתח בשאלה אחת: מי סימן ✓.</b></p>
+  <p class="med" style="margin-top:30px;opacity:.7">ולפני שיוצאים: משוב של 30 שניות, בסעיף 5 בדף.</p></div>
+
+</div></div>
+<div id="hint">← → או רווח · F מסך מלא · R טשטוש מחדש · #מספר בכתובת קופץ לשקף</div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='m4-';
+var TYPES={phones:'📵 אין טלפונים',partner:'🧍 אין שותף/ה',time:'⏳ אין זמן',reach:'📞 לא ענו'};
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+var slides=[].slice.call(document.querySelectorAll('.s'));
+slides.forEach(function(s,i){
+  var l=document.createElement('img');l.className='logo';l.src='hopa-logo.png';l.alt='';s.appendChild(l);
+  var p=document.createElement('div');p.className='pg';p.textContent=(i+1)+' / '+slides.length;s.appendChild(p);
+});
+var cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,j){s.classList.toggle('on',j===cur)});
+  location.hash=String(cur+1);
+  if(slides[cur].dataset.live)poll();
+  var td=slides[cur].dataset.timer;
+  if(td)startTimer(Number(td),slides[cur].querySelector('.tmr'));else stopTimer();
+}
+function fit(){
+  var k=Math.min(innerWidth/1920,innerHeight/1080);
+  $('deck').style.transform='scale('+k+')';
+}
+addEventListener('resize',fit);fit();
+addEventListener('keydown',function(e){
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown')show(cur+1);
+  else if(e.key==='ArrowRight'||e.key==='PageUp')show(cur-1);
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  else if(e.key==='r'||e.key==='R'){var v=$('votes');if(v)v.classList.add('blur')}
+  else if(e.key==='Home')show(0);
+});
+addEventListener('click',function(){
+  var v=$('votes');
+  if(slides[cur].dataset.live==='vote'&&v&&v.classList.contains('blur')){v.classList.remove('blur');return}
+  show(cur+1);
+});
+
+/* ---- טיימר ---- */
+var tk=null,tv=0,tEl=null;
+function stopTimer(){if(tk){clearInterval(tk);tk=null}}
+function startTimer(sec,el){
+  stopTimer();tv=sec;tEl=el;paintT();
+  tk=setInterval(function(){tv--;paintT();if(tv<=0)stopTimer()},1000);
+}
+function paintT(){if(tEl)tEl.textContent=String(Math.floor(Math.max(0,tv)/60)).padStart(2,'0')+':'+String(Math.max(0,tv)%60).padStart(2,'0')}
+
+/* ---- נתונים חיים ---- */
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||22000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+var STORE={};
+function items(kind){
+  var pre='intake_'+KEY_PREFIX+kind+'-';
+  return Object.keys(STORE).filter(function(k){return k.indexOf(pre)===0})
+    .map(function(k){return STORE[k]||{}}).filter(function(x){return !x.del})
+    .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
+}
+function votes(list,keys,labels){
+  var v={};keys.forEach(function(k){v[k]=0});
+  list.forEach(function(x){if(v[x.v]!==undefined)v[x.v]++});
+  var tot=list.length||1;
+  return keys.map(function(k,i){
+    return '<div><div class="pc">'+Math.round(v[k]/tot*100)+'%</div><div class="lb">'+labels[i]+'</div><div class="ct">'+v[k]+'</div></div>';
+  }).join('');
+}
+function draw(){
+  $('votes').innerHTML=votes(items('kama'),['0','1','2','3'],['עוד לא','אחת','שתיים','שלוש']);
+
+  var a=items('asiti');
+  $('asiti').innerHTML=a.slice(-30).map(function(x){return '<span>'+esc(x.text)+'</span>'}).join('');
+  $('asitiCount').textContent=a.length+' פעולות שכבר קרו';
+
+  var n=items('nisayon'),by={};
+  Object.keys(TYPES).forEach(function(t){by[t]=[]});
+  n.forEach(function(x){if(by[x.t])by[x.t].push(x.text)});
+  $('nis').innerHTML=Object.keys(TYPES).map(function(t){
+    return '<div class="col"><h4>'+TYPES[t]+'</h4><ul>'+by[t].slice(-7).map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ul></div>';
+  }).join('');
+  $('nisCount').textContent=n.length+' ניסיונות לשבוע הקרוב';
+
+  var m=items('hodaot');
+  $('msgNum').textContent=m.reduce(function(s,x){return s+(Number(x.v)||0)},0)+'+';
+  $('milga').innerHTML=items('milga').slice(-14).map(function(x){return '<span>'+esc(x.name)+(x.date?' <i>'+esc(x.date)+'</i>':'')+'</span>'}).join('');
+
+  $('shutaf').innerHTML=votes(items('shutaf'),['yes','named','no'],['כן, ודיברנו','יש שם, עוד לא','עוד אין']);
+
+  var h=items('haba');
+  $('haba').innerHTML=h.slice(-30).map(function(x){return '<span>'+esc(x.what)+' <i>עד '+esc(x.date)+'</i></span>'}).join('');
+  $('habaCount').textContent=h.length+' צעדים עד 16.12';
+}
+var busy=false;
+async function poll(){
+  if(busy)return;busy=true;
+  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;draw()}}catch(e){}
+  busy=false;
+}
+show(location.hash?Number(location.hash.slice(1))-1:0);
+poll();
+setInterval(function(){if(!document.hidden&&slides[cur].dataset.live)poll()},7000);
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>רץ־שיט למנחות · מפגש 5.11 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#e6e2ea;--bg:#f4f1f6;--ok:#22b573;--shadow:0 3px 14px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  button,input{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:1180px;margin:0 auto;padding:0 14px}
+
+  header{background:#111;color:#fff;padding:14px 0}
+  .hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{margin:0;font-size:20px;font-weight:900}
+  header .sub{font-size:13px;opacity:.8}
+  .clockbox{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#222;border-radius:12px;padding:7px 13px}
+  .clockbox input{width:74px;background:#111;border:1px solid #444;color:var(--yellow);border-radius:8px;padding:5px 8px;text-align:center;font-weight:800;direction:ltr}
+  .clockbox .now{font-size:19px;font-weight:900;color:var(--yellow);font-variant-numeric:tabular-nums}
+
+  .tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  .tabs .in{display:flex;gap:6px;padding-top:8px;padding-bottom:8px;overflow-x:auto}
+  .tabs button{flex:none;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:6px 15px;font-weight:800;font-size:13px;cursor:pointer}
+  .tabs button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+
+  main{padding:14px 0 60px}
+  .pane{display:none}.pane.on{display:block}
+
+  .blk{background:#fff;border-radius:15px;box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden;border-inline-start:5px solid var(--line)}
+  .blk.now{border-inline-start-color:var(--pink);box-shadow:0 6px 26px rgba(232,52,138,.2)}
+  .blk.done{opacity:.5}
+  .bh{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer;background:#fff}
+  .bh .tm{background:#111;color:var(--yellow);border-radius:9px;padding:4px 10px;font-weight:900;font-size:13.5px;font-variant-numeric:tabular-nums;flex:none}
+  .bh .ti{flex:1;min-width:0}
+  .bh h3{margin:0;font-size:15.5px;font-weight:900}
+  .bh small{color:var(--muted);font-size:12.5px}
+  .bh .dur{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;flex:none}
+  .bh .go{border:none;background:var(--yellow);border-radius:9px;padding:6px 12px;font-weight:800;font-size:12.5px;cursor:pointer;flex:none}
+  .bb{padding:0 14px 14px;display:none;border-top:1px solid var(--line);padding-top:12px}
+  .blk.open .bb{display:block}
+  .bb h4{margin:12px 0 4px;font-size:13px;font-weight:800;color:var(--pink-dark)}
+  .bb h4:first-child{margin-top:0}
+  .bb p{margin:0 0 8px;font-size:14px}
+  .bb ul{margin:4px 0 10px;padding-inline-start:20px;font-size:14px}.bb li{margin-bottom:4px}
+  .say{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:14.5px;font-weight:600;margin:8px 0}
+  .warn{background:#fff4f4;border:1.5px solid #f5c9c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
+  .warn b{color:#c0392b}
+  .good{background:#e8f8ef;border:1.5px solid #b8e6c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
+  .chatbox{background:#f8f6fa;border:1.5px dashed var(--line);border-radius:11px;padding:10px 12px;font-size:13.5px;margin:8px 0;white-space:pre-wrap;position:relative}
+  .chatbox button{position:absolute;inset-inline-end:8px;top:8px;border:none;background:var(--pink);color:#fff;border-radius:8px;padding:4px 11px;font-size:12px;font-weight:800;cursor:pointer}
+  .onpage{display:inline-block;background:#eef7ff;border:1.5px solid #c5e0f7;color:#1a5b8f;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;margin:2px 4px 2px 0}
+
+  .card{background:#fff;border-radius:15px;box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
+  .card h2{margin:0 0 8px;font-size:16px;font-weight:900}
+  .card h2 small{font-weight:500;color:var(--muted);font-size:12.5px}
+  .stat{display:flex;gap:9px;flex-wrap:wrap}
+  .stat>div{background:var(--pink-soft);border-radius:11px;padding:8px 16px;font-size:12.5px;color:var(--pink-dark);font-weight:700;text-align:center}
+  .stat b{display:block;font-size:23px;color:var(--ink)}
+  .wall{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .wall span{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:700}
+  .wall span i{font-style:normal;font-weight:500;color:var(--muted)}
+  .vres{display:flex;gap:9px;flex-wrap:wrap;margin-top:9px}
+  .vres>div{flex:1 1 120px;background:#111;color:#fff;border-radius:13px;padding:12px;text-align:center}
+  .vres b{display:block;font-size:30px;font-weight:900;color:var(--yellow)}
+  .vres .l{font-size:12.5px;opacity:.8}
+  .rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:9px}
+  .room{border:1.5px solid var(--line);border-radius:13px;padding:10px 12px}
+  .room h4{margin:0 0 5px;font-size:13.5px;font-weight:900;color:var(--pink-dark)}
+  .room ul{margin:0;padding-inline-start:17px;font-size:12.5px}
+  .room li{margin-bottom:4px}
+  .room li small{color:var(--muted)}
+  .empty{color:#7d7d8a;font-size:13px}
+  .btn{border:none;border-radius:11px;padding:9px 17px;font-weight:800;font-size:13.5px;cursor:pointer}
+  .btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .btn.red{background:#fff;border:1.5px solid #f0b7b7;color:#c0392b}
+  .chk{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
+  .chk:last-child{border-bottom:none}
+  .chk input{width:19px;height:19px;accent-color:var(--pink);flex:none;margin-top:2px}
+  .chk.done span{text-decoration:line-through;opacity:.5}
+  .lnk{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .lnk a{background:#111;color:#fff;text-decoration:none;border-radius:11px;padding:9px 15px;font-weight:800;font-size:13px}
+  .lnk a.y{background:var(--yellow);color:#111}
+  table.fb{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+  table.fb th,table.fb td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:start}
+  table.fb th{color:var(--muted);font-size:12px}
+  .gap{font-weight:900;font-size:15px}
+  .gap.bad{color:#c0392b}.gap.ok{color:#14613b}
+  #toast{position:fixed;inset-inline:0;bottom:20px;margin:auto;width:max-content;background:#111;color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header><div class="in hrow">
+  <div>
+    <h1>רץ־שיט · מפגש 5.11</h1>
+    <div class="sub">״הצעד הראשון״ · זום · 90 דקות · מרפאת חסמים</div>
+  </div>
+  <div class="clockbox">
+    <span style="font-size:12px;opacity:.6">התחלה</span>
+    <input id="start" value="11:00">
+    <span class="now" id="now">--:--</span>
+  </div>
+</div></header>
+
+<div class="tabs"><div class="in">
+  <button data-p="run" class="on">🎬 רץ־שיט</button>
+  <button data-p="pre">🧩 חסמים מ-21.10</button>
+  <button data-p="live">📊 תשובות חיות</button>
+  <button data-p="prep">✅ הכנות</button>
+  <button data-p="links">🔗 קישורים</button>
+</div></div>
+
+<main class="in">
+  <div class="pane on" id="p-run"><div id="blocks"></div></div>
+
+  <!-- חסמים שנאספו ב-21.10 — לשיבוץ חדרים -->
+  <div class="pane" id="p-pre">
+    <div class="card">
+      <h2>מה כתבו ב"הדף שלי" ב-21.10 <small>· מהטופס הדיגיטלי (intake_tochnit-*)</small></h2>
+      <p style="font-size:13.5px;color:var(--muted);margin:0">כאן משבצים מראש 8 חדרים: <b>2 חדרים לכל סוג חסם</b>, ובכל חדר מארח/ת מהופה שכבר עבר/ה את החסם הזה. מי שלא מילא דיגיטלית בוחר/ת סוג חסם בדף בתחילת חלק 2.</p>
+      <div class="stat" id="pstat" style="margin-top:10px"></div>
+      <div style="margin-top:10px"><button class="btn ghost" id="refresh2">🔄 רענון</button></div>
+    </div>
+    <div class="card"><h2>לפי סוג החסם</h2><div class="rooms" id="pre-types"></div></div>
+    <div class="card"><h2>שותף/ה בבית הספר <small>· מי כתב שם ומי השאיר ריק</small></h2><div class="wall" id="pre-partner"></div></div>
+  </div>
+
+  <div class="pane" id="p-live">
+    <div class="card">
+      <div class="stat" id="lstat"></div>
+      <div style="margin-top:10px"><button class="btn ghost" id="refresh">🔄 רענון עכשיו</button>
+      <span style="font-size:12px;color:var(--muted);margin-inline-start:8px" id="lastup"></span></div>
+    </div>
+    <div class="card"><h2>1 · כמה פעולות עשיתי?</h2><div class="vres" id="lw-k"></div></div>
+    <div class="card"><h2>1 · מה כבר קרה <small>— להקריא 4–5 בקול</small></h2><div class="wall" id="lw-a"></div></div>
+    <div class="card"><h2>2 · החדרים: מי בחר איזה חסם</h2><div class="vres" id="lw-t"></div></div>
+    <div class="card"><h2>2 · מה מנסים השבוע, לפי חסם</h2><div class="rooms" id="lw-n"></div></div>
+    <div class="card"><h2>3 · מלגות שנמצאו</h2><div class="wall" id="lw-g"></div></div>
+    <div class="card"><h2>3 · כמה בוגרים יקבלו הודעה עד סוף השבוע</h2><div class="vres" id="lw-m"></div></div>
+    <div class="card"><h2>4 · שותף/ה בבית הספר</h2><div class="vres" id="lw-s"></div></div>
+    <div class="card"><h2>5 · הצעד הבא <small>— זו הרשימה שפותחת את 16.12</small></h2><div class="wall" id="lw-h"></div></div>
+    <div class="card"><h2>5 · משוב · הופה מול לא־הופה</h2><div id="lw-f"></div></div>
+  </div>
+
+  <div class="pane" id="p-prep">
+    <div class="card"><h2>לפני המפגש</h2><div id="chklist"></div></div>
+    <div class="card">
+      <h2>הודעה למארחים (רכזי הופה) · לשלוח עד 29.10</h2>
+      <div class="chatbox">היי 💛 ב-5.11 (זום) אתם שוב המארחים, הפעם של "מרפאת החסמים".
+יהיו 8 חדרים, 2 לכל חסם: אין טלפונים · אין שותף/ה · אין זמן · לא ענו / לא ידעתי מה להגיד.
+בכל חדר מארח/ת אחד/ת שכבר נתקל/ה בחסם הזה ומצא/ה איך לעקוף אותו.
+התפקיד: לשמור על הזמן בפרוטוקול (3 הצגה · 3 שאלות · 5 עצות · 2 בחירה) ולספר מה קרה אצלכם, לא מה "צריך".
+כתבו לי באיזה חסם יש לכם הכי הרבה ניסיון 🙏
+הדף: https://meytalp-dev.github.io/hopa-nihul/mifgash4.html</div>
+    </div>
+    <div class="card">
+      <h2>🧹 איפוס נתוני המפגש</h2>
+      <p style="font-size:13.5px;color:var(--muted)">מוחק את כל מה שנכתב בדף המשתתפים (בדיקות, ניסיונות). <b>חובה להריץ אחרי הבדיקות ולפני 5.11.</b> לא נוגע בנתוני 21.10.</p>
+      <button class="btn red" id="resetBtn">מחיקת כל נתוני מפגש 5.11</button>
+      <div id="resetStat" style="font-size:13px;margin-top:9px;color:var(--muted)"></div>
+    </div>
+  </div>
+
+  <div class="pane" id="p-links">
+    <div class="card"><h2>לשיתוף עם המשתתפים</h2>
+      <div class="lnk">
+        <a class="y" href="mifgash4.html" target="_blank">📄 הדף המלווה</a>
+        <a href="https://hopa.org.il" target="_blank">🔎 מאגר המענים</a>
+        <a href="mifgash3.html#s4" target="_blank">📝 "הדף שלי" מ-21.10</a>
+      </div>
+    </div>
+    <div class="card"><h2>למנחות בלבד</h2>
+      <div class="lnk">
+        <a href="mifgash4-slides.html" target="_blank">🖥️ מצגת לשיתוף מסך</a>
+        <a href="kir.html" target="_blank">🧱 קיר הציטוטים (לחלק 4)</a>
+        <a href="mashov2.html?admin=hopa" target="_blank">💬 משוב 14.10 + 21.10</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='m4-';
+var TYPES={phones:'📵 אין טלפונים',partner:'🧍 אין שותף/ה',time:'⏳ אין זמן',reach:'📞 לא ענו / מה להגיד'};
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2000)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+/* ============ הבלוקים ============ */
+var BLOCKS=[
+{n:0,d:5,t:'פתיחה',s:'מיטל · איפה אנחנו בדרך',body:
+  '<div class="say">״לפני שבועיים, בבני ברק, כל אחד מכם כתב שלוש פעולות לפני חנוכה. היום אנחנו בדיוק באמצע הדרך. המפגש הזה לא מביא תוכן חדש. הוא נועד לעזור לכם לעשות את מה שכבר החלטתם.״</div>'+
+  '<div class="say">״זה השלב שבו כל תוכנית נתקעת. לכן היום עובדים על החסמים, לא על הרעיונות.״</div>'+
+  '<h4>הודעה לצ׳אט</h4>'+
+  '<div class="chatbox">הדף המלווה של המפגש. פותחים עכשיו ומשאירים פתוח:\nhttps://meytalp-dev.github.io/hopa-nihul/mifgash4.html</div>'+
+  '<span class="onpage">במצגת: שקפים 1–2</span>'},
+
+{n:1,d:10,t:'מה קרה מאז 21.10?',s:'הצבעה כנה + קיר פעולות',body:
+  '<h4>מהלך</h4>'+
+  '<ul><li><b>2′</b> הצבעה בדף: כמה מתוך 3 הפעולות עשיתי? (0/1/2/3)</li>'+
+  '<li><b>2′</b> התוצאה על המסך. <b>לפני שחושפים</b> אומרים:</li></ul>'+
+  '<div class="say">״מי שסימן אפס: אתם הסיבה שהמפגש הזה קיים. זה לא מבחן, זו נקודת התחלה.״</div>'+
+  '<ul><li><b>3′</b> מי שעשה משהו כותב אותו לקיר במשפט אחד.</li>'+
+  '<li><b>3′</b> <b>מקריאים 4–5 פעולות בקול</b> (טאב ״תשובות חיות״). עדיף פעולות קטנות ("שלחתי הודעה לשלושה בוגרים") על פני גדולות. הקטנות הן אלה שמעוררות חיקוי.</li></ul>'+
+  '<div class="warn"><b>הסיכון:</b> שהרכזים שעשו 3 מתוך 3 יהפכו לכוכבים, ומי שעשה 0 ירגיש שהוא בתחרות. לא לשבח בשמות. לשבח את הפעולות.</div>'+
+  '<span class="onpage">בדף: סעיף 1</span><span class="onpage">במצגת: שקפים 3–5</span>'},
+
+{n:2,d:30,t:'מרפאת חסמים · חדרים',s:'8 חדרים · 2 לכל חסם · מארח/ת מהופה בכל חדר',body:
+  '<h4>לפני הפתיחה (2′)</h4>'+
+  '<p>מבקשים מכולם לבחור סוג חסם בדף. מי ששובץ מראש (טאב ״חסמים מ-21.10״) מקבל מספר חדר. השאר משובצים לפי הבחירה בדף, בטאב ״תשובות חיות״.</p>'+
+  '<div class="chatbox">חדרים לפי חסם:\n1–2 · 📵 אין לי טלפונים של בוגרים\n3–4 · 🧍 אין לי שותף/ה בבית הספר\n5–6 · ⏳ אין לי זמן\n7–8 · 📞 התקשרתי ולא ענו / לא ידעתי מה להגיד\nבחרו מספר חדר בסעיף 2 בדף.</div>'+
+  '<h4>בחדר: התייעצות עמיתים, 2 סבבים של 13′</h4>'+
+  '<ul><li><b>3′</b> רכז/ת אחד/ת מציג/ה מקרה אמיתי. כולם שותקים.</li>'+
+  '<li><b>3′</b> שאלות הבהרה <b>בלבד</b>.</li>'+
+  '<li><b>5′</b> עצות, בגוף ראשון: ״אצלנו ניסינו…״</li>'+
+  '<li><b>2′</b> המציג/ה בוחר/ת דבר אחד ומתי.</li></ul>'+
+  '<p>בסוף (2′) כל אחד כותב בדף ״מה אני מנסה השבוע״.</p>'+
+  '<div class="warn"><b>למה הפרוטוקול נוקשה:</b> בלעדיו, 5 הדקות הראשונות הופכות לקיטורים משותפים על ״אין זמן״. שלב השאלות בלבד הוא שמכריח להבין את המקרה לפני שממהרים לפתור.</div>'+
+  '<h4>מה לעקוב בזמן החדרים</h4><p>טאב ״תשובות חיות״, ״מה מנסים השבוע״. אם בחדר מסוים אין כלום אחרי 20′, קופצים אליו.</p>'+
+  '<h4>חזרה למליאה</h4><p>אין דיווח בעל־פה. מראים את השקף החי עם ה״ניסיונות״ לפי חסם, ומקריאים אחד מכל חסם.</p>'+
+  '<span class="onpage">בדף: סעיף 2 + טיימר</span><span class="onpage">במצגת: שקפים 6–8</span>'},
+
+{n:3,d:25,t:'צומת המלגות',s:'רמה 2 שווה כסף אמיתי',body:
+  '<div class="say">״בחודשים הקרובים נסגרות הגשות למלגות סטודנטים, ביניהן קרן גרוס. בוגר שלא שמע עליהן בזמן מפספס אותן השנה. ולא צריך להיות בתוכנית של הופה כדי להפנות אליהן.״</div>'+
+  '<div class="warn"><b>לאמת לפני המפגש:</b> מועד הסגירה של קרן גרוס. בחומרי 21.10 כתוב 15.12, ובמאגר הקרנות שלנו מופיעה הגשה עד 31.12. בדף המשתתפים לא כתוב תאריך בכוונה, והם מתבקשים לבדוק באתר המלגה.</div>'+
+  '<h4>שלושה צעדים</h4>'+
+  '<ul><li><b>5′</b> עד 5 בוגרים שלומדים או מתחילים ללמוד. <b>ראשי תיבות בלבד</b>, נשמר רק במכשיר.</li>'+
+  '<li><b>10′</b> חיפוש ב-hopa.org.il, קטגוריית מלגות (טיימר 6′ בדף). מי שמצא משתף שם + תאריך סגירה. מקריאים 3–4.</li>'+
+  '<li><b>5′</b> מעתיקים את נוסח הוואטסאפ מהדף, ומצביעים: לכמה בוגרים אשלח עד סוף השבוע.</li></ul>'+
+  '<div class="good"><b>הרגע לעצור בו:</b> כשהמספר המצטבר של ״הודעות עד סוף השבוע״ עולה על המסך, אומרים אותו בקול: ״X בוגרים ישמעו השבוע על מלגה שלא היו שומעים עליה.״</div>'+
+  '<p style="font-size:13.5px;color:var(--muted)">5 הדקות הנותרות הן מרווח. החדרים תמיד נמשכים יותר מהמתוכנן.</p>'+
+  '<span class="onpage">בדף: סעיף 3</span><span class="onpage">במצגת: שקפים 9–12</span>'},
+
+{n:4,d:15,t:'השותף/ה בבית הספר',s:'החסם שכמעט כולם כתבו',body:
+  '<h4>3′ · הצבעה</h4><p>כן ודיברנו · יש שם, עוד לא דיברנו · עוד אין.</p>'+
+  '<div class="say">״רכז לבד לא שורד. אבל גם אף אחד לא יתנדב להיות השותף שלך. צריך לבקש, ובקשה ספציפית.״</div>'+
+  '<h4>3′ · שלושת המשפטים</h4>'+
+  '<ul><li><b>מה ראיתי</b>: ציטוט אחד מהקיר של 21.10 (לפתוח את kir.html בשיתוף מסך לרגע)</li>'+
+  '<li><b>מה אני מבקש/ת</b>: דבר אחד קטן ומוגדר</li>'+
+  '<li><b>מתי</b>: עם תאריך</li></ul>'+
+  '<h4>6′ · זוגות בחדרים אקראיים</h4><p>אחד מתרגל, השני משחק את היועצת העסוקה. אחרי 3′ מתחלפים.</p>'+
+  '<h4>3′ · חזרה</h4><p>שאלה אחת למליאה: ״מה היועצת אמרה שהפתיע אתכם?״</p>'+
+  '<div class="warn">אסור שזה יישמע כמו ביקורת על היועצות. הן עמוסות, וזה בדיוק למה הבקשה צריכה להיות קטנה.</div>'+
+  '<span class="onpage">בדף: סעיף 4</span><span class="onpage">במצגת: שקפים 13–15</span>'},
+
+{n:5,d:5,t:'הצעד הבא + משוב',s:'הרשימה שפותחת את 16.12',body:
+  '<ul><li>כל אחד כותב פעולה אחת <b>עם תאריך</b> בדף.</li>'+
+  '<li>משוב של 30 שניות, באותו סעיף.</li></ul>'+
+  '<div class="say">״16.12, זום 13:30. נפתח בשאלה אחת: מי סימן ✓.״</div>'+
+  '<div class="good"><b>הסיום:</b> מקריאים 3 צעדים מהרשימה החיה, בלי שמות. בלי מילה נוספת.</div>'+
+  '<p style="font-size:13.5px"><b>אחרי המפגש:</b> טאב ״תשובות חיות״ → משוב. אם הפער בין הופה ללא־הופה גדול מ-0.7, זה הסימן שמפגש 16.12 צריך להיבנות אחרת.</p>'+
+  '<span class="onpage">בדף: סעיף 5</span><span class="onpage">במצגת: שקפים 16–17</span>'}
+];
+
+/* ============ רץ־שיט ============ */
+function hhmm(mins){var h=Math.floor(mins/60)%24,m=mins%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')}
+function startMins(){var v=($('start').value||'11:00').split(':');return (Number(v[0])||11)*60+(Number(v[1])||0)}
+var openSet={},current=lsGet('m4-cur')?Number(lsGet('m4-cur')):-1;
+function drawBlocks(){
+  var t=startMins(),html='';
+  BLOCKS.forEach(function(b,i){
+    var cls='blk'+(i===current?' now':'')+(current>i?' done':'')+(openSet[i]?' open':'');
+    html+='<div class="'+cls+'" data-i="'+i+'">'+
+      '<div class="bh" data-t="'+i+'">'+
+        '<span class="tm">'+hhmm(t)+'</span>'+
+        '<div class="ti"><h3>'+b.n+' · '+esc(b.t)+'</h3><small>'+esc(b.s)+'</small></div>'+
+        '<span class="dur">'+b.d+' דק׳</span>'+
+        '<button class="go" data-g="'+i+'">'+(i===current?'▶ עכשיו':'התחלנו')+'</button>'+
+      '</div><div class="bb">'+b.body+'</div></div>';
+    t+=b.d;
+  });
+  html+='<div class="blk"><div class="bh"><span class="tm">'+hhmm(t)+'</span><div class="ti"><h3>סיום</h3><small>90 דקות</small></div></div></div>';
+  $('blocks').innerHTML=html;
+  [].slice.call($('blocks').querySelectorAll('.bh[data-t]')).forEach(function(h){
+    h.onclick=function(e){
+      if(e.target.dataset.g!==undefined){current=Number(e.target.dataset.g);lsSet('m4-cur',current);drawBlocks();return}
+      var i=Number(h.dataset.t);openSet[i]=!openSet[i];drawBlocks();
+    };
+  });
+  [].slice.call($('blocks').querySelectorAll('.chatbox')).forEach(addCopy);
+}
+function addCopy(box){
+  var txt=box.textContent;
+  var b=document.createElement('button');b.textContent='העתקה';
+  b.onclick=function(e){e.stopPropagation();navigator.clipboard.writeText(txt).then(function(){toast('הועתק ✓')})};
+  box.appendChild(b);
+}
+$('start').addEventListener('input',drawBlocks);
+drawBlocks();
+[].slice.call(document.querySelectorAll('#p-prep .chatbox')).forEach(addCopy);
+setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')},1000);
+
+/* ============ טאבים ============ */
+[].slice.call(document.querySelectorAll('.tabs button')).forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p)});
+    if(b.dataset.p==='live'||b.dataset.p==='pre')poll();
+  };
+});
+
+/* ============ הכנות ============ */
+var CHK=['לאמת את מועד הסגירה של קרן גרוס (15.12 או 31.12?) ולתקן בחומרים של 21.10 אם צריך',
+ 'לשלוח למארחים (רכזי הופה) את ההודעה שבטאב הזה, עד 29.10',
+ 'לשבץ 8 חדרים לפי טאב ״חסמים מ-21.10״ (2 לכל חסם, מארח/ת בכל חדר)',
+ 'לבדוק ש-hopa.org.il מציג מלגות פתוחות בקטגוריית מלגות',
+ 'לבדוק את הדף המלווה מהנייד ומהמחשב',
+ '🧹 להריץ את איפוס נתוני המפגש (למטה), אחרי הבדיקות',
+ 'לפתוח את המצגת במסך שני, ואת kir.html בלשונית נוספת',
+ 'לוודא ששתי מנחות: מדברת ומפעילה חדרים',
+ 'לשלוח תזכורת לרכזים יום לפני, עם בקשה להביא את ״הדף שלי״ מ-21.10'];
+$('chklist').innerHTML=CHK.map(function(t,i){
+  var on=lsGet('m4-chk'+i)==='1';
+  return '<label class="chk'+(on?' done':'')+'" data-i="'+i+'"><input type="checkbox"'+(on?' checked':'')+'><span>'+esc(t)+'</span></label>';
+}).join('');
+[].slice.call($('chklist').children).forEach(function(l){
+  l.querySelector('input').onchange=function(){lsSet('m4-chk'+l.dataset.i,this.checked?'1':'0');l.classList.toggle('done',this.checked)};
+});
+
+/* ============ backend ============ */
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries){var err;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;err=new Error((r&&r.error)||'שגיאה')}catch(e){err=e}await delay(700+i*600)}throw err}
+
+var STORE={};
+function pick(prefix){
+  var pre='intake_'+prefix;
+  return Object.keys(STORE).filter(function(k){return k.indexOf(pre)===0})
+    .map(function(k){return STORE[k]||{}}).filter(function(x){return !x.del})
+    .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
+}
+function items(kind){return pick(KEY_PREFIX+kind+'-')}
+function chip(h){return '<span>'+h+'</span>'}
+var EMPTY='<span class="empty" style="border:0">עדיין ריק</span>';
+function vcount(list,keys,labels){
+  var v={};keys.forEach(function(k){v[k]=0});
+  list.forEach(function(x){if(v[x.v]!==undefined)v[x.v]++});
+  var tot=list.length||1;
+  return keys.map(function(k,i){return '<div><b>'+v[k]+'</b><span class="l">'+labels[i]+' · '+Math.round(v[k]/tot*100)+'%</span></div>'}).join('');
+}
+function avg(a){return a.length?a.reduce(function(s,x){return s+x},0)/a.length:null}
+
+function drawPre(){
+  var t=pick('tochnit-').filter(function(x){return x.who});
+  var byT={};Object.keys(TYPES).forEach(function(k){byT[k]=[]});byT.none=[];
+  t.forEach(function(x){(byT[x.btype]||byT.none).push(x)});
+  $('pstat').innerHTML='<div>מילאו דיגיטלית<b>'+t.length+'</b></div>'+
+    Object.keys(TYPES).map(function(k){return '<div>'+TYPES[k]+'<b>'+byT[k].length+'</b></div>'}).join('')+
+    '<div>לא סימנו סוג<b>'+byT.none.length+'</b></div>';
+  $('pre-types').innerHTML=Object.keys(TYPES).concat(['none']).map(function(k){
+    var l=byT[k];
+    return '<div class="room"><h4>'+(TYPES[k]||'❔ לא סימנו סוג')+' · '+l.length+'</h4><ul>'+
+      (l.map(function(x){return '<li><b>'+esc(x.who)+'</b>'+(x.block?'<br><small>'+esc(x.block)+'</small>':'')+'</li>'}).join('')||'<li class="empty">אין</li>')+
+      '</ul></div>';
+  }).join('');
+  $('pre-partner').innerHTML=t.map(function(x){
+    return chip(esc(String(x.who).split(' ')[0])+' <i>· '+(x.partner?esc(x.partner):'❗ אין שם')+'</i>');
+  }).join('')||EMPTY;
+}
+
+function drawLive(){
+  var k=items('kama'),a=items('asiti'),c=items('chasam'),n=items('nisayon'),g=items('milga'),m=items('hodaot'),s=items('shutaf'),h=items('haba'),f=items('mashov');
+  $('lstat').innerHTML=
+    '<div>הצביעו<b>'+k.length+'</b></div>'+
+    '<div>פעולות שקרו<b>'+a.length+'</b></div>'+
+    '<div>בחרו חסם<b>'+c.length+'</b></div>'+
+    '<div>ניסיונות לשבוע<b>'+n.length+'</b></div>'+
+    '<div>מלגות<b>'+g.length+'</b></div>'+
+    '<div>צעד הבא<b>'+h.length+'</b></div>'+
+    '<div>משובים<b>'+f.length+'</b></div>';
+  $('lw-k').innerHTML=vcount(k,['0','1','2','3'],['אף אחת','אחת','שתיים','שלוש']);
+  $('lw-a').innerHTML=a.map(function(x){return chip(esc(x.text))}).join('')||EMPTY;
+
+  var tc={};Object.keys(TYPES).forEach(function(t){tc[t]=[]});
+  c.forEach(function(x){if(tc[x.t])tc[x.t].push(x.room||'?')});
+  $('lw-t').innerHTML=Object.keys(TYPES).map(function(t){
+    return '<div><b>'+tc[t].length+'</b><span class="l">'+TYPES[t]+'</span></div>';
+  }).join('');
+
+  var nb={};n.forEach(function(x){(nb[x.t||'?']=nb[x.t||'?']||[]).push(x)});
+  $('lw-n').innerHTML=Object.keys(nb).map(function(t){
+    return '<div class="room"><h4>'+(TYPES[t]||'❔ בלי סוג')+' · '+nb[t].length+'</h4><ul>'+
+      nb[t].map(function(x){return '<li>'+esc(x.text)+(x.room?' <small>· חדר '+esc(x.room)+'</small>':'')+'</li>'}).join('')+'</ul></div>';
+  }).join('')||EMPTY;
+
+  $('lw-g').innerHTML=g.map(function(x){return chip(esc(x.name)+(x.date?' <i>· '+esc(x.date)+'</i>':''))}).join('')||EMPTY;
+  /* הערכה שמרנית: 1–2 נספר כ-1, 3–4 כ-3, 5+ כ-5 */
+  var msgs=m.reduce(function(sum,x){return sum+(Number(x.v)||0)},0);
+  $('lw-m').innerHTML='<div style="flex:2 1 200px"><b>'+msgs+'+</b><span class="l">בוגרים ישמעו השבוע על מלגה (הערכה שמרנית)</span></div>'+
+    vcount(m,['0','1','3','5'],['אף אחד','1–2','3–4','5+']);
+  $('lw-s').innerHTML=vcount(s,['yes','named','no'],['כן, ודיברנו','יש שם, עוד לא','עוד אין']);
+  $('lw-h').innerHTML=h.map(function(x){return chip(esc(String(x.who).split(' ')[0])+' <i>· '+esc(x.what)+' · עד '+esc(x.date)+'</i>')}).join('')||EMPTY;
+
+  var fh=f.filter(function(x){return Number(x.hopa)===1}).map(function(x){return Number(x.score)});
+  var fn=f.filter(function(x){return Number(x.hopa)===0}).map(function(x){return Number(x.score)});
+  var ah=avg(fh),an=avg(fn),gap=(ah!=null&&an!=null)?Math.abs(ah-an):null;
+  $('lw-f').innerHTML=f.length?
+    '<table class="fb"><tr><th></th><th>משיבים</th><th>ערך מעשי (1–5)</th></tr>'+
+    '<tr><td>רכזי הופה</td><td>'+fh.length+'</td><td>'+(ah!=null?ah.toFixed(2):'—')+'</td></tr>'+
+    '<tr><td>לא בהופה</td><td>'+fn.length+'</td><td>'+(an!=null?an.toFixed(2):'—')+'</td></tr></table>'+
+    (gap!=null?'<p class="gap '+(gap>0.7?'bad':'ok')+'">פער: '+gap.toFixed(2)+(gap>0.7?' · מעל 0.7, בעיה מבנית. לבנות את 16.12 אחרת.':' · תקין')+'</p>':'')+
+    '<div class="wall">'+f.filter(function(x){return x.txt}).map(function(x){return chip(esc(x.txt)+' <i>· '+(Number(x.hopa)?'הופה':'לא הופה')+'</i>')}).join('')+'</div>'
+    :EMPTY;
+  $('lastup').textContent='עודכן '+new Date().toLocaleTimeString('he-IL');
+}
+var busy=false;
+async function poll(){
+  if(busy)return;busy=true;
+  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;drawLive();drawPre()}}catch(e){}
+  busy=false;
+}
+$('refresh').onclick=poll;$('refresh2').onclick=poll;
+poll();
+setInterval(function(){if(!document.hidden&&($('p-live').classList.contains('on')||$('p-pre').classList.contains('on')))poll()},6000);
+
+/* ============ איפוס ============ */
+$('resetBtn').onclick=async function(){
+  if(!confirm('למחוק את כל נתוני מפגש 5.11 מהדף המלווה? (הצבעות, פעולות, חסמים, מלגות, צעדים, משוב). נתוני 21.10 לא נפגעים.'))return;
+  var st=$('resetStat');st.textContent='טוען את הרשימה…';
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6);
+    var keys=Object.keys(r.store||{}).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0&&!(r.store[k]||{}).del});
+    if(!keys.length){st.textContent='אין מה למחוק, כבר נקי ✓';return}
+    for(var i=0;i<keys.length;i++){
+      st.textContent='מוחק '+(i+1)+' מתוך '+keys.length+'…';
+      var school=keys[i].slice('intake_'.length);
+      try{await jsonpRetry({action:'intakeSubmit',school:school,json:JSON.stringify({del:1})},3)}catch(e){}
+    }
+    st.textContent='נמחקו '+keys.length+' רשומות ✓';
+    STORE={};poll();
+  }catch(e){st.textContent='לא הצלחתי לטעון מהגיליון. נסו שוב.'}
+};
+</script>
+</body>
+</html>

@@ -189,7 +189,7 @@
 
   <section id="s4">
     <div class="sec-head"><div class="num">4</div><div><h2>הדף שלי</h2><small>3 פעולות עד חנוכה</small></div><div class="time">25 דק'</div></div>
-    <p>ממלאים בשקט על הדף המודפס. אפשר גם כאן — ואז זה חוזר אליכם ב-16.12.</p>
+    <p>ממלאים בשקט על הדף המודפס, <b>ואז מעתיקים לכאן</b> (2 דקות). ב-5.11 בזום נחזור בדיוק לזה, ומה שכתבתם כאן יקבע באיזה חדר תהיו.</p>
 
     <label class="fl">שם + בית ספר</label>
     <input type="text" id="p_who" placeholder="כדי שנדע למי לחזור" maxlength="70">
@@ -205,7 +205,15 @@
     <input type="text" id="p_partner" placeholder="יועצת? מחנכת י״ב? מזכירה?" maxlength="60">
     <div class="callout" style="margin-top:8px"><b>רכז לבד לא שורד.</b> אם אין שם — זה החסם הראשון.</div>
 
-    <label class="fl">החסם האמיתי שלי — ומה הצעד הקטן שעוקף אותו</label>
+    <label class="fl">החסם האמיתי שלי: איזה סוג הוא הכי קרוב?</label>
+    <select id="p_btype" style="width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff">
+      <option value="">בחרו…</option>
+      <option value="phones">📵 אין לי טלפונים של בוגרים</option>
+      <option value="partner">🧍 אין לי שותף/ה בבית הספר</option>
+      <option value="time">⏳ אין לי זמן / זה לא בשעות שלי</option>
+      <option value="reach">📞 התקשרתי ולא ענו / לא ידעתי מה להגיד</option>
+    </select>
+    <label class="fl">ובמילים שלי: מה החסם, ומה הצעד הקטן שעוקף אותו</label>
     <textarea id="p_block"></textarea>
 
     <label class="fl">בוגר אחד שאני מתקשר/ת אליו השבוע</label>
@@ -225,7 +233,8 @@
     <ul>
       <li>הקיר מצולם ונשלח לכולם</li>
       <li>תבנית המאגר · פרוטוקול 4 השאלות · שלוש הרמות · קישור למענים</li>
-      <li><b>16.12, זום 13:30</b> — נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</li>
+      <li><b>5.11, זום</b> — נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף. ואז עובדים על החסמים.</li>
+      <li><b>16.12, זום 13:30</b> — מפגש אמצע שנה</li>
     </ul>
     <div class="btnrow">
       <a class="btn yellow" href="mashov2.html" target="_blank" rel="noopener">💬 משוב על המפגש</a>
@@ -270,11 +279,12 @@ $('csvBtn').onclick=function(){
 };
 
 /* טיוטה מקומית */
-var F=['p_who','p_a1','p_a2','p_a3','p_partner','p_block','p_boger','p_when'];
+var F=['p_who','p_a1','p_a2','p_a3','p_partner','p_btype','p_block','p_boger','p_when'];
 F.forEach(function(k){
   var el=$(k);if(!el)return;
   el.value=lsGet('hopa-m3-'+k)||'';
   el.addEventListener('input',function(){lsSet('hopa-m3-'+k,this.value)});
+  el.addEventListener('change',function(){lsSet('hopa-m3-'+k,this.value)});
 });
 
 function jsonp(params,tmo){
@@ -298,12 +308,12 @@ if(!myId){myId=Date.now().toString(36)+Math.random().toString(36).slice(2,6);lsS
 
 $('p_send').onclick=async function(){
   var who=$('p_who').value.trim();
-  if(!who){$('p_err').textContent='צריך שם ובית ספר כדי שנוכל לחזור אליך ב-16.12.';return}
+  if(!who){$('p_err').textContent='צריך שם ובית ספר כדי שנוכל לחזור אליך ב-5.11.';return}
   $('p_err').textContent='';
   var btn=this;btn.disabled=true;btn.textContent='שומר…';
   var payload={who:who,
     a1:$('p_a1').value.trim(),a2:$('p_a2').value.trim(),a3:$('p_a3').value.trim(),
-    partner:$('p_partner').value.trim(),block:$('p_block').value.trim(),
+    partner:$('p_partner').value.trim(),btype:$('p_btype').value,block:$('p_block').value.trim(),
     boger:$('p_boger').value.trim(),collectWhen:$('p_when').value.trim(),
     ts:new Date().toISOString(),meeting:'מפגש 21.10.2026 · בני ברק'};
   var params={action:'intakeSubmit',school:KEY_PREFIX+myId,json:JSON.stringify(payload)};
@@ -311,7 +321,7 @@ $('p_send').onclick=async function(){
   try{await jsonpRetry(params,4);ok=true}
   catch(e){try{await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});ok=true}catch(e2){}}
   btn.disabled=false;btn.textContent='שמירה 💛';
-  if(ok)toast('נשמר ✓ נדבר על זה ב-16.12');
+  if(ok)toast('נשמר ✓ נדבר על זה ב-5.11');
   else $('p_err').textContent='לא נשמר — נסו שוב. מה שכתבתם שמור במכשיר.';
 };
 </script>
