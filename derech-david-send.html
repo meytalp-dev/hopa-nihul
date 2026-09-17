@@ -180,6 +180,10 @@ let SUBMITTED = {};   // phone(digits) -> {name, ts}
 let filter = 'all', query = '';
 const app = document.getElementById('app');
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function copyText(txt){
+  try { await navigator.clipboard.writeText(txt); return true; } catch(e) {}
+  try { const ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); ta.remove(); return ok; } catch(e) { return false; }
+}
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2000); }
 const digits = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
 const waNum = p => '972' + digits(p).replace(/^0/,'');
@@ -264,8 +268,7 @@ function render(){
   const shownReach = list.filter(s => s.stage==='reach' && match(s));
   const shownOut = list.filter(s => s.stage==='out' && match(s));
   const armySent = list.filter(s => s.armySentAt);
-  const armyReady = list.filter(s => statusOf(s)==='done' && !s.stage && !s.armySentAt);
-  const armyNoConsent = list.filter(s => statusOf(s)==='done' && s.stage==='wants' && !s.armySentAt);
+  const armyReady = list.filter(s => statusOf(s)==='done' && !s.armySentAt);   // מילוי שאלון ההפניה = אישור השתתפות
   const approvedNotFilled = list.filter(s => !s.stage && statusOf(s)!=='done');
   const names = arr => arr.length ? arr.map(s=>esc(s.name)).join(' · ') : '—';
   const nextNew = list.find(s=>canSend(s) && statusOf(s)==='new');
@@ -302,11 +305,10 @@ function render(){
   </div>
 
   <div class="card army-box">
-    <h2>🎖️ מול המדור בצה"ל <small>נשלח רק מי שאישר/ה בטופס ההסכמה וגם מילא/ה את שאלון ההפניה</small></h2>
+    <h2>🎖️ מול המדור בצה"ל <small>מילוי שאלון ההפניה = אישור ההשתתפות</small></h2>
     <div class="grid">
       <div class="cell"><b>${armySent.length}</b>נשלחו למדור<span>${names(armySent)}</span></div>
       <div class="cell" style="${armyReady.length?'background:var(--ok-soft)':''}"><b>${armyReady.length}</b>מוכנים לשליחה עכשיו<span>${names(armyReady)}</span></div>
-      <div class="cell" style="${armyNoConsent.length?'background:#fdecec':''}"><b>${armyNoConsent.length}</b>מילאו — חסר אישור הסכמה<span>${names(armyNoConsent)}</span></div>
       <div class="cell"><b>${approvedNotFilled.length}</b>אישרו — טרם מילאו שאלון<span>${names(approvedNotFilled)}</span></div>
     </div>
   </div>
@@ -319,24 +321,13 @@ function render(){
     <button class="st ${filter==='reach'?'on':''}" data-f="reach"><b>${counts.reach}</b>📞 בארי עוד לא תפס</button>
     <button class="st ${filter==='out'?'on':''}" data-f="out"><b>${counts.out}</b>⏸ לא רלוונטי</button>
   </div>
-  <div class="card direct ${WA.url?'on':''}">
-    <h2>⚡ שליחה ישירה <small>${WA.url ? 'מחובר לוואטסאפ של הופה — בלי לפתוח חלון לכל אחד' : 'שליחה אוטומטית מהוואטסאפ המחובר, בלי לפתוח חלון לכל תלמיד'}</small></h2>
-    ${WA.url ? `
-      <div class="toolbar" style="margin-top:6px">
-        <button class="btn primary" id="sendAll" ${WA.busy||!counts.new?'disabled':''}>⚡ שלח לכל מי שעוד לא קיבל (${counts.new})</button>
-        ${WA.busy ? '<button class="btn outline" id="stopAll">⏹ עצור</button>' : ''}
-        <span class="hint" id="waProg" style="margin:0"></span>
-        <button class="btn outline sm" id="disconnect" title="ניתוק החיבור במכשיר הזה" style="margin-inline-start:auto">ניתוק</button>
-      </div>
-      <p class="hint" style="margin:8px 0 0">ההודעות יוצאות מהמספר המחובר (הוואטסאפ של מיטל) — כדאי ששם הרכז/ת בהודעה יתאים. יש השהיה של כ-2 שניות בין הודעה להודעה.</p>`
-    : `
-      <p class="hint">אותו חיבור כמו בדף <a href="hodaot.html" target="_blank" rel="noopener">שליחת הודעות לקבוצות</a> — אם כבר התחברת שם במכשיר הזה, זה מתחבר לבד. אחרת: הדביקי את כתובת ה-Web App (/exec) של סקריפט איסוף המענים ואת סיסמת השליחה.</p>
-      <div class="row"><input class="field" id="waUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(WA.url)}"><input class="field" id="waSecret" type="password" placeholder="סיסמת שליחה (SEND_SECRET)" value="${esc(WA.secret)}"></div>
-      <div class="toolbar"><button class="btn primary" id="waConnect">התחברות</button><span class="hint" style="margin:0">בלי חיבור — הכפתורים הירוקים עדיין פותחים וואטסאפ רגיל לכל תלמיד.</span></div>`}
+  <div class="card" style="background:var(--yellow-soft)">
+    <h2>📋 שליחה בהעתקה בלבד <small>כדי שוואטסאפ לא יחסום — בלי שליחה אוטומטית</small></h2>
+    <p class="hint" style="margin:4px 0 0">לכל תלמיד/ה: <b>📋 העתק</b> (ההודעה עם הקישור האישי מועתקת ומסומנת "נשלח") ← <b>💬 פתח צ'אט</b> ← הדבקה ושליחה ידנית. כדאי לשלוח בקצב רגוע, לא הרבה ברצף.</p>
   </div>
   <div class="toolbar">
     <input class="field" id="q" placeholder="חיפוש שם / טלפון…" value="${esc(query)}">
-    ${nextNew && !WA.url ? `<a class="btn wa" id="next" href="${waHref(nextNew)}" target="_blank" rel="noopener" data-id="${esc(nextNew.id)}">💬 שלח לבא בתור: ${esc(nextNew.name.split(' ')[0])}</a>` : ''}
+    ${nextNew ? `<button class="btn wa" data-copy="${esc(nextNew.id)}">📋 העתק לבא בתור: ${esc(nextNew.name.split(' ')[0])}</button>` : ''}
     <a class="btn outline" href="${ADMIN_URL}" target="_blank" rel="noopener">📥 לתשובות שהתקבלו</a>
     <a class="btn outline" href="${SHEET_URL || ADMIN_URL}" target="_blank" rel="noopener" title="הגיליון שנשלח לרכזת התוכנית — רק מי שאישר/ה ומילא/ה">📊 הגיליון למדור בצה"ל</a>
   </div>
@@ -377,24 +368,27 @@ function render(){
   app.querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.restore); s.stage='reach'; save(); render(); });
   app.querySelectorAll('[data-army]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.army);
     if (s.armySentAt) { if(!confirm('לבטל את הסימון "נשלח למדור" של '+s.name+'?')) return; s.armySentAt=''; }
-    else { if (s.stage==='wants' && !confirm(s.name+' עוד לא אישר/ה בטופס ההסכמה. לסמן בכל זאת שנשלח למדור?')) return; s.armySentAt=new Date().toISOString(); }
+    else { s.armySentAt=new Date().toISOString(); }
     save(); render(); });
   app.querySelectorAll('[data-note]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.note); const t=prompt('הערה על '+s.name+':', s.note||''); if(t!==null){ s.note=t.trim(); save(); render(); } });
-  app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(msgFor(s)).then(()=>toast('ההודעה הועתקה')); });
+  app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy);
+    if (!(await copyText(msgFor(s)))) { prompt('ההעתקה האוטומטית לא עבדה — סמני והעתיקי:', msgFor(s)); }
+    const first = !s.sentAt; if (first) { s.sentAt=new Date().toISOString(); save(true); }
+    toast('ההודעה ל'+s.name.split(' ')[0]+' הועתקה' + (first?' וסומנה "נשלח"':'') + ' — פתחי את הצ׳אט והדביקי'); render(); });
 }
 function refreshLinks(){ app.querySelectorAll('a[data-id]').forEach(a=>{ const s=DATA.students.find(x=>x.id===a.dataset.id); if(s) a.href=waHref(s); }); }
 function rowHtml(s){
   const st = statusOf(s);
   const sub = SUBMITTED[digits(s.phone)];
   const tag = st==='done' ? `<span class="tag ok">✓ מילא/ה ${esc(fmtDate(sub.ts))}</span>` : st==='sent' ? `<span class="tag yel">נשלח ${esc(fmtDate(s.sentAt))}</span>` : `<span class="tag gray">עוד לא נשלח</span>`;
-  const stageTag = (s.stage==='wants' ? (st==='done' ? ' <span class="tag warn">⚠️ חסר אישור הסכמה</span>' : ' <span class="tag pink">אמר/ה שרוצה</span>') : '')
+  const stageTag = (s.stage==='wants' && st!=='done' ? ' <span class="tag pink">אמר/ה שרוצה</span>' : '')
     + (s.armySentAt ? ` <span class="tag army">🎖️ נשלח למדור${/^\d{4}-/.test(s.armySentAt)?' '+esc(fmtDate(s.armySentAt).split(' ')[0]):''}</span>` : '');
   const urgent = /דחו?פ/.test(s.note||'');
   return `<div class="stu ${st}">
     <div class="who"><b>${esc(s.name)}</b> ${tag}${stageTag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note ${urgent?'urgent':''}">${urgent?'🔴 ':''}${esc(s.note)}</span>`:''}</div>
     <div class="acts">
-      ${st==='done' ? `<button class="btn ${s.armySentAt?'outline':'ok'} sm" data-army="${esc(s.id)}" title="${s.armySentAt?'ביטול הסימון':'סימון שטופס ההפניה הועבר למדור בצה&quot;ל'}">${s.armySentAt?'↩ 🎖️':'🎖️ נשלח למדור'}</button>` : (WA.url ? `<button class="btn wa sm ${st==='sent'?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${st==='sent'?'שלח שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}" title="פתיחה בוואטסאפ רגיל">💬</a>` : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`)}
-      <button class="btn outline sm" data-copy="${esc(s.id)}" title="העתק הודעה">📋</button>
+      ${st==='done' ? `<button class="btn ${s.armySentAt?'outline':'ok'} sm" data-army="${esc(s.id)}" title="${s.armySentAt?'ביטול הסימון':'סימון שטופס ההפניה הועבר למדור בצה&quot;ל'}">${s.armySentAt?'↩ 🎖️':'🎖️ נשלח למדור'}</button>` : `<button class="btn wa sm ${st==='sent'?'again':''}" data-copy="${esc(s.id)}">📋 ${st==='sent'?'העתק שוב':'העתק הודעה'}</button>`}
+      <a class="btn outline sm" href="https://wa.me/${waNum(s.phone)}" target="_blank" rel="noopener" title="פתיחת הצ'אט בלי טקסט — להדביק את ההודעה">💬 פתח צ'אט</a>
       ${st==='sent' ? `<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון נשלח">↩</button>` : ''}
       <button class="btn sm danger" data-del="${esc(s.id)}" title="הסר">✕</button>
     </div>
