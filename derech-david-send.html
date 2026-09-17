@@ -78,13 +78,20 @@
   .tag.ok{background:var(--ok-soft);color:#137a4a}
   .tag.pink{background:var(--pink-soft);color:var(--pink-dark)}
   .tag.blue{background:#e8f0fe;color:#2856b8}
+  .tag.army{background:#e3efe6;color:#2f5d3a}
+  .tag.warn{background:#fdecec;color:#a33}
+  .army-box .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:8px}
+  .army-box .cell{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13px}
+  .army-box .cell b{display:block;font-size:22px}
+  .army-box .cell span{display:block;color:#5a5a66;margin-top:2px}
+  .stu.out{opacity:.7}
   .stu.reach{border-right-color:#7aa2f7;background:#fafcff}
   .stu .note{display:block;font-size:13px;color:#5a5a66;background:var(--bg);border-radius:10px;padding:5px 10px;margin-top:6px}
   .stu .note.urgent{background:#fdecec;color:#a33}
   .btn.ok{background:var(--ok);color:#fff}
   .sec{margin:18px 4px 0;font-size:15px;font-weight:700;color:var(--ink)}
   .sec small{font-weight:400;color:var(--muted);font-size:13px}
-  .acts{display:flex;gap:6px;align-items:center}
+  .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .empty{text-align:center;color:var(--muted);padding:26px 10px}
   .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
   .foot a{color:var(--pink-dark);text-decoration:none;font-weight:600}
@@ -238,9 +245,11 @@ function msgFor(s){
 function waHref(s){ return 'https://wa.me/' + waNum(s.phone) + '?text=' + encodeURIComponent(msgFor(s)); }
 
 /* ===================== רינדור ===================== */
-/* stage: '' = אישר/ה בטופס ההסכמה · 'wants' = אמר/ה לבארי שרוצה (טרם אישר/ה בטופס) · 'reach' = בארי עוד לא תפס — לא שולחים קישור */
-const canSend = s => s.stage !== 'reach';
+/* stage: '' = אישר/ה בטופס ההסכמה · 'wants' = אמר/ה לבארי שרוצה (טרם אישר/ה בטופס) · 'reach' = בארי עוד לא תפס — לא שולחים קישור · 'out' = לא רלוונטי (נשמר לתיעוד)
+   armySentAt = טופס ההפניה הועבר למדור "דרך דוד" בצה"ל */
+const canSend = s => s.stage !== 'reach' && s.stage !== 'out';
 function statusOf(s){
+  if (s.stage === 'out') return 'out';
   if (SUBMITTED[digits(s.phone)]) return 'done';
   if (s.stage === 'reach') return 'reach';
   if (s.sentAt) return 'sent';
@@ -248,11 +257,17 @@ function statusOf(s){
 }
 function render(){
   const list = DATA.students;
-  const counts = { all:list.length, new:0, sent:0, done:0, reach:0 };
+  const counts = { all:list.length, new:0, sent:0, done:0, reach:0, out:0 };
   list.forEach(s=>counts[statusOf(s)]++);
   const match = s => (filter==='all' || statusOf(s)===filter) && (!query || (s.name+' '+s.phone+' '+(s.school||'')+' '+(s.note||'')).includes(query));
   const shownSend = list.filter(s => canSend(s) && match(s));
-  const shownReach = list.filter(s => !canSend(s) && match(s));
+  const shownReach = list.filter(s => s.stage==='reach' && match(s));
+  const shownOut = list.filter(s => s.stage==='out' && match(s));
+  const armySent = list.filter(s => s.armySentAt);
+  const armyReady = list.filter(s => statusOf(s)==='done' && !s.stage && !s.armySentAt);
+  const armyNoConsent = list.filter(s => statusOf(s)==='done' && s.stage==='wants' && !s.armySentAt);
+  const approvedNotFilled = list.filter(s => !s.stage && statusOf(s)!=='done');
+  const names = arr => arr.length ? arr.map(s=>esc(s.name)).join(' · ') : '—';
   const nextNew = list.find(s=>canSend(s) && statusOf(s)==='new');
 
   app.innerHTML = `
@@ -286,12 +301,23 @@ function render(){
     </details>
   </div>
 
+  <div class="card army-box">
+    <h2>🎖️ מול המדור בצה"ל <small>נשלח רק מי שאישר/ה בטופס ההסכמה וגם מילא/ה את שאלון ההפניה</small></h2>
+    <div class="grid">
+      <div class="cell"><b>${armySent.length}</b>נשלחו למדור<span>${names(armySent)}</span></div>
+      <div class="cell" style="${armyReady.length?'background:var(--ok-soft)':''}"><b>${armyReady.length}</b>מוכנים לשליחה עכשיו<span>${names(armyReady)}</span></div>
+      <div class="cell" style="${armyNoConsent.length?'background:#fdecec':''}"><b>${armyNoConsent.length}</b>מילאו — חסר אישור הסכמה<span>${names(armyNoConsent)}</span></div>
+      <div class="cell"><b>${approvedNotFilled.length}</b>אישרו — טרם מילאו שאלון<span>${names(approvedNotFilled)}</span></div>
+    </div>
+  </div>
+
   <div class="stats">
     <button class="st ${filter==='all'?'on':''}" data-f="all"><b>${counts.all}</b>ברשימה</button>
     <button class="st ${filter==='new'?'on':''}" data-f="new"><b>${counts.new}</b>עוד לא נשלח</button>
     <button class="st ${filter==='sent'?'on':''}" data-f="sent"><b>${counts.sent}</b>נשלח, מחכים למילוי</button>
     <button class="st ${filter==='done'?'on':''}" data-f="done"><b>${counts.done}</b>✓ מילאו את השאלון</button>
     <button class="st ${filter==='reach'?'on':''}" data-f="reach"><b>${counts.reach}</b>📞 בארי עוד לא תפס</button>
+    <button class="st ${filter==='out'?'on':''}" data-f="out"><b>${counts.out}</b>⏸ לא רלוונטי</button>
   </div>
   <div class="card direct ${WA.url?'on':''}">
     <h2>⚡ שליחה ישירה <small>${WA.url ? 'מחובר לוואטסאפ של הופה — בלי לפתוח חלון לכל אחד' : 'שליחה אוטומטית מהוואטסאפ המחובר, בלי לפתוח חלון לכל תלמיד'}</small></h2>
@@ -315,12 +341,14 @@ function render(){
     <a class="btn outline" href="${SHEET_URL || ADMIN_URL}" target="_blank" rel="noopener" title="הגיליון שנשלח לרכזת התוכנית — רק מי שאישר/ה ומילא/ה">📊 הגיליון למדור בצה"ל</a>
   </div>
 
-  ${filter!=='reach' ? `<div class="sec">📨 לשליחת השאלון <small>אישרו או אמרו לבארי שרוצים</small></div>
+  ${filter!=='reach' && filter!=='out' ? `<div class="sec">📨 לשליחת השאלון <small>אישרו או אמרו לבארי שרוצים</small></div>
   <div class="list">
     ${shownSend.length ? shownSend.map(rowHtml).join('') : `<div class="card empty">${list.length ? 'אין תלמידים בסינון הזה' : 'הרשימה ריקה — הוסיפו תלמיד/ה למעלה או הדביקו רשימה שלמה'}</div>`}
   </div>` : ''}
   ${(filter==='all'||filter==='reach') && shownReach.length ? `<div class="sec">📞 בארי עוד לא תפס <small>לא נשלח קישור. אחרי שיחה: "רוצה" מעביר לשליחה, "לא רוצה" מוריד מהרשימה</small></div>
   <div class="list">${shownReach.map(reachHtml).join('')}</div>` : ''}
+  ${(filter==='all'||filter==='out') && shownOut.length ? `<div class="sec">⏸ לא רלוונטי <small>לא שולחים — נשמר לתיעוד. "החזר" מחזיר לרשימת השיחות</small></div>
+  <div class="list">${shownOut.map(outHtml).join('')}</div>` : ''}
   <div class="foot"><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · פתאום הכל נראה אפשרי!</div>`;
 
   /* wiring */
@@ -345,6 +373,12 @@ function render(){
   app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.unsend); s.sentAt=''; save(); render(); });
   app.querySelectorAll('[data-wants]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.wants); s.stage='wants'; s.reachedAt=new Date().toISOString(); save(); render(); toast(s.name+' עבר/ה לשליחת השאלון'); });
   app.querySelectorAll('[data-nowant]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.nowant); if(confirm(s.name+' לא רוצה — להוריד מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
+  app.querySelectorAll('[data-out]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.out); const t=prompt('למה '+s.name+' לא רלוונטי/ת? (נשמר בהערה)', s.note||''); if(t!==null){ s.stage='out'; s.note=t.trim(); save(); render(); } });
+  app.querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.restore); s.stage='reach'; save(); render(); });
+  app.querySelectorAll('[data-army]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.army);
+    if (s.armySentAt) { if(!confirm('לבטל את הסימון "נשלח למדור" של '+s.name+'?')) return; s.armySentAt=''; }
+    else { if (s.stage==='wants' && !confirm(s.name+' עוד לא אישר/ה בטופס ההסכמה. לסמן בכל זאת שנשלח למדור?')) return; s.armySentAt=new Date().toISOString(); }
+    save(); render(); });
   app.querySelectorAll('[data-note]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.note); const t=prompt('הערה על '+s.name+':', s.note||''); if(t!==null){ s.note=t.trim(); save(); render(); } });
   app.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(msgFor(s)).then(()=>toast('ההודעה הועתקה')); });
 }
@@ -353,11 +387,13 @@ function rowHtml(s){
   const st = statusOf(s);
   const sub = SUBMITTED[digits(s.phone)];
   const tag = st==='done' ? `<span class="tag ok">✓ מילא/ה ${esc(fmtDate(sub.ts))}</span>` : st==='sent' ? `<span class="tag yel">נשלח ${esc(fmtDate(s.sentAt))}</span>` : `<span class="tag gray">עוד לא נשלח</span>`;
-  const stageTag = s.stage==='wants' ? ' <span class="tag pink">אמר/ה שרוצה</span>' : '';
+  const stageTag = (s.stage==='wants' ? (st==='done' ? ' <span class="tag warn">⚠️ חסר אישור הסכמה</span>' : ' <span class="tag pink">אמר/ה שרוצה</span>') : '')
+    + (s.armySentAt ? ` <span class="tag army">🎖️ נשלח למדור${/^\d{4}-/.test(s.armySentAt)?' '+esc(fmtDate(s.armySentAt).split(' ')[0]):''}</span>` : '');
+  const urgent = /דחו?פ/.test(s.note||'');
   return `<div class="stu ${st}">
-    <div class="who"><b>${esc(s.name)}</b> ${tag}${stageTag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note">${esc(s.note)}</span>`:''}</div>
+    <div class="who"><b>${esc(s.name)}</b> ${tag}${stageTag}<span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note ${urgent?'urgent':''}">${urgent?'🔴 ':''}${esc(s.note)}</span>`:''}</div>
     <div class="acts">
-      ${st==='done' ? '' : (WA.url ? `<button class="btn wa sm ${st==='sent'?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${st==='sent'?'שלח שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}" title="פתיחה בוואטסאפ רגיל">💬</a>` : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`)}
+      ${st==='done' ? `<button class="btn ${s.armySentAt?'outline':'ok'} sm" data-army="${esc(s.id)}" title="${s.armySentAt?'ביטול הסימון':'סימון שטופס ההפניה הועבר למדור בצה&quot;ל'}">${s.armySentAt?'↩ 🎖️':'🎖️ נשלח למדור'}</button>` : (WA.url ? `<button class="btn wa sm ${st==='sent'?'again':''}" data-direct="${esc(s.id)}" ${WA.busy?'disabled':''}>⚡ ${st==='sent'?'שלח שוב':'שלח'}</button><a class="btn outline sm" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}" title="פתיחה בוואטסאפ רגיל">💬</a>` : `<a class="btn wa sm ${st==='sent'?'again':''}" href="${waHref(s)}" target="_blank" rel="noopener" data-id="${esc(s.id)}">💬 ${st==='sent'?'שלח שוב':'שלח בוואטסאפ'}</a>`)}
       <button class="btn outline sm" data-copy="${esc(s.id)}" title="העתק הודעה">📋</button>
       ${st==='sent' ? `<button class="btn outline sm" data-unsend="${esc(s.id)}" title="בטל סימון נשלח">↩</button>` : ''}
       <button class="btn sm danger" data-del="${esc(s.id)}" title="הסר">✕</button>
@@ -373,7 +409,17 @@ function reachHtml(s){
       <a class="btn outline sm" href="https://wa.me/${waNum(s.phone)}" target="_blank" rel="noopener" title="פתיחת צ'אט בוואטסאפ (בלי קישור לשאלון)">💬</a>
       <button class="btn outline sm" data-note="${esc(s.id)}" title="עריכת הערה">✏️</button>
       <button class="btn ok sm" data-wants="${esc(s.id)}">✔ רוצה</button>
+      <button class="btn outline sm" data-out="${esc(s.id)}" title="לא שולחים, אבל נשמר לתיעוד (למשל: כבר התגייס)">⏸ לא רלוונטי</button>
       <button class="btn sm danger" data-nowant="${esc(s.id)}">✕ לא רוצה</button>
+    </div>
+  </div>`;
+}
+function outHtml(s){
+  return `<div class="stu out">
+    <div class="who"><b>${esc(s.name)}</b> <span class="tag gray">לא רלוונטי</span><span><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a>${s.school?' · '+esc(s.school):''}</span>${s.note?`<span class="note">${esc(s.note)}</span>`:''}</div>
+    <div class="acts">
+      <button class="btn outline sm" data-note="${esc(s.id)}" title="עריכת הערה">✏️</button>
+      <button class="btn outline sm" data-restore="${esc(s.id)}">↩ החזר</button>
     </div>
   </div>`;
 }
