@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לוח המעקב של מיטל · הופה</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;--green:#1f9d63;--green-soft:#e3f6ec;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--warn:#b65c00;--warn-soft:#fff1dd}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  .in{max-width:900px;margin:0 auto;padding:0 16px}
+  a{color:inherit}
+
+  header{background:#111;color:#fff;padding:20px 0 22px}
+  .hrow{display:flex;align-items:center;gap:14px}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:36px;display:block}
+  h1{margin:0;font-size:24px;font-weight:900}
+  .sub{font-size:13.5px;opacity:.75;margin-top:2px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:16px}
+  .kpi{background:#1c1c24;border-radius:12px;padding:9px 12px;text-decoration:none}
+  .kpi b{display:block;font-size:24px;font-weight:900;color:var(--yellow);line-height:1.1}
+  .kpi span{font-size:12.5px;opacity:.8}
+
+  nav{position:sticky;top:0;z-index:5;background:rgba(246,242,247,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  nav .in{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+  nav a{flex:none;text-decoration:none;font-size:13px;font-weight:700;border-radius:999px;padding:6px 12px;background:#fff;border:1.5px solid var(--line)}
+  nav a:hover{border-color:var(--pink)}
+  .filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:14px;font-size:13px}
+  .filters button{font:inherit;font-weight:700;border-radius:999px;padding:5px 12px;border:1.5px solid var(--line);background:#fff;cursor:pointer}
+  .filters button.on{background:#111;color:#fff;border-color:#111}
+  .sync{margin-inline-start:auto;color:var(--muted);font-size:12px}
+
+  main{padding:4px 0 40px}
+  section{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(31,31,38,.07);margin-top:16px;overflow:hidden;scroll-margin-top:60px}
+  .sh{display:flex;align-items:center;gap:12px;padding:16px 18px 4px;flex-wrap:wrap}
+  .ico{width:42px;height:42px;border-radius:12px;background:var(--pink);color:#fff;display:grid;place-items:center;font-size:21px;flex:none}
+  section.dark .ico{background:#111}
+  .sh h2{margin:0;font-size:19px;font-weight:900}
+  .sh .goal{font-size:13.5px;color:var(--muted);font-weight:500}
+  .cnt{margin-inline-start:auto;font-size:12.5px;font-weight:700;background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:3px 10px}
+  .sb{padding:8px 18px 16px}
+
+  .item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+  .item:first-child{border-top:0}
+  .item input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex:none;cursor:pointer}
+  .item .t{flex:1;min-width:0}
+  .item .t b{font-weight:700}
+  .item .d{font-size:13px;color:var(--muted)}
+  .item.done .t{opacity:.5}
+  .item.done .t b{text-decoration:line-through}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-inline-start:4px;vertical-align:1px}
+  .tag.urg{background:var(--pink);color:#fff}
+  .tag.who{background:#eef0ff;color:#3b46a8}
+  .tag.date{background:var(--warn-soft);color:var(--warn)}
+  .note{margin-top:5px;width:100%;font:inherit;font-size:13px;border:1px dashed var(--line);border-radius:8px;padding:4px 8px;background:#fcfbfd}
+  .note:focus{outline:none;border-color:var(--pink);border-style:solid}
+  .when{font-size:11.5px;color:var(--green)}
+  .ilinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+  .ilinks a{font-size:12.5px;font-weight:700;text-decoration:none;border-radius:8px;padding:3px 9px;background:var(--pink-soft);color:var(--pink-dark)}
+
+  .live{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:6px 0 10px}
+  .live div{background:var(--bg);border-radius:12px;padding:8px 10px;text-align:center}
+  .live b{display:block;font-size:22px;font-weight:900;color:var(--pink-dark)}
+  .live span{font-size:12px;color:var(--muted)}
+  .hint{font-size:12.5px;color:var(--muted);margin:4px 0 8px}
+  .warn{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:7px 11px;font-size:13px;margin:6px 0}
+
+  .tw{overflow-x:auto;margin:0 -18px;padding:0 18px}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th{text-align:right;font-size:12px;color:var(--muted);font-weight:700;padding:6px 6px;border-bottom:2px solid var(--line);white-space:nowrap}
+  td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.n{font-weight:700;white-space:nowrap}
+  td.num{font-weight:900;text-align:center}
+  .pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:0;font-family:inherit}
+  .p-ok{background:var(--green-soft);color:var(--green)}
+  .p-no{background:var(--pink-soft);color:var(--pink-dark)}
+  .p-part{background:var(--warn-soft);color:var(--warn)}
+  .p-mute{background:#f1eff3;color:var(--muted);cursor:default}
+  tr.hide{display:none}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+  .card{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;text-decoration:none;display:block;background:#fff}
+  .card:hover{border-color:var(--pink)}
+  .card b{display:block;font-size:14.5px}
+  .card span{font-size:12.5px;color:var(--muted)}
+  .card i{font-style:normal;font-size:11px;font-weight:700;color:var(--pink-dark)}
+  h3{font-size:14px;margin:14px 0 8px;color:var(--pink-dark)}
+  h3:first-child{margin-top:4px}
+
+  .add{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .add input,.add select{font:inherit;font-size:13.5px;border:1.5px solid var(--line);border-radius:10px;padding:7px 10px}
+  .add input{flex:1 1 220px}
+  .btn{font:inherit;font-weight:700;border:0;border-radius:10px;padding:7px 14px;background:var(--pink);color:#fff;cursor:pointer}
+  .x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0 4px}
+
+  #gate{position:fixed;inset:0;background:#111;display:grid;place-items:center;z-index:50;padding:16px}
+  #gate div{background:#fff;border-radius:18px;padding:24px;max-width:320px;width:100%;text-align:center}
+  #gate input{width:100%;font:inherit;font-size:22px;text-align:center;letter-spacing:4px;border:1.5px solid var(--line);border-radius:12px;padding:8px;margin:12px 0}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:8px 18px;font-size:13.5px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60}
+  .toast.on{opacity:1}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 34px}
+  footer a{color:var(--pink-dark);font-weight:700}
+  @media(max-width:480px){h1{font-size:20px}.sh h2{font-size:17px}}
+</style>
+</head>
+<body>
+
+<div id="gate"><div>
+  <img src="hopa-logo.png" alt="הופה" style="height:40px">
+  <p style="margin:10px 0 0;font-weight:700">לוח המעקב — קוד כניסה</p>
+  <input id="pin" type="password" autocomplete="off" inputmode="text">
+  <button class="btn" id="pinGo" style="width:100%">כניסה</button>
+</div></div>
+
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1>לוח המעקב שלי</h1><div class="sub">כל מה שפתוח בתוכנית הבוגרים במקום אחד · הנתונים נכונים ל-17.9.2026 · הסימונים נשמרים בגיליון ומסתנכרנים בין מכשירים</div></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+</div></header>
+
+<nav><div class="in">
+  <a href="#dd">🎖️ נערי דוד</a>
+  <a href="#schools">🏫 בתי הספר</a>
+  <a href="#people">👥 אנשי קשר</a>
+  <a href="#tech">🔧 ממתין להדבקה</a>
+  <a href="#meet">📅 מפגשים</a>
+  <a href="#neshira">🧯 נשירה</a>
+  <a href="#more">📌 עוד</a>
+  <a href="#links">🔗 קישורים</a>
+  <a href="#train">🎓 הדרכות</a>
+</div></nav>
+
+<main class="in">
+  <div class="filters">
+    <span>הצגה:</span>
+    <button data-f="open" class="on">רק מה שפתוח</button>
+    <button data-f="all">הכל</button>
+    <button data-f="done">מה שסגרתי</button>
+    <span class="sync" id="sync">טוען…</span>
+  </div>
+
+  <!-- נערי דוד -->
+  <section id="dd">
+    <div class="sh"><div class="ico">🎖️</div><div><h2>נערי דוד · דרך דוד</h2><div class="goal">מאישור ההורים ועד שטופס ההפניה מגיע למדור בצה"ל</div></div><span class="cnt" data-cnt="dd"></span></div>
+    <div class="sb">
+      <div class="live" id="ddLive"><div><b>…</b><span>נטען מהגיליון</span></div></div>
+      <div class="hint">המספרים נקראים ברגע זה מרשימת השליחה ומהטפסים שהבוגרים מילאו. השמות עצמם מופיעים רק בדף השליחה.</div>
+      <div data-list="dd"></div>
+      <div class="ilinks" style="margin-top:10px">
+        <a href="derech-david-send.html" target="_blank">📨 דף השליחה (קוד hopa)</a>
+        <a href="derech-david.html?admin=hopa" target="_blank">🗂️ ניהול ההפניות</a>
+        <a href="derech-david.html" target="_blank">📝 הטופס לבוגר/ת</a>
+        <a href="https://hopadash.vercel.app/send?key=nd-send-7k2m9x4q" target="_blank">✍️ מרכז שליחת טופסי ההסכמה</a>
+        <a href="https://hopadash.vercel.app/nosach" target="_blank">📄 נוסח ההודעה</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- בתי הספר -->
+  <section id="schools">
+    <div class="sh"><div class="ico">🏫</div><div><h2>25 בתי הספר · רשימות, קבוצות ותוכניות עבודה</h2><div class="goal">לחיצה על תג משנה אותו (למשל כשנפתחה קבוצה או הועלתה רשימה)</div></div></div>
+    <div class="sb">
+      <div class="live" id="schoolLive"></div>
+      <div class="warn">⚠️ <b>קבוצות וואטסאפ של בוגרים:</b> לפי מה שאמרת, יש קבוצות ב-7 בתי ספר. במונדיי רשום קישור גם ל<b>צור ברק</b>, ובמונדיי <b>חסרים</b> הקישורים של <b>תל אביב</b> ו<b>חושן</b>. כדאי לבדוק את צור ברק ולהוסיף את שני הקישורים ללוח.</div>
+      <div class="tw"><table>
+        <thead><tr><th>בית ספר</th><th>בוגרים במערכת</th><th>רשימה</th><th>מה חסר ברשימה</th><th>קבוצת בוגרים</th><th>תוכנית עבודה</th><th>שאלון היכרות</th></tr></thead>
+        <tbody id="schoolRows"></tbody>
+      </table></div>
+      <div class="hint">מספרי הבוגרים לפי הייבוא האחרון (16.9). תוכנית עבודה ושאלון היכרות לפי מונדיי (17.9). התקציב (10,000 ₪) עוד לא הועבר לאף בית ספר.</div>
+      <div data-list="schools"></div>
+    </div>
+  </section>
+
+  <!-- אנשי קשר -->
+  <section id="people">
+    <div class="sh"><div class="ico">👥</div><div><h2>אנשי קשר, גישות ופורום</h2><div class="goal">מיילים, משתמשים ב-HOPA Secure וחברות בקבוצת הרכזים</div></div><span class="cnt" data-cnt="people"></span></div>
+    <div class="sb"><div data-list="people"></div></div>
+  </section>
+
+  <!-- טכני -->
+  <section id="tech" class="dark">
+    <div class="sh"><div class="ico">🔧</div><div><h2>דברים שמחכים שתדביקי או תריצי</h2><div class="goal">קוד מוכן שעוד לא עלה לאוויר</div></div><span class="cnt" data-cnt="tech"></span></div>
+    <div class="sb"><div data-list="tech"></div></div>
+  </section>
+
+  <!-- מפגשים -->
+  <section id="meet">
+    <div class="sh"><div class="ico">📅</div><div><h2>מפגשי הרכזים · 14.10 · 21.10 · 5.11</h2><div class="goal">מה עוד צריך לסגור לפני המפגשים</div></div><span class="cnt" data-cnt="meet"></span></div>
+    <div class="sb"><div data-list="meet"></div></div>
+  </section>
+
+  <!-- נשירה -->
+  <section id="neshira">
+    <div class="sh"><div class="ico">🧯</div><div><h2>מניעת נשירה 14–18</h2><div class="goal">5 בתי ספר · מה עוד חסר</div></div><span class="cnt" data-cnt="neshira"></span></div>
+    <div class="sb"><div data-list="neshira"></div></div>
+  </section>
+
+  <!-- עוד -->
+  <section id="more">
+    <div class="sh"><div class="ico">📌</div><div><h2>עוד דברים שכדאי לא לשכוח</h2><div class="goal">מאגר המענים, פרסום, מסמכים · וגם כל מה שתוסיפי בעצמך</div></div><span class="cnt" data-cnt="more"></span></div>
+    <div class="sb">
+      <div data-list="more"></div>
+      <div class="add">
+        <input id="newText" placeholder="פריט חדש למעקב…">
+        <select id="newSec">
+          <option value="more">עוד</option><option value="dd">נערי דוד</option><option value="schools">בתי הספר</option>
+          <option value="people">אנשי קשר</option><option value="meet">מפגשים</option><option value="neshira">נשירה</option>
+        </select>
+        <button class="btn" id="addBtn">הוספה</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- קישורים -->
+  <section id="links">
+    <div class="sh"><div class="ico">🔗</div><div><h2>כל הקישורים</h2><div class="goal">הופה דש, HOPA Secure, דפי שליחה וטפסים</div></div></div>
+    <div class="sb" id="linkBlocks"></div>
+  </section>
+
+  <!-- הדרכות -->
+  <section id="train">
+    <div class="sh"><div class="ico">🎓</div><div><h2>חומרי הדרכה</h2><div class="goal">מפגשי רכזים, תיקי חפיפה, מענים וכלים לשטח</div></div></div>
+    <div class="sb" id="trainBlocks"></div>
+  </section>
+</main>
+
+<footer class="in">לוח מעקב פנימי · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const GS_SECRET = 'hopa-nihul-2026';
+const STATE_KEY = 'maakav_state';
+const PIN = 'hopa';
+const HD = 'https://hopadash.vercel.app';
+
+/* ---------- פריטי המעקב ---------- */
+const ITEMS = {
+  dd: [
+    {id:'dd-consent2', t:'2 בוגרים מילאו את הטופס, אבל ההורים עוד לא אישרו', d:'בלי אישור הסכמה אי אפשר להעביר למדור. טופסי ה-Word שלהם כבר מוכנים בתיקייה.', urg:1},
+    {id:'dd-eden', t:'בוגר אחד מצור ברק מסומן דחוף ועוד לא עבר צו ראשון', d:'המדור מטפל רק אחרי צו ראשון. צריך לבדוק איתו מתי הצו.', urg:1},
+    {id:'dd-reach', t:'פולו-אפ לבוגרים שבארי עוד לא הצליח לתפוס', d:'בדף השליחה, בסינון "בארי עוד לא תפס".', who:'בארי'},
+    {id:'dd-wants', t:'פולו-אפ לבוגרים שאמרו שהם רוצים אבל עוד לא מילאו', d:'לשלוח להם שוב את הקישור לשאלון.', who:'בארי'},
+    {id:'dd-sheet', t:'להפעיל את הגיליון לרכזת התוכנית בצה"ל', d:'להדביק את הקוד של דרך דוד ב-Code.gs, להריץ ddBuild ולפרוס גרסה חדשה (New version). ההוראות בקובץ "עדכון-Code.gs-גיליון-דרך-דוד.md".'},
+    {id:'dd-monday', t:'להוסיף ידנית בוגרים חדשים שאישרו', d:'מי שמאשר בלוח המונדיי של נערי דוד לא נכנס לבד לרשימת השליחה. צריך להוסיף אותו ידנית.'},
+    {id:'dd-direct', t:'לבדוק את "⚡ שליחה ישירה" מול הוואטסאפ האמיתי', d:'עד עכשיו הכפתור נבדק רק בסימולציה.'},
+  ],
+  schools: [
+    {id:'sc-empty', t:'6 בתי ספר עוד בלי רשימת בוגרים', d:'לקייה, ג\'וליס, פלמחים, דרור גליל, רהט וירכא. לבקש מהרכזים קובץ ולייבא. ⚠️ לפני הייבוא של ירכא: בשם שלה במערכת יש תו נסתר בתחילתו.', urg:1},
+    {id:'sc-mitzpe', t:'מצפה רמון: נפתח במערכת, אבל אין רכז/ת', d:'המנהלת היא ענבל לוי. צריך להחליט מי אחראי/ת על הבוגרים בבית הספר.'},
+    {id:'sc-haifa', t:'"תיכון חברתי חיפה" הופיע ב-HOPA Secure', d:'בית הספר הזה לא ברשימת 25 בתי הספר של התוכנית. לבדוק מי פתח אותו ואם הוא קשור לכרמל חיפה.'},
+    {id:'sc-ids', t:'להשלים ת"ז: אשקלון (243) ובית שאן (77)', d:'אלה הפערים הגדולים ביותר. אפשר להשלים במסך "דורשי טיפול" ב-HOPA Secure.', who:'בארי / אסמאא'},
+    {id:'sc-phones', t:'להשלים טלפונים: כרמיאל (131), בית שאן (30), נווה מדבר (20)', d:'', who:'בארי / אסמאא'},
+    {id:'sc-year', t:'לתקן שנת סיום ברמת דוד ובביר אלמכסור', d:'השנה נשמרה כ-"2026" במקום תשפ"ו.'},
+    {id:'sc-bs-new', t:'בית שאן: להוסיף את מחזור תשפ"ו', d:'בקובץ יש 20 שורות שמסומנות "מחזור חדש להוסיף".'},
+    {id:'sc-wa', t:'לפתוח קבוצות בוגרים בבתי הספר שאין בהם', d:'כרגע יש קבוצות רק ב-7 בתי ספר. בטבלה למעלה אפשר לסמן כל קבוצה חדשה שנפתחת.'},
+    {id:'sc-plans', t:'תוכניות עבודה: רק 4 מתוך 25 הוגשו', d:'הוגשו: תל אביב, כרמיאל, ירכא ומוצקין. לשלוח תזכורת לכל השאר.', urg:1},
+    {id:'sc-quest', t:'12 בתי ספר עוד לא ענו על שאלון ההיכרות', d:'רשימת בתי הספר מופיעה בעמודה "שאלון היכרות" בטבלה.'},
+    {id:'sc-budget', t:'העברת התקציב לבתי הספר', d:'לפי מונדיי, עוד לא הועבר תקציב לאף בית ספר.'},
+    {id:'sc-counts', t:'לעדכן את מספרי הבוגרים בדפים עם ספירה קבועה', d:'הטאב "רשימות בוגרים" בהופה דש, rishum-send, mazaltov-data.js והתאריך בלוח הצוות. כרמל, טורעאן ונחלים עוד לא נכנסו לדפים האלה.'},
+  ],
+  people: [
+    {id:'pp-mail3', t:'חסרים מיילים של 3 רכזים', d:'נחלים (טל מילוא), אשדוד (ריקי מסס) ובית שאן (חן עמרן).', links:[['דף בקשת המייל','mail-rakazim.html']]},
+    {id:'pp-bs-acc', t:'לפתוח משתמש לרכז/ת בית שאן ב-HOPA Secure', d:'כרגע אין לבית הספר משתמש רכז/ת.', urg:1},
+    {id:'pp-newacc', t:'לפתוח משתמשים ל-6 בתי הספר החדשים', d:'נחלים, טורעאן, דרור גליל, ירכא, רהט ומצפה רמון, ולשלוח להם את פרטי הכניסה.', links:[['דף שליחת הגישות','hopa-secure-send.html']]},
+    {id:'pp-drafts', t:'לוודא שנשלחו טיוטות המייל עם הגישות', d:'ב-14.9 הוכנו ב-Gmail טיוטות ל-20 אנשים ב-10 בתי ספר, ולא ברור אם הן נשלחו.'},
+    {id:'pp-relogin', t:'בארי ואסמאא צריכים להתנתק ולהתחבר מחדש', d:'רק אחרי כניסה מחדש הם יראו את בורר בתי הספר (הם admin מ-16.9).', who:'בארי / אסמאא'},
+    {id:'pp-root', t:'להחליף את סיסמת ה-root של HOPA Secure', d:'ממתין מ-29.8.', urg:1},
+    {id:'pp-forum', t:'לבדוק מי עוד לא בקבוצת הרכזים', d:'לבדוק את ביר אלמכסור, פלמחים, חושן, טורעאן ודרור גליל. בנווה מדבר לבדוק שהרכזת החדשה, היאם אזברגה, צורפה.'},
+    {id:'pp-verify', t:'לאמת 3 פרטים לא ודאיים', d:'המייל של כרמיאל (irisb@), המייל של רהט, ושם המשפחה של מוניר מטורעאן.'},
+    {id:'pp-mor', t:'חסר הטלפון של מור מרמת דוד', d:'חסר ברשימת המשוב של המפגש הראשון.'},
+    {id:'pp-portal', t:'כפתור "פורטל הופה דש" עובד רק לבית הערבה ולמוצקין', d:'להריץ build-portal-links.bat ולהעביר את portal-links-map.js ללירון. ⚠️ הקודים יהיו גלויים בקוד האתר.', who:'לירון'},
+    {id:'pp-bugs', t:'להעביר ללירון את התקלות בייבוא הבוגרים', d:'קבצים מעל 8KB נחסמים, קובץ חלקי מוחק שדות, תאריכים נקראים הפוך, ולא מסומנת "בדיקה" כשיש טלפון משותף.', who:'לירון'},
+  ],
+  tech: [
+    {id:'tc-lakh', t:'לוח הצוות: להדביק את lakhDone ו-lakhWeekly ב-Code.gs', d:'בלי זה לא מגיע אלייך מייל כשבארי או אסמאא מסמנים משימה, וגם הסיכום השבועי לא נשלח.', links:[['לוח הצוות','lakh.html']]},
+    {id:'tc-dd', t:'דרך דוד: להדביק את הפונקציות dd* ולפרוס', d:'אותו עדכון כמו בפריט בחלק של נערי דוד.'},
+    {id:'tc-kehila', t:'אתר הקהילה: חבילת "כוח-על לכל רכז/ת" מחכה ללירון', d:'בתיקייה כוח-על-רכזים\\לפריסה-קהילה. באתר החי יש כרגע רק כוח-על אחד.', who:'לירון', links:[['תצוגה מקדימה','kochot-al.html']]},
+    {id:'tc-consent', t:'טופס ההסכמה לבוגרים: לוודא שהותקן', d:'להדביק 4 קבצים, להריץ setup ולפרוס. צריך גם אישור לתיקון בנוסח ("Google" במקום "Supabase").'},
+    {id:'tc-nda', t:'הסכם הסודיות: מה שנשאר', d:'חתימת העמותה וכתובת מלאה, רשימת הצוות, אישור הנוסח וארכוב הפריסה השנייה.', links:[['/nda', HD+'/nda']]},
+    {id:'tc-old', t:'קוד ישן שלא בטוח שהודבק', d:'contacts (לדף התזכורת), avatars (לדף הקהילה) ו-allgroups (לדף /kishurim).'},
+  ],
+  meet: [
+    {id:'mt-guest', t:'14.10: מי הבוגר/ת שמגיע/ה להתראיין?', d:'', urg:1, date:'14.10'},
+    {id:'mt-hours', t:'לקבוע שעות ל-14.10 ול-21.10', d:'כרגע השעות הן ברירת מחדל: 11:00 ו-9:30. במפגש 21.10 עוד לא נקבעה שעה.'},
+    {id:'mt-hosts', t:'21.10: לשבץ 12 מארחים ל-6 עמדות', d:'', date:'21.10'},
+    {id:'mt-room', t:'21.10: לוודא שבחדר בבני ברק אפשר להעמיד שולחנות ולזוז', d:'', date:'21.10'},
+    {id:'mt-reset', t:'ללחוץ על כפתור האיפוס לפני 14.10', d:'בדפי המפגש, כדי שהתשובות מהבדיקות יימחקו.', date:'14.10'},
+    {id:'mt-gross', t:'לאמת את מועד הסגירה של קרן גרוס', d:'בחומרי 21.10 כתוב 15.12, ובמאגר הקרנות כתוב 31.12.'},
+  ],
+  neshira: [
+    {id:'ns-hermon', t:'מבואות חרמון חסר בשני לוחות המונדיי', d:'להוסיף אותו גם ללוח הבוגרים וגם ללוח הנשירה, בשם זהה בדיוק.'},
+    {id:'ns-students', t:'אשקלון ובית שאן: עוד לא הועלו תלמידים', d:'בבית הערבה הועלו 144, בעכו 99 ובמבואות חרמון 82.'},
+    {id:'ns-quest', t:'אין עדיין שאלוני נשירה להורים, לתלמידים ולמחנכים', d:''},
+    {id:'ns-ramzor', t:'רמזור הופה: האפיון מוכן ומחכה לאישור שלך', d:'יש תוכנית של 13 משימות. הבנייה תתחיל אחרי האישור.'},
+    {id:'ns-kabas', t:'חסרים פרטי הקב"ס באשקלון ובבית שאן', d:'הפרטים לא מפורסמים באתרי הרשויות, צריך לברר ישירות.'},
+    {id:'ns-content', t:'בפורטל הנשירה בהופה דש אין עדיין חומרים והודעות', d:''},
+  ],
+  more: [
+    {id:'mr-meta', t:'לחדש את הטוקן של Meta לפני 13.11', d:'בלי טוקן חדש הפרסום האוטומטי בפייסבוק ובאינסטגרם ייעצר.', urg:1, date:'13.11'},
+    {id:'mr-sql', t:'להעלות מענים למניעת נשירה למאגר', d:'הקובץ המומלץ הוא "מענים-נשירה-פעילים" (67 מענים שנבדקו). יש גם קובץ של 9 מענים לסיוע חומרי וביגוד.'},
+    {id:'mr-hidden', t:'14 מענים מוסתרים שהקישור שלהם כבר תקין', d:'ועוד 5 מחכים להחלטה: הדר הכרמל, מלגת רקיע, מלגת ידידים, ניצוץ באמונה והגג הורוד.'},
+    {id:'mr-kehila', t:'גורמים קהילתיים: להשלים את מה שחסר', d:'להוסיף את עכו ואת תל שבע לדף, ולמצוא גורמים לדרור גליל, למצפה רמון ולירכא.', links:[['דף הגורמים','kehila.html']]},
+    {id:'mr-telsheva', t:'להבהיר את המצב של טכנולוגי אלמסתקבל תל שבע', d:'בית הספר מופיע ברשימות הישנות, אבל לא בין 25 בתי הספר של התוכנית.'},
+    {id:'mr-bh-lists', t:'בית הערבה: שתי רשימות שלא הועלו למונדיי', d:'רשימה של 21 עם פרטי הורים שלא מתאימה לאלפון, וכיתה י"ב 2 שיש בה רק 8 תלמידים.'},
+  ],
+};
+
+/* ---------- 25 בתי הספר ---------- */
+// al = בוגרים ב-HOPA Secure (16.9) · miss = חסרים ברשימה · wa = קבוצת בוגרים (לפי מיטל 17.9) · plan / quest = מונדיי 17.9
+const SCHOOLS = [
+  {k:'haaraba', n:'אורט בית הערבה', al:438, miss:'7–11 טלפונים, 15 בלי שנה', wa:1, plan:1, quest:0},
+  {k:'akko', n:'אורט מרום עכו', al:354, miss:'2 טלפונים', wa:1, plan:0, quest:0},
+  {k:'ashkelon', n:'אורט אדיבי אשקלון', al:296, miss:'243 בלי ת"ז', wa:1, plan:0, quest:0},
+  {k:'karmiel', n:'עתיד מגשימים כרמיאל', al:237, miss:'131 בלי טלפון, 3 ת"ז פסולות', wa:0, plan:2, quest:1},
+  {k:'nehalim', n:'תיכון נחלים', al:150, miss:'10 בלי ת"ז', wa:0, plan:0, quest:1},
+  {k:'motzkin', n:'עתיד שמיים מוצקין', al:141, miss:'3 ת"ז, 2 שנים', wa:1, plan:2, quest:0},
+  {k:'telaviv', n:'התיכון החברתי תל אביב', al:121, miss:'5 טלפונים, אין עיר', wa:1, plan:2, quest:1},
+  {k:'hoshen', n:'תיכון חושן', al:109, miss:'6 טלפונים', wa:1, plan:0, quest:1},
+  {k:'sheikh', n:'תיכון שיח', al:80, miss:'5 טלפונים', wa:0, plan:0, quest:1},
+  {k:'beitshean', n:'מגשימים בית שאן', al:77, miss:'77 בלי ת"ז, 30 בלי טלפון, מחזור תשפ"ו חסר', wa:1, plan:0, quest:0},
+  {k:'sakhnin', n:'אלאמאני סחנין', al:75, miss:'3 טלפונים', wa:0, plan:0, quest:1},
+  {k:'ramatdavid', n:'עמל רמת דוד', al:70, miss:'שנת סיום "2026" לתיקון', wa:0, plan:0, quest:0},
+  {k:'ashdod', n:'עמל טכנולוגי אשדוד', al:66, miss:'7 ת"ז, 4 טלפונים, אין מגמה', wa:0, plan:0, quest:1},
+  {k:'carmel', n:'אורט כרמל חיפה', al:57, miss:'לא נספר מחדש', wa:0, plan:0, quest:0},
+  {k:'tzurbarak', n:'אורט צור ברק', al:50, miss:'—', wa:0, plan:0, quest:0, waNote:'במונדיי יש קישור לקבוצה'},
+  {k:'turan', n:'מנאראת טורעאן', al:37, miss:'טלפון 1, ת"ז פסולה 1', wa:0, plan:0, quest:1},
+  {k:'navemidbar', n:'דרור נווה מדבר', al:20, miss:'20 בלי טלפון', wa:0, plan:0, quest:1},
+  {k:'birmaksur', n:'עתיד אבדאע ביר אלמכסור', al:19, miss:'שנת סיום "2026" לתיקון', wa:0, plan:0, quest:0},
+  {k:'lakiya', n:'טכנולוגי לקייה', al:0, miss:'', wa:0, plan:0, quest:0},
+  {k:'julis', n:'יוצר עתיד ג׳וליס', al:0, miss:'', wa:0, plan:0, quest:1},
+  {k:'palmachim', n:'יוצר עתיד פלמחים', al:0, miss:'', wa:0, plan:0, quest:0},
+  {k:'drorgalil', n:'דרור גליל', al:0, miss:'', wa:0, plan:0, quest:0},
+  {k:'rahat', n:'עמל טכנולוגי רהט', al:0, miss:'', wa:0, plan:0, quest:1},
+  {k:'yarka', n:'ח׳טוואת ירכא', al:0, miss:'תו נסתר בשם במערכת', wa:0, plan:2, quest:1},
+  {k:'mitzpe', n:'התיכון החברתי מצפה רמון', al:0, miss:'אין רכז/ת', wa:0, plan:0, quest:1},
+];
+
+/* ---------- קישורים ---------- */
+const LINKS = [
+  ['הופה דש · מרכז הניהול', [
+    ['מרכז הניהול (אדמין)', HD+'/admin', 'כל בתי הספר, התוכניות וההודעות'],
+    ['שליחת קישורי הפורטל', HD+'/kishurim', 'קישור אישי לכל בית ספר + פתיחת קבוצת הצוות'],
+    ['אנשי קשר', HD+'/kesher', 'רכזים ומנהלים בכל בית ספר'],
+    ['מיפוי בוגרים', HD+'/mipuy', ''],
+    ['מרכז שליחה · נערי דוד', HD+'/send?key=nd-send-7k2m9x4q', 'טופסי הסכמה אישיים לתלמידים'],
+    ['נוסח ההודעה · נערי דוד', HD+'/nosach', ''],
+    ['הסכם סודיות', HD+'/nda', 'לעובדים ולמתנדבים'],
+    ['פורטל בית ספר', HD+'/s', 'לכל בית ספר קוד משלו. הקישורים המלאים נמצאים בדף שליחת הקישורים'],
+  ]],
+  ['HOPA Secure ומאגר המענים', [
+    ['HOPA Secure · ניהול', 'https://hopa.org.il/admin', 'ניהול בוגרים, "דורשי טיפול", משתמשים'],
+    ['אתר הופה · מאגר המענים', 'https://hopa.org.il', 'המאגר הפתוח לכולם'],
+    ['קהילת רכזי הבוגרים', 'https://kehila.hopa.org.il', 'האתר של לירון ב-Vercel'],
+  ]],
+  ['דפי שליחה לרכזים ולמנהלים', [
+    ['גישות ל-HOPA Secure', 'hopa-secure-send.html', 'שם משתמש + סיסמה לכל רכז/ת ומנהל/ת · קוד hopa'],
+    ['"מזל טוב, המערכת מוכנה"', 'mazaltov.html', 'ההודעות לבתי הספר + קביעת פגישה'],
+    ['קביעת פגישה', 'pgisha.html', ''],
+    ['שליחת הודעות לקבוצות', 'hodaot.html', ''],
+    ['תזכורת לטופס המיילים', 'rishum-send.html', ''],
+    ['בקשת מייל מרכזים', 'mail-rakazim.html', ''],
+    ['שליחת שאלון דרך דוד', 'derech-david-send.html', 'קוד hopa'],
+    ['ברכת פתיחת שנה', 'bracha-send.html', ''],
+    ['תזכורת למפגש', 'tizkoret.html', 'מי עוד לא נרשם'],
+    ['איסוף תמונות לפוסט', 'tmuna-send.html', ''],
+  ]],
+  ['טפסים שרכזים ובוגרים ממלאים', [
+    ['רישום רכזים (מיילים)', 'rishum.html', 'מעקב: ?admin=hopa'],
+    ['שאלון היכרות למנהלים', 'intake.html', ''],
+    ['תוכנית עבודה', 'plan.html', ''],
+    ['הפנייה לדרך דוד', 'derech-david.html', 'ניהול: ?admin=hopa'],
+    ['פנייה להופה · בוגרים', 'pniya.html', ''],
+    ['משוב מפגשים 14.10 ו-21.10', 'mashov2.html', ''],
+    ['תמונה לפוסט', 'tmuna.html', ''],
+  ]],
+  ['ניהול פנימי', [
+    ['דף הניהול + גאנט', 'index.html', ''],
+    ['לוח משימות הצוות', 'lakh.html', 'בארי ואסמאא'],
+    ['תיקי בתי הספר', 'tikim.html', ''],
+    ['פוסטים לפייסבוק ולאינסטגרם', 'facebook.html', ''],
+    ['בדיקות הבוט', 'bot-test.html', ''],
+    ['סינון עמותות', 'sinun.html', ''],
+    ['פנייה לעמותות', 'amutot.html', ''],
+    ['מידעון שותפים', 'midaon.html', ''],
+    ['סיכום המפגשים לרויטל', 'mifgashim-revital.html', ''],
+  ]],
+];
+
+const TRAIN = [
+  ['מפגשי רכזים · תשפ"ז', [
+    ['14.10 · איפה הם עכשיו?', 'mifgash2.html', 'דף משתתפים'],
+    ['14.10 · מצגת', 'mifgash2-slides.html', ''],
+    ['14.10 · רץ-שיט', 'mifgash2-manche.html', ''],
+    ['השיחה שלי', 'sicha.html', 'המשימה בין המפגשים'],
+    ['21.10 · מה שמעתי', 'mifgash3.html', 'בני ברק'],
+    ['21.10 · רץ-שיט + מדריך מארחים', 'mifgash3-manche.html', ''],
+    ['קיר הציטוטים', 'kir.html', ''],
+    ['הדף שלי (תוכנית בית ספרית)', 'tochnit.html', 'להדפסה'],
+    ['כרטיס כיס · שיחת בוגר', 'kartis.html', ''],
+    ['5.11 · הצעד הראשון', 'mifgash4.html', ''],
+    ['5.11 · מצגת', 'mifgash4-slides.html', ''],
+    ['5.11 · רץ-שיט', 'mifgash4-manche.html', ''],
+  ]],
+  ['מפגש #1 · 24.8 (לשימוש חוזר)', [
+    ['דף המשתתפים', 'mifgash-zoom.html', 'בוגר אחד, שנה אחת'],
+    ['מצגת', 'mifgash-zoom-slides.html', ''],
+    ['רץ-שיט', 'mifgash-zoom-manche.html', ''],
+    ['החדר עם אסמאא · הסיפור של מוחמד', 'mifgash-zoom-migzar.html', ''],
+    ['גלריית כוחות-העל', 'mifgash-galeria.html', ''],
+  ]],
+  ['תיקי חפיפה ומסמכי יסוד', [
+    ['ליבת הפעילות של רכז/ת בוגרים', 'liba.html', '6 חובות ליבה, רמות מעקב, מדדים'],
+    ['תיק חפיפה · בארי', 'bari.html', 'רכז מענים ובוגרים'],
+    ['תיק חפיפה · רכזת המגזר', 'rakezet-migzar.html', 'החברה הערבית, הבדואית והדרוזית'],
+    ['היערכות לתשפ"ז', 'tashpaz.html', 'למנהלות ולמנהלים'],
+    ['מחקר ליווי בוגרים', 'mechkar-bogrim.html', 'בארץ ובעולם'],
+    ['מודל ההפעלה למניעת נשירה', 'model-neshira.html', '18 פרקים'],
+    ['הכנה לשירות משמעותי', 'hachana.html', 'לפי אזור'],
+  ]],
+  ['מענים לשטח', [
+    ['מענים מומלצים לרכזי בוגרים', 'manim-bogrim.html', 'שער'],
+    ['מלגות עם ליווי', 'manim-milgot.html', ''],
+    ['תעסוקה והכשרה', 'manim-taasuka.html', ''],
+    ['כלכלה ומיצוי זכויות', 'manim-zchuyot.html', ''],
+    ['החברה הערבית, הדרוזית והבדואית', 'manim-aravit.html', ''],
+    ['מניעת נשירה 14–18', 'manim-neshira.html', ''],
+    ['קבוצות וואטסאפ למענים', 'kvutzot.html', ''],
+    ['גורמים קהילתיים · נשירה', 'kehila-neshira.html', ''],
+  ]],
+  ['מסמכים בהופה דש', [
+    ['תוכנית הבוגרים (PDF)', HD+'/docs/hopa-alumni-program.pdf', ''],
+    ['גאנט שנתי (PDF)', HD+'/docs/hopa-gantt-2027.pdf', ''],
+    ['בנק הודעות (Word)', HD+'/docs/hopa-message-bank.docx', ''],
+    ['מצגת להורים (PDF)', HD+'/docs/hopa-parents-presentation.pdf', ''],
+    ['קבוצות וואטסאפ (Word)', HD+'/docs/hopa-whatsapp-groups.docx', ''],
+  ]],
+];
+
+/* ---------- מצב (גיליון + גיבוי מקומי) ---------- */
+let ST = {items:{}, schools:{}, custom:[]};
+let FILTER = 'open';
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove('on'),1800); }
+
+function jsonp(params){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Date.now()+Math.floor(Math.random()*1e4);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ cleanup(); rej(new Error('timeout')); }, 20000);
+    function cleanup(){ clearTimeout(timer); delete window[cb]; s.remove(); }
+    window[cb]=d=>{ cleanup(); res(d); };
+    s.onerror=()=>{ cleanup(); rej(new Error('network')); };
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    document.body.appendChild(s);
+  });
+}
+function parse(v){ if(typeof v==='string'){ try{ return JSON.parse(v); }catch(e){ return null; } } return v; }
+
+let saveTimer=null;
+function save(){
+  ST.updated = new Date().toISOString();
+  lsSet(STATE_KEY, JSON.stringify(ST));
+  $('#sync').textContent='שומר…';
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{
+      const r=await jsonp({action:'storeSet', secret:GS_SECRET, key:STATE_KEY, json:JSON.stringify(ST)});
+      if(!r.ok) throw new Error(r.error);
+      $('#sync').textContent='✓ נשמר בגיליון';
+    }catch(e){ $('#sync').textContent='⚠️ נשמר רק במכשיר הזה — ננסה שוב בשינוי הבא'; }
+  }, 700);
+}
+
+async function load(){
+  const local=parse(lsGet(STATE_KEY)); if(local) ST=Object.assign(ST,local);
+  render();
+  try{
+    const r=await jsonp({action:'storeAll', secret:GS_SECRET});
+    if(!r.ok) throw new Error(r.error);
+    const remote=parse(r.store[STATE_KEY]);
+    if(remote && (!local || !local.updated || (remote.updated||'') >= local.updated)) ST=Object.assign({items:{},schools:{},custom:[]},remote);
+    else if(local && local.updated && (!remote || local.updated > (remote.updated||''))) save();
+    ddLive(r.store);
+    $('#sync').textContent='✓ מסונכרן עם הגיליון';
+  }catch(e){
+    $('#sync').textContent='⚠️ אין חיבור לגיליון — מוצג מה שנשמר במכשיר';
+    $('#ddLive').innerHTML='<div><b>—</b><span>אין חיבור לגיליון</span></div>';
+  }
+  render();
+}
+
+function ddLive(store){
+  const sl=parse(store.dd_sendlist)||{students:[]};
+  const list=(sl.students||[]).filter(s=>s.stage!=='out');
+  const filled=Object.keys(store).filter(k=>k.startsWith('intake_dd_')).map(k=>parse(store[k])).filter(v=>v && v.name && !v._test && v.name!=='נעה כהן');
+  const army=list.filter(s=>s.armySentAt).length;
+  const box=[
+    [list.length,'ברשימת השליחה'],
+    [list.filter(s=>s.stage==='reach').length,'בארי עוד לא תפס'],
+    [list.filter(s=>s.stage==='wants').length,'אמרו שרוצים'],
+    [filled.length,'מילאו את הטופס'],
+    [army,'נשלחו למדור'],
+    [Math.max(0,filled.length-army),'מילאו ועוד לא נשלחו'],
+  ];
+  $('#ddLive').innerHTML=box.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+/* ---------- רינדור ---------- */
+function allItems(sec){
+  return (ITEMS[sec]||[]).concat(ST.custom.filter(c=>c.sec===sec).map(c=>Object.assign({custom:1},c)));
+}
+function itemHtml(it){
+  const s=ST.items[it.id]||{};
+  const done=!!s.done;
+  if(FILTER==='open' && done) return '';
+  if(FILTER==='done' && !done) return '';
+  const tags=(it.urg?'<span class="tag urg">דחוף</span>':'')+(it.date?`<span class="tag date">עד ${esc(it.date)}</span>`:'')+(it.who?`<span class="tag who">${esc(it.who)}</span>`:'');
+  const links=(it.links||[]).map(([l,u])=>`<a href="${esc(u)}" target="_blank">${esc(l)}</a>`).join('');
+  return `<div class="item ${done?'done':''}">
+    <input type="checkbox" data-chk="${esc(it.id)}" ${done?'checked':''} aria-label="בוצע">
+    <div class="t"><b>${esc(it.t)}</b>${tags}${it.custom?` <button class="x" data-del="${esc(it.id)}" title="מחיקה">×</button>`:''}
+      ${it.d?`<div class="d">${esc(it.d)}</div>`:''}
+      ${links?`<div class="ilinks">${links}</div>`:''}
+      ${done&&s.at?`<div class="when">✓ נסגר ב-${new Date(s.at).toLocaleDateString('he-IL')}</div>`:''}
+      <input class="note" data-note="${esc(it.id)}" value="${esc(s.note||'')}" placeholder="הערה / עדכון…">
+    </div></div>`;
+}
+function renderLists(){
+  document.querySelectorAll('[data-list]').forEach(el=>{
+    const sec=el.dataset.list, items=allItems(sec);
+    const html=items.map(itemHtml).join('');
+    el.innerHTML=html || `<div class="hint">${FILTER==='done'?'עוד לא סגרת כאן כלום.':'אין כאן פריטים פתוחים 🎉'}</div>`;
+    const open=items.filter(i=>!(ST.items[i.id]||{}).done).length;
+    const c=document.querySelector(`[data-cnt="${sec}"]`); if(c) c.textContent=open?`${open} פתוחים`:'הכל סגור ✓';
+  });
+}
+
+const PILLS = {
+  list:{ yes:['p-ok','✓ יש'], part:['p-part','חלקי'], no:['p-no','✗ אין'] },
+  wa:{ yes:['p-ok','✓ יש'], no:['p-no','✗ אין'] },
+  plan:{ yes:['p-ok','✓ הוגש'], no:['p-no','טרם'] },
+  quest:{ yes:['p-ok','✓ ענה'], no:['p-no','לא ענה'] },
+};
+function sv(s,f){
+  const o=(ST.schools[s.k]||{})[f];
+  if(o) return o;
+  if(f==='list') return s.al===0?'no':(s.miss && s.miss!=='—' && s.miss!=='לא נספר מחדש'?'part':'yes');
+  if(f==='wa') return s.wa?'yes':'no';
+  if(f==='plan') return s.plan===2?'yes':'no';
+  if(f==='quest') return s.quest?'yes':'no';
+}
+function pill(s,f){ const v=sv(s,f), p=PILLS[f][v]; return `<button class="pill ${p[0]}" data-pill="${s.k}|${f}">${p[1]}</button>`; }
+function renderSchools(){
+  $('#schoolRows').innerHTML=SCHOOLS.map(s=>{
+    const open=['list','wa','plan','quest'].some(f=>sv(s,f)!=='yes');
+    const hide=(FILTER==='open'&&!open)||(FILTER==='done'&&open);
+    return `<tr class="${hide?'hide':''}"><td class="n">${esc(s.n)}</td><td class="num">${s.al||'<span style="color:var(--pink)">0</span>'}</td>
+      <td>${pill(s,'list')}</td><td class="d" style="font-size:12.5px">${esc(s.miss||'אין רשימה')}</td>
+      <td>${pill(s,'wa')}${s.waNote&&sv(s,'wa')!=='yes'?`<div class="d" style="font-size:11.5px;color:var(--warn)">${esc(s.waNote)}</div>`:''}</td>
+      <td>${pill(s,'plan')}</td><td>${pill(s,'quest')}</td></tr>`;
+  }).join('');
+  const c=f=>SCHOOLS.filter(s=>sv(s,f)==='yes').length;
+  const total=SCHOOLS.reduce((a,s)=>a+s.al,0);
+  $('#schoolLive').innerHTML=[
+    [total.toLocaleString('he-IL'),'בוגרים במערכת'],
+    [SCHOOLS.filter(s=>sv(s,'list')==='no').length,'בלי רשימה'],
+    [`${c('wa')}/25`,'קבוצות בוגרים'],
+    [`${c('plan')}/25`,'תוכניות עבודה'],
+    [`${c('quest')}/25`,'ענו על השאלון'],
+  ].map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+function renderKpis(){
+  const secs=Object.keys(ITEMS);
+  const all=secs.flatMap(allItems);
+  const open=all.filter(i=>!(ST.items[i.id]||{}).done);
+  const urg=open.filter(i=>i.urg).length;
+  const noWa=SCHOOLS.filter(s=>sv(s,'wa')!=='yes').length;
+  const noList=SCHOOLS.filter(s=>sv(s,'list')==='no').length;
+  $('#kpis').innerHTML=[
+    [open.length,'פריטים פתוחים','#dd'],[urg,'מתוכם דחופים','#dd'],
+    [noList,'בתי ספר בלי רשימה','#schools'],[noWa,'בלי קבוצת בוגרים','#schools'],
+  ].map(([n,l,h])=>`<a class="kpi" href="${h}"><b>${n}</b><span style="color:#fff">${l}</span></a>`).join('');
+}
+
+function cards(blocks){
+  return blocks.map(([h,arr])=>`<h3>${esc(h)}</h3><div class="grid">${arr.map(([t,u,d])=>`<a class="card" href="${esc(u)}" target="_blank" rel="noopener"><b>${esc(t)}</b>${d?`<span>${esc(d)}</span>`:''}${/^https?:/.test(u)?`<i>${esc(u.replace(/^https?:\/\//,'').split('/')[0])}</i>`:''}</a>`).join('')}</div>`).join('');
+}
+
+function render(){ renderLists(); renderSchools(); renderKpis(); }
+
+document.addEventListener('change',e=>{
+  const id=e.target.dataset.chk;
+  if(id){ const s=ST.items[id]=ST.items[id]||{}; s.done=e.target.checked; s.at=s.done?new Date().toISOString():''; save(); render(); toast(s.done?'סומן כבוצע ✓':'הוחזר לפתוחים'); }
+  const nid=e.target.dataset.note;
+  if(nid){ const s=ST.items[nid]=ST.items[nid]||{}; s.note=e.target.value.trim(); save(); }
+});
+document.addEventListener('click',e=>{
+  const p=e.target.closest('[data-pill]');
+  if(p){
+    const [k,f]=p.dataset.pill.split('|'); const s=SCHOOLS.find(x=>x.k===k);
+    const order=Object.keys(PILLS[f]); const cur=sv(s,f);
+    const next=order[(order.indexOf(cur)+1)%order.length];
+    ST.schools[k]=Object.assign({},ST.schools[k],{[f]:next}); save(); render();
+    return;
+  }
+  const d=e.target.closest('[data-del]');
+  if(d && confirm('למחוק את הפריט?')){ ST.custom=ST.custom.filter(c=>c.id!==d.dataset.del); delete ST.items[d.dataset.del]; save(); render(); return; }
+  const fb=e.target.closest('[data-f]');
+  if(fb){ FILTER=fb.dataset.f; document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===fb)); render(); }
+});
+$('#addBtn').onclick=()=>{
+  const t=$('#newText').value.trim(); if(!t) return;
+  ST.custom.push({id:'c'+Date.now(), sec:$('#newSec').value, t, d:''});
+  $('#newText').value=''; save(); render(); toast('נוסף ✓');
+};
+$('#newText').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#addBtn').click(); });
+
+$('#linkBlocks').innerHTML=cards(LINKS);
+$('#trainBlocks').innerHTML=cards(TRAIN);
+
+function unlock(){ $('#gate').remove(); lsSet('maakav_pin','1'); load(); }
+if(lsGet('maakav_pin')==='1') unlock();
+else {
+  $('#pinGo').onclick=()=>{ if($('#pin').value.trim().toLowerCase()===PIN) unlock(); else { $('#pin').value=''; toast('קוד שגוי'); } };
+  $('#pin').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#pinGo').click(); });
+  $('#pin').focus();
+}
+</script>
+</body>
+</html>
