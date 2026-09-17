@@ -138,7 +138,9 @@ let DATA = { students: [], msg: DEFAULT_MSG, rakez: '', rakezTel: '', school: ''
 /* ---- שליחה ישירה דרך הוואטסאפ המחובר (Green API דרך ה-Apps Script של איסוף המענים) ----
    אותם מפתחות localStorage כמו hodaot.html / דף הניהול — חיבור אחד לכל הדפים. הטוקן של Green לא נמצא כאן; רק כתובת ה-/exec + הסיסמה. */
 const MLS = { url:'hopa_send_url', secret:'hopa_send_secret' };
-const WA = { url: localStorage.getItem(MLS.url)||'', secret: localStorage.getItem(MLS.secret)||'', busy:false, stop:false };
+/* בדפדפן הפנימי של וואטסאפ localStorage עלול לזרוק שגיאה — לכן תמיד דרך העטיפה */
+const LS = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }, del(k){ try{ localStorage.removeItem(k); }catch(e){} } };
+const WA = { url: LS.get(MLS.url)||'', secret: LS.get(MLS.secret)||'', busy:false, stop:false };
 let jsonpN = 0;
 function waJsonp(params, tmo){
   return new Promise((res,rej)=>{
@@ -173,7 +175,7 @@ async function sendAllDirect(){
 }
 function setProgress(t){ const el=document.getElementById('waProg'); if(el) el.textContent=t; }
 async function testConnection(){
-  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ localStorage.setItem(MLS.url,WA.url); localStorage.setItem(MLS.secret,WA.secret); toast('מחובר ✓'); render(); } else throw new Error((r&&r.error)||'err'); }
+  try{ const r=await waJsonp({action:'groups'}); if(r&&r.ok){ LS.set(MLS.url,WA.url); LS.set(MLS.secret,WA.secret); toast('מחובר ✓'); render(); } else throw new Error((r&&r.error)||'err'); }
   catch(e){ toast('החיבור נכשל: '+e.message); }
 }
 let SUBMITTED = {};   // phone(digits) -> {name, ts}
@@ -201,9 +203,19 @@ function jsonpOnce(params, tmo){
     document.head.appendChild(s);
   });
 }
+/* טעינה ישירה בלי עוגיות גוגל — בנייד עם כמה חשבונות גוגל מחוברים, תג script מקבל דף שגיאה במקום נתונים */
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
 async function jsonp(params){
   let err;
   for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
     try{ return await jsonpOnce(params, 25000); }
     catch(e){ err=e; const h=document.querySelector('#app .hint'); if(h && i<4) h.textContent=`גוגל מתעכב — מנסה שוב (${i+1}/4)…`; }
   }
@@ -230,7 +242,7 @@ async function load(){
     SHEET_URL = (st['dd_sheet_id'] && st['dd_sheet_id'].url) || '';
     SUBMITTED = {};
     Object.keys(st).filter(k=>k.startsWith('intake_dd_')).forEach(k=>{ const x=st[k]; if(x && x.name && !x._test && x.phone) SUBMITTED[digits(x.phone)] = {name:x.name, ts:x.ts}; });
-  }catch(e){ app.innerHTML = `<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון (${esc(e.message)}). נסו לרענן.</p></div>`; return; }
+  }catch(e){ app.innerHTML = `<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון (${esc(e.message)}).</p><button class="btn primary" onclick="load()">🔄 לנסות שוב</button><p class="hint" style="margin-top:10px">אם זה חוזר בנייד: לפתוח את הקישור בכרום/ספארי (לא מתוך וואטסאפ), או בחלון גלישה בסתר.</p></div>`; return; }
   render();
 }
 
@@ -358,7 +370,7 @@ function render(){
   const sa=document.getElementById('sendAll'); if(sa) sa.onclick = ()=>{ render(); sendAllDirect(); };
   const so=document.getElementById('stopAll'); if(so) so.onclick = ()=>{ WA.stop=true; toast('עוצר אחרי ההודעה הנוכחית…'); };
   const wc=document.getElementById('waConnect'); if(wc) wc.onclick = ()=>{ WA.url=document.getElementById('waUrl').value.trim(); WA.secret=document.getElementById('waSecret').value.trim(); if(!WA.url||!WA.secret){ toast('צריך כתובת וסיסמה'); return; } testConnection(); };
-  const dc=document.getElementById('disconnect'); if(dc) dc.onclick = ()=>{ if(confirm('לנתק את החיבור במכשיר הזה? (הדף hodaot.html ידרוש חיבור מחדש)')){ localStorage.removeItem(MLS.url); localStorage.removeItem(MLS.secret); WA.url=''; WA.secret=''; render(); } };
+  const dc=document.getElementById('disconnect'); if(dc) dc.onclick = ()=>{ if(confirm('לנתק את החיבור במכשיר הזה? (הדף hodaot.html ידרוש חיבור מחדש)')){ LS.del(MLS.url); LS.del(MLS.secret); WA.url=''; WA.secret=''; render(); } };
   app.querySelectorAll('[data-direct]').forEach(b=>b.onclick=async()=>{ const s=DATA.students.find(x=>x.id===b.dataset.direct); b.disabled=true; b.textContent='שולח…'; try{ await sendDirect(s); save(true); toast('נשלח ל'+s.name+' ✓'); render(); }catch(e){ b.disabled=false; b.textContent='⚡ שלח'; toast('לא נשלח: '+e.message); } });
   app.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.del); if(confirm('להסיר את '+s.name+' מהרשימה?')){ DATA.students=DATA.students.filter(x=>x.id!==s.id); save(); render(); } });
   app.querySelectorAll('[data-unsend]').forEach(b=>b.onclick=()=>{ const s=DATA.students.find(x=>x.id===b.dataset.unsend); s.sentAt=''; save(); render(); });
@@ -447,9 +459,9 @@ function addBulk(){
 
 /* ===================== שער ===================== */
 function gate(){
-  if (localStorage.getItem('hopa_dd_pin')===PIN) return load();
+  if (LS.get('hopa_dd_pin')===PIN) return load();
   app.innerHTML = `<div class="card gate"><h2 style="justify-content:center">🔒 דף לצוות הופה</h2><p class="hint">הקלידו את קוד הצוות פעם אחת במכשיר הזה</p><input class="field" id="pin" type="password" autocomplete="off"><button class="btn primary" id="go" style="margin-top:10px;width:100%">כניסה</button><p class="hint" id="pinErr" style="margin-top:8px"></p></div>`;
-  const go = ()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ localStorage.setItem('hopa_dd_pin',PIN); load(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
+  const go = ()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){ LS.set('hopa_dd_pin',PIN); load(); } else document.getElementById('pinErr').textContent='קוד לא נכון'; };
   document.getElementById('go').onclick = go; document.getElementById('pin').addEventListener('keydown',e=>{ if(e.key==='Enter') go(); }); document.getElementById('pin').focus();
 }
 gate();
