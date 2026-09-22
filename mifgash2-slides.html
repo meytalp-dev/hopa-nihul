@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>איפה הם עכשיו? · מצגת 14.10 · הופה</title>
+<title>שעתיים בשבוע · מצגת 14.10 · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26}
@@ -11,237 +11,210 @@
   body{font-family:'Rubik',system-ui,Arial,sans-serif}
   #stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
   #deck{width:1920px;height:1080px;transform-origin:center;position:relative;background:#fff}
-  .s{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:110px 130px;background:#fff;color:var(--ink)}
+  .s{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:105px 130px;background:#fff;color:var(--ink)}
   .s.on{display:flex}
   .s.dark{background:#111;color:#fff}
   .s.pinkbg{background:var(--pink);color:#fff}
   .s.yellowbg{background:var(--yellow);color:#111}
 
-  .kick{font-size:30px;font-weight:800;color:var(--pink);letter-spacing:.5px;margin-bottom:22px}
+  .kick{font-size:29px;font-weight:800;color:var(--pink);letter-spacing:.5px;margin-bottom:20px}
   .s.dark .kick,.s.pinkbg .kick{color:var(--yellow)}
-  h1{font-size:130px;font-weight:900;margin:0;line-height:1.02;letter-spacing:-3px}
-  h2{font-size:88px;font-weight:900;margin:0 0 30px;line-height:1.1;letter-spacing:-2px}
-  h3{font-size:54px;font-weight:800;margin:0 0 18px}
-  p.big{font-size:46px;font-weight:600;line-height:1.4;margin:0}
-  p.med{font-size:36px;font-weight:500;line-height:1.5;margin:0}
-  .sub{font-size:38px;font-weight:500;opacity:.7;margin-top:26px}
-
-  .quote{border-inline-start:14px solid var(--yellow);padding-inline-start:38px;font-size:56px;font-weight:700;line-height:1.35}
+  h1{font-size:122px;font-weight:900;margin:0;line-height:1.02;letter-spacing:-3px}
+  h2{font-size:82px;font-weight:900;margin:0 0 28px;line-height:1.1;letter-spacing:-2px}
+  p.big{font-size:44px;font-weight:600;line-height:1.4;margin:0}
+  p.med{font-size:34px;font-weight:500;line-height:1.5;margin:0}
+  .sub{font-size:36px;font-weight:500;opacity:.7;margin-top:24px}
+  .quote{border-inline-start:14px solid var(--yellow);padding-inline-start:36px;font-size:52px;font-weight:700;line-height:1.35}
   .s.yellowbg .quote{border-color:#111}
 
-  .three{display:flex;gap:34px;margin-top:20px}
-  .three>div{flex:1;background:#f6f2f7;border-radius:34px;padding:44px 38px}
-  .s.dark .three>div{background:#1c1c24}
-  .three .n{font-size:110px;font-weight:900;color:var(--pink);line-height:1}
-  .s.dark .three .n{color:var(--yellow)}
-  .three .l{font-size:31px;font-weight:600;margin-top:14px;line-height:1.35}
-  .three .src{font-size:22px;opacity:.5;margin-top:18px}
+  .huge{font-size:230px;font-weight:900;color:var(--yellow);line-height:.95;letter-spacing:-8px}
+  .s.yellowbg .huge{color:#111}
 
-  .lvls{display:flex;flex-direction:column;gap:22px;margin-top:14px}
-  .lvl{display:flex;align-items:center;gap:30px;border-radius:26px;padding:30px 38px;background:#f6f2f7}
-  .lvl .dot{width:26px;height:26px;border-radius:50%;flex:none}
-  .lvl .t{font-size:44px;font-weight:900;width:330px;flex:none}
-  .lvl .d{font-size:30px;font-weight:500;flex:1;line-height:1.35}
-  .lvl .c{font-size:26px;font-weight:800;color:var(--pink-dark);flex:none}
+  .chaps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:20px}
+  .chap{background:#f6f2f7;border-radius:26px;padding:28px 26px;position:relative;overflow:hidden}
+  .s.dark .chap{background:#1c1c24}
+  .chap:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:9px;background:var(--pink)}
+  .chap .n{font-size:20px;font-weight:800;opacity:.45}
+  .chap .t{font-size:33px;font-weight:900;line-height:1.15;margin-top:3px}
+  .chap .d{font-size:21px;opacity:.55;margin-top:7px;line-height:1.3}
 
-  .wall{display:flex;flex-wrap:wrap;gap:16px;align-content:flex-start;margin-top:26px;max-height:640px;overflow:hidden}
-  .wall span{background:#f6f2f7;border-radius:999px;padding:14px 30px;font-size:34px;font-weight:800}
-  .s.dark .wall span{background:#1c1c24}
-  .wall span i{font-style:normal;font-weight:400;opacity:.55;font-size:29px}
+  .bars{margin-top:30px}
+  .bar{display:flex;align-items:center;gap:26px;margin-bottom:24px}
+  .bar .nm{width:430px;font-size:36px;font-weight:800;flex:none}
+  .bar .nm small{display:block;font-size:22px;font-weight:400;opacity:.5}
+  .bar .track{flex:1;height:38px;background:#f0ecf3;border-radius:999px;overflow:hidden}
+  .s.dark .bar .track{background:#25252e}
+  .bar .fill{display:block;height:100%;background:var(--pink);border-radius:999px;transition:width .6s}
+  .s.dark .bar .fill{background:var(--yellow)}
+  .bar .v{width:170px;text-align:center;font-size:40px;font-weight:900;color:var(--pink-dark);flex:none}
+  .s.dark .bar .v{color:var(--yellow)}
 
-  .votes{display:flex;gap:34px;margin-top:40px}
-  .votes>div{flex:1;background:#1c1c24;border-radius:34px;padding:52px 30px;text-align:center}
-  .votes .pc{font-size:132px;font-weight:900;color:var(--yellow);line-height:1}
-  .votes .lb{font-size:34px;font-weight:700;margin-top:10px}
-  .votes .ct{font-size:24px;opacity:.5;margin-top:8px}
-  .blur{filter:blur(26px);transition:filter .8s}
-
-  .qlist{display:flex;flex-direction:column;gap:26px;margin-top:16px}
-  .qlist div{background:#f6f2f7;border-radius:24px;padding:30px 36px;font-size:40px;font-weight:700}
+  .qlist{display:flex;flex-direction:column;gap:24px;margin-top:14px}
+  .qlist div{background:#f6f2f7;border-radius:24px;padding:28px 34px;font-size:38px;font-weight:700}
   .s.dark .qlist div{background:#1c1c24}
+  .s.pinkbg .qlist div{background:rgba(255,255,255,.15);color:#fff}
   .qlist div b{color:var(--pink);margin-inline-end:14px}
-  .s.dark .qlist div b{color:var(--yellow)}
+  .s.dark .qlist div b,.s.pinkbg .qlist div b{color:var(--yellow)}
 
-  .rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:26px}
-  .room{background:#f6f2f7;border-radius:22px;padding:22px 26px}
-  .room h4{margin:0 0 10px;font-size:28px;font-weight:900;color:var(--pink-dark)}
-  .room ul{margin:0;padding-inline-start:24px;font-size:22px;line-height:1.45}
+  .wall{display:flex;flex-wrap:wrap;gap:15px;align-content:flex-start;margin-top:24px;max-height:640px;overflow:hidden}
+  .wall span{background:#f6f2f7;border-radius:999px;padding:13px 28px;font-size:31px;font-weight:800}
+  .s.dark .wall span{background:#1c1c24}
+  .wall span i{font-style:normal;font-weight:400;opacity:.5;font-size:27px}
 
-  .logo{position:absolute;top:52px;inset-inline-start:64px;height:56px;opacity:.9}
+  .rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:24px}
+  .room{background:#f6f2f7;border-radius:22px;padding:20px 24px}
+  .s.dark .room{background:#1c1c24}
+  .room h4{margin:0 0 9px;font-size:26px;font-weight:900;color:var(--pink-dark)}
+  .s.dark .room h4{color:var(--yellow)}
+  .room ul{margin:0;padding-inline-start:22px;font-size:20px;line-height:1.45}
+
+  .lvls{display:flex;flex-direction:column;gap:22px;margin-top:16px}
+  .lvl{display:flex;align-items:center;gap:30px;border-radius:26px;padding:30px 38px;background:#f6f2f7}
+  .lvl .dot{width:28px;height:28px;border-radius:50%;flex:none}
+  .lvl .t{font-size:44px;font-weight:900;width:290px;flex:none}
+  .lvl .d{font-size:30px;font-weight:500;flex:1}
+
+  .logo{position:absolute;top:50px;inset-inline-start:62px;height:54px;opacity:.9}
   .s.dark .logo,.s.pinkbg .logo{filter:brightness(0) invert(1)}
-  .pg{position:absolute;bottom:44px;inset-inline-end:64px;font-size:23px;font-weight:800;opacity:.35}
-  .tmr{position:absolute;bottom:44px;inset-inline-start:64px;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--pink)}
-  .s.dark .tmr{color:var(--yellow)}
-  .live{position:absolute;top:56px;inset-inline-end:64px;font-size:24px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:10px}
+  .pg{position:absolute;bottom:42px;inset-inline-end:62px;font-size:22px;font-weight:800;opacity:.32}
+  .live{position:absolute;top:54px;inset-inline-end:62px;font-size:23px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:10px}
   .s.dark .live{color:var(--yellow)}
   .live i{width:14px;height:14px;border-radius:50%;background:currentColor;animation:bl 1.6s infinite}
   @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
-  #hint{position:fixed;bottom:14px;inset-inline:0;text-align:center;color:#666;font-size:13px;font-family:Rubik,Arial;z-index:5}
+  #hint{position:fixed;bottom:12px;inset-inline:0;text-align:center;color:#666;font-size:13px;font-family:Rubik,Arial;z-index:5}
 </style>
 </head>
 <body>
 <div id="stage"><div id="deck">
 
-<!-- 1 -->
-<div class="s dark"><div class="kick">מפגש רכזים · 14.10.2026</div>
-  <h1>איפה הם<br>עכשיו?</h1>
-  <div class="sub">ליווי בוגרים · רכזים חברתיים ורכזי בוגרים · תוכנית הבוגרים של הופה</div></div>
+<div class="s dark"><div class="kick">מפגש רכזים · 14.10.2026 · 1 מתוך 3</div>
+  <h1>שעתיים<br>בשבוע</h1>
+  <div class="sub">בונים תוכנית עבודה לליווי בוגרים</div></div>
 
-<!-- 2 -->
-<div class="s yellowbg"><div class="quote">אנחנו מבקשים מכם שעה וחצי כדי לדבר על אנשים<br>שכבר לא נמצאים בבית הספר שלכם.<br><br>בלי ציונים, בלי נוכחות, בלי מדידה מבחוץ.</div>
-  <p class="big" style="margin-top:50px"><b>מה שנעשה בשבילם — נעשה כי בחרנו, לא כי חייבים.</b></p></div>
+<div class="s yellowbg"><div class="quote">
+  משרד העבודה הקצה <b>שעתיים שבועיות</b> לכל רכז/ת חברתי/ת לליווי בוגרים.<br><br>
+  זה כבר בתפקיד. זה כבר מתוקצב.</div>
+  <p class="big" style="margin-top:46px"><b>אנחנו לא כאן כדי לשכנע שזה חשוב —<br>אלא כדי לענות מה עושים עם זה.</b></p></div>
 
-<!-- 3 -->
-<div class="s"><h2>מי בחדר</h2>
-  <div class="three">
-    <div><div class="n">64</div><div class="l">רכזים חברתיים</div></div>
-    <div><div class="n">25</div><div class="l">בתוכנית הבוגרים של הופה</div></div>
-    <div><div class="n">39</div><div class="l">לא בתוכנית</div></div>
+<div class="s dark" style="align-items:center;text-align:center"><div class="huge">70</div>
+  <p class="big" style="margin-top:26px">שעות בשנה</p>
+  <p class="med" style="margin-top:14px;opacity:.55">שנת לימודים של כ-35 שבועות פעילים</p></div>
+
+<div class="s pinkbg"><div class="quote" style="border-color:#fff;font-size:56px">
+  70 שעות זה לא מעט, וזה גם לא הרבה.<br><br>
+  מספיק בשביל <b>תוכנית אחת שעובדת</b> —<br>ולא מספיק בשביל לעשות הכול.</div>
+  <p class="big" style="margin-top:44px">לכן זו <b>תוכנית עבודה</b> ולא רשימת משאלות.</p></div>
+
+<div class="s"><h2>שלושה מפגשים, תוצר אחד</h2>
+  <div class="qlist">
+    <div><b>14.10</b>היום — בונים את השלד</div>
+    <div><b>21.10</b>בני ברק — שולחנות הרעיונות</div>
+    <div><b>4.11</b>מרכיבים — וכל אחד יוצא עם תוכנית עבודה מוכנה</div>
   </div>
-  <p class="big" style="margin-top:50px">המפגש בנוי לשתי הקבוצות — <b>ולא בנוי לשכנע אף אחד להצטרף לשום דבר.</b></p></div>
+  <p class="big" style="margin-top:40px">מסמך שאפשר להניח על <b>שולחן המנהל/ת</b>.</p></div>
 
-<!-- 4 -->
-<div class="s pinkbg"><div class="kick">סעיף 1 בדף</div>
-  <h2>הבוגר שאני זוכר/ת</h2>
-  <p class="big">בחרו בוגר או בוגרת אחת מהמחזור שסיים ביוני — <b>שאתם זוכרים בשם.</b><br>
-  לא הכי מצטיין ולא הכי בעייתי. מישהו שנשאר לכם בראש.</p>
-  <p class="med" style="margin-top:44px;opacity:.85">כותבים בדף: שם פרטי + מילה אחת על מה קרה לו.</p></div>
-
-<!-- 5 — חי -->
-<div class="s dark" data-live="wall"><div class="live"><i></i> חי</div>
-  <div class="kick">הבוגרים שלנו</div>
-  <h3 id="wallCount">— שמות</h3>
-  <div class="wall" id="wall"></div></div>
-
-<!-- 6 -->
-<div class="s yellowbg"><h2 style="font-size:104px">ועכשיו השאלה</h2>
-  <p class="big" style="font-size:64px;font-weight:800">האם את/ה יודע/ת <u>בוודאות</u><br>מה הוא עושה היום?</p>
-  <p class="med" style="margin-top:50px;opacity:.7">מצביעים בסעיף 1 בדף</p></div>
-
-<!-- 7 — חי -->
-<div class="s dark" data-live="vote"><div class="live"><i></i> חי</div>
-  <h2>יודע/ת בוודאות?</h2>
-  <div class="votes blur" id="votes"></div>
-  <p class="med" style="margin-top:38px;opacity:.55">רווח או קליק לגילוי · מקש R לטשטוש מחדש</p></div>
-
-<!-- 8 -->
-<div class="s pinkbg"><div class="quote" style="border-color:#fff;font-size:64px">
-  אלה בני אדם.<br>את רובם ליוויתם ארבע שנים.<br><br><b>ואת רובם איבדנו תוך ארבעה חודשים.</b></div></div>
-
-<!-- 9 -->
 <div class="s"><div class="kick">12 דקות</div><h2>בוגר אמיתי</h2>
   <div class="qlist">
     <div><b>1</b>איך נראה השבוע הראשון אחרי הטקס?</div>
     <div><b>2</b>מישהו מבית הספר יצר איתך קשר אחרי שסיימת?</div>
     <div><b>3</b>מה היה הכי קשה בשנה הראשונה — שלא ידעת שיהיה קשה?</div>
-    <div><b>4</b>משפט אחד לרכז אחד בחדר הזה.</div>
+    <div><b>4</b>משפט אחד לרכז/ת אחד/ת בחדר הזה.</div>
   </div></div>
 
-<!-- 10 -->
-<div class="s dark"><div class="kick">מה שהמחקר אומר</div><h2>שלושה מספרים</h2>
-  <div class="three">
-    <div><div class="n">+19</div><div class="l">נקודות אחוז בסיום תואר — בזכות ליווי אחרי התיכון</div><div class="src">KIPP · מחקר Mathematica</div></div>
-    <div><div class="n">+10</div><div class="l">נקודות אחוז — בניסוי מבוקר (RCT)</div><div class="src">Bottom Line</div></div>
-    <div><div class="n">112</div><div class="l">מוסדות ו-99 רכזי בוגרים בישראל — זה כבר קיים כאן</div><div class="src">״יש לך כתובת״ · ג׳וינט</div></div>
-  </div></div>
+<div class="s dark"><div class="kick">מבנה תוכנית העבודה</div><h2>שמונה פרקים</h2>
+  <div class="chaps" id="chaps"></div>
+  <p class="med" style="margin-top:34px;opacity:.6">בבני ברק כל שולחן ייקח פרק אחד ויהפוך למומחה בו.</p></div>
 
-<!-- 11 -->
-<div class="s yellowbg"><h2>והחור</h2>
-  <p class="big" style="font-size:52px">במחקר שעשינו באוגוסט 2026 <b>לא מצאנו מערך ליווי בוגרים מוסדר</b> באף אחת מרשתות החינוך הגדולות בישראל.</p>
-  <div class="quote" style="border-color:#111;margin-top:56px;font-size:52px">אין לזה עדיין תשובה מערכתית.<br><b>מה שיקרה עם הבוגרים שלכם תלוי בכם.</b></div></div>
+<div class="s" data-live="hours"><div class="live"><i></i> חי</div>
+  <div class="kick">התעדוף שלנו</div><h2>על מה נוציא את 70 השעות?</h2>
+  <div class="bars" id="hbars"></div>
+  <p class="med" style="margin-top:20px;opacity:.5" id="hn">— רכזים תעדפו</p></div>
 
-<!-- 12 -->
-<div class="s pinkbg"><div class="kick">25 דקות · חדרים</div>
-  <h2>מה כבר יש לי?</h2>
-  <p class="big">אילו נקודות קשר עם בוגרים <u>כבר קיימות</u> אצלכם בבית הספר —<br>גם אם אף אחד לא קורא לזה ״ליווי בוגרים״?</p>
-  <p class="med" style="margin-top:40px;opacity:.85">קבוצת וואטסאפ של המחזור · בוגרים שחוזרים להתנדב · מורה שנשארה בקשר · הטקס · רשימת טלפונים אצל המזכירות · עמוד פייסבוק</p></div>
+<div class="s pinkbg"><div class="kick">פרק א׳</div><h2>מי איתי</h2>
+  <div class="quote" style="border-color:#fff;font-size:54px">
+    70 שעות של אדם אחד זה מעט.<br><br>
+    70 שעות של אדם אחד <b>שגייס עוד ארבעה</b> — זו תוכנית.</div></div>
 
-<!-- 13 -->
-<div class="s"><h2>בחדר</h2>
+<div class="s"><h2>בחדר · 25 דקות</h2>
   <div class="qlist">
-    <div><b>3′</b>סבב שמות — שם, בית ספר, כמה שנים בתפקיד</div>
-    <div><b>12′</b>כל אחד נותן נקודת קשר אחת ומקליד לדף (סעיף 4)</div>
-    <div><b>7′</b>רכזי הופה עונים על שאלה אחת: ״מה עשינו עם זה אצלנו?״</div>
-    <div><b>3′</b>מנסחים משפט אחד לדיווח</div>
-  </div>
-  <p class="med" style="margin-top:36px;opacity:.6">קודם בוחרים מספר חדר בדף המלווה.</p></div>
+    <div><b>3′</b>סבב שמות</div>
+    <div><b>8′</b>מי בבית הספר שלי כבר נוגע/ת בבוגרים — גם אם זה לא בתפקיד?</div>
+    <div><b>9′</b>את מי אני מגייס/ת <u>ראשון</u> — ומה בדיוק אבקש?</div>
+    <div><b>5′</b>רכזי הופה: את מי גייסנו אצלנו, ומה זה נתן?</div>
+  </div></div>
 
-<!-- 14 — חי -->
-<div class="s" data-live="rooms"><div class="live"><i></i> חי</div>
-  <div class="kick">מה שכבר יש לנו</div><h2 id="roomsCount">נקודות קשר</h2>
+<div class="s dark" data-live="partners"><div class="live"><i></i> חי</div>
+  <div class="kick">את מי אנחנו מגייסים</div><h2 id="pn">—</h2>
   <div class="rooms" id="rooms"></div></div>
 
-<!-- 15 -->
-<div class="s"><h2>שלוש רמות</h2>
+<div class="s yellowbg"><div class="kick">פרק ב׳ · שכבת י"ב</div>
+  <div class="quote" style="border-color:#111;font-size:54px">
+    כמעט כל מה שצריך בשביל ללוות בוגר<br>אפשר להשיג בזמן שהוא <b>עדיין יושב מולך</b>.<br><br>
+    אחרי הטקס — הכול נהיה פי עשר קשה.</div></div>
+
+<div class="s"><h2>הצ׳ק-ליסט</h2>
+  <p class="med" style="margin-bottom:24px;opacity:.6">מסמנים מה כבר קורה — ומוסיפים מה שחסר</p>
+  <div class="chaps" style="grid-template-columns:repeat(2,1fr);gap:18px" id="cklist"></div></div>
+
+<div class="s dark" data-live="cklist"><div class="live"><i></i> חי</div>
+  <div class="kick">מה החדר הוסיף</div><h2 id="cn">—</h2>
+  <div class="wall" id="ckwall"></div></div>
+
+<div class="s"><div class="kick">פרק ג׳</div><h2>הקשר</h2>
+  <p class="big" style="margin-bottom:30px">ליווי בוגרים הוא לא ״להיות זמין״. זו <b>יוזמה מתוזמנת</b>.</p>
   <div class="lvls">
-    <div class="lvl"><span class="dot" style="background:#22b573"></span><span class="t">1 · לא לאבד</span>
-      <span class="d">מאגר מינימלי שנאסף <b>בי״ב</b> · קבוצת מחזור · טקס מעבר</span><span class="c">שעתיים ביוני</span></div>
-    <div class="lvl"><span class="dot" style="background:#f0a500"></span><span class="t">2 · לדעת להפנות</span>
-      <span class="d">מאגר המענים של הופה — פתוח, חינם, בלי חברות</span><span class="c">20 דקות ללמוד</span></div>
-    <div class="lvl"><span class="dot" style="background:#E8348A"></span><span class="t">3 · ללוות</span>
-      <span class="d">רמזור · שיחת 4 השאלות · מדרג סיוע · פורטל ותיעוד</span><span class="c">תפקיד בשעות</span></div>
+    <div class="lvl"><span class="dot" style="background:#22b573"></span><span class="t">🟢 מרחוק</span><span class="d">3 שיחות בשנה · רוב הבוגרים</span></div>
+    <div class="lvl"><span class="dot" style="background:#f0a500"></span><span class="t">🟠 מקרוב</span><span class="d">שיחה בחודש · מי שבצומת</span></div>
+    <div class="lvl"><span class="dot" style="background:#E8348A"></span><span class="t">🔴 בפעולה</span><span class="d">אינטנסיבי · עד שהצורך נענה</span></div>
+  </div></div>
+
+<div class="s dark"><h2>הצמתים שקובעים את היומן</h2>
+  <div class="qlist">
+    <div><b>יוני</b>קליטת מחזור — טלפון אישי ותאריך גיוס לפני הפיזור</div>
+    <div><b>ספט׳–דצמ׳</b>חלון המלגות</div>
+    <div><b>3 חודשים לפני שחרור</b>שיחות שחרור</div>
+    <div><b>פסח</b>סקר בוגרים שנתי</div>
   </div>
-  <p class="big" style="margin-top:44px">רוב הערך ברמה 1 ו-2. <b>שתיהן פתוחות לכולכם מהיום, בלי לדבר איתנו בכלל.</b></p></div>
+  <p class="med" style="margin-top:34px;opacity:.55">הערוץ: וואטסאפ, לא מייל.</p></div>
 
-<!-- 16 -->
-<div class="s yellowbg" data-timer="240"><div class="kick">4 דקות</div>
-  <h2>חיפוש חי</h2>
-  <p class="big" style="font-size:56px">היכנסו ל-<b>hopa.org.il</b><br>וחפשו מענה אחד באזור שלכם<br>לצורך אמיתי שאתם מכירים.</p>
-  <span class="tmr" id="tmr">04:00</span></div>
-
-<!-- 17 — חי -->
-<div class="s dark" data-live="mane"><div class="live"><i></i> חי</div>
-  <div class="kick">מה מצאנו</div><h3 id="maneCount">— מענים</h3>
-  <div class="wall" id="mane"></div></div>
-
-<!-- 18 -->
 <div class="s pinkbg"><div class="kick">עד 21.10</div>
-  <h1 style="font-size:104px">בוגר אחד.<br>שיחה אחת.<br>שלוש שאלות.</h1></div>
+  <h1 style="font-size:96px">שיחה אחת<br>עם בוגר.<br>ושם אחד<br>של שותף/ה.</h1></div>
 
-<!-- 19 -->
-<div class="s"><h2>שלוש השאלות</h2>
-  <div class="qlist">
-    <div><b>1</b>מה את/ה עושה עכשיו?</div>
-    <div><b>2</b>מה הכי קשה כרגע?</div>
-    <div><b>3</b>מה היית רוצה שבית הספר היה עושה בשבילך בשנה האחרונה?</div>
-  </div>
-  <p class="big" style="margin-top:44px">ואז — משפט אחד <b>שהוא אמר</b>, בדף ״השיחה שלי״.</p>
-  <p class="med" style="margin-top:20px;opacity:.6">ב-21.10 אנחנו פותחים את המפגש מהמשפטים האלה. בלי שמות, בלי בתי ספר.</p></div>
+<div class="s" data-live="tables"><div class="live"><i></i> חי</div>
+  <div class="kick">השולחנות של 21.10</div><h2 id="tn">מי יושב איפה</h2>
+  <div class="chaps" id="tables"></div></div>
 
-<!-- 20 — חי -->
-<div class="s dark" data-live="mesima"><div class="live"><i></i> חי</div>
-  <div class="kick">מי מתקשר למי</div><h3 id="mesCount">— רכזים בחרו בוגר</h3>
-  <div class="wall" id="mes"></div></div>
+<div class="s yellowbg"><h1 style="font-size:104px">21.10<br>בני ברק</h1>
+  <p class="big" style="margin-top:40px;font-size:54px"><b>שולחנות הרעיונות.</b><br>תבואו עם מה ששמעתם.</p></div>
 
-<!-- 21 -->
-<div class="s yellowbg"><h1 style="font-size:110px">21.10<br>בני ברק</h1>
-  <p class="big" style="margin-top:44px;font-size:56px"><b>תבואו עם מה ששמעתם.</b></p></div>
-
-<!-- 22 -->
 <div class="s dark"><div class="kick">🚪 הדלת</div>
-  <p class="big" style="font-size:50px">25 מכם בתוכנית הבוגרים של הופה.<br><br>
-  מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים בסעיף 7 בדף, ואחזור אליו.</p>
-  <p class="med" style="margin-top:46px;opacity:.5">זה הכול. לא נדבר על זה יותר.</p></div>
-
-<!-- 23 -->
-<div class="s pinkbg"><div class="kick">רק רכזי הופה · +10 דקות</div>
-  <h2>אתם מארחים את התחנות</h2>
-  <div class="qlist">
-    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">א׳</b>המאגר — ״אי אפשר ללוות את מי שאין לך את הטלפון שלו״</div>
-    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">ב׳</b>השיחה — 4 השאלות + סימולציה</div>
-    <div style="background:rgba(255,255,255,.15);color:#fff"><b style="color:var(--yellow)">ג׳</b>מענים ומדרג — יידוע ← תיווך ← סנגור ← ליווי</div>
-  </div>
-  <div class="quote" style="border-color:#fff;margin-top:50px;font-size:48px">אתם לא מרצים.<br><b>אתם מספרים מה קרה אצלכם.</b></div></div>
+  <p class="big" style="font-size:48px">25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה,<br>ויש להם ליווי ומערכת.<br><br>
+  מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים בסעיף 7 בדף.</p>
+  <p class="med" style="margin-top:44px;opacity:.45">זה הכול. לא נדבר על זה יותר.</p></div>
 
 </div></div>
-<div id="hint">← → או רווח · F מסך מלא · R טשטוש מחדש · #מספר בכתובת קופץ לשקף</div>
+<div id="hint">← → או רווח · F מסך מלא · #מספר בכתובת קופץ לשקף</div>
 
+<script src="elias-data.js"></script>
 <script>
 var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 var GS_SECRET='hopa-nihul-2026';
 var KEY_PREFIX='m2-';
+var CHECKLIST=[
+  'טלפון אישי — לא של ההורים','תאריך גיוס / תחילת שירות','משפט הסכמה לשמירת קשר',
+  'קבוצת מחזור שנפתחת לפני הסיום','שיחה אישית קצרה עם כל אחד','להציג מה זה ליווי בוגרים',
+  'לסמן מי בסיכון להיעלם','לחבר למענה אחד לפני שיוצאים'
+];
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+$('chaps').innerHTML=CHAPTERS.map(function(c){
+  return '<div class="chap" style="--pink:'+c.c+'"><div class="n">פרק '+c.n+'</div>'+
+    '<div class="t">'+esc(c.t)+'</div><div class="d">'+esc(c.d)+'</div></div>';
+}).join('');
+$('cklist').innerHTML=CHECKLIST.map(function(t,i){
+  return '<div class="chap"><div class="n">'+(i+1)+'</div><div class="t" style="font-size:28px">'+esc(t)+'</div></div>';
+}).join('');
 
 var slides=[].slice.call(document.querySelectorAll('.s'));
 slides.forEach(function(s,i){
@@ -254,38 +227,18 @@ function show(i){
   slides.forEach(function(s,j){s.classList.toggle('on',j===cur)});
   location.hash=String(cur+1);
   if(slides[cur].dataset.live)poll();
-  var td=slides[cur].dataset.timer;
-  if(td)startTimer(Number(td));else stopTimer();
 }
-function fit(){
-  var k=Math.min(innerWidth/1920,innerHeight/1080);
-  $('deck').style.transform='scale('+k+')';
-}
+function fit(){$('deck').style.transform='scale('+Math.min(innerWidth/1920,innerHeight/1080)+')'}
 addEventListener('resize',fit);fit();
 addEventListener('keydown',function(e){
   if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown')show(cur+1);
   else if(e.key==='ArrowRight'||e.key==='PageUp')show(cur-1);
   else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
-  else if(e.key==='r'||e.key==='R'){var v=$('votes');if(v)v.classList.add('blur')}
   else if(e.key==='Home')show(0);
 });
-addEventListener('click',function(){
-  var v=$('votes');
-  if(slides[cur].dataset.live==='vote'&&v&&v.classList.contains('blur')){v.classList.remove('blur');return}
-  show(cur+1);
-});
+addEventListener('click',function(){show(cur+1)});
 show(location.hash?Number(location.hash.slice(1))-1:0);
 
-/* ---- טיימר ---- */
-var tk=null,tv=240;
-function stopTimer(){if(tk){clearInterval(tk);tk=null}}
-function startTimer(sec){
-  stopTimer();tv=sec;paintT();
-  tk=setInterval(function(){tv--;paintT();if(tv<=0)stopTimer()},1000);
-}
-function paintT(){var e=$('tmr');if(e)e.textContent=String(Math.floor(tv/60)).padStart(2,'0')+':'+String(Math.max(0,tv%60)).padStart(2,'0')}
-
-/* ---- נתונים חיים ---- */
 function jsonp(params,tmo){
   return new Promise(function(res,rej){
     var cb='cb'+Math.random().toString(36).slice(2);
@@ -307,32 +260,36 @@ function items(kind){
     .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
 }
 function draw(){
-  var b=items('bogrim');
-  $('wall').innerHTML=b.slice(-46).map(function(x){return '<span>'+esc(x.name)+(x.word?' <i>'+esc(x.word)+'</i>':'')+'</span>'}).join('');
-  $('wallCount').textContent=b.length+' שמות';
-
-  var k=items('know'),v={yes:0,guess:0,no:0};
-  k.forEach(function(x){if(v[x.v]!==undefined)v[x.v]++});
-  var tot=k.length||1;
-  $('votes').innerHTML=
-    '<div><div class="pc">'+Math.round(v.yes/tot*100)+'%</div><div class="lb">יודע/ת בוודאות</div><div class="ct">'+v.yes+' רכזים</div></div>'+
-    '<div><div class="pc">'+Math.round(v.guess/tot*100)+'%</div><div class="lb">מנחש/ת</div><div class="ct">'+v.guess+'</div></div>'+
-    '<div><div class="pc">'+Math.round(v.no/tot*100)+'%</div><div class="lb">לא יודע/ת</div><div class="ct">'+v.no+'</div></div>';
-
-  var r=items('nekuda'),byRoom={};
-  r.forEach(function(x){(byRoom[x.room]=byRoom[x.room]||[]).push(x.text)});
-  $('rooms').innerHTML=Object.keys(byRoom).sort().slice(0,8).map(function(rm){
-    return '<div class="room"><h4>חדר '+esc(rm)+'</h4><ul>'+byRoom[rm].slice(0,7).map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div>';
+  var h=items('shaot'),n=h.length||1,avg={};
+  BUCKETS.forEach(function(b){avg[b.k]=0});
+  h.forEach(function(x){BUCKETS.forEach(function(b){avg[b.k]+=Number((x.hours||{})[b.k])||0})});
+  $('hbars').innerHTML=BUCKETS.map(function(b){
+    var v=avg[b.k]/n;
+    return '<div class="bar"><span class="nm">'+esc(b.t)+'<small>'+esc(b.d)+'</small></span>'+
+      '<span class="track"><span class="fill" style="width:'+Math.min(100,Math.round(v/70*100))+'%"></span></span>'+
+      '<span class="v">'+v.toFixed(1)+'</span></div>';
   }).join('');
-  $('roomsCount').textContent=r.length+' נקודות קשר שכבר קיימות';
+  $('hn').textContent=h.length+' רכזים תעדפו';
 
-  var m=items('mane');
-  $('mane').innerHTML=m.slice(-30).map(function(x){return '<span>'+(x.city?'<i>'+esc(x.city)+' · </i>':'')+esc(x.found)+'</span>'}).join('');
-  $('maneCount').textContent=m.length+' מענים';
+  var p=items('shutaf'),byRoom={};
+  p.forEach(function(x){(byRoom[x.room]=byRoom[x.room]||[]).push(x.text)});
+  $('rooms').innerHTML=Object.keys(byRoom).sort().slice(0,8).map(function(r){
+    return '<div class="room"><h4>חדר '+esc(r)+'</h4><ul>'+
+      byRoom[r].slice(0,6).map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div>';
+  }).join('');
+  $('pn').textContent=p.length+' גיוסים';
 
-  var c=items('mesima');
-  $('mes').innerHTML=c.slice(-50).map(function(x){return '<span>'+esc(x.who)+'</span>'}).join('');
-  $('mesCount').textContent=c.length+' רכזים בחרו בוגר';
+  var c=items('cklist');
+  $('ckwall').innerHTML=c.slice(-30).map(function(x){return '<span>'+esc(x.text)+'</span>'}).join('');
+  $('cn').textContent=c.length+' סעיפים שהחדר הוסיף';
+
+  var t=items('shulchan');
+  $('tables').innerHTML=CHAPTERS.map(function(ch){
+    var l=t.filter(function(x){return String(x.chapter).indexOf(ch.n+' · ')===0});
+    return '<div class="chap" style="--pink:'+ch.c+'"><div class="n">שולחן '+ch.n+'</div>'+
+      '<div class="t">'+esc(ch.t)+'</div><div class="d" style="color:'+ch.c+';font-weight:800;font-size:26px">'+l.length+' רכזים</div></div>';
+  }).join('');
+  $('tn').textContent='מי יושב איפה · '+t.length+' בחרו';
 }
 var busy=false;
 async function poll(){

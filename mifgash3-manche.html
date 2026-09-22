@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>רץ־שיט ומדריך מארחים · מפגש 21.10 · הופה</title>
+<title>רץ־שיט · שולחנות הרעיונות · 21.10 · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
@@ -58,21 +58,19 @@
   .stat>div{background:var(--pink-soft);border-radius:11px;padding:8px 16px;font-size:12.5px;color:var(--pink-dark);font-weight:700;text-align:center}
   .stat b{display:block;font-size:23px;color:var(--ink)}
 
-  .host{border:2px solid var(--line);border-radius:15px;padding:15px;margin-top:11px}
-  .host.a{border-color:#b8e6c9}.host.b{border-color:#f6dc7a}.host.c{border-color:#f5c2dd}
-  .host h3{margin:0 0 2px;font-size:16.5px;font-weight:900}
-  .host .lead{font-size:13.5px;color:var(--muted);font-weight:600;margin-bottom:9px}
-  .mins{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
-  .mins span{background:#111;color:var(--yellow);border-radius:8px;padding:3px 10px;font-size:12px;font-weight:800}
-
-  .tbl{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px;margin-top:9px}
-  .tb{border:1.5px solid var(--line);border-radius:13px;padding:11px 13px}
-  .tb h4{margin:0 0 5px;font-size:13.5px;font-weight:900;color:var(--pink-dark)}
-  .tb ul{margin:0;padding-inline-start:17px;font-size:12.5px}
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;margin-top:10px}
+  .tc{border:2px solid var(--line);border-radius:14px;padding:13px 14px}
+  .tc .bd{color:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:800;display:inline-block}
+  .tc h3{margin:7px 0 1px;font-size:16px;font-weight:900}
+  .tc .d{color:var(--muted);font-size:12.5px}
+  .tc ol{margin:9px 0 0;padding-inline-start:18px;font-size:12.5px;line-height:1.45}
+  .tc li{margin-bottom:5px}
+  .tc .st{margin-top:9px;font-size:11.5px;font-weight:800;border-radius:9px;padding:5px 9px;text-align:center}
+  .tc .st.no{background:#fff8dc;color:#6b5300}
+  .tc .st.yes{background:#e8f8ef;color:#14613b}
 
   .btn{border:none;border-radius:11px;padding:9px 17px;font-weight:800;font-size:13.5px;cursor:pointer}
   .btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
-  .btn.pink{background:var(--pink);color:#fff}
   .chk{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
   .chk:last-child{border-bottom:none}
   .chk input{width:19px;height:19px;accent-color:var(--pink);flex:none;margin-top:2px}
@@ -80,8 +78,6 @@
   .lnk{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
   .lnk a{background:#111;color:#fff;text-decoration:none;border-radius:11px;padding:9px 15px;font-weight:800;font-size:13px}
   .lnk a.y{background:var(--yellow);color:#111}
-  .qb{border:1.5px solid var(--line);border-radius:12px;padding:10px 13px;margin-top:8px;font-size:14.5px;font-weight:600}
-  .qb small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:4px}
   #toast{position:fixed;inset-inline:0;bottom:20px;margin:auto;width:max-content;background:#111;color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
   #toast.show{opacity:1}
 </style>
@@ -89,208 +85,149 @@
 <body>
 
 <header><div class="in hrow">
-  <div><h1>רץ־שיט · מפגש 21.10</h1><div class="sub">״מה שמעתי״ · בני ברק · שעתיים · עולם קפה</div></div>
+  <div><h1>רץ־שיט · מפגש 21.10</h1><div class="sub">שולחנות הרעיונות · בני ברק · שעתיים</div></div>
   <div class="clockbox"><span style="font-size:12px;opacity:.6">התחלה</span><input id="start" value="09:30"><span class="now" id="now">--:--</span></div>
 </div></header>
 
 <div class="tabs"><div class="in">
   <button data-p="run" class="on">🎬 רץ־שיט</button>
-  <button data-p="hosts">🎪 מדריך מארחים</button>
-  <button data-p="live">📊 מצב השיחות</button>
-  <button data-p="prep">✅ הכנות</button>
+  <button data-p="tables">🪑 שמונת השולחנות</button>
+  <button data-p="live">📊 מצב חי</button>
+  <button data-p="prep">✅ הכנות והדפסות</button>
   <button data-p="links">🔗 קישורים</button>
 </div></div>
 
 <main class="in">
   <div class="pane on" id="p-run"><div id="blocks"></div></div>
 
-  <div class="pane" id="p-hosts">
+  <div class="pane" id="p-tables">
     <div class="card">
       <h2>המבנה</h2>
-      <p style="font-size:14px">3 נושאים × 2 עותקים = <b>6 עמדות</b>. בכל עמדה <b>צמד מארחים מרכזי הופה</b> שנשאר שם כל שלושת הסבבים (12 מארחים). 52 הנותרים מסתובבים בשש קבוצות של ~8–9.</p>
-      <div class="warn"><b>אם החדר קטן או מלבני:</b> 3 עמדות בלבד, קבוצות של 17. פחות טוב — עדיין עובד.</div>
-      <div class="good"><b>הכלל היחיד למארחים:</b> אתם לא מרצים. אתם מספרים <b>מה קרה אצלכם</b>. אם התחלתם משפט ב״צריך ל…״ — עצרו והחליפו ל״אצלנו ניסינו…״.</div>
+      <p style="font-size:14px">8 שולחנות × 8 אנשים. <b>כל שולחן לוקח פרק אחד ונהיה המומחה שלו.</b>
+      בכל שולחן 3 רכזי הופה — לא כמרצים, אלא כמי שכבר ניסו.</p>
+      <div class="good"><b>המשפט שפותח את היום:</b> ״אתם לא הולכים לשמוע תוכנית עבודה. אתם הולכים לכתוב אותה.״</div>
+      <div class="warn"><b>הכלל שמציל את היום:</b> בסבב זריקת הרעיונות <b>לא פוסלים כלום</b>. מי שאומר ״זה לא ריאלי״ בתוך ה-90 שניות — עוצר את השולחן. פוסלים אחר כך, כשבוחרים שלושה.</div>
     </div>
-
-    <div class="host a">
-      <h3>עמדה א׳ · המאגר</h3>
-      <div class="lead">״אי אפשר ללוות את מי שאין לך את הטלפון שלו״</div>
-      <div class="mins"><span>2′ הסיפור שלי</span><span>8′ הליבה</span><span>5′ תוצר</span></div>
-      <h4 style="margin-top:6px;font-size:13px;color:var(--pink-dark)">2′ — פותחים מהסיפור שלכם</h4>
-      <p style="font-size:14px">מה קרה כשניסיתם לבנות רשימה — כמה טלפונים היו שגויים, מה עבד, מה בזבז זמן. <b>לא תיאוריה.</b></p>
-      <h4>8′ — הליבה</h4>
-      <ul>
-        <li><b>המינימום:</b> שם · טלפון · שנת סיום. זהו. כל השאר בונוס.</li>
-        <li><b>מתי — התובנה שהופכת את התחנה:</b> לא אחרי שהם הולכים. <b>בי״ב, שבועיים לפני הטקס</b>, כשהם עדיין יושבים מולך.</li>
-        <li><b>איך:</b> QR על השקף בשיעור אחרון · טופס אחד · ההורים כגיבוי.</li>
-        <li><b>תאריך גיוס</b> — הפרט היחיד שכמעט אי אפשר להשיג אחר כך.</li>
-        <li><b>הסכמה:</b> משפט קצר בטופס — למה שומרים, מי רואה, איך מבקשים להסיר.</li>
-      </ul>
-      <h4>5′ — התוצר</h4>
-      <p style="font-size:14px">כל אחד מוריד את תבנית המאגר (כפתור בדף המשתתפים) ו<b>כותב תאריך</b>: מתי אני אוסף מהמחזור הנוכחי.</p>
-      <div class="warn"><b>מלכודת:</b> מישהו ישאל על GDPR/פרטיות ותיתקעו 6 דקות. התשובה: ״שם, טלפון ושנת סיום עם משפט הסכמה — זה מה שכל בית ספר כבר עושה. מה שמעבר לזה נדבר בנפרד.״ וממשיכים.</div>
-    </div>
-
-    <div class="host b">
-      <h3>עמדה ב׳ · השיחה</h3>
-      <div class="lead">התחנה שמתאימה לכולם — כי כל רכז חברתי כבר מדבר עם נוער</div>
-      <div class="mins"><span>3′ הפרוטוקול</span><span>2′ עקרונות</span><span>8′ סימולציה</span><span>2′ דיבוב</span></div>
-      <h4 style="margin-top:6px;font-size:13px;color:var(--pink-dark)">3′ — 4 השאלות</h4>
-      <ul>
-        <li>🧭 <b>מסלול</b> — איפה את/ה עכשיו? מה השלב הבא ומתי?</li>
-        <li>💰 <b>כסף וזכויות</b> — מלגות, פיקדון, זכאויות שלא מומשו, חובות</li>
-        <li>🏠 <b>חיים</b> — דיור, משפחה, איך את/ה מרגיש/ה באמת</li>
-        <li>🔗 <b>חיבור</b> — למה אפשר לחבר אותך עכשיו</li>
-      </ul>
-      <h4>2′ — שלושת העקרונות</h4>
-      <ul>
-        <li>מתחילים מהתקוות, לא מהחששות</li>
-        <li>משקפים כוחות — ״שיחה טובה היא שיחה שבה הבוגר לומד על צדדים חזקים שלו״</li>
-        <li>מדברים על <b>הפרק הבא</b>, לא על כל החיים</li>
-      </ul>
-      <h4>8′ — סימולציה בזוגות · 4 דקות לכל אחד</h4>
-      <p style="font-size:14px">מחלקים <b>כרטיסי מצב</b> — לקוחים מהקיר. דוגמאות:</p>
-      <div class="qb">סיים בלי בגרות, עובד במחסן, לא יודע שיש השלמת בגרות במימון.</div>
-      <div class="qb">משוחררת, רוצה ללמוד, אבל ״זה יקר מדי״ — לא בדקה מלגות מעולם.</div>
-      <div class="qb">לפני גיוס בעוד חודשיים, לא מדבר עם אף אחד על זה.</div>
-      <h4>2′ — דיבוב</h4>
-      <p style="font-size:14px">״איפה נתקעתם?״ — כמעט תמיד התשובה היא <b>הרצון לפתור במקום להקשיב</b>. זו הנקודה שאתם רוצים שתיאמר בקול על ידם, לא על ידכם.</p>
-    </div>
-
-    <div class="host c">
-      <h3>עמדה ג׳ · מענים ומדרג</h3>
-      <div class="lead">מה עושים עם מה ששמעת</div>
-      <div class="mins"><span>2′ המדרג</span><span>9′ 3 מקרים</span><span>2′ גבולות</span><span>2′ הצומת</span></div>
-      <h4 style="margin-top:6px;font-size:13px;color:var(--pink-dark)">2′ — ארבע המדרגות</h4>
-      <p style="font-size:14px"><b>יידוע → תיווך → סנגור → ליווי.</b><br>
-      הכלל: <i>״חיבור למענה בלי מעקב לא נחשב. בודקים שהקשר נוצר ושהצורך באמת נענה — ואם לא, מחפשים מענה אחר.״</i></p>
-      <h4>9′ — שלושה מקרים מהקיר</h4>
-      <p style="font-size:14px">לכל מקרה, בזוגות מול <b>hopa.org.il</b> בנייד: באיזו מדרגה אנחנו? מה המענה? <b>ומי בבית הספר עוזר לי בזה?</b></p>
-      <h4>2′ — הגבולות, בפירוש</h4>
-      <ul>
-        <li>לא מעבירים כסף אישי ולא מלווים כספית</li>
-        <li>סיוע כלכלי רק דרך מענים, מלגות וזכויות</li>
-        <li>סימן למצוקה נפשית חריפה → התייעצות וחיבור לגורם טיפולי <b>עוד באותו יום</b></li>
-      </ul>
-      <h4>2′ — הצומת הקרוב</h4>
-      <div class="warn"><b>קרן גרוס נסגרת ב-15.12.</b> מי שיוצא מכאן ולא עושה כלום — הבוגרים שלו מפספסים אותה השנה.</div>
-    </div>
-
-    <div class="card">
-      <h2>מי נרשם כמארח/ת (מ-14.10)</h2>
-      <div id="hostlist" style="font-size:14px">טוען…</div>
-    </div>
+    <div class="tgrid" id="tgrid"></div>
   </div>
 
   <div class="pane" id="p-live">
     <div class="card">
       <div class="stat" id="lstat"></div>
-      <div id="verdict" style="margin-top:12px;padding:11px 14px;border-radius:12px;font-weight:700;font-size:14px"></div>
       <div style="margin-top:10px"><button class="btn ghost" id="refresh">🔄 רענון</button>
         <span style="font-size:12px;color:var(--muted);margin-inline-start:8px" id="lastup"></span></div>
     </div>
-    <div class="card"><h2>תמות מהשיחות</h2><div id="themes" style="font-size:14px"></div></div>
-    <div class="card"><h2>חסמים — מי שלא התקשר</h2><div id="blocks2" style="font-size:14px"></div></div>
-    <div class="card"><h2>בנק ציטוטי גיבוי</h2>
-      <p style="font-size:13.5px;color:var(--muted)">להדפיס רק אם ב-19.10 יש פחות מ-25 שיחות. כל שולחן מקבל 3 כרטיסים, קורא, ובוחר את זה שהכי מהדהד.</p>
-      <div class="lnk"><a class="y" href="sicha.html?admin=hopa" target="_blank">🖨️ הדפסת כרטיסים מהשיחות שכן בוצעו</a></div>
-      <div class="warn" style="margin-top:10px"><b>לאסוף מראש:</b> 12 ציטוטים אמיתיים מבוגרים של הופה, בהסכמה, בלי שמות. אפשר בהקלטה קולית בוואטסאפ ולתמלל.</div>
-    </div>
+    <div class="card"><h2>הפרקים שנשלחו</h2><div id="sent" style="font-size:14px"></div></div>
+    <div class="card"><h2>מצב השיחות עם בוגרים (מ-14.10)</h2><div id="sichot" style="font-size:14px"></div></div>
   </div>
 
   <div class="pane" id="p-prep">
-    <div class="card"><h2>לפני המפגש</h2><div id="chklist"></div></div>
-    <div class="card"><h2>מה מביאים פיזית</h2>
+    <div class="card"><h2>מה מדפיסים</h2>
       <ul style="font-size:14px">
-        <li>כרטיסים גדולים (A5) + טושים עבים — 3 לכל שולחן</li>
-        <li>נייר דבק / מגנטים לקיר</li>
-        <li>64 עותקים מודפסים של <b>הדף שלי</b> (tochnit.html)</li>
-        <li>64 <b>כרטיסי כיס</b> (kartis.html — 4 בדף, 16 דפים)</li>
-        <li>שלטי שולחנות עם שמות משובצים מראש</li>
-        <li>6 שלטי עמדות לעולם הקפה</li>
-        <li>ציטוטי הגיבוי מודפסים (רק אם צריך)</li>
+        <li><b>64 מחברות</b> — 10 עמודים, דו-צדדי. לכל שולחן מדפיסים את <b>המחברת המסומנת שלו</b> (8 עותקים לכל פרק)</li>
+        <li><b>32 קלפי אתגר</b> — 2 בעמוד, 16 דפים. לגזור; כל שולחן מקבל את 4 שלו</li>
+        <li><b>קלפי אליאס</b> — 5 קלפים × 8 סטים</li>
+        <li>64 כרטיסי כיס (16 דפים, 4 בדף) — לגזור</li>
+        <li>שלטי שולחנות עם <b>שם הפרק</b> + שמות משובצים</li>
+      </ul>
+      <div class="lnk" id="printLinks"></div>
+    </div>
+    <div class="card"><h2>מה מביאים</h2>
+      <ul style="font-size:14px">
+        <li>טושים עבים — 2 לשולחן · כרטיסים גדולים לקיר</li>
+        <li>נייר דבק או מגנטים</li>
+        <li>פעמון או טיימר גדול להחלפת סבבים</li>
+        <li>ציטוטי גיבוי מודפסים — רק אם פחות מ-25 שיחות בוצעו</li>
       </ul>
     </div>
+    <div class="card"><h2>לפני המפגש</h2><div id="chklist"></div></div>
   </div>
 
   <div class="pane" id="p-links">
     <div class="card"><h2>למשתתפים</h2><div class="lnk">
       <a class="y" href="mifgash3.html" target="_blank">📄 דף המפגש</a>
-      <a href="kir.html" target="_blank">🧱 קיר הבוגרים</a>
-      <a href="sicha.html" target="_blank">📞 השיחה שלי</a>
+      <a href="machberet.html" target="_blank">📓 המחברת</a>
+      <a href="kir.html" target="_blank">🧱 קיר הציטוטים</a>
       <a href="https://hopa.org.il" target="_blank">🔎 מאגר המענים</a>
     </div></div>
     <div class="card"><h2>להדפסה</h2><div class="lnk">
-      <a href="tochnit.html" target="_blank">🖨️ הדף שלי (A4)</a>
-      <a href="kartis.html" target="_blank">🎴 כרטיס כיס (4 בדף)</a>
+      <a href="elias.html?m=ch" target="_blank">🎴 32 קלפי אתגר</a>
+      <a href="elias.html?m=el" target="_blank">🗣️ קלפי אליאס</a>
+      <a href="kartis.html" target="_blank">🎴 כרטיס כיס</a>
+      <a href="tochnit.html" target="_blank">📋 טופס תוכנית העבודה</a>
     </div></div>
-    <div class="card"><h2>למיטל</h2><div class="lnk">
-      <a href="sicha.html?admin=hopa" target="_blank">📊 ניהול השיחות</a>
+    <div class="card"><h2>המפגשים האחרים</h2><div class="lnk">
       <a href="mifgash2-manche.html" target="_blank">⬅️ רץ־שיט 14.10</a>
-      <a href="mashov2.html?admin=hopa" target="_blank">💬 משוב</a>
-      <a href="mifgash4-manche.html" target="_blank">➡️ רץ־שיט 5.11</a>
+      <a href="mifgash4-manche.html" target="_blank">➡️ רץ־שיט 4.11</a>
+      <a href="sicha.html?admin=hopa" target="_blank">📊 ניהול השיחות</a>
     </div></div>
   </div>
 </main>
 
 <div id="toast"></div>
 
+<script src="elias-data.js"></script>
 <script>
 var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 var GS_SECRET='hopa-nihul-2026';
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2000)}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
 var BLOCKS=[
-{n:0,d:10,t:'כניסה לשולחנות',s:'משובצים מראש בשמות',body:
-  '<div class="warn"><b>לא לתת להם לשבת עם החברים מבית הספר.</b> 8 שולחנות × 8, בכל שולחן 3 רכזי הופה. שלטי שמות על השולחנות לפני שנכנסים.</div>'+
-  '<h4>הקיר</h4><p>קיר ריק עם הכותרת <b>״מה הבוגרים אמרו לנו השבוע״</b> + כרטיסים גדולים וטושים על כל שולחן.</p>'+
-  '<div class="good"><b>אם השיחות הוזנו מראש בדף:</b> חצי מהכרטיסים כבר תלויים כשהם נכנסים. הם רואים קיר מתמלא לפני שאמרנו מילה.</div>'},
+{n:0,d:10,t:'כניסה לשולחנות',s:'משובצים מראש · שלט עם שם הפרק',body:
+  '<div class="warn"><b>לא לתת להם לשבת עם החברים מבית הספר.</b> 8 שולחנות × 8, בכל שולחן 3 רכזי הופה. שלט על כל שולחן עם <b>שם הפרק</b> ולא רק מספר.</div>'+
+  '<h4>על כל שולחן</h4><ul><li>8 מחברות של הפרק הזה</li><li>4 קלפי האתגר של הפרק, הפוכים</li><li>סט קלפי אליאס</li><li>טושים וכרטיסים לקיר</li></ul>'+
+  '<div class="say">״אתם לא הולכים לשמוע תוכנית עבודה. אתם הולכים לכתוב אותה.״</div>'+
+  '<h4>מה מסבירים ב-3 דקות</h4><p>שמונה פרקים, שמונה שולחנות. כל שולחן מומחה בפרק אחד; ב-4.11 כל אחד מציג — וכולם יוצאים עם תוכנית שלמה.</p>'},
 
-{n:1,d:20,t:'מה שמעתי מהבוגר שלי',s:'סבב בשולחן · ~100 שניות לאדם',body:
+{n:1,d:10,t:'קיר הציטוטים',s:'נפתחים ממה ששמעו',body:
   '<div class="say">״אנחנו לא פותחים במצגת. אנחנו פותחים במה שאתם שמעתם.״</div>'+
-  '<ul><li><b>2′</b> — הנחיה</li><li><b>14′</b> — סבב: לא סיכום השיחה, <b>המשפט</b>. מה הוא אמר ואיך זה נחת עליך.</li>'+
-  '<li><b>4′</b> — השולחן בוחר ציטוט אחד, כותב על כרטיס ותולה על הקיר</li></ul>'+
-  '<h4>מי שלא התקשר</h4><p>מקשיב, ובסוף עונה בשולחן על שאלה אחת: <i>״למה לא יצא לך?״</i></p>'+
-  '<div class="good"><b>התשובות האלה יקרות</b> — אין טלפונים, לא ידעתי מה להגיד, לא היה זמן, פחדתי. אלה בדיוק החסמים שנטפל בהם בתחנות. מבקשים מהרשם/ת לרשום.</div>'+
-  '<div class="warn"><b>גיבוי:</b> אם פחות מ-25 עשו את השיחה — כל שולחן מקבל 3 כרטיסי ציטוט מודפסים, קורא, ובוחר את זה שהכי מהדהד. המפגש שורד, הוא פשוט קצת פחות שלהם.</div>'},
+  '<ul><li><b>6′</b> — סבב בשולחן, ~100 שניות לאדם. לא סיכום השיחה — <b>המשפט</b>.</li>'+
+  '<li><b>4′</b> — כל שולחן כותב ציטוט אחד על כרטיס ותולה. מיטל מקריאה 5–6 בקול.</li></ul>'+
+  '<div class="good"><b>מי שלא התקשר</b> עונה בשולחן על ״למה לא יצא לך?״ — והתשובה נרשמת. אלה החסמים האמיתיים, והם חוזרים בתחנות.</div>'+
+  '<div class="say">״ארבע התמות שעלו כאן הן בדיוק ארבע השאלות של שיחת בוגר. לא המצאנו את זה — הבוגרים שלכם הכתיבו את זה השבוע.״</div>'+
+  '<div class="warn"><b>גיבוי:</b> אם פחות מ-25 שיחות בוצעו — כל שולחן מקבל 3 ציטוטים מודפסים ובוחר אחד.</div>'},
 
-{n:2,d:10,t:'הקיר מדבר',s:'מליאה · מיטל',body:
-  '<p>ניגשים לקיר ומקריאים <b>6–7 ציטוטים בקול</b>. ואז ממיינים בזמן אמת לתמות על לוח:</p>'+
-  '<p style="font-size:16px;font-weight:800">מסלול · כסף · חיים · בדידות · בגרות חסרה · שירות</p>'+
-  '<div class="say">״שימו לב מה קרה. ארבע התמות הראשונות הן בדיוק ארבע השאלות שרכז בוגרים שואל בכל שיחה: איפה אתה במסלול · מה עם כסף וזכויות · מה קורה בחיים · ולמה אפשר לחבר אותך. לא המצאנו את זה — הבוגרים שלכם הכתיבו את זה השבוע.״</div>'+
-  '<div class="good"><b>זה הרגע החזק ביותר של המפגש.</b> הפרוטוקול לא מוצג כתורה מלמעלה — הוא מתגלה כמסקנה מהחומר שלהם. אל תמהרו דרכו.</div>'},
+{n:2,d:8,t:'אליאס · סבב חימום',s:'מסבירים בלי להגיד את המילה',body:
+  '<h4>איך משחקים</h4><ul><li>3 סבבים של 60 שניות. בכל סבב אדם אחר בשולחן מסביר.</li>'+
+  '<li>הקלף מכיל 6 מושגים מעולם ליווי הבוגרים. <b>אסור להגיד את המילה או חלק ממנה.</b></li>'+
+  '<li>כל ניחוש נכון = נקודה. רושמים במחברת, עמוד 2.</li></ul>'+
+  '<div class="good"><b>למה זה כאן ולא רק בשביל הכיף:</b> חצי מהחדר לא מכיר את השפה — מדרג, סנגור, פיקדון, קרן גרוס. '+
+  'אחרי שמונה דקות כולם מכירים, בלי הרצאה אחת. <b>זה הבלוק הכי יעיל ביום.</b></div>'+
+  '<div class="warn">לא להאריך. שמונה דקות ועוצרים — גם אם כיף. האנרגיה צריכה לעבור לסבב הבא.</div>'},
 
-{n:3,d:45,t:'עולם קפה · 3 סבבים × 15 דק׳',s:'6 עמדות · 12 מארחים',body:
-  '<p>3 נושאים × 2 עותקים. צמד מארחים בכל עמדה, נשארים כל שלושת הסבבים. 52 מסתובבים בשש קבוצות.</p>'+
-  '<h4>תזמון בפועל</h4><p>3 × 13 דקות + 2 מעברים של 3 דקות = 45. <b>צלצול/מחיאת כף להחלפה</b> — לא לסמוך על שעונים.</p>'+
-  '<ul><li><b>א׳ המאגר</b> — אי אפשר ללוות את מי שאין לך את הטלפון שלו</li>'+
-  '<li><b>ב׳ השיחה</b> — 4 השאלות + סימולציה בזוגות</li>'+
-  '<li><b>ג׳ מענים ומדרג</b> — יידוע ← תיווך ← סנגור ← ליווי</li></ul>'+
-  '<div class="warn"><b>הסיכון הכי גדול:</b> מארח שהופך את התחנה להרצאה. תזכורת לפני שמתחילים: ״אתם מספרים מה קרה אצלכם.״</div>'+
-  '<p style="font-size:13.5px;color:var(--muted)">המדריך המלא לכל תחנה — בטאב ״מדריך מארחים״.</p>'},
+{n:3,d:40,t:'אליאס הפוך',s:'4 סבבים × 10 דקות · כאן נוצר התוכן',body:
+  '<h4>מבנה כל סבב · 10 דקות</h4>'+
+  '<ul><li><b>90 שניות</b> — הופכים את הקלף. זורקים כמה שיותר רעיונות. הרשם/ת כותב/ת הכול. כל רעיון = נקודה.</li>'+
+  '<li><b>3 דקות</b> — בוחרים את <b>שלושת הטובים</b> ומסמנים במחברת.</li>'+
+  '<li><b>5 דקות</b> — לוקחים <b>אחד</b> ומפרטים: מה צריך בשביל שזה יקרה · כמה שעות בשנה · מי אחראי.</li></ul>'+
+  '<div class="warn"><b>הכלל שמציל את הסבב:</b> ב-90 השניות <b>לא פוסלים כלום</b>. מי שאומר ״זה לא ריאלי״ עוצר את השולחן. פוסלים בשלב הבחירה.</div>'+
+  '<div class="good"><b>5 דקות הפירוט הן העבודה האמיתית.</b> רעיון בלי שעות ובלי אחראי לא ייכנס לשום תוכנית עבודה. אם שולחן מדלג על זה — לעצור אותו.</div>'+
+  '<h4>תפקידים בשולחן · מחליפים כל סבב</h4>'+
+  '<ul><li><b>רשם/ת</b> — כותב/ת הכול, לא מסנן/ת</li><li><b>שומר/ת זמן</b> — 90 שניות זה 90 שניות</li>'+
+  '<li><b>מקדם/ת</b> — כשיש שקט, זורק/ת רעיון גרוע בכוונה כדי לשחרר</li></ul>'+
+  '<div class="warn"><b>החלפת סבבים:</b> פעמון או מחיאת כף. לא לסמוך על שעונים — השולחנות בתוך זה.</div>'},
 
-{n:4,d:25,t:'הדף שלי',s:'אישי ואז בזוגות',body:
-  '<ul><li><b>12′</b> — מילוי אישי, <b>בשקט</b>. הדף מודפס, ממלאים ביד.</li>'+
-  '<li><b>8′</b> — זוגות מהשולחן מקריאים זה לזה. תפקיד המקשיב: <b>שאלה אחת בלבד</b> — ״מה הכי סביר שימנע ממך לעשות את זה?״</li>'+
-  '<li><b>5′</b> — כל אחד מצלם את הדף שלו ושולח לעצמו בוואטסאפ.</li></ul>'+
-  '<h4>ארבעת השדות</h4>'+
-  '<ul><li>3 פעולות עד חנוכה — <b>עם תאריך</b></li>'+
-  '<li>מי השותף/ה שלי בבית הספר — <b>בשם</b>. רכז לבד לא שורד.</li>'+
-  '<li>מה החסם האמיתי — ומה הצעד הקטן שעוקף אותו</li>'+
-  '<li>בוגר אחד שאני מתקשר/ת אליו השבוע</li></ul>'+
-  '<div class="good"><b>12 הדקות בשקט הן קריטיות.</b> אם מדברים ברקע — אף אחד לא כותב באמת. לבקש שקט מפורשות.</div>'+
-  '<div class="warn"><b>חובה, לא רשות:</b> 2 דקות בסוף להעתקה לטופס הדיגיטלי בדף המפגש (סעיף 4), <b>כולל סוג החסם</b>. לפי זה משבצים את החדרים ב-5.11. בלי זה, מפגש 5.11 מתחיל בעיוורון.</div>'},
+{n:4,d:30,t:'כותבים את הפרק',s:'5 פעולות · זה מה שיוצג ב-4.11',body:
+  '<h4>מה השולחן כותב · עמוד 7 במחברת</h4>'+
+  '<ul><li><b>5 פעולות</b> — כל אחת עם <b>מתי בשנה · כמה שעות · מי שותף</b></li>'+
+  '<li><b>משפט אחד</b> שיוצג ב-4.11 — מה כל רכז/ת חייב/ת לדעת על הפרק</li>'+
+  '<li><b>המלכודת</b> — מה הכי סביר שייכשל, ומה עוקף את זה</li></ul>'+
+  '<div class="good"><b>חמש ולא יותר.</b> שולחן שכותב 12 פעולות לא כתב תוכנית עבודה — הוא כתב רשימת משאלות. ההגבלה היא מה שמכריח את הבחירה.</div>'+
+  '<div class="warn"><b>שעות:</b> 70 השעות מתחלקות על שמונה פרקים. אם שולחן אחד רוצה 50 שעות לעצמו — זו שיחה טובה לקיים איתו.</div>'+
+  '<h4>שולחים מהדף</h4><p>הרשם/ת ממלא/ת את סעיף 5 ב-<b>mifgash3.html</b> ולוחץ/ת שליחה. אפשר לשלוח כמה פעמים — האחרונה נשמרת.</p>'+
+  '<div class="warn">לוודא שכל שמונת השולחנות שלחו לפני שהולכים הביתה. הטאב ״מצב חי״ מראה מי חסר.</div>'},
 
-{n:5,d:10,t:'סגירה',s:'',body:
-  '<ul><li>הקיר מצולם ונשלח לכולם — <b>תוצר משותף שהם יצרו</b></li>'+
-  '<li>מה נשלח: תבנית המאגר · פרוטוקול 4 השאלות · שלוש הרמות · קישור למענים</li>'+
-  '<li><b>5.11, זום</b> — ״נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף. ואז עובדים על החסמים שכתבתם.״</li>'+
-  '<li>הדלת הפתוחה, שוב במשפט אחד</li></ul>'+
-  '<div class="say"><b>הסיום:</b> מיטל קוראת ציטוט אחד מהקיר. בלי מילה נוספת.</div>'}
+{n:5,d:17,t:'סבב ברק וסגירה',s:'הפעם הראשונה שרואים את התמונה השלמה',body:
+  '<ul><li><b>12′</b> — כל שולחן קורא את <b>המשפט האחד</b> שלו. 8 שולחנות × 90 שניות.</li>'+
+  '<li><b>5′</b> — סגירה.</li></ul>'+
+  '<div class="say">״שמונה משפטים. זו תוכנית העבודה שלכם, וכתבתם אותה בשעתיים.״</div>'+
+  '<h4>סגירה</h4><ul><li>המחברות נשארות אצלכם — הן חצי מהתוצר</li>'+
+  '<li><b>4.11 · זום</b> — כל שולחן מציג 5 דקות, ואתם מסמנים מה אתם לוקחים</li>'+
+  '<li>בסוף 4.11 כל אחד מפיק <b>מסמך תוכנית עבודה</b> להנחה על שולחן המנהל/ת</li></ul>'+
+  '<div class="good"><b>הסיום:</b> מיטל קוראת ציטוט אחד מהקיר. בלי מילה נוספת.</div>'}
 ];
 
 function hhmm(m){var h=Math.floor(m/60)%24;return String(h).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
@@ -323,20 +260,23 @@ setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()
   b.onclick=function(){
     document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
     document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p)});
-    if(b.dataset.p==='live'||b.dataset.p==='hosts')poll();
+    if(b.dataset.p==='live'||b.dataset.p==='tables')poll();
   };
 });
 
-var CHK=['לוודא מול הכנס: שולחנות ותנועה (לא אולם עם שורות)',
- 'לשבץ 8 שולחנות מראש — 3 רכזי הופה בכל אחד, לא חברים מאותו בי״ס יחד',
- 'לשבץ 12 מארחים ל-6 עמדות ולשלוח להם את מדריך המארחים',
+$('printLinks').innerHTML=CHAPTERS.map(function(c){
+  return '<a href="machberet.html?p='+c.key+'" target="_blank">📓 '+c.n+' · '+esc(c.t)+'</a>';
+}).join('');
+
+var CHK=['לוודא מול הכנס: שולחנות ותנועה, לא אולם עם שורות',
+ 'לשבץ 8 שולחנות מראש — פרק לכל שולחן, 3 רכזי הופה בכל אחד',
+ 'להדפיס 8 מחברות לכל פרק (סה״כ 64) — הקישורים בטאב הזה',
+ 'להדפיס ולגזור 32 קלפי אתגר + 8 סטים של קלפי אליאס',
+ 'להדפיס ולגזור 64 כרטיסי כיס',
  'לבדוק ב-19.10 כמה שיחות בוצעו — ואם פחות מ-25, להדפיס ציטוטי גיבוי',
- 'להדפיס 64 עותקים של ״הדף שלי״',
- 'להדפיס 16 דפים של כרטיס הכיס (64 כרטיסים) ולגזור',
- 'כרטיסים גדולים + טושים + נייר דבק לקיר',
- 'שלטי עמדות ושלטי שולחנות',
- 'להכין 3 כרטיסי מצב לסימולציה בעמדה ב׳ — מהקיר',
- 'להזכיר לרכזים לעשות את השיחה (וואטסאפ, 19.10)'];
+ 'שלטי שולחנות עם שם הפרק',
+ 'פעמון או טיימר גדול להחלפת סבבים',
+ 'להסביר לרכזי הופה מראש: אתם לא מרצים, אתם משתתפים שכבר ניסו'];
 $('chklist').innerHTML=CHK.map(function(t,i){
   var on=lsGet('m3-chk'+i)==='1';
   return '<label class="chk'+(on?' done':'')+'" data-i="'+i+'"><input type="checkbox"'+(on?' checked':'')+'><span>'+esc(t)+'</span></label>';
@@ -364,48 +304,45 @@ function pick(prefix){
   return Object.keys(STORE).filter(function(k){return k.indexOf(p)===0})
     .map(function(k){return STORE[k]||{}}).filter(function(x){return !x.del});
 }
-function bar(l,n,max){
-  return '<div style="display:flex;align-items:center;gap:10px;margin-top:7px"><span style="width:200px;font-weight:600">'+esc(l)+'</span>'+
-    '<span style="flex:1;height:11px;background:#f0ecf3;border-radius:999px;overflow:hidden"><span style="display:block;height:100%;width:'+(max?Math.round(n/max*100):0)+'%;background:#E8348A"></span></span>'+
-    '<span style="width:26px;text-align:center;font-weight:800">'+n+'</span></div>';
+function drawTables(){
+  $('tgrid').innerHTML=CHAPTERS.map(function(c){
+    var x=STORE['intake_m3-perek-'+c.key],sent=x&&!x.del&&x.acts&&x.acts.length;
+    return '<div class="tc" style="border-color:'+c.c+'">'+
+      '<span class="bd" style="background:'+c.c+'">שולחן '+c.n+'</span>'+
+      '<h3>'+esc(c.t)+'</h3><div class="d">'+esc(c.d)+'</div>'+
+      '<ol>'+(CARDS[c.key]||[]).map(function(q){return '<li>'+esc(q)+'</li>'}).join('')+'</ol>'+
+      '<div class="st '+(sent?'yes':'no')+'">'+(sent?'✓ נשלח · '+x.acts.length+' פעולות':'⏳ טרם נשלח')+'</div>'+
+      '</div>';
+  }).join('');
 }
-var THEMES=['מסלול — צבא/לימודים/עבודה','כסף וזכויות','חיים — דיור, משפחה, רגש','בדידות','בגרות חסרה','שירות ומה אחריו'];
-var NOCALL=['אין לי טלפונים של בוגרים','לא ידעתי מה להגיד','לא היה לי זמן','התקשרתי והוא לא ענה','לא הרגשתי בנוח'];
 function draw(){
+  var sentN=0,actsN=0;
+  CHAPTERS.forEach(function(c){
+    var x=STORE['intake_m3-perek-'+c.key];
+    if(x&&!x.del&&x.acts&&x.acts.length){sentN++;actsN+=x.acts.length}
+  });
   var s=pick('sicha-').filter(function(x){return x.who});
   var done=s.filter(function(x){return Number(x.called)===1});
-  var not=s.filter(function(x){return Number(x.called)===0});
-  var kir=pick('kir-').filter(function(x){return x.quote});
-  var schools={};s.forEach(function(x){schools[x.school]=1});
-
   $('lstat').innerHTML=
-    '<div>שיחות שבוצעו<b>'+done.length+'</b></div>'+
-    '<div>לא יצא<b>'+not.length+'</b></div>'+
-    '<div>בתי ספר<b>'+Object.keys(schools).length+'</b></div>'+
-    '<div>ציטוטים לקיר<b>'+(done.filter(function(x){return x.quote}).length+kir.length)+'</b></div>';
-  var v=$('verdict');
-  if(done.length>=25){v.style.cssText='margin-top:12px;padding:11px 14px;border-radius:12px;font-weight:700;font-size:14px;background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b';
-    v.textContent='✅ מעל 25 שיחות — הקיר עומד על עצמו. אין צורך בבנק הגיבוי.';}
-  else{v.style.cssText='margin-top:12px;padding:11px 14px;border-radius:12px;font-weight:700;font-size:14px;background:#fff8dc;border:1.5px solid #f6dc7a;color:#6b5300';
-    v.textContent='⚠️ '+done.length+' שיחות בלבד. אם זה המצב ב-19.10 — מפעילים את בנק ציטוטי הגיבוי המודפס.';}
+    '<div>פרקים שנשלחו<b>'+sentN+' / 8</b></div>'+
+    '<div>פעולות בתוכנית<b>'+actsN+'</b></div>'+
+    '<div>שיחות עם בוגרים<b>'+done.length+'</b></div>'+
+    '<div>ציטוטים לקיר<b>'+done.filter(function(x){return x.quote}).length+'</b></div>';
 
-  var cnt=function(list,key,val){return list.filter(function(x){return (x[key]||[]).indexOf(val)>-1}).length};
-  var tMax=Math.max.apply(null,[1].concat(THEMES.map(function(t){return cnt(done,'themes',t)})));
-  $('themes').innerHTML=THEMES.map(function(t){return bar(t,cnt(done,'themes',t),tMax)}).join('');
-  var nMax=Math.max.apply(null,[1].concat(NOCALL.map(function(t){return cnt(not,'nocall',t)})));
-  $('blocks2').innerHTML=not.length?NOCALL.map(function(t){return bar(t,cnt(not,'nocall',t),nMax)}).join('')
-    :'<p style="color:#7d7d8a;font-size:13.5px">עדיין אין תשובות מהקטגוריה הזאת.</p>';
+  $('sent').innerHTML=CHAPTERS.map(function(c){
+    var x=STORE['intake_m3-perek-'+c.key],ok=x&&!x.del&&x.acts&&x.acts.length;
+    return '<div style="display:flex;gap:9px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)">'+
+      '<span style="width:9px;height:9px;border-radius:50%;background:'+(ok?'#22b573':'#f0a500')+';flex:none"></span>'+
+      '<b style="min-width:130px">'+c.n+' · '+esc(c.t)+'</b>'+
+      '<span style="color:var(--muted);font-size:13px;flex:1">'+(ok?esc(x.line||'—'):'טרם נשלח')+'</span>'+
+      '<span style="font-size:12px;color:var(--muted)">'+(ok?esc(x.who||''):'')+'</span></div>';
+  }).join('');
 
-  var hosts=pick('m2-meareach-');
-  $('hostlist').innerHTML=hosts.length
-    ? '<div class="tbl">'+['א׳ · המאגר','ב׳ · השיחה','ג׳ · מענים ומדרג','לא משנה לי'].map(function(st){
-        var l=hosts.filter(function(h){return h.station===st});
-        return '<div class="tb"><h4>'+esc(st)+' · '+l.length+'</h4><ul>'+
-          (l.length?l.map(function(h){return '<li>'+esc(h.me)+'</li>'}).join(''):'<li style="color:#7d7d8a">—</li>')+'</ul></div>';
-      }).join('')+'</div>'
-    : '<p style="color:#7d7d8a">עדיין אף אחד לא נרשם בבריף המארחים ב-14.10.</p>';
-
+  $('sichot').innerHTML=done.length>=25
+    ? '<div class="good"><b>'+done.length+' שיחות</b> — הקיר עומד על עצמו. אין צורך בבנק הגיבוי.</div>'
+    : '<div class="warn"><b>'+done.length+' שיחות בלבד.</b> אם זה המצב ב-19.10 — מדפיסים ציטוטי גיבוי.</div>';
   $('lastup').textContent='עודכן '+new Date().toLocaleTimeString('he-IL');
+  drawTables();
 }
 var busy=false;
 async function poll(){
@@ -414,7 +351,7 @@ async function poll(){
   busy=false;
 }
 $('refresh').onclick=poll;
-poll();
+drawTables();poll();
 </script>
 </body>
 </html>

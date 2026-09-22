@@ -3,54 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>תוכנית הבוגרים של בית הספר שלי · דף אחד</title>
+<title>תוכנית עבודה · ליווי בוגרים · תשפ״ז</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26;--muted:#7d7d8a;--line:#d8d3dd}
+  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26;--muted:#7d7d8a;--line:#d5d0da}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
   body{font-family:'Rubik',system-ui,Arial,sans-serif;background:#e9e5ec;color:var(--ink)}
   .bar{background:#111;color:#fff;padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .bar h1{margin:0;font-size:17px;font-weight:800}
-  .bar .sp{margin-inline-start:auto}
-  .bar button{border:none;background:var(--yellow);color:#111;border-radius:10px;padding:9px 20px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
   .bar small{opacity:.6;font-size:12.5px}
+  .bar .sp{margin-inline-start:auto}
+  .bar button{border:none;border-radius:10px;padding:9px 18px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+  .bar button.y{background:var(--yellow);color:#111}
+  .bar button.g{background:#333;color:#fff;border:1.5px solid #555}
 
-  .page{width:210mm;min-height:297mm;background:#fff;margin:16px auto;padding:16mm 15mm;box-shadow:0 6px 30px rgba(0,0,0,.15)}
+  .page{width:210mm;min-height:297mm;background:#fff;margin:14px auto;padding:15mm 15mm 12mm;
+        box-shadow:0 6px 30px rgba(0,0,0,.15);display:flex;flex-direction:column}
+  .head{display:flex;align-items:flex-start;gap:14px;border-bottom:3px solid var(--pink);padding-bottom:12px;flex:none}
+  .head img{height:42px}
+  .head h2{margin:0;font-size:24px;font-weight:900;letter-spacing:-.5px;line-height:1.12}
+  .head .s{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .head .who{margin-inline-start:auto;text-align:left;font-size:12px;font-weight:700;line-height:1.7}
+  .head .who span{display:inline-block;border-bottom:1.3px solid var(--line);min-width:45mm;height:17px}
+  .head .who b{color:var(--pink-dark);font-weight:800}
 
-  .head{display:flex;align-items:flex-start;gap:14px;border-bottom:3px solid var(--pink);padding-bottom:12px}
-  .head img{height:44px}
-  .head h2{margin:0;font-size:25px;font-weight:900;letter-spacing:-.5px;line-height:1.1}
-  .head .s{font-size:13px;color:var(--muted);margin-top:3px}
-  .head .date{margin-inline-start:auto;text-align:left;font-size:12px;color:var(--muted);font-weight:700}
+  h3{font-size:15.5px;font-weight:900;margin:17px 0 5px;display:flex;align-items:center;gap:8px}
+  h3 .n{background:var(--pink);color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+  h3 small{font-weight:500;color:var(--muted);font-size:12px}
+  p{margin:0 0 8px;font-size:12.5px;line-height:1.5}
 
-  .who{display:flex;gap:12px;margin-top:14px}
-  .who>div{flex:1}
-  .lbl{font-size:11.5px;font-weight:800;color:var(--pink-dark);margin-bottom:3px}
-  .line{border-bottom:1.5px solid var(--line);height:26px}
+  .hero{background:#111;color:#fff;border-radius:14px;padding:14px 18px;margin-top:12px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .hero .big{font-size:38px;font-weight:900;color:var(--yellow);line-height:1;flex:none}
+  .hero .l{font-size:13px;font-weight:600;flex:1;min-width:140px}
+  .hero .sp{display:flex;gap:9px;flex-wrap:wrap}
+  .hero .sp div{background:#1f1f28;border-radius:9px;padding:6px 11px;font-size:11px;text-align:center}
+  .hero .sp b{display:block;font-size:17px;color:var(--yellow)}
 
-  h3{font-size:16px;font-weight:900;margin:20px 0 4px;display:flex;align-items:center;gap:8px}
-  h3 .n{background:var(--pink);color:#fff;width:23px;height:23px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none}
-  h3 small{font-weight:500;color:var(--muted);font-size:12.5px}
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{background:#f6f2f7;font-size:10.5px;font-weight:800;color:var(--pink-dark);padding:6px 8px;text-align:right;border:1.3px solid var(--line)}
+  td{border:1.3px solid var(--line);padding:6px 8px;font-size:11.5px;line-height:1.35;vertical-align:top}
+  td.e{height:11mm;padding:0}
+  td.c{text-align:center;font-weight:700;white-space:nowrap}
+  tr.ch td{background:#faf8fb;font-weight:800;font-size:11px;color:var(--pink-dark);padding:4px 8px}
 
-  .act{display:flex;gap:10px;align-items:flex-end;margin-top:9px}
-  .act .num{width:26px;height:26px;border:2px solid var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--pink-dark);flex:none;margin-bottom:2px}
-  .act .what{flex:1}
-  .act .when{width:34mm}
-
-  .note{background:#fffdf0;border:1.5px solid #f0e08a;border-radius:11px;padding:9px 12px;font-size:12.5px;margin-top:8px}
+  .lbl{font-size:10.5px;font-weight:800;color:var(--pink-dark);margin-bottom:3px}
+  .line{border-bottom:1.3px solid var(--line);height:22px}
+  .box{border:1.3px solid var(--line);border-radius:9px;padding:7px 10px;font-size:11.5px;min-height:18mm;line-height:1.45}
+  .note{background:#fffdf0;border:1.3px solid #f0e08a;border-radius:9px;padding:8px 11px;font-size:11.5px;line-height:1.45;margin-top:8px}
   .note b{color:#8a7500}
-  .box{border:1.5px solid var(--line);border-radius:11px;height:24mm;margin-top:8px}
-  .box.sm{height:15mm}
 
-  .foot{margin-top:22px;border-top:2px solid var(--line);padding-top:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-  .foot .big{background:var(--pink);color:#fff;border-radius:12px;padding:11px 16px;font-weight:900;font-size:14px}
-  .foot .t{font-size:12.5px;color:var(--muted);flex:1;min-width:150px}
-  .foot .t b{color:var(--ink)}
+  .sig{margin-top:auto;padding-top:14px;display:flex;gap:20px;flex:none}
+  .sig>div{flex:1}
+  .sig .l{border-bottom:1.3px solid var(--line);height:20px;margin-bottom:3px}
+  .sig .c{font-size:10px;color:var(--muted);font-weight:700}
+  .foot{margin-top:10px;border-top:1.3px solid var(--line);padding-top:8px;font-size:9.5px;color:var(--muted);display:flex;flex:none}
+  .foot .r{margin-inline-start:auto}
+  .foot b{color:var(--ink)}
 
   @media print{
     body{background:#fff}
     .bar{display:none}
-    .page{width:auto;min-height:0;margin:0;padding:12mm 12mm;box-shadow:none}
+    .page{width:auto;min-height:0;margin:0;padding:12mm;box-shadow:none}
     @page{size:A4;margin:0}
   }
 </style>
@@ -58,46 +71,110 @@
 <body>
 
 <div class="bar">
-  <h1>תוכנית הבוגרים של בית הספר שלי</h1>
-  <small>דף אחד · למילוי ביד במפגש 21.10</small>
+  <h1>תוכנית עבודה · ליווי בוגרים · תשפ״ז</h1>
+  <small id="mode">טופס ריק למילוי ביד</small>
   <span class="sp"></span>
-  <button onclick="window.print()">🖨️ הדפסה</button>
+  <button class="g" id="blankBtn">📄 גרסה ריקה</button>
+  <button class="y" onclick="window.print()">🖨️ הדפסה</button>
 </div>
 
-<div class="page">
-  <div class="head">
-    <img src="hopa-logo.png" alt="הופה">
-    <div>
-      <h2>תוכנית הבוגרים<br>של בית הספר שלי</h2>
-      <div class="s">מפגש רכזים · 21.10.2026 · בני ברק</div>
-    </div>
-    <div class="date">שם:<br><span style="display:inline-block;border-bottom:1.5px solid var(--line);width:42mm;height:16px"></span><br><br>
-      בית ספר:<br><span style="display:inline-block;border-bottom:1.5px solid var(--line);width:42mm;height:16px"></span></div>
-  </div>
+<div id="doc"></div>
 
-  <h3><span class="n">1</span>שלוש פעולות עד חנוכה <small>· עם תאריך לכל אחת</small></h3>
-  <div class="act"><span class="num">1</span><div class="what"><div class="lbl">מה אני עושה</div><div class="line"></div></div><div class="when"><div class="lbl">מתי</div><div class="line"></div></div></div>
-  <div class="act"><span class="num">2</span><div class="what"><div class="line"></div></div><div class="when"><div class="line"></div></div></div>
-  <div class="act"><span class="num">3</span><div class="what"><div class="line"></div></div><div class="when"><div class="line"></div></div></div>
-  <div class="note"><b>רעיונות מהתחנות:</b> לאסוף טלפונים מי״ב לפני הטקס · לפתוח קבוצת מחזור · להתקשר ל-5 בוגרים · לבדוק מי זכאי לקרן גרוס (נסגרת 15.12) · לשבת עם היועצת</div>
+<script src="elias-data.js"></script>
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+var qs=new URLSearchParams(location.search);
+var live=null;
+if(qs.get('src')==='live'){try{live=JSON.parse(lsGet('hopa-m4-plan'))}catch(e){live=null}}
+document.getElementById('mode').textContent=live?('מולא ע״י '+live.me):'טופס ריק למילוי ביד';
+document.getElementById('blankBtn').onclick=function(){location.search=''};
 
-  <h3><span class="n">2</span>מי השותף/ה שלי בבית הספר <small>· בשם</small></h3>
-  <div class="line" style="margin-top:6px"></div>
-  <div class="note"><b>רכז לבד לא שורד.</b> יועצת? מחנכת י״ב? מזכירה שמחזיקה את הרשימות? אם אין שם — זה החסם הראשון שלך.</div>
+function whoLine(label,val){
+  return '<div><b>'+label+':</b> '+(val?'<span style="border:0;min-width:0">'+esc(val)+'</span>':'<span></span>')+'</div>';
+}
+var nameVal='',schoolVal='';
+if(live&&live.me){
+  var parts=String(live.me).split(/\s*[·,|]\s*|\s+-\s+/);
+  nameVal=parts[0]||live.me; schoolVal=parts.slice(1).join(' ')||'';
+}
 
-  <h3><span class="n">3</span>החסם האמיתי שלי <small>· ומה הצעד הקטן שעוקף אותו</small></h3>
-  <div class="box"></div>
+/* ---- שורות הפעולות ---- */
+var rows='';
+if(live&&live.acts&&live.acts.length){
+  var byCh={};
+  live.acts.forEach(function(a){(byCh[a.n+' · '+a.chapter]=byCh[a.n+' · '+a.chapter]||[]).push(a)});
+  Object.keys(byCh).sort(function(a,b){return parseInt(a)-parseInt(b)}).forEach(function(k){
+    rows+='<tr class="ch"><td colspan="4">'+esc(k)+'</td></tr>';
+    byCh[k].forEach(function(a){
+      rows+='<tr><td>'+esc(a.t)+'</td><td class="c">'+esc(a.when||'—')+'</td>'+
+        '<td class="c">'+esc(a.hours||'—')+'</td><td class="c">'+esc(a.who||'—')+'</td></tr>';
+    });
+  });
+  (live.own||[]).forEach(function(t,i){
+    if(i===0)rows+='<tr class="ch"><td colspan="4">פעולות נוספות שלי</td></tr>';
+    rows+='<tr><td>'+esc(t)+'</td><td class="c">—</td><td class="c">—</td><td class="c">—</td></tr>';
+  });
+}else{
+  for(var i=0;i<11;i++)rows+='<tr><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td></tr>';
+}
 
-  <h3><span class="n">4</span>בוגר אחד שאני מתקשר/ת אליו השבוע</h3>
-  <div class="box sm"></div>
+/* ---- חלוקת שעות ---- */
+var hrsHtml=BUCKETS.map(function(b){
+  var v=live&&live.hours?live.hours[b.k]:null;
+  return '<div><b>'+(v!=null?v:'__')+'</b>'+esc(b.t)+'</div>';
+}).join('');
+var total=0;
+if(live&&live.hours)BUCKETS.forEach(function(b){total+=Number(live.hours[b.k])||0});
 
-  <div class="foot">
-    <span class="big">5.11 · זום</span>
-    <div class="t">נפתח בשאלה אחת: <b>מי עשה לפחות פעולה אחת מהדף הזה.</b><br>
-      העתיקו את הדף לטופס הדיגיטלי (דף המפגש, סעיף 4) ושמרו צילום בוואטסאפ.</div>
-    <div class="t" style="text-align:left"><b>הופה</b> · hopa.org.il</div>
-  </div>
-</div>
+document.getElementById('doc').innerHTML=
+'<div class="page">'+
+  '<div class="head">'+
+    '<img src="hopa-logo.png" alt="הופה">'+
+    '<div><h2>תוכנית עבודה<br>ליווי בוגרים · תשפ״ז</h2>'+
+      '<div class="s">נבנתה במפגשי רכזי הבוגרים · 14.10 · 21.10 · 4.11.2026</div></div>'+
+    '<div class="who">'+whoLine('בית הספר',schoolVal)+whoLine('רכז/ת',nameVal)+whoLine('תאריך','')+'</div>'+
+  '</div>'+
 
+  '<div class="hero">'+
+    '<div class="big">'+(total||70)+'</div>'+
+    '<div class="l">שעות בשנה · שתי שעות שבועיות שהוקצו לליווי בוגרים<br>'+
+      '<span style="opacity:.6;font-size:11px">הקצאת משרד העבודה לרכז/ת חברתי/ת</span></div>'+
+    '<div class="sp">'+hrsHtml+'</div>'+
+  '</div>'+
+
+  '<h3><span class="n">1</span>הפעולות <small>· מה נעשה השנה</small></h3>'+
+  '<table><tr><th style="width:52%">הפעולה</th><th style="width:16%">מתי בשנה</th><th style="width:13%">שעות</th><th>מי שותף/ה</th></tr>'+
+  rows+'</table>'+
+
+  '<h3><span class="n">2</span>השותפים בבית הספר</h3>'+
+  (live&&live.partner
+    ? '<div class="box">'+esc(live.partner)+'</div>'
+    : '<div class="line"></div><div class="line" style="margin-top:8px"></div>')+
+  '<div class="note"><b>רכז לבד לא שורד.</b> תוכנית ליווי בוגרים מחזיקה כשיש לצידה יועצ/ת, מחנכ/ת י״ב ומזכירות — '+
+  'ולא כשהיא תלויה באדם אחד.</div>'+
+
+  '<h3><span class="n">3</span>החסם המרכזי והמענה לו</h3>'+
+  (live&&live.block
+    ? '<div class="box">'+esc(live.block)+'</div>'
+    : '<div class="box"></div>')+
+
+  '<h3><span class="n">4</span>מה נמדוד בסוף השנה</h3>'+
+  '<table><tr><th style="width:62%">המדד</th><th>היעד</th></tr>'+
+  [['בוגרי המחזור האחרון שיש לנו טלפון אישי שלהם',''],
+   ['בוגרים שדיברנו איתם לפחות פעם אחת השנה',''],
+   ['בוגרים שחוברו למענה — ובדקנו שהחיבור עבד',''],
+   ['בוגרים במצב "לומד / עובד / משרת"','']]
+   .map(function(r){return '<tr><td>'+r[0]+'</td><td class="e" style="width:28%"></td></tr>'}).join('')+
+  '</table>'+
+
+  '<div class="sig">'+
+    '<div><div class="l"></div><div class="c">רכז/ת חברתי/ת · ליווי בוגרים</div></div>'+
+    '<div><div class="l"></div><div class="c">מנהל/ת בית הספר</div></div>'+
+  '</div>'+
+  '<div class="foot"><span><b>הופה</b> · תוכנית הבוגרים · hopa.org.il</span>'+
+    '<span class="r">מאגר מענים ארצי לצעירים · מלגות · תעסוקה · מיצוי זכויות</span></div>'+
+'</div>';
+</script>
 </body>
 </html>

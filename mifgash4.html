@@ -3,24 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>הצעד הראשון · מפגש רכזים 5.11 · הופה</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>התוכנית המלאה · מפגש 4.11 · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
     --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;
     --shadow:0 4px 18px rgba(31,31,38,.07)}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
-  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-  button,textarea,input,select{font-family:inherit;font-size:inherit}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  button,input,textarea,select{font-family:inherit;font-size:inherit}
   a{color:var(--pink-dark)}
   .in{max-width:720px;margin:0 auto;padding:0 16px}
 
   header{background:#111;color:#fff;padding:18px 0 24px;position:relative;overflow:hidden}
-  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%);pointer-events:none}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
   .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex;align-items:center}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
   .logo img{height:38px;display:block}
   header h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.3px}
   header .sub{font-size:13.5px;opacity:.85;margin-top:3px}
@@ -37,304 +35,173 @@
   section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:64px}
   .sec-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
   .sec-head .num{background:var(--pink);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex:none;margin-top:2px}
-  .sec-head h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.2px}
+  .sec-head h2{margin:0;font-size:18px;font-weight:900}
   .sec-head small{display:block;color:var(--muted);font-size:13px;font-weight:500;margin-top:1px}
   .sec-head .time{margin-inline-start:auto;background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:800;flex:none;white-space:nowrap}
 
   p{margin:0 0 10px}
-  .lead{font-size:15.5px}
-  .quote{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 12px 12px 0;padding:12px 14px;font-size:15px;font-weight:600;margin:12px 0}
   .callout{background:var(--pink-soft);border-radius:14px;padding:13px 15px;margin:12px 0;font-size:14.5px}
   .callout b{color:var(--pink-dark)}
   .callout.y{background:#fffdf0;border:1.5px solid #f6e98a}
   .callout.g{background:#e8f8ef;border:1.5px solid #b8e6c9}
+  .quote{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 12px 12px 0;padding:12px 14px;font-size:15px;font-weight:600;margin:12px 0}
   ul{margin:6px 0 12px;padding-inline-start:22px}li{margin-bottom:5px}
 
-  .qcard{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:9px}
-  .qcard .t{font-weight:800;font-size:15px;display:flex;gap:8px;align-items:center}
-  .qcard .d{font-size:13.5px;color:var(--muted);margin-top:3px}
+  /* הצגת פרק */
+  .pk{border:2px solid var(--line);border-radius:16px;padding:15px;margin-top:12px;transition:.2s}
+  .pk.on{box-shadow:0 8px 28px rgba(31,31,38,.13)}
+  .pk .hd{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .pk .badge{color:#fff;border-radius:999px;padding:4px 13px;font-size:12px;font-weight:800}
+  .pk h3{margin:7px 0 1px;font-size:18px;font-weight:900}
+  .pk .d{color:var(--muted);font-size:13px}
+  .pk .who{margin-inline-start:auto;font-size:12px;color:var(--muted);font-weight:700}
+  .pk .line{margin-top:10px;border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:15px;font-weight:700}
+  .pk .trap{margin-top:8px;background:#fff4f4;border:1.5px solid #f5c9c9;border-radius:11px;padding:9px 12px;font-size:13px}
+  .pk .trap b{color:#c0392b}
+  .acts{margin-top:10px}
+  .acts .a{display:flex;gap:9px;align-items:flex-start;border-top:1px solid var(--line);padding:9px 0}
+  .acts .a:first-child{border-top:none}
+  .acts .a .n{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11.5px;color:#fff;flex:none;margin-top:2px}
+  .acts .a .t{flex:1;font-size:14px;font-weight:700;line-height:1.35}
+  .acts .a .m{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px;display:flex;gap:8px;flex-wrap:wrap}
+  .acts .a .m span{background:#f6f2f7;border-radius:999px;padding:2px 9px}
+  .acts .a .take{flex:none;width:34px;height:34px;border:2px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:16px;line-height:1;margin-top:2px}
+  .acts .a .take.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  .pk .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
 
-  input[type=text],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink);outline:none;transition:.15s}
-  input[type=text]:focus,textarea:focus,select:focus{border-color:var(--pink)}
-  textarea{min-height:76px;resize:vertical}
+  .taken{background:#111;color:#fff;border-radius:16px;padding:15px;margin-top:12px;position:sticky;bottom:12px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .taken .h{font-size:13px;font-weight:800;color:var(--yellow)}
+  .taken .n{font-size:30px;font-weight:900;line-height:1.1}
+  .taken .s{font-size:12.5px;opacity:.7}
+
+  input[type=text],textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+  input:focus,textarea:focus{border-color:var(--pink)}
+  textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
   .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 160px}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;transition:.15s;text-decoration:none}
+  .sl .row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .sl .nm{width:135px;font-size:13.5px;font-weight:700;flex:none}
+  .sl input[type=range]{flex:1;accent-color:var(--pink)}
+  .sl .v{width:54px;text-align:center;font-weight:900;font-size:14px;color:var(--pink-dark);flex:none}
+  .sl .tot{text-align:center;font-weight:800;font-size:14px;margin-top:4px}
+  .sl .tot b{font-size:20px}
+  .sl .tot.over{color:#c0392b}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;text-decoration:none}
   .btn:active{transform:scale(.97)}
-  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.32)}
-  .btn.pink:hover{background:var(--pink-dark)}
-  .btn.pink:disabled{opacity:.55;cursor:default;box-shadow:none}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.3)}
+  .btn.yellow{background:var(--yellow);color:#111}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:9px 16px;border-radius:11px;font-weight:700}
-  .btn.yellow{background:var(--yellow);color:#111;box-shadow:0 8px 22px rgba(255,242,0,.35)}
-  .btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:11px}
-
-  .vote{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
-  .vote button{flex:1 1 110px;border:2px solid var(--line);background:#fff;border-radius:15px;padding:14px 10px;cursor:pointer;transition:.15s;font-weight:800;font-size:14.5px;line-height:1.3;text-align:center}
-  .vote button .e{display:block;font-size:28px;margin-bottom:4px;filter:grayscale(1);opacity:.5;transition:.15s}
-  .vote button:hover{border-color:var(--pink)}
-  .vote button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
-  .vote button.on .e{filter:none;opacity:1;transform:scale(1.1)}
-
-  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
-  .types button{border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px 10px;cursor:pointer;font-weight:800;font-size:14px;line-height:1.3;text-align:center;transition:.15s}
-  .types button .e{display:block;font-size:24px;margin-bottom:3px}
-  .types button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
-
-  .wall{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;min-height:34px}
-  .wall span{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:700;animation:pop .3s ease}
-  .wall span i{font-style:normal;font-weight:500;color:var(--muted)}
-  @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-  .livehint{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+  .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
+  .livehint{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-  .roomsel{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
-  .roomsel button{width:46px;height:46px;border:2px solid var(--line);background:#fff;border-radius:13px;font-weight:900;font-size:16px;cursor:pointer;transition:.15s}
-  .roomsel button:hover{border-color:var(--pink)}
-  .roomsel button.on{background:var(--pink);border-color:var(--pink);color:#fff}
-
-  .proto{display:flex;flex-direction:column;gap:7px;margin:10px 0}
-  .proto div{display:flex;gap:11px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
-  .proto .t{background:#111;color:var(--yellow);border-radius:8px;padding:3px 9px;font-weight:900;font-size:12.5px;flex:none;margin-top:1px}
-  .proto .n{font-size:14px}
-  .proto .n b{display:block;font-size:14.5px}
-
-  .timer{display:flex;align-items:center;gap:12px;background:#111;color:#fff;border-radius:15px;padding:12px 16px;margin-top:12px;flex-wrap:wrap}
-  .timer .t{font-size:32px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:1px}
-  .timer .lbl{font-size:13px;opacity:.75}
-  .timer button{margin-inline-start:auto;background:var(--yellow);color:#111;border:none;border-radius:11px;padding:9px 18px;font-weight:800;cursor:pointer}
-
-  .five{display:flex;flex-direction:column;gap:7px;margin-top:10px}
-  .five .r{display:flex;gap:8px;align-items:center}
-  .five .r .i{width:26px;height:26px;border-radius:50%;background:var(--pink-soft);color:var(--pink-dark);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
-  .five .r input{flex:1}
-
-  .copybox{background:#f8f6fa;border:1.5px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:14px;margin:10px 0;white-space:pre-wrap}
-
-  .scale{display:flex;gap:6px;margin-top:8px}
-  .scale button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 0;font-weight:900;font-size:16px;cursor:pointer}
-  .scale button.on{background:var(--pink);border-color:var(--pink);color:#fff}
-  .scale-l{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-top:4px}
-
-  .sent{background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b;border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px;margin-top:10px}
-  .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
-
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
-  footer a{font-weight:700}
-  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transform:translateY(14px);transition:.25s;pointer-events:none;z-index:99}
-  #toast.show{opacity:1;transform:none}
-  @media(max-width:520px){header h1{font-size:20px}.sec-head h2{font-size:16.5px}}
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="in">
-    <div class="hrow">
-      <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-      <div>
-        <h1>הצעד הראשון</h1>
-        <div class="sub">מפגש רכזים חברתיים ורכזי בוגרים · תוכנית הבוגרים של הופה</div>
-      </div>
-    </div>
-    <div class="meet">5.11.2026 · זום <small>90 דקות</small></div>
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1>התוכנית המלאה</h1><div class="sub">שמונה פרקים · שמונה שולחנות · תוכנית אחת</div></div>
   </div>
-</header>
+  <div class="meet">4.11.2026 · זום <small>90 דקות · מפגש 3 מתוך 3</small></div>
+</div></header>
 
 <nav class="toc"><div class="in" id="toc"></div></nav>
 
 <main class="in">
 
-  <!-- 0 -->
   <section id="s0">
-    <div class="sec-head"><div class="num">0</div><div><h2>פתיחה</h2><small>איפה אנחנו בדרך</small></div><div class="time">5 דק'</div></div>
-    <p class="lead">לפני שבועיים, בבני ברק, כל אחד כתב שלוש פעולות לפני חנוכה. היום אנחנו בדיוק באמצע הדרך.</p>
-    <div class="quote">המפגש הזה לא מביא תוכן חדש. הוא נועד לעזור לכם לעשות את מה שכבר החלטתם לעשות.</div>
-    <div class="callout">
-      זה השלב שבו כל תוכנית נתקעת: ההתלהבות מהכנס דעכה, השגרה חזרה, והחסם שכתבתם על הדף נהיה אמיתי.
-      <b>לכן היום עובדים על החסמים ולא על הרעיונות.</b>
-    </div>
+    <div class="sec-head"><div class="num">0</div><div><h2>איפה אנחנו</h2><small></small></div><div class="time">5 דק'</div></div>
+    <p>ב-14.10 בנינו את השלד. ב-21.10 שמונה שולחנות ייצרו רעיונות והפכו כל אחד למומחה בפרק אחד.</p>
+    <div class="quote">היום כל שולחן מציג, ואתם לוקחים. <b>בסוף המפגש לכל אחד כאן תהיה תוכנית עבודה שלמה — שנבנתה על ידי 64 אנשים ולא על ידי אחד.</b></div>
+    <div class="callout y"><b>איך זה עובד:</b> אחרי כל הצגה יש שתי דקות. סמנו <b>➕</b> ליד כל פעולה שאתם לוקחים לבית הספר שלכם.
+      מה שסימנתם הופך בסוף למסמך תוכנית העבודה שלכם.</div>
   </section>
 
-  <!-- 1 -->
   <section id="s1">
-    <div class="sec-head"><div class="num">1</div><div><h2>מה קרה מאז 21.10?</h2><small>הצבעה כנה</small></div><div class="time">10 דק'</div></div>
-    <p>מתוך שלוש הפעולות שכתבתם על "הדף שלי", <b>כמה כבר עשיתם?</b></p>
-    <div class="vote" id="k_vote">
-      <button data-v="0"><span class="e">🌱</span>עוד לא אף אחת</button>
-      <button data-v="1"><span class="e">👣</span>אחת</button>
-      <button data-v="2"><span class="e">🚶</span>שתיים</button>
-      <button data-v="3"><span class="e">🏃</span>שלוש</button>
-    </div>
-    <div class="err" id="k_err"></div>
-    <div id="k_done"></div>
-    <div class="callout g" style="margin-top:12px"><b>"עוד לא אף אחת" היא תשובה לגיטימית לגמרי.</b> ממנה מתחיל חלק 2. ההצבעה אנונימית ורק הסיכום יוצג על המסך.</div>
-
-    <label class="fl">עשית משהו? כתבו אותו במשפט קצר, כדי שאחרים ילמדו ממנו</label>
-    <input type="text" id="a_text" placeholder="למשל: פתחתי קבוצת וואטסאפ למחזור תשפ״ו — 31 הצטרפו" maxlength="110">
-    <div class="btnrow"><button class="btn pink" id="a_send">שליחה לקיר</button></div>
-    <div class="err" id="a_err"></div>
-    <div class="wall" id="a_wall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="a_count">0</span> פעולות שכבר קרו</div>
-    <p class="livehint">לא הבאתם את הדף? <a href="mifgash3.html#s4" target="_blank" rel="noopener">הדף הדיגיטלי מ-21.10</a> שמור במכשיר שבו מילאתם אותו.</p>
+    <div class="sec-head"><div class="num">1</div><div><h2>שמונה הצגות</h2><small>5 דקות הצגה · 2 דקות לסמן</small></div><div class="time">56 דק'</div></div>
+    <p class="livehint"><span class="dot"></span> <span id="ready">0</span> מתוך 8 פרקים נשלחו מ-21.10</p>
+    <div id="peraks"></div>
   </section>
 
-  <!-- 2 -->
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>מרפאת חסמים</h2><small>חדרים לפי סוג החסם · רכזי הופה מארחים</small></div><div class="time">30 דק'</div></div>
-    <p><b>מה עוצר אותך?</b> בחרו את החסם שהכי קרוב למה שכתבתם על הדף.</p>
-    <div class="types" id="types">
-      <button data-t="phones"><span class="e">📵</span>אין לי טלפונים של בוגרים</button>
-      <button data-t="partner"><span class="e">🧍</span>אין לי שותף/ה בבית הספר</button>
-      <button data-t="time"><span class="e">⏳</span>אין לי זמן / זה לא בשעות שלי</button>
-      <button data-t="reach"><span class="e">📞</span>התקשרתי ולא ענו / לא ידעתי מה להגיד</button>
-    </div>
+    <div class="sec-head"><div class="num">2</div><div><h2>התוכנית שלי</h2><small>ניסוח סופי</small></div><div class="time">15 דק'</div></div>
 
-    <label class="fl">מספר החדר שלך (נשלח בצ'אט)</label>
-    <div class="roomsel" id="roomsel"></div>
+    <label class="fl">שם + בית ספר</label>
+    <input type="text" id="me" placeholder="כדי שנוכל לשלוח לך את המסמך" maxlength="70">
 
-    <h3 style="margin:16px 0 4px;font-size:15.5px">הפרוטוקול בחדר: התייעצות עמיתים</h3>
-    <p class="livehint" style="margin-top:0">פעמיים, כל פעם עם רכז/ת אחר/ת שמציג/ה. בערך 13 דקות לסבב.</p>
-    <div class="proto">
-      <div><span class="t">3′</span><span class="n"><b>מציג/ה את המקרה</b>מה ניסיתי, איפה נתקעתי. כל השאר שותקים.</span></div>
-      <div><span class="t">3′</span><span class="n"><b>שאלות הבהרה בלבד</b>"כמה בוגרים יש לך ברשימה?" זו שאלה. "למה שלא תנסה…" זו כבר עצה, והיא מחכה לשלב הבא.</span></div>
-      <div><span class="t">5′</span><span class="n"><b>עצות, בגוף ראשון</b>"אצלנו ניסינו…". המציג/ה רק מקשיב/ה ורושם/ת.</span></div>
-      <div><span class="t">2′</span><span class="n"><b>המציג/ה בוחר/ת</b>דבר אחד שהוא/היא לוקח/ת, ומתי.</span></div>
-    </div>
-    <div class="timer"><span class="t" id="t_disp">13:00</span><span class="lbl" id="t_lbl">סבב התייעצות</span><button id="t_btn">התחל</button></div>
+    <h3 style="margin:18px 0 2px;font-size:16px">חלוקת 70 השעות</h3>
+    <p class="livehint" style="margin-bottom:0">אחרי ששמעתם הכול — האם התעדוף שלכם השתנה מ-14.10?</p>
+    <div class="sl" id="sliders"></div>
 
-    <div class="callout y" style="margin-top:14px"><b>לרכזי הופה שבחדר:</b> אתם שומרים על הזמן ומספרים מה קרה אצלכם, לא מה "צריך" לעשות. אם שמעתם את עצמכם אומרים "צריך ל…", עצרו ותגידו במקום זה "אצלנו ניסינו…".</div>
+    <label class="fl">השותף/ה שלי בבית הספר — בשם</label>
+    <input type="text" id="partner" placeholder="יועצת? מחנכת י״ב? מזכירה?" maxlength="60">
 
-    <label class="fl">מה אני מנסה השבוע (אחרי החדר)</label>
-    <input type="text" id="n_text" placeholder="למשל: לבקש מהמזכירות את רשימת הטלפונים של תשפ״ה עד יום ראשון" maxlength="120">
-    <div class="btnrow"><button class="btn pink" id="n_send">שליחה</button></div>
-    <div class="err" id="n_err"></div>
-    <div class="wall" id="n_wall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="n_count">0</span> ניסיונות לשבוע הקרוב · מוצגים לפי סוג החסם שבחרת</div>
+    <label class="fl">שלוש פעולות עד חנוכה (מעבר למה שסימנתם למעלה)</label>
+    <input type="text" id="q1" placeholder="1 · מה + עד מתי" maxlength="110">
+    <input type="text" id="q2" placeholder="2" maxlength="110" style="margin-top:7px">
+    <input type="text" id="q3" placeholder="3" maxlength="110" style="margin-top:7px">
+
+    <label class="fl">החסם האמיתי שלי — ומה הצעד הקטן שעוקף אותו</label>
+    <textarea id="block"></textarea>
   </section>
 
-  <!-- 3 -->
   <section id="s3">
-    <div class="sec-head"><div class="num">3</div><div><h2>צומת המלגות</h2><small>משימה אחת משותפת לכולנו</small></div><div class="time">25 דק'</div></div>
-    <p class="lead">בחודשים הקרובים נסגרות הגשות למלגות סטודנטים, ביניהן <b>קרן גרוס</b>. בוגר שלא שמע עליהן בזמן מפספס אותן השנה.</p>
-    <div class="callout">זה המקום שבו רמה 2, "לדעת להפנות", שווה כסף אמיתי לבוגרים שלכם. <b>לא צריך להיות בתוכנית של הופה כדי לעשות את זה.</b></div>
-
-    <h3 style="margin:16px 0 4px;font-size:15.5px">1 · מי מהבוגרים שלי לומד או מתחיל ללמוד השנה? <small style="font-weight:500;color:var(--muted)">(5 דק')</small></h3>
-    <p>כתבו עד 5 <b>שמות פרטיים או ראשי תיבות</b>. הרשימה נשמרת <b>רק במכשיר שלכם</b> ולא נשלחת לאף אחד.</p>
-    <div class="five" id="five"></div>
-
-    <h3 style="margin:18px 0 4px;font-size:15.5px">2 · מה יש להם? <small style="font-weight:500;color:var(--muted)">(10 דק')</small></h3>
-    <p>היכנסו ל-<a href="https://hopa.org.il" target="_blank" rel="noopener"><b>hopa.org.il</b></a>, קטגוריית מלגות, ובחרו מלגה אחת שמתאימה לפחות לאחד מהם. <b>בדקו את מועד הסגירה באתר של המלגה עצמה.</b></p>
-    <div class="timer"><span class="t" id="t2_disp">06:00</span><span class="lbl">מחפשים מלגה</span><button id="t2_btn">התחל</button></div>
-    <div class="two" style="margin-top:12px">
-      <div><label class="fl">המלגה שמצאתי</label><input type="text" id="g_name" placeholder="שם המלגה" maxlength="70"></div>
-      <div><label class="fl">נסגרת ב־</label><input type="text" id="g_date" placeholder="תאריך מהאתר שלה" maxlength="30"></div>
+    <div class="sec-head"><div class="num">3</div><div><h2>המסמך לבית הספר</h2><small>מה שנשאר ביד</small></div><div class="time">8 דק'</div></div>
+    <div class="callout g"><b>זה לא דף סיכום ממפגש.</b> זו תוכנית עבודה בליווי בוגרים לתשפ״ז — עם שעות, עם אחראים ועם לוח זמנים.
+      אפשר להניח אותה על שולחן המנהל/ת ולהכניס אותה לתוכנית העבודה הבית ספרית.</div>
+    <div class="btnrow">
+      <button class="btn pink" id="saveBtn">💾 שמירה ושליחה</button>
+      <button class="btn yellow" id="printBtn">🖨️ הפקת המסמך</button>
     </div>
-    <div class="btnrow"><button class="btn pink" id="g_send">שיתוף עם כולם</button></div>
-    <div class="err" id="g_err"></div>
-    <div class="wall" id="g_wall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="g_count">0</span> מלגות נמצאו</div>
-
-    <h3 style="margin:18px 0 4px;font-size:15.5px">3 · ההודעה <small style="font-weight:500;color:var(--muted)">(5 דק')</small></h3>
-    <p>נוסח קצר לוואטסאפ. מעתיקים, משנים את מה שבסוגריים, ושולחים <b>עוד היום</b>.</p>
-    <div class="copybox" id="msgbox">היי [שם], כאן [השם שלי] מ[בית הספר] 🙂
-נזכרתי בך השבוע. ראיתי שיש מלגה לסטודנטים: [שם המלגה], וההגשה נסגרת ב-[תאריך].
-רוצה שנבדוק יחד אם זה מתאים לך? זה לוקח 10 דקות.</div>
-    <div class="btnrow"><button class="btn ghost" id="copyMsg">📋 העתקת ההודעה</button></div>
-
-    <label class="fl" style="margin-top:14px">כמה בוגרים אני שולח/ת אליהם הודעה עד סוף השבוע?</label>
-    <div class="vote" id="m_vote">
-      <button data-v="0"><span class="e">🤷</span>אף אחד עדיין</button>
-      <button data-v="1"><span class="e">1️⃣</span>1–2</button>
-      <button data-v="3"><span class="e">3️⃣</span>3–4</button>
-      <button data-v="5"><span class="e">5️⃣</span>5 ומעלה</button>
-    </div>
-    <div class="err" id="m_err"></div>
+    <div class="err" id="err"></div>
+    <div class="callout" style="margin-top:12px"><b>השמירה עוזרת לנו:</b> כך נוכל לשלוח לכם תזכורת לפני חנוכה ולבדוק מה יצא לפועל.</div>
   </section>
 
-  <!-- 4 -->
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>השותף/ה בבית הספר</h2><small>החסם שכמעט כולם כתבו</small></div><div class="time">15 דק'</div></div>
-    <div class="quote">רכז לבד לא שורד. אבל גם אף אחד לא יתנדב להיות השותף שלך. צריך לבקש, ובקשה ספציפית.</div>
-
-    <p><b>יש לי שותף/ה בשם?</b></p>
-    <div class="vote" id="s_vote">
-      <button data-v="yes"><span class="e">🤝</span>כן, ודיברנו</button>
-      <button data-v="named"><span class="e">🎯</span>יש שם, עוד לא דיברנו</button>
-      <button data-v="no"><span class="e">❓</span>עוד אין</button>
+    <div class="sec-head"><div class="num">4</div><div><h2>סגירה</h2><small></small></div><div class="time">6 דק'</div></div>
+    <ul>
+      <li>מסמך תוכנית העבודה — במייל ובוואטסאפ</li>
+      <li>המחברת המלאה של כל שמונת הפרקים</li>
+      <li>כרטיס הכיס · תבנית המאגר · <a href="https://hopa.org.il" target="_blank" rel="noopener">מאגר המענים</a></li>
+    </ul>
+    <div class="btnrow">
+      <a class="btn yellow" href="mashov2.html" target="_blank" rel="noopener">💬 משוב</a>
+      <a class="btn ghost" href="kartis.html" target="_blank" rel="noopener">🎴 כרטיס כיס</a>
+      <a class="btn ghost" href="machberet.html" target="_blank" rel="noopener">📓 המחברת</a>
     </div>
-    <div class="err" id="s_err"></div>
-
-    <h3 style="margin:16px 0 4px;font-size:15.5px">שיחה של 5 דקות · שלושה משפטים</h3>
-    <div class="qcard"><div class="t">1 · מה ראיתי</div><div class="d">"דיברתי עם בוגר מהמחזור שעבר, והוא סיפר ש…" (ציטוט אחד מהקיר של 21.10 עובד מצוין)</div></div>
-    <div class="qcard"><div class="t">2 · מה אני מבקש/ת, וזה קטן</div><div class="d">"אני לא מבקש/ת שתיקחי פרויקט. רק ש[דבר אחד מוגדר]: לתת לי 10 דקות בשיעור של י״ב / להעביר לי את רשימת הטלפונים / לספר לי על בוגר שאת דואגת לו."</div></div>
-    <div class="qcard"><div class="t">3 · מתי</div><div class="d">"אפשר עד [תאריך]?" בקשה בלי תאריך נשכחת.</div></div>
-
-    <div class="callout y" style="margin-top:14px"><b>בזוגות, 6 דקות:</b> אחד מתרגל את השיחה, השני משחק את היועצת או המחנכת העסוקה. אחרי 3 דקות מתחלפים.</div>
-
-    <label class="fl">נוסח לוואטסאפ, אם קשה לתפוס אותה פנים מול פנים</label>
-    <div class="copybox" id="msgbox2">היי [שם], יש לי בקשה קטנה בקשר לבוגרים של המחזור שעבר.
-דיברתי עם אחד מהם ויצאתי עם משהו שחשוב לי להראות לך.
-יש לך 5 דקות השבוע? מתאים לי [יום ושעה].</div>
-    <div class="btnrow"><button class="btn ghost" id="copyMsg2">📋 העתקת ההודעה</button></div>
   </section>
 
-  <!-- 5 -->
-  <section id="s5">
-    <div class="sec-head"><div class="num">5</div><div><h2>הצעד הבא</h2><small>וסגירה</small></div><div class="time">5 דק'</div></div>
-    <p>פעולה אחת עם תאריך, עד המפגש הבא. <b>ב-16.12 נפתח מהרשימה הזאת.</b></p>
-    <div class="two">
-      <div><label class="fl">שם + בית ספר</label><input type="text" id="h_who" maxlength="70"></div>
-      <div><label class="fl">עד מתי</label><input type="text" id="h_date" placeholder="למשל: 20.11" maxlength="20"></div>
-    </div>
-    <label class="fl">הפעולה</label>
-    <input type="text" id="h_what" placeholder="פעולה אחת שאפשר לסמן עליה ✓" maxlength="120">
-    <div class="btnrow"><button class="btn pink" id="h_send">אני על זה ✋</button></div>
-    <div class="err" id="h_err"></div>
-    <div class="livehint"><span class="dot"></span> <span id="h_count">0</span> רכזים רשמו צעד הבא</div>
-
-    <div class="callout" style="margin-top:16px"><b>16.12 · זום 13:30</b> · מפגש אמצע שנה. נפתח בשאלה: מי סימן ✓.</div>
-
-    <h3 style="margin:20px 0 4px;font-size:16px">משוב · 30 שניות</h3>
-    <p style="margin-bottom:4px">כמה המפגש היום יעזור לך <b>לעשות</b> משהו בשבועיים הקרובים?</p>
-    <div class="scale" id="f_scale"></div>
-    <div class="scale-l"><span>בכלל לא</span><span>מאוד</span></div>
-    <label class="fl">אני רכז/ת בתוכנית הבוגרים של הופה</label>
-    <div class="vote" id="f_hopa" style="margin-top:4px">
-      <button data-v="1">כן</button>
-      <button data-v="0">לא</button>
-    </div>
-    <label class="fl">משפט אחד: מה היה חסר היום?</label>
-    <input type="text" id="f_txt" maxlength="160">
-    <div class="btnrow"><button class="btn yellow" id="f_send">שליחת המשוב</button></div>
-    <div class="err" id="f_err"></div>
-  </section>
+  <div class="taken" id="takenBar">
+    <div class="h">בתוכנית שלי</div>
+    <div class="n"><span id="tk">0</span> פעולות</div>
+    <div class="s">מתוך <span id="tot">0</span> שהוצגו · סה״כ <span id="tkh">0</span> שעות משוערות</div>
+  </div>
 
 </main>
 
-<footer class="in">
-  תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a><br>
-  <span style="opacity:.7">מפגש 5.11.2026 · הדף מתעדכן בזמן אמת</span>
-</footer>
-
+<footer class="in">תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
 <div id="toast"></div>
 
+<script src="elias-data.js"></script>
 <script>
-/* ===================== תשתית ===================== */
 var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 var GS_SECRET='hopa-nihul-2026';
-var KEY_PREFIX='m4-';               /* כל מפתחות המפגש הזה: intake_m4-* */
-var POLL_MS=8000;
-var TYPES={phones:'📵 אין טלפונים',partner:'🧍 אין שותף/ה',time:'⏳ אין זמן',reach:'📞 לא ענו / מה להגיד'};
+var M3='m3-',KEY_PREFIX='m4-';
 
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},2100)}
-/* localStorage נופל בדפדפן הפנימי של וואטסאפ — תמיד עטוף */
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2100)}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-function now(){return new Date().toISOString()}
 
 var devId=lsGet('hopa-m4-dev');
 if(!devId){devId=Date.now().toString(36)+Math.random().toString(36).slice(2,7);lsSet('hopa-m4-dev',devId)}
@@ -353,208 +220,135 @@ function jsonp(params,tmo){
   });
 }
 function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
-/* שרתי Apps Script מחזירים 404 רגעי בערך פעם ב-6 — לכן כל קריאה מנסה שוב לבד */
-async function jsonpRetry(params,tries){
-  var err;
-  for(var i=1;i<=(tries||5);i++){
-    try{
-      var r=await jsonp(params,25000);
-      if(r&&r.ok)return r;
-      err=new Error((r&&r.error)||'שגיאת שרת');
-    }catch(e){err=e}
-    await delay(700+i*600);
-  }
-  throw err||new Error('נכשל');
-}
-/* שמירה: כל רשומה במפתח intake_m4-<סוג>-<מזהה> */
-async function put(kind,id,payload){
-  var params={action:'intakeSubmit',school:KEY_PREFIX+kind+'-'+id,json:JSON.stringify(payload)};
-  try{ await jsonpRetry(params,4); return true }
-  catch(e){
-    try{ await fetch(EXEC_URL,{method:'POST',mode:'no-cors',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams(params).toString()}); return true }
-    catch(e2){ return false }
-  }
-}
-/* כפתור שליחה עם מצב טעינה; seq=true מאפשר כמה רשומות מאותו מכשיר */
-var seqN=Number(lsGet('hopa-m4-seq')||0);
-function wire(btnId,errId,collect,kind,okMsg,after,multi){
-  var btn=$(btnId);if(!btn)return;
-  btn.onclick=async function(){
-    var e=$(errId); if(e)e.textContent='';
-    var data=collect(); if(!data)return;
-    var old=btn.textContent; btn.disabled=true; btn.textContent='שולח…';
-    var id=devId; if(multi){seqN++;lsSet('hopa-m4-seq',seqN);id=devId+'-'+seqN}
-    var ok=await put(kind,id,Object.assign({ts:now(),dev:devId},data));
-    btn.disabled=false; btn.textContent=old;
-    if(ok){ toast(okMsg); if(after)after(); pollNow() }
-    else if(e){ e.textContent='לא הצלחנו לשלוח. בדקו את האינטרנט ונסו שוב.' }
-  };
-}
-/* קבוצת כפתורי בחירה שנשמרת מיד */
-function voteGroup(boxId,errId,kind,lsKey,extra){
-  var box=$(boxId),cur=lsGet(lsKey)||'';
-  function paint(){[].slice.call(box.children).forEach(function(b){b.classList.toggle('on',b.dataset.v===cur)})}
-  [].slice.call(box.children).forEach(function(b){
-    b.onclick=async function(){
-      cur=b.dataset.v;lsSet(lsKey,cur);paint();
-      if(!kind)return;
-      var ok=await put(kind,devId,Object.assign({v:cur,ts:now()},extra?extra():{}));
-      $(errId).textContent=ok?'':'התשובה לא נשמרה. נסו שוב.';
-      if(ok)pollNow();
-    };
-  });
-  paint();
-  return function(){return cur};
-}
-function copyFrom(boxId){
-  var t=$(boxId).textContent;
-  if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast('הועתק ✓')},function(){toast('סמנו והעתיקו ידנית')});
-  else toast('סמנו והעתיקו ידנית');
-}
-function makeTimer(dispId,btnId,secs,lblId,lblTxt){
-  var T=secs,tk=null;
-  function show(){$(dispId).textContent=String(Math.floor(T/60)).padStart(2,'0')+':'+String(T%60).padStart(2,'0')}
-  $(btnId).onclick=function(){
-    if(tk){clearInterval(tk);tk=null;this.textContent='המשך';return}
-    this.textContent='עצור';
-    tk=setInterval(function(){
-      T--;show();
-      if(lblId&&lblTxt){var el=secs-T;var s=lblTxt.find(function(x){return el<x[0]})||lblTxt[lblTxt.length-1];$(lblId).textContent=s[1]}
-      if(T<=0){clearInterval(tk);tk=null;$(btnId).textContent='התחל';T=secs;show();toast('הזמן נגמר')}
-    },1000);
-  };
-  show();
-}
+async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
 
-/* ===================== ניווט ===================== */
-var SECS=[['s0','פתיחה'],['s1','מה קרה'],['s2','מרפאת חסמים'],['s3','צומת המלגות'],['s4','השותף/ה'],['s5','הצעד הבא']];
+var SECS=[['s0','איפה אנחנו'],['s1','ההצגות'],['s2','התוכנית שלי'],['s3','המסמך'],['s4','סגירה']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
-var tocLinks=[].slice.call($('toc').querySelectorAll('a'));
-window.addEventListener('scroll',function(){
-  var y=window.scrollY+120,cur=0;
+var links=[].slice.call($('toc').querySelectorAll('a'));
+addEventListener('scroll',function(){
+  var y=scrollY+120,cur=0;
   SECS.forEach(function(s,i){var el=$(s[0]);if(el&&el.offsetTop<=y)cur=i});
-  tocLinks.forEach(function(a,i){a.classList.toggle('on',i===cur)});
+  links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
 },{passive:true});
 
-/* ===================== 1 · כמה עשיתי ===================== */
-voteGroup('k_vote','k_err','kama','hopa-m4-kama');
-wire('a_send','a_err',function(){
-  var t=$('a_text').value.trim();
-  if(!t){$('a_err').textContent='כתבו משפט אחד על מה שעשיתם.';return null}
-  return {text:t};
-},'asiti','נוסף לקיר 💛',function(){$('a_text').value=''},true);
-
-/* ===================== 2 · מרפאת חסמים ===================== */
-var myType=lsGet('hopa-m4-type')||'';
-var myRoom=lsGet('hopa-m4-room')||'';
-function paintType(){[].slice.call($('types').children).forEach(function(b){b.classList.toggle('on',b.dataset.t===myType)});renderN()}
-[].slice.call($('types').children).forEach(function(b){
-  b.onclick=async function(){
-    myType=b.dataset.t;lsSet('hopa-m4-type',myType);paintType();
-    await put('chasam',devId,{t:myType,room:myRoom,ts:now()});pollNow();
-  };
-});
-$('roomsel').innerHTML=[1,2,3,4,5,6,7,8].map(function(n){return '<button data-r="'+n+'">'+n+'</button>'}).join('');
-function paintRoom(){[].slice.call($('roomsel').children).forEach(function(b){b.classList.toggle('on',b.dataset.r===myRoom)})}
-[].slice.call($('roomsel').children).forEach(function(b){
-  b.onclick=function(){myRoom=b.dataset.r;lsSet('hopa-m4-room',myRoom);paintRoom();
-    if(myType)put('chasam',devId,{t:myType,room:myRoom,ts:now()});};
-});
-paintType();paintRoom();
-makeTimer('t_disp','t_btn',780,'t_lbl',[[180,'מציג/ה את המקרה'],[360,'שאלות הבהרה בלבד'],[660,'עצות: "אצלנו ניסינו…"'],[781,'המציג/ה בוחר/ת']]);
-wire('n_send','n_err',function(){
-  var t=$('n_text').value.trim();
-  if(!t){$('n_err').textContent='מה אתם מנסים השבוע?';return null}
-  return {text:t,t:myType,room:myRoom};
-},'nisayon','נרשם ✓',function(){$('n_text').value=''},true);
-
-/* ===================== 3 · צומת המלגות ===================== */
-$('five').innerHTML=[1,2,3,4,5].map(function(i){
-  return '<div class="r"><span class="i">'+i+'</span><input type="text" data-k="'+i+'" maxlength="30" placeholder="שם פרטי / ראשי תיבות"></div>';
-}).join('');
-[].slice.call($('five').querySelectorAll('input')).forEach(function(el){
-  el.value=lsGet('hopa-m4-five'+el.dataset.k)||'';
-  el.addEventListener('input',function(){lsSet('hopa-m4-five'+el.dataset.k,this.value)});
-});
-makeTimer('t2_disp','t2_btn',360);
-wire('g_send','g_err',function(){
-  var n=$('g_name').value.trim(),d=$('g_date').value.trim();
-  if(!n){$('g_err').textContent='איזו מלגה מצאתם?';return null}
-  return {name:n,date:d};
-},'milga','שותף ✓',function(){$('g_name').value='';$('g_date').value=''},true);
-$('copyMsg').onclick=function(){copyFrom('msgbox')};
-voteGroup('m_vote','m_err','hodaot','hopa-m4-hodaot');
-
-/* ===================== 4 · שותף/ה ===================== */
-voteGroup('s_vote','s_err','shutaf','hopa-m4-shutaf');
-$('copyMsg2').onclick=function(){copyFrom('msgbox2')};
-
-/* ===================== 5 · הצעד הבא + משוב ===================== */
-['h_who','h_date','h_what'].forEach(function(k){
-  $(k).value=lsGet('hopa-m4-'+k)||'';
-  $(k).addEventListener('input',function(){lsSet('hopa-m4-'+k,this.value)});
-});
-wire('h_send','h_err',function(){
-  var w=$('h_who').value.trim(),a=$('h_what').value.trim(),d=$('h_date').value.trim();
-  if(!w||!a){$('h_err').textContent='צריך שם ופעולה.';return null}
-  if(!d){$('h_err').textContent='ותאריך. בלי תאריך זו לא פעולה 🙂';return null}
-  return {who:w,what:a,date:d};
-},'haba','נרשם! נתראה ב-16.12 ✋',function(){$('h_send').textContent='נרשם ✓'});
-
-var fScore=lsGet('hopa-m4-fscore')||'';
-$('f_scale').innerHTML=[1,2,3,4,5].map(function(n){return '<button data-v="'+n+'">'+n+'</button>'}).join('');
-function paintScale(){[].slice.call($('f_scale').children).forEach(function(b){b.classList.toggle('on',b.dataset.v===fScore)})}
-[].slice.call($('f_scale').children).forEach(function(b){b.onclick=function(){fScore=b.dataset.v;lsSet('hopa-m4-fscore',fScore);paintScale()}});
-paintScale();
-var getHopa=voteGroup('f_hopa','f_err',null,'hopa-m4-fhopa');
-$('f_txt').value=lsGet('hopa-m4-ftxt')||'';
-$('f_txt').addEventListener('input',function(){lsSet('hopa-m4-ftxt',this.value)});
-wire('f_send','f_err',function(){
-  if(!fScore){$('f_err').textContent='בחרו מספר מ-1 עד 5.';return null}
-  if(getHopa()===''){$('f_err').textContent='סמנו אם אתם בתוכנית של הופה.';return null}
-  return {score:Number(fScore),hopa:Number(getHopa()),txt:$('f_txt').value.trim()};
-},'mashov','תודה 💛',function(){$('f_send').textContent='נשלח ✓'});
-
-/* ===================== קריאה חיה מהגיליון ===================== */
-var STORE={};
-function items(kind){
-  var pre='intake_'+KEY_PREFIX+kind+'-';
-  return Object.keys(STORE).filter(function(k){return k.indexOf(pre)===0})
-    .map(function(k){return STORE[k]||{}})
-    .filter(function(x){return !x.del})           /* "איפוס המפגש" בדף המנחות מסמן del:1 */
-    .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
+/* ---- תעדוף שעות ---- */
+var hrs={};
+BUCKETS.forEach(function(b){hrs[b.k]=Number(lsGet('hopa-m2-h-'+b.k))||Number(lsGet('hopa-m4-h-'+b.k))||17});
+$('sliders').innerHTML=BUCKETS.map(function(b){
+  return '<div class="row"><span class="nm">'+esc(b.t)+'<br><span style="font-weight:500;color:var(--muted);font-size:11.5px">'+esc(b.d)+'</span></span>'+
+    '<input type="range" min="0" max="70" step="5" value="'+hrs[b.k]+'" data-k="'+b.k+'">'+
+    '<span class="v" id="v-'+b.k+'">'+hrs[b.k]+' ש׳</span></div>';
+}).join('')+'<div class="tot" id="htot"></div>';
+function paintHours(){
+  var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k];$('v-'+b.k).textContent=hrs[b.k]+' ש׳'});
+  var el=$('htot');el.className='tot'+(sum>70?' over':'');
+  el.innerHTML='סה״כ <b>'+sum+'</b> מתוך 70'+(sum>70?' — חרגתם ב-'+(sum-70):(sum<70?' · נשארו '+(70-sum):' ✓'));
 }
-function chip(html){return '<span>'+html+'</span>'}
-function renderN(){
-  var n=items('nisayon');
-  var mine=myType?n.filter(function(x){return x.t===myType}):n;
-  $('n_wall').innerHTML=mine.slice(-40).map(function(x){return chip(esc(x.text))}).join('');
-  $('n_count').textContent=n.length;
+[].slice.call($('sliders').querySelectorAll('input')).forEach(function(inp){
+  inp.addEventListener('input',function(){hrs[this.dataset.k]=Number(this.value);lsSet('hopa-m4-h-'+this.dataset.k,this.value);paintHours()});
+});
+paintHours();
+
+['me','partner','q1','q2','q3','block'].forEach(function(k){
+  var el=$(k);el.value=lsGet('hopa-m4-'+k)||'';
+  el.addEventListener('input',function(){lsSet('hopa-m4-'+k,this.value)});
+});
+
+/* ---- הפרקים מ-21.10 ---- */
+var STORE={},PERAKS=[],taken={};
+try{taken=JSON.parse(lsGet('hopa-m4-taken'))||{}}catch(e){taken={}}
+
+function draw(){
+  PERAKS=[];
+  CHAPTERS.forEach(function(c){
+    var x=STORE['intake_'+M3+'perek-'+c.key];
+    if(x&&!x.del&&x.acts&&x.acts.length)PERAKS.push({c:c,d:x});
+  });
+  $('ready').textContent=PERAKS.length;
+
+  $('peraks').innerHTML=CHAPTERS.map(function(c){
+    var p=null;PERAKS.forEach(function(q){if(q.c.key===c.key)p=q.d});
+    var h='<div class="pk" style="border-color:'+c.c+'"><div class="hd">'+
+      '<span class="badge" style="background:'+c.c+'">פרק '+c.n+'</span>'+
+      (p&&p.who?'<span class="who">'+esc(p.who)+'</span>':'')+
+      '</div><h3>'+esc(c.t)+'</h3><div class="d">'+esc(c.d)+'</div>';
+    if(!p){h+='<div class="empty">הפרק הזה עדיין לא נשלח מ-21.10.</div></div>';return h}
+    if(p.line)h+='<div class="line">'+esc(p.line)+'</div>';
+    h+='<div class="acts">'+p.acts.map(function(a,i){
+      var id=c.key+'-'+i,on=taken[id];
+      return '<div class="a"><span class="n" style="background:'+c.c+'">'+(i+1)+'</span>'+
+        '<span class="t">'+esc(a.t)+
+          '<span class="m">'+(a.when?'<span>'+esc(a.when)+'</span>':'')+
+            (a.hours?'<span>'+esc(a.hours)+' ש׳</span>':'')+
+            (a.who?'<span>'+esc(a.who)+'</span>':'')+'</span>'+
+        '</span>'+
+        '<button class="take'+(on?' on':'')+'" data-id="'+id+'" data-h="'+esc(a.hours||'')+'" title="לקחת לתוכנית שלי">'+(on?'✓':'➕')+'</button></div>';
+    }).join('')+'</div>';
+    if(p.trap)h+='<div class="trap"><b>מלכודת:</b> '+esc(p.trap)+'</div>';
+    return h+'</div>';
+  }).join('');
+
+  [].slice.call($('peraks').querySelectorAll('.take')).forEach(function(b){
+    b.onclick=function(){
+      var id=b.dataset.id;
+      taken[id]=!taken[id];
+      if(!taken[id])delete taken[id];
+      lsSet('hopa-m4-taken',JSON.stringify(taken));
+      b.classList.toggle('on',!!taken[id]);
+      b.textContent=taken[id]?'✓':'➕';
+      paintTaken();
+    };
+  });
+  paintTaken();
 }
-function renderAll(){
-  var a=items('asiti');
-  $('a_wall').innerHTML=a.slice(-50).map(function(x){return chip(esc(x.text))}).join('');
-  $('a_count').textContent=a.length;
-  renderN();
-  var g=items('milga');
-  $('g_wall').innerHTML=g.slice(-40).map(function(x){return chip(esc(x.name)+(x.date?' <i>· '+esc(x.date)+'</i>':''))}).join('');
-  $('g_count').textContent=g.length;
-  $('h_count').textContent=items('haba').length;
-  $('k_done').innerHTML=lsGet('hopa-m4-kama')?'<div class="sent">התשובה נספרה ✓ אפשר לשנות בלחיצה נוספת.</div>':'';
+function paintTaken(){
+  var n=0,tot=0,hsum=0;
+  PERAKS.forEach(function(p){
+    p.d.acts.forEach(function(a,i){
+      tot++;
+      if(taken[p.c.key+'-'+i]){n++;hsum+=(parseFloat(a.hours)||0)}
+    });
+  });
+  $('tk').textContent=n;$('tot').textContent=tot;$('tkh').textContent=hsum||'—';
 }
-var polling=false;
-async function pollNow(){
-  if(polling)return; polling=true;
-  try{
-    var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);
-    if(r&&r.ok&&r.store){STORE=r.store;renderAll()}
-  }catch(e){}
-  polling=false;
+async function poll(){
+  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;draw()}}catch(e){}
 }
-pollNow();
-setInterval(function(){ if(!document.hidden) pollNow() },POLL_MS);
+poll();
+setInterval(function(){if(!document.hidden)poll()},10000);
+
+/* ---- שמירה ---- */
+function myPlan(){
+  var acts=[];
+  PERAKS.forEach(function(p){
+    p.d.acts.forEach(function(a,i){
+      if(taken[p.c.key+'-'+i])acts.push({chapter:p.c.t,n:p.c.n,t:a.t,when:a.when,hours:a.hours,who:a.who});
+    });
+  });
+  return {me:$('me').value.trim(),partner:$('partner').value.trim(),
+    hours:hrs,acts:acts,
+    own:[$('q1').value.trim(),$('q2').value.trim(),$('q3').value.trim()].filter(Boolean),
+    block:$('block').value.trim(),ts:new Date().toISOString()};
+}
+$('saveBtn').onclick=async function(){
+  var p=myPlan();
+  if(!p.me){$('err').textContent='צריך שם ובית ספר.';return}
+  $('err').textContent='';
+  var btn=this;btn.disabled=true;btn.textContent='שומר…';
+  var params={action:'intakeSubmit',school:KEY_PREFIX+'tochnit-'+devId,json:JSON.stringify(p)};
+  var ok=false;
+  try{await jsonpRetry(params,4);ok=true}
+  catch(e){try{await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});ok=true}catch(e2){}}
+  btn.disabled=false;btn.textContent='💾 שמירה ושליחה';
+  if(ok)toast('נשמר ✓ נשלח לכם לפני חנוכה');
+  else $('err').textContent='לא נשמר — נסו שוב. מה שכתבתם שמור במכשיר.';
+};
+$('printBtn').onclick=function(){
+  var p=myPlan();
+  if(!p.me){$('err').textContent='מלאו שם ובית ספר לפני ההפקה.';return}
+  lsSet('hopa-m4-plan',JSON.stringify(p));
+  window.open('tochnit.html?src=live','_blank');
+};
 </script>
 </body>
 </html>

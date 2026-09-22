@@ -3,58 +3,73 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מפגשי רכזים · ליווי בוגרים · הופה</title>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<title>שלושה מפגשים · תוכנית עבודה לליווי בוגרים · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
     --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
-  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  .in{max-width:760px;margin:0 auto;padding:0 16px}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .in{max-width:800px;margin:0 auto;padding:0 16px}
+  a{color:var(--pink-dark)}
 
-  header{background:#111;color:#fff;padding:22px 0 26px}
+  header{background:#111;color:#fff;padding:24px 0 28px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-130px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.2),transparent 65%)}
   .hrow{display:flex;align-items:center;gap:14px}
   .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
   .logo img{height:38px;display:block}
-  h1{margin:0;font-size:24px;font-weight:900}
-  .sub{font-size:13.5px;opacity:.75;margin-top:2px}
-  .idea{margin-top:18px;border-inline-start:4px solid var(--yellow);padding-inline-start:14px;font-size:16px;font-weight:500}
+  h1{margin:0;font-size:25px;font-weight:900;letter-spacing:-.4px}
+  .sub{font-size:13.5px;opacity:.75;margin-top:3px}
+
+  .hero{margin-top:20px;background:#1c1c24;border-radius:16px;padding:16px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .hero .big{font-size:48px;font-weight:900;color:var(--yellow);line-height:1;flex:none}
+  .hero .l{font-size:15px;font-weight:600;flex:1;min-width:190px}
+  .hero .l small{display:block;opacity:.6;font-size:12.5px;font-weight:400;margin-top:4px}
+
+  .idea{margin-top:16px;border-inline-start:4px solid var(--yellow);padding-inline-start:15px;font-size:16px;font-weight:500}
   .idea b{color:var(--yellow)}
 
-  .levels{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .levels span{flex:1 1 150px;background:#1c1c24;border-radius:12px;padding:8px 12px;font-size:13px}
-  .levels b{display:block;font-size:14.5px}
-  .levels i{font-style:normal;opacity:.6}
+  main{padding:20px 0 40px}
+  .chaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:9px;margin-top:12px}
+  .chap{background:#fff;border-radius:13px;padding:11px 13px;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(31,31,38,.05)}
+  .chap:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--pink)}
+  .chap .n{font-size:11px;font-weight:800;color:var(--muted)}
+  .chap .t{font-size:14.5px;font-weight:800;line-height:1.2;margin-top:1px}
+  .chap .d{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.35}
 
-  main{padding:18px 0 40px}
-  .m{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(31,31,38,.07);margin-top:14px;overflow:hidden}
+  .sect{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(31,31,38,.07);padding:18px;margin-top:16px}
+  .sect h2{margin:0 0 4px;font-size:18px;font-weight:900}
+  .sect .lead{color:var(--muted);font-size:13.5px;margin-bottom:8px}
+
+  .m{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(31,31,38,.07);margin-top:16px;overflow:hidden}
   .mh{display:flex;align-items:center;gap:14px;padding:16px 18px 0}
-  .date{background:var(--pink);color:#fff;border-radius:14px;padding:8px 12px;text-align:center;flex:none;min-width:74px}
+  .date{background:var(--pink);color:#fff;border-radius:14px;padding:9px 12px;text-align:center;flex:none;min-width:78px}
   .date b{display:block;font-size:22px;font-weight:900;line-height:1}
   .date small{font-size:11.5px;font-weight:700;opacity:.9}
-  .m.live .date{background:#111;color:var(--yellow)}
   .mh h2{margin:0;font-size:19px;font-weight:900}
   .mh .goal{font-size:14px;color:var(--muted);font-weight:500}
   .mb{padding:12px 18px 16px}
   .mb ul{margin:0;padding-inline-start:20px;font-size:14.5px}
-  .mb li{margin-bottom:4px}
-  .out{margin-top:10px;background:var(--pink-soft);border-radius:11px;padding:8px 12px;font-size:13.5px}
+  .mb li{margin-bottom:5px}
+  .out{margin-top:11px;background:var(--pink-soft);border-radius:11px;padding:9px 13px;font-size:13.5px}
   .out b{color:var(--pink-dark)}
   .links{display:flex;flex-wrap:wrap;gap:7px;padding:12px 18px 16px;border-top:1px solid var(--line);background:#fcfbfd}
   .links a{text-decoration:none;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
   .links a.main{background:var(--pink);border-color:var(--pink);color:#fff}
   .links a.sl{background:var(--yellow);border-color:var(--yellow);color:#111}
-  .links a:hover{border-color:var(--pink)}
+  .arrow{text-align:center;font-size:13px;font-weight:700;color:var(--pink-dark);margin-top:12px}
+  .arrow span{background:#fff;border:1.5px dashed #f5c2dd;border-radius:999px;padding:6px 15px;display:inline-block}
 
-  .arrow{text-align:center;font-size:13px;font-weight:700;color:var(--pink-dark);margin-top:10px}
-  .arrow span{background:#fff;border:1.5px dashed #f5c2dd;border-radius:999px;padding:5px 14px;display:inline-block}
-
-  .next{margin-top:14px;background:#111;color:#fff;border-radius:18px;padding:14px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px}
-  .next b{color:var(--yellow);font-size:16px}
+  .final{margin-top:16px;background:#111;color:#fff;border-radius:18px;padding:18px 20px}
+  .final h2{margin:0 0 6px;font-size:19px;font-weight:900;color:var(--yellow)}
+  .final p{font-size:14.5px;opacity:.9;margin:0 0 10px}
+  .final .links{background:transparent;border:0;padding:0;margin-top:10px}
+  .final .links a{background:#262630;border-color:#3a3a46;color:#fff}
+  .final .links a.sl{background:var(--yellow);border-color:var(--yellow);color:#111}
 
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 34px}
   footer a{color:var(--pink-dark);font-weight:700}
-  @media(max-width:480px){h1{font-size:20px}.mh{align-items:flex-start}}
+  @media(max-width:480px){h1{font-size:21px}.mh{align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -62,90 +77,117 @@
 <header><div class="in">
   <div class="hrow">
     <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-    <div><h1>שלושה מפגשי רכזים · ליווי בוגרים</h1><div class="sub">64 רכזים חברתיים, מתוכם 25 בתוכנית הבוגרים של הופה</div></div>
+    <div><h1>שלושה מפגשים, תוכנית אחת</h1>
+      <div class="sub">רכזים חברתיים · ליווי בוגרים · תשפ״ז</div></div>
   </div>
-  <div class="idea"><b>השנה האחרונה בבית הספר היא השנה הראשונה של הבוגר.</b><br>המפגשים בנויים לשתי הקבוצות: רכזי הופה מארחים ומשתפים מהניסיון שלהם, ואין ניסיון לגייס לתוכנית.</div>
-  <div class="levels">
-    <span><b>1 · לא לאבד</b><i>כל בית ספר</i></span>
-    <span><b>2 · לדעת להפנות</b><i>כל בית ספר · מאגר המענים</i></span>
-    <span><b>3 · ללוות</b><i>25 בתי הספר של הופה</i></span>
+
+  <div class="hero">
+    <div class="big">70</div>
+    <div class="l">שעות בשנה לכל רכז/ת חברתי/ת
+      <small>משרד העבודה הקצה שעתיים שבועיות לליווי בוגרים — זה כבר בתפקיד, וזה כבר מתוקצב</small></div>
+  </div>
+
+  <div class="idea">
+    המפגשים לא נועדו לשכנע שליווי בוגרים חשוב. הם נועדו לענות על שאלה אחת:
+    <b>מה עושים עם השעתיים האלה</b> — ולהוציא כל רכז/ת עם תוכנית עבודה כתובה.
   </div>
 </div></header>
 
 <main class="in">
 
+  <div class="sect">
+    <h2>שמונת הפרקים</h2>
+    <div class="lead">המבנה שמחבר את שלושת המפגשים. בבני ברק כל שולחן לוקח פרק אחד והופך למומחה בו.</div>
+    <div class="chaps" id="chaps"></div>
+  </div>
+
   <div class="m">
-    <div class="mh">
-      <div class="date"><b>14.10</b><small>זום · 90′</small></div>
-      <div><h2>איפה הם עכשיו?</h2><div class="goal">הופכים את הבוגרים לנושא של כולם</div></div>
-    </div>
-    <div class="mb">
-      <ul>
-        <li>כל רכז/ת נזכר/ת בבוגר אחד ובודק/ת: האם אני יודע/ת מה הוא עושה היום?</li>
-        <li>ראיון עם בוגר אמיתי ונתונים מהמחקר</li>
-        <li>בחדרים: אילו נקודות קשר עם בוגרים כבר קיימות אצלנו</li>
-        <li>שלוש הרמות, וחיפוש של מענה אמיתי במאגר</li>
-      </ul>
-      <div class="out"><b>יוצאים עם משימה:</b> שיחת טלפון אחת עם בוגר, שלוש שאלות. רכזי הופה נשארים לתדריך מארחים.</div>
-    </div>
+    <div class="mh"><div class="date"><b>14.10</b><small>זום · 90′</small></div>
+      <div><h2>שעתיים בשבוע</h2><div class="goal">בונים את שלד התוכנית</div></div></div>
+    <div class="mb"><ul>
+      <li><b>בוגר אמיתי</b> — ראיון של 12 דקות. למי אנחנו מתכננים</li>
+      <li>שמונת הפרקים, ו<b>תעדוף חי של 70 השעות</b> — כל אחד מחלק, והמערכת לא נותנת לחרוג</li>
+      <li><b>פרק א׳ · מי איתי</b> — בחדרים: את מי אני מגייס/ת ראשון, ומה בדיוק אבקש</li>
+      <li><b>פרק ב׳ · שכבת י"ב</b> — בונים את הצ׳ק-ליסט ביחד, לא מקבלים אותו מוכן</li>
+      <li><b>פרק ג׳ · הקשר</b> — שלוש רמות מעקב, ערוץ, וצמתים בלוח השנה</li>
+    </ul>
+      <div class="out"><b>יוצאים עם:</b> שלד תוכנית, שם של שותף/ה לגייס, ובחירת השולחן ל-21.10.</div></div>
     <div class="links">
-      <a class="main" href="mifgash2.html" target="_blank">📄 דף המשתתפים</a>
-      <a class="sl" href="mifgash2-slides.html" target="_blank">🖥️ מצגת</a>
-      <a href="mifgash2-manche.html" target="_blank">🎬 רץ־שיט למנחות</a>
-      <a href="sicha.html" target="_blank">📞 השיחה שלי</a>
+      <a class="main" href="mifgash2.html">📄 דף המשתתפים</a>
+      <a class="sl" href="mifgash2-slides.html">🖥️ מצגת</a>
+      <a href="mifgash2-manche.html">🎬 רץ־שיט</a>
+      <a href="sicha.html">📞 השיחה שלי</a>
     </div>
   </div>
 
-  <div class="arrow"><span>⬇ ביניים: שיחה עם בוגר אחד ← ציטוט אחד לקיר</span></div>
+  <div class="arrow"><span>⬇ בין המפגשים: שיחה אחת עם בוגר · ובירור מי השותף/ה בבית הספר</span></div>
 
-  <div class="m live">
-    <div class="mh">
-      <div class="date"><b>21.10</b><small>בני ברק · 2 שעות</small></div>
-      <div><h2>מה שמעתי</h2><div class="goal">משיחה אחת לתוכנית בית ספרית</div></div>
-    </div>
-    <div class="mb">
-      <ul>
-        <li>נפתחים מהציטוטים של הבוגרים. מהם עולות ארבע תמות, והן בדיוק ארבע השאלות של שיחת בוגר</li>
-        <li>עולם קפה, שלוש תחנות שרכזי הופה מארחים: <b>המאגר · השיחה · מענים ומדרג</b></li>
-        <li>"הדף שלי": 3 פעולות עד חנוכה, השותף/ה בבית הספר והחסם</li>
-      </ul>
-      <div class="out"><b>יוצאים עם:</b> תוכנית בדף אחד, כרטיס כיס ותבנית למאגר בוגרים.</div>
-    </div>
+  <div class="m">
+    <div class="mh"><div class="date"><b>21.10</b><small>בני ברק · 2 ש׳</small></div>
+      <div><h2>שולחנות הרעיונות</h2><div class="goal">מייצרים את התוכן — במשחק</div></div></div>
+    <div class="mb"><ul>
+      <li>נפתחים מ<b>קיר הציטוטים</b> — מה הבוגרים אמרו לרכזים השבוע</li>
+      <li><b>אליאס · סבב חימום</b> — מסבירים מושגי תפקיד בלי להגיד את המילה. שובר קרח שגם יוצר שפה משותפת ל-39 שלא מכירים</li>
+      <li><b>אליאס הפוך</b> — 4 סבבים: קלף אתגר אמיתי, 90 שניות לזרוק כמה שיותר רעיונות, ואז בוחרים שלושה ומפרטים אחד</li>
+      <li><b>כותבים את הפרק</b> — 5 פעולות, כל אחת עם מתי · כמה שעות · מי שותף</li>
+      <li><b>סבב ברק</b> — כל שולחן משפט אחד. הפעם הראשונה שרואים את התמונה השלמה</li>
+    </ul>
+      <div class="out"><b>יוצאים עם:</b> מחברת מלווה של 10 עמודים, ופרק כתוב שיוצג ב-4.11.</div></div>
     <div class="links">
-      <a class="main" href="mifgash3.html" target="_blank">📄 דף המשתתפים</a>
-      <a class="sl" href="kir.html" target="_blank">🧱 קיר הציטוטים</a>
-      <a href="mifgash3-manche.html" target="_blank">🎬 רץ־שיט + מדריך מארחים</a>
-      <a href="tochnit.html" target="_blank">🖨️ הדף שלי</a>
-      <a href="kartis.html" target="_blank">🎴 כרטיס כיס</a>
-      <a href="mashov2.html" target="_blank">💬 משוב</a>
+      <a class="main" href="mifgash3.html">📄 דף המשתתפים</a>
+      <a class="sl" href="machberet.html">📓 המחברת</a>
+      <a href="mifgash3-manche.html">🎬 רץ־שיט ושולחנות</a>
+      <a href="elias.html?m=ch">🎴 קלפי אתגר</a>
+      <a href="elias.html?m=el">🗣️ קלפי אליאס</a>
+      <a href="kir.html">🧱 קיר הציטוטים</a>
     </div>
   </div>
 
-  <div class="arrow"><span>⬇ ביניים: שלוש פעולות עם תאריך</span></div>
+  <div class="arrow"><span>⬇ שמונה פרקים כתובים · אחד מכל שולחן</span></div>
 
   <div class="m">
-    <div class="mh">
-      <div class="date"><b>5.11</b><small>זום · 90′</small></div>
-      <div><h2>הצעד הראשון</h2><div class="goal">בלי תוכן חדש: עוזרים לבצע</div></div>
-    </div>
-    <div class="mb">
-      <ul>
-        <li>הצבעה כנה: כמה פעולות כבר עשיתי?</li>
-        <li><b>מרפאת חסמים</b> בחדרים לפי סוג החסם, בפרוטוקול של התייעצות עמיתים</li>
-        <li>צומת המלגות: כל רכז/ת שולח/ת הודעה לבוגרים שלומדים</li>
-        <li>איך מגייסים שותף/ה בבית הספר בשיחה של 5 דקות</li>
-      </ul>
-      <div class="out"><b>יוצאים עם:</b> צעד הבא עם תאריך, ומשוב שמשווה בין רכזי הופה לשאר.</div>
-    </div>
+    <div class="mh"><div class="date"><b>4.11</b><small>זום · 90′</small></div>
+      <div><h2>התוכנית המלאה</h2><div class="goal">מרכיבים — וכל אחד לוקח</div></div></div>
+    <div class="mb"><ul>
+      <li><b>שמונה הצגות</b> — 5 דקות לכל שולחן, ואחרי כל אחת שתי דקות לסמן <b>➕</b> מה אני לוקח/ת</li>
+      <li><b>התוכנית שלי</b> — חלוקת השעות מחדש, שם השותף/ה, שלוש פעולות עד חנוכה והחסם</li>
+      <li><b>הפקת המסמך</b> — תוכנית עבודה מודפסת, עם שורת חתימה למנהל/ת</li>
+    </ul>
+      <div class="out"><b>יוצאים עם:</b> תוכנית עבודה שלמה שנבנתה על ידי 64 אנשים ולא על ידי אחד.</div></div>
     <div class="links">
-      <a class="main" href="mifgash4.html" target="_blank">📄 דף המשתתפים</a>
-      <a class="sl" href="mifgash4-slides.html" target="_blank">🖥️ מצגת</a>
-      <a href="mifgash4-manche.html" target="_blank">🎬 רץ־שיט למנחות</a>
+      <a class="main" href="mifgash4.html">📄 דף המשתתפים</a>
+      <a class="sl" href="mifgash4-slides.html">🖥️ מצגת</a>
+      <a href="mifgash4-manche.html">🎬 רץ־שיט</a>
+      <a href="tochnit.html">📋 מסמך התוכנית</a>
+    </div>
+  </div>
+
+  <div class="final">
+    <h2>התוצר</h2>
+    <p><b>״תוכנית עבודה · ליווי בוגרים · תשפ״ז״</b> — מסמך A4 לכל בית ספר: הפעולות עם שעות ואחראים,
+      השותפים, החסם המרכזי, ארבעה מדדי תוצאה, ושורת חתימה לרכז/ת ולמנהל/ת.
+      מוכן להיכנס לתוכנית העבודה הבית ספרית.</p>
+    <div class="links">
+      <a class="sl" href="tochnit.html">📋 לראות את המסמך</a>
+      <a href="kartis.html">🎴 כרטיס כיס · שיחת בוגר</a>
+      <a href="mashov2.html">💬 משוב</a>
     </div>
   </div>
 
 </main>
 
-<footer class="in">תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · מאגר המענים פתוח לכולם</footer>
+<footer class="in">
+  תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a><br>
+  <span style="opacity:.7">64 רכזים חברתיים · 25 מהם בתוכנית הבוגרים של הופה</span>
+</footer>
+
+<script src="elias-data.js"></script>
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+document.getElementById('chaps').innerHTML=CHAPTERS.map(function(c){
+  return '<div class="chap" style="--pink:'+c.c+'"><div class="n">פרק '+c.n+'</div>'+
+    '<div class="t">'+esc(c.t)+'</div><div class="d">'+esc(c.d)+'</div></div>';
+}).join('');
+</script>
 </body>
 </html>

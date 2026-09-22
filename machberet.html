@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המחברת · שולחנות הרעיונות · 21.10 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--yellow:#FFF200;--ink:#1f1f26;--muted:#7d7d8a;--line:#d5d0da}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:#e9e5ec;color:var(--ink)}
+
+  .bar{background:#111;color:#fff;padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+  .bar h1{margin:0;font-size:17px;font-weight:800}
+  .bar small{opacity:.6;font-size:12.5px}
+  .bar .sp{margin-inline-start:auto}
+  .bar select,.bar button{border:none;border-radius:10px;padding:9px 16px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+  .bar select{background:#222;color:#fff;border:1.5px solid #444}
+  .bar button{background:var(--yellow);color:#111}
+
+  .page{width:210mm;min-height:297mm;background:#fff;margin:14px auto;padding:14mm 14mm 12mm;box-shadow:0 6px 30px rgba(0,0,0,.15);
+        position:relative;display:flex;flex-direction:column}
+  .ph{display:flex;align-items:center;gap:11px;border-bottom:2.5px solid var(--pink);padding-bottom:8px;margin-bottom:12px;flex:none}
+  .ph img{height:28px}
+  .ph .t{font-size:16px;font-weight:900;letter-spacing:-.2px}
+  .ph .s{font-size:11.5px;color:var(--muted);font-weight:600}
+  .ph .pg{margin-inline-start:auto;font-size:11px;font-weight:800;color:var(--muted)}
+
+  h2{font-size:23px;font-weight:900;margin:0 0 6px;letter-spacing:-.5px;line-height:1.15}
+  h3{font-size:15px;font-weight:900;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  h3 .n{background:var(--pink);color:#fff;width:21px;height:21px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+  p{margin:0 0 8px;font-size:13px;line-height:1.5}
+  .lbl{font-size:10.5px;font-weight:800;color:var(--pink-dark);margin-bottom:3px}
+  .line{border-bottom:1.3px solid var(--line);height:23px}
+  .box{border:1.3px solid var(--line);border-radius:9px;height:26mm}
+  .box.sm{height:15mm}.box.lg{height:40mm}
+
+  .hero{background:#111;color:#fff;border-radius:16px;padding:20px 22px;margin-bottom:12px}
+  .hero .big{font-size:46px;font-weight:900;color:var(--yellow);line-height:1}
+  .hero .l{font-size:14px;font-weight:600;margin-top:4px}
+  .hero .s{font-size:11.5px;opacity:.6;margin-top:6px}
+
+  .chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+  .chip{border:1.3px solid var(--line);border-radius:9px;padding:7px 8px;position:relative;overflow:hidden}
+  .chip:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:3.5px;background:var(--pink)}
+  .chip .n{font-size:9px;font-weight:800;color:var(--muted)}
+  .chip .t{font-size:11.5px;font-weight:800;line-height:1.2}
+  .chip .d{font-size:9.5px;color:var(--muted);line-height:1.25;margin-top:1px}
+  .chip.mine{border-width:2.5px;border-color:var(--pink);background:#fff2f8}
+  .chip.mine:after{content:"השולחן שלי";position:absolute;inset-inline-end:5px;top:5px;font-size:8px;font-weight:800;color:var(--pink-dark)}
+
+  .note{background:#fffdf0;border:1.3px solid #f0e08a;border-radius:9px;padding:8px 11px;font-size:11.5px;line-height:1.45}
+  .note b{color:#8a7500}
+  .rule{background:#f6f2f7;border-radius:9px;padding:8px 11px;font-size:11.5px;line-height:1.45;margin-top:6px}
+  .rule b{color:var(--pink-dark)}
+
+  /* עמוד אתגר */
+  .card{border:2.5px solid var(--pink);border-radius:13px;padding:14px 16px;margin-bottom:10px;background:#fff2f8}
+  .card .rn{font-size:10.5px;font-weight:800;color:var(--pink-dark)}
+  .card .q{font-size:19px;font-weight:900;line-height:1.3;margin-top:3px}
+  .ideas{display:flex;flex-direction:column;gap:0}
+  .ideas .i{display:flex;gap:8px;align-items:flex-end;padding:4px 0}
+  .ideas .i .n{width:19px;height:19px;border:1.3px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--muted);flex:none;margin-bottom:2px}
+  .ideas .i .l{flex:1;border-bottom:1.3px solid var(--line);height:19px}
+  .ideas .i .st{width:15px;height:15px;border:1.3px solid var(--pink);border-radius:4px;flex:none;margin-bottom:3px}
+  .top3{margin-top:9px;border:1.3px dashed var(--pink);border-radius:9px;padding:9px 11px}
+  .top3 .h{font-size:11px;font-weight:800;color:var(--pink-dark);margin-bottom:4px}
+
+  /* טבלת הפרק */
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{background:#f6f2f7;font-size:10.5px;font-weight:800;color:var(--pink-dark);padding:6px 8px;text-align:right;border:1.3px solid var(--line)}
+  td{border:1.3px solid var(--line);padding:0;height:13mm}
+  td.sm{height:9mm}
+
+  .score{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:6px}
+  .score div{border:1.3px solid var(--line);border-radius:9px;padding:7px;text-align:center}
+  .score .t{font-size:10.5px;font-weight:800;color:var(--muted)}
+  .score .b{height:17mm;border-bottom:1.3px solid var(--line);margin-top:3px}
+
+  .words{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}
+  .words span{border:1.3px solid var(--line);border-radius:7px;padding:5px 7px;font-size:11px;font-weight:700;text-align:center}
+
+  .foot{margin-top:auto;padding-top:9px;border-top:1.3px solid var(--line);font-size:9.5px;color:var(--muted);display:flex;gap:8px;flex:none}
+  .foot b{color:var(--ink)}
+  .foot .l{margin-inline-start:auto}
+
+  @media print{
+    body{background:#fff}
+    .bar{display:none}
+    .page{width:auto;min-height:0;margin:0;padding:11mm 11mm 9mm;box-shadow:none;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>המחברת · שולחנות הרעיונות</h1>
+  <small>21.10 · בני ברק · 10 עמודים · להדפיס דו-צדדי ולכרוך</small>
+  <span class="sp"></span>
+  <select id="chSel"><option value="">מחברת כללית (בלי סימון שולחן)</option></select>
+  <button onclick="window.print()">🖨️ הדפסה</button>
+</div>
+
+<div id="book"></div>
+
+<script src="elias-data.js"></script>
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var qs=new URLSearchParams(location.search);
+var mine=qs.get('p')||'';   /* machberet.html?p=maagar  → מחברת מסומנת לשולחן */
+
+var sel=document.getElementById('chSel');
+sel.innerHTML+=CHAPTERS.map(function(c){return '<option value="'+c.key+'"'+(c.key===mine?' selected':'')+'>שולחן '+c.n+' · '+esc(c.t)+'</option>'}).join('');
+sel.onchange=function(){location.search=this.value?'?p='+this.value:''};
+
+function head(title,sub,pg){
+  return '<div class="ph"><img src="hopa-logo.png" alt="הופה"><div><div class="t">'+title+'</div>'+
+    (sub?'<div class="s">'+sub+'</div>':'')+'</div><div class="pg">'+pg+'</div></div>';
+}
+function foot(){
+  return '<div class="foot"><span><b>הופה</b> · תוכנית הבוגרים</span>'+
+    '<span class="l">מפגש 21.10.2026 · בני ברק · hopa.org.il</span></div>';
+}
+function ideaRows(n){
+  var h='<div class="ideas">';
+  for(var i=1;i<=n;i++)h+='<div class="i"><span class="n">'+i+'</span><span class="l"></span><span class="st"></span></div>';
+  return h+'</div>';
+}
+
+var my=mine?chapterByKey(mine):null;
+var P=[];
+
+/* ---------- עמ' 1 · שער ---------- */
+P.push('<div class="page">'+head('שולחנות הרעיונות','מפגש רכזים · ליווי בוגרים','1')+
+  '<h2>המחברת</h2>'+
+  '<p style="font-size:14px">21.10.2026 · בני ברק · שעתיים</p>'+
+  '<div style="margin:14px 0"><div class="lbl">שם</div><div class="line"></div>'+
+  '<div class="lbl" style="margin-top:10px">בית ספר</div><div class="line"></div>'+
+  '<div class="lbl" style="margin-top:10px">שולחן מס׳</div><div class="line" style="width:40mm"></div></div>'+
+
+  '<div class="hero"><div class="big">70</div><div class="l">שעות בשנה — זה מה ששתי שעות שבועיות שוות</div>'+
+  '<div class="s">משרד העבודה הקצה שעתיים שבועיות לכל רכז/ת חברתי/ת לליווי בוגרים</div></div>'+
+
+  '<div class="note"><b>מה קורה היום:</b> כל שולחן לוקח פרק אחד מתוך תוכנית העבודה והופך להיות המומחה שלו. '+
+  'ארבעה סבבים של ״אליאס הפוך״ מייצרים את הרעיונות, ובסוף השולחן כותב את הפרק. '+
+  'ב-4.11 בזום כל שולחן יציג את הפרק שלו — וכל אחד ייצא עם תוכנית שלמה שכל החדר בנה.</div>'+
+
+  '<div class="rule" style="margin-top:10px"><b>כלל אחד למחברת הזאת:</b> אף רעיון לא נפסל בזמן הסבב. '+
+  'פוסלים אחר כך, כשבוחרים שלושה.</div>'+
+  foot()+'</div>');
+
+/* ---------- עמ' 2 · מפת הפרקים ---------- */
+P.push('<div class="page">'+head('מפת התוכנית','שמונה פרקים · שמונה שולחנות','2')+
+  '<h2>תוכנית עבודה בליווי בוגרים</h2>'+
+  '<p>אלה שמונת הפרקים. השולחן שלכם מסומן.</p>'+
+  '<div class="chips">'+CHAPTERS.map(function(c){
+    return '<div class="chip'+(my&&c.key===my.key?' mine':'')+'" style="--pink:'+c.c+'">'+
+      '<div class="n">פרק '+c.n+'</div><div class="t">'+esc(c.t)+'</div><div class="d">'+esc(c.d)+'</div></div>';
+  }).join('')+'</div>'+
+
+  '<h3><span class="n">✓</span>סדר היום</h3>'+
+  '<table><tr><th style="width:18mm">דקות</th><th>מה</th></tr>'+
+  [['10','כניסה לשולחנות · מי אנחנו ואיזה פרק לקחנו'],
+   ['10','קיר הציטוטים — מה הבוגרים אמרו לנו השבוע'],
+   ['8','אליאס · סבב חימום על מושגי התפקיד'],
+   ['40','אליאס הפוך · ארבעה קלפי אתגר'],
+   ['30','כותבים את הפרק'],
+   ['17','סבב ברק — כל שולחן משפט אחד · וסגירה']]
+   .map(function(r){return '<tr><td class="sm" style="text-align:center;font-weight:800;padding:0 4px">'+r[0]+'</td>'+
+     '<td class="sm" style="padding:0 8px;font-size:12px">'+r[1]+'</td></tr>'}).join('')+'</table>'+
+
+  '<h3><span class="n">🎴</span>אליאס · סבב החימום</h3>'+
+  '<p style="font-size:12px">מסבירים את המושג בלי להגיד את המילה. 60 שניות לסבב, כל ניחוש נכון = נקודה.</p>'+
+  '<div class="words">'+ELIAS_WORDS.slice(0,18).map(function(w){return '<span>'+esc(w)+'</span>'}).join('')+'</div>'+
+  '<div class="score"><div><div class="t">סבב 1</div><div class="b"></div></div>'+
+    '<div><div class="t">סבב 2</div><div class="b"></div></div>'+
+    '<div><div class="t">סבב 3</div><div class="b"></div></div>'+
+    '<div><div class="t">סה״כ</div><div class="b"></div></div></div>'+
+  foot()+'</div>');
+
+/* ---------- עמ' 3–6 · ארבעת קלפי האתגר ---------- */
+var cards=my?CARDS[my.key]:['','','',''];
+for(var r=0;r<4;r++){
+  P.push('<div class="page">'+head('אליאס הפוך · סבב '+(r+1),my?('שולחן '+my.n+' · '+my.t):'',(r+3))+
+    '<div class="card" style="border-color:'+(my?my.c:'#E8348A')+';background:'+(my?my.c+'12':'#fff2f8')+'">'+
+      '<div class="rn">קלף אתגר '+(r+1)+' מתוך 4</div>'+
+      '<div class="q">'+(cards[r]?esc(cards[r]):'&nbsp;')+'</div>'+
+    '</div>'+
+    '<div class="rule"><b>90 שניות.</b> זורקים כמה שיותר רעיונות. הרשם/ת כותב/ת הכול. כל רעיון שנרשם = נקודה. '+
+    '<b>לא פוסלים כלום בזמן הסבב.</b></div>'+
+    ideaRows(14)+
+    '<div class="top3"><div class="h">★ ואחרי הסבב — מסמנים את שלושת הטובים ומפרטים אחד מהם:</div>'+
+      '<div class="lbl" style="margin-top:5px">הרעיון</div><div class="line"></div>'+
+      '<div class="lbl" style="margin-top:6px">מה צריך בשביל שזה יקרה</div><div class="line"></div>'+
+      '<div class="lbl" style="margin-top:6px">כמה שעות בשנה · מי אחראי</div><div class="line"></div>'+
+    '</div>'+
+    foot()+'</div>');
+}
+
+/* ---------- עמ' 7 · כותבים את הפרק ---------- */
+P.push('<div class="page">'+head('כותבים את הפרק',my?('שולחן '+my.n+' · '+my.t):'','7')+
+  '<h2>'+(my?('פרק '+my.n+' · '+esc(my.t)):'הפרק שלנו')+'</h2>'+
+  '<p>זה מה שיוצג ב-4.11, וזה מה שייכנס לתוכנית העבודה של כולם. <b>חמש פעולות, לא יותר.</b></p>'+
+  '<table><tr><th style="width:52%">הפעולה</th><th style="width:16%">מתי בשנה</th><th style="width:14%">שעות</th><th>מי איתי</th></tr>'+
+  '<tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr>'+
+  '<tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr>'+
+  '<tr><td></td><td></td><td></td><td></td></tr></table>'+
+
+  '<h3><span class="n">!</span>המשפט שנציג ב-4.11</h3>'+
+  '<p style="font-size:12px">משפט אחד שמסכם את הפרק — מה שכל רכז/ת חייב/ת לדעת עליו.</p>'+
+  '<div class="box sm"></div>'+
+
+  '<h3><span class="n">?</span>המלכודת</h3>'+
+  '<p style="font-size:12px">מה הכי סביר שיכשל בפרק הזה — ומה עוקף את זה.</p>'+
+  '<div class="box sm"></div>'+
+  foot()+'</div>');
+
+/* ---------- עמ' 8 · התוכנית שלי ---------- */
+P.push('<div class="page">'+head('התוכנית שלי','מה אני לוקח/ת מכאן','8')+
+  '<h2>תוכנית העבודה שלי<br>בליווי בוגרים · תשפ״ז</h2>'+
+  '<p>הטיוטה. ב-4.11 היא תושלם מהפרקים של כל השולחנות.</p>'+
+
+  '<h3><span class="n">1</span>חלוקת 70 השעות</h3>'+
+  '<div class="score">'+BUCKETS.map(function(b){
+    return '<div><div class="t">'+esc(b.t)+'</div><div class="b"></div></div>';
+  }).join('')+'</div>'+
+
+  '<h3><span class="n">2</span>שלוש פעולות עד חנוכה</h3>'+
+  '<table><tr><th style="width:70%">מה</th><th>עד מתי</th></tr>'+
+  '<tr><td class="sm"></td><td class="sm"></td></tr><tr><td class="sm"></td><td class="sm"></td></tr>'+
+  '<tr><td class="sm"></td><td class="sm"></td></tr></table>'+
+
+  '<h3><span class="n">3</span>השותף/ה שלי בבית הספר — בשם</h3>'+
+  '<div class="line"></div>'+
+  '<div class="note" style="margin-top:6px"><b>רכז לבד לא שורד.</b> אם אין שם — זה החסם הראשון שלך.</div>'+
+
+  '<h3><span class="n">4</span>החסם האמיתי — ומה הצעד הקטן שעוקף אותו</h3>'+
+  '<div class="box"></div>'+
+  foot()+'</div>');
+
+/* ---------- עמ' 9 · שיחת בוגר ---------- */
+P.push('<div class="page">'+head('שיחת בוגר','הפרוטוקול · 15 דקות','9')+
+  '<h2>ארבע השאלות</h2>'+
+  '<table><tr><th style="width:26%">השאלה</th><th>מה שואלים</th></tr>'+
+  [['🧭 מסלול','איפה את/ה עכשיו — צבא / שירות / לימודים / עבודה? מה השלב הבא ומתי?'],
+   ['💰 כסף וזכויות','מלגות פתוחות, פיקדון, זכאויות שלא מומשו, חובות שמעיקים?'],
+   ['🏠 חיים','דיור, משפחה, איך את/ה מרגיש/ה באמת? מקשיבים גם למה שלא נאמר.'],
+   ['🔗 חיבור','למה אפשר לחבר אותך עכשיו — מענה, אירוע, בוגר/ת אחר/ת?']]
+   .map(function(r){return '<tr><td class="sm" style="padding:0 8px;font-weight:800;font-size:12px">'+r[0]+'</td>'+
+     '<td class="sm" style="padding:0 8px;font-size:11.5px">'+r[1]+'</td></tr>'}).join('')+'</table>'+
+
+  '<div class="note" style="margin-top:10px"><b>שלושת העקרונות:</b> מתחילים מהתקוות ולא מהחששות · משקפים כוחות — '+
+  '״שיחה טובה היא שיחה שבה הבוגר לומד על צדדים חזקים שלו״ · מדברים על <b>הפרק הבא</b>, לא על כל החיים. '+
+  'ומסיימים ב״מה הצעד הבא שלך?״ + עדכון המאגר.</div>'+
+
+  '<h3><span class="n">→</span>מדרג הסיוע</h3>'+
+  '<table><tr><th>יידוע</th><th>תיווך</th><th>סנגור</th><th>ליווי</th></tr>'+
+  '<tr><td class="sm" style="text-align:center;font-size:11px;padding:0 4px">סיפרתי שקיים</td>'+
+  '<td class="sm" style="text-align:center;font-size:11px;padding:0 4px">חיברתי בפועל</td>'+
+  '<td class="sm" style="text-align:center;font-size:11px;padding:0 4px">נלחמתי מולם</td>'+
+  '<td class="sm" style="text-align:center;font-size:11px;padding:0 4px">עד שנפתר</td></tr></table>'+
+  '<div class="rule"><b>חיבור למענה בלי מעקב לא נחשב.</b> בודקים שהקשר נוצר ושהצורך באמת נענה — ואם לא, מחפשים מענה אחר.</div>'+
+  '<div class="note" style="margin-top:8px;background:#fff4f4;border-color:#f0cccc"><b style="color:#a03030">גבולות:</b> '+
+  'לא מעבירים כסף אישי ולא מלווים כספית. סיוע כלכלי רק דרך מענים, מלגות וזכויות. '+
+  'בכל סימן למצוקה נפשית חריפה — התייעצות וחיבור לגורם טיפולי עוד באותו יום.</div>'+
+  foot()+'</div>');
+
+/* ---------- עמ' 10 · הערות ---------- */
+P.push('<div class="page">'+head('רעיונות ששמעתי משולחנות אחרים','לרשום במהלך סבב הברק ובמפגש 4.11','10')+
+  '<h2>מה אני לוקח/ת מאחרים</h2>'+
+  CHAPTERS.map(function(c){
+    return '<div style="margin-top:9px"><div class="lbl" style="color:'+c.c+'">פרק '+c.n+' · '+esc(c.t)+'</div>'+
+      '<div class="line" style="height:19px"></div></div>';
+  }).join('')+
+  '<div class="note" style="margin-top:14px"><b>4.11 · זום ·</b> כל שולחן מציג את הפרק שלו, ואחרי כל הצגה יש לכם שתי דקות '+
+  'לכתוב כאן מה אתם לוקחים. בסוף המפגש זה הופך למסמך תוכנית העבודה שלכם.</div>'+
+  '<div style="margin-top:12px"><div class="lbl">הערות</div><div class="box lg"></div></div>'+
+  foot()+'</div>');
+
+document.getElementById('book').innerHTML=P.join('');
+</script>
+</body>
+</html>

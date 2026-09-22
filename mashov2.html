@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>משוב · מפגשי הרכזים 14.10 ו-21.10 · הופה</title>
+<title>משוב · מפגשי הרכזים · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
@@ -116,9 +116,9 @@ var KEY_PREFIX='mashov2-';
 var ADMIN_PARAM='hopa';
 var LS_KEY='hopa-mashov2-draft';
 
-var WORKED=['הבוגר שסיפר','״הבוגר שאני זוכר/ת״ וההצבעה','המספרים והמחקר','החדרים בזום',
-  'שיחת הטלפון עם בוגר','קיר הבוגרים','תחנת המאגר','תחנת השיחה','תחנת המענים והמדרג',
-  '״הדף שלי״','האנשים והאווירה'];
+var WORKED=['הבוגר שסיפר','תעדוף 70 השעות','החדרים — מי השותפים שלי','בניית הצ׳ק-ליסט לי״ב',
+  'שיחת הטלפון עם בוגר','קיר הציטוטים','אליאס — סבב החימום','אליאס הפוך — קלפי האתגר',
+  'כתיבת הפרק בשולחן','שמונה ההצגות ב-4.11','מסמך תוכנית העבודה','האנשים והאווירה'];
 var TOPICS=['מלגות וזכויות','תעסוקה והכשרות','בניית מאגר בוגרים','תרגול שיחות','עבודה עם קבוצות וואטסאפ',
   'חיבור לגורמים בקהילה','בוגרים בשירות ואחריו','למידת עמיתים והצלחות','כלים דיגיטליים ומעקב'];
 var RATE_L=['ממש לא','פחות','בסדר','טוב','מעולה!'],RATE_E=['😕','😐','🙂','😃','🤩'];
@@ -175,10 +175,10 @@ function render(){
       '<button data-v="0"'+(state.inHopa===0?' class="on"':'')+'>לא</button></div>'+
     '<p class="hint" style="margin-top:8px">חשוב לנו לדעת אם המפגש עבד גם למי שלא בתוכנית.</p></div>'+
 
-  '<div class="card"><h2><span class="num">2</span>איך היו המפגשים בסך הכול? <span class="req">*</span></h2><div class="scale" id="rate">'+scaleBtns(state.rate)+'</div></div>'+
-  '<div class="card"><h2><span class="num">3</span>יצאת עם משהו מעשי לעבודה שלך? <span class="req">*</span></h2><div class="scale" id="useful">'+scaleBtns(state.useful)+'</div></div>'+
+  '<div class="card"><h2><span class="num">2</span>איך היה המסלול בסך הכול? <span class="req">*</span></h2><div class="scale" id="rate">'+scaleBtns(state.rate)+'</div></div>'+
+  '<div class="card"><h2><span class="num">3</span>יצאת עם תוכנית עבודה שתריץ/י בפועל? <span class="req">*</span></h2><div class="scale" id="useful">'+scaleBtns(state.useful)+'</div></div>'+
 
-  '<div class="card"><h2><span class="num">4</span>עשית את שיחת הטלפון עם בוגר?</h2>'+
+  '<div class="card"><h2><span class="num">4</span>עשית את שיחת הטלפון עם בוגר/ת?</h2>'+
     '<div class="toggle" id="called"><button data-v="1"'+(state.called===1?' class="on"':'')+'>✅ כן</button>'+
     '<button data-v="0"'+(state.called===0?' class="on"':'')+'>🙈 לא</button></div></div>'+
 
@@ -225,7 +225,7 @@ async function submit(){
   var payload={who:state.who.trim(),school:state.school.trim(),inHopa:state.inHopa,called:state.called,
     rate:state.rate,useful:state.useful,worked:state.worked,improve:state.improve.trim(),
     topics:state.topics,heart:state.heart.trim(),ts:new Date().toISOString(),
-    meeting:'מפגשי רכזים 14.10 + 21.10 · 2026'};
+    meeting:'מפגשי רכזים 14.10 · 21.10 · 4.11 · 2026'};
   var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
   try{
     if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
@@ -244,13 +244,13 @@ async function submit(){
 function renderDone(){
   app.innerHTML='<div class="card done"><div class="big">💛</div><h2>תודה!</h2>'+
     '<p>כל מילה כאן נכנסת לתכנון המפגש הבא.</p>'+
-    '<div class="nextbox">5.11.2026 · זום<small>נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</small></div></div>';
+    '<div class="nextbox">4.11.2026 · זום<small>נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</small></div></div>';
 }
 
 /* ---------- ניהול ---------- */
 async function renderAdmin(){
   $('heroTitle').textContent='משוב · ניהול';
-  $('heroSub').textContent='מפגשי 14.10 ו-21.10 · חי מהגיליון';
+  $('heroSub').textContent='שלושת המפגשים · חי מהגיליון';
   $('heroMeet').textContent='למיטל ולצוות';
   $('wrap').classList.add('adm');
   app.innerHTML='<div class="card"><p class="hint" id="ls">טוען…</p></div>';

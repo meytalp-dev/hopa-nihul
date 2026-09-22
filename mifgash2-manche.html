@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>רץ־שיט למנחות · מפגש 14.10 · הופה</title>
+<title>רץ־שיט · שעתיים בשבוע · 14.10 · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
@@ -13,7 +13,6 @@
   button,input{font-family:inherit;font-size:inherit}
   a{color:var(--pink-dark)}
   .in{max-width:1180px;margin:0 auto;padding:0 14px}
-
   header{background:#111;color:#fff;padding:14px 0}
   .hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   header h1{margin:0;font-size:20px;font-weight:900}
@@ -21,19 +20,16 @@
   .clockbox{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#222;border-radius:12px;padding:7px 13px}
   .clockbox input{width:74px;background:#111;border:1px solid #444;color:var(--yellow);border-radius:8px;padding:5px 8px;text-align:center;font-weight:800;direction:ltr}
   .clockbox .now{font-size:19px;font-weight:900;color:var(--yellow);font-variant-numeric:tabular-nums}
-
   .tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
   .tabs .in{display:flex;gap:6px;padding-top:8px;padding-bottom:8px;overflow-x:auto}
   .tabs button{flex:none;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:6px 15px;font-weight:800;font-size:13px;cursor:pointer}
   .tabs button.on{background:var(--pink);border-color:var(--pink);color:#fff}
-
   main{padding:14px 0 60px}
   .pane{display:none}.pane.on{display:block}
-
   .blk{background:#fff;border-radius:15px;box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden;border-inline-start:5px solid var(--line)}
   .blk.now{border-inline-start-color:var(--pink);box-shadow:0 6px 26px rgba(232,52,138,.2)}
   .blk.done{opacity:.5}
-  .bh{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer;background:#fff}
+  .bh{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer}
   .bh .tm{background:#111;color:var(--yellow);border-radius:9px;padding:4px 10px;font-weight:900;font-size:13.5px;font-variant-numeric:tabular-nums;flex:none}
   .bh .ti{flex:1;min-width:0}
   .bh h3{margin:0;font-size:15.5px;font-weight:900}
@@ -42,17 +38,17 @@
   .bh .go{border:none;background:var(--yellow);border-radius:9px;padding:6px 12px;font-weight:800;font-size:12.5px;cursor:pointer;flex:none}
   .bb{padding:0 14px 14px;display:none;border-top:1px solid var(--line);padding-top:12px}
   .blk.open .bb{display:block}
-  .bb h4{margin:12px 0 4px;font-size:13px;font-weight:800;color:var(--pink-dark);text-transform:none}
+  .bb h4{margin:12px 0 4px;font-size:13px;font-weight:800;color:var(--pink-dark)}
   .bb h4:first-child{margin-top:0}
   .bb p{margin:0 0 8px;font-size:14px}
   .bb ul{margin:4px 0 10px;padding-inline-start:20px;font-size:14px}.bb li{margin-bottom:4px}
   .say{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:14.5px;font-weight:600;margin:8px 0}
   .warn{background:#fff4f4;border:1.5px solid #f5c9c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
   .warn b{color:#c0392b}
+  .good{background:#e8f8ef;border:1.5px solid #b8e6c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
+  .good b{color:#14613b}
   .chatbox{background:#f8f6fa;border:1.5px dashed var(--line);border-radius:11px;padding:10px 12px;font-size:13.5px;margin:8px 0;white-space:pre-wrap;position:relative}
   .chatbox button{position:absolute;inset-inline-end:8px;top:8px;border:none;background:var(--pink);color:#fff;border-radius:8px;padding:4px 11px;font-size:12px;font-weight:800;cursor:pointer}
-  .onpage{display:inline-block;background:#eef7ff;border:1.5px solid #c5e0f7;color:#1a5b8f;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;margin:2px 4px 2px 0}
-
   .card{background:#fff;border-radius:15px;box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
   .card h2{margin:0 0 8px;font-size:16px;font-weight:900}
   .stat{display:flex;gap:9px;flex-wrap:wrap}
@@ -61,17 +57,22 @@
   .wall{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
   .wall span{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:700}
   .wall span i{font-style:normal;font-weight:500;color:var(--muted)}
-  .vres{display:flex;gap:9px;flex-wrap:wrap;margin-top:9px}
-  .vres>div{flex:1 1 130px;background:#111;color:#fff;border-radius:13px;padding:12px;text-align:center}
-  .vres b{display:block;font-size:32px;font-weight:900;color:var(--yellow)}
-  .vres .l{font-size:12.5px;opacity:.8}
+  .hbars{margin-top:8px}
+  .hbar{display:flex;align-items:center;gap:10px;margin-top:7px;font-size:13.5px}
+  .hbar .nm{width:150px;font-weight:700}
+  .hbar .track{flex:1;height:14px;background:#f0ecf3;border-radius:999px;overflow:hidden}
+  .hbar .fill{display:block;height:100%;background:var(--pink);border-radius:999px}
+  .hbar .v{width:62px;text-align:center;font-weight:900;color:var(--pink-dark)}
   .rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:9px}
   .room{border:1.5px solid var(--line);border-radius:13px;padding:10px 12px}
   .room h4{margin:0 0 5px;font-size:13.5px;font-weight:900;color:var(--pink-dark)}
   .room ul{margin:0;padding-inline-start:17px;font-size:12.5px}
+  .tb{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;margin-top:9px}
+  .tbi{border:1.5px solid var(--line);border-radius:12px;padding:9px 11px}
+  .tbi h4{margin:0 0 4px;font-size:13px;font-weight:900}
+  .tbi ul{margin:0;padding-inline-start:16px;font-size:12px}
   .btn{border:none;border-radius:11px;padding:9px 17px;font-weight:800;font-size:13.5px;cursor:pointer}
   .btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
-  .btn.pink{background:var(--pink);color:#fff}
   .btn.red{background:#fff;border:1.5px solid #f0b7b7;color:#c0392b}
   .chk{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
   .chk:last-child{border-bottom:none}
@@ -87,15 +88,8 @@
 <body>
 
 <header><div class="in hrow">
-  <div>
-    <h1>רץ־שיט · מפגש 14.10</h1>
-    <div class="sub">״איפה הם עכשיו?״ · זום · 90 דקות + 10 בריף מארחים</div>
-  </div>
-  <div class="clockbox">
-    <span style="font-size:12px;opacity:.6">התחלה</span>
-    <input id="start" value="11:00">
-    <span class="now" id="now">--:--</span>
-  </div>
+  <div><h1>רץ־שיט · מפגש 14.10</h1><div class="sub">״שעתיים בשבוע״ · זום · 90 דקות</div></div>
+  <div class="clockbox"><span style="font-size:12px;opacity:.6">התחלה</span><input id="start" value="11:00"><span class="now" id="now">--:--</span></div>
 </div></header>
 
 <div class="tabs"><div class="in">
@@ -109,54 +103,42 @@
   <div class="pane on" id="p-run"><div id="blocks"></div></div>
 
   <div class="pane" id="p-live">
-    <div class="card">
-      <div class="stat" id="lstat"></div>
-      <div style="margin-top:10px"><button class="btn ghost" id="refresh">🔄 רענון עכשיו</button>
-      <span style="font-size:12px;color:var(--muted);margin-inline-start:8px" id="lastup"></span></div>
-    </div>
-    <div class="card"><h2>1 · קיר הבוגרים <small style="font-weight:500;color:var(--muted);font-size:12.5px">— להקריא 6–7 שמות בקול</small></h2><div class="wall" id="lw-b"></div></div>
-    <div class="card"><h2>1 · ״יודע/ת איפה הוא היום?״</h2><div class="vres" id="lw-k"></div></div>
-    <div class="card"><h2>4 · נקודות קשר לפי חדר</h2><div class="rooms" id="lw-r"></div></div>
-    <div class="card"><h2>5 · מענים שנמצאו</h2><div class="wall" id="lw-m"></div></div>
-    <div class="card"><h2>6 · מי מתקשר למי</h2><div class="wall" id="lw-c"></div></div>
-    <div class="card"><h2>8 · מארחים ל-21.10</h2><div class="wall" id="lw-h"></div></div>
+    <div class="card"><div class="stat" id="lstat"></div>
+      <div style="margin-top:10px"><button class="btn ghost" id="refresh">🔄 רענון</button>
+      <span style="font-size:12px;color:var(--muted);margin-inline-start:8px" id="lastup"></span></div></div>
+    <div class="card"><h2>2 · על מה החדר רוצה להוציא את 70 השעות</h2><div class="hbars" id="lw-h"></div></div>
+    <div class="card"><h2>3 · את מי מגייסים — לפי חדר</h2><div class="rooms" id="lw-p"></div></div>
+    <div class="card"><h2>4 · מה החדר הוסיף לצ׳ק-ליסט י"ב</h2><div class="wall" id="lw-c"></div></div>
+    <div class="card"><h2>6 · שיבוץ השולחנות ל-21.10</h2><div class="tb" id="lw-t"></div></div>
   </div>
 
   <div class="pane" id="p-prep">
     <div class="card"><h2>לפני המפגש</h2><div id="chklist"></div></div>
-    <div class="card">
-      <h2>🧹 איפוס נתוני המפגש</h2>
-      <p style="font-size:13.5px;color:var(--muted)">מוחק את כל מה שנכתב בדף המשתתפים (בדיקות, ניסיונות). <b>חובה להריץ אחרי הבדיקות ולפני 14.10.</b></p>
+    <div class="card"><h2>🧹 איפוס נתוני המפגש</h2>
+      <p style="font-size:13.5px;color:var(--muted)">מוחק את כל מה שנכתב בדף המשתתפים. <b>חובה להריץ אחרי הבדיקות ולפני 14.10.</b></p>
       <button class="btn red" id="resetBtn">מחיקת כל נתוני מפגש 14.10</button>
-      <div id="resetStat" style="font-size:13px;margin-top:9px;color:var(--muted)"></div>
-    </div>
+      <div id="resetStat" style="font-size:13px;margin-top:9px;color:var(--muted)"></div></div>
   </div>
 
   <div class="pane" id="p-links">
-    <div class="card"><h2>לשיתוף עם המשתתפים</h2>
-      <div class="lnk">
-        <a class="y" href="mifgash2.html" target="_blank">📄 הדף המלווה</a>
-        <a href="sicha.html" target="_blank">📞 השיחה שלי</a>
-        <a href="https://hopa.org.il" target="_blank">🔎 מאגר המענים</a>
-      </div>
-    </div>
-    <div class="card"><h2>למנחות בלבד</h2>
-      <div class="lnk">
-        <a href="mifgash2-slides.html" target="_blank">🖥️ מצגת לשיתוף מסך</a>
-        <a href="sicha.html?admin=hopa" target="_blank">📊 ניהול השיחות</a>
-        <a href="mashov2.html?admin=hopa" target="_blank">💬 משוב</a>
-      </div>
-    </div>
-    <div class="card"><h2>אחרי המפגש</h2>
-      <div class="lnk">
-        <a class="y" href="mashov2.html" target="_blank">💬 דף המשוב לשליחה</a>
-      </div>
-    </div>
+    <div class="card"><h2>למשתתפים</h2><div class="lnk">
+      <a class="y" href="mifgash2.html" target="_blank">📄 הדף המלווה</a>
+      <a href="sicha.html" target="_blank">📞 השיחה שלי</a>
+      <a href="https://hopa.org.il" target="_blank">🔎 מאגר המענים</a></div></div>
+    <div class="card"><h2>למנחות</h2><div class="lnk">
+      <a href="mifgash2-slides.html" target="_blank">🖥️ מצגת</a>
+      <a href="sicha.html?admin=hopa" target="_blank">📊 ניהול השיחות</a>
+      <a href="mifgash3-manche.html" target="_blank">➡️ רץ־שיט 21.10</a></div></div>
+    <div class="card"><h2>המסלול כולו</h2><div class="lnk">
+      <a href="mifgashim-revital.html" target="_blank">🗺️ סקירת שלושת המפגשים</a>
+      <a href="machberet.html" target="_blank">📓 המחברת של 21.10</a>
+      <a href="tochnit.html" target="_blank">📋 מסמך תוכנית העבודה</a></div></div>
   </div>
 </main>
 
 <div id="toast"></div>
 
+<script src="elias-data.js"></script>
 <script>
 var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
 var GS_SECRET='hopa-nihul-2026';
@@ -167,107 +149,107 @@ function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTi
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
-/* ============ הבלוקים ============ */
 var BLOCKS=[
-{n:0,d:5,t:'פתיחה',s:'לירון 2 · מיטל 3',body:
-  '<h4>לירון — לא מציגה את הופה, ממסגרת</h4>'+
-  '<div class="say">״אנחנו מבקשים מכם שעה וחצי כדי לדבר על אנשים שכבר לא נמצאים בבית הספר שלכם. בלי ציונים, בלי נוכחות, בלי משרד החינוך שמודד. זה אומר שמה שנעשה בשבילם — נעשה כי בחרנו, לא כי חייבים. זה מה שהופך את זה למקצוע ולא למשימה.״</div>'+
-  '<h4>מיטל — המשפט שמכניס את כולם</h4>'+
-  '<div class="say">״בחדר הזה 64 רכזים חברתיים. 25 מהם עובדים איתנו בתוכנית הבוגרים. 39 לא. המפגש הזה בנוי לשתי הקבוצות — ולא בנוי לשכנע אף אחד להצטרף לשום דבר.״</div>'+
-  '<div class="warn"><b>למה זה חשוב:</b> אמירת האמת מראש על ההרכב מנטרלת את החשד. בלי זה הם ירגישו את זה לבד בדקה 20 וייסגרו.</div>'+
+{n:0,d:5,t:'למה אנחנו כאן',s:'לירון 2 · מיטל 3',body:
+  '<h4>הפתיחה — ההקשר החדש</h4>'+
+  '<div class="say">״משרד העבודה הקצה שעתיים שבועיות לכל רכז/ת חברתי/ת לליווי בוגרים. זה כבר בתפקיד, וזה כבר מתוקצב. '+
+  'אנחנו לא כאן כדי לשכנע אתכם שזה חשוב — אנחנו כאן כדי לענות על שאלה אחת: מה עושים עם השעתיים האלה.״</div>'+
+  '<div class="good"><b>למה זה הפתיח הנכון:</b> הוא מבטל את כל הפער בין רכזי הופה לשאר. '+
+  'השעתיים ניתנו לכולם — אז החדר אחיד מהשנייה הראשונה.</div>'+
+  '<h4>המספר שמסגר את היום</h4>'+
+  '<p><b>70 שעות בשנה.</b> ״לא מעט, ולא הרבה. מספיק לתוכנית אחת שעובדת, ולא מספיק לעשות הכול. '+
+  'לכן זו תוכנית עבודה ולא רשימת משאלות.״</p>'+
   '<h4>הודעה לצ׳אט</h4>'+
-  '<div class="chatbox">הדף המלווה של המפגש — פותחים עכשיו ומשאירים פתוח:\nhttps://meytalp-dev.github.io/hopa-nihul/mifgash2.html</div>'},
+  '<div class="chatbox">הדף המלווה — פותחים עכשיו ומשאירים פתוח:\nhttps://meytalp-dev.github.io/hopa-nihul/mifgash2.html</div>'},
 
-{n:1,d:10,t:'הבוגר שאני זוכר/ת',s:'הרגע שבו הנושא נהיה של כולם',body:
-  '<h4>מהלך</h4>'+
-  '<ul><li><b>1 דק׳</b> — ״תחשבו על המחזור שסיים ביוני. בחרו בוגר אחד שאתם זוכרים בשם. לא הכי מצטיין ולא הכי בעייתי — מישהו שנשאר לכם בראש.״</li>'+
-  '<li><b>2 דק׳</b> — כותבים בדף: שם פרטי + מילה אחת. הקיר מתמלא.</li>'+
-  '<li><b>2 דק׳</b> — <b>מקריאים בקול 6–7 שמות מהקיר</b> (טאב ״תשובות חיות״).</li>'+
-  '<li><b>2 דק׳</b> — ההצבעה בדף: יודע/ת בוודאות · מנחש/ת · לא יודע/ת</li>'+
-  '<li><b>3 דק׳</b> — התוצאה על המסך המשותף, ואז <b>שתיקה של 3 שניות</b>.</li></ul>'+
-  '<div class="say">״תסתכלו על השמות. אלה בני אדם. את רובם ליוויתם ארבע שנים. ואת רובם איבדנו תוך ארבעה חודשים.״</div>'+
-  '<div class="warn"><b>ההקראה בקול היא כל העניין.</b> בלי זה זה טריק; איתה זה רגע. אל תדלגו עליה גם אם לוחץ בזמן.</div>'+
-  '<span class="onpage">בדף: סעיף 1 — שם+מילה, והצבעה</span><span class="onpage">במצגת: שקף 3 — התוצאה החיה</span>'},
-
-{n:2,d:12,t:'בוגר אמיתי',s:'ראיון — מיטל מראיינת',body:
+{n:1,d:12,t:'בוגר אמיתי',s:'ראיון · מיטל מראיינת',body:
   '<h4>ארבע השאלות (לתת לבוגר מראש)</h4>'+
   '<ul><li>איך נראה השבוע הראשון אחרי הטקס?</li>'+
-  '<li><b>מישהו מבית הספר יצר איתך קשר אחרי שסיימת? מי, מתי, ומה הוא אמר?</b></li>'+
+  '<li><b>מישהו מבית הספר יצר איתך קשר אחרי שסיימת? מי, מתי, ומה אמר?</b></li>'+
   '<li>מה היה הכי קשה בשנה הראשונה — שלא ידעת שיהיה קשה?</li>'+
-  '<li>אם היית יכול להגיד לרכז אחד בחדר משפט אחד — מה הוא?</li></ul>'+
-  '<div class="warn">בוגר בן 19 מול 64 מבוגרים בזום <b>לא ישרוד מונולוג</b>. שואלים שאלה, נותנים לענות, לא ממלאים שתיקות.</div>'+
-  '<h4>אם אין בוגר חי</h4><p>משמיעים 3 הקלטות של 60 שניות שנאספו מראש בוואטסאפ — רצוי בוגר, בוגרת ובוגר מהחברה הערבית.</p>'+
-  '<h4>לפני שהוא מדבר</h4><p>לכבות מצלמות של המשתתפים? <b>לא.</b> שיראה פרצופים. לבקש מכולם להשתיק מיקרופונים.</p>'},
+  '<li>משפט אחד לרכז/ת אחד/ת בחדר.</li></ul>'+
+  '<div class="good"><b>למה הבוגר נשאר גם כשהמפגש נהיה תכנוני:</b> בלעדיו זו ישיבת תכנון. איתו — יש למי מתכננים. '+
+  'זה מה שיגרום להם למלא את הטפסים ברצינות ולא לאדיבות.</div>'+
+  '<div class="warn">בוגר בן 19 מול 64 מבוגרים בזום <b>לא ישרוד מונולוג</b>. שואלים, נותנים לענות, לא ממלאים שתיקות.</div>'+
+  '<h4>אם אין בוגר</h4><p>3 הקלטות של 60 שניות שנאספו מראש בוואטסאפ — רצוי בוגר, בוגרת, ובוגר מהחברה הערבית.</p>'},
 
-{n:3,d:8,t:'שלושה מספרים וחור אחד',s:'לגיטימציה מקצועית',body:
-  '<h4>שקף לכל מספר</h4>'+
-  '<ul><li><b>+19 נק׳ אחוז</b> בסיום תואר בזכות ליווי אחרי התיכון — KIPP, מחקר Mathematica</li>'+
-  '<li><b>+10 נק׳ אחוז</b> בניסוי מבוקר — Bottom Line</li>'+
-  '<li><b>112 מוסדות ו-99 רכזי בוגרים</b> בישראל — ״יש לך כתובת״, חינוך התיישבותי + ג׳וינט</li></ul>'+
-  '<div class="say">״אין לזה עדיין תשובה מערכתית באף רשת חינוך גדולה. וזה אומר שמה שיקרה עם הבוגרים שלכם — תלוי בכם, ולא במטה שיחליט. אתם 64 האנשים שזה תלוי בהם.״</div>'+
-  '<div class="warn"><b>זהירות בניסוח:</b> זו לא ביקורת על אורט — זו הזדמנות. אם זה יישמע כביקורת, נאבד את החדר.</div>'},
+{n:2,d:10,t:'שמונת הפרקים + תעדוף 70 השעות',s:'המבנה של כל התהליך',body:
+  '<h4>4 דקות — הפרקים</h4>'+
+  '<p>שמונה פרקים על שקף אחד. <b>״בבני ברק כל שולחן ייקח פרק אחד ויהפוך למומחה בו. ב-4.11 נרכיב את הכול.״</b></p>'+
+  '<h4>6 דקות — התעדוף החי</h4>'+
+  '<ul><li>כל אחד מחלק 70 שעות בין ארבע קבוצות-על בדף (סליידרים). הדף לא נותן לחרוג.</li>'+
+  '<li>התמונה המשותפת עולה על המסך — טאב ״תשובות חיות״.</li></ul>'+
+  '<div class="say">״אין כאן תשובה נכונה. יש בחירה — וזה בדיוק העניין. מי שלא ויתר על כלום, לא בנה תוכנית עבודה.״</div>'+
+  '<div class="good"><b>מה לעשות עם התוצאה:</b> להצביע על הפער. אם החדר שם 40 שעות ב״קשר שוטף״ ו-5 ב״מערכת״ — '+
+  'לשאול בקול: ״מי יעשה את השיחות האלה כשאף אחד בבית הספר לא יודע שאתם עושים אותן?״</div>'},
 
-{n:4,d:25,t:'חדרים · מה כבר יש לי?',s:'8 חדרים × 8 · 3 רכזי הופה בכל חדר',body:
-  '<h4>לפני הפתיחה</h4><p>שולחים בצ׳אט את מספרי החדרים, פותחים חדרים, מוודאים שכולם בחרו מספר בדף.</p>'+
-  '<div class="chatbox">בחדר: כל אחד נותן נקודת קשר אחת עם בוגרים שכבר קיימת אצלכם — גם אם לא קוראים לזה ״ליווי בוגרים״.\nמוסיפים אותה בסעיף 4 בדף (אחרי שבוחרים מספר חדר).</div>'+
-  '<h4>מבנה הזמן בחדר</h4>'+
-  '<ul><li><b>3 דק׳</b> — סבב שמות (שם, בית ספר, כמה שנים בתפקיד)</li>'+
-  '<li><b>12 דק׳</b> — כל אחד נותן נקודת קשר אחת ומקליד אותה לדף</li>'+
-  '<li><b>7 דק׳</b> — רכזי הופה עונים על שאלה אחת בלבד: ״מה עשינו עם נקודת הקשר הזאת אצלנו?״</li>'+
-  '<li><b>3 דק׳</b> — החדר מנסח <b>משפט אחד</b> לדיווח</li></ul>'+
-  '<div class="warn"><b>הסיכון:</b> רכז הופה שמשתלט והופך את זה להרצאה. לכן בבריף המארחים: ״אתם עונים על שאלה אחת. לא מלמדים.״</div>'+
-  '<h4>חזרה למליאה — 25 דק׳ כוללות</h4><p>רק <b>3 חדרים</b> מדווחים, 60 שניות כל אחד. כל השאר עולה על השקף מהדף.</p>'},
+{n:3,d:25,t:'פרק א׳ · מי איתי',s:'8 חדרים × 8 · 3 רכזי הופה בכל חדר',body:
+  '<div class="say">״70 שעות של אדם אחד זה מעט. 70 שעות של אדם אחד שגייס עוד ארבעה — זו תוכנית.״</div>'+
+  '<h4>בחדר</h4>'+
+  '<ul><li><b>3′</b> — סבב שמות (שם, בית ספר, כמה שנים בתפקיד)</li>'+
+  '<li><b>8′</b> — מי בבית הספר שלי כבר נוגע/ת בבוגרים, גם אם זה לא בתפקיד? (מסמנים בדף)</li>'+
+  '<li><b>9′</b> — <b>את מי אני מגייס/ת ראשון, ומה בדיוק אבקש?</b> כל אחד כותב בדף. זה החלק שנשאר.</li>'+
+  '<li><b>5′</b> — רכזי הופה עונים על שאלה אחת: ״את מי גייסנו אצלנו, ומה זה נתן?״</li></ul>'+
+  '<div class="warn"><b>הסיכון:</b> רכז הופה שהופך את זה להרצאה. בתדריך מראש: ״אתם עונים על שאלה אחת. לא מלמדים.״</div>'+
+  '<div class="good"><b>הניסוח שעושה את ההבדל:</b> לא ״מי יכול לעזור״ אלא <b>״מה בדיוק אבקש ממנו/ה״</b>. '+
+  'בקשה מעורפלת לא מגייסת אף אחד.</div>'+
+  '<div class="chatbox">בחדר: מי בבית הספר שלכם כבר נוגע בבוגרים — גם אם זה לא בתפקיד שלו?\nואת מי אתם מגייסים ראשון, ומה בדיוק תבקשו ממנו/ה? (סעיף 3 בדף)</div>'},
 
-{n:5,d:15,t:'שלוש הרמות + חיפוש חי',s:'הרמה השנייה פתוחה לכולם',body:
-  '<h4>7 דק׳ — השקף המרכזי</h4>'+
-  '<ul><li><b>1 · לא לאבד</b> — מאגר מינימלי שנאסף <u>בי״ב</u>, קבוצת מחזור, טקס מעבר · שעתיים ביוני</li>'+
-  '<li><b>2 · לדעת להפנות</b> — מאגר המענים, פתוח וחינם · 20 דקות ללמוד</li>'+
-  '<li><b>3 · ללוות</b> — רמזור, 4 שאלות, מדרג, פורטל · תפקיד מוגדר בשעות</li></ul>'+
-  '<div class="say">״רוב הערך נמצא ברמה 1 ו-2. הן פתוחות לכולכם החל מהיום, בלי לדבר איתנו בכלל.״</div>'+
-  '<h4>8 דק׳ — חיפוש חי (טיימר בדף)</h4>'+
-  '<div class="chatbox">נכנסים ל-hopa.org.il ומחפשים מענה אחד באזור שלכם, לצורך אמיתי שאתם מכירים.\nכותבים בסעיף 5 בדף: עיר · מה חיפשתי · מה מצאתי</div>'+
-  '<p>אחרי הטיימר — מקריאים 5 מהתשובות החיות.</p>'},
+{n:4,d:22,t:'פרק ב׳ · צ׳ק-ליסט שכבת י"ב',s:'בונים אותו ביחד, לא מקבלים מוכן',body:
+  '<div class="say">״כמעט כל מה שצריך בשביל ללוות בוגר אפשר להשיג בזמן שהוא עדיין יושב מולך. אחרי הטקס הכול נהיה פי עשר קשה.״</div>'+
+  '<h4>מבנה</h4>'+
+  '<ul><li><b>8′</b> — עוברים על שמונת הסעיפים בדף. כל אחד מסמן מה כבר קורה אצלו ומה חסר.</li>'+
+  '<li><b>9′</b> — <b>מה חסר ברשימה?</b> מוסיפים לצ׳ק-ליסט המשותף. זה הבלוק שבו החדר כותב, לא מקבל.</li>'+
+  '<li><b>5′</b> — מקריאים בקול 6–8 מהתוספות.</li></ul>'+
+  '<div class="good"><b>למה בונים ולא מחלקים:</b> צ׳ק-ליסט שהחדר כתב — מיושם. צ׳ק-ליסט שחולק — נשמר בתיקייה. '+
+  'זה כל ההבדל, וזה עולה תשע דקות.</div>'+
+  '<div class="warn"><b>הסעיף שאסור לפספס:</b> <b>תאריך גיוס</b>. זה הפרט היחיד שכמעט אי אפשר להשיג אחרי שהם מתפזרים. '+
+  'אם אף אחד לא מעלה אותו — מיטל מעלה.</div>'},
 
-{n:6,d:10,t:'המשימה עד 21.10',s:'הגשר בין המפגשים',body:
-  '<div class="say">״בוגר אחד. שיחת טלפון אחת. שלוש שאלות. ב-21.10 בבני ברק אנחנו פותחים את המפגש מהמשפטים שתביאו.״</div>'+
-  '<h4>3 השאלות</h4><ul><li>מה את/ה עושה עכשיו?</li><li>מה הכי קשה כרגע?</li><li>מה היית רוצה שבית הספר היה עושה בשבילך בשנה האחרונה?</li></ul>'+
-  '<div class="warn"><b>למה שלוש ולא ארבע:</b> שיחת 4 השאלות היא הפרוטוקול המקצועי של רכז הופה. לתת אותה כמשימת בית למי שלא הוכשר = שיחה גרועה. את המלאה לומדים ב-21.10 בתחנה ב׳ — <b>וזה בדיוק ההבדל שנרצה שירגישו</b>.</div>'+
-  '<h4>3 דק׳ — מי מתקשר למי, בקול</h4><p>כל אחד רושם בדף שם אחד. <b>מי שאומר שם בפומבי — מבצע.</b></p>'+
+{n:5,d:10,t:'פרק ג׳ · הקשר',s:'מליאה · קצר וחד',body:
+  '<div class="say">״ליווי בוגרים הוא לא ׳להיות זמין׳. זו יוזמה מתוזמנת — ובלי החלטה מראש על הקצב, זה פשוט לא קורה.״</div>'+
+  '<h4>שלוש רמות</h4>'+
+  '<ul><li>🟢 <b>מרחוק</b> — 3 שיחות בשנה · רוב הבוגרים</li>'+
+  '<li>🟠 <b>מקרוב</b> — שיחה בחודש · מי שבצומת</li>'+
+  '<li>🔴 <b>בפעולה</b> — אינטנסיבי · עד שהצורך נענה</li></ul>'+
+  '<h4>שתי נקודות שמזיזות</h4>'+
+  '<ul><li><b>הערוץ:</b> וואטסאפ ולא מייל. בכל התוכניות שנבדקו — הודעות הן מה שעובד.</li>'+
+  '<li><b>הצמתים שקובעים את היומן:</b> יוני קליטת מחזור · ספטמבר–דצמבר חלון מלגות · 3 חודשים לפני שחרור · פסח סקר שנתי.</li></ul>'+
+  '<div class="good">שלושת הפרקים שנשארו — מענים, קהילה, תיעוד, הנהלה — נבנים בבני ברק. לא מנסים לכסות הכול היום.</div>'},
+
+{n:6,d:6,t:'עד 21.10 + בחירת שולחן',s:'הגשר',body:
+  '<h4>שתי משימות</h4>'+
+  '<ul><li><b>שיחה אחת עם בוגר/ת</b> — 3 שאלות, דף ״השיחה שלי״</li>'+
+  '<li><b>לברר מי השותף/ה שלך</b> ולדבר איתו/ה 10 דקות</li></ul>'+
   '<div class="chatbox">דף ״השיחה שלי״ — ממלאים אחרי השיחה, לוקח דקה:\nhttps://meytalp-dev.github.io/hopa-nihul/sicha.html</div>'+
-  '<h4>פרטיות — לומר בפירוש</h4><p>על הקיר ב-21.10 יופיעו <b>ציטוטים בלבד, בלי שמות ובלי בתי ספר</b>.</p>'},
+  '<h4>בחירת שולחן — 3 דקות</h4>'+
+  '<p>כל אחד בוחר בדף באיזה פרק הוא רוצה לשבת ב-21.10. <b>לפי זה משבצים את השולחנות.</b> '+
+  'הטאב ״תשובות חיות״ מראה את החלוקה — אם פרק אחד ריק, מיטל מבקשת מתנדבים בקול.</p>'+
+  '<div class="warn">בלי הבחירה הזאת — שיבוץ השולחנות ב-21.10 נעשה בעיוורון.</div>'+
+  '<h4>פרטיות</h4><p>על הקיר ב-21.10 — <b>ציטוטים בלבד, בלי שמות ובלי בתי ספר</b>. לומר את זה בפירוש.</p>'},
 
 {n:7,d:5,t:'סגירה + הדלת',s:'בלי פיץ׳',body:
-  '<h4>מה נשלח היום</h4><ul><li>סיכום + שלוש הרמות בדף אחד</li><li>קישור למאגר המענים</li><li>דף ״השיחה שלי״</li><li>דף המשוב</li></ul>'+
-  '<div class="say">״21.10, בני ברק. תבואו עם מה ששמעתם.״</div>'+
+  '<h4>מה נשלח היום</h4><ul><li>הצ׳ק-ליסט המלא של י"ב, כולל מה שהחדר הוסיף</li>'+
+  '<li>שמונת הפרקים בדף אחד</li><li>קישור למאגר המענים</li><li>דף ״השיחה שלי״</li></ul>'+
+  '<div class="say">״21.10, בני ברק. תבואו עם מה ששמעתם ועם שם של שותף/ה.״</div>'+
   '<h4>הדלת — שקף אחד</h4>'+
-  '<div class="say">״25 מכם בתוכנית הבוגרים של הופה. אם מישהו רוצה להבין מה זה אומר בפועל — הנה טופס, מלאו ואחזור אליכם. זה הכול, לא נדבר על זה יותר.״</div>'+
-  '<div class="warn">אחרי המשפט הזה — <b>לא חוזרים לנושא</b>. כל חזרה הופכת את המפגש לשיווק בדיעבד.</div>'},
-
-{n:8,d:10,t:'בריף מארחים · רק רכזי הופה',s:'המהלך שנותן להם מעמד',body:
-  '<div class="say">״תודה לכולם. רכזי הופה — נשארים איתי עשר דקות.״</div>'+
-  '<h4>מה קורה שם</h4>'+
-  '<ul><li>הם מקבלים תפקיד: <b>מארחי התחנות ב-21.10</b> — עמדה, נושא, צמד.</li>'+
-  '<li>שלוש התחנות: א׳ המאגר · ב׳ השיחה · ג׳ מענים ומדרג. שני עותקים מכל אחת = 6 עמדות, 12 מארחים.</li>'+
-  '<li>נרשמים בסעיף 8 בדף.</li></ul>'+
-  '<div class="say">כלל אחד: ״אתם לא מרצים. אתם מספרים מה קרה אצלכם.״</div>'+
-  '<div class="warn"><b>למה הבלוק הזה קיים:</b> 64 יוצאים עם שאלה, 25 יוצאים עם תפקיד. זה מה שמונע מרכזי הופה להרגיש שהמפגש לא היה בשבילם.</div>'}
+  '<div class="say">״25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה, ויש להם ליווי ומערכת. '+
+  'מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים בסעיף 7, ואחזור אליו. זה הכול.״</div>'+
+  '<div class="warn">אחרי המשפט הזה — <b>לא חוזרים לנושא</b>. כל חזרה הופכת את המפגש לשיווק בדיעבד.</div>'}
 ];
 
-/* ============ רץ־שיט ============ */
-function hhmm(mins){var h=Math.floor(mins/60)%24,m=mins%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')}
+function hhmm(m){var h=Math.floor(m/60)%24;return String(h).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
 function startMins(){var v=($('start').value||'11:00').split(':');return (Number(v[0])||11)*60+(Number(v[1])||0)}
 var openSet={},current=lsGet('m2-cur')?Number(lsGet('m2-cur')):-1;
 function drawBlocks(){
   var t=startMins(),html='';
   BLOCKS.forEach(function(b,i){
-    var cls='blk'+(i===current?' now':'')+(current>i?' done':'')+(openSet[i]?' open':'');
-    html+='<div class="'+cls+'" data-i="'+i+'">'+
-      '<div class="bh" data-t="'+i+'">'+
-        '<span class="tm">'+hhmm(t)+'</span>'+
-        '<div class="ti"><h3>'+b.n+' · '+esc(b.t)+'</h3><small>'+esc(b.s)+'</small></div>'+
-        '<span class="dur">'+b.d+' דק׳</span>'+
-        '<button class="go" data-g="'+i+'">'+(i===current?'▶ עכשיו':'התחלנו')+'</button>'+
-      '</div><div class="bb">'+b.body+'</div></div>';
+    html+='<div class="blk'+(i===current?' now':'')+(current>i?' done':'')+(openSet[i]?' open':'')+'">'+
+      '<div class="bh" data-t="'+i+'"><span class="tm">'+hhmm(t)+'</span>'+
+      '<div class="ti"><h3>'+b.n+' · '+esc(b.t)+'</h3><small>'+esc(b.s)+'</small></div>'+
+      '<span class="dur">'+b.d+' דק׳</span>'+
+      '<button class="go" data-g="'+i+'">'+(i===current?'▶ עכשיו':'התחלנו')+'</button></div>'+
+      '<div class="bb">'+b.body+'</div></div>';
     t+=b.d;
   });
   $('blocks').innerHTML=html;
@@ -288,7 +270,6 @@ $('start').addEventListener('input',drawBlocks);
 drawBlocks();
 setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')},1000);
 
-/* ============ טאבים ============ */
 [].slice.call(document.querySelectorAll('.tabs button')).forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
@@ -297,14 +278,12 @@ setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()
   };
 });
 
-/* ============ הכנות ============ */
 var CHK=['לוודא מי הבוגר שמגיע — ולשלוח לו את 4 השאלות מראש',
- 'להקליט 3 קטעי גיבוי של 60 שניות בוואטסאפ (למקרה שהבוגר לא מגיע)',
+ 'להקליט 3 קטעי גיבוי של 60 שניות בוואטסאפ',
  'לבדוק את הדף המלווה מהנייד ומהמחשב',
- '🧹 להריץ את איפוס נתוני המפגש (טאב הכנות) — אחרי הבדיקות',
- 'לשבץ מראש 8 חדרים, 3 רכזי הופה בכל חדר',
+ '🧹 להריץ את איפוס נתוני המפגש — אחרי הבדיקות',
+ 'לשבץ מראש 8 חדרי זום, 3 רכזי הופה בכל חדר',
  'לפתוח את המצגת במסך שני',
- 'להכין את הודעות הצ׳אט להעתקה',
  'לוודא ששתי מנחות — מדברת ומפעילה',
  'לשלוח תזכורת לרכזים יום לפני'];
 $('chklist').innerHTML=CHK.map(function(t,i){
@@ -315,7 +294,6 @@ $('chklist').innerHTML=CHK.map(function(t,i){
   l.querySelector('input').onchange=function(){lsSet('m2-chk'+l.dataset.i,this.checked?'1':'0');l.classList.toggle('done',this.checked)};
 });
 
-/* ============ backend ============ */
 function jsonp(params,tmo){
   return new Promise(function(res,rej){
     var cb='cb'+Math.random().toString(36).slice(2);
@@ -330,7 +308,7 @@ function jsonp(params,tmo){
   });
 }
 function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
-async function jsonpRetry(p,tries){var err;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;err=new Error((r&&r.error)||'שגיאה')}catch(e){err=e}await delay(700+i*600)}throw err}
+async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
 
 var STORE={};
 function items(kind){
@@ -339,30 +317,38 @@ function items(kind){
     .map(function(k){return STORE[k]||{}}).filter(function(x){return !x.del})
     .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
 }
-function chip(h){return '<span>'+h+'</span>'}
 function drawLive(){
-  var b=items('bogrim'),k=items('know'),r=items('nekuda'),m=items('mane'),c=items('mesima'),h=items('meareach');
+  var h=items('shaot'),p=items('shutaf'),c=items('cklist'),t=items('shulchan'),d=items('delet');
   $('lstat').innerHTML=
-    '<div>בוגרים על הקיר<b>'+b.length+'</b></div>'+
-    '<div>הצביעו<b>'+k.length+'</b></div>'+
-    '<div>נקודות קשר<b>'+r.length+'</b></div>'+
-    '<div>מענים<b>'+m.length+'</b></div>'+
-    '<div>התחייבו לשיחה<b>'+c.length+'</b></div>'+
-    '<div>מארחים<b>'+h.length+'</b></div>';
-  $('lw-b').innerHTML=b.map(function(x){return chip(esc(x.name)+(x.word?' <i>· '+esc(x.word)+'</i>':''))}).join('')||'<span style="border:0;color:#7d7d8a">עדיין ריק</span>';
-  var v={yes:0,guess:0,no:0};k.forEach(function(x){if(v[x.v]!==undefined)v[x.v]++});
-  var tot=k.length||1;
-  $('lw-k').innerHTML=
-    '<div><b>'+v.yes+'</b><span class="l">יודע/ת בוודאות · '+Math.round(v.yes/tot*100)+'%</span></div>'+
-    '<div><b>'+v.guess+'</b><span class="l">מנחש/ת · '+Math.round(v.guess/tot*100)+'%</span></div>'+
-    '<div><b>'+v.no+'</b><span class="l">לא יודע/ת · '+Math.round(v.no/tot*100)+'%</span></div>';
-  var byRoom={};r.forEach(function(x){(byRoom[x.room]=byRoom[x.room]||[]).push(x.text)});
-  $('lw-r').innerHTML=Object.keys(byRoom).sort().map(function(rm){
-    return '<div class="room"><h4>חדר '+esc(rm)+' · '+byRoom[rm].length+'</h4><ul>'+byRoom[rm].map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div>';
+    '<div>תעדפו שעות<b>'+h.length+'</b></div>'+
+    '<div>גיוסים<b>'+p.length+'</b></div>'+
+    '<div>תוספות לצ׳ק-ליסט<b>'+c.length+'</b></div>'+
+    '<div>בחרו שולחן<b>'+t.length+'</b></div>'+
+    '<div>ביקשו פרטים<b>'+d.length+'</b></div>';
+
+  var avg={},n=h.length||1;
+  BUCKETS.forEach(function(b){avg[b.k]=0});
+  h.forEach(function(x){BUCKETS.forEach(function(b){avg[b.k]+=Number((x.hours||{})[b.k])||0})});
+  $('lw-h').innerHTML=BUCKETS.map(function(b){
+    var v=(avg[b.k]/n);
+    return '<div class="hbar"><span class="nm">'+esc(b.t)+'</span>'+
+      '<span class="track"><span class="fill" style="width:'+Math.min(100,Math.round(v/70*100))+'%"></span></span>'+
+      '<span class="v">'+v.toFixed(1)+' ש׳</span></div>';
+  }).join('');
+
+  var byRoom={};p.forEach(function(x){(byRoom[x.room]=byRoom[x.room]||[]).push(x.text)});
+  $('lw-p').innerHTML=Object.keys(byRoom).sort().map(function(r){
+    return '<div class="room"><h4>חדר '+esc(r)+' · '+byRoom[r].length+'</h4><ul>'+
+      byRoom[r].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>';
   }).join('')||'<span style="color:#7d7d8a;font-size:13px">עדיין ריק</span>';
-  $('lw-m').innerHTML=m.map(function(x){return chip((x.city?'<i>'+esc(x.city)+' · </i>':'')+esc(x.found))}).join('')||'<span style="border:0;color:#7d7d8a">עדיין ריק</span>';
-  $('lw-c').innerHTML=c.map(function(x){return chip(esc(String(x.me).split(' ')[0])+' <i>→ '+esc(x.who)+'</i>')}).join('')||'<span style="border:0;color:#7d7d8a">עדיין ריק</span>';
-  $('lw-h').innerHTML=h.map(function(x){return chip(esc(x.me)+' <i>· '+esc(x.station)+'</i>')}).join('')||'<span style="border:0;color:#7d7d8a">עדיין ריק</span>';
+
+  $('lw-c').innerHTML=c.map(function(x){return '<span>'+esc(x.text)+'</span>'}).join('')||'<span style="border:0;color:#7d7d8a">עדיין ריק</span>';
+
+  $('lw-t').innerHTML=CHAPTERS.map(function(ch){
+    var l=t.filter(function(x){return String(x.chapter).indexOf(ch.n+' · ')===0});
+    return '<div class="tbi" style="border-color:'+ch.c+'"><h4>'+ch.n+' · '+esc(ch.t)+' <span style="color:'+ch.c+'">('+l.length+')</span></h4>'+
+      '<ul>'+(l.length?l.map(function(x){return '<li>'+esc(x.me)+'</li>'}).join(''):'<li style="color:#7d7d8a">—</li>')+'</ul></div>';
+  }).join('');
   $('lastup').textContent='עודכן '+new Date().toLocaleTimeString('he-IL');
 }
 var busy=false;
@@ -375,9 +361,8 @@ $('refresh').onclick=poll;
 poll();
 setInterval(function(){if(!document.hidden&&$('p-live').classList.contains('on'))poll()},6000);
 
-/* ============ איפוס ============ */
 $('resetBtn').onclick=async function(){
-  if(!confirm('למחוק את כל נתוני מפגש 14.10 מהדף המלווה? (שמות, הצבעות, נקודות קשר, מענים, התחייבויות, מארחים)'))return;
+  if(!confirm('למחוק את כל נתוני מפגש 14.10 מהדף המלווה?'))return;
   var st=$('resetStat');st.textContent='טוען את הרשימה…';
   try{
     var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6);
@@ -385,10 +370,9 @@ $('resetBtn').onclick=async function(){
     if(!keys.length){st.textContent='אין מה למחוק — כבר נקי ✓';return}
     for(var i=0;i<keys.length;i++){
       st.textContent='מוחק '+(i+1)+' מתוך '+keys.length+'…';
-      var school=keys[i].slice('intake_'.length);
-      try{await jsonpRetry({action:'intakeSubmit',school:school,json:JSON.stringify({del:1})},3)}catch(e){}
+      try{await jsonpRetry({action:'intakeSubmit',school:keys[i].slice(7),json:JSON.stringify({del:1})},3)}catch(e){}
     }
-    st.textContent='נמחקו '+keys.length+' רשומות ✓ הדף המלווה יתרוקן תוך 8 שניות.';
+    st.textContent='נמחקו '+keys.length+' רשומות ✓';
     STORE={};poll();
   }catch(e){st.textContent='לא הצלחתי לטעון מהגיליון — נסו שוב.'}
 };
