@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סקירת קלפי המשחק · מפגש 21.10 · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--ok:#22b573;--warn:#f0a500;--no:#d9534f;
+    --shadow:0 4px 18px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  button,input,textarea,select{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:760px;margin:0 auto;padding:0 16px}
+  .in.adm{max-width:1000px}
+
+  header{background:#111;color:#fff;padding:18px 0 22px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.2),transparent 65%)}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:36px;display:block}
+  header h1{margin:0;font-size:22px;font-weight:900;letter-spacing:-.3px}
+  header .sub{font-size:13px;opacity:.8;margin-top:3px}
+
+  .who{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 2px 10px rgba(31,31,38,.06)}
+  .who .in{display:flex;gap:10px;align-items:center;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+  .who input{flex:1;min-width:130px;border:1.5px solid var(--line);border-radius:11px;padding:8px 11px;outline:none}
+  .who input:focus{border-color:var(--pink)}
+  .prog{flex:none;display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--muted)}
+  .prog .track{width:90px;height:9px;background:#f0ecf3;border-radius:999px;overflow:hidden}
+  .prog .fill{display:block;height:100%;background:var(--ok);border-radius:999px;transition:width .3s}
+  .savedot{font-size:12px;font-weight:800;color:var(--ok);min-width:56px;text-align:center}
+  .savedot.busy{color:var(--warn)}
+  .savedot.err{color:var(--no)}
+
+  main{padding:16px 0 90px}
+  .intro{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+  .intro h2{margin:0 0 6px;font-size:18px;font-weight:900}
+  .intro p{margin:0 0 9px;font-size:14.5px}
+  .intro .note{background:#fffdf0;border:1.5px solid #f6e98a;border-radius:13px;padding:12px 14px;font-size:14px;margin-top:10px}
+  .intro .note b{color:#8a7500}
+
+  .ch{margin-top:22px}
+  .ch .chh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .ch .bd{color:#fff;border-radius:999px;padding:4px 14px;font-size:12.5px;font-weight:800}
+  .ch h3{margin:0;font-size:17px;font-weight:900}
+  .ch .d{color:var(--muted);font-size:13px}
+
+  .card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:15px 16px;margin-top:11px;border-inline-start:5px solid var(--line)}
+  .card.st-ok{border-inline-start-color:var(--ok)}
+  .card.st-fix{border-inline-start-color:var(--warn)}
+  .card.st-no{border-inline-start-color:var(--no);opacity:.72}
+  .card .rn{font-size:11.5px;font-weight:800;color:var(--muted)}
+  .card .q{font-size:17px;font-weight:800;line-height:1.35;margin-top:3px}
+  .sts{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
+  .sts button{flex:1 1 90px;border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:8px 6px;font-size:13px;font-weight:800;cursor:pointer;color:var(--muted);transition:.15s}
+  .sts button:hover{border-color:var(--pink)}
+  .sts button.on[data-s=ok]{background:#e8f8ef;border-color:var(--ok);color:#14613b}
+  .sts button.on[data-s=fix]{background:#fff8dc;border-color:var(--warn);color:#6b5300}
+  .sts button.on[data-s=no]{background:#fff4f4;border-color:var(--no);color:#a03030}
+  .fields{margin-top:10px;display:none}
+  .fields.show{display:block}
+  .fields label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin:8px 0 4px}
+  .fields textarea,.fields input{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;outline:none}
+  .fields textarea{min-height:60px;resize:vertical;line-height:1.5}
+  .fields textarea:focus,.fields input:focus{border-color:var(--pink)}
+  .fields .alt{border-color:#f0e08a;background:#fffdf0}
+
+  .words{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .words button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink)}
+  .words button.out{background:#fff4f4;border-color:#f0b7b7;color:#a03030;text-decoration:line-through}
+  .genbox{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:22px}
+  .genbox h3{margin:0 0 4px;font-size:17px;font-weight:900}
+  .genbox label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin:10px 0 4px}
+  .genbox textarea,.genbox input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;outline:none}
+  .genbox textarea{min-height:90px;resize:vertical}
+  .genbox textarea:focus,.genbox input:focus{border-color:var(--pink)}
+
+  .done{position:fixed;inset-inline:0;bottom:0;background:#111;color:#fff;padding:11px 16px;z-index:40;box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+  .done .in{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .done .t{font-size:13.5px;font-weight:700;flex:1;min-width:140px}
+  .done .t b{color:var(--yellow)}
+  .done button{border:none;background:var(--yellow);color:#111;border-radius:11px;padding:10px 20px;font-weight:800;font-size:14px;cursor:pointer}
+  .done a{color:#fff;font-size:12.5px;opacity:.6;text-decoration:none}
+
+  /* ניהול */
+  .rev{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:15px;margin-top:12px}
+  .rev h3{margin:0 0 8px;font-size:16px;font-weight:900;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .rev h3 .tag{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:800}
+  .rrow{border-top:1px solid var(--line);padding:9px 0;font-size:13.5px}
+  .rrow .q{font-weight:700}
+  .rrow .n{color:var(--ink);margin-top:4px}
+  .rrow .n b{color:var(--pink-dark)}
+  .rrow .a{background:#fffdf0;border:1.5px solid #f0e08a;border-radius:10px;padding:8px 11px;margin-top:5px;font-weight:700}
+  .pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800;margin-inline-end:6px}
+  .pill.ok{background:#e8f8ef;color:#14613b}.pill.fix{background:#fff8dc;color:#6b5300}.pill.no{background:#fff4f4;color:#a03030}
+  .btn{border:none;border-radius:11px;padding:9px 17px;font-weight:800;font-size:13.5px;cursor:pointer}
+  .btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  #toast{position:fixed;inset-inline:0;bottom:70px;margin:auto;width:max-content;max-width:88%;background:var(--pink);color:#fff;padding:11px 22px;border-radius:999px;font-weight:800;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1 id="ttl">סקירת קלפי המשחק</h1>
+      <div class="sub" id="sub">מפגש הרכזים · 21.10.2026 · בני ברק</div></div>
+  </div>
+</div></header>
+
+<div class="who" id="whoBar"><div class="in">
+  <input type="text" id="me" placeholder="השם שלך — כדי שנדע מי העיר">
+  <span class="prog"><span class="track"><span class="fill" id="pf" style="width:0"></span></span><span id="pt">0 / 32</span></span>
+  <span class="savedot" id="sd">נשמר ✓</span>
+</div></div>
+
+<main class="in" id="wrap"><div id="app"></div></main>
+
+<div class="done" id="doneBar"><div class="in">
+  <div class="t">ההערות נשמרות לבד תוך כדי כתיבה. כשסיימת — <b>לחצי כאן</b> כדי שנדע שזה מוכן.</div>
+  <button id="finBtn">סיימתי לעבור ✓</button>
+  <a href="elias.html?m=ch" target="_blank" rel="noopener">🎴 לראות איך הקלפים נראים מודפסים</a>
+</div></div>
+
+<div id="toast"></div>
+
+<script src="elias-data.js"></script>
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY='hearot-cards-';
+var ADMIN='hopa';
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2200)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+var qs=new URLSearchParams(location.search);
+var revId=lsGet('hopa-hearot-id');
+if(!revId){revId=Date.now().toString(36)+Math.random().toString(36).slice(2,6);lsSet('hopa-hearot-id',revId)}
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
+
+/* ---------- מצב ---------- */
+var D=load();
+function load(){
+  try{var s=JSON.parse(lsGet('hopa-hearot-cards'));if(s&&s.items)return s}catch(e){}
+  return {who:'',items:{},words:{},addWords:'',general:'',done:false};
+}
+function save(){lsSet('hopa-hearot-cards',JSON.stringify(D))}
+
+/* שמירה אוטומטית לגיליון, מושהית */
+var saveTimer=null,saving=false,pending=false;
+function mark(st){
+  var e=$('sd');if(!e)return;
+  e.className='savedot'+(st==='busy'?' busy':st==='err'?' err':'');
+  e.textContent=st==='busy'?'שומר…':st==='err'?'לא נשמר':'נשמר ✓';
+}
+function queueSave(){
+  save();mark('busy');
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(pushSave,1400);
+}
+async function pushSave(){
+  if(saving){pending=true;return}
+  saving=true;
+  var payload={who:(D.who||'').trim(),items:D.items,words:D.words,addWords:D.addWords,
+    general:D.general,done:!!D.done,ts:new Date().toISOString(),kind:'cards'};
+  var params={action:'intakeSubmit',school:KEY+revId,json:JSON.stringify(payload)};
+  var ok=false;
+  try{
+    if(new URLSearchParams(params).toString().length>6200)throw new Error('long');
+    await jsonpRetry(params,3);ok=true;
+  }catch(e){
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams(params).toString()});
+      ok=true;
+    }catch(e2){}
+  }
+  saving=false;mark(ok?'ok':'err');
+  if(pending){pending=false;pushSave()}
+}
+
+/* ---------- בנייה ---------- */
+function statusBtns(id,cur){
+  return '<div class="sts" data-id="'+id+'">'+
+    '<button data-s="ok"'+(cur==='ok'?' class="on"':'')+'>✓ מצוין</button>'+
+    '<button data-s="fix"'+(cur==='fix'?' class="on"':'')+'>✏️ לנסח מחדש</button>'+
+    '<button data-s="no"'+(cur==='no'?' class="on"':'')+'>✖️ להוריד</button>'+
+  '</div>';
+}
+function render(){
+  var html='<div class="intro">'+
+    '<h2>מה אני מבקשת שתעברי עליו</h2>'+
+    '<p>אלה <b>32 קלפי האתגר</b> של מפגש 21.10 — ארבעה לכל שולחן. כל קלף מקבל <b>90 שניות</b> שבהן השולחן זורק כמה שיותר רעיונות.</p>'+
+    '<div class="note"><b>מה חשוב לי לדעת מכל קלף:</b> האם רכז/ת חברתי/ת בשטח יכול/ה לייצר עליו 5–6 רעיונות אמיתיים ב-90 שניות? '+
+    'קלף מנוסח רחב מדי (״איך משפרים את הקשר?״) או צר מדי (״האם לשלוח סמס?״) — שורף לשולחן שלם עשר דקות.</div>'+
+    '<p style="margin-top:10px;font-size:13.5px;color:var(--muted)">אפשר לענות רק על מה שבולט — לא חייבים לעבור על הכול. '+
+    'ההערות נשמרות לבד, אפשר לסגור ולחזור.</p>'+
+  '</div>';
+
+  CHAPTERS.forEach(function(c){
+    html+='<div class="ch"><div class="chh"><span class="bd" style="background:'+c.c+'">שולחן '+c.n+'</span>'+
+      '<div><h3>'+esc(c.t)+'</h3><div class="d">'+esc(c.d)+'</div></div></div>';
+    (CARDS[c.key]||[]).forEach(function(q,i){
+      var id=c.key+'-'+i,it=D.items[id]||{};
+      html+='<div class="card'+(it.s?' st-'+it.s:'')+'" data-card="'+id+'" style="border-inline-start-color:'+(it.s?'':c.c)+'">'+
+        '<div class="rn">סבב '+(i+1)+' מתוך 4</div>'+
+        '<div class="q">'+esc(q)+'</div>'+
+        statusBtns(id,it.s)+
+        '<div class="fields'+(it.s&&it.s!=='ok'?' show':'')+'" data-f="'+id+'">'+
+          '<label>מה הבעיה / מה חסר</label>'+
+          '<textarea data-k="note" data-id="'+id+'" placeholder="בקצרה">'+esc(it.note||'')+'</textarea>'+
+          '<label>הצעת ניסוח חלופי לקלף</label>'+
+          '<textarea class="alt" data-k="alt" data-id="'+id+'" placeholder="איך היית מנסחת את השאלה?">'+esc(it.alt||'')+'</textarea>'+
+        '</div>'+
+      '</div>';
+    });
+    html+='</div>';
+  });
+
+  html+='<div class="genbox"><h3>🗣️ מושגי האליאס</h3>'+
+    '<p style="font-size:14px;color:var(--muted);margin:2px 0 0">סבב החימום — מסבירים בלי להגיד את המילה. '+
+    '<b>לחיצה על מושג מסמנת אותו להורדה.</b></p>'+
+    '<div class="words" id="words">'+ELIAS_WORDS.map(function(w){
+      return '<button data-w="'+esc(w)+'"'+(D.words[w]?' class="out"':'')+'>'+esc(w)+'</button>';
+    }).join('')+'</div>'+
+    '<label>מושגים להוסיף</label>'+
+    '<input type="text" id="addWords" placeholder="מופרדים בפסיק" value="'+esc(D.addWords||'')+'">'+
+  '</div>';
+
+  html+='<div class="genbox"><h3>💬 הערה כללית</h3>'+
+    '<label>על המשחק כולו — המבנה, הזמנים, מה חסר</label>'+
+    '<textarea id="general" placeholder="כל דבר שעולה">'+esc(D.general||'')+'</textarea>'+
+  '</div>';
+
+  $('app').innerHTML=html;
+  bind();
+  paintProg();
+}
+
+function bind(){
+  [].slice.call(document.querySelectorAll('.sts')).forEach(function(box){
+    var id=box.dataset.id;
+    [].slice.call(box.children).forEach(function(b){
+      b.onclick=function(){
+        var s=b.dataset.s;
+        var it=D.items[id]=D.items[id]||{};
+        it.s=(it.s===s)?'':s;
+        [].slice.call(box.children).forEach(function(x){x.classList.toggle('on',x.dataset.s===it.s)});
+        var card=box.closest('.card');
+        card.className='card'+(it.s?' st-'+it.s:'');
+        if(!it.s)card.style.borderInlineStartColor='';
+        var f=document.querySelector('.fields[data-f="'+id+'"]');
+        f.classList.toggle('show',!!it.s&&it.s!=='ok');
+        queueSave();paintProg();
+      };
+    });
+  });
+  [].slice.call(document.querySelectorAll('[data-k]')).forEach(function(el){
+    el.addEventListener('input',function(){
+      var it=D.items[this.dataset.id]=D.items[this.dataset.id]||{};
+      it[this.dataset.k]=this.value;
+      queueSave();
+    });
+  });
+  [].slice.call($('words').children).forEach(function(b){
+    b.onclick=function(){
+      var w=b.dataset.w;
+      if(D.words[w])delete D.words[w];else D.words[w]=1;
+      b.classList.toggle('out',!!D.words[w]);
+      queueSave();
+    };
+  });
+  $('addWords').addEventListener('input',function(){D.addWords=this.value;queueSave()});
+  $('general').addEventListener('input',function(){D.general=this.value;queueSave()});
+}
+
+function paintProg(){
+  var n=0;Object.keys(D.items).forEach(function(k){if(D.items[k].s)n++});
+  $('pt').textContent=n+' / 32';
+  $('pf').style.width=Math.round(n/32*100)+'%';
+}
+
+$('me').value=D.who||'';
+$('me').addEventListener('input',function(){D.who=this.value;queueSave()});
+$('finBtn').onclick=function(){
+  if(!(D.who||'').trim()){toast('רק תרשמי את השם למעלה 🙂');$('me').focus();return}
+  D.done=true;queueSave();pushSave();
+  this.textContent='תודה! נשלח ✓';this.disabled=true;
+  toast('תודה 💛 ההערות הגיעו למיטל');
+};
+
+/* ---------- ניהול ---------- */
+async function admin(){
+  $('ttl').textContent='הערות על הקלפים · ניהול';
+  $('sub').textContent='כל מי שעבר/ה · חי מהגיליון';
+  $('whoBar').style.display='none';$('doneBar').style.display='none';
+  $('wrap').classList.add('adm');
+  $('app').innerHTML='<div class="intro"><p id="ls">טוען…</p></div>';
+  var store;
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6);store=r.store;
+  }catch(e){$('app').innerHTML='<div class="intro"><p>לא נטען. <button class="btn ghost" onclick="location.reload()">🔄</button></p></div>';return}
+
+  var revs=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY)===0})
+    .map(function(k){return store[k]||{}}).filter(function(x){return x.who||Object.keys(x.items||{}).length});
+  if(!revs.length){$('app').innerHTML='<div class="intro"><p>עדיין אין הערות.</p></div>';return}
+
+  var byCard={};
+  revs.forEach(function(r){
+    Object.keys(r.items||{}).forEach(function(id){
+      var it=r.items[id];
+      if(!it.s&&!it.note&&!it.alt)return;
+      (byCard[id]=byCard[id]||[]).push({who:r.who,it:it});
+    });
+  });
+  var pill={ok:'מצוין',fix:'לנסח מחדש',no:'להוריד'};
+  var html='<div class="intro"><h2>'+revs.length+' סוקרים</h2><p>'+
+    revs.map(function(r){
+      var n=Object.keys(r.items||{}).filter(function(k){return r.items[k].s}).length;
+      return '<b>'+esc(r.who||'ללא שם')+'</b> — '+n+' קלפים'+(r.done?' · סיים/ה ✓':' · בתהליך');
+    }).join(' · ')+'</p>'+
+    '<div style="text-align:left;margin-top:10px"><button class="btn ghost" onclick="location.reload()">🔄 רענון</button> '+
+    '<button class="btn ghost" id="csv">⬇️ CSV</button></div></div>';
+
+  CHAPTERS.forEach(function(c){
+    var rows='';
+    (CARDS[c.key]||[]).forEach(function(q,i){
+      var id=c.key+'-'+i,l=byCard[id];
+      if(!l)return;
+      rows+='<div class="rrow"><div class="q">'+esc(q)+'</div>'+
+        l.map(function(x){
+          return '<div class="n">'+(x.it.s?'<span class="pill '+x.it.s+'">'+pill[x.it.s]+'</span>':'')+
+            '<b>'+esc(x.who||'—')+':</b> '+esc(x.it.note||'')+'</div>'+
+            (x.it.alt?'<div class="a">הצעה: '+esc(x.it.alt)+'</div>':'');
+        }).join('')+'</div>';
+    });
+    if(rows)html+='<div class="rev"><h3><span class="tag" style="background:'+c.c+'22;color:'+c.c+'">שולחן '+c.n+'</span>'+esc(c.t)+'</h3>'+rows+'</div>';
+  });
+
+  var outW={},addW=[],gen=[];
+  revs.forEach(function(r){
+    Object.keys(r.words||{}).forEach(function(w){(outW[w]=outW[w]||[]).push(r.who)});
+    if((r.addWords||'').trim())addW.push({who:r.who,t:r.addWords});
+    if((r.general||'').trim())gen.push({who:r.who,t:r.general});
+  });
+  if(Object.keys(outW).length||addW.length)
+    html+='<div class="rev"><h3>🗣️ מושגי אליאס</h3>'+
+      (Object.keys(outW).length?'<div class="rrow"><div class="q">סומנו להורדה</div><div class="n">'+
+        Object.keys(outW).map(function(w){return esc(w)+' <span style="color:var(--muted)">('+outW[w].map(esc).join(', ')+')</span>'}).join(' · ')+'</div></div>':'')+
+      addW.map(function(x){return '<div class="rrow"><div class="q">להוסיף — '+esc(x.who)+'</div><div class="n">'+esc(x.t)+'</div></div>'}).join('')+
+    '</div>';
+  if(gen.length)
+    html+='<div class="rev"><h3>💬 הערות כלליות</h3>'+
+      gen.map(function(x){return '<div class="rrow"><div class="q">'+esc(x.who||'—')+'</div><div class="n">'+esc(x.t).replace(/\n/g,'<br>')+'</div></div>'}).join('')+'</div>';
+
+  $('app').innerHTML=html;
+  $('csv').onclick=function(){
+    var rows=[['שולחן','קלף','סוקר/ת','סטטוס','הערה','הצעת ניסוח']];
+    CHAPTERS.forEach(function(c){
+      (CARDS[c.key]||[]).forEach(function(q,i){
+        (byCard[c.key+'-'+i]||[]).forEach(function(x){
+          rows.push([c.t,q,x.who,pill[x.it.s]||'',x.it.note||'',x.it.alt||'']);
+        });
+      });
+    });
+    var csv='﻿'+rows.map(function(r){return r.map(function(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='hearot-kartisim.csv';a.click();
+  };
+}
+
+if(qs.get('admin')===ADMIN)admin();else{render();mark('ok')}
+</script>
+</body>
+</html>
