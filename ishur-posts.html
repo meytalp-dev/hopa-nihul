@@ -118,7 +118,7 @@ var KEY='ishur-posts-';
 var ADMIN='hopa';
 
 var SECTIONS=[
-  {t:'סדרה א׳ · בהשראת גראז׳ — לפייסבוק',d:'פונה למנהלים, לבתי ספר ולשותפים. כל פוסט צבעוני — צבע רקע משלו ושני צבעי הדגשה. תמונה בודדת.',items:[
+  {t:'סדרה א׳ · בהשראת גראז׳ — לפייסבוק',d:'פונה למנהלים, לבתי ספר ולשותפים. צבעוני במיוחד — סגול, ירוק, כתום, טורקיז, ורוד וצהוב בתוך כל פוסט. תמונה בודדת.',items:[
     {id:'g1',t:'המפתח לשנה שאחרי',imgs:['fb-1-hamafteach']},
     {id:'g2',t:'מי מלווה את ההמראה?',imgs:['fb-2-hamraa']},
     {id:'g3',t:'יש להם כתובת',imgs:['fb-3-yesh-lahem-ktovet']},
@@ -196,7 +196,7 @@ function render(){
       var it=D.items[p.id]||{};
       html+='<div class="card'+(it.s?' st-'+it.s:'')+'" data-card="'+p.id+'">'+
         '<h3>'+esc(p.t)+(p.imgs.length>1?'<small>קרוסלה · '+p.imgs.length+' תמונות</small>':'')+'</h3>'+
-        '<div class="imgs'+(p.imgs.length>1?' multi':'')+'">'+p.imgs.map(function(n){return '<img loading="lazy" src="ishur/'+n+'.jpg" alt="">'}).join('')+'</div>'+
+        '<div class="imgs'+(p.imgs.length>1?' multi':'')+'">'+p.imgs.map(function(n){return '<img loading="lazy" src="ishur/'+n+'.jpg?v=3" alt="">'}).join('')+'</div>'+
         (p.imgs.length>1?'<div class="swipe">← החליקו לתמונות הבאות</div>':'')+
         (p.cap?'<details class="cap"><summary>📝 הטקסט לפוסט</summary><div>'+esc(p.cap)+'</div></details>':'')+
         '<div class="sts" data-id="'+p.id+'">'+
