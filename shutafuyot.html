@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · הצעה לשיתופי פעולה לבוגרים</title>
+<meta name="description" content="הצעה ללירון: שיתופי פעולה עם קידום נוער, מכינות, פעמונים וגופי זכויות, וסדרת הרצאות לבוגרי הופה. לכל שותף: איש קשר, סוג הקשר ומה מבקשים.">
+<meta property="og:title" content="הופה · הצעה לשיתופי פעולה לבוגרים">
+<meta property="og:description" content="מי השותפים, איך פונים אליהם, ומה מציעים לבוגרים. טיוטה לדיון.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* הופה · הצעה לשיתופי פעולה · ורוד #E8348A · צהוב #FFF200 · Rubik · מובייל first · בלי רקע שחור */
+:root{
+  --pink:#E8348A; --pink-deep:#C2185B; --pink-soft:#FCE7F2;
+  --yellow:#FFF200; --yellow-deep:#FFD500; --yellow-soft:#FFFCE6;
+  --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
+  --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
+  --green:#3BA55C; --green-deep:#2C824A; --green-soft:#E8F5EC;
+  --blue:#3D7DD8; --blue-deep:#2A62B5; --blue-soft:#E7F0FB;
+  --purple:#8A4DD8; --purple-deep:#6E36B8; --purple-soft:#F1E9FB;
+  --r-lg:22px; --r-md:14px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --maxw:920px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:Rubik,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep)}
+h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.02em;font-weight:800}
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+.hero{padding:48px 0 30px;border-bottom:1px solid var(--line);
+  background:radial-gradient(1000px 400px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+             radial-gradient(900px 440px at 4% 4%, rgba(232,52,138,.13), transparent 60%),#fff}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:46px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:15px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.draft{font-size:13px;font-weight:800;color:var(--pink-deep);background:var(--pink-soft);border-radius:999px;padding:6px 14px}
+.kicker{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.14em;color:var(--pink-deep);margin-bottom:12px}
+h1.title{font-size:clamp(30px,6vw,50px);font-weight:900;letter-spacing:-.035em;max-width:20ch}
+h1.title .hl{background:linear-gradient(180deg,transparent 62%, var(--yellow) 62%, var(--yellow) 94%, transparent 94%);padding:0 4px}
+.lede{font-size:clamp(16px,2.2vw,18.5px);color:var(--ink-2);max-width:62ch;margin-top:14px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.toc a{text-decoration:none;font-weight:700;font-size:14px;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:999px;padding:8px 15px}
+.toc a:hover{border-color:var(--pink);background:var(--pink-soft)}
+
+section{padding:40px 0 8px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-num{font-weight:900;font-size:15px;color:#fff;background:var(--pink);border-radius:10px;min-width:32px;height:32px;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900}
+.sec-lede{color:var(--ink-2);margin:6px 0 20px;max-width:64ch}
+
+/* סוגי שותפות */
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.type{border:1px solid var(--line);border-radius:var(--r-md);padding:16px 16px 14px;background:#fff;box-shadow:var(--shadow)}
+.type b{display:block;font-size:17px;margin-bottom:4px}
+.type p{margin:0;font-size:15px;color:var(--ink-2)}
+
+.tag{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 11px;white-space:nowrap}
+.t-hafnaya{background:var(--green-soft);color:var(--green-deep)}
+.t-shigra{background:var(--blue-soft);color:var(--blue-deep)}
+.t-astrat{background:var(--purple-soft);color:var(--purple-deep)}
+.t-migzar{background:var(--yellow-soft);color:#7A6400;border:1px solid #F2E27A}
+
+/* כרטיסי שותפים */
+.group-title{font-size:19px;font-weight:800;margin:26px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--yellow)}
+.cards{display:grid;gap:14px}
+.card{border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow);padding:18px 18px 16px;
+  border-top:5px solid var(--pink)}
+.card.prio{border-top-color:var(--yellow-deep)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.card h3{font-size:19px;font-weight:800}
+.card .what{color:var(--muted);font-size:14.5px;margin-top:2px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.rows{margin-top:12px;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:92px 1fr;gap:10px;font-size:15.5px}
+.row .k{font-weight:800;color:var(--ink-2);font-size:13.5px;padding-top:2px}
+.row .v{color:var(--ink)}
+.contact a{display:inline-block;margin-inline-end:10px;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(194,24,91,.3)}
+.ask{background:var(--yellow-soft);border-radius:10px;padding:10px 12px;font-size:15.5px}
+.verify{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* הרצאות */
+.lectures{display:grid;gap:12px;counter-reset:lec}
+.lec{display:grid;grid-template-columns:44px 1fr;gap:14px;border:1px solid var(--line);border-radius:var(--r-md);padding:16px;background:#fff}
+.lec::before{counter-increment:lec;content:counter(lec);width:44px;height:44px;border-radius:12px;background:var(--yellow);
+  font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center}
+.lec h3{font-size:17.5px}
+.lec p{margin:4px 0 6px;font-size:15px;color:var(--ink-2)}
+.lec .meta{font-size:14px;color:var(--muted)}
+.lec .meta b{color:var(--ink-2)}
+.format{margin-top:16px;border-radius:var(--r-md);background:var(--tint);padding:16px 18px;font-size:15.5px}
+.format ul{margin:6px 0 0;padding-inline-start:20px}
+
+/* הודעות */
+.msg{border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.msg h3{font-size:17px;margin-bottom:10px}
+.msg pre{white-space:pre-wrap;font-family:inherit;font-size:15.5px;line-height:1.7;margin:0;background:var(--tint);border-radius:12px;padding:14px}
+.copy{margin-top:10px;font-family:inherit;font-weight:800;font-size:14.5px;border:0;border-radius:999px;padding:9px 18px;
+  background:var(--pink);color:#fff;cursor:pointer}
+.copy.done{background:var(--green)}
+
+.steps{counter-reset:st;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.steps li{position:relative;padding:12px 16px 12px 16px;padding-inline-start:52px;border:1px solid var(--line);border-radius:var(--r-md);background:#fff}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;inset-inline-start:14px;top:12px;width:26px;height:26px;
+  border-radius:8px;background:var(--pink);color:#fff;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}
+
+footer{margin-top:40px;padding:26px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer a{font-weight:800}
+@media (max-width:520px){ .row{grid-template-columns:1fr;gap:2px} .lec{grid-template-columns:1fr} }
+@media print{ .topbar,.copy,.toc{display:none} .card,.msg,.lec{break-inside:avoid;box-shadow:none} }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener">
+        <img src="hopa-logo.png" alt="הופה">
+        <span class="org"><b>הופה · ליווי בוגרים</b><span>הצעה פנימית ללירון</span></span>
+      </a>
+      <span class="draft">טיוטה לדיון · ספטמבר 2026</span>
+    </div>
+    <div class="kicker">שיתופי פעולה לבוגרים</div>
+    <h1 class="title">מרשימת מענים <span class="hl">לשותפים שמחכים לבוגר</span></h1>
+    <p class="lede">
+      המאגר שלנו כבר מכיל כ-600 מענים. הצעד הבא הוא שותפים שמתחייבים לקבל בוגר שאנחנו מפנים, להיכנס לבתי הספר ולבנות איתנו את המסלול.
+      במסמך: למי פונים, איזה סוג קשר, מה מבקשים מכל שותף, וסדרת הרצאות שאפשר להציע לבוגרים כבר השנה.
+    </p>
+    <nav class="toc">
+      <a href="#types">סוגי שותפות</a>
+      <a href="#partners">השותפים</a>
+      <a href="#lectures">סדרת הרצאות</a>
+      <a href="#messages">נוסחי פנייה</a>
+      <a href="#next">צעדים הבאים</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="types">
+  <div class="sec-head"><span class="sec-num">1</span><h2>שלושה סוגי שותפות</h2></div>
+  <p class="sec-lede">לא כל שותף צריך אותו הסכם. כל שותף במסמך מסומן לפי סוג הקשר.</p>
+  <div class="types">
+    <div class="type"><span class="tag t-hafnaya">הפניה חמה</span><b style="margin-top:8px">בוגר עובר מיד ליד</b>
+      <p>איש קשר קבוע אצל השותף וטופס קצר. הרכז/ת לא אומר/ת "תתקשר לשם" אלא "מחכים לך ביום שלישי". השותף מעדכן אם הבוגר הגיע.</p></div>
+    <div class="type"><span class="tag t-shigra">נכנס לשגרה</span><b style="margin-top:8px">השותף בתוך הפעילות שלנו</b>
+      <p>הרצאה לבוגרים, סדנה לשכבת י"ב, הכשרה לרכזים או מפגש במפגשי הרכזים. הרכזים מכירים פנים ולא רק שם.</p></div>
+    <div class="type"><span class="tag t-astrat">אסטרטגי</span><b style="margin-top:8px">הסכם ברמת מערכת</b>
+      <p>הסכם עם רשות, משרד ממשלתי או ארגון גג, הגשה משותפת לקרן. מעט כאלה, אבל הם משנים את התמונה.</p></div>
+  </div>
+</section>
+
+<section id="partners">
+  <div class="sec-head"><span class="sec-num">2</span><h2>השותפים: למי פונים ומה מבקשים</h2></div>
+  <p class="sec-lede">כרטיס עם פס צהוב = עדיפות ראשונה. אנשי קשר שלא אומתו מסומנים, ובהם פונים דרך "צור קשר" באתר ומבקשים את האחראי/ת על שיתופי פעולה.</p>
+
+  <!-- קידום נוער -->
+  <h3 class="group-title">העברת מקל בגיל 18</h3>
+  <div class="cards">
+    <article class="card prio">
+      <div class="card-top">
+        <div><h3>היחידה לקידום נוער ברשות</h3><div class="what">מלווה את הנוער שלנו עד 18, בדיוק עד הגיל שבו אנחנו מתחילים</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-astrat">אסטרטגי</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v">מנהל/ת היחידה לקידום נוער בכל רשות שיש בה בי"ס הופה. ברמה הארצית: המחלקה לקידום נוער, אגף היל"ה, משרד החינוך.</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">פגישה ובניית "העברת מקל": נער/ה שמסיים/ת את הליווי אצלם עובר/ת, בהסכמה בכתב, ישירות לרכז/ת הבוגרים של הופה. בתמורה: הרצאות הזכויות שלנו פתוחות גם לנוער שלהם.</span></div>
+        <div class="row"><span class="k">איך מתחילים</span><span class="v">רשות אחת שיש בה קשר טוב, פיילוט של שנה. אחרי שיש תוצאות, פונים לאגף היל"ה להסכם ארצי.</span></div>
+      </div>
+      <div class="verify">נוסח פנייה מוכן בסעיף 4. חשוב: העברת פרטים רק בהסכמה בכתב (מתחבר לטופס ההסכמה הקיים).</div>
+    </article>
+  </div>
+
+  <!-- מכינות -->
+  <h3 class="group-title">מכינות ושירות משמעותי</h3>
+  <div class="cards">
+    <article class="card prio">
+      <div class="card-top">
+        <div><h3>מועצת המכינות הקדם צבאיות</h3><div class="what">ארגון הגג של המכינות. מפעיל "אימוץ יישוב" (מכינה מלווה תלמידי י"א ברשות לקראת המיונים) וקרן מלגות לנוער מהפריפריה</div></div>
+        <div class="tags"><span class="tag t-astrat">אסטרטגי</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="https://mechinot.org.il" target="_blank" rel="noopener">mechinot.org.il</a> · לבקש את האחראי/ת על שילוב נוער מהפריפריה</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">שכל בי"ס של הופה "יאומץ" על ידי מכינה באזור שלו, ושהבוגרים שלנו יקבלו עדיפות במלגות הפריפריה. הופה מביאה את הזיהוי (רדאר) ואת הליווי לפני ואחרי המכינה.</span></div>
+      </div>
+      <div class="verify">איש קשר ישיר טרם אותר.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>"אשר רוח בו", מצפה רמון</h3><div class="what">מכינה של 7 חודשים לצעירים בסיכון בגיל 18, גם עם רישום פלילי, לקראת גיוס משמעותי</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-shigra">נכנס לשגרה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="tel:0525962001">052-5962001</a><a href="mailto:misrad.arb@gmail.com">misrad.arb@gmail.com</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">מסלול הפניה קבוע מבתי הספר של הופה, ומפגש היכרות עם שכבת י"ב בבי"ס הופה במצפה רמון (שכנים באותו יישוב).</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>מכינות ניצוץ, מרכז מעשה</h3><div class="what">רשת מכינות לצעירים ממצבי סיכון: ליאל, הרועות, אחת משלנו</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact">ליאל <a href="tel:0525665928">052-5665928</a> · הרועות <a href="tel:0507986393">050-7986393</a> · אחת משלנו <a href="tel:0526728323">052-6728323</a> · <a href="https://maase.org.il/" target="_blank" rel="noopener">maase.org.il</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">הפניה חמה של בוגרי י"ב שמתאימים, ועדכון הדדי בזמן המכינה ואחריה. הרכז/ת של הופה ממשיך/ה את הקשר גם בשירות.</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>מכינות שחר · מכינת חוסן פאודל</h3><div class="what">מכינות שמתמחות בקליטת צעירים בסיכון, עם דגש על הכנה פיזית, חוסן ומנהיגות</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact">שחר <a href="tel:0528561197">052-8561197</a> <a href="https://www.mehina.net/" target="_blank" rel="noopener">mehina.net</a> · פאודל <a href="tel:0523717277">052-3717277</a> <a href="mailto:amishaishav@gmail.com">amishaishav@gmail.com</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">להכניס למסלול ההפניה הקבוע, עם יום פתוח לבוגרים שמתלבטים.</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>בחברת אחיי, מניפה</h3><div class="what">מנטור אישי לכל מועמד לשירות, שממשיך גם לתוך השירות</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="tel:0533402526">053-3402526</a><a href="mailto:mentorim.achay@menifa.org.il">mentorim.achay@menifa.org.il</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">מנטור לבוגרים שלנו לפני הגיוס ובמהלכו, כהמשך ישיר לליווי של הרכז/ת.</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>כרם אל, דלית אל כרמל</h3><div class="what">מכינה קדם צבאית דרוזית-יהודית</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-migzar">דרוזי · ירכא, ג'וליס</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v">דרך אתר מועצת המכינות</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">מפגש היכרות לשכבת י"ב בירכא ובג'וליס, ומסלול הפניה קבוע.</span></div>
+      </div>
+      <div class="verify">איש קשר ישיר טרם אותר.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>מכינה קדם צבאית לצעירים בדואים</h3><div class="what">7 חודשי הכנה, שירות, ואחריו סיוע בתעסוקה ובלימודים (הועברה מגבעת חביבה לקיבוץ בצפון)</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-migzar">בדואי · רהט, לקייה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v">לאתר (דרך מועצת המכינות או גבעת חביבה)</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">היכרות ובדיקה אם מתאימה גם לבוגרים מהדרום, או אם יש מקבילה בנגב.</span></div>
+      </div>
+      <div class="verify">לבדוק מיקום ומצב נוכחי לפני פנייה.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>האגודה להתנדבות · בת עמי</h3><div class="what">שירות אזרחי-לאומי לחברה הערבית והדרוזית, כולל קבוצות לצעירים בסיכון. באגודה פועלת גם תוכנית "בשביל" בתוך תיכונים</div></div>
+        <div class="tags"><span class="tag t-shigra">נכנס לשגרה</span><span class="tag t-migzar">ערבי · סח'נין, טורעאן</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact">האגודה: <a href="https://sherut-leumi.co.il/%D7%A9%D7%99%D7%A8%D7%95%D7%AA-%D7%90%D7%96%D7%A8%D7%97%D7%99-%D7%A2%D7%A8%D7%91%D7%99-%D7%93%D7%A8%D7%95%D7%96%D7%99/" target="_blank" rel="noopener">sherut-leumi.co.il</a> · בת עמי: <a href="tel:0526070642">052-6070642</a> <a href="mailto:sleumi@bat-ami.org.il">sleumi@bat-ami.org.il</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">"בשביל" בבתי הספר של הופה בחברה הערבית, והרצאה בערבית לבוגרים. נקודה חשובה: מסיימי שירות אזרחי זכאים גם לשירותי הקרן לחיילים משוחררים.</span></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- כסף וזכויות -->
+  <h3 class="group-title">כסף, זכויות ועצמאות</h3>
+  <div class="cards">
+    <article class="card prio">
+      <div class="card-top">
+        <div><h3>פעמונים · תוכנית תכל'ס</h3><div class="what">תכנון כלכלי לנוער ולצעירים בסיכון: תקציב, צרכנות, בנקאות, זכויות בעבודה, ביטוח לאומי. מפגש של 3 שעות או עד 5 מפגשים, ליווי אישי בחינם על ידי מתנדבים</div></div>
+        <div class="tags"><span class="tag t-shigra">נכנס לשגרה</span><span class="tag t-hafnaya">הפניה חמה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact">דנה גניש, מנהלת התוכנית · <a href="mailto:danag@paamonim.org">danag@paamonim.org</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">שותפות בשלוש שכבות: (1) הכשרה אחת לכל רכזי הבוגרים לזיהוי מצוקה כלכלית; (2) סדנת תכל'ס בכל בי"ס לי"ב ולבוגרים; (3) הפניה חמה של בוגר עם חובות למתנדב אישי.</span></div>
+      </div>
+      <div class="verify">לשאול אם יש מנחים בערבית.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>האגף והקרן לחיילים משוחררים</h3><div class="what">משרד הביטחון. פיקדון, מענק שחרור, מלגות, הכשרה מקצועית, ייעוץ אישי. מלגות מיוחדות לבני מיעוטים ולחיילים בודדים. מקיים סדנאות לקראת שחרור</div></div>
+        <div class="tags"><span class="tag t-shigra">נכנס לשגרה</span><span class="tag t-astrat">אסטרטגי</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="https://www.hachvana.mod.gov.il/Pages/default.aspx" target="_blank" rel="noopener">hachvana.mod.gov.il</a> · "צור קשר", לבקש את היחידה לסדנאות והרצאות</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">מרצה להרצאות 1 ו-5 בסדרה (בעברית ובערבית), ובהמשך: נציג/ה קבוע/ה שהרכזים יכולים להפנות אליו/ה בוגר ספציפי.</span></div>
+      </div>
+      <div class="verify">איש קשר ישיר טרם אותר.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>רוח נכונה</h3><div class="what">קהילה ומענים לחיילים בודדים, בזמן השירות ואחריו</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-shigra">נכנס לשגרה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="https://ruachnechona.org.il/" target="_blank" rel="noopener">ruachnechona.org.il</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">הרצאה 2 בסדרה, ומסלול הפניה לבוגרים שלנו שמוגדרים חיילים בודדים.</span></div>
+      </div>
+      <div class="verify">איש קשר ישיר טרם אותר.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>למרחב · יתד / "גשר לעצמאות"</h3><div class="what">ליווי לצעירים בני 18-25 בלי עורף משפחתי: ליווי אישי, מענה 24/7, דירות מעבר (משרד הרווחה), ייעוץ משפטי בחובות ותביעות</div></div>
+        <div class="tags"><span class="tag t-hafnaya">הפניה חמה</span><span class="tag t-shigra">נכנס לשגרה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="https://www.kolzchut.org.il/he/%D7%A1%D7%99%D7%95%D7%A2_%D7%95%D7%9C%D7%99%D7%95%D7%95%D7%99_%D7%9E%D7%98%D7%A2%D7%9D_%D7%9C%D7%9E%D7%A8%D7%97%D7%91_%D7%9C%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D_%D7%97%D7%A1%D7%A8%D7%99_%D7%A2%D7%95%D7%A8%D7%A3_%D7%9E%D7%A9%D7%A4%D7%97%D7%AA%D7%99" target="_blank" rel="noopener">למרחב בכל-זכות</a> · <a href="https://www.kolzchut.org.il/he/%22%D7%92%D7%A9%D7%A8_%D7%9C%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA%22_%D7%9C%D7%91%D7%95%D7%92%D7%A8%D7%99_%D7%A4%D7%A0%D7%99%D7%9E%D7%99%D7%95%D7%AA_%D7%95%D7%90%D7%95%D7%9E%D7%A0%D7%94_%D7%97%D7%A1%D7%A8%D7%99_%D7%A2%D7%95%D7%A8%D7%A3_%D7%9E%D7%A9%D7%A4%D7%97%D7%AA%D7%99" target="_blank" rel="noopener">גשר לעצמאות בכל-זכות</a></span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">הרצאה 3 בסדרה, ומסלול הפניה מהיר לבוגר שנשאר בלי דיור או בלי תמיכה.</span></div>
+      </div>
+      <div class="verify">איש קשר ישיר טרם אותר.</div>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <div><h3>רשת מרכזי הצעירים</h3><div class="what">מרכז צעירים כמעט בכל עיר. כבר מזמינים קורסים מפעמונים ועובדים עם הקרן</div></div>
+        <div class="tags"><span class="tag t-shigra">נכנס לשגרה</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">איש קשר</span><span class="v contact"><a href="https://tzeirim.org.il/" target="_blank" rel="noopener">tzeirim.org.il</a> · ובכל עיר: מנהל/ת מרכז הצעירים</span></div>
+        <div class="row"><span class="k">הפנייה</span><span class="v ask">לארח את הרצאות הסדרה בעיר (מקום וקהל), ולהכיר לבוגרים שלנו את המרכז כבית קבוע אחרי ביה"ס.</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="lectures">
+  <div class="sec-head"><span class="sec-num">3</span><h2>סדרת הרצאות לבוגרי הופה</h2></div>
+  <p class="sec-lede">"מה מגיע לי?" שמונה מפגשים קצרים ומעשיים, כל אחד עם שותף אחר. כל מפגש נגמר בדבר אחד שהבוגר עושה באותו ערב (בודק פיקדון, ממלא בקשה למלגה, קובע פגישה).</p>
+
+  <div class="lectures">
+    <div class="lec"><div>
+      <h3>הכסף שלך אחרי הצבא: פיקדון ומענק שחרור</h3>
+      <p>כמה יש לי, על מה מותר להשתמש בפיקדון, מתי הוא פג, ואיך לא לבזבז אותו בחודש הראשון.</p>
+      <div class="meta"><b>מרצה:</b> האגף והקרן לחיילים משוחררים · <b>קהל:</b> משתחררים ומשוחררים</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>חייל/ת בודד/ה: מה מגיע לך בשירות ואחריו</h3>
+      <p>הגדרת בודד, סיוע בדיור ובשכר, מלגות ייעודיות, ולמי פונים כשנתקעים.</p>
+      <div class="meta"><b>מרצה:</b> רוח נכונה + הקרן · <b>קהל:</b> חיילים ומשוחררים, וגם י"ב שעומדים להיות בודדים</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>לבד, אבל לא לבד: צעירים בלי עורף משפחתי</h3>
+      <p>דירות מעבר, ליווי אישי, ייעוץ משפטי בחובות, ואיפה מקבלים עזרה בלילה ובסוף שבוע.</p>
+      <div class="meta"><b>מרצה:</b> למרחב / גשר לעצמאות · <b>קהל:</b> בוגרים בלי תמיכה משפחתית</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>תכל'ס: תקציב, בנק וחובות</h3>
+      <p>לבנות תקציב חודשי, לקרוא דף בנק, להבין מינוס והלוואות, ומה עושים כשכבר נכנסו לחוב.</p>
+      <div class="meta"><b>מרצה:</b> פעמונים · <b>קהל:</b> כולם</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>תלוש, זכויות בעבודה וביטוח לאומי</h3>
+      <p>לקרוא תלוש שכר, שכר מינימום, שעות נוספות, דמי אבטלה ומה עושים כשלא משלמים.</p>
+      <div class="meta"><b>מרצה:</b> פעמונים (חלק מתכל'ס) · <b>קהל:</b> בוגרים שעובדים</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>לימודים ומלגות: מה אפשר לקבל ואיך מגישים</h3>
+      <p>מלגות הקרן (כולל לבני מיעוטים ולבודדים), מכינות קדם אקדמיות, ושירות המלגות של הופה.</p>
+      <div class="meta"><b>מרצה:</b> הקרן + רכז/ת המענים של הופה · <b>קהל:</b> מי שחושב על לימודים</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>بعد الخدمة المدنية: ما هي حقوقي؟ (בערבית)</h3>
+      <p>זכויות מסיימי שירות אזרחי: פיקדון, מלגות, הכשרה מקצועית ותעסוקה.</p>
+      <div class="meta"><b>מרצה:</b> האגודה להתנדבות + הקרן · <b>קהל:</b> בוגרים מהחברה הערבית, הדרוזית והבדואית</div>
+    </div></div>
+    <div class="lec"><div>
+      <h3>כשקשה: לאן פונים</h3>
+      <p>מתי זה יותר מ"תקופה קשה", קווי סיוע שאפשר לפנות אליהם בכתב, ואיך עוזרים לחבר.</p>
+      <div class="meta"><b>מרצה:</b> ער"ן או סה"ר (לתאם) · <b>קהל:</b> כולם, וגם הרכזים</div>
+    </div></div>
+  </div>
+
+  <div class="format">
+    <b>פורמט מוצע</b>
+    <ul>
+      <li>זום בערב, 60 דקות, פעם בחודש (אוקטובר עד מאי). ההקלטה נשארת בפורטל הבוגרים.</li>
+      <li>הרצאות 1, 4 ו-6 גם פרונטלית: בביה"ס לשכבת י"ב, או במרכז הצעירים בעיר.</li>
+      <li>הזמנה אישית מהרכז/ת לכל בוגר, לא רק פוסט בקבוצה.</li>
+      <li>מדד הצלחה: כמה בוגרים עשו את "הצעד של הערב" (בדקו פיקדון, הגישו בקשה, קבעו פגישה).</li>
+    </ul>
+  </div>
+</section>
+
+<section id="messages">
+  <div class="sec-head"><span class="sec-num">4</span><h2>נוסחי פנייה מוכנים</h2></div>
+  <p class="sec-lede">להעתיק, להחליף את מה שבסוגריים, ולשלוח.</p>
+
+  <div class="msg">
+    <h3>לקידום נוער ברשות</h3>
+    <pre id="m1">שלום [שם],
+
+אני [שם], [תפקיד] בהופה. אנחנו מלווים בוגרים של בתי ספר לנוער בסיכון מגיל 18 עד 26, ובעיר שלכם אנחנו עובדים עם [שם ביה"ס].
+
+אנחנו רואים שוב ושוב את אותו רגע: בגיל 18 הליווי של קידום נוער ושל ביה"ס מסתיים, ודווקא אז הצעירים עומדים מול הגיוס, הכסף, העבודה והדיור. חלק גדול מהם נעלמים בדיוק שם.
+
+הרעיון שלנו פשוט: להיפגש ולבנות יחד "העברת מקל". נער/ה שמסיים/ת אצלכם, ובהסכמתו/ה, עובר/ת ישירות לרכז/ת הבוגרים שלנו, שמכיר/ה אותו/ה כבר בי"ב וממשיך/ה ללוות אחרי.
+
+מה אנחנו מביאים: רכז/ת בוגרים בביה"ס, מאגר של כ-600 מענים (מכינות, שירות, תעסוקה, מלגות, זכויות), וסדרת מפגשים על מיצוי זכויות שנשמח לפתוח גם לנוער שלכם.
+
+אשמח לפגישה של חצי שעה, בזום או אצלכם.
+
+תודה,
+[שם], הופה
+hopa.org.il</pre>
+    <button class="copy" data-t="m1">העתקה</button>
+  </div>
+
+  <div class="msg">
+    <h3>לפעמונים (דנה גניש)</h3>
+    <pre id="m2">שלום דנה,
+
+אני [שם], [תפקיד] בהופה. אנחנו מלווים בוגרים של בתי ספר לנוער בסיכון מגיל 18 עד 26, בכ-25 בתי ספר ברחבי הארץ, כולל בחברה הערבית, הדרוזית והבדואית.
+
+כסף הוא אחד הדברים הראשונים שמפילים את הבוגרים שלנו אחרי הצבא, ותכל'ס נראית לנו מתאימה בדיוק. נשמח לבחון איתך שותפות בשלוש שכבות:
+1. הכשרה לרכזי הבוגרים שלנו, כדי שיזהו מצוקה כלכלית ויידעו להפנות.
+2. סדנאות תכל'ס לשכבת י"ב ולבוגרים בבתי הספר, כחלק מסדרת מפגשים על מיצוי זכויות שאנחנו בונים.
+3. מסלול הפניה חמה של בוגר עם חובות למתנדב/ת אישי/ת שלכם.
+
+עוד שאלה: יש לכם מנחים שעובדים בערבית?
+
+אשמח לשיחה קצרה.
+תודה,
+[שם], הופה
+hopa.org.il</pre>
+    <button class="copy" data-t="m2">העתקה</button>
+  </div>
+
+  <div class="msg">
+    <h3>למועצת המכינות</h3>
+    <pre id="m3">שלום,
+
+אני [שם], [תפקיד] בהופה. אנחנו מלווים תלמידים ובוגרים של בתי ספר לנוער בסיכון, מגיל 14 ועד 26, בכ-25 בתי ספר ברחבי הארץ.
+
+רבים מהתלמידים שלנו ירוויחו משנת מכינה, אבל לא מגיעים אליה: לא מכירים, לא עוברים מיונים, או שאין להם אפשרות כלכלית. ראינו את מודל "אימוץ היישוב" ואת קרן המלגות לנוער מהפריפריה, ונשמח לבחון יחד:
+- חיבור בין בתי הספר של הופה למכינות באזור, כולל חשיפה בי"א וליווי לקראת המיונים.
+- עדיפות לבוגרים שלנו במלגות הפריפריה.
+- ליווי משותף: הופה מזהה ומלווה לפני המכינה וממשיכה ללוות אחרי.
+
+אשמח שתפנו אותי לאחראי/ת על שילוב נוער מהפריפריה.
+תודה,
+[שם], הופה
+hopa.org.il</pre>
+    <button class="copy" data-t="m3">העתקה</button>
+  </div>
+</section>
+
+<section id="next">
+  <div class="sec-head"><span class="sec-num">5</span><h2>צעדים הבאים: מה צריך להחליט</h2></div>
+  <ol class="steps">
+    <li><b>לאשר כיוון:</b> מתחילים בשלושה פיילוטים, אחד מכל סוג: קידום נוער ברשות אחת, פעמונים, והקרן לחיילים משוחררים (לסדרת ההרצאות).</li>
+    <li><b>לבחור רשות ובית ספר לפיילוט</b> של "העברת מקל", עדיף מקום שיש בו כבר קשר טוב עם קידום נוער.</li>
+    <li><b>להגדיר מי מוביל/ה</b> כל שותפות מול הארגון, ומי אחראי/ת על סדרת ההרצאות.</li>
+    <li><b>לאתר אנשי קשר חסרים</b> (מועצת המכינות, הקרן, רוח נכונה, למרחב, כרם אל, המכינה לבדואים).</li>
+    <li><b>לקבוע מועד להרצאה הראשונה</b> ולבדוק אחרי חצי שנה: כמה בוגרים הופנו, כמה הגיעו וכמה נשארו.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    פרטי הקשר נאספו ממאגר המענים של הופה וממקורות ציבוריים, ספטמבר 2026. לפני פנייה כדאי לוודא שהם עדכניים.<br>
+    <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a> · הופה, רצף ליווי לבני נוער וצעירים 14-26
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.t).innerText;
+    function ok(){b.textContent='הועתק ✓';b.classList.add('done');setTimeout(function(){b.textContent='העתקה';b.classList.remove('done')},1800)}
+    try{
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fallback)}else{fallback()}
+    }catch(e){fallback()}
+    function fallback(){
+      try{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();ok()}catch(e){}
+    }
+  });
+});
+</script>
+</body>
+</html>
