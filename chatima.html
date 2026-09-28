@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הופה · חתימת מייל ותמונת פרופיל</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--pink-deep:#C2185B;--pink-soft:#FCE7F2;--yellow:#FFF200;--ink:#111;--muted:#6B6B6B;--line:#E9E7E4;--tint:#FAF8F5}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:#fff;color:var(--ink);line-height:1.6}
+.topbar{height:6px;background:linear-gradient(90deg,var(--pink),#FFD500,var(--yellow))}
+.wrap{max-width:720px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:28px;margin:0 0 4px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 26px}
+.card{border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 6px 24px rgba(0,0,0,.05)}
+.card h2{font-size:19px;margin:0 0 12px}
+.preview{background:var(--tint);border-radius:12px;padding:18px;overflow-x:auto}
+.btn{display:inline-block;margin-top:14px;font-family:inherit;font-weight:800;font-size:15px;border:0;border-radius:999px;padding:10px 20px;background:var(--pink);color:#fff;cursor:pointer;text-decoration:none}
+.btn.done{background:#3BA55C}
+ol{margin:10px 0 0;padding-inline-start:22px}
+li{margin-bottom:6px}
+.prof{width:140px;height:140px;border-radius:50%;display:block;margin:4px 0}
+code{background:var(--pink-soft);padding:1px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="wrap">
+  <h1>חתימה ותמונת פרופיל להופה</h1>
+  <p class="sub">לחשבון meytal@hopa.org.il</p>
+
+  <div class="card">
+    <h2>1. החתימה</h2>
+    <div class="preview" id="sigwrap"><!-- SIG START --><table dir="rtl" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;color:#111111;direction:rtl;text-align:right;border-collapse:collapse">
+<tr>
+<td style="padding:0 0 0 14px;vertical-align:middle;border-left:3px solid #E8348A"><a href="https://hopa.org.il" target="_blank"><img src="https://meytalp-dev.github.io/hopa-nihul/hopa-logo.png" alt="הופה" width="120" style="display:block;width:120px;height:auto;border:0"></a></td>
+<td style="padding:0 14px 0 0;vertical-align:middle">
+<div style="font-size:16px;font-weight:bold;color:#111111;margin:0">מיטל פלג</div>
+<div style="font-size:13px;color:#C2185B;font-weight:bold;margin:0 0 6px">סמנכ"לית תפעול | הופה</div>
+<div style="font-size:13px;color:#3A3A3A;margin:0">נייד: <a href="tel:+972536256653" style="color:#3A3A3A;text-decoration:none">053-6256653</a></div>
+<div style="font-size:13px;margin:0"><a href="mailto:meytal@hopa.org.il" style="color:#3A3A3A;text-decoration:none">meytal@hopa.org.il</a></div>
+<div style="font-size:13px;margin:0"><a href="https://hopa.org.il" target="_blank" style="color:#C2185B;text-decoration:none;font-weight:bold">hopa.org.il</a></div>
+</td>
+</tr>
+</table><!-- SIG END --></div>
+    <button class="btn" id="copy">העתקת החתימה</button>
+    <ol>
+      <li>בג'ימייל של הופה: גלגל השיניים ⚙️ ← <b>הצגת כל ההגדרות</b>.</li>
+      <li>בלשונית <b>כללי</b> גוללים ל<b>חתימה</b> ← <b>יצירת חתימה חדשה</b> ← שם: "הופה".</li>
+      <li>מדביקים (Ctrl+V) בתיבה. אם הלוגו לא מופיע מיד, זה בסדר, הוא נטען מהאתר.</li>
+      <li>מתחת לתיבה: <b>ברירת מחדל לאימיילים חדשים</b> ו<b>לתשובות</b> ← בוחרים "הופה".</li>
+      <li>גוללים לתחתית ← <b>שמירת השינויים</b>.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>2. תמונת פרופיל (במקום ה"מ")</h2>
+    <img class="prof" src="hopa-profile.png" alt="לוגו הופה עגול">
+    <a class="btn" href="hopa-profile.png" download="hopa-profile.png">הורדת התמונה</a>
+    <ol>
+      <li>מחוברת ל-meytal@hopa.org.il, לוחצים על העיגול עם ה"מ" בפינה ← <b>ניהול חשבון Google</b>.</li>
+      <li><b>פרטים אישיים</b> ← <b>תמונה</b> ← העלאת התמונה שהורדת.</li>
+      <li>אם כתוב שאין הרשאה לשנות תמונה, צריך לבקש מלירון לאפשר את זה בניהול החשבון של הופה.</li>
+    </ol>
+  </div>
+</div>
+<script>
+document.getElementById('copy').addEventListener('click',function(){
+  var b=this, el=document.getElementById('sigwrap');
+  function ok(){b.textContent='הועתק ✓ עכשיו מדביקים בג\'ימייל';b.classList.add('done');setTimeout(function(){b.textContent='העתקת החתימה';b.classList.remove('done')},3000)}
+  function fallback(){
+    try{var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();ok()}catch(e){}
+  }
+  try{
+    if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+      var html=el.innerHTML;
+      navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]).then(ok,fallback);
+    }else fallback();
+  }catch(e){fallback()}
+});
+</script>
+</body>
+</html>
