@@ -109,7 +109,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.open && !sent[t.dataset.open]) setTimeout(()=>mark(t.dataset.open,true),600);
 });
 function load(){
-  fetch('shutafim-send-data.json?v=1').then(r=>r.json()).then(d=>{DATA=d;render()})
+  fetch('shutafim-send-data.json?v=2').then(r=>r.json()).then(d=>{DATA=d;render()})
    .catch(()=>{document.getElementById('app').innerHTML='<div class="gate">לא הצלחתי לטעון את הרשימה. לרענן את הדף.</div>'});
 }
 if(LS.get('hopa_shutafim_pin')===PIN) load();
