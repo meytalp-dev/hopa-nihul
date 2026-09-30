@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>הופה · שליחת פניות לשותפים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--pink-deep:#C2185B;--pink-soft:#FCE7F2;--yellow:#FFF200;--yellow-soft:#FFFCE6;--ink:#111;--ink2:#3A3A3A;--muted:#6B6B6B;--line:#E9E7E4;--tint:#FAF8F5;--green:#3BA55C;--green-soft:#E8F5EC}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:#fff;color:var(--ink);line-height:1.55;font-size:16px}
+.topbar{height:6px;background:linear-gradient(90deg,var(--pink),#FFD500,var(--yellow))}
+.wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+header img{height:38px}
+h1{font-size:22px;margin:0;font-weight:800}
+.sub{color:var(--muted);font-size:14px;margin:4px 0 14px}
+.from{background:var(--yellow-soft);border:1px solid #F2E27A;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:14px}
+.stats b{font-size:18px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.chip.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-deep)}
+.card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,.04);border-top:4px solid var(--pink)}
+.card.sent{border-top-color:var(--green);background:#FBFEFC}
+.org{font-weight:800;font-size:17px}
+.meta{font-size:13px;color:var(--muted);word-break:break-all}
+.su{margin:8px 0 4px;font-weight:600}
+details{margin:6px 0}
+summary{cursor:pointer;color:var(--pink-deep);font-size:14px;font-weight:600}
+.body{white-space:pre-wrap;background:var(--tint);border-radius:10px;padding:10px;font-size:14.5px;margin-top:6px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{font-family:inherit;font-weight:700;font-size:14px;border:0;border-radius:999px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+.b1{background:var(--pink);color:#fff}
+.b2{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.b3{background:var(--green-soft);color:#2C824A}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--tint);color:var(--ink2);margin-inline-start:6px}
+.sentlbl{color:#2C824A;font-size:13px;font-weight:700}
+.gate{max-width:320px;margin:80px auto;text-align:center}
+.gate input{font-family:inherit;font-size:18px;padding:10px;border:1.5px solid var(--line);border-radius:10px;width:100%;text-align:center;margin:10px 0}
+.help{font-size:13.5px;color:var(--ink2);background:var(--tint);border-radius:12px;padding:10px 12px;margin-bottom:14px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+const PIN='hopa', FROM='meytal@hopa.org.il';
+const SIG='\n\nמיטל פלג\nסמנכ"לית תפעול | הופה\nנייד: 053-6256653\nmeytal@hopa.org.il\nhopa.org.il';
+const LS={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let DATA=[], sent={}, filt='הכל';
+try{sent=JSON.parse(LS.get('shutafim_sent')||'{}')}catch(e){sent={}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
+function bodyOf(d){return d.p.join('\n\n')+SIG}
+function gmailUrl(d){
+  const q='authuser='+encodeURIComponent(FROM)+'&view=cm&fs=1&to='+encodeURIComponent(d.to.join(','))+
+    (d.cc.length?'&cc='+encodeURIComponent(d.cc.join(',')):'')+'&su='+encodeURIComponent(d.su)+'&body='+encodeURIComponent(bodyOf(d));
+  return 'https://mail.google.com/mail/?'+q;
+}
+function mailtoUrl(d){
+  return 'mailto:'+d.to.join(',')+'?'+(d.cc.length?'cc='+encodeURIComponent(d.cc.join(','))+'&':'')+'subject='+encodeURIComponent(d.su)+'&body='+encodeURIComponent(bodyOf(d));
+}
+function copy(t){
+  const ok=()=>toast('הועתק ✓');
+  try{ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fb);return} }catch(e){}
+  fb();
+  function fb(){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();ok()}catch(e){toast('לא הצליח להעתיק')}}
+}
+function mark(i,v){ if(v) sent[i]=new Date().toISOString().slice(0,10); else delete sent[i]; LS.set('shutafim_sent',JSON.stringify(sent)); render(); }
+function render(){
+  const groups=['הכל','לא נשלח','י"ב והכנה לשירות','מכינות','תקופת הצבא','אחרי הצבא','השכלה','תעסוקה'];
+  const list=DATA.filter(d=>filt==='הכל'||(filt==='לא נשלח'?!sent[d.i]:d.g===filt));
+  const nSent=DATA.filter(d=>sent[d.i]).length;
+  document.getElementById('app').innerHTML=`<div class="wrap">
+  <header><img src="hopa-logo.png" alt="הופה"><div><h1>פניות לשותפים</h1></div></header>
+  <p class="sub">${DATA.length} מיילים אישיים לקביעת פגישה. כל מייל נפתח מוכן, רק לעבור ולשלוח.</p>
+  <div class="from"><b>שולחת:</b> ${FROM} · החתימה כבר בתוך הטקסט.</div>
+  <div class="help"><b>בנייד:</b> "פתיחה בג'ימייל" פותח את המייל מוכן. אם נפתחת אפליקציית Gmail, לוודא למעלה בשורת <b>"מאת"</b> שנבחר <b>${FROM}</b> (לחיצה על השורה מחליפה חשבון). אם הטקסט לא נכנס, להשתמש ב"העתקת נושא" ו"העתקת טקסט".</div>
+  <div class="stats"><span>נשלחו: <b>${nSent}</b> / ${DATA.length}</span></div>
+  <div class="chips">${groups.map(g=>`<button class="chip ${g===filt?'on':''}" data-f="${esc(g)}">${esc(g)}</button>`).join('')}</div>
+  ${list.map(d=>`<div class="card ${sent[d.i]?'sent':''}">
+    <div class="org">${esc(d.org)}<span class="tag">${esc(d.g)}</span></div>
+    <div class="meta">אל: ${esc(d.to.join(', '))}${d.cc.length?' · עותק: '+esc(d.cc.join(', ')):''}</div>
+    <div class="su">${esc(d.su)}</div>
+    <details><summary>הצגת המייל</summary><div class="body">${esc(bodyOf(d))}</div></details>
+    <div class="btns">
+      <a class="btn b1" href="${gmailUrl(d)}" target="_blank" rel="noopener" data-open="${d.i}">פתיחה בג'ימייל</a>
+      <a class="btn b2" href="${mailtoUrl(d)}" data-open="${d.i}">אפליקציית מייל</a>
+      <button class="btn b2" data-cs="${d.i}">העתקת נושא</button>
+      <button class="btn b2" data-cb="${d.i}">העתקת טקסט</button>
+      ${sent[d.i]?`<button class="btn b3" data-un="${d.i}">✓ נשלח ${sent[d.i]} · ביטול</button>`:`<button class="btn b3" data-mk="${d.i}">סימון נשלח</button>`}
+    </div></div>`).join('')}
+  <p class="sub" style="margin-top:20px">הסימון "נשלח" נשמר במכשיר הזה בלבד. <a href="https://hopa.org.il">hopa.org.il</a></p>
+  </div>`;
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-f],[data-cs],[data-cb],[data-mk],[data-un],[data-open]'); if(!t) return;
+  const D=i=>DATA.find(d=>d.i==i);
+  if(t.dataset.f){filt=t.dataset.f;render();}
+  else if(t.dataset.cs) copy(D(t.dataset.cs).su);
+  else if(t.dataset.cb) copy(bodyOf(D(t.dataset.cb)));
+  else if(t.dataset.mk) mark(t.dataset.mk,true);
+  else if(t.dataset.un) mark(t.dataset.un,false);
+  else if(t.dataset.open && !sent[t.dataset.open]) setTimeout(()=>mark(t.dataset.open,true),600);
+});
+function load(){
+  fetch('shutafim-send-data.json?v=1').then(r=>r.json()).then(d=>{DATA=d;render()})
+   .catch(()=>{document.getElementById('app').innerHTML='<div class="gate">לא הצלחתי לטעון את הרשימה. לרענן את הדף.</div>'});
+}
+if(LS.get('hopa_shutafim_pin')===PIN) load();
+else{
+  document.getElementById('app').innerHTML='<div class="gate"><img src="hopa-logo.png" style="height:44px;margin:0 auto"><p>קוד צוות</p><input id="pin" inputmode="text" autocomplete="off"><button class="btn b1" id="go">כניסה</button><p id="err" style="color:#C2185B"></p></div>';
+  const go=()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){LS.set('hopa_shutafim_pin',PIN);load();} else document.getElementById('err').textContent='קוד לא נכון'; };
+  document.getElementById('go').onclick=go;
+  document.getElementById('pin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+}
+</script>
+</body>
+</html>
