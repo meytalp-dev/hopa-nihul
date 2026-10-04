@@ -36,6 +36,11 @@ summary{cursor:pointer;color:var(--pink-deep);font-size:14px;font-weight:600}
 .b2{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
 .b3{background:var(--green-soft);color:#2C824A}
 .tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--tint);color:var(--ink2);margin-inline-start:6px}
+.rtag{background:#E8F5EC;color:#2C824A}
+.reply{background:#E8F5EC;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14.5px}
+.reply .rh{font-weight:800;margin-bottom:4px}
+.reply .rn{margin-top:6px}
+.reply a{font-weight:700;color:#2C824A}
 .sentlbl{color:#2C824A;font-size:13px;font-weight:700}
 .gate{max-width:320px;margin:80px auto;text-align:center}
 .gate input{font-family:inherit;font-size:18px;padding:10px;border:1.5px solid var(--line);border-radius:10px;width:100%;text-align:center;margin:10px 0}
@@ -73,18 +78,20 @@ function copy(t){
 }
 function mark(i,v){ if(v) sent[i]=new Date().toISOString().slice(0,10); else delete sent[i]; LS.set('shutafim_sent',JSON.stringify(sent)); render(); }
 function render(){
-  const groups=['הכל','לא נשלח','י"ב והכנה לשירות','מכינות','תקופת הצבא','אחרי הצבא','השכלה','תעסוקה'];
-  const list=DATA.filter(d=>filt==='הכל'||(filt==='לא נשלח'?!sent[d.i]:d.g===filt));
-  const nSent=DATA.filter(d=>sent[d.i]).length;
+  const groups=['הכל','חזרו אליי','נשלח, ממתין','לא נשלח','י"ב והכנה לשירות','מכינות','תקופת הצבא','אחרי הצבא','השכלה','תעסוקה'];
+  const isSent=d=>!!(d.sentAt||sent[d.i]);
+  const list=DATA.filter(d=>filt==='הכל'||(filt==='חזרו אליי'?!!d.reply:filt==='נשלח, ממתין'?(isSent(d)&&!d.reply):filt==='לא נשלח'?!isSent(d):d.g===filt));
+  const nSent=DATA.filter(isSent).length, nRep=DATA.filter(d=>d.reply).length;
   document.getElementById('app').innerHTML=`<div class="wrap">
   <header><img src="hopa-logo.png" alt="הופה"><div><h1>פניות לשותפים</h1></div></header>
   <p class="sub">${DATA.length} מיילים אישיים לקביעת פגישה. כל מייל נפתח מוכן, רק לעבור ולשלוח.</p>
   <div class="from"><b>שולחת:</b> ${FROM} · החתימה כבר בתוך הטקסט.</div>
   <div class="help"><b>בנייד:</b> "פתיחה בג'ימייל" פותח את המייל מוכן. אם נפתחת אפליקציית Gmail, לוודא למעלה בשורת <b>"מאת"</b> שנבחר <b>${FROM}</b> (לחיצה על השורה מחליפה חשבון). אם הטקסט לא נכנס, להשתמש ב"העתקת נושא" ו"העתקת טקסט".</div>
-  <div class="stats"><span>נשלחו: <b>${nSent}</b> / ${DATA.length}</span></div>
+  <div class="stats"><span>נשלחו: <b>${nSent}</b> / ${DATA.length}</span><span>·</span><span>חזרו: <b>${nRep}</b></span><span>·</span><span>ממתינים לתשובה: <b>${nSent-nRep}</b></span></div>
   <div class="chips">${groups.map(g=>`<button class="chip ${g===filt?'on':''}" data-f="${esc(g)}">${esc(g)}</button>`).join('')}</div>
-  ${list.map(d=>`<div class="card ${sent[d.i]?'sent':''}">
-    <div class="org">${esc(d.org)}<span class="tag">${esc(d.g)}</span></div>
+  ${list.map(d=>`<div class="card ${isSent(d)?'sent':''}">
+    <div class="org">${esc(d.org)}<span class="tag">${esc(d.g)}</span>${d.reply?'<span class="tag rtag">חזרו אליי</span>':d.sentAt?'<span class="tag">נשלח '+esc(d.sentAt)+'</span>':''}</div>
+    ${d.reply?`<div class="reply"><div class="rh">📩 ${esc(d.reply.who)} · ${esc(d.reply.date)}</div><div>${esc(d.reply.text)}</div><div class="rn"><b>הצעד הבא:</b> ${esc(d.reply.next)}</div><a href="${esc(d.reply.url)}" target="_blank" rel="noopener">לשרשור בג'ימייל</a></div>`:''}
     <div class="meta">אל: ${esc(d.to.join(', '))}${d.cc.length?' · עותק: '+esc(d.cc.join(', ')):''}</div>
     <div class="su">${esc(d.su)}</div>
     <details><summary>הצגת המייל</summary><div class="body">${esc(bodyOf(d))}</div></details>
@@ -93,9 +100,9 @@ function render(){
       <a class="btn b2" href="${mailtoUrl(d)}" data-open="${d.i}">אפליקציית מייל</a>
       <button class="btn b2" data-cs="${d.i}">העתקת נושא</button>
       <button class="btn b2" data-cb="${d.i}">העתקת טקסט</button>
-      ${sent[d.i]?`<button class="btn b3" data-un="${d.i}">✓ נשלח ${sent[d.i]} · ביטול</button>`:`<button class="btn b3" data-mk="${d.i}">סימון נשלח</button>`}
+      ${d.sentAt?'':sent[d.i]?`<button class="btn b3" data-un="${d.i}">✓ נשלח ${sent[d.i]} · ביטול</button>`:`<button class="btn b3" data-mk="${d.i}">סימון נשלח</button>`}
     </div></div>`).join('')}
-  <p class="sub" style="margin-top:20px">הסימון "נשלח" נשמר במכשיר הזה בלבד. <a href="https://hopa.org.il">hopa.org.il</a></p>
+  <p class="sub" style="margin-top:20px">"נשלח" ו"חזרו אליי" מתעדכנים מתיבת המייל (עדכון אחרון: 4.10). סימון ידני של "נשלח" נשמר במכשיר הזה בלבד. <a href="https://hopa.org.il">hopa.org.il</a></p>
   </div>`;
 }
 document.addEventListener('click',e=>{
@@ -109,7 +116,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.open && !sent[t.dataset.open]) setTimeout(()=>mark(t.dataset.open,true),600);
 });
 function load(){
-  fetch('shutafim-send-data.json?v=4').then(r=>r.json()).then(d=>{DATA=d;render()})
+  fetch('shutafim-send-data.json?v='+Date.now()).then(r=>r.json()).then(d=>{DATA=d;render()})
    .catch(()=>{document.getElementById('app').innerHTML='<div class="gate">לא הצלחתי לטעון את הרשימה. לרענן את הדף.</div>'});
 }
 if(LS.get('hopa_shutafim_pin')===PIN) load();
