@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>הופה · מחשבים לבוגרים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--pink-deep:#C2185B;--pink-soft:#FCE7F2;--yellow:#FFF200;--yellow-soft:#FFFCE6;--ink:#111;--ink2:#3A3A3A;--muted:#6B6B6B;--line:#E9E7E4;--tint:#FAF8F5;--green:#3BA55C;--green-soft:#E8F5EC}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:#fff;color:var(--ink);line-height:1.55;font-size:16px}
+.topbar{height:6px;background:linear-gradient(90deg,var(--pink),#FFD500,var(--yellow))}
+.wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+header img{height:38px}
+h1{font-size:22px;margin:0;font-weight:800}
+h2{font-size:18px;margin:22px 0 8px;font-weight:800}
+.sub{color:var(--muted);font-size:14px;margin:4px 0 14px}
+.from{background:var(--yellow-soft);border:1px solid #F2E27A;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+.help{font-size:13.5px;color:var(--ink2);background:var(--tint);border-radius:12px;padding:10px 12px;margin-bottom:14px}
+.card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,.04);border-top:4px solid var(--pink)}
+.card.sent{border-top-color:var(--green);background:#FBFEFC}
+.org{font-weight:800;font-size:17px}
+.why{font-size:14px;color:var(--ink2);margin:4px 0}
+.meta{font-size:13px;color:var(--muted);word-break:break-all}
+.ltr{direction:ltr;unicode-bidi:embed}
+.su{margin:8px 0 4px;font-weight:600}
+details{margin:6px 0}
+summary{cursor:pointer;color:var(--pink-deep);font-size:14px;font-weight:600}
+.body{white-space:pre-wrap;background:var(--tint);border-radius:10px;padding:10px;font-size:14.5px;margin-top:6px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{font-family:inherit;font-weight:700;font-size:14px;border:0;border-radius:999px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+.b1{background:var(--pink);color:#fff}
+.b2{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.b3{background:var(--green-soft);color:#2C824A}
+.bx{background:#fff;color:var(--muted);border:1.5px solid var(--line)}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--tint);color:var(--ink2);margin-inline-start:6px}
+form.add{border:1.5px dashed var(--pink);border-radius:16px;padding:14px;background:var(--pink-soft)}
+form.add label{display:block;font-size:14px;font-weight:600;margin:8px 0 3px}
+form.add input{font-family:inherit;font-size:16px;padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;width:100%;background:#fff}
+.gate{max-width:320px;margin:80px auto;text-align:center}
+.gate input{font-family:inherit;font-size:18px;padding:10px;border:1.5px solid var(--line);border-radius:10px;width:100%;text-align:center;margin:10px 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<div id="clip" contenteditable="true" style="position:fixed;left:-9999px;top:0;opacity:0"></div>
+<script>
+const PIN='hopa', FROM='meytal@hopa.org.il', CC=['liron@hopa.org.il'];
+const SIG='\n\nמיטל פלג\nסמנכ"לית תפעול | עמותת הופה\nנייד: 053-6256653\nmeytal@hopa.org.il\nhopa.org.il';
+const ABOUT='עמותת הופה מלווה בוגרים של בתי ספר בשנים שאחרי התיכון: בשירות, בלימודים, בהכשרה מקצועית ובכניסה לעבודה. אנחנו פועלים ביותר מ-30 בתי ספר ברחבי הארץ, מלווים כ-5,000 בוגרים ונמצאים בתהליכי קליטה של בתי ספר נוספים. בכל בית ספר יש רכז/ת בוגרים שמכיר/ה כל בוגר באופן אישי.';
+const NEED='הרבה מהבוגרים שלנו נתקעים בגלל משהו בסיסי: אין להם מחשב. בלי מחשב קשה להגיש מועמדות למלגה, להירשם ללימודים, לכתוב קורות חיים, ללמוד בקורס מקוון או לחפש עבודה. טלפון לא מספיק לכל אלה.';
+const LS={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(matchMedia('(pointer:coarse)').matches&&innerWidth<900);
+
+/* גופים שמשפצים ומחלקים מחשבים — אין להם מייל גלוי, פונים בטלפון/וואטסאפ או בטופס באתר */
+const ORGS=[
+ {i:'mitchashvim',org:'מתחשבים',why:'אוספים מחשבים מחברות, משדרגים ומחלקים. יכולים להיות הגוף שמוחק ומשפץ בשבילנו, ואולי גם לתת מחשבים לבוגרים.',
+  phone:'0526689996',site:'https://www.mitchashvim.org.il/contact',
+  p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
+   'אנחנו מתחילים לאסוף מחשבים ניידים לבוגרים (במתנה), ואשמח לבדוק איתכם שלושה דברים:\n1. האם אתם מעבירים מחשבים גם לצעירים בגילאי 18–26, דרך הרכזים שלנו.\n2. כשחברה תתרום לנו מחשבים משומשים, האם תוכלו לבצע מחיקה מאובטחת ושדרוג.\n3. מה העלות של מחשב נייד משופץ אחד, כדי שנוכל לגייס עבורו תרומות.',
+   'אשמח לשיחה קצרה.\nתודה רבה,']},
+ {i:'ecommunity',org:'אקומיוניטי — התאגיד החברתי למחזור פסולת אלקטרונית',why:'תורמים מחשב נייד משופץ על כל 10 מחשבים ישנים שארגון ממחזר דרכם. כבר נתנו מחשבים לחיילים בודדים.',
+  phone:'046129999',site:'https://ecommunity.org.il/contact',
+  p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
+   'ראינו שאתם תורמים מחשבים ניידים משופצים לצעירים, למשל לחיילים בודדים. נשמח לבדוק אם בוגרי הופה יכולים להיות בין מקבלי המחשבים, ואם חברות שממחזרות דרככם יכולות לייעד את המחשבים שנצברים לבוגרים שלנו. הרכזים בבתי הספר יעבירו כל מחשב למי שהכי צריך אותו.',
+   'אשמח לשיחה קצרה.\nתודה רבה,']},
+ {i:'mehalev',org:'מחשב מהלב (רמת גן)',why:'עמותה רשומה שמטרתה חלוקת ציוד מחשוב לנזקקים ולעמותות. אין פרטי קשר במאגרים — לחפש בגוגל לפני פנייה.',
+  phone:'',site:'https://www.google.com/search?q=%D7%A2%D7%9E%D7%95%D7%AA%D7%AA+%D7%9E%D7%97%D7%A9%D7%91+%D7%9E%D7%94%D7%9C%D7%91',
+  p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
+   'ראיתי שהעמותה שלכם מחלקת ציוד מחשוב לנזקקים ולעמותות. נשמח לבדוק אם תוכלו להעביר מחשבים ניידים לבוגרים שלנו. הרכזים בבתי הספר יעבירו כל מחשב למי שהכי צריך אותו, ונשלח לכם דיווח על החלוקה.',
+   'אשמח לשיחה קצרה.\nתודה רבה,']}
+];
+
+function companyLetter(c){
+  return {i:c.i,org:c.org,to:[c.email],cc:CC,su:'בקשה לתרומת מחשבים ניידים לבוגרים — עמותת הופה',
+   p:[(c.name?'שלום '+c.name+',':'שלום,'),'שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
+    'הבקשה שלנו: אם '+c.org+' מחליפה מחשבים ניידים, נשמח לקבל את המחשבים שיוצאים משימוש. כל מחשב יינתן במתנה לבוגר או בוגרת שזקוקים לו.',
+    'מה מתאים לנו:\n• מחשבים ניידים במצב תקין, עם מטען\n• רצוי: 8GB זיכרון לפחות וכונן SSD\n• כל כמות עוזרת, גם כמה מחשבים בודדים',
+    'איך זה יעבוד:\n• אבטחת מידע: אפשר להעביר את המחשבים אחרי מחיקה אצלכם, או שנתאם מחיקה מאובטחת ושדרוג דרך גוף מקצועי.\n• חלוקה: רכזי הבוגרים בבתי הספר יעבירו כל מחשב למי שהכי צריך אותו.\n• דיווח: תקבלו מאיתנו סיכום של כמה מחשבים חולקו ובאילו בתי ספר, ואם תרצו גם סיפורים של בוגרים, באישורם.',
+    'מכותבת גם מנכ"לית העמותה, הגב\' לירון גולן.','אשמח לשיחה קצרה כדי לבדוק אם זה מתאים לכם.\nתודה רבה,']};
+}
+
+let sent={}, companies=[];
+try{sent=JSON.parse(LS.get('machshevim_sent')||'{}')}catch(e){sent={}}
+try{companies=JSON.parse(LS.get('machshevim_companies')||'[]')}catch(e){companies=[]}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+const bodyOf=d=>d.p.join('\n\n')+SIG;
+const htmlOf=d=>'<div dir="rtl" style="text-align:right;font-family:Arial,sans-serif;font-size:15px;line-height:1.6">'+
+  bodyOf(d).split('\n\n').map(x=>'<p dir="rtl" style="text-align:right;margin:0 0 12px">'+esc(x).replace(/\n/g,'<br>')+'</p>').join('')+
+  '<p dir="rtl" style="text-align:right"><a href="https://hopa.org.il">hopa.org.il</a></p></div>';
+const mailtoUrl=d=>'mailto:'+d.to.join(',')+'?'+(d.cc.length?'cc='+encodeURIComponent(d.cc.join(','))+'&':'')+'subject='+encodeURIComponent(d.su)+'&body='+encodeURIComponent(bodyOf(d));
+const gmailUrl=d=>'https://mail.google.com/mail/?authuser='+encodeURIComponent(FROM)+'&view=cm&fs=1&to='+encodeURIComponent(d.to.join(','))+(d.cc.length?'&cc='+encodeURIComponent(d.cc.join(',')):'')+'&su='+encodeURIComponent(d.su);
+function copyText(t){
+  const ok=()=>toast('הועתק ✓');
+  try{ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fb);return} }catch(e){}
+  fb();
+  function fb(){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();ok()}catch(e){toast('לא הצליח להעתיק')}}
+}
+function copyHtml(html){
+  const c=document.getElementById('clip');c.innerHTML=html;
+  const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r);
+  let ok=false;try{ok=document.execCommand('copy')}catch(e){}
+  s.removeAllRanges();c.innerHTML='';return ok;
+}
+function mark(i,v){ if(v) sent[i]=new Date().toISOString().slice(0,10); else delete sent[i]; LS.set('machshevim_sent',JSON.stringify(sent)); render(); }
+const sentBtn=i=>sent[i]?`<button class="btn b3" data-un="${i}">✓ נשלח ${sent[i]} · ביטול</button>`:`<button class="btn b3" data-mk="${i}">סימון נשלח</button>`;
+
+function render(){
+  const C=companies.map(companyLetter);
+  document.getElementById('app').innerHTML=`<div class="wrap">
+  <header><img src="hopa-logo.png" alt="הופה"><div><h1>מחשבים ניידים לבוגרים</h1></div></header>
+  <p class="sub">פניות לחברות שמחליפות מחשבים ולגופים שמשפצים ומחלקים. המחשבים ניתנים במתנה ומחולקים דרך רכזי הבוגרים.</p>
+  <div class="from"><b>שולחת:</b> <span class="ltr">${FROM}</span> · עותק ללירון · החתימה כבר בתוך הטקסט.</div>
+
+  <h2>1. גופים שמשפצים ומחלקים מחשבים</h2>
+  <div class="help">אין להם כתובת מייל גלויה. "העתקת הנוסח" ואז לשלוח בוואטסאפ, או להדביק בטופס באתר שלהם.</div>
+  ${ORGS.map(d=>`<div class="card ${sent[d.i]?'sent':''}">
+    <div class="org">${esc(d.org)}</div>
+    <div class="why">${esc(d.why)}</div>
+    ${d.phone?`<div class="meta">טלפון: <span class="ltr">${esc(d.phone)}</span></div>`:''}
+    <details><summary>הצגת הנוסח</summary><div class="body">${esc(bodyOf(d))}</div></details>
+    <div class="btns">
+      <button class="btn b1" data-ct="${d.i}">📋 העתקת הנוסח</button>
+      ${d.phone&&d.phone.startsWith('05')?`<a class="btn b2" href="https://wa.me/972${d.phone.slice(1)}" target="_blank" rel="noopener">💬 פתיחת צ'אט</a>`:''}
+      ${d.phone?`<a class="btn b2" href="tel:${d.phone}">📞 חיוג</a>`:''}
+      <a class="btn b2" href="${esc(d.site)}" target="_blank" rel="noopener">${d.phone?'טופס באתר':'חיפוש פרטי קשר'}</a>
+      ${sentBtn(d.i)}
+    </div></div>`).join('')}
+
+  <h2>2. חברות</h2>
+  <div class="help">מוסיפים חברה ואיש/אשת קשר (אחראי/ת אחריות חברתית או מנהל/ת מערכות מידע), ומתקבל מייל אישי מוכן.
+  <b>בנייד:</b> "שליחת מייל" פותח את אפליקציית המייל עם הכל בפנים — לבדוק שבשורת "מאת" נבחר <span class="ltr">${FROM}</span>.
+  <b>במחשב:</b> נפתחת טיוטה בג'ימייל והטקסט מועתק — ללחוץ בגוף המייל ו-Ctrl+V.</div>
+  ${C.map(d=>`<div class="card ${sent[d.i]?'sent':''}">
+    <div class="org">${esc(d.org)}</div>
+    <div class="meta">אל: <span class="ltr">${esc(d.to.join(', '))}</span> · עותק: <span class="ltr">${esc(d.cc.join(', '))}</span></div>
+    <div class="su">${esc(d.su)}</div>
+    <details><summary>הצגת המייל</summary><div class="body">${esc(bodyOf(d))}</div></details>
+    <div class="btns">
+      <a class="btn b1" href="${mailtoUrl(d)}" data-send="${d.i}">✉️ שליחת מייל</a>
+      <button class="btn b2" data-cb="${d.i}">העתקת טקסט</button>
+      ${sentBtn(d.i)}
+      <button class="btn bx" data-del="${d.i}">הסרה</button>
+    </div></div>`).join('')}
+  <form class="add" id="addf">
+    <div class="org">➕ הוספת חברה</div>
+    <label for="f-org">שם החברה</label><input id="f-org" required>
+    <label for="f-name">שם פרטי של איש/אשת הקשר (לא חובה)</label><input id="f-name">
+    <label for="f-email">מייל</label><input id="f-email" type="email" dir="ltr" required>
+    <div class="btns"><button class="btn b1" type="submit">הכנת מייל</button></div>
+  </form>
+  <p class="sub" style="margin-top:20px">החברות והסימונים נשמרים במכשיר הזה בלבד. <a href="https://hopa.org.il">hopa.org.il</a></p>
+  </div>`;
+  document.getElementById('addf').onsubmit=e=>{
+    e.preventDefault();
+    const org=document.getElementById('f-org').value.trim(), name=document.getElementById('f-name').value.trim(), email=document.getElementById('f-email').value.trim();
+    if(!org||!email) return;
+    companies.push({i:'c'+Date.now(),org,name,email});
+    LS.set('machshevim_companies',JSON.stringify(companies)); render(); toast('המייל מוכן ✓');
+  };
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-ct],[data-cb],[data-mk],[data-un],[data-send],[data-del]'); if(!t) return;
+  const O=i=>ORGS.find(d=>d.i==i), K=i=>companyLetter(companies.find(c=>c.i==i));
+  if(t.dataset.ct) copyText(bodyOf(O(t.dataset.ct)));
+  else if(t.dataset.cb) copyText(bodyOf(K(t.dataset.cb)));
+  else if(t.dataset.mk) mark(t.dataset.mk,true);
+  else if(t.dataset.un) mark(t.dataset.un,false);
+  else if(t.dataset.del){ if(confirm('להסיר את החברה מהרשימה?')){companies=companies.filter(c=>c.i!=t.dataset.del);LS.set('machshevim_companies',JSON.stringify(companies));render();} }
+  else if(t.dataset.send){
+    const d=K(t.dataset.send);
+    if(!isMobile){
+      e.preventDefault();
+      const ok=copyHtml(htmlOf(d));
+      window.open(ok?gmailUrl(d):gmailUrl(d)+'&body='+encodeURIComponent(bodyOf(d)),'_blank');
+      toast(ok?'הטקסט הועתק — ללחוץ בגוף המייל ו-Ctrl+V':'הטקסט נכנס לטיוטה');
+    }
+    if(!sent[d.i]) setTimeout(()=>mark(d.i,true),600);
+  }
+});
+if(LS.get('hopa_shutafim_pin')===PIN) render();
+else{
+  document.getElementById('app').innerHTML='<div class="gate"><img src="hopa-logo.png" style="height:44px;margin:0 auto"><p>קוד צוות</p><input id="pin" autocomplete="off"><button class="btn b1" id="go">כניסה</button><p id="err" style="color:#C2185B"></p></div>';
+  const go=()=>{ if(document.getElementById('pin').value.trim().toLowerCase()===PIN){LS.set('hopa_shutafim_pin',PIN);render();} else document.getElementById('err').textContent='קוד לא נכון'; };
+  document.getElementById('go').onclick=go;
+  document.getElementById('pin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+}
+</script>
+</body>
+</html>
