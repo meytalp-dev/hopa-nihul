@@ -61,7 +61,7 @@ const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(ma
 /* גופים שמשפצים ומחלקים מחשבים — אין להם מייל גלוי, פונים בטלפון/וואטסאפ או בטופס באתר */
 const ORGS=[
  {i:'mitchashvim',org:'מתחשבים',why:'אוספים מחשבים מחברות, משדרגים ומחלקים. יכולים להיות הגוף שמוחק ומשפץ בשבילנו, ואולי גם לתת מחשבים לבוגרים.',
-  phone:'0526689996',site:'https://www.mitchashvim.org.il/contact',
+  phone:'0526689996',site:'https://www.mitchashvim.org.il/contact',to:['office@2b-friendly.com'],su:'בוגרי הופה ומחשבים משופצים — בקשה לשיחה',
   p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
    'אנחנו מתחילים לאסוף מחשבים ניידים לבוגרים (במתנה), ואשמח לבדוק איתכם שלושה דברים:\n1. האם אתם מעבירים מחשבים גם לצעירים בגילאי 18–26, דרך הרכזים שלנו.\n2. כשחברה תתרום לנו מחשבים משומשים, האם תוכלו לבצע מחיקה מאובטחת ושדרוג.\n3. מה העלות של מחשב נייד משופץ אחד, כדי שנוכל לגייס עבורו תרומות.',
    'אשמח לשיחה קצרה.\nתודה רבה,']},
@@ -70,12 +70,13 @@ const ORGS=[
   p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
    'ראינו שאתם תורמים מחשבים ניידים משופצים לצעירים, למשל לחיילים בודדים. נשמח לבדוק אם בוגרי הופה יכולים להיות בין מקבלי המחשבים, ואם חברות שממחזרות דרככם יכולות לייעד את המחשבים שנצברים לבוגרים שלנו. הרכזים בבתי הספר יעבירו כל מחשב למי שהכי צריך אותו.',
    'אשמח לשיחה קצרה.\nתודה רבה,']},
- {i:'mehalev',org:'מחשב מהלב (רמת גן)',why:'עמותה רשומה שמטרתה חלוקת ציוד מחשוב לנזקקים ולעמותות. אין פרטי קשר במאגרים — לחפש בגוגל לפני פנייה.',
-  phone:'',site:'https://www.google.com/search?q=%D7%A2%D7%9E%D7%95%D7%AA%D7%AA+%D7%9E%D7%97%D7%A9%D7%91+%D7%9E%D7%94%D7%9C%D7%91',
+ {i:'mehalev',org:'מחשב מהלב (רמת גן)',why:'אוספים מחשבים משומשים מעסקים, טכנאים מתנדבים מתקנים אותם, ומחלקים לילדים ולסטודנטים לפי בקשות של עובדים סוציאליים ועמותות.',
+  phone:'',site:'https://www.mahshev.org.il/',to:['office@mahshev.org.il'],su:'מחשבים ניידים לבוגרי הופה — בקשה לשיחה',
   p:['שלום,','שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה.',ABOUT,NEED,
    'ראיתי שהעמותה שלכם מחלקת ציוד מחשוב לנזקקים ולעמותות. נשמח לבדוק אם תוכלו להעביר מחשבים ניידים לבוגרים שלנו. הרכזים בבתי הספר יעבירו כל מחשב למי שהכי צריך אותו, ונשלח לכם דיווח על החלוקה.',
    'אשמח לשיחה קצרה.\nתודה רבה,']}
 ];
+ORGS.forEach(o=>{o.to=o.to||[];o.cc=o.to.length?CC:[];if(o.to.length)o.p.splice(o.p.length-1,0,'מכותבת גם מנכ"לית העמותה, הגב\' לירון גולן.');});
 
 function companyLetter(c){
   return {i:c.i,org:c.org,to:[c.email],cc:CC,su:'בקשה לתרומת מחשבים ניידים לבוגרים — עמותת הופה',
@@ -120,14 +121,17 @@ function render(){
   <div class="from"><b>שולחת:</b> <span class="ltr">${FROM}</span> · עותק ללירון · החתימה כבר בתוך הטקסט.</div>
 
   <h2>1. גופים שמשפצים ומחלקים מחשבים</h2>
-  <div class="help">אין להם כתובת מייל גלויה. "העתקת הנוסח" ואז לשלוח בוואטסאפ, או להדביק בטופס באתר שלהם.</div>
+  <div class="help">"שליחת מייל" פותח מייל מוכן. אפשר גם בוואטסאפ: "העתקת הנוסח", ואז "פתיחת צ'אט" ולהדביק.</div>
   ${ORGS.map(d=>`<div class="card ${sent[d.i]?'sent':''}">
     <div class="org">${esc(d.org)}</div>
     <div class="why">${esc(d.why)}</div>
+    ${d.to.length?`<div class="meta">מייל: <span class="ltr">${esc(d.to.join(', '))}</span> · עותק: <span class="ltr">${esc(d.cc.join(', '))}</span></div>`:'<div class="meta">אין כתובת מייל גלויה — פונים בטלפון, בוואטסאפ או בטופס באתר.</div>'}
     ${d.phone?`<div class="meta">טלפון: <span class="ltr">${esc(d.phone)}</span></div>`:''}
+    ${d.su?`<div class="su">${esc(d.su)}</div>`:''}
     <details><summary>הצגת הנוסח</summary><div class="body">${esc(bodyOf(d))}</div></details>
     <div class="btns">
-      <button class="btn b1" data-ct="${d.i}">📋 העתקת הנוסח</button>
+      ${d.to.length?`<a class="btn b1" href="${mailtoUrl(d)}" data-send="${d.i}">✉️ שליחת מייל</a>`:''}
+      <button class="btn ${d.to.length?'b2':'b1'}" data-ct="${d.i}">📋 העתקת הנוסח</button>
       ${d.phone&&d.phone.startsWith('05')?`<a class="btn b2" href="https://wa.me/972${d.phone.slice(1)}" target="_blank" rel="noopener">💬 פתיחת צ'אט</a>`:''}
       ${d.phone?`<a class="btn b2" href="tel:${d.phone}">📞 חיוג</a>`:''}
       <a class="btn b2" href="${esc(d.site)}" target="_blank" rel="noopener">${d.phone?'טופס באתר':'חיפוש פרטי קשר'}</a>
@@ -175,7 +179,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.un) mark(t.dataset.un,false);
   else if(t.dataset.del){ if(confirm('להסיר את החברה מהרשימה?')){companies=companies.filter(c=>c.i!=t.dataset.del);LS.set('machshevim_companies',JSON.stringify(companies));render();} }
   else if(t.dataset.send){
-    const d=K(t.dataset.send);
+    const d=O(t.dataset.send)||K(t.dataset.send);
     if(!isMobile){
       e.preventDefault();
       const ok=copyHtml(htmlOf(d));
