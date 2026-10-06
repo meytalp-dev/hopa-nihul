@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>יום הסבר וגיוס למכינות · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;--shadow:0 4px 18px rgba(31,31,38,.07)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  button,textarea,input,select{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:680px;margin:0 auto;padding:0 16px}
+  .in.adm{max-width:1000px}
+
+  header{background:#111;color:#fff;padding:18px 0 26px;position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
+  .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo img{height:40px;display:block}
+  header h1{margin:0;font-size:22px;font-weight:900}
+  header .sub{font-size:13.5px;opacity:.85;margin-top:2px}
+  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+
+  main{padding:18px 0 40px}
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px}
+  .card h2{margin:0 0 2px;font-size:16.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h2 .num{background:var(--pink-soft);color:var(--pink-dark);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:800;flex:none}
+  .intro{border-top:5px solid var(--pink)}
+  .intro p{margin:0 0 10px;font-size:15.5px}
+  .intro p:last-child{margin-bottom:0}
+  .intro .lead{font-size:17px;font-weight:700}
+  .intro ul{margin:4px 0 12px;padding-inline-start:20px}
+  .intro li{margin-bottom:4px}
+  .ask{background:var(--pink-soft);border-radius:12px;padding:10px 14px;font-weight:700;color:var(--pink-dark)}
+  .hint{font-size:13px;color:var(--muted);margin:2px 0 10px}
+  input[type=text],input[type=tel],input[type=number],input[type=date],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none;color:var(--ink)}
+  input:focus,textarea:focus,select:focus{border-color:var(--pink)}
+  textarea{min-height:82px;resize:vertical}
+  .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 165px}
+  label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:8px 0 4px}
+
+  .toggle{display:flex;gap:8px;flex-wrap:wrap}
+  .toggle button{flex:1 1 150px;border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px 8px;font-weight:800;font-size:14px;cursor:pointer;color:var(--ink)}
+  .toggle button.on{border-color:var(--pink);background:var(--pink-soft);color:var(--pink-dark)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+  .chips button:hover{border-color:var(--pink)}
+  .chips button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:14px 30px;font-weight:800;font-size:16.5px;cursor:pointer;text-decoration:none}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 24px rgba(232,52,138,.33)}
+  .btn.pink:disabled{opacity:.6;cursor:default}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:8px 14px;border-radius:10px;font-weight:700}
+  .send{margin-top:18px;text-align:center}
+  .err{color:#d9534f;font-size:13.5px;margin-top:8px;min-height:18px;font-weight:600}
+  .req{color:var(--pink);font-weight:800}
+
+  .done{text-align:center;padding:38px 18px}
+  .done .big{font-size:64px;line-height:1}
+  .done h2{justify-content:center;font-size:22px;margin-top:10px}
+  .done p{color:var(--muted);font-size:15px}
+
+  .stat{display:flex;gap:10px;flex-wrap:wrap}
+  .stat>div{background:var(--pink-soft);border-radius:12px;padding:8px 16px;font-size:13px;color:var(--pink-dark);font-weight:600;text-align:center}
+  .stat b{display:block;font-size:22px;color:var(--ink)}
+  .resp{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+  .resp .who{font-weight:800;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .resp .tag{font-size:11.5px;border-radius:999px;padding:2px 10px;font-weight:800;background:var(--pink-soft);color:var(--pink-dark)}
+  .resp .tag.m{background:#fff6c2;color:#7a6500}
+  .resp .tag.n{background:#eee;color:#555}
+  .resp .row{font-size:13.5px;margin-top:6px}
+  .resp .row b{color:var(--pink-dark)}
+  .resp .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .pend{display:flex;flex-wrap:wrap;gap:6px}
+  .pend span{background:#f0ecf3;border-radius:999px;padding:4px 12px;font-size:13px}
+  [dir=ltr]{unicode-bidi:isolate}
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <div class="hrow">
+    <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
+    <div><h1 id="heroTitle">יום הסבר וגיוס למכינות</h1><div class="sub" id="heroSub">לתלמידי י"ב · בבית הספר שלכם</div></div>
+  </div>
+  <div class="meet" id="heroMeet">שעה אחת · 2 דקות הרשמה</div>
+</div></header>
+
+<main class="in" id="wrap"><div id="app"></div></main>
+
+<footer class="in" style="text-align:center;color:#7d7d8a;font-size:12.5px;padding:0 16px 40px">
+  עמותת <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a>
+</footer>
+<div id="toast" style="position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99"></div>
+
+<script>
+var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+var GS_SECRET='hopa-nihul-2026';
+var KEY_PREFIX='mechinot-';
+var ADMIN_PARAM='hopa';
+var LS_KEY='hopa-mechinot-draft';
+
+// שמות המכינות — לעדכן כאן אם צריך
+var MECHINOT='מכינת מגדלור ומכינת "אחד משלנו"';
+
+// בתי הספר של הופה — כלליים ודרוזיים (בלי החברה הערבית והבדואית)
+var SCHOOLS=[
+  {id:'bethaarava',n:'אורט בית הערבה'},
+  {id:'zurbarak',n:'אורט צור ברק'},
+  {id:'motzkin',n:'עתיד שמיים קריית מוצקין'},
+  {id:'akko',n:'אורט מרום עכו'},
+  {id:'beitshean',n:'אורט מגשימים בית שאן'},
+  {id:'ashkelon',n:'אורט אדיבי אשקלון'},
+  {id:'nechalim',n:'מרכז תורני טכנולוגי נחלים'},
+  {id:'ashdod',n:'יוצר עמל טכנולוגי אשדוד'},
+  {id:'ramatdavid',n:'עמל רמת דוד'},
+  {id:'siach',n:'תיכון שיח'},
+  {id:'hoshen',n:'תיכון חושן'},
+  {id:'palmachim',n:'יוצר עתיד פלמחים'},
+  {id:'tlv',n:'התיכון החברתי תל אביב-יפו'},
+  {id:'haifasocial',n:'התיכון החברתי חיפה'},
+  {id:'karmiel',n:'עתיד יוצר מגשימים כרמיאל'},
+  {id:'mitzpe',n:'התיכון החברתי מצפה רמון'},
+  {id:'drorgalil',n:'דרור גליל (קיבוץ רביד)'},
+  {id:'julis',n:"יוצר עתיד בנות ג'וליס"},
+  {id:'yarka',n:"תיכון ח'טוואת ירכא"}
+];
+var ROLES=['רכז/ת בוגרים','יועץ/ת','מחנך/ת י"ב','מנהל/ת','אחר'];
+var DAYS=['ראשון','שני','שלישי','רביעי','חמישי'];
+var TIMES=['08:00–10:00','10:00–12:00','12:00–14:00','14:00–16:00'];
+var INTEREST=[['yes','✅ כן, נשמח שיגיעו'],['maybe','🤔 רוצים לשמוע עוד'],['no','לא השנה']];
+
+var app=document.getElementById('app'),qs=new URLSearchParams(location.search);
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.style.opacity=1;setTimeout(function(){e.style.opacity=0},1900)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+function jsonp(params,tmo){
+  return new Promise(function(res,rej){
+    var cb='cb'+Math.random().toString(36).slice(2);
+    params=Object.assign({},params,{callback:cb});
+    var s=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||25000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+    s.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(s);
+  });
+}
+function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function jsonpRetry(p,tries,onA){
+  var e;
+  for(var i=1;i<=(tries||5);i++){
+    if(onA)onA(i);
+    try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאת שרת')}catch(x){e=x}
+    await delay(800+i*700);
+  }
+  throw e||new Error('נכשל');
+}
+
+var state=load();
+function load(){
+  try{var s=JSON.parse(lsGet(LS_KEY));if(s&&s.id)return s}catch(e){}
+  var pre=qs.get('school')||'';
+  return {id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+    school:SCHOOLS.some(function(x){return x.id===pre})?pre:'',schoolOther:'',
+    interest:'',name:'',role:'',phone:'',email:'',students:'',days:[],times:[],date:'',notes:'',sent:false};
+}
+function save(){lsSet(LS_KEY,JSON.stringify(state))}
+function schoolName(x){
+  if(x.school==='other')return x.schoolOther||'אחר';
+  var s=SCHOOLS.filter(function(y){return y.id===x.school})[0];return s?s.n:(x.schoolName||x.school||'');
+}
+function chipBtns(list,sel,ltr){return list.map(function(t){return '<button type="button"'+(ltr?' dir="ltr"':'')+' data-v="'+esc(t)+'"'+(sel.indexOf(t)>-1?' class="on"':'')+'>'+esc(t)+'</button>'}).join('')}
+
+function render(){
+  if(state.sent){renderDone();return}
+  var opts='<option value="">בחרו בית ספר…</option>'+SCHOOLS.map(function(s){
+    return '<option value="'+s.id+'"'+(state.school===s.id?' selected':'')+'>'+esc(s.n)+'</option>'}).join('')+
+    '<option value="other"'+(state.school==='other'?' selected':'')+'>בית ספר אחר</option>';
+  var showSlots=state.interest!=='no';
+  app.innerHTML=
+  '<div class="card intro">'+
+    '<p class="lead">מכינה לפני הצבא יכולה לשנות מסלול חיים</p>'+
+    '<p>הופה יצאה לשיתוף פעולה עם '+esc(MECHINOT)+'. מניסיוננו, בוגרי מכינה מצליחים יותר בצבא, מגיעים לתפקידים משמעותיים ומצליחים לשנות את חייהם.</p>'+
+    '<p class="ask">נציגי המכינות יגיעו אליכם לשעה אחת עם תלמידי י"ב. מומלץ בחום. נרשמים כאן 👇</p>'+
+    '<h2 style="margin-top:16px"><span class="num">1</span>בית הספר <span class="req">*</span></h2>'+
+    '<select id="school">'+opts+'</select>'+
+    '<div id="otherWrap" style="'+(state.school==='other'?'':'display:none')+'"><label class="fl">שם בית הספר והיישוב</label>'+
+    '<input type="text" id="schoolOther" value="'+esc(state.schoolOther)+'" maxlength="60"></div></div>'+
+
+  '<div class="card"><h2><span class="num">2</span>מעוניינים שהמכינות יגיעו אליכם? <span class="req">*</span></h2>'+
+    '<div class="toggle" id="interest">'+INTEREST.map(function(o){
+      return '<button type="button" data-v="'+o[0]+'"'+(state.interest===o[0]?' class="on"':'')+'>'+o[1]+'</button>'}).join('')+'</div></div>'+
+
+  '<div class="card"><h2><span class="num">3</span>איש/אשת קשר לתיאום <span class="req">*</span></h2>'+
+    '<div class="two"><div><label class="fl">שם מלא</label><input type="text" id="name" value="'+esc(state.name)+'" maxlength="40"></div>'+
+    '<div><label class="fl">טלפון נייד</label><input type="tel" id="phone" dir="ltr" inputmode="tel" value="'+esc(state.phone)+'" maxlength="15" placeholder="05X-XXXXXXX"></div></div>'+
+    '<label class="fl">תפקיד</label><div class="chips" id="role">'+chipBtns(ROLES,[state.role])+'</div>'+
+    '<label class="fl">מייל (לא חובה)</label><input type="text" id="email" dir="ltr" inputmode="email" value="'+esc(state.email)+'" maxlength="60"></div>'+
+
+  '<div id="slots" style="'+(showSlots?'':'display:none')+'">'+
+  '<div class="card"><h2><span class="num">4</span>כמה תלמידי י"ב רלוונטיים, בערך?</h2>'+
+    '<p class="hint">הערכה מספיקה, זה עוזר למכינות להיערך</p>'+
+    '<input type="number" id="students" dir="ltr" min="0" max="500" inputmode="numeric" value="'+esc(state.students)+'" style="max-width:140px"></div>'+
+
+  '<div class="card"><h2><span class="num">5</span>מתי נוח לכם? <span class="req">*</span></h2>'+
+    '<p class="hint">אפשר לסמן כמה ימים וכמה שעות, וכך יהיה לנו קל יותר לתאם</p>'+
+    '<label class="fl">ימים נוחים</label><div class="chips" id="days">'+chipBtns(DAYS,state.days)+'</div>'+
+    '<label class="fl">שעות נוחות</label><div class="chips" id="times">'+chipBtns(TIMES,state.times,1)+'</div>'+
+    '<label class="fl">יש תאריך מועדף? (לא חובה)</label><input type="date" id="date" dir="ltr" value="'+esc(state.date)+'" style="max-width:200px"></div>'+
+  '</div>'+
+
+  '<div class="card"><h2><span class="num" id="notesNum">'+(showSlots?6:4)+'</span>עוד משהו שחשוב שנדע?</h2>'+
+    '<textarea id="notes" placeholder="למשל: שבועות שלא מתאימים, מגמה מסוימת, שאלות למכינות">'+esc(state.notes)+'</textarea></div>'+
+  '<div class="send"><button class="btn pink" id="sendBtn">שליחה</button><div class="err" id="err"></div></div>';
+
+  $('school').onchange=function(){state.school=this.value;save();$('otherWrap').style.display=this.value==='other'?'':'none'};
+  ['schoolOther','name','phone','email','students','date','notes'].forEach(function(k){
+    $(k).addEventListener('input',function(){state[k]=this.value;save()});
+  });
+  [].slice.call($('interest').children).forEach(function(b){
+    b.onclick=function(){state.interest=b.dataset.v;save();
+      [].slice.call($('interest').children).forEach(function(x){x.classList.toggle('on',x===b)});
+      var show=state.interest!=='no';$('slots').style.display=show?'':'none';$('notesNum').textContent=show?6:4};
+  });
+  [].slice.call($('role').children).forEach(function(b){
+    b.onclick=function(){state.role=state.role===b.dataset.v?'':b.dataset.v;save();
+      [].slice.call($('role').children).forEach(function(x){x.classList.toggle('on',x.dataset.v===state.role)})};
+  });
+  ['days','times'].forEach(function(k){
+    [].slice.call($(k).children).forEach(function(b){
+      b.onclick=function(){var v=b.dataset.v,a=state[k],i=a.indexOf(v);
+        if(i>-1)a.splice(i,1);else a.push(v);b.classList.toggle('on');save()};
+    });
+  });
+  $('sendBtn').onclick=submit;
+}
+
+function phoneOk(p){var d=String(p).replace(/\D/g,'');return /^0\d{8,9}$/.test(d)||/^972\d{8,9}$/.test(d)}
+
+async function submit(){
+  var btn=$('sendBtn'),e=$('err');e.textContent='';
+  if(!state.school||(state.school==='other'&&!state.schoolOther.trim())){e.textContent='בחרו בית ספר.';return}
+  if(!state.interest){e.textContent='סמנו אם אתם מעוניינים.';return}
+  if(!state.name.trim()){e.textContent='חסר שם איש/אשת קשר.';return}
+  if(!phoneOk(state.phone)){e.textContent='מספר הטלפון לא נראה תקין.';return}
+  if(state.interest!=='no'&&(!state.days.length||!state.times.length)){e.textContent='סמנו לפחות יום אחד ושעה אחת שנוחים לכם.';return}
+  btn.disabled=true;btn.textContent='שולח…';
+  var no=state.interest==='no';
+  var payload={school:state.school,schoolName:schoolName(state),interest:state.interest,
+    name:state.name.trim(),role:state.role,phone:state.phone.trim(),email:state.email.trim(),
+    students:no?'':state.students,days:no?[]:state.days,times:no?[]:state.times,date:no?'':state.date,
+    notes:state.notes.trim(),ts:new Date().toISOString()};
+  var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
+  try{
+    if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
+    await jsonpRetry(params,5,function(a){if(a>1)btn.textContent='שולח… ('+a+')'});
+    state.sent=true;save();renderDone();scrollTo({top:0,behavior:'smooth'});
+  }catch(x){
+    try{
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});
+      state.sent=true;save();renderDone();scrollTo({top:0,behavior:'smooth'});
+    }catch(x2){
+      btn.disabled=false;btn.textContent='שליחה';
+      e.textContent='לא הצלחנו לשלוח. בדקו את החיבור לאינטרנט ונסו שוב, הפרטים שמורים.';
+    }
+  }
+}
+function renderDone(){
+  var no=state.interest==='no';
+  app.innerHTML='<div class="card done"><div class="big">'+(no?'🙏':'💛')+'</div><h2>תודה!</h2>'+
+    '<p>'+(no?'קיבלנו. אם יתאים בהמשך, נשמח לשמוע.':'קיבלנו את הפרטים. ניצור קשר בקרוב לתיאום מועד.')+'</p>'+
+    '<p><button class="btn ghost" id="again">מילוי נוסף לבית ספר אחר</button></p></div>';
+  $('again').onclick=function(){try{localStorage.removeItem(LS_KEY)}catch(e){}state=load();state.school='';render();scrollTo({top:0})};
+}
+
+/* ---------- ניהול ---------- */
+function waLink(p){var d=String(p||'').replace(/\D/g,'');if(d.indexOf('0')===0)d='972'+d.slice(1);return d?'https://wa.me/'+d:''}
+async function renderAdmin(){
+  $('heroTitle').textContent='מכינות · ניהול';
+  $('heroSub').textContent='הרשמות ליום הסבר וגיוס · חי מהגיליון';
+  $('heroMeet').textContent='למיטל ולצוות';
+  $('wrap').classList.add('adm');
+  app.innerHTML='<div class="card"><p class="hint" id="ls">טוען…</p></div>';
+  var store;
+  try{
+    var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(a){
+      var el=$('ls');if(el)el.textContent=a===1?'טוען…':'השרת של גוגל מתעצל, ניסיון '+a+'/6…';});
+    store=r.store;
+  }catch(e){app.innerHTML='<div class="card"><p class="hint">לא נטען ('+esc(e.message)+'). <button class="btn ghost" onclick="location.reload()">🔄 לנסות שוב</button></p></div>';return}
+
+  var items=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
+    .map(function(k){return store[k]||{}}).filter(function(x){return x.name&&!x._test})
+    .sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
+  var yes=items.filter(function(x){return x.interest==='yes'}),maybe=items.filter(function(x){return x.interest==='maybe'});
+  var studs=yes.concat(maybe).reduce(function(s,x){return s+(Number(x.students)||0)},0);
+  var done={};items.forEach(function(x){done[x.school]=1});
+  var pending=SCHOOLS.filter(function(s){return !done[s.id]});
+  var IL={yes:'מעוניינים',maybe:'רוצים לשמוע עוד',no:'לא השנה'},IC={yes:'',maybe:' m',no:' n'};
+
+  app.innerHTML=
+  '<div class="card"><div class="stat">'+
+    '<div>נרשמו<b>'+items.length+'</b></div>'+
+    '<div>מעוניינים<b>'+yes.length+'</b></div>'+
+    '<div>לשמוע עוד<b>'+maybe.length+'</b></div>'+
+    '<div>תלמידי י"ב (הערכה)<b>'+studs+'</b></div>'+
+  '</div>'+
+  '<div style="text-align:left;margin-top:12px"><button class="btn ghost" onclick="location.reload()">🔄 רענון</button> <button class="btn ghost" id="csv">⬇️ CSV</button> <button class="btn ghost" id="copy">📋 העתקת קישור לטופס</button></div></div>'+
+
+  '<div class="card"><h2>כל ההרשמות ('+items.length+')</h2>'+
+    (items.length?items.map(function(x){
+      var wa=waLink(x.phone);
+      return '<div class="resp"><div class="who">'+esc(x.schoolName||schoolName(x))+
+        '<span class="tag'+(IC[x.interest]||'')+'">'+(IL[x.interest]||'')+'</span>'+
+        '<span style="margin-inline-start:auto;font-weight:500;color:#7d7d8a;font-size:12.5px">'+esc(new Date(x.ts).toLocaleDateString('he-IL'))+'</span></div>'+
+        '<div class="row"><b>קשר:</b> '+esc(x.name)+(x.role?' · '+esc(x.role):'')+' · <span dir="ltr">'+esc(x.phone)+'</span>'+(x.email?' · <span dir="ltr">'+esc(x.email)+'</span>':'')+'</div>'+
+        (x.students?'<div class="row"><b>תלמידי י"ב:</b> '+esc(x.students)+'</div>':'')+
+        ((x.days||[]).length?'<div class="row"><b>ימים:</b> '+esc(x.days.join(', '))+' · <b>שעות:</b> <span dir="ltr">'+esc((x.times||[]).join(', '))+'</span></div>':'')+
+        (x.date?'<div class="row"><b>תאריך מועדף:</b> '+esc(new Date(x.date).toLocaleDateString('he-IL'))+'</div>':'')+
+        (x.notes?'<div class="row"><b>הערות:</b> '+esc(x.notes)+'</div>':'')+
+        (wa?'<div class="acts"><a class="btn ghost" href="'+wa+'" target="_blank" rel="noopener">💬 וואטסאפ</a> <a class="btn ghost" href="tel:'+esc(String(x.phone).replace(/[^\d+]/g,''))+'">📞 חיוג</a></div>':'')+
+      '</div>';
+    }).join(''):'<p class="hint">עדיין אין הרשמות.</p>')+'</div>'+
+
+  '<div class="card"><h2>בתי ספר שעוד לא נרשמו ('+pending.length+')</h2>'+
+    '<div class="pend">'+pending.map(function(s){return '<span>'+esc(s.n)+'</span>'}).join('')+'</div></div>';
+
+  $('copy').onclick=function(){
+    var u=location.origin+location.pathname;
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){toast('הקישור הועתק')},function(){prompt('הקישור לטופס:',u)});
+  };
+  $('csv').onclick=function(){
+    var head=['בית ספר','מעוניינים','איש קשר','תפקיד','טלפון','מייל','תלמידי י"ב','ימים','שעות','תאריך מועדף','הערות','נשלח'];
+    var rows=items.map(function(x){return [x.schoolName||schoolName(x),IL[x.interest]||'',x.name,x.role,x.phone,x.email,x.students,(x.days||[]).join(' | '),(x.times||[]).join(' | '),x.date,x.notes,x.ts]});
+    var csv='﻿'+[head].concat(rows).map(function(r){return r.map(function(c){return '"'+String(c==null?'':c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='mechinot-harshama.csv';a.click();
+  };
+}
+
+if(qs.get('admin')===ADMIN_PARAM)renderAdmin();else render();
+</script>
+</body>
+</html>
