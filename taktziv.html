@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תוכנית עבודה · 10,000 ₪ · הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A; --pink-dark:#c02673; --pink-soft:#fde7f2;
+    --yellow:#FFF200; --yellow-soft:#fffbcc;
+    --ink:#1b1b23; --muted:#6b6b7a; --line:#e6e6ee; --bg:#f6f6fa; --card:#fff;
+    --ok:#0f9d58; --warn:#e07b00; --bad:#d93025;
+    --shadow:0 6px 24px rgba(30,20,50,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;padding-bottom:96px}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;color:inherit}
+  a{color:var(--pink-dark)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+  .hero{background:linear-gradient(125deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;border-radius:0 0 24px 24px;padding:18px 0 22px;box-shadow:var(--shadow)}
+  .hero .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logobox{background:#fff;border-radius:12px;padding:6px 12px;display:inline-flex;flex:none}
+  .logobox img{height:32px;display:block}
+  .hero h1{font-size:21px;font-weight:800;flex:1;min-width:200px}
+  .hero p{font-size:14px;opacity:.92;width:100%}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:16px;box-shadow:var(--shadow)}
+  .sec h2{font-size:17px;font-weight:700;margin-bottom:4px}
+  .sec .lead{font-size:14px;color:var(--muted);margin-bottom:14px}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .f label{display:block;font-size:13px;font-weight:600;color:#4a4a58;margin-bottom:5px}
+  .f label .opt{font-weight:400;color:var(--muted)}
+  input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;font-size:16px;background:#fff}
+  textarea{resize:vertical;min-height:58px;line-height:1.5}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-soft)}
+  .bad{border-color:var(--bad)!important;background:#fff7f7!important}
+
+  .row{border:1.5px solid var(--line);border-radius:15px;padding:13px;margin-bottom:11px;position:relative}
+  .row .rn{font-size:13px;font-weight:700;color:var(--pink-dark);margin-bottom:7px}
+  .row .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:9px}
+  .money{position:relative}
+  .money input{padding-inline-start:30px;font-weight:700}
+  .money span{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700}
+  .rm{position:absolute;inset-inline-end:10px;top:9px;color:var(--muted);font-size:13px;padding:2px 6px;border-radius:7px}
+  .rm:hover{color:var(--bad);background:#fdeceb}
+  .add{width:100%;border:1.5px dashed #d4cfe0;border-radius:13px;padding:11px;font-weight:700;color:var(--pink-dark);font-size:15px}
+  .add:hover{border-color:var(--pink);background:#fffafd}
+
+  .bar{position:fixed;inset-inline:0;bottom:0;background:rgba(255,255,255,.97);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(30,20,50,.10);z-index:40;padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+  .bar .wrap{display:flex;align-items:center;gap:12px}
+  .tot{flex:1;min-width:0}
+  .tot b{font-size:19px;font-weight:800}
+  .tot small{display:block;font-size:13px;font-weight:600}
+  .s-ok{color:var(--ok)} .s-under{color:var(--warn)} .s-over{color:var(--bad)}
+  .btn{border-radius:12px;padding:11px 20px;font-size:15px;font-weight:700;white-space:nowrap}
+  .btn-main{background:var(--pink);color:#fff;box-shadow:0 4px 14px rgba(232,52,138,.32)}
+  .btn-main:disabled{background:#c9c6d4;box-shadow:none}
+  .btn-ghost{border:1.5px solid var(--line);background:#fff;color:#444}
+
+  .err{background:#fdeceb;border:1.5px solid #f4b8b3;color:#8f1d15;border-radius:13px;padding:11px 14px;margin-top:14px;font-size:14px;display:none}
+  .done{display:none;text-align:center}
+  .done .mark{width:58px;height:58px;border-radius:50%;background:#e6f6ec;color:var(--ok);display:grid;place-items:center;margin:0 auto 12px}
+  .done h2{font-size:21px}
+  .summary{text-align:start;background:#fafafd;border:1px solid var(--line);border-radius:13px;padding:14px;margin-top:16px;font-size:14.5px;white-space:pre-wrap;line-height:1.7}
+  .acts{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .foot{text-align:center;font-size:13px;color:var(--muted);padding:22px 0 8px}
+
+  /* ניהול */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:14px}
+  .chip:hover{border-color:var(--pink)}
+  .pcard{border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:10px}
+  .pcard .ph{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .pcard .meta{font-size:13px;color:var(--muted);margin-top:3px}
+  .pcard .det{white-space:pre-wrap;font-size:14px;margin-top:8px;line-height:1.65}
+  .tag{font-size:13px;font-weight:700;border-radius:999px;padding:2px 10px;background:#f1f0f6}
+
+  @media (max-width:520px){
+    .hero h1{font-size:19px}
+    .btn{padding:11px 15px}
+  }
+  @media print{ .bar,.acts,.hero{display:none} body{padding:0;background:#fff} .sec{box-shadow:none} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="logobox" href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
+    <h1>תוכנית עבודה · 10,000 ₪ לבוגרים</h1>
+    <p>על מה תרצו להוציא את התקציב השנה? כמה שורות קצרות, וזהו.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ───── הטופס ───── -->
+  <div id="form">
+    <section class="sec">
+      <h2>מי ממלא/ת?</h2>
+      <div class="grid" style="margin-top:12px">
+        <div class="f"><label for="school">בית הספר</label>
+          <select id="school"><option value="">בחרו בית ספר…</option></select></div>
+        <div class="f"><label for="coord">שם ממלא/ת הטופס</label><input id="coord" autocomplete="name"></div>
+        <div class="f"><label for="phone">טלפון</label><input id="phone" type="tel" inputmode="tel" dir="ltr" style="text-align:right" autocomplete="tel"></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>על מה תוציאו את ה-10,000 ₪?</h2>
+      <p class="lead">שורה לכל פעילות: מה עושים וכמה זה עולה.</p>
+      <div id="rows"></div>
+      <button type="button" class="add" id="addRow">+ עוד שורה</button>
+      <div class="f" style="margin-top:14px"><label for="notes">משהו נוסף? <span class="opt">(רשות)</span></label>
+        <textarea id="notes" placeholder="שאלה, הערה, צורך מיוחד"></textarea></div>
+      <div class="err" id="err"></div>
+    </section>
+  </div>
+
+  <!-- ───── סיום ───── -->
+  <section class="sec done" id="done">
+    <div class="mark"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>התוכנית התקבלה, תודה!</h2>
+    <p style="color:var(--muted)">נחזור אליכם אם יהיו שאלות.</p>
+    <div class="summary" id="summary"></div>
+    <div class="acts">
+      <button type="button" class="btn btn-ghost" id="copyBtn">העתקת הסיכום</button>
+      <button type="button" class="btn btn-ghost" id="editBtn">עריכה ושליחה מחדש</button>
+    </div>
+  </section>
+
+  <!-- ───── ניהול (?admin=1) ───── -->
+  <div id="admin" style="display:none">
+    <section class="sec" id="gate">
+      <h2>כניסה לניהול</h2>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input id="pw" type="password" placeholder="סיסמה">
+        <button class="btn btn-main" id="pwBtn">כניסה</button>
+      </div>
+      <p id="pwmsg" style="color:var(--bad);font-size:14px;margin-top:8px"></p>
+    </section>
+    <div id="adminBody" style="display:none">
+      <section class="sec">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <h2 id="kpi">טוען…</h2>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost" id="reloadBtn">רענון</button>
+            <button class="btn btn-ghost" id="csvBtn">ייצוא לאקסל</button>
+          </div>
+        </div>
+        <div id="missing" style="margin-top:12px;font-size:14px"></div>
+      </section>
+      <section class="sec"><h2>תוכניות שהתקבלו</h2><div id="cards"></div></section>
+    </div>
+  </div>
+
+  <div class="foot">עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
+</main>
+
+<div class="bar" id="bar">
+  <div class="wrap">
+    <div class="tot"><b id="totNum">0 ₪</b> <span style="color:var(--muted);font-weight:600">מתוך 10,000 ₪</span>
+      <small id="totState" class="s-under">נשארו 10,000 ₪</small></div>
+    <button type="button" class="btn btn-main" id="sendBtn">שליחה</button>
+  </div>
+</div>
+
+<script>
+var CONFIG = {
+  /* אותו Apps Script של דף הניהול. נשמר במפתח intake_תקציב · <בית ספר> */
+  EXEC_URL: 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec',
+  BUDGET: 10000,
+  KEY_PREFIX: 'תקציב · '
+};
+
+/* בתי הספר של תוכנית הבוגרים (כמו ב-plan.html) */
+var SCHOOLS = [
+  'אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק',
+  'דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב יפו',
+  'טכנולוגי אלמסתקבל תל שבע','טכנולוגי לקייה','מנאראת טורעאן','מרכז תורני טכנולוגי נחלים',
+  'עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד יוצר מגשימים',
+  'עתיד יוצר מגשימים בית שאן','עתיד שמיים מוצקין','תיכון ח׳טוואת ירכא אבו סנאן','תיכון חושן',
+  'תיכון טכנולוגי אלאמאני סחנין','תיכון יוצר עמל טכנולוגי אשדוד','תיכון יוצר עתיד בנות ג׳וליס',
+  'תיכון יוצר עתיד פלמחים','תיכון שיח'
+];
+
+var EXAMPLES = [
+  'למשל: מפגש מחזור לבוגרי תשפ״ה',
+  'למשל: מלגות ציוד ללימודים ל-10 בוגרים',
+  'למשל: שעות לרכז/ת לשיחות טלפון עם בוגרים',
+  'למשל: הסעה לערב תעסוקה',
+  'מה עושים?'
+];
+
+function $(id){ return document.getElementById(id); }
+function qp(k){ return new URLSearchParams(location.search).get(k); }
+function fmt(n){ return Number(n || 0).toLocaleString('he-IL'); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' })[c]; }); }
+/* localStorage זורק בדפדפן הפנימי של וואטסאפ — תמיד בתוך try */
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+
+SCHOOLS.forEach(function(s){
+  var o = document.createElement('option'); o.value = o.textContent = s; $('school').appendChild(o);
+});
+
+/* ═══════ שורות ═══════ */
+function addRow(r){
+  r = r || {};
+  var n = $('rows').children.length;
+  var d = document.createElement('div');
+  d.className = 'row';
+  d.innerHTML =
+    '<div class="rn"></div>' +
+    '<button type="button" class="rm" title="מחיקת שורה">מחיקה</button>' +
+    '<div class="f"><label>מה עושים?</label><textarea class="what" rows="2" placeholder="' + esc(EXAMPLES[Math.min(n, EXAMPLES.length - 1)]) + '"></textarea></div>' +
+    '<div class="two">' +
+      '<div class="f"><label>כמה עולה</label><div class="money"><span>₪</span><input class="amt" type="number" inputmode="numeric" min="0" step="100"></div></div>' +
+      '<div class="f"><label>כמה בוגרים <span class="opt">(רשות)</span></label><input class="grads" type="number" inputmode="numeric" min="0"></div>' +
+    '</div>';
+  d.querySelector('.what').value = r.what || '';
+  d.querySelector('.amt').value = r.amount || '';
+  d.querySelector('.grads').value = r.grads || '';
+  $('rows').appendChild(d);
+  renumber();
+}
+function renumber(){
+  var rows = $('rows').children;
+  for (var i = 0; i < rows.length; i++){
+    rows[i].querySelector('.rn').textContent = 'פעילות ' + (i + 1);
+    rows[i].querySelector('.rm').style.display = rows.length > 1 ? '' : 'none';
+  }
+}
+$('addRow').addEventListener('click', function(){ addRow(); refresh(); });
+$('rows').addEventListener('click', function(e){
+  if (!e.target.closest('.rm')) return;
+  e.target.closest('.row').remove(); renumber(); refresh();
+});
+document.addEventListener('input', function(e){
+  if (e.target.classList) e.target.classList.remove('bad');
+  refresh();
+});
+$('school').addEventListener('change', refresh);
+
+function collect(){
+  var lines = [];
+  Array.prototype.forEach.call($('rows').children, function(r){
+    var l = {
+      what: r.querySelector('.what').value.trim(),
+      amount: Number(r.querySelector('.amt').value) || 0,
+      grads: r.querySelector('.grads').value.trim()
+    };
+    if (l.what || l.amount) lines.push(l);
+  });
+  return {
+    school: $('school').value,
+    coord: $('coord').value.trim(),
+    phone: $('phone').value.trim(),
+    lines: lines,
+    total: lines.reduce(function(s, l){ return s + l.amount; }, 0),
+    notes: $('notes').value.trim()
+  };
+}
+
+function refresh(){
+  var d = collect(), left = CONFIG.BUDGET - d.total, st = $('totState');
+  $('totNum').textContent = fmt(d.total) + ' ₪';
+  if (left > 0){ st.className = 's-under'; st.textContent = 'נשארו ' + fmt(left) + ' ₪'; }
+  else if (left === 0){ st.className = 's-ok'; st.textContent = 'בדיוק 10,000 ₪'; }
+  else { st.className = 's-over'; st.textContent = 'חריגה של ' + fmt(-left) + ' ₪'; }
+  lsSet('hopa_taktziv', JSON.stringify(d));
+}
+
+/* ═══════ שליחה ═══════ */
+function validate(){
+  var errs = [], d = collect();
+  document.querySelectorAll('.bad').forEach(function(x){ x.classList.remove('bad'); });
+  if (!d.school){ $('school').classList.add('bad'); errs.push('לבחור בית ספר'); }
+  if (!d.coord){ $('coord').classList.add('bad'); errs.push('לכתוב שם'); }
+  Array.prototype.forEach.call($('rows').children, function(r){
+    var w = r.querySelector('.what'), a = r.querySelector('.amt');
+    if (w.value.trim() && !Number(a.value)){ a.classList.add('bad'); if (errs.indexOf('לכתוב סכום לכל פעילות') < 0) errs.push('לכתוב סכום לכל פעילות'); }
+    if (!w.value.trim() && Number(a.value)){ w.classList.add('bad'); if (errs.indexOf('לכתוב מה עושים בכל שורה עם סכום') < 0) errs.push('לכתוב מה עושים בכל שורה עם סכום'); }
+  });
+  if (!d.lines.length) errs.push('למלא לפחות פעילות אחת');
+  if (d.total > CONFIG.BUDGET) errs.push('הסכום עובר את 10,000 ₪, צריך להוריד ' + fmt(d.total - CONFIG.BUDGET) + ' ₪');
+  if (errs.length){
+    $('err').innerHTML = '<b>כמעט! נשאר:</b> ' + errs.map(esc).join(' · ');
+    $('err').style.display = 'block';
+    return null;
+  }
+  $('err').style.display = 'none';
+  if (d.total < CONFIG.BUDGET &&
+      !confirm('תכננתם ' + fmt(d.total) + ' ₪, נשארו ' + fmt(CONFIG.BUDGET - d.total) + ' ₪ לא מתוכננים. לשלוח בכל זאת?')) return null;
+  d.ts = new Date().toISOString();
+  return d;
+}
+
+function summaryText(d){
+  var s = 'תוכנית עבודה · 10,000 ₪ לבוגרים\n' + d.school + ' · ' + d.coord + (d.phone ? ' · ' + d.phone : '') + '\n\n';
+  d.lines.forEach(function(l){
+    s += '• ' + l.what + ' · ' + fmt(l.amount) + ' ₪' + (l.grads ? ' · ' + l.grads + ' בוגרים' : '') + '\n';
+  });
+  s += '\nסה״כ: ' + fmt(d.total) + ' ₪ מתוך 10,000 ₪';
+  if (d.notes) s += '\nהערות: ' + d.notes;
+  return s;
+}
+
+var lastData = null;
+$('sendBtn').addEventListener('click', function(){
+  var d = validate();
+  if (!d){ if ($('err').style.display === 'block') $('err').scrollIntoView({ block:'center', behavior:'smooth' }); return; }
+  var btn = this; btn.disabled = true; btn.textContent = 'שולח…';
+  /* POST בלבד — GET עם עברית מגיע לסקריפט כסימני שאלה */
+  var body = new URLSearchParams({ action:'intakeSubmit', school: CONFIG.KEY_PREFIX + d.school, json: JSON.stringify(d) }).toString();
+  var fin = false, done = function(){ if (fin) return; fin = true; finish(d); };
+  fetch(CONFIG.EXEC_URL, {
+    method:'POST', mode:'no-cors',
+    headers:{ 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: body
+  }).catch(function(){}).then(done);
+  setTimeout(done, 6000);   /* Apps Script איטי; הבקשה ממשיכה ברקע */
+});
+
+function finish(d){
+  lastData = d;
+  $('form').style.display = 'none'; $('bar').style.display = 'none';
+  $('done').style.display = 'block';
+  $('summary').textContent = summaryText(d);
+  document.body.style.paddingBottom = '20px';
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+$('editBtn').addEventListener('click', function(){
+  $('form').style.display = ''; $('bar').style.display = ''; $('done').style.display = 'none';
+  document.body.style.paddingBottom = '';
+  $('sendBtn').disabled = false; $('sendBtn').textContent = 'שליחה';
+});
+$('copyBtn').addEventListener('click', function(){
+  var b = this;
+  navigator.clipboard.writeText(summaryText(lastData)).then(function(){ b.textContent = 'הועתק'; setTimeout(function(){ b.textContent = 'העתקת הסיכום'; }, 1600); });
+});
+
+/* ═══════ ניהול (?admin=1) ═══════ */
+var PLANS = [];
+/* הקריאה הראשונה ל-Apps Script נכשלת לפעמים — ניסיון חוזר */
+function jsonp(params, cb, tries){
+  tries = tries == null ? 3 : tries;
+  var name = '__tcb' + Math.random().toString(36).slice(2), s = document.createElement('script'), settled = false;
+  function fail(err){
+    if (settled) return; settled = true;
+    try{ s.remove(); }catch(e){}
+    if (tries > 1) setTimeout(function(){ jsonp(params, cb, tries - 1); }, 800); else cb({ ok:false, error:err });
+  }
+  window[name] = function(r){ if (settled) return; settled = true; try{ delete window[name]; s.remove(); }catch(e){} cb(r); };
+  var p = {}; Object.keys(params).forEach(function(k){ p[k] = params[k]; }); p.callback = name;
+  s.onerror = function(){ fail('network'); };
+  s.src = CONFIG.EXEC_URL + '?' + new URLSearchParams(p).toString();
+  document.body.appendChild(s);
+  setTimeout(function(){ fail('timeout'); }, 15000);
+}
+
+function adminLoad(){
+  $('kpi').textContent = 'טוען…';
+  jsonp({ action:'storeAll', secret: lsGet('hopa_sync_pw') || '' }, function(r){
+    if (!r || !r.ok){
+      $('gate').style.display = ''; $('adminBody').style.display = 'none';
+      $('pwmsg').textContent = r && r.error === 'unauthorized' ? 'סיסמה שגויה.' : 'לא הצלחנו להתחבר. נסו שוב.';
+      return;
+    }
+    PLANS = [];
+    Object.keys(r.store || {}).forEach(function(k){
+      if (k.indexOf('intake_' + CONFIG.KEY_PREFIX) !== 0) return;
+      var d = r.store[k]; if (d && d.lines) PLANS.push(d);
+    });
+    PLANS.sort(function(a, b){ return String(a.school).localeCompare(String(b.school), 'he'); });
+    renderAdmin();
+  });
+}
+
+function renderAdmin(){
+  $('kpi').textContent = PLANS.length + ' מתוך ' + SCHOOLS.length + ' בתי ספר הגישו';
+  var got = PLANS.map(function(p){ return p.school; });
+  var miss = SCHOOLS.filter(function(n){ return got.indexOf(n) < 0; });
+  $('missing').innerHTML = miss.length
+    ? '<b>טרם הגישו (' + miss.length + ')</b>, לחיצה מעתיקה קישור אישי:<div class="chips">' +
+      miss.map(function(n){ return '<button type="button" class="chip" data-link="' + esc(n) + '">' + esc(n) + '</button>'; }).join('') + '</div>'
+    : '<b>כל בתי הספר הגישו.</b>';
+  $('cards').innerHTML = PLANS.length ? PLANS.map(function(p){
+    var cls = p.total === CONFIG.BUDGET ? 's-ok' : (p.total > CONFIG.BUDGET ? 's-over' : 's-under');
+    return '<div class="pcard"><div class="ph"><b>' + esc(p.school) + '</b><span class="tag ' + cls + '">' + fmt(p.total) + ' ₪</span></div>' +
+      '<div class="meta">' + esc(p.coord) + (p.phone ? ' · ' + esc(p.phone) : '') + (p.ts ? ' · ' + new Date(p.ts).toLocaleDateString('he-IL') : '') + '</div>' +
+      '<div class="det">' + esc(p.lines.map(function(l){ return '• ' + l.what + ' · ' + fmt(l.amount) + ' ₪' + (l.grads ? ' · ' + l.grads + ' בוגרים' : ''); }).join('\n') +
+        (p.notes ? '\nהערות: ' + p.notes : '')) + '</div></div>';
+  }).join('') : '<p style="color:var(--muted);margin-top:8px">עוד לא התקבלו תוכניות.</p>';
+}
+
+function toCsv(){
+  var rows = [['בית ספר','ממלא/ת','טלפון','פעילות','סכום ₪','כמה בוגרים','סה״כ לבית הספר','הערות','תאריך']];
+  PLANS.forEach(function(p){
+    p.lines.forEach(function(l){
+      rows.push([p.school, p.coord, p.phone, l.what, l.amount, l.grads, p.total, p.notes, p.ts ? new Date(p.ts).toLocaleDateString('he-IL') : '']);
+    });
+  });
+  var csv = '﻿' + rows.map(function(r){
+    return r.map(function(v){ return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\r\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8' }));
+  a.download = 'תוכניות-10000-בוגרים.csv';
+  a.click();
+}
+
+$('missing').addEventListener('click', function(e){
+  var b = e.target.closest('[data-link]'); if (!b) return;
+  var url = location.origin + location.pathname + '?school=' + encodeURIComponent(b.dataset.link), name = b.textContent;
+  navigator.clipboard.writeText(url).then(function(){ b.textContent = 'הקישור הועתק'; setTimeout(function(){ b.textContent = name; }, 1600); });
+});
+$('pwBtn').addEventListener('click', function(){
+  lsSet('hopa_sync_pw', $('pw').value.trim());
+  $('gate').style.display = 'none'; $('adminBody').style.display = '';
+  adminLoad();
+});
+$('pw').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('pwBtn').click(); });
+$('reloadBtn').addEventListener('click', adminLoad);
+$('csvBtn').addEventListener('click', toCsv);
+
+/* ═══════ אתחול ═══════ */
+(function init(){
+  if (qp('admin')){
+    $('form').style.display = 'none'; $('bar').style.display = 'none'; $('admin').style.display = '';
+    document.body.style.paddingBottom = '20px';
+    if (lsGet('hopa_sync_pw')){ $('gate').style.display = 'none'; $('adminBody').style.display = ''; adminLoad(); }
+    return;
+  }
+  var saved = null;
+  try{ saved = JSON.parse(lsGet('hopa_taktziv') || 'null'); }catch(e){}
+  if (saved){
+    $('school').value = saved.school || ''; $('coord').value = saved.coord || '';
+    $('phone').value = saved.phone || ''; $('notes').value = saved.notes || '';
+    (saved.lines || []).forEach(addRow);
+  }
+  while ($('rows').children.length < 3) addRow();
+  var qs = qp('school');
+  if (qs && SCHOOLS.indexOf(qs) >= 0) $('school').value = qs;
+  refresh();
+})();
+</script>
+</body>
+</html>
