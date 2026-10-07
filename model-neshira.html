@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>הופה · מודל ההפעלה למניעת נשירה 14–18</title>
-<meta name="description" content="מודל ההפעלה של הופה למניעת נשירה בגילאי 14–18: נוהל משרד החינוך ונוהל משרד העבודה בהפרדה, רמזור הנוכחות, תפקיד רכז/ת מניעת הנשירה, 12 כרטיסי התערבות, תוכנית עבודה, מדידה ונהלים.">
+<meta name="description" content="מודל ההפעלה של הופה למניעת נשירה בגילאי 14–18: שאלוני מיפוי לתלמידים, להורים ולצוות, רמזור שנגזר מהם, הגדרת תפקיד רכז/ת מניעת הנשירה, מה המחקר בארץ ובעולם ממליץ, כרטיסי התערבות, סדירויות ומדידה.">
 <meta property="og:title" content="הופה · מודל ההפעלה למניעת נשירה 14–18">
-<meta property="og:description" content="ספר עבודה אחד: שני הנהלים המחייבים, רמזור נוכחות, הגדרת תפקיד הרכז/ת, 12 כרטיסי התערבות, סדירויות ומדדים.">
+<meta property="og:description" content="שאלוני מיפוי ← רמזור ← מבוגר משמעותי ← מענה. ספר העבודה של הופה למניעת נשירה, כולל הגדרת תפקיד הרכז/ת והמלצות מהמחקר.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -18,8 +18,9 @@
   --ink:#111111; --ink-2:#3A3A3A; --muted:#6B6B6B;
   --line:#E9E7E4; --bg:#FFFFFF; --tint:#FAF8F5;
   --green:#3BA55C; --green-soft:#E8F5EC;
-  --orange:#E8862F; --orange-soft:#FDF0E3;
+  --amber:#E0A800; --amber-soft:#FFF6D6;
   --red:#D93A3A; --red-soft:#FDECEC;
+  --gray:#8A8A8A; --gray-soft:#F1F1F1;
   --blue:#3D7DD8; --blue-soft:#E7F0FB;
   --teal:#0B7FA6; --teal-soft:#E4F2F8;
   --r-lg:24px; --r-md:16px;
@@ -73,7 +74,8 @@ section{margin-bottom:46px;scroll-margin-top:30px}
 .mission{border:2px solid var(--pink);background:linear-gradient(180deg,#fff,var(--pink-soft) 200%);
   border-radius:var(--r-lg);padding:22px 26px;font-size:19px;font-weight:600;box-shadow:var(--shadow);margin:14px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
 .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:14px}
 .pr{background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px}
 .pr b{display:block;font-size:15px;color:var(--pink-deep);margin-bottom:3px}
@@ -83,26 +85,42 @@ table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff}
 th{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;text-align:right;padding:10px 14px;white-space:nowrap}
 td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
 tr:nth-child(even) td{background:var(--tint)}
-/* טבלאות הנהלים */
-.tbl-wrap.edu th{background:var(--blue-soft);color:#1F4E8C}
-.tbl-wrap.lab th{background:var(--teal-soft);color:#075E7C}
-.minbox{border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow);margin-bottom:14px;background:#fff}
-.minbox.edu{border:1px solid #B7D0F0;border-top:6px solid var(--blue)}
-.minbox.lab{border:1px solid #A8D3E4;border-top:6px solid var(--teal)}
-.minbox .who{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.04em;padding:3px 12px;border-radius:999px;margin-bottom:8px}
-.minbox.edu .who{background:var(--blue-soft);color:#1F4E8C}
-.minbox.lab .who{background:var(--teal-soft);color:#075E7C}
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
-@media(max-width:700px){.tiers{grid-template-columns:1fr}}
+/* שלושת הקולות */
+.voice{border-radius:var(--r-lg);padding:18px 20px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.voice .ic{font-size:28px;line-height:1}
+.voice h3{font-size:18px;margin:8px 0 4px}
+.voice .meta{font-size:13px;color:var(--muted);font-weight:600}
+.voice ul{margin:8px 0 0;padding-inline-start:20px;font-size:14px;color:var(--ink-2)}
+.voice ul li{margin-bottom:4px}
+.voice.st{border-top:6px solid var(--pink)}
+.voice.pa{border-top:6px solid var(--yellow-deep)}
+.voice.te{border-top:6px solid var(--blue)}
+/* רמזור */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.tiers.t3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:800px){.tiers{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tiers,.tiers.t3{grid-template-columns:1fr}}
 .tier{border-radius:var(--r-md);padding:15px 17px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
 .tier.green{border-top:6px solid var(--green)}
-.tier.orange{border-top:6px solid var(--orange)}
+.tier.yellow{border-top:6px solid var(--amber)}
 .tier.red{border-top:6px solid var(--red)}
+.tier.gray{border-top:6px solid var(--gray)}
 .tier h4{font-size:16px;margin:0 0 6px}
 .tier .trig{display:block;font-size:13px;font-weight:800;color:var(--ink);background:var(--tint);
-  border:1px solid var(--line);border-radius:10px;padding:7px 10px;margin-bottom:8px}
+  border:1px solid var(--line);border-radius:10px;padding:7px 10px;margin-bottom:8px;line-height:1.45}
 .tier p{margin:0;font-size:14px;color:var(--ink-2)}
 .tier ul{margin:6px 0 0;padding-inline-start:20px;font-size:13.8px;color:var(--ink-2)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-inline-end:4px}
+.dot.g{background:var(--green)} .dot.y{background:var(--amber)} .dot.r{background:var(--red)} .dot.n{background:var(--gray)}
+/* זרימה */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0 8px;counter-reset:fl}
+@media(max-width:760px){.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.flow{grid-template-columns:1fr}}
+.fl{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 15px;box-shadow:var(--shadow);position:relative}
+.fl::before{counter-increment:fl;content:counter(fl);position:absolute;top:-11px;inset-inline-end:12px;background:var(--yellow);
+  border:1px solid var(--yellow-deep);border-radius:999px;font-size:11.5px;font-weight:800;padding:1px 10px}
+.fl b{display:block;font-size:15px;color:var(--pink-deep)}
+.fl span{display:block;font-size:13px;color:var(--ink-2);line-height:1.5;margin-top:3px}
 .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 8px}
 @media(max-width:700px){.ladder{grid-template-columns:1fr 1fr}}
 .rung{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px;box-shadow:var(--shadow);position:relative}
@@ -114,15 +132,31 @@ tr:nth-child(even) td{background:var(--tint)}
 .month:first-child{border-top:none}
 .month .m{background:var(--pink-soft);color:var(--pink-deep);font-weight:800;padding:11px 13px;font-size:14.5px}
 .month .a{padding:11px 15px;font-size:14.5px}
+@media(max-width:480px){.month{grid-template-columns:88px 1fr}}
 .months{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
 .callout{border-radius:var(--r-md);padding:15px 19px;margin:12px 0;font-size:15px}
 .callout.y{background:var(--yellow-soft);border:1px solid var(--yellow-deep)}
 .callout.p{background:var(--pink-soft);border:1px solid #F3A9CC}
 .callout.r{background:var(--red-soft);border:1px solid #F0B4B4}
 .callout.b{background:var(--blue-soft);border:1px solid #B7D0F0}
+.callout.g{background:var(--green-soft);border:1px solid #A9D8B8}
 .callout b:first-child{display:block;margin-bottom:4px}
-.quote{border-inline-start:4px solid var(--yellow-deep);background:var(--yellow-soft);
-  border-radius:0 var(--r-md) var(--r-md) 0;padding:12px 18px;margin:12px 0;font-size:15px;font-weight:600;color:var(--ink-2)}
+/* מחקר */
+.finding{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 22px;box-shadow:var(--shadow);margin-bottom:12px;
+  border-inline-start:6px solid var(--teal)}
+.finding .src{display:inline-block;font-size:12px;font-weight:800;color:#075E7C;background:var(--teal-soft);border-radius:999px;padding:2px 11px;margin-bottom:6px}
+.finding h3{font-size:17.5px;margin-bottom:4px}
+.finding p{font-size:15px;margin:6px 0}
+.finding .so{font-size:14.5px;background:var(--yellow-soft);border:1px solid var(--yellow-deep);border-radius:12px;padding:9px 13px;margin-top:10px}
+.finding .so b{color:var(--ink)}
+.finding.il{border-inline-start-color:var(--blue)}
+.finding.il .src{color:#1F4E8C;background:var(--blue-soft)}
+.recs{counter-reset:rc;list-style:none;padding:0;margin:10px 0}
+.recs li{counter-increment:rc;position:relative;padding:12px 16px 12px 16px;padding-inline-start:52px;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-md);margin-bottom:8px;box-shadow:var(--shadow);font-size:15px}
+.recs li::before{content:counter(rc);position:absolute;inset-inline-start:14px;top:12px;width:26px;height:26px;border-radius:8px;background:var(--pink);color:#fff;
+  font-weight:900;font-size:13.5px;display:flex;align-items:center;justify-content:center}
+.recs li b{display:block}
 .toc{background:var(--tint);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 22px;margin:22px 0 0}
 .toc b{display:block;font-size:13px;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
 .toc ol{margin:0;padding-inline-start:20px;columns:2;column-gap:26px;font-size:14.5px}
@@ -135,9 +169,7 @@ tr:nth-child(even) td{background:var(--tint)}
   border:1.5px solid var(--line);background:#fff;color:var(--ink-2);cursor:pointer}
 .filters button.on{background:var(--pink);border-color:var(--pink);color:#fff}
 details.icard{border:1px solid var(--line);border-radius:var(--r-md);background:#fff;box-shadow:var(--shadow);
-  margin-bottom:10px;overflow:hidden}
-details.icard[data-axis="18-26"]{border-inline-start:5px solid var(--yellow-deep)}
-details.icard[data-axis="14-18"]{border-inline-start:5px solid var(--pink)}
+  margin-bottom:10px;overflow:hidden;border-inline-start:5px solid var(--pink)}
 details.icard summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
 details.icard summary::-webkit-details-marker{display:none}
 .icard .no{flex:none;width:30px;height:30px;border-radius:9px;background:var(--tint);border:1px solid var(--line);
@@ -145,10 +177,10 @@ details.icard summary::-webkit-details-marker{display:none}
 .icard .ttl{flex:1;min-width:0}
 .icard .ttl b{display:block;font-size:16.5px;font-weight:800}
 .icard .ttl .meta{font-size:12.5px;color:var(--muted);margin-top:3px}
-.tag{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 9px;border-radius:999px;margin-inline-end:5px;
+.tag{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 9px;border-radius:999px;margin-inline-end:5px;margin-bottom:3px;
   border:1px solid var(--line);background:var(--tint);color:var(--ink-2)}
 .tag.red{background:var(--red-soft);border-color:#F0B4B4;color:#A32626}
-.tag.orange{background:var(--orange-soft);border-color:#EBC79B;color:#95571A}
+.tag.yellow{background:var(--amber-soft);border-color:#EBD27A;color:#7A5C00}
 .tag.green{background:var(--green-soft);border-color:#A9D8B8;color:#256B39}
 .tag.all{background:var(--blue-soft);border-color:#B7D0F0;color:#2A5DA6}
 .icard .body{padding:2px 18px 18px;font-size:15px}
@@ -157,11 +189,23 @@ details.icard summary::-webkit-details-marker{display:none}
 .icard .body li{margin-bottom:5px}
 .icard .foot{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--ink-2)}
 .icard .foot span{display:block;margin-bottom:3px}
+/* פרק מקופל */
+details.fold{border:1px dashed #B9B5AF;border-radius:var(--r-lg);background:var(--tint);margin:14px 0}
+details.fold>summary{cursor:pointer;list-style:none;padding:16px 20px;font-weight:800;font-size:16px;display:flex;gap:10px;align-items:center}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::after{content:"＋";margin-inline-start:auto;color:var(--pink-deep);font-size:20px}
+details.fold[open]>summary::after{content:"－"}
+details.fold>summary small{display:block;font-weight:500;font-size:13.5px;color:var(--muted)}
+details.fold .fbody{padding:0 20px 18px}
 .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
 .lk{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
   padding:14px 16px;box-shadow:var(--shadow)}
 .lk b{display:block;font-size:15.5px;color:var(--pink-deep)}
 .lk span{display:block;font-size:13px;color:var(--muted);margin-top:3px;line-height:1.5}
+.qlist{margin:6px 0;padding-inline-start:22px;font-size:14.5px}
+.qlist li{margin-bottom:6px}
+.qlist .ans{display:block;font-size:12.5px;color:var(--muted)}
+.ltr{direction:ltr;unicode-bidi:isolate}
 footer{border-top:1px solid var(--line);background:var(--tint);padding:26px 0 38px;margin-top:26px}
 footer .frow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 footer img{height:40px}
@@ -169,9 +213,9 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
 @media print{
   .topbar,.filters,.toc{display:none}
   body{font-size:12.5px}
-  details.icard{break-inside:avoid}
-  details.icard .body{display:block !important}
-  .card,.tbl-wrap,.months,.minbox{break-inside:avoid;box-shadow:none}
+  details.icard,details.fold{break-inside:avoid}
+  details.icard .body,details.fold .fbody{display:block !important}
+  .card,.tbl-wrap,.months,.finding,.voice{break-inside:avoid;box-shadow:none}
 }
 </style>
 </head>
@@ -185,33 +229,33 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
         <img src="hopa-logo.png" alt="הופה">
         <span class="org"><b>הופה</b><span>hopa.org.il · פתאום הכל נראה אפשרי</span></span>
       </a>
-      <span class="datechip">טיוטה לעבודה · ספטמבר 2026 · תשפ"ז</span>
+      <span class="datechip">טיוטה לעבודה · אוקטובר 2026 · תשפ"ז</span>
     </div>
     <h1>מודל ההפעלה · מניעת נשירה 14–18</h1>
-    <p class="sub">ספר העבודה של הופה לציר הנשירה: שני הנהלים המחייבים (משרד החינוך ומשרד העבודה) בהפרדה מלאה, רמזור הנוכחות של הופה, הגדרת תפקיד רכז/ת מניעת הנשירה, 12 כרטיסי התערבות, סדירויות, מדידה ונהלים.</p>
-    <p class="method">בתי הספר של הופה אינם שייכים כולם לאותו פיקוח: חלקם בפיקוח משרד החינוך וחלקם בפיקוח מינהל הכשרה מקצועית במשרד העבודה. לכל אחד נוהל ביקור סדיר משלו, עם הגדרות, טפסים ולוחות זמנים שונים. המודל הזה מפריד ביניהם במפורש (פרקים 3–5), ומעליהם מניח שכבה אחת של הופה שזהה בכל בית ספר.</p>
+    <p class="sub">ספר העבודה של הופה לציר הנשירה. הכול מתחיל בשאלוני מיפוי לשלושה קולות: התלמיד, ההורים והמחנך/ת. מהם נגזר הרמזור, ומהרמזור נגזרים הליווי, המבוגר המשמעותי והמענה.</p>
+    <p class="method">המודל כולל את שאלוני המיפוי ואת הדרך לקרוא אותם, את הגדרת התפקיד של רכז/ת מניעת הנשירה עם הסדירויות, את מה שהמחקר בארץ ובעולם ממליץ, ואת כרטיסי ההתערבות. מעקב הנוכחות היומי נשאר באחריות כל בית ספר ולפי הנוהל שלו, ולכן אינו חלק מהמודל. הנהלים מקופלים בנספח, לעיון בלבד.</p>
 
     <nav class="toc">
       <b>תוכן העניינים</b>
       <ol>
         <li><a href="#s1">רקע, חזון ועקרונות</a></li>
-        <li><a href="#s2">מושגי יסוד ואוכלוסיית היעד</a></li>
-        <li><a href="#s3">שני משרדים, שני נהלים</a></li>
-        <li><a href="#s4">נוהל משרד החינוך</a></li>
-        <li><a href="#s5">נוהל משרד העבודה</a></li>
-        <li><a href="#s6">רמזור הנוכחות של הופה</a></li>
+        <li><a href="#s2">מה המחקר אומר: בארץ ובעולם</a></li>
+        <li><a href="#s3">שאלוני המיפוי: שלושה קולות</a></li>
+        <li><a href="#s4">מהשאלונים לרמזור</a></li>
+        <li><a href="#s5">מה עושים בכל צבע</a></li>
+        <li><a href="#s6">מחזור המיפוי לאורך השנה</a></li>
         <li><a href="#s7">רכז/ת מניעת נשירה: התפקיד</a></li>
-        <li><a href="#s8">מי אחראי על מה</a></li>
-        <li><a href="#s9">קליטת בית ספר חדש ופרטיות</a></li>
-        <li><a href="#s10">12 כרטיסי ההתערבות</a></li>
-        <li><a href="#s11">סולם ההסלמה הבית-ספרי</a></li>
-        <li><a href="#s12">סדירויות ולוח השנה</a></li>
+        <li><a href="#s8">הסדירויות של הרכז/ת</a></li>
+        <li><a href="#s9">מי אחראי על מה</a></li>
+        <li><a href="#s10">קליטת בית ספר ופרטיות</a></li>
+        <li><a href="#s11">12 כרטיסי ההתערבות</a></li>
+        <li><a href="#s12">לוח השנה</a></li>
         <li><a href="#s13">תוכנית עבודה ותקציב צבוע</a></li>
-        <li><a href="#s14">מדידה, תיעוד ודיווח</a></li>
+        <li><a href="#s14">מדידה ודיווח</a></li>
         <li><a href="#s15">מאגר המענים והרשת הקהילתית</a></li>
-        <li><a href="#s16">נהלים, גבולות ואתיקה</a></li>
+        <li><a href="#s16">גבולות, אתיקה ומצבי חירום</a></li>
         <li><a href="#s17">הכשרה וקהילת רכזים</a></li>
-        <li><a href="#s18">נספחים וכלים</a></li>
+        <li><a href="#s18">נספחים</a></li>
       </ol>
     </nav>
   </div>
@@ -222,8 +266,8 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
 <!-- ═══════════ חלק א ═══════════ -->
 <div class="part">
   <b>חלק א</b>
-  <h2>התפיסה והמסגרת המחייבת</h2>
-  <p>מה אנחנו עושים, ומה החוק והנהלים מחייבים. הפרקים 3–5 הם החלק שכל רכז/ת חייב/ת לדעת לפי הפיקוח של בית הספר שלו/ה.</p>
+  <h2>התפיסה, ומה המחקר אומר</h2>
+  <p>למה אנחנו עובדים כך, ועל מה זה נשען.</p>
 </div>
 
 <section id="s1">
@@ -231,389 +275,423 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
 
   <div class="card">
     <h3>הרקע</h3>
-    <p>הופה פועלת ליצירת רצף ליווי אחד לבני נוער וצעירים מגיל 14 עד 26. הציר הראשון, 14–18, מתרחש בתוך בית הספר, ובו נמצאת נקודת ההתערבות הזולה והמשפיעה ביותר: הרגע שבו תלמיד עדיין נמצא במסגרת אבל כבר מתחיל להתנתק ממנה. זו הנשירה הסמויה, והיא עיקר העבודה.</p>
-    <p>שנת תשפ"ז היא השנה שבה התחום עובר מעבודה נקודתית למערך מובנה: תוכנית עבודה בכל בית ספר, תקציב צבוע, הכשרות, קהילת רכזים, וחיבור שיטתי למאגר המענים.</p>
+    <p>הופה פועלת ליצירת רצף ליווי אחד לבני נוער וצעירים מגיל 14 עד 26. הציר הראשון, 14–18, מתרחש בתוך בית הספר. שם נמצאת נקודת ההתערבות הזולה והמשפיעה ביותר: הרגע שבו תלמיד עדיין במסגרת, אבל כבר מתחיל להתנתק ממנה. זו הנשירה הסמויה, והיא עיקר העבודה.</p>
+    <p>בשנת תשפ"ז התחום עובר מעבודה נקודתית למערך מובנה, שנשען על <b>מיפוי שיטתי של כל תלמיד</b>: שלושה שאלונים קצרים, מהתלמיד, מההורים ומהמחנך/ת. מהם בונים תמונה, ממנה רמזור, ומהרמזור תוכנית אישית.</p>
   </div>
 
   <div class="mission">
-    ליצור מציאות שבה תלמיד שמתחיל להתרחק ממערכת החינוך מזוהה מוקדם, מקבל מבוגר משמעותי אחד שלא נעלם, ומחובר בזמן אמת למענה שמתאים לו — כדי שהוא יסיים את בית הספר וימשיך לרצף הבוגרים ולא לרצף הניתוק.
+    ליצור מציאות שבה כל תלמיד מוכר בשמו ובחוזקות שלו, תלמיד שמתחיל להתרחק מזוהה מוקדם, יש לו מבוגר משמעותי אחד שלא נעלם, והוא מחובר בזמן למענה שמתאים לו. כך הוא מסיים את בית הספר וממשיך לרצף הבוגרים, ולא לרצף הניתוק.
   </div>
 
   <div class="grid2">
     <div class="card">
       <h3>ייעוד</h3>
-      <p>הפעלת מערך בית-ספרי לזיהוי מוקדם וללוויי אישי של תלמידים בסיכון נשירה בגילאי 14–18, הנשען על מעקב נוכחות שוטף, על קשר אנושי קבוע, ועל מאגר מענים ארצי שמחבר את התלמיד לעולם שמחוץ לכיתה.</p>
+      <p>הפעלת מערך בית-ספרי של מיפוי, זיהוי מוקדם וליווי אישי לתלמידים בסיכון נשירה בגילאי 14–18. המערך נשען על שאלוני מיפוי בשלושה קולות, על קשר אנושי קבוע, ועל מאגר מענים ארצי שמחבר את התלמיד לעולם שמחוץ לכיתה.</p>
     </div>
     <div class="card">
       <h3>מטרה</h3>
-      <p>שכל תלמיד בסיכון בבתי הספר של הופה יהיה מזוהה בשמו, יהיה לו מבוגר משמעותי מלווה, תהיה לו תוכנית אישית, ויהיה לו לפחות מענה חיצוני אחד מותאם — ושהמעבר שלו לרצף הבוגרים יקרה בלי ניתוק.</p>
+      <p>שכל תלמיד בשכבות היעד ימופה. שלכל תלמיד בצהוב ובאדום יהיו מבוגר משמעותי בשמו, מטרה לשליש ותוכנית אישית. שיהיה לו לפחות מענה מותאם אחד. ושהמעבר שלו לרצף הבוגרים יקרה בלי ניתוק.</p>
     </div>
   </div>
 
   <div class="card">
     <h3>תוצאות מצופות</h3>
     <ul>
+      <li>תמונת מצב ממופה ומתעדכנת על כל תלמיד בשכבות היעד, משלושה קולות</li>
+      <li>עלייה בשיעור התלמידים שמציינים מבוגר משמעותי בבית הספר</li>
+      <li>תנועה ברמזור: תלמידים שעוברים מאדום לצהוב ומצהוב לירוק בין המיפויים</li>
+      <li>עלייה בשיעור התלמידים בסיכון שחוברו למענה חיצוני מותאם, והחיבור נסגר בפועל</li>
       <li>ירידה בנשירה הגלויה ובנשירה הסמויה בשכבות היעד</li>
-      <li>עלייה בשיעור התלמידים המדווחים על מבוגר משמעותי בבית הספר</li>
-      <li>עלייה בשיעור התלמידים בסיכון שחוברו למענה חיצוני מותאם</li>
-      <li>עמידה מלאה בחובות הדיווח של הנוהל הרלוונטי לבית הספר</li>
-      <li>מעבר מסודר של כלל מסיימי י"ב לרצף הבוגרים, בלי נקודת ניתוק</li>
+      <li>מעבר מסודר של כל מסיימי י"ב לרצף הבוגרים, בלי נקודת ניתוק</li>
     </ul>
   </div>
 
   <div class="card">
-    <h3>שישה עקרונות עבודה</h3>
+    <h3>שבעה עקרונות עבודה</h3>
     <div class="principles">
-      <div class="pr"><b>נוכחות היא הסימן</b><span>מעקב נוכחות יומי הוא הכלי המרכזי. תלמיד שנעדר הוא תלמיד שמתחיל להתרחק.</span></div>
-      <div class="pr"><b>מבוגר משמעותי אחד</b><span>קשר יציב עם איש צוות אחד. אדם אחד, לאורך זמן, שלא נעלם.</span></div>
-      <div class="pr"><b>מענה אישי, לא גורף</b><span>תוכנית אישית לכל תלמיד בסיכון. לא תוכנית כיתתית אחידה.</span></div>
-      <div class="pr"><b>רצף בין הגורמים</b><span>הנשירה קורית בתפרים: בית ספר, קב"ס, קידום נוער, רווחה. תפקיד הרכז/ת הוא לתפור.</span></div>
-      <div class="pr"><b>המשפחה בפנים</b><span>מעורבות הורים בשלב מוקדם, לפני שהמצב משברי, ובשפה של דאגה ולא של אשמה.</span></div>
-      <div class="pr"><b>טעם להישאר</b><span>חוגים, ספורט, מנהיגות, תעסוקה נלווית. שייכות היא תנאי להתמדה, לא בונוס.</span></div>
+      <div class="pr"><b>המיפוי הוא הכניסה</b><span>לא מחכים שתלמיד "יתפוצץ". ממפים את כולם, ומזהים מוקדם.</span></div>
+      <div class="pr"><b>שלושה קולות</b><span>תלמיד, הורה ומחנך/ת. כל אחד רואה חלק. דווקא הפער ביניהם מלמד הכי הרבה.</span></div>
+      <div class="pr"><b>מתחילים מחוזקה</b><span>כל שאלון שואל במה התלמיד טוב. כל תוכנית אישית נפתחת שם.</span></div>
+      <div class="pr"><b>מבוגר משמעותי אחד</b><span>אדם אחד, לאורך זמן, שלא נעלם. זה הממצא החזק ביותר במחקר.</span></div>
+      <div class="pr"><b>רגשי ולימודי ביחד</b><span>לא "קודם נסדר ציונים". שני הצירים במקביל.</span></div>
+      <div class="pr"><b>המשפחה בפנים</b><span>ההורים הם קול במיפוי ושותפים בתוכנית, וגם משאב לבית הספר כולו.</span></div>
+      <div class="pr"><b>רמזור בלי מענה הוא לא תוכנית</b><span>כל צבע מחייב פעולה. זיהוי לבד לא מונע נשירה.</span></div>
     </div>
   </div>
 </section>
 
 <section id="s2">
-  <div class="sec-head"><span class="sec-num">2</span><h2>מושגי יסוד ואוכלוסיית היעד</h2></div>
-  <p class="sec-lead">ההגדרות כאן אינן שלנו: הן לקוחות מתוך שני הנהלים המחייבים, והן כמעט זהות בשניהם. חשוב להשתמש בהן בדיוק, כי הן אלה שקובעות מתי מתחילה חובת פעולה ודיווח.</p>
+  <div class="sec-head"><span class="sec-num">2</span><h2>מה המחקר אומר: בארץ ובעולם</h2></div>
+  <p class="sec-lead">סקירת עומק שנעשתה עבור הופה ביוני 2026: 25 מקורות שנקראו במלואם, והטענות המרכזיות אומתו מול המקור. הממצאים הבינלאומיים אומתו. הממצאים הישראליים מבוססים על קריאת מקורות ראשוניים, ומסומנים בהתאם.</p>
 
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>מונח</th><th>ההגדרה בנוהל</th></tr></thead>
-      <tbody>
-        <tr><td><b>בעיית ביקור סדיר</b></td><td>היעדרות תלמיד מעל 7 ימים בחודש, במצטבר או שלא במצטבר.</td></tr>
-        <tr><td><b>נושר סמוי</b><br>(נשירה סמויה)</td><td>תלמיד הרשום ומשובץ בבית הספר, אך נעדר <b>7 ימי לימודים רצופים</b>, או בהיעדרות לא רצופה המצטברת ל-<b>14 ימים</b> ללא סיבה מוצדקת. או: תלמיד הנעדר לעיתים כה תכופות עד שיש בכך הפרעה רצינית ללימודיו ולא חזר למרות הפעולות. או: תלמיד המתאפיין באחד מאלה — שוטטות בשטח בית הספר ומחוצה לו בשעות הלימודים, נוכחות פיזית בכיתה בלי תפקוד לימודי, קושי למלא אחר חוקי בית הספר, קשיי הסתגלות וקשיים התנהגותיים או לימודיים.</td></tr>
-        <tr><td><b>תפקוד לקוי</b></td><td>התנהגות של תלמיד המגלה סימנים של נשירה סמויה כמוגדר לעיל.</td></tr>
-        <tr><td><b>תלמיד בסכנת נשירה</b></td><td>תלמיד שמתקיימים לגביו התנאים לנשירה סמויה.</td></tr>
-        <tr><td><b>נושר</b></td><td>תלמיד שהיה רשום במוסד חינוך מפוקח ואינו רשום עוד בבית הספר.</td></tr>
-        <tr><td><b>קב"ס</b><br>קצין ביקור סדיר</td><td>אדם שהוסמך על ידי שר החינוך. שני היבטים לתפקידו: בקרה ואכיפה של חוק לימוד חובה, וחינוכי-טיפולי — הנחיה וסיוע בגיבוש תוכניות להכלה ולמניעת נשירה. הקב"ס שייך למינהל החינוך ברשות המקומית <b>במקום מגוריו של התלמיד</b>, לא במקום בית הספר.</td></tr>
-      </tbody>
-    </table>
+  <h3 style="margin:8px 0 10px">בעולם</h3>
+
+  <div class="finding">
+    <span class="src">מטא-אנליזה · Campbell, Wilson ואחרים 2011 · 167 מחקרים</span>
+    <h3>היישום מכריע יותר מהשיטה</h3>
+    <p>רוב התוכניות למניעת נשירה מצמצמות נשירה, ואף אחת לא בלטה מעל האחרות. מסקנת החוקרים: "בחירת אסטרטגיה שניתן ליישם בהצלחה משפיעה על התוצאה יותר מבחירת סוג התוכנית". ועוד ממצא: תוכניות שעיקרן ניטור נוכחות בלבד היו פחות יעילות.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> לבחור מעט פעולות שהצוות באמת יכול להחזיק, ולבצע אותן היטב, לאורך זמן. לא לרדוף אחרי "תוכנית דגל".</div>
   </div>
 
-  <div class="card">
-    <h3>מי הם התלמידים</h3>
-    <p>התוכנית פועלת בבתי ספר בפריפריה הגיאוגרפית והחברתית, המוגדרים במצב סיכון גבוה לנשירה, ניתוק והדרה. מדובר בתלמידים המתמודדים עם שילוב של קשיים רגשיים, חברתיים וכלכליים, חוסר יציבות משפחתית, פערים לימודיים ומיעוט דמויות מבוגרות תומכות.</p>
-    <p><b>הראיה שהמודל עובד:</b> מחקר ד"ר שמר (2022) בבית ספר טכנולוגי בבית שאן: 80% מהבוגרים היו מוכרים לרווחה. בקבוצה שלוותה על ידי הופה הנתון ירד ל-10%.</p>
+  <div class="finding">
+    <span class="src">Check &amp; Connect · אוניברסיטת מינסוטה · דירוג WWC</span>
+    <h3>מבוגר קבוע + מעקב שוטף + התערבות מדורגת</h3>
+    <p>לכל תלמיד מתנתק מוצמד מבוגר אחד, שהוא גם מנטור וגם מתכלל, עם מחויבות של שנתיים לפחות. הוא עוקב באופן שוטף (Check), ומקיים שיחות אישיות קבועות והתערבות בשתי רמות: בסיסית לכולם ואינטנסיבית למי שמסומן (Connect). זו התוכנית היחידה בתחום שקיבלה דירוג "השפעות חיוביות" על התמדה בלימודים. סייג: בסיס הראיות קטן, וניסוי גדול בשיקגו לא שחזר את האפקט. גם כאן, היישום מכריע.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> זה המבנה של המודל הזה: מיפוי ← רמזור ← מבוגר משמעותי ← שיחה קבועה. הקביעות חשובה מהתוכן.</div>
   </div>
 
-  <div class="card">
-    <h3>ששת תחומי המעקב על התלמיד</h3>
-    <p>הרדאר מחזיק תמונת מצב מתעדכנת על כל תלמיד במעקב. <b>הנוכחות היא הכניסה</b>, ושאר התחומים מסבירים אותה:</p>
-    <div class="principles">
-      <div class="pr"><b>נוכחות והתמדה</b><span>היעדרויות רצופות ומצטברות, איחורים, היעלמות משיעורים מסוימים</span></div>
-      <div class="pr"><b>לימודי</b><span>ציונים, כישלונות, צבירת זכאות, פערי ידע</span></div>
-      <div class="pr"><b>רגשי והתנהגותי</b><span>מצב רוח, אירועי משמעת, סימני מצוקה</span></div>
-      <div class="pr"><b>משפחתי</b><span>יציבות הבית, מעורבות הורים, אירועים משפחתיים</span></div>
-      <div class="pr"><b>חברתי ושייכות</b><span>מקום בכיתה, חברויות, השתתפות בפעילות, בידוד</span></div>
-      <div class="pr"><b>קיום ותעסוקה</b><span>מצב כלכלי במשפחה, עבודה במקביל ללימודים, ציוד</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="s3">
-  <div class="sec-head"><span class="sec-num">3</span><h2>שני משרדים, שני נהלים</h2></div>
-  <p class="sec-lead">זו ההפרדה החשובה ביותר במסמך. בית ספר בפיקוח משרד החינוך ובית ספר בפיקוח מינהל הכשרה מקצועית פועלים לפי שני נהלים שונים: לוחות זמנים שונים, טפסים שונים, וגורמי דיווח שונים לגמרי.</p>
-
-  <div class="callout r"><b>הכלל הראשון של הרכז/ת</b>לפני כל פעולה — לוודא באיזה פיקוח נמצא בית הספר, ולעבוד לפי הנוהל הנכון. דיווח לגורם הלא נכון אינו נחשב דיווח.</div>
-
-  <div class="grid2">
-    <div class="minbox edu">
-      <span class="who">משרד החינוך</span>
-      <h3>חוזר מנכ"ל — ביקור סדיר למניעת נשירה</h3>
-      <p>חל על בתי ספר בפיקוח משרד החינוך. מעוגן בחוק לימוד חובה תש"ט–1949. הציר המרכזי: מוסד החינוך ← מחלקת החינוך ברשות ← הקב"ס ← הממונה המחוזי.</p>
-      <p><b>גורמי הדיווח:</b> מנהל מחלקת החינוך ברשות, קב"ס, ממונה מחוזי.</p>
-      <p><b>הוועדה המרכזית:</b> ועדת התמדה <b>רשותית</b>, בראשות מנהל מחלקת החינוך.</p>
-    </div>
-    <div class="minbox lab">
-      <span class="who">משרד העבודה</span>
-      <h3>הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה</h3>
-      <p>חל על בתי ספר בפיקוח מינהל הכשרה מקצועית. בתוקף מתשפ"ד, מהדורה מעודכנת תמוז תשפ"ו (יולי 2026). הציר המרכזי: בית הספר ← המפקח הפדגוגי והמפקחת על הצוותים הטיפוליים ← הרשת המפעילה, ובמקביל לקב"ס ברשות.</p>
-      <p><b>גורמי הדיווח:</b> מפקח פדגוגי כולל, מפקחת על הצוותים הטיפוליים, ממונה מחוזי, נציג הרשת המפעילה, וקב"ס.</p>
-      <p><b>הוועדה המרכזית:</b> ועדת התמדה <b>בית-ספרית</b>, בזימון המנהל/ת.</p>
-    </div>
+  <div class="finding">
+    <span class="src">ניסוי מבוקר · MDRC על Communities In Schools · 2017 · 24 בתי ספר</span>
+    <h3>קשר ושייכות מגיעים לפני הציונים</h3>
+    <p>אחרי שנתיים של ניהול מקרה אינטנסיבי: אין שיפור בהישגים ובנוכחות. אבל יש שיפור מובהק בשיעור התלמידים שמדווחים על מבוגר אכפתי, באיכות הקשר עם חברים ובמעורבות בבית הספר. וכשל מאלף: <b>תלמידים בסיכון גבוה קיבלו פחות שירות מתלמידים בסיכון בינוני</b>. המערכת זלגה מעצמה אל המקרים הקלים.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> למדוד גם "יש לי מבוגר משמעותי" (שאלה 7 בשאלון התלמיד), ולא רק ציונים. ולבדוק כל רבעון שהאדומים באמת מקבלים את עיקר הזמן (כרטיס 6).</div>
   </div>
 
-  <h3 style="margin-top:26px">ההבדלים במבט אחד</h3>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>נושא</th><th>משרד החינוך</th><th>משרד העבודה</th></tr></thead>
-      <tbody>
-        <tr><td>למי מדווחים</td><td>מנהל מחלקת החינוך ברשות, קב"ס, ממונה מחוזי</td><td>מפקח פדגוגי, מפקחת על הצוותים הטיפוליים, רשת מפעילה, קב"ס</td></tr>
-        <tr><td>דיווח שוטף</td><td>דיווח מנהל על תלמיד מעל 7 ימי היעדרות בחודש</td><td><b>דו"ח חודשי קבוע</b> בסיום כל חודש (טופס 8.1) על כל הנעדרים מעל 7 ימים וסטטוס הטיפול</td></tr>
-        <tr><td>טפסים</td><td>לפי החוזר והנספחים שבו</td><td>ערכת טפסים ממוספרת: 8.1 עד 8.6</td></tr>
-        <tr><td>ועדות</td><td>ועדת התמדה <b>רשותית</b>, לפחות פעמיים בשנה</td><td>ועדות התמדה <b>בית-ספריות</b>, שלושה מועדים קבועים בשנה</td></tr>
-        <tr><td>צוות פנימי</td><td>צוות בין-מקצועי מוסדי</td><td>צוות בין-מקצועי למניעת נשירה, מתכנס 3 פעמים בשנה לפחות, בתיעוד</td></tr>
-        <tr><td>ציר הזמן לגריעה</td><td>בקשת גריעה לממונה המחוזי בתום 60 יום</td><td>סיום לימודים אחרי מיצוי ועדות, וגריעה עד שבוע ממכתב הסיום</td></tr>
-      </tbody>
-    </table>
+  <div class="finding">
+    <span class="src">City Connects · Boston College</span>
+    <h3>סקירת צרכים לכל תלמיד וחיבור למענים</h3>
+    <p>תוכנית שעושה סקירה שיטתית של צרכים וחוזקות <b>לכל תלמיד</b>, ומחברת כל אחד למענה קהילתי מתאים. תלמידים שלמדו בבתי ספר עם התוכנית נשרו בהמשך בשיעור נמוך בכמחצית: 9.2% מול 16.6%. סייג: מחקר כמו-ניסויי, והחוקרים קשורים לתוכנית.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> זה הבסיס לשאלוני המיפוי. לא ממפים רק את "המקרים", ממפים את כולם, וכל מיפוי נגמר בחיבור למענה.</div>
   </div>
 
-  <h3 style="margin-top:26px">מיפוי בתי הספר לפי פיקוח</h3>
-  <p>לכל בית ספר בתחום מסומן בפירוש באיזה פיקוח הוא נמצא. שמות גורמי הדיווח וטלפוניהם נמלאים בפגישת הפתיחה עם כל בית ספר. <b>המיפוי הזה מוזן גם לפורטל</b>: כל בית ספר רואה בטאב "מודל ההפעלה" רק את הנוהל שלו.</p>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>בית ספר</th><th>פיקוח</th><th>גורם דיווח מרכזי (שם)</th><th>קב"ס ברשות</th></tr></thead>
-      <tbody>
-        <tr><td>אורט אדיבי אשקלון</td><td><b>משרד החינוך</b></td><td>&nbsp;</td><td>לא פורסם ברשות — דרך המוקד</td></tr>
-        <tr><td>אורט מגשימים בית שאן</td><td><b>משרד החינוך</b></td><td>&nbsp;</td><td>לא פורסם ברשות — דרך המוקד</td></tr>
-        <tr><td>אורט בית הערבה</td><td><b>משרד העבודה</b></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr><td>אורט מרום עכו</td><td><b>משרד החינוך</b></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr><td>מבואות חרמון</td><td><b>משרד החינוך</b></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="callout y"><b>איך יודעים באיזה פיקוח בית הספר</b>לפי מי המפקח/ת שאליו/ה בית הספר מדווח: מפקח כולל של מחוז במשרד החינוך, או מפקח פדגוגי כולל ומפקחת על הצוותים הטיפוליים במינהל הכשרה מקצועית. שאלה אחת למנהל/ת סוגרת את זה. יש בתי ספר שבהם מגמות שונות מפוקחות אחרת — במקרה כזה מסמנים לכל שכבה או מגמה בנפרד.</div>
-</section>
-
-<section id="s4">
-  <div class="sec-head"><span class="sec-num">4</span><h2>נוהל משרד החינוך</h2></div>
-  <p class="sec-lead">חוזר מנכ"ל "ביקור סדיר למניעת נשירה". הנוסח המחייב הוא החוזר עצמו; מה שמובא כאן הוא תמצית עבודה.</p>
-
-  <div class="minbox edu">
-    <span class="who">משרד החינוך</span>
-    <h3>הבסיס: חוק לימוד חובה</h3>
-    <p>הורים של ילד בגיל לימוד חובה חייבים, כל אחד מהם, לדאוג לכך שהילד ילמד באופן סדיר במוסד חינוך מוכר. אי-ביקור סדיר הוא הפרה של חובה שבחוק, וזה מה שמעניק לקב"ס את סמכות האכיפה.</p>
+  <div class="finding">
+    <span class="src">מטא-אנליזה · JESPAR 2024 · 26 מחקרים</span>
+    <h3>רגשי-התנהגותי ולימודי יחד, עדיף על תגבור לבדו</h3>
+    <p>התערבויות התנהגותיות ומשולבות הראו גודל אפקט של כ-0.31–0.33. התערבויות אקדמיות בלבד הראו כ-0.12. השילוב מנצח.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> לתלמיד בצהוב או באדום תמיד שני רכיבים: לימודי וקשר-רגשי (כרטיס 4). שעות תגבור לבד הן לא תוכנית.</div>
   </div>
 
-  <div class="card">
-    <h3>שרשרת הפעולה לפי ימים</h3>
-    <div class="tbl-wrap edu">
-      <table>
-        <thead><tr><th>מתי</th><th>מה קורה</th><th>מי אחראי</th></tr></thead>
-        <tbody>
-          <tr><td>יומי</td><td>מעקב נוכחות שוטף ובירור היעדרות מול התלמיד וההורים</td><td>מחנך/ת הכיתה</td></tr>
-          <tr><td><b>יום 7</b></td><td>החל מהיום השביעי להיעדרות, במצטבר או שלא במצטבר — חובה לבדוק את סיבת ההיעדרות</td><td>מנהל/ת המוסד</td></tr>
-          <tr><td><b>יום 7</b></td><td>דיווח למנהל/ת על תלמיד שנעדר למעלה מ-7 ימים בחודש אחד</td><td>מחנך/ת הכיתה</td></tr>
-          <tr><td><b>יום 7</b></td><td>משלוח הודעה רשומה להורים על ההיעדרות</td><td>מנהל/ת המוסד</td></tr>
-          <tr><td>+3 ימים מההודעה</td><td>עדכון מול הקב"ס ותיאום המשך הטיפול</td><td>מנהל/ת המוסד</td></tr>
-          <tr><td>במקביל</td><td>הודעה בכתב למנהל/ת מחלקת החינוך ברשות</td><td>מנהל/ת המוסד</td></tr>
-          <tr><td><b>יום 21</b> מההודעה</td><td>הקב"ס בודק אם התלמיד חזר ללימודים</td><td>קב"ס</td></tr>
-          <tr><td><b>יום 30</b></td><td>אם התלמיד לא חזר — דיווח לממונים</td><td>מנהל/ת + קב"ס</td></tr>
-          <tr><td><b>יום 60</b></td><td>בקשה לשקול גריעה ממצבת התלמידים, לממונה המחוזי</td><td>מנהל/ת המוסד</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="finding">
+    <span class="src">Early Warning Systems · מחקרי שיקגו</span>
+    <h3>כישלון ראשון הוא אות מוקדם</h3>
+    <p>מערכות זיהוי מוקדם מסמנות תלמיד בסיכון לפי כישלון במקצוע אחד או יותר, במיוחד שני מקצועות ליבה, ולפי ממוצע נמוך. מומלץ לזהות כבר בתחילת השנה, ולא לחכות לסוף מחצית.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> שאלה 18 בשאלון המחנך (מספר הציונים השליליים) היא אחד הסימנים החזקים ברמזור. כישלון ראשון מקבל תגובה תוך שבוע (כרטיס 3).</div>
   </div>
 
-  <div class="card">
-    <h3>הוועדות</h3>
-    <ul>
-      <li><b>צוות בין-מקצועי מוסדי:</b> מנהל/ת המוסד, מחנך/ת הכיתה, רכז/ת שכבה, יועץ/ת חינוכי/ת. דן בתלמידים בסכנת נשירה ובתוכניות ההתערבות.</li>
-      <li><b>ועדת התמדה רשותית:</b> בראשות מנהל/ת מחלקת החינוך ברשות, בהשתתפות הקב"ס וגורמי מקצוע נוספים. מתכנסת <b>לפחות פעמיים בשנה</b>, ודנה בתוכניות ההתערבות ובקליטת תלמידים במסגרות.</li>
+  <h3 style="margin:22px 0 10px">בארץ</h3>
+
+  <div class="finding il">
+    <span class="src">ברוקדייל 2022 · נשירה בחינוך הבדואי בנגב</span>
+    <h3>בעל תפקיד מתכלל, התאמת מענים, רצף</h3>
+    <p>הדוח ממליץ על שלושה קווי פעולה: מינוי בעל תפקיד מתכלל, התאמה מדויקת של מענים לצרכים, ובניית רצף מענים בין שלבי החינוך.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> אלה בדיוק שלוש הפונקציות של המודל: רכז/ת מניעת נשירה (מתכלל/ת), מאגר המענים (התאמה), והמעבר לרכז/ת הבוגרים (רצף).</div>
+  </div>
+
+  <div class="finding il">
+    <span class="src">אשלים 2008 · הערכת מרכזי נוער בסיכון</span>
+    <h3>קשר, יישוג, ושמירה על אנשי הצוות</h3>
+    <p>קשר מבוגר-נער הוא הרכיב המרכזי. יישוג פעיל, כלומר יוזמה של המבוגר ולא המתנה לפנייה, הוא תנאי להגעה לבני נוער. ותחלופת צוות ושחיקה הן האיום המבני הגדול ביותר.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> הרכז/ת יוזמ/ת קשר, לא מחכה. ובית הספר שומר על הרכז/ת: זמן מוגדר, מקום, גיבוי, וקהילת עמיתים.</div>
+  </div>
+
+  <div class="finding il">
+    <span class="src">מערך קידום נוער והיל"ה · משרד החינוך</span>
+    <h3>רשת הביטחון קיימת, וצריך לחבר אליה</h3>
+    <p>יחידות קידום נוער ברשויות הן רשת הביטחון לנוער בנשירה גלויה או סמויה, ותוכנית היל"ה היא מסלול ההשלמה של משרד החינוך. ביקורת חוזרת עליהן: נתק בין התוכנית לבין בית הספר. ובישראל כמעט אין הערכות אפקט מבוקרות לתוכניות בתחום.</p>
+    <div class="so"><b>מה זה אומר לבית הספר:</b> קשר קבוע עם קידום נוער והקב"ס, לא רק במשבר. ובית ספר שממפה ומודד כמו במודל הזה נמצא בחזית התחום בארץ.</div>
+  </div>
+
+  <h3 style="margin:24px 0 8px">עשר המלצות פרקטיות לבתי הספר</h3>
+  <p class="sec-lead">מה שנגזר מהמחקר, מתורגם לפעולה שאפשר להתחיל בה מחר.</p>
+  <ol class="recs">
+    <li><b>למפות את כולם, לא רק את "המקרים".</b>שאלוני המיפוי עוברים לכל תלמידי שכבות היעד. כך מגלים גם את מי שלא עושה רעש.</li>
+    <li><b>מבוגר משמעותי לכל תלמיד בצהוב ובאדום, בשמו.</b>תלמיד שלא מצליח לנקוב בשם של מבוגר משמעותי הוא בעצמו סימן (כרטיס 7).</li>
+    <li><b>שיחה קבועה, באותו יום ובאותה שעה.</b>השיחה מתקיימת גם בשבוע טוב. הקביעות היא ההתערבות (כרטיס 1).</li>
+    <li><b>תמיד שני צירים: קשר-רגשי ולימודי.</b>לא תגבור לבדו (כרטיס 4).</li>
+    <li><b>להגיב לכישלון הראשון תוך שבוע.</b>לפני שהוא הופך לשניים (כרטיס 3).</li>
+    <li><b>להתחיל מהחוזקה.</b>מה שהתלמיד כתב ש"אני טוב בו", הוא הכניסה לתוכנית ולמענה (כרטיס 9).</li>
+    <li><b>לגייס את ההורים לפני כל מכתב.</b>שיחה מגייסת, בלשון של דאגה ולא של אשמה (כרטיס 5).</li>
+    <li><b>לוודא שהאדומים מקבלים הכי הרבה.</b>פעם ברבעון, מהיומן ולא מהזיכרון (כרטיס 6).</li>
+    <li><b>מענה עד הסוף.</b>חיבור למענה נחשב רק כשהתלמיד הגיע בפועל, והצורך נענה.</li>
+    <li><b>לשמור על הרכז/ת.</b>זמן מוגדר, מקום עבודה, גיבוי של ההנהלה, וקהילת עמיתים. שחיקה היא האיום הגדול ביותר על המודל.</li>
+  </ol>
+
+  <div class="callout r"><b>ומה לא לעשות</b>
+    <ul style="margin:4px 0 0;padding-inline-start:20px">
+      <li><b>לא לעשות רמזור בלי מענה.</b> רמזור שלא מחובר לפעולה הוא דשבורד, לא תוכנית.</li>
+      <li><b>לא להבטיח שיפור בנוכחות או בציונים כתוצאה בטוחה.</b> להבטיח זיהוי, קשר ומענה. הראיות על נוכחות אינן עקביות.</li>
+      <li><b>לא להניח שהמקרים הקשים מקבלים הכי הרבה.</b> הראיות מראות שבלי בקרה קורה ההפך.</li>
+      <li><b>לא להציג תוכנית כ"מוכחת מדעית"</b> על סמך אתר התוכנית. רק על סמך מחקר מבוקר.</li>
     </ul>
   </div>
-
-  <div class="card">
-    <h3>מה זה אומר לרכז/ת של הופה</h3>
-    <ul>
-      <li>הכתובת המערכתית שלך היא <b>מחלקת החינוך ברשות והקב"ס</b>, ולא מפקח של רשת.</li>
-      <li>ועדת ההתמדה מתקיימת <b>ברשות ולא בבית הספר</b> — צריך להביא אליה תיק מסודר, ולוודא שבית הספר מיוצג בה.</li>
-      <li>ההודעה הרשומה להורים היא צעד פורמלי עם משמעות משפטית. השיחה המגייסת עם ההורים (כרטיס 5) צריכה לקרות <b>לפניה</b>, לא אחריה.</li>
-    </ul>
-  </div>
-
-  <p><a href="https://apps.education.gov.il/mankal/horaa.aspx?siduri=406" target="_blank" rel="noopener"><b>לחוזר המנכ"ל המלא ←</b></a></p>
-</section>
-
-<section id="s5">
-  <div class="sec-head"><span class="sec-num">5</span><h2>נוהל משרד העבודה</h2></div>
-  <p class="sec-lead">"הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה", מינהל הכשרה מקצועית. בתוקף מתשפ"ד, מהדורה מעודכנת תמוז תשפ"ו (יולי 2026). חל על בתי ספר בפיקוח המינהל.</p>
-
-  <div class="minbox lab">
-    <span class="who">משרד העבודה</span>
-    <h3>הנוהל בשורה אחת</h3>
-    <p>בית הספר עוקב יומית אחר נוכחות התלמידים, מתערב מהיום השביעי להיעדרות בחודש, ומדווח מדי חודש לגורמי המשרד — עד סיום לימודים אם אין ברירה.</p>
-    <p><b>למי הנוהל מיועד:</b> מנהל/ת בית הספר, מחנכי/ות הכיתות, היועצים/ות והצוות הבין-מקצועי למניעת נשירה.</p>
-  </div>
-
-  <div class="card">
-    <h3>חלוקת האחריות</h3>
-    <h4>מנהל/ת בית הספר</h4>
-    <ul>
-      <li>רענון הנחיות הביקור הסדיר בימי ההיערכות, ובמידת האפשר זימון הקב"ס למפגש עם צוות ההוראה.</li>
-      <li>אחריות על מעקב יומי ושוטף אחר נוכחות התלמידים.</li>
-      <li>ניתוח דוחות הנוכחות החודשיים, זיהוי מגמות ונקיטת פעולות.</li>
-      <li><b>דו"ח חודשי בסיום כל חודש</b> למפקח הפדגוגי, למפקחת על הצוותים הטיפוליים ולנציג הרשת המפעילה: שמות מי שנשרו מרצון וסיבת העזיבה, שמות תלמידים במעקב נשירה סמויה (מעל 7 ימי היעדרות באותו חודש), וסיכום הפעולות שנעשו עם כל תלמיד (טופס 8.1).</li>
-    </ul>
-    <h4>מחנך/ת הכיתה</h4>
-    <ul>
-      <li>מעקב יומי אחר מי שלא הגיע, ויצירת קשר לבירור עם התלמיד או ההורים.</li>
-      <li>נעדר גם למחרת — בדיקה מול ההורים.</li>
-      <li><b>אחרי יומיים של היעדרות, מכל סיבה — עדכון יועץ/ת הכיתה.</b></li>
-      <li>דו"ח נוכחות חודשי למנהל/ת וליועץ/ת: נוכחות, איחורים, היעדרויות מוצדקות ושאינן, והיעדרות ממקצועות מסוימים. מתויק בתיק הבית-ספרי.</li>
-    </ul>
-    <h4>היועץ/ת</h4>
-    <ul>
-      <li>איש/אשת הקשר של בית הספר עם גורמי הרווחה, גורמי הטיפול והקב"ס.</li>
-      <li>קשר הדוק עם הקב"ס, נהלי עבודה שוטפים, הצגת נתוני נוכחות ועדכון על תלמידים שאותרו.</li>
-      <li>הזמנת הקב"ס לישיבות הצוות הבין-מקצועי.</li>
-      <li>שותף/ה לתהליכי מעבר בין בתי ספר, וליווי התלמיד ומשפחתו עד לקליטה במסגרת חלופית.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>הצוות הבין-מקצועי למניעת נשירה</h3>
-    <p><b>הרכב:</b> נקבע על ידי המנהל/ת, וכולל מנהל/ת, רכז/ת פדגוגי/ת, נציגות מחנכים, יועץ/ים, מדריך יועצים. אפשר לצרף פסיכולוג בית הספר, רכז/ת החניכות, קב"ס וכל מי שיימצא לנכון.</p>
-    <p><b>מתכנס שלוש פעמים בשנה לפחות:</b></p>
-    <ul>
-      <li><b>תחילת שנה</b> — בניית תוכנית העבודה</li>
-      <li><b>אמצע שנה</b> — בקרה ודיוק תוכניות העבודה וההתערבויות האישיות</li>
-      <li><b>סוף שנה</b> — הפקת לקחים ומסקנות לקראת השנה הבאה</li>
-    </ul>
-    <p>כלל מפגשי הצוות והעבודה בתחום <b>יתועדו</b>. בכתיבת תוכנית העבודה יש להקפיד על חיסיון תלמידים ולא להעביר לצוות מסמכים חסויים על פי דין, כגון אבחונים וחוות דעת פסיכולוגיות ופסיכיאטריות.</p>
-  </div>
-
-  <div class="card">
-    <h3>הטיפול בבעיית ביקור סדיר, שלב אחר שלב</h3>
-    <ol>
-      <li><b>מהיום השביעי להיעדרות</b> (בתוך חודש, במצטבר או לא) — המנהל/ת, המחנך/ת והיועץ/ת בודקים לעומק את סיבת ההיעדרות.</li>
-      <li><b>בניית תוכנית התערבות אישית</b> (לימודית, חברתית ורגשית) על ידי המחנך/ת והיועץ/ת, בהתייעצות עם המדריך על הייעוץ, הכוללת מיצוי האפשרויות הפנים-בית-ספריות: שיחות אישיות, מעקב, הזמנת הורים, שיעורים פרטניים, ביקורי בית, חונכות של בעלי תפקידים. התוכנית מתועדת ומתויקת בתיק האישי.</li>
-      <li><b>שיתוף ההורים</b> בהכנת התוכנית והצגתה להם לפני הפעלתה, לקבלת התייחסותם.</li>
-      <li><b>תקופת יישום של 15 ימים לפחות</b>, שבמהלכה מגייסים את התלמיד לשתף פעולה וממשיכים בשיח ובפעולות חינוכיות.</li>
-      <li>אם אותרו מספר תלמידים במאפיינים דומים — אפשר לבנות <b>תוכנית קבוצתית עד 5 תלמידים</b>.</li>
-      <li><b>ביקור בית</b> על ידי המחנך/ת או היועץ/ת. אם התלמיד עולה חדש, כדאי לצרף אדם הדובר את שפת ההורים.</li>
-      <li><b>יידוע הקב"ס בכתב</b> (טופס 8.4) על ידי היועץ/ת, על הבעיה ועל התוכנית שנבנתה.</li>
-      <li><b>מכתב רשמי להורים</b> (טופס 8.5) מהמנהל/ת, עם העתק לקב"ס, לגורמי המשרד ולתיק האישי.</li>
-      <li>אם הבעיה נמשכת אחרי מיצוי הפעולות — החלטה על <b>ועדת התמדה</b>, בהתייעצות עם המפקחת על המערך הטיפולי.</li>
-    </ol>
-  </div>
-
-  <div class="card">
-    <h3>ועדת ההתמדה</h3>
-    <ul>
-      <li><b>שלושה מועדים נקבעים בתחילת השנה:</b> דצמבר/ינואר · פברואר/מרץ · מאי/יוני.</li>
-      <li><b>הרכב:</b> מנהל/ת, יועץ/ת, מחנך/ת, קב"ס. רצוי לזמן גם גורמים טיפוליים רלוונטיים. המנהל/ת מזמן/ת את התלמידים והוריהם.</li>
-      <li>הורים פרודים או גרושים מוזמנים בנפרד. די בהופעת הורה אחד כדי לקיים את הוועדה, בתנאי שההורה הנעדר הוזמן כנדרש.</li>
-      <li><b>מטרה:</b> בניית תוכנית התערבות אישית להגברת שייכות ומניעת נשירה.</li>
-      <li>היועץ/ת שולח/ת למשתתפים את סיכום הוועדה ואת התוכנית, ומתעד/ת בתיק האישי.</li>
-      <li><b>מעקב:</b> המנהל/ת מוודא/ת ביצוע בפועל, ומעדכנים את הקב"ס <b>אחת לשבועיים</b>.</li>
-      <li><b>אחרי 30 יום</b> מהוועדה, אם התלמיד עדיין לא מגיע — ועדת התמדה נוספת, הפעם בהשתתפות המפקח הפדגוגי הכולל. היא מחליטה בין תוכנית התערבות נוספת (כ-15 יום) לבין סיום לימודים ומציאת מסגרת חלופית.</li>
-    </ul>
-    <div class="callout r"><b>שימו לב</b>לא ניתן להפסיק לימודים בכיתה י"ב; במקרה חריג יש להיוועץ עם המפקח הכולל. כל החלטה על סיום לימודים מתקבלת רק אחרי מיצוי כל האפשרויות, תוך שקילת טובת התלמיד.</div>
-  </div>
-
-  <div class="card">
-    <h3>העדר רישום, אי-הגעה ועזיבה מרצון</h3>
-    <div class="tbl-wrap lab">
-      <table>
-        <thead><tr><th>המקרה</th><th>למי מדווח/ת המנהל/ת</th><th>מועד</th></tr></thead>
-        <tbody>
-          <tr><td>העדר רישום לשנה הקרובה</td><td>לקב"ס (טופס 8.2)</td><td>עד שבוע לפני פתיחת השנה</td></tr>
-          <tr><td>אי-הגעה בפתיחת השנה</td><td>לקב"ס, לממונה המחוזי, למפקח הפדגוגי ולמפקחת על הצוותים הטיפוליים</td><td>עד 20.9</td></tr>
-          <tr><td>עזיבה מרצון במהלך השנה</td><td>לקב"ס, למפקח הפדגוגי, לממונה ולמפקחת (נספח 8.3)</td><td>עד שבוע מהודעת התלמיד</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p><b>גריעה בעקבות עזיבה מרצון:</b> שיחה עם התלמיד וההורים לפני הגריעה, מכתב סיום לימודים רשמי להורים, עדכון המפקח הפדגוגי והמפקחת, הודעה לקב"ס וליחידת הבקרה והתפעול במחוז, ודיווח במערכות המשרד. יש לכלול את סיבת העזיבה.</p>
-    <p><b>סיום לימודים בעקבות בעיית ביקור סדיר:</b> בתום 30 יום מהוועדה הראשונה או 15 יום מהשנייה, התייעצות עם המפקח הפדגוגי הכולל. אחרי ההחלטה — מכתב רשמי (נספח 8.6), ווידוא שהקב"ס מחפש מסגרת חלופית. גריעה ממצבת התלמידים עד שבוע משליחת המכתב.</p>
-  </div>
-
-  <div class="card">
-    <h3>ערכת הטפסים</h3>
-    <ul>
-      <li><b>טופס 8.1</b> — דיווח חודשי: היעדרויות תלמידים מעל 7 ימים בחודש</li>
-      <li><b>טופס 8.2</b> — העדר רישום או אישור לימודים לשנה הקרובה, ריכוז לקב"ס</li>
-      <li><b>נספח 8.3</b> — מכתב סיום לימודים בעקבות הודעת ההורים על עזיבה</li>
-      <li><b>טופס 8.4</b> — הודעה לקב"ס בכתב על בעיית ביקור סדיר או תפקוד לקוי</li>
-      <li><b>נספח 8.5</b> — מכתב להורים על בעיית ביקור סדיר, כולל ההודעה על חובת ההורים לפי חוק לימוד חובה תש"ט–1949 והתראה כי אי-ביקור סדיר הוא עברה פלילית. יש לדרוש אישור קבלה</li>
-      <li><b>נספח 8.6</b> — מכתב סיום לימודים בעקבות בעיית ביקור סדיר או תפקוד לקוי</li>
-    </ul>
-  </div>
-
-  <p><a href="https://pedagogiamh.co.il/bikur-sadir.html" target="_blank" rel="noopener"><b>לנוהל המלא ולטפסים ←</b></a></p>
-</section>
-
-<section id="s6">
-  <div class="sec-head"><span class="sec-num">6</span><h2>רמזור הנוכחות של הופה</h2></div>
-  <p class="sec-lead">מעל שני הנהלים מונחת שכבה אחת של הופה, זהה בכל בית ספר. היא בנויה על דבר אחד: <b>נוכחות</b>.</p>
-
-  <div class="callout y"><b>העיקרון: הופה מקדימה את הנוהל</b>שני הנהלים הרשמיים נכנסים לפעולה ביום השביעי. הופה מסמנת <b>כתום כבר ביום השלישי</b> — כדי שכשהנוהל הרשמי ידרוש פעולה, כבר יהיה קשר, כבר יהיה מבוגר מלווה, וכבר יהיה ידוע מה קורה עם התלמיד הזה. הרמזור לא מחליף את הנוהל, הוא נותן לו זמן.</div>
-
-  <div class="tiers">
-    <div class="tier green">
-      <h4>🟢 ירוק</h4>
-      <span class="trig">נוכחות סדירה</span>
-      <ul>
-        <li>מעקב נוכחות שוטף</li>
-        <li>שאלון מבוגר אכפתי פעמיים בשנה</li>
-        <li>מענים קבוצתיים לשייכות</li>
-        <li>נגישות: כולם יודעים מי הרכז/ת</li>
-      </ul>
-    </div>
-    <div class="tier orange">
-      <h4>🟠 כתום</h4>
-      <span class="trig">3 ימים רצופים ללא הגעה</span>
-      <ul>
-        <li>שיחת בירור עם התלמיד ועם ההורים תוך יום</li>
-        <li>כניסה לרשימת המעקב של הרכז/ת</li>
-        <li>שיחה אישית אחת לחודש לפחות</li>
-        <li>שיחת הורים מגייסת (כרטיס 5)</li>
-        <li>מענה אחד מותאם מהמאגר</li>
-      </ul>
-    </div>
-    <div class="tier red">
-      <h4>🔴 אדום</h4>
-      <span class="trig">7 ימים רצופים ללא הגעה</span>
-      <ul>
-        <li>הפעלת הנוהל המחייב של המשרד הרלוונטי</li>
-        <li>שיחת חיבור שבועית קבועה (כרטיס 1)</li>
-        <li>מבוגר משמעותי משובץ בשמו</li>
-        <li>תוכנית התערבות אישית כתובה</li>
-        <li>חבילה משולבת: קשר + לימודי (כרטיס 4)</li>
-        <li>ביקור בית ויידוע הקב"ס</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>איך הרמזור מתיישב עם שני הנהלים</h3>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>יום</th><th>הופה</th><th>משרד החינוך</th><th>משרד העבודה</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>בירור טלפוני</td><td>בירור מחנך/ת</td><td>בירור מחנך/ת</td></tr>
-          <tr><td>2</td><td>בירור עם ההורים</td><td>בדיקה מול ההורים</td><td>בדיקה מול ההורים + <b>עדכון היועץ/ת</b></td></tr>
-          <tr><td><b>3</b></td><td><b>🟠 כתום.</b> כניסה לרשימת המעקב, שיחה עם התלמיד</td><td>—</td><td>—</td></tr>
-          <tr><td><b>7</b></td><td><b>🔴 אדום.</b> שיחה שבועית, מבוגר משובץ, תוכנית אישית</td><td>בדיקת סיבה, הודעה רשומה להורים, דיווח לרשות</td><td>בדיקת סיבה לעומק, תוכנית התערבות אישית, יידוע קב"ס</td></tr>
-          <tr><td>סוף החודש</td><td>עדכון הרמזור ודיווח פנימי</td><td>—</td><td><b>דו"ח חודשי (טופס 8.1)</b></td></tr>
-          <tr><td>21–30</td><td>וידוא שהתוכנית מבוצעת בפועל</td><td>בדיקת קב"ס, ואז דיווח לממונים</td><td>ועדת התמדה, ומעקב מול קב"ס כל שבועיים</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>שלושה כללים על הרמזור</h3>
-    <ul>
-      <li><b>גם היעדרות מוצדקת נספרת לצורך הסימון.</b> הסף מסמן לבירור, לא לתיוג. תלמיד עם מחלה מתועדת יסומן כתום, יתברר, ויוסר. אבל אף אחד לא נופל בין הכיסאות בגלל "כנראה שזה בסדר".</li>
-      <li><b>נשירה סמויה בלי היעדרות היא עדיין אדום.</b> תלמיד שנוכח פיזית בכיתה בלי תפקוד לימודי, או משוטט בשטח בית הספר בשעות הלימודים, נכנס לרמזור לפי שיקול המחנך/ת והיועץ/ת גם בלי לעבור את סף הימים. זו ההגדרה של שני הנהלים.</li>
-      <li><b>הרמזור הוא תנועה, לא תווית.</b> היעד המוצהר בתוכנית העבודה הוא כמה תלמידים עברו מאדום לכתום ומכתום לירוק. מי שנשאר אדום שנה שלמה בלי תזוזה הוא סימן שההתערבות לא מתאימה, לא סימן לתלמיד שלא משתף פעולה.</li>
-    </ul>
-  </div>
+  <p class="sec-lead">הסקירה המלאה, עם כל המקורות: "מחקר מניעת נשירה וליווי בוגרים — סיכום", בתיקיית הופה תשפ"ז. רשימת המקורות העיקריים בנספח ג'.</p>
 </section>
 
 <!-- ═══════════ חלק ב ═══════════ -->
 <div class="part">
   <b>חלק ב</b>
-  <h2>המבנה הארגוני והתפקידים</h2>
-  <p>מי עושה מה, ואיך בית ספר נכנס לתוכנית. הפרק המרכזי הוא 7: הגדרת תפקיד רכז/ת מניעת הנשירה, במקביל למסמך הליבה של רכז/ת הבוגרים.</p>
+  <h2>המיפוי והרמזור: לב המודל</h2>
+  <p>מה שואלים, את מי, איך קוראים את התשובות, ומה עושים עם כל צבע.</p>
+</div>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">3</span><h2>שאלוני המיפוי: שלושה קולות</h2></div>
+  <p class="sec-lead">על כל תלמיד ממלאים שלושה שאלונים: התלמיד על עצמו, ההורים על הילד/ה, והמחנך/ת. כל קול רואה חלק אחר של התמונה. הנוסח המלא של השאלות בנספח א'.</p>
+
+  <div class="grid3">
+    <div class="voice st">
+      <div class="ic">🧑‍🎓</div>
+      <h3>שאלון התלמיד</h3>
+      <div class="meta">8 שאלות · כ-5 דקות · בשיעור חינוך</div>
+      <ul>
+        <li>תחושה בבית הספר, ללמידה ולנוכחות, כפי שהתלמיד רואה אותן</li>
+        <li>מקצוע שהוא טוב בו, ומקצוע שקשה לו בו</li>
+        <li>במה הוא רוצה לבקש עזרה</li>
+        <li><b>מי המבוגר המשמעותי שלו</b></li>
+        <li>משהו קטן שהוא טוב בו או אוהב</li>
+      </ul>
+    </div>
+    <div class="voice pa">
+      <div class="ic">👨‍👩‍👧</div>
+      <h3>שאלון ההורים</h3>
+      <div class="meta">5 שאלות · כ-3 דקות · קישור בנייד</div>
+      <ul>
+        <li>האם לילד/ה טוב בבית הספר, ולמה</li>
+        <li>תחושת ההתקדמות הלימודית (סולם 1–5)</li>
+        <li>תחביב או חוזקה של הילד/ה</li>
+        <li>דבר נוסף שחשוב שנדע</li>
+        <li><b>האם ההורה רוצה להעביר הרצאה</b> בתחום העניין שלו</li>
+      </ul>
+    </div>
+    <div class="voice te">
+      <div class="ic">👩‍🏫</div>
+      <h3>שאלון המחנך/ת</h3>
+      <div class="meta">24 שדות · כ-5–7 דקות לתלמיד · בישיבה</div>
+      <ul>
+        <li>לימודי וחברתי: השתתפות, קושי, קשר עם הצוות, חברים, דמות משמעותית</li>
+        <li>בית ומשפחה: קשר ההורים, תמיכה מהבית, קשיים, ביקור בית</li>
+        <li>גורמי טיפול: קב"ס, קצין מבחן, טיפול, רווחה</li>
+        <li>סיכום: חוזקה, התרשמות כללית</li>
+        <li>שדות מעקב פדגוגי: ציונים שליליים, מגמה, <b>מטרה לשליש הבא</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>מה כל קול נותן לנו</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>קול</th><th>מה רק הוא יכול לספר</th><th>למה הוא משמש</th></tr></thead>
+        <tbody>
+          <tr><td><b>התלמיד</b></td><td>איך הוא מרגיש, מה קשה לו, ממי הוא מוכן לקבל עזרה</td><td>זיהוי ניתוק רגשי שלא נראה מבחוץ · בחירת המבוגר המשמעותי · נקודת הפתיחה לשיחה</td></tr>
+          <tr><td><b>ההורים</b></td><td>מה קורה בבית, מה הילד אוהב מחוץ לבית הספר, איך המשפחה רואה את בית הספר</td><td>פתיחת קשר עם המשפחה לפני שיש בעיה · חוזקות לתוכנית · הורים כמשאב לבית הספר</td></tr>
+          <tr><td><b>המחנך/ת</b></td><td>תמונה מקצועית: לימודי, חברתי, משפחתי, ומי כבר מטפל</td><td>הבסיס לרמזור · מי עוד בתמונה (קב"ס, רווחה) · מטרה לשליש</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>איך מגיעים לשיעור מענה גבוה</h3>
+    <p>שאלון שלא מולא לא אומר דבר. היעד: <b>מחנך/ת 100%, תלמידים 90%, הורים 60% ומעלה</b>.</p>
+    <ul>
+      <li><b>תלמידים:</b> ממלאים בשיעור חינוך, בכיתה ובטלפון, באותו שבוע לכל השכבה. לא שולחים קישור הביתה ומקווים.</li>
+      <li><b>הורים:</b> קישור בוואטסאפ מהמחנך/ת, עם משפט אישי ("חשוב לי לשמוע אתכם"). מי שלא ענה אחרי שבוע מקבל תזכורת אחת. הורים שלא ענו גם אחריה ממלאים את השאלון בטלפון עם המחנך/ת או הרכז/ת, שלוש דקות. השיחה הזו היא גם הזדמנות לקשר.</li>
+      <li><b>מחנך/ת:</b> 24 שדות לכל תלמיד הם עבודה. לכן ממלאים בשני שלבים: <b>שאלות 1–16</b> בתחילת השנה, בישיבה מוקדשת עם היועץ/ת, כ-5 דקות לתלמיד. <b>שדות 17–24</b> מתמלאים סביב ישיבת הצוות הפדגוגית בכל שליש.</li>
+      <li><b>שפה:</b> בבתי ספר עם הורים דוברי ערבית, רוסית או אמהרית, השאלון להורים יוצא בשפת ההורים, או שממלאים אותו בשיחה עם איש צוות דובר השפה.</li>
+      <li><b>היענות היא נתון בפני עצמו.</b> הורה שלא ענה לשום פנייה, ותלמיד שהשאיר שאלות ריקות, הם מידע. רושמים ומבררים.</li>
+    </ul>
+  </div>
+
+  <div class="callout b"><b>איפה השאלונים חיים</b>השאלונים מתמלאים במערכת HOPA Secure, במודול מניעת הנשירה: שאלון לתלמיד, להורה ולמחנך/ת, עם לוח משוב ומסך "פערים בשאלונים". בית הספר רואה את התלמידים בשמם. צוות הופה רואה תלמיד מקודד בלבד (ראו פרק 10).</div>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">4</span><h2>מהשאלונים לרמזור</h2></div>
+  <p class="sec-lead">הרמזור לא נקבע לפי ספירת ימים. הוא נגזר מקריאה משותפת של שלושת השאלונים, בחמישה תחומים. המערכת מציעה צבע, וצוות בית הספר מאשר או משנה אותו בישיבת המיפוי.</p>
+
+  <div class="card">
+    <h3>חמשת התחומים, ומה נחשב סימן בכל אחד</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>תחום</th><th>סימן מהתלמיד</th><th>סימן מההורים</th><th>סימן מהמחנך/ת</th></tr></thead>
+        <tbody>
+          <tr><td><b>📚 לימודי</b></td><td>"הלמידה שלי: חלשה"</td><td>התקדמות 1–2 בסולם</td><td>קושי לימודי · 2 ציונים שליליים ומעלה</td></tr>
+          <tr><td><b>🙋 מעורבות</b></td><td>"הנוכחות שלי: חלשה"</td><td>—</td><td>לא משתתף/ת באופן פעיל · נוכחות "חלשה" או "לא מגיע/ה"</td></tr>
+          <tr><td><b>💛 שייכות וקשר</b></td><td>"לא טוב לי" בבית הספר · לא ציין/ה מבוגר משמעותי</td><td>"לא טוב" לילד/ה בבית הספר</td><td>אין קשר חיובי עם הצוות · אין קשרים חברתיים · אין דמות משמעותית בבית הספר</td></tr>
+          <tr><td><b>🏠 בית ומשפחה</b></td><td>—</td><td>לא ענו לשאלון אחרי פנייה טלפונית</td><td>ההורים לא בקשר · אין תמיכה מהבית · קשיים משפחתיים, רגשיים או כלכליים</td></tr>
+          <tr><td><b>🧭 גורמי טיפול</b></td><td>—</td><td>—</td><td>קב"ס או קצין מבחן מעורבים · רווחה או טיפול פעילים</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:14.5px;color:var(--muted)">הנוכחות מופיעה כאן כפי שהתלמיד והמחנך/ת מתארים אותה בשאלון, כחלק מהתמונה. מעקב הנוכחות היומי והטיפול בו נשארים אצל בית הספר, לפי הנוהל שלו.</p>
+  </div>
+
+  <div class="tiers">
+    <div class="tier gray">
+      <h4><span class="dot n"></span>אפור · טרם מופה</h4>
+      <span class="trig">לא התקבל אף שאלון, או רק חלקי</span>
+      <p>אפור הוא לא "בסדר". אפור הוא "לא יודעים". תלמיד שנשאר אפור אחרי חודש עולה לבירור.</p>
+    </div>
+    <div class="tier green">
+      <h4><span class="dot g"></span>ירוק</h4>
+      <span class="trig">אין סימן, או סימן בתחום אחד בלבד שאינו דגל אדום</span>
+      <p>התלמיד מתפקד ויש לו עוגן. ממשיכים מעקב שגרתי ובונים על החוזקות.</p>
+    </div>
+    <div class="tier yellow">
+      <h4><span class="dot y"></span>צהוב · בחשש</h4>
+      <span class="trig">סימנים בשני תחומים, או אין מבוגר משמעותי</span>
+      <p>משהו מתחיל לזוז. זה השלב שבו ההתערבות הכי זולה והכי יעילה.</p>
+    </div>
+    <div class="tier red">
+      <h4><span class="dot r"></span>אדום · דגל</h4>
+      <span class="trig">סימנים בשלושה תחומים ומעלה, או דגל אדום אחד</span>
+      <p>סיכון ממשי לנשירה. מבוגר משובץ, שיחה שבועית ותוכנית אישית כתובה.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>דגלים אדומים: כל אחד מהם לבדו מספיק</h3>
+    <ul>
+      <li>המחנך/ת מסמן/ת נוכחות <b>"לא מגיע/ה"</b></li>
+      <li><b>3 ציונים שליליים ומעלה</b></li>
+      <li>התלמיד כותב <b>"לא טוב לי"</b> בבית הספר, <b>ובנוסף</b> לא מציין שום מבוגר משמעותי</li>
+      <li>אין דמות משמעותית <b>לא בבית הספר ולא מחוצה לו</b> (לפי המחנך/ת)</li>
+      <li><b>קשיים משפחתיים, רגשיים או כלכליים, ובנוסף אין תמיכה מהבית</b></li>
+      <li><b>קצין מבחן מעורב</b></li>
+      <li>כל תוכן בתשובה פתוחה שמעיד על <b>מצוקה, פגיעה או סכנה</b>. במקרה כזה לא מחכים לרמזור: פועלים מיד לפי פרק 16.</li>
+    </ul>
+    <div class="callout y" style="margin-bottom:0"><b>העיקרון: האדום תמיד גובר</b>עדיפה התרעת שווא שתתברר בשיחה, על פני תלמיד שהוחמץ. הרמזור מסמן לבירור, לא מדביק תווית.</div>
+  </div>
+
+  <div class="card">
+    <h3>הפער בין הקולות הוא מידע</h3>
+    <p>כשהקולות לא מסכימים, זו לא "טעות במיפוי". זו לרוב התובנה החשובה ביותר:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>הפער</th><th>מה זה עשוי לומר</th><th>מה עושים</th></tr></thead>
+        <tbody>
+          <tr><td>התלמיד: "טוב לי מאוד". המחנך/ת: אין קשרים חברתיים, לא משתתף</td><td>ניתוק שהתלמיד מסתיר, או לא מזהה בעצמו</td><td>שיחה אישית פתוחה, בלי לעמת עם השאלון</td></tr>
+          <tr><td>התלמיד: "לא טוב לי". המחנך/ת: הכול תקין</td><td>מצוקה שקטה, שלא נראית בכיתה</td><td>שיחה תוך שבוע. זה סימן חשוב במיוחד</td></tr>
+          <tr><td>ההורים: מתקדם מאוד (5). המחנך/ת: 3 שליליים ומעלה</td><td>המשפחה לא יודעת מה קורה</td><td>שיחת הורים מגייסת (כרטיס 5), לפני כל מכתב</td></tr>
+          <tr><td>התלמיד ציין מבוגר משמעותי. המחנך/ת: אין דמות משמעותית</td><td>יש קשר שהצוות לא מכיר</td><td>לפנות לאותו מבוגר, ולגייס אותו לתוכנית</td></tr>
+          <tr><td>המבוגר שהתלמיד ציין אינו איש צוות</td><td>העוגן נמצא מחוץ לבית הספר</td><td>לחזק את העוגן הזה, ולבנות במקביל גשר לאיש צוות (כרטיס 7)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout p"><b>הרמזור הוא כלי עבודה, לא ציון</b>הכללים כאן הם נקודת פתיחה, וייבחנו בסוף השליש הראשון מול מה שהצוותים ראו בשטח. כל בית ספר יכול לבקש לכייל אותם. והעיקר: הצבע נקבע סופית בישיבת הצוות, על ידי אנשים שמכירים את התלמיד.</div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">5</span><h2>מה עושים בכל צבע</h2></div>
+  <p class="sec-lead">כל צבע מחייב פעולה מוגדרת. רמזור בלי פעולה הוא דשבורד, לא תוכנית.</p>
+
+  <div class="tiers t3">
+    <div class="tier green">
+      <h4><span class="dot g"></span>ירוק</h4>
+      <span class="trig">מעקב שגרתי וחיזוק</span>
+      <ul>
+        <li>החוזקה שכתב התלמיד נכנסת למענים קבוצתיים, להעשרה ולשייכות</li>
+        <li>המחנך/ת מעדכן/ת שדות מעקב בכל שליש</li>
+        <li>התלמיד יודע מי הרכז/ת, והדלת פתוחה</li>
+        <li>מיפוי חוזר באביב</li>
+      </ul>
+    </div>
+    <div class="tier yellow">
+      <h4><span class="dot y"></span>צהוב</h4>
+      <span class="trig">ליווי ממוקד</span>
+      <ul>
+        <li>שיחה אישית תוך שבועיים מהמיפוי</li>
+        <li>מבוגר משמעותי בשמו, גם אם אינו הרכז/ת</li>
+        <li>מטרה אחת לשליש, שהתלמיד שותף לניסוחה</li>
+        <li>שיחה אחת לחודש לפחות</li>
+        <li>שיחת הורים מגייסת (כרטיס 5)</li>
+        <li>מענה מותאם אחד מהמאגר</li>
+      </ul>
+    </div>
+    <div class="tier red">
+      <h4><span class="dot r"></span>אדום</h4>
+      <span class="trig">ליווי צמוד</span>
+      <ul>
+        <li>שיחה תוך שבוע מהמיפוי</li>
+        <li>הרכז/ת או מבוגר משובץ: שיחה שבועית קבועה (כרטיס 1)</li>
+        <li>תוכנית אישית כתובה, משולבת: לימודי + קשר-רגשי (כרטיס 4)</li>
+        <li>שיחת הורים מגייסת, ובמידת הצורך ביקור בית</li>
+        <li>תיאום עם הגורמים שכבר מעורבים: קב"ס, רווחה, טיפול</li>
+        <li>דיון בצוות הבין-מקצועי</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>מסלול ההסלמה הבית-ספרי</h3>
+    <p>כשהתוכנית לא מזיזה את התלמיד, עולים מדרגה. כל בית ספר מתאים את שמות בעלי התפקידים לעצמו.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>שלב</th><th>מתי</th><th>מה קורה</th><th>מי</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>סימן ראשון מהמיפוי או מהשטח</td><td>שיחה עם התלמיד, ובירור קצר עם המחנך/ת</td><td>רכז/ת</td></tr>
+          <tr><td>2</td><td>צהוב</td><td>מבוגר משמעותי, מטרה לשליש, שיחה עם ההורים, מענה</td><td>רכז/ת + מחנך/ת</td></tr>
+          <tr><td>3</td><td>אדום, או צהוב שלא זז אחרי שליש</td><td>תוכנית אישית כתובה ומשולבת, שיחה שבועית, ביקור בית לפי הצורך</td><td>רכז/ת + מחנך/ת + יועץ/ת</td></tr>
+          <tr><td>4</td><td>אדום שלא זז אחרי 6–8 שבועות</td><td>דיון בצוות הבין-מקצועי. תיאום עם הקב"ס, קידום נוער או רווחה</td><td>הנהלה + יועץ/ת + רכז/ת</td></tr>
+          <tr><td>5</td><td>המצב לא נפתר</td><td>הפעלת נוהל הביקור הסדיר של בית הספר, ובמידת הצורך ועדת התמדה (נספח ב')</td><td>הנהלה, לפי הנוהל</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout y" style="margin-bottom:0"><b>שני כללים על המסלול</b>אחד: <b>לא מדלגים על שלב 2.</b> בשלב הזה רוב המערכות מפסידות את התלמיד, כי "מחכים לראות אם זה יסתדר". שניים: <b>המסלול הוא לטיפול, לא לענישה.</b> תלמיד שמרגיש שכל שלב מקרב אותו לעונש ילמד להיעלם טוב יותר, לא להגיע יותר.</div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><span class="sec-num">6</span><h2>מחזור המיפוי לאורך השנה</h2></div>
+  <p class="sec-lead">המיפוי הוא לא אירוע חד-פעמי. הוא מחזור שחוזר בכל שליש, ובכל סבב בודקים אם התלמיד זז.</p>
+
+  <div class="flow">
+    <div class="fl"><b>מיפוי</b><span>שלושת השאלונים, לכל השכבה, בתוך שבועיים</span></div>
+    <div class="fl"><b>ישיבת מיפוי</b><span>לכל כיתה: מחנך/ת, יועץ/ת ורכז/ת. קריאת הקולות וקביעת צבע</span></div>
+    <div class="fl"><b>תוכנית</b><span>מבוגר משמעותי, מטרה לשליש, מענה. נרשם בשדות 22–23</span></div>
+    <div class="fl"><b>ליווי</b><span>שיחות, תוכנית משולבת, הורים, מענים, לפי הצבע</span></div>
+    <div class="fl"><b>בדיקה בשליש</b><span>ישיבת צוות פדגוגית: מה השתנה? עדכון שדות 17–24 והצבע</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>מתי</th><th>מה ממלאים</th><th>מה יוצא מזה</th></tr></thead>
+      <tbody>
+        <tr><td><b>אוקטובר–נובמבר</b><br>מיפוי פתיחה</td><td>שאלון תלמיד + שאלון הורים + מחנך/ת שאלות 1–16</td><td>רמזור ראשון לכל תלמיד · רשימה שמית · מבוגר משמעותי לכל צהוב ואדום</td></tr>
+        <tr><td><b>סוף שליש א'</b><br>(דצמבר)</td><td>מחנך/ת שדות 17–24, בישיבת הצוות הפדגוגית</td><td>מטרה לשליש ב' · עדכון צבע · תגובה לכישלונות</td></tr>
+        <tr><td><b>סוף שליש ב'</b><br>(מרץ)</td><td>מחנך/ת שדות 17–24</td><td>מטרה לשליש ג' · עדכון צבע · מי לא זז ← צוות בין-מקצועי</td></tr>
+        <tr><td><b>מאי</b><br>מיפוי חוזר</td><td>שאלון תלמיד חוזר (וגם הורים, לצהובים ולאדומים)</td><td>השוואה לסתיו: האם יש יותר "טוב לי"? יותר מבוגרים משמעותיים?</td></tr>
+        <tr><td><b>יוני</b><br>סיכום שנה</td><td>מחנך/ת סיכום והערות</td><td>העברת מקל לשנה הבאה · מסיימי י"ב עוברים לרכז/ת הבוגרים</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>ישיבת המיפוי הכיתתית: איך היא נראית</h3>
+    <p>45–60 דקות לכיתה. משתתפים המחנך/ת, היועץ/ת והרכז/ת. על השולחן: שלושת השאלונים, זה לצד זה, לכל תלמיד.</p>
+    <ol>
+      <li><b>תמונה כללית (5 דקות):</b> כמה תלמידים בכל צבע, ומה שיעור המענה בכל שאלון.</li>
+      <li><b>האדומים (20 דקות):</b> לכל תלמיד: מה הסימנים, מה החוזקה, מי המבוגר המשמעותי, מי כבר מטפל. מסכמים את המטרה לשליש ואת המענה.</li>
+      <li><b>הצהובים (15 דקות):</b> אותו דבר, בקצרה. מי מהם קרוב לאדום?</li>
+      <li><b>הפערים והאפורים (10 דקות):</b> איפה הקולות לא מסכימים? ממי חסר שאלון, ומי משיג אותו?</li>
+      <li><b>חלוקת משימות (5 דקות):</b> מי מדבר עם מי, עד מתי. נרשם בשדה 24.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════ חלק ג ═══════════ -->
+<div class="part">
+  <b>חלק ג</b>
+  <h2>התפקיד והמבנה</h2>
+  <p>מי עושה מה. הפרק המרכזי הוא 7: הגדרת התפקיד של רכז/ת מניעת הנשירה, ואחריו הסדירויות שלו/ה.</p>
 </div>
 
 <section id="s7">
   <div class="sec-head"><span class="sec-num">7</span><h2>רכז/ת מניעת נשירה: הגדרת התפקיד</h2></div>
-  <p class="sec-lead">הליבה של התפקיד: מה החובות בכל בית ספר ובכל היקף משרה, איך עובדים בפועל, ומה מוסיפים כשיש יותר שעות.</p>
+  <p class="sec-lead">מה התפקיד, מה החובות בכל בית ספר ובכל היקף משרה, איך עובדים בפועל, ומה מוסיפים כשיש יותר שעות.</p>
 
   <div class="mission">
-    רכז/ת מניעת הנשירה הוא/היא <b>המבוגר המשמעותי שלא נעלם</b> של התלמידים שהמערכת הכי נוטה לאבד — מי שרואה את הסימנים לפני שהם הופכים לנשירה, יוזם/ת קשר, מחבר/ת למענה, ומלווה עד שהתלמיד מסיים את י"ב וממשיך לרכז/ת הבוגרים.
+    רכז/ת מניעת הנשירה הוא/היא <b>המבוגר המשמעותי שלא נעלם</b> של התלמידים שהמערכת הכי נוטה לאבד, ו<b>מי שמחזיק/ה את תמונת המיפוי</b> של בית הספר. הרכז/ת מוביל/ה את המיפוי, קורא/ת את הקולות, יוזם/ת קשר, מחבר/ת למענה, ומלווה עד שהתלמיד מסיים את י"ב וממשיך לרכז/ת הבוגרים.
   </div>
 
   <div class="card">
     <h3>שתי זירות עבודה</h3>
     <ul>
-      <li><b>פרטנית — ליווי תלמידים:</b> איתור מוקדם, שיחות קבועות, בניית תוכנית אישית, עבודה עם המשפחה, חיבור למענים, ליווי במעברים.</li>
-      <li><b>מערכתית — בתוך בית הספר:</b> החזקת תמונת הנשירה של בית הספר, עבודה עם המחנכות והיועצת, הצגת נתונים להנהלה, נוכחות בצוות הבין-מקצועי ובוועדות ההתמדה, קשר עם הקב"ס ועם הרשות, ובניית מענים קבוצתיים לשייכות.</li>
+      <li><b>זירה פרטנית, ליווי תלמידים:</b> שיחות קבועות עם האדומים והצהובים, בניית תוכנית אישית, עבודה עם המשפחה, חיבור למענים וליווי במעברים.</li>
+      <li><b>זירה מערכתית, בתוך בית הספר:</b> הובלת מחזור המיפוי, ניהול ישיבות המיפוי עם המחנכים, הצגת תמונת הרמזור להנהלה, השתתפות בצוות הבין-מקצועי, קשר עם הקב"ס ועם הרשות, ובניית מענים קבוצתיים לשייכות.</li>
     </ul>
   </div>
 
@@ -621,138 +699,206 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
     <h3>מסגרת ארגונית</h3>
     <ul>
       <li><b>כפיפות מנהלתית:</b> מנהל/ת בית הספר.</li>
-      <li><b>ליווי מקצועי:</b> מטה הופה — הדרכה, מפגש רכזים חודשי, שני ימי הכשרה בשנה, וכלים (מאגר המענים, כרטיסי ההתערבות, הרמזור).</li>
-      <li><b>עורף מקצועי:</b> רכז המענים במטה הופה, לשאלות של מענים והתאמות. הרכז/ת בשטח לא צריכ/ה לדעת הכול לבד.</li>
-      <li><b>שותפים קבועים בבית הספר:</b> היועצת, המחנכות, רכז/ת השכבה, ורכז/ת הבוגרים (זירת המעבר המשותפת).</li>
-      <li><b>שותפים מחוץ לבית הספר:</b> קב"ס, קידום נוער, שפ"ח, רווחה — <b>ובנוסף גורם הפיקוח הרלוונטי לפי פרק 3</b>.</li>
+      <li><b>ליווי מקצועי:</b> מטה הופה: הדרכה, מפגש רכזים, שני ימי הכשרה בשנה, וכלים (שאלוני המיפוי ב-HOPA Secure, מאגר המענים, כרטיסי ההתערבות).</li>
+      <li><b>עורף מקצועי:</b> רכז/ת המענים במטה הופה, לשאלות על מענים והתאמות. הרכז/ת בשטח לא צריכ/ה לדעת הכול לבד.</li>
+      <li><b>שותפים קבועים בבית הספר:</b> היועץ/ת, המחנכים, רכז/ת השכבה, ורכז/ת הבוגרים (במעבר המשותף בסיום י"ב).</li>
+      <li><b>שותפים מחוץ לבית הספר:</b> קב"ס, קידום נוער, שפ"ח, רווחה.</li>
     </ul>
-    <div class="callout b"><b>הבהרה חשובה</b>הרכז/ת של הופה אינו/ה מחליף/ה אף בעל תפקיד בנוהל. הדיווחים הרשמיים הם באחריות המנהל/ת, המחנך/ת והיועץ/ת. תפקיד הרכז/ת הוא <b>לוודא שזה קורה בזמן, ולעשות את מה שהנוהל לא עושה</b>: את הקשר האישי, את המענה, ואת הרצף.</div>
+    <div class="callout b" style="margin-bottom:0"><b>הבהרה חשובה</b>הרכז/ת אינו/ה מחליף/ה אף בעל תפקיד בבית הספר. הטיפול בנוכחות ובנוהל הביקור הסדיר נשאר אצל המנהל/ת, המחנכים והיועץ/ת. התפקיד של הרכז/ת הוא <b>לעשות את מה שאף אחד אחר לא מחזיק</b>: את התמונה המלאה, את הקשר האישי, את המענה ואת הרצף.</div>
   </div>
 
   <h3 style="margin:30px 0 4px">חמישה עקרונות עבודה</h3>
   <div class="principles">
-    <div class="pr"><b>מזהים מוקדם</b><span>עובדים מנתוני הנוכחות ולא מהתחושה, ומסמנים ביום השלישי ולא בשביעי.</span></div>
+    <div class="pr"><b>עובדים מהמיפוי</b><span>מהשאלונים ולא מהתחושה. מה שלא מופה, לא ידוע.</span></div>
     <div class="pr"><b>לא נעלמים</b><span>העקביות חשובה מהתוכן. ביטול שיחה על ידי המבוגר מאשר לתלמיד שמבוגרים נעלמים.</span></div>
-    <div class="pr"><b>קשר ולימודי ביחד</b><span>לא "קודם נסדר את הציונים ואז נטפל בשאר". שני הצירים במקביל.</span></div>
-    <div class="pr"><b>גשר, לא תחליף</b><span>לא מייצרים מענים חדשים. מחברים למה שקיים, ומוודאים שהחיבור עבד.</span></div>
-    <div class="pr"><b>הרצף לא נקטע</b><span>גם במעבר מסגרת, וגם בסיום י"ב. המעבר לרכז/ת הבוגרים הוא לב המודל.</span></div>
+    <div class="pr"><b>מחוזקה לקושי</b><span>כל שיחה ותוכנית נפתחות במה שהתלמיד טוב בו.</span></div>
+    <div class="pr"><b>גשר, לא תחליף</b><span>לא בונים מענים חדשים. מחברים למה שקיים, ומוודאים שהחיבור עבד.</span></div>
+    <div class="pr"><b>הרצף לא נקטע</b><span>לא במעבר מסגרת ולא בסיום י"ב. המעבר לרכז/ת הבוגרים הוא לב המודל.</span></div>
   </div>
 
-  <h3 style="margin:34px 0 6px">הליבה — שש החובות של כל רכז/ת</h3>
+  <h3 style="margin:34px 0 6px">הליבה: שש החובות של כל רכז/ת</h3>
   <p class="sec-lead">אלה לא המלצות. זו ההגדרה המינימלית של התפקיד, בכל בית ספר ובכל היקף משרה.</p>
 
   <div class="card">
-    <h3>א. רשימת סיכון חיה, מבוססת נוכחות</h3>
+    <h3>א. להוביל את מחזור המיפוי</h3>
     <ul>
-      <li><b>סריקת נוכחות שבועית:</b> מי צבר שלושה ימים רצופים, ומי עבר שבעה.</li>
-      <li><b>רשימה שמית עד סוף אוקטובר:</b> לכל תלמיד ברשימה — סימון רמזור, מבוגר משמעותי משובץ בשמו, ותוכנית אישית.</li>
-      <li><b>הצלבה חודשית עם הדיווח הרשמי</b> של בית הספר, כדי שהרשימה של הופה והרשימה של המשרד יהיו אותה רשימה.</li>
-      <li><b>תיעוד גם של מי שנבדק ולא סומן</b>, כדי שאפשר יהיה לראות תזוזה בהמשך השנה.</li>
+      <li><b>מיפוי פתיחה עד סוף נובמבר:</b> שלושת השאלונים לכל שכבות היעד, ומעקב אחרי שיעורי המענה עד ליעד.</li>
+      <li><b>ישיבת מיפוי לכל כיתה</b> עם המחנך/ת והיועץ/ת, וקביעת צבע לכל תלמיד.</li>
+      <li><b>רשימה שמית עד אמצע דצמבר:</b> לכל תלמיד בצהוב ובאדום יש מבוגר משמעותי בשמו, מטרה לשליש ומענה.</li>
+      <li><b>עדכון בכל סוף שליש</b> ומיפוי חוזר במאי.</li>
     </ul>
   </div>
 
   <div class="card">
-    <h3>ב. קשר יזום מדורג — לפי רמת הרמזור</h3>
-    <div class="tiers">
-      <div class="tier red"><h4>🔴 אדום</h4><p><b>שיחה שבועית</b> קבועה, 15–20 דקות, יום ושעה קבועים. מינימום סמסטר, השאיפה שנתיים רצופות.</p></div>
-      <div class="tier orange"><h4>🟠 כתום</h4><p><b>שיחה חודשית</b> + תגובה מיידית לכל היעדרות חוזרת או אירוע.</p></div>
-      <div class="tier green"><h4>🟢 ירוק</h4><p><b>סריקה שוטפת</b> + נגישות. הרכז/ת מוכר/ת לשכבה, והדלת פתוחה בלי הפניה.</p></div>
+    <h3>ב. קשר יזום ומדורג, לפי הצבע</h3>
+    <div class="tiers t3">
+      <div class="tier red"><h4><span class="dot r"></span>אדום</h4><p><b>שיחה שבועית</b> קבועה, 15–20 דקות, ביום ובשעה קבועים. לפחות שליש שלם. השאיפה: עד סוף הלימודים.</p></div>
+      <div class="tier yellow"><h4><span class="dot y"></span>צהוב</h4><p><b>שיחה חודשית</b>, ותגובה מיידית לכל אירוע או סימן חדש.</p></div>
+      <div class="tier green"><h4><span class="dot g"></span>ירוק</h4><p><b>נוכחות ונגישות.</b> הרכז/ת מוכר/ת לשכבה, והדלת פתוחה גם בלי הפניה.</p></div>
     </div>
-    <p>השיחה נפתחת תמיד באותו פורמט של ארבע שאלות (ראו למטה), ומתקיימת גם בשבוע טוב. דווקא אז היא בונה את האמון שיידרש בשבוע רע.</p>
+    <p>השיחה תמיד באותו מבנה של ארבע שאלות (בהמשך הפרק), ומתקיימת גם בשבוע טוב. דווקא אז נבנה האמון שיידרש בשבוע רע.</p>
   </div>
 
   <div class="card">
-    <h3>ג. נוכחות בצמתים הקבועים</h3>
+    <h3>ג. מבוגר משמעותי לכל תלמיד בסיכון</h3>
     <ul>
-      <li><b>פתיחת שנה:</b> מי מהרשומים לא הגיע בכלל. שני הנהלים מטפלים בזה במפורש, ובמשרד העבודה יש תאריך קשיח — 20.9.</li>
-      <li><b>אחרי חופשות ארוכות:</b> החזרה מחופשה היא נקודת נשירה מוכרת. סריקת נוכחות בשבוע הראשון אחרי כל חופשה.</li>
-      <li><b>אחרי כל חלוקת תעודות:</b> מעבר על הנכשלים ותגובה תוך שבוע (כרטיס 3).</li>
-      <li><b>לפני הקיץ:</b> הקיץ הוא נקודת נשירה. שיחה עם כל תלמיד אדום וכתום על מה קורה בחופש ומי בקשר איתו.</li>
-      <li><b>בסיום י"ב:</b> העברה מסודרת לרכז/ת הבוגרים (כרטיס 8).</li>
+      <li><b>הרכז/ת לא חייב/ת להיות המבוגר של כולם.</b> הרכז/ת מתכלל/ת: מוצא/ת לכל תלמיד את המבוגר הנכון. לפעמים זה מי שהתלמיד כבר כתב בשאלון, לפעמים מורה מקצועי, מאמן או רכז/ת שכבה.</li>
+      <li>הרכז/ת מחזיק/ה בעצמו/ה את <b>הליווי השבועי של האדומים</b>, עד המספר שהמשרה מאפשרת (ראו פרק 8).</li>
+      <li>מבוגר משובץ מקבל מהרכז/ת תדריך קצר, ושיחת מעקב אחת לחודש: "איך הולך? מה אתה צריך?".</li>
     </ul>
   </div>
 
   <div class="card">
-    <h3>ד. חיבור למענים — במדרג, ועד הסוף</h3>
+    <h3>ד. חיבור למענים, במדרג ועד הסוף</h3>
     <div class="ladder">
       <div class="rung"><span class="step">1</span><b>יידוע</b><span>מידע מלא ומדויק. התלמיד או המשפחה מממשים לבד.</span></div>
       <div class="rung"><span class="step">2</span><b>תיווך</b><span>שיחה מקדימה לגורם, או שיחה משותפת.</span></div>
-      <div class="rung"><span class="step">3</span><b>סנגור</b><span>הרכז/ת פונה בעצמו/ה לגורם, בהחלטה משותפת עם התלמיד ומשפחתו.</span></div>
-      <div class="rung"><span class="step">4</span><b>ליווי</b><span>מתלווים פיזית לפגישה כשבלי זה זה לא יקרה.</span></div>
+      <div class="rung"><span class="step">3</span><b>סנגור</b><span>הרכז/ת פונה בעצמו/ה, בהחלטה משותפת עם התלמיד והמשפחה.</span></div>
+      <div class="rung"><span class="step">4</span><b>ליווי</b><span>מתלווים פיזית לפגישה, כשבלי זה היא לא תקרה.</span></div>
     </div>
-    <p><b>סוגרים מעגל:</b> חיבור למענה בלי מעקב לא נחשב. בודקים שהקשר נוצר, שהתלמיד הגיע, ושהצורך נענה. אם לא, מחפשים מענה אחר.</p>
-    <p><b>לא ממהרים לקבל "לא":</b> מטילים ספק בתשובה שלילית של פקיד, עולים קומה, ומציידים את המשפחה בנוסח אסרטיבי ומנומס.</p>
+    <p><b>סוגרים מעגל:</b> חיבור בלי מעקב לא נחשב. בודקים שהתלמיד הגיע ושהצורך נענה. אם לא, מחפשים מענה אחר.</p>
+    <p><b>החוזקה היא כתובת:</b> מה שהתלמיד כתב ש"אני טוב בו" או "אוהב", הוא לא פחות חשוב מהקושי. מענה של העשרה, ספורט או מנהיגות שמתחבר לחוזקה בונה שייכות, ושייכות היא תנאי להתמדה.</p>
   </div>
 
   <div class="card">
     <h3>ה. עבודה מערכתית בבית הספר</h3>
     <ul>
-      <li><b>ישיבת הנהלה בפתיחת השנה:</b> הצגת תמונת הנשירה — כמה תלמידים בכל רמת רמזור, מה קרה בשנה שעברה, מה היעדים.</li>
-      <li><b>נוכחות בצוות הבין-מקצועי למניעת נשירה</b> ובוועדות ההתמדה, לפי הנוהל של בית הספר.</li>
-      <li><b>ישיבות מיפוי עם צוותי השכבות</b> לפחות פעמיים בשנה: מי מדאיג אתכם? מי נעלם בשיעורים? מי מגיע ולא נמצא?</li>
-      <li><b>עבודה שוטפת עם המחנכות:</b> המחנכת היא העיניים. הרכז/ת נותן/ת לה שלוש שאלות בירור קבועות ומקבל/ת ממנה איתותים.</li>
-      <li><b>קשר קבוע עם הקב"ס ועם קידום נוער ברשות</b>, לא רק בזמן משבר.</li>
-      <li><b>איתות מערכתי:</b> כשירידה מופיעה בכיתה שלמה או בשכבה, זו בעיית אקלים ולא בעיה פרטנית. מביאים אותה להנהלה.</li>
+      <li><b>הצגת תמונת הרמזור בהנהלה</b> אחרי כל סבב מיפוי: כמה תלמידים בכל צבע, מה השתנה, מה היעדים.</li>
+      <li><b>השתתפות בצוות הבין-מקצועי</b> של בית הספר, עם תיק מסודר לכל תלמיד אדום שלא זז.</li>
+      <li><b>עבודה שוטפת עם המחנכים:</b> המחנך/ת הם העיניים. הרכז/ת מקבל/ת מהם איתותים, ונותן/ת להם גב.</li>
+      <li><b>קשר קבוע עם הקב"ס ועם קידום נוער ברשות</b>, לא רק במשבר.</li>
+      <li><b>איתות מערכתי:</b> כשכיתה שלמה או שכבה נצבעת בצהוב, או ש"טוב לי" יורד בכל השכבה, זו שאלה של אקלים ולא של תלמיד בודד. מביאים את זה להנהלה.</li>
+      <li><b>הורים כמשאב:</b> ריכוז ההורים שענו "כן, אשמח" להעביר הרצאה, ובניית "בנק הורים" לבית הספר (כרטיס 10).</li>
     </ul>
   </div>
 
   <div class="card">
     <h3>ו. תיעוד ודיווח</h3>
     <ul>
-      <li><b>כל שיחה מתועדת בשתי שורות:</b> מה עלה, מה סוכם. התיעוד הוא מה שמאפשר רצף כשמישהו אחר נכנס לתמונה, והוא גם דרישה מפורשת בשני הנהלים.</li>
-      <li><b>יעדים חודשיים כמותיים:</b> כמה שיחות אדום התקיימו בפועל, כמה חיבורים למענים נסגרו.</li>
-      <li><b>שלושה דיווחים בשנה להופה</b> (דצמבר, מרץ, יוני), על תבנית אחידה: מה תוכנן, מה בוצע, מה השתנה ברמזור.</li>
+      <li><b>כל שיחה מתועדת בשתי שורות:</b> מה עלה, מה סוכם. התיעוד מאפשר רצף כשמישהו אחר נכנס לתמונה.</li>
+      <li><b>שדות המעקב במערכת מעודכנים בכל שליש:</b> צבע, מטרה, מענה, סיכום ישיבה.</li>
+      <li><b>שלושה דיווחים בשנה להופה</b> (דצמבר, מרץ, יוני), בתבנית אחידה: מה תוכנן, מה בוצע, מה השתנה ברמזור.</li>
     </ul>
   </div>
 
-  <h3 style="margin:34px 0 6px">פרוטוקול שיחת החיבור — ארבע שאלות</h3>
+  <h3 style="margin:34px 0 6px">פרוטוקול שיחת החיבור: ארבע שאלות</h3>
   <p class="sec-lead">מבנה קבוע לכל שיחה יזומה, כדי שהליווי לא יהיה תלוי באלתור.</p>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>שלב</th><th>מה שואלים</th></tr></thead>
       <tbody>
-        <tr><td>🙂 מה טוב</td><td>מה היה טוב השבוע? מתחילים תמיד ממשהו שעבד, לא מהבעיה.</td></tr>
-        <tr><td>😕 מה קשה</td><td>מה היה קשה? מה הכי מעיק עליך עכשיו, בבית ספר או בכלל?</td></tr>
-        <tr><td>📊 איפה אנחנו</td><td>מבט משותף בנתונים: נוכחות, ציון שנכנס. לא חקירה — "בוא נראה מה המערכת מספרת עלינו".</td></tr>
-        <tr><td>🤝 מה אני יכול/ה לעשות</td><td>מה אני יכול/ה לעשות בשבילך השבוע? וסיכום אחד קטן וברור — של התלמיד, לא של הרכז/ת.</td></tr>
+        <tr><td>🙂 מה טוב</td><td>מה היה טוב השבוע? מתחילים תמיד במשהו שעבד, לא בבעיה. בפגישה הראשונה: מתחילים במה שהתלמיד כתב שהוא טוב בו.</td></tr>
+        <tr><td>😕 מה קשה</td><td>מה היה קשה? מה הכי מעיק עליך עכשיו, בבית הספר או בכלל?</td></tr>
+        <tr><td>🎯 איפה אנחנו</td><td>מבט משותף על המטרה לשליש: מה התקדם? מה תקוע? לא חקירה, אלא "בוא נראה איפה אנחנו".</td></tr>
+        <tr><td>🤝 מה אני יכול/ה לעשות</td><td>מה אני יכול/ה לעשות בשבילך השבוע? וסיכום אחד קטן וברור. של התלמיד, לא של הרכז/ת.</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="callout y"><b>יחס ההקשבה</b>שני שלישים הקשבה, שליש נתונים. שיחה שהופכת לתחקיר ציונים מפסיקה לעבוד. ואם עולה תוכן רגשי חריג (פגיעה, סכנה), עוצרים את הפורמט ומערבים מיד יועצת או גורם טיפולי לפי נוהלי בית הספר.</div>
+  <div class="callout y"><b>יחס ההקשבה</b>שני שלישים הקשבה, שליש מטרות. שיחה שהופכת לתחקיר ציונים מפסיקה לעבוד. ואם עולה תוכן רגשי חריג (פגיעה, סכנה), עוצרים את המבנה ומערבים מיד את היועץ/ת או גורם טיפולי, לפי נוהלי בית הספר.</div>
 
-  <h3 style="margin:34px 0 6px">הרחבות — כשהיקף המשרה מאפשר</h3>
+  <h3 style="margin:34px 0 6px">מי מתאים/ה לתפקיד</h3>
   <div class="card">
     <ul>
-      <li><b>קבוצת שייכות:</b> קבוצה קטנה קבועה לתלמידים בסיכון, סביב עשייה ולא סביב הבעיה (ספורט, מוזיקה, מנהיגות, התנדבות). הנוהל של משרד העבודה מאפשר במפורש תוכנית קבוצתית עד 5 תלמידים.</li>
-      <li><b>חונכות עמיתים:</b> תלמיד י"ב חונך לתלמיד ט'. שלושה כללים מחייבים: מינון מוגדר, התחייבות של שנה, ופיקוח של איש צוות אחד. חונך שנושר באמצע גרוע מאין-חונך.</li>
-      <li><b>עבודה עם ההורים כקבוצה:</b> מפגש הורים אחד בשנה לקבוצת ההורים של תלמידי הליווי, לא רק שיחות פרטניות.</li>
+      <li><b>יכולת ליצור קשר עם בני נוער</b> שלא בוטחים במבוגרים, ולהחזיק אותו לאורך זמן.</li>
+      <li><b>עבודה עם נתונים בלי לאבד את האדם:</b> לקרוא שאלונים, להחזיק רשימה, ולזכור שמאחורי כל שורה יש תלמיד.</li>
+      <li><b>עבודת צוות ותיווך:</b> לעבוד עם מחנכים, יועץ/ת והנהלה בלי להפוך ל"עוד גורם שדורש".</li>
+      <li><b>היכרות עם הקהילה והרשות:</b> קב"ס, קידום נוער, רווחה ומתנ"ס.</li>
+      <li><b>גבולות ברורים:</b> מלווה, לא מטפל/ת (פרק 16).</li>
+      <li><b>בבתי ספר בחברה הערבית, הדרוזית והבדואית:</b> שליטה בשפת התלמידים וההורים, והיכרות עם הקהילה.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:34px 0 6px">הרחבות: כשהיקף המשרה מאפשר</h3>
+  <div class="card">
+    <ul>
+      <li><b>קבוצת שייכות:</b> קבוצה קטנה וקבועה לתלמידים בצהוב, סביב עשייה ולא סביב הבעיה. לבנות אותה מהחוזקות שהתלמידים כתבו (כרטיס 12).</li>
+      <li><b>חונכות עמיתים:</b> תלמיד/ת י"ב חונכ/ת תלמיד/ת ט'. שלושה כללים: מינון מוגדר, התחייבות לשנה, ופיקוח של איש צוות אחד. חונך שנושר באמצע גרוע מאין חונך.</li>
+      <li><b>בנק הורים:</b> הורים שהציעו להעביר הרצאה הופכים למשאב לכל בית הספר (כרטיס 10).</li>
+      <li><b>מפגש הורים קבוצתי</b> פעם בשנה, להורים של תלמידי הליווי.</li>
       <li><b>יישוג לנושרים:</b> איתור פעיל של מי שכבר עזב, בשיתוף הקב"ס, וניסיון החזרה או חיבור להיל"ה.</li>
-      <li><b>שגריר שכבה:</b> תלמיד/ה שמסייע/ת בזיהוי מי נעלם, בלי להפוך למדווח/ת.</li>
     </ul>
   </div>
 </section>
 
 <section id="s8">
-  <div class="sec-head"><span class="sec-num">8</span><h2>מי אחראי על מה</h2></div>
+  <div class="sec-head"><span class="sec-num">8</span><h2>הסדירויות של הרכז/ת</h2></div>
+  <p class="sec-lead">מה קורה בכל קצב. הסדירויות הן מה שהופך תפקיד טוב לתפקיד שמחזיק שנה שלמה.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>קצב</th><th>מה הרכז/ת עושה</th><th>עם מי</th></tr></thead>
+      <tbody>
+        <tr><td><b>יומי</b></td><td>זמינות לתלמידים · קליטת איתותים מהמחנכים · תגובה לכל אירוע אצל תלמיד אדום</td><td>תלמידים, מחנכים</td></tr>
+        <tr><td><b>שבועי</b></td><td>שיחה עם כל תלמיד אדום שבליווי אישי · תיעוד כל שיחה · שעה קבועה עם היועץ/ת: מי חדש, מי מדאיג, מה סוכם</td><td>תלמידים אדומים, יועץ/ת</td></tr>
+        <tr><td><b>דו-שבועי</b></td><td>עדכון קצר להורים של תלמידי האדום, גם עם בשורות טובות</td><td>הורים</td></tr>
+        <tr><td><b>חודשי</b></td><td>שיחה עם כל תלמיד צהוב · שיחת מעקב עם כל מבוגר משובץ · בדיקת סטטוס המענים: מי הגיע, מי לא · מפגש רכזים של הופה</td><td>תלמידים צהובים, מבוגרים משובצים, צוות הופה</td></tr>
+        <tr><td><b>בכל שליש</b></td><td>ישיבת צוות פדגוגית: עדכון שדות 17–24 ועדכון צבעים · וידוא מיקוד (כרטיס 6) · דיווח להופה · הצגה בהנהלה</td><td>מחנכים, יועץ/ת, הנהלה</td></tr>
+        <tr><td><b>פעמיים בשנה</b></td><td>סבב מיפוי מלא (סתיו) וסבב חוזר (מאי) · יום הכשרה של הופה</td><td>כל השכבה, הורים, מחנכים</td></tr>
+        <tr><td><b>שנתי</b></td><td>תוכנית עבודה (ספטמבר) · העברת מסיימי י"ב לרכז/ת הבוגרים (יוני) · סיכום שנה והעברת מקל</td><td>הנהלה, רכז/ת בוגרים</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>חלוקת הזמן המומלצת</h3>
+      <p style="font-size:14px;color:var(--muted)">הצעה לדיון, לא תקן.</p>
+      <ul>
+        <li><b>כ-50% ליווי פרטני:</b> שיחות, הורים, תוכניות אישיות</li>
+        <li><b>כ-20% מיפוי ועבודה מערכתית:</b> שאלונים, ישיבות, הנהלה</li>
+        <li><b>כ-20% מענים ותיאום:</b> חיבור, מעקב, קב"ס ורשות</li>
+        <li><b>כ-10% תיעוד, למידה וקהילה</b></li>
+      </ul>
+      <p style="font-size:14px">בחודשי המיפוי (אוקטובר–נובמבר, מאי) החלק המערכתי גדל, ובשאר השנה הפרטני.</p>
+    </div>
+    <div class="card">
+      <h3>כמה תלמידים אפשר להחזיק</h3>
+      <p>המחקר לא קובע מספר אופטימלי, והופה תלמד אותו מהדיווחים של השנה. <b>ההצעה כנקודת פתיחה:</b></p>
+      <ul>
+        <li>ליווי שבועי אישי של הרכז/ת: <b>עד 12–15 תלמידים</b> בחצי משרה</li>
+        <li>מעבר לזה: הרכז/ת משבצ/ת מבוגרים נוספים ומתכלל/ת</li>
+        <li>הצהובים: ליווי חודשי, ברובו דרך המבוגרים המשובצים</li>
+      </ul>
+      <p style="font-size:14px">אם יש יותר אדומים ממה שהמשרה מחזיקה, זה לא כישלון של הרכז/ת. זה נתון שמגיע להנהלה ולהופה.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>שבוע לדוגמה</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>יום</th><th>מוקד</th></tr></thead>
+        <tbody>
+          <tr><td>א'</td><td>שיחות שבועיות עם תלמידי האדום (חלק א') · עדכון עם היועץ/ת</td></tr>
+          <tr><td>ב'</td><td>שיחות שבועיות (חלק ב') · שיחות עם הורים</td></tr>
+          <tr><td>ג'</td><td>מענים: פניות, תיאום, מעקב מי הגיע · קב"ס או קידום נוער</td></tr>
+          <tr><td>ד'</td><td>שיחות עם צהובים · מבוגרים משובצים · קבוצת שייכות</td></tr>
+          <tr><td>ה'</td><td>תיעוד ועדכון המערכת · הכנה לשבוע הבא · זמינות פתוחה לתלמידים</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:14px;color:var(--muted)">כל בית ספר מתאים לפי ימי הנוכחות של הרכז/ת. העיקרון: לשיחות עם האדומים יש יום ושעה קבועים, שלא זזים.</p>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head"><span class="sec-num">9</span><h2>מי אחראי על מה</h2></div>
   <p class="sec-lead">טבלה אחת שמונעת את הכשל הנפוץ ביותר: כולם חושבים שמישהו אחר מטפל.</p>
   <div class="tbl-wrap">
     <table>
-      <thead><tr><th>משימה</th><th>רכז/ת נשירה</th><th>מחנך/ת</th><th>יועצת</th><th>מנהל/ת</th><th>קב"ס / רשות</th><th>הופה (מטה)</th></tr></thead>
+      <thead><tr><th>משימה</th><th>רכז/ת נשירה</th><th>מחנך/ת</th><th>יועץ/ת</th><th>מנהל/ת</th><th>קב"ס / רשות</th><th>הופה (מטה)</th></tr></thead>
       <tbody>
-        <tr><td>דיווח נוכחות יומי</td><td></td><td>✔</td><td></td><td>✔ אחריות</td><td></td><td></td></tr>
-        <tr><td>בירור היעדרות ביום הראשון</td><td></td><td>✔</td><td></td><td></td><td></td><td></td></tr>
-        <tr><td>סימון רמזור (3 / 7 ימים)</td><td>✔ מוביל/ה</td><td>✔ מזין/ה</td><td>✔ מייעצת</td><td></td><td></td><td>✔ תבנית</td></tr>
-        <tr><td>שיחה שבועית עם תלמיד אדום</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td>מבוגר משמעותי משובץ</td><td>✔ משבץ/ת</td><td>✔ יכול/ה להיות</td><td>✔ יכולה להיות</td><td></td><td></td><td></td></tr>
+        <tr><td>הפצת שאלוני המיפוי ומעקב היענות</td><td>✔ מוביל/ה</td><td>✔ מעביר/ה לתלמידים ולהורים</td><td></td><td>✔ מאפשר/ת זמן</td><td></td><td>✔ המערכת</td></tr>
+        <tr><td>שאלון המחנך/ת לכל תלמיד</td><td>מלווה</td><td>✔ ממלא/ת</td><td>✔ שותף/ה</td><td></td><td></td><td></td></tr>
+        <tr><td>ישיבת מיפוי כיתתית וקביעת צבע</td><td>✔ מנחה</td><td>✔</td><td>✔</td><td></td><td></td><td></td></tr>
+        <tr><td>שיבוץ מבוגר משמעותי</td><td>✔ משבצ/ת</td><td>✔ יכול/ה להיות</td><td>✔ יכול/ה להיות</td><td></td><td></td><td></td></tr>
+        <tr><td>שיחה שבועית עם תלמיד אדום</td><td>✔ או מבוגר משובץ</td><td></td><td></td><td></td><td></td><td></td></tr>
         <tr><td>שיחה ראשונה עם ההורים</td><td>✔</td><td>✔ שותף/ה</td><td>✔ במקרים מורכבים</td><td></td><td></td><td></td></tr>
-        <tr><td>תוכנית התערבות אישית</td><td>✔ שותף/ה ומתכלל/ת</td><td>✔ כותב/ת</td><td>✔ כותבת</td><td>✔ מאשר/ת</td><td>מייעץ</td><td></td></tr>
-        <tr><td>ביקור בית</td><td>✔ יכול/ה</td><td>✔</td><td>✔</td><td></td><td>✔</td><td></td></tr>
-        <tr><td>יידוע הקב"ס בכתב</td><td>מוודא/ת שנעשה</td><td></td><td>✔ אחראית</td><td></td><td>מקבל</td><td></td></tr>
-        <tr><td>דיווח לגורמי הפיקוח</td><td>מוודא/ת שנעשה</td><td></td><td></td><td>✔ אחראי/ת</td><td></td><td></td></tr>
-        <tr><td>ועדת התמדה</td><td>✔ מביא/ה תיק</td><td>✔ משתתף/ת</td><td>✔ משתתפת</td><td>✔ מזמן/ת</td><td>✔ משתתף</td><td></td></tr>
-        <tr><td>מצוקה רגשית או נפשית</td><td>מזהה ומסלים</td><td>מזהה ומדווח/ת</td><td>✔ אחראית</td><td></td><td>✔ שפ"ח / רווחה</td><td></td></tr>
-        <tr><td>חיבור למענה מהמאגר</td><td>✔ מוביל/ה</td><td></td><td></td><td></td><td>✔ מענים יישוביים</td><td>✔ המאגר + עורף</td></tr>
-        <tr><td>מעבר למסגרת אחרת</td><td>✔ מלווה את המעבר</td><td></td><td>✔</td><td></td><td>✔ קולט</td><td></td></tr>
+        <tr><td>תוכנית אישית ומטרה לשליש</td><td>✔ מתכלל/ת</td><td>✔ כותב/ת</td><td>✔ שותף/ה</td><td>✔ מאשר/ת</td><td>מייעץ</td><td></td></tr>
+        <tr><td>מעקב נוכחות ונוהל ביקור סדיר</td><td>לידיעה</td><td>✔</td><td>✔</td><td>✔ אחראי/ת</td><td>✔</td><td></td></tr>
+        <tr><td>מצוקה רגשית או נפשית</td><td>מזהה ומסלים</td><td>מזהה ומדווח/ת</td><td>✔ אחראי/ת</td><td></td><td>✔ שפ"ח / רווחה</td><td></td></tr>
+        <tr><td>חיבור למענה מהמאגר</td><td>✔ מוביל/ה</td><td></td><td></td><td></td><td>✔ מענים ביישוב</td><td>✔ המאגר + עורף</td></tr>
+        <tr><td>מעבר למסגרת אחרת</td><td>✔ מלווה</td><td></td><td>✔</td><td></td><td>✔ קולט</td><td></td></tr>
         <tr><td>מעבר לרצף הבוגרים בסיום י"ב</td><td>✔ מוסר/ת</td><td></td><td></td><td></td><td></td><td>✔ רכז/ת בוגרים קולט/ת</td></tr>
         <tr><td>תוכנית עבודה ודיווח להופה</td><td>✔ כותב/ת</td><td></td><td></td><td>✔ מאשר/ת</td><td></td><td>✔ תבנית ומשוב</td></tr>
       </tbody>
@@ -760,427 +906,371 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
   </div>
 </section>
 
-<section id="s9">
-  <div class="sec-head"><span class="sec-num">9</span><h2>קליטת בית ספר חדש ופרטיות</h2></div>
+<section id="s10">
+  <div class="sec-head"><span class="sec-num">10</span><h2>קליטת בית ספר ופרטיות</h2></div>
 
   <div class="card">
     <h3>תהליך קליטה בשלושה שלבים</h3>
     <ol>
       <li><b>חשיפה והחלטה:</b> מפגש היכרות עם הנהלת בית הספר. ההחלטה להצטרף מתקבלת בצוות, לא רק על ידי המנהל/ת.</li>
-      <li><b>תיאום ציפיות:</b> נקבע במפורש מה בית הספר מספק (נתוני נוכחות, רכז/ת בהיקף שעות מוגדר, שילוב בישיבות הצוות הבין-מקצועי, מרחב עבודה) ומה הופה מספקת (הכשרה, כלים, מאגר מענים, ליווי מקצועי, תקציב). <b>ובנוסף: סימון הפיקוח וגורמי הדיווח לפי פרק 3.</b></li>
-      <li><b>חתימה והפעלה:</b> חתימה על טופס ההצטרפות ועל ההסכמות, מיפוי ראשוני, ובניית תוכנית העבודה השנתית.</li>
+      <li><b>תיאום ציפיות:</b> מה בית הספר מספק (זמן לשאלונים בשיעורי חינוך, ישיבות מיפוי עם המחנכים, רכז/ת בהיקף שעות מוגדר, מרחב עבודה) ומה הופה מספקת (מערכת השאלונים, הכשרה, כלים, מאגר מענים, ליווי מקצועי, תקציב).</li>
+      <li><b>חתימה והפעלה:</b> חתימה על ההסכמות, טעינת התלמידים למערכת, מיפוי פתיחה ותוכנית עבודה שנתית.</li>
     </ol>
-    <p><b>המצב בשטח (ספטמבר 2026):</b> חמישה בתי ספר בתחום — אורט אדיבי אשקלון, אורט מגשימים בית שאן, אורט בית הערבה, אורט מרום עכו, ומבואות חרמון (בית ספר חדש, מתחילים מהמנהל).</p>
+    <p><b>המצב בשטח (אוקטובר 2026):</b> חמישה בתי ספר בתחום: אורט אדיבי אשקלון, אורט מגשימים בית שאן, אורט בית הערבה, אורט מרום עכו ומבואות חרמון.</p>
   </div>
 
   <div class="callout r">
-    <b>נקודה משפטית קריטית: ויתור סודיות לפני העברת רשימת תלמידים</b>
-    עמותה חיצונית אינה "גוף ציבורי" לפי חוק הגנת הפרטיות. המסלול החוקי היחיד להעברת רשימת תלמידים מבית הספר להופה הוא <b>הסכמת הורה בכתב או ויתור סודיות חתום, לפני העברת הרשימה</b>. בגילאי 14–18 ההסכמה היא של ההורה. בסיום י"ב, במעבר לרצף הבוגרים, ההסכמה עוברת לצעיר עצמו.
+    <b>פרטיות: הופה לא רואה את זהות התלמידים</b>
+    במודול מניעת הנשירה התלמיד מופיע אצל צוות הופה כמספר מקודד בלבד. השם, תעודת הזהות והטלפון נשארים בבית הספר, וכך גם המפתח שמקשר בין המספר לתלמיד. השאלונים אוספים פרטים מזהים כדי שבית הספר יוכל לעבוד. הם לא מועברים להופה.
   </div>
 
   <div class="card">
-    <h3>מה בית הספר מעביר</h3>
-    <p>לצורך העבודה נדרשים: נתוני נוכחות ברמת שכבה, רשימת התלמידים המסומנים בסיכון (שם, כיתה, מחנך/ת, טלפון תלמיד, טלפון הורה), ומידע על מי מטפל היום. <b>לא מועברים מסמכים חסויים על פי דין</b> — אבחונים, חוות דעת פסיכולוגיות ופסיכיאטריות — כפי שמורה הנוהל במפורש. ולא ממציאים נתונים ולא ממלאים שדות שאין להם מקור.</p>
+    <h3>הסכמה ושקיפות</h3>
+    <ul>
+      <li><b>לפני המיפוי:</b> מכתב להורים שמסביר מה שואלים, למה, מי רואה את התשובות, ואיך אפשר לסרב. ההסכמה בגילאי 14–18 היא של ההורה. בסיום י"ב, במעבר לרצף הבוגרים, היא עוברת לצעיר עצמו.</li>
+      <li><b>לתלמידים, בפתיחת השאלון:</b> משפט אחד שאומר למה שואלים ("כדי שנדע איך לעזור"), ומי יקרא את התשובות.</li>
+      <li><b>לא מועברים מסמכים חסויים על פי דין:</b> אבחונים, חוות דעת פסיכולוגיות ופסיכיאטריות.</li>
+      <li><b>לא ממציאים נתונים:</b> שדה ריק נשאר ריק, ומסומן לבירור.</li>
+    </ul>
   </div>
 </section>
 
-<!-- ═══════════ חלק ג ═══════════ -->
+<!-- ═══════════ חלק ד ═══════════ -->
 <div class="part">
-  <b>חלק ג</b>
+  <b>חלק ד</b>
   <h2>הפעולות: מה עושים בפועל</h2>
-  <p>12 כרטיסי ההתערבות, סולם ההסלמה, הסדירויות, תוכנית העבודה, המדידה והנהלים. זה החלק שהרכז/ת פותח/ת ביום עבודה רגיל.</p>
+  <p>כרטיסי ההתערבות, לוח השנה, תוכנית העבודה, המדידה והמענים. זה החלק שהרכז/ת פותח/ת ביום עבודה רגיל.</p>
 </div>
 
-<section id="s10">
-  <div class="sec-head"><span class="sec-num">10</span><h2>12 כרטיסי ההתערבות</h2></div>
-  <p class="sec-lead">שמונה כרטיסים לציר 14–18 וארבעה לציר 18–26 (שנכללים כאן משום שהמעבר בסיום י"ב הוא חלק מהתפקיד). כל כרטיס הוא פעולה שאפשר לבצע מחר בבוקר.</p>
+<section id="s11">
+  <div class="sec-head"><span class="sec-num">11</span><h2>12 כרטיסי ההתערבות</h2></div>
+  <p class="sec-lead">כל כרטיס הוא פעולה שאפשר לבצע מחר בבוקר. הכרטיסים מחוברים לשאלוני המיפוי: כתוב בכל אחד איזו תשובה מפעילה אותו.</p>
 
   <div class="filters" id="filters">
     <button class="on" data-f="all">הכול (12)</button>
-    <button data-f="14-18">ציר 14–18</button>
-    <button data-f="18-26">ציר 18–26</button>
     <button data-f="red">אדום</button>
-    <button data-f="orange">כתום</button>
+    <button data-f="yellow">צהוב</button>
+    <button data-f="green">ירוק</button>
     <button data-f="practice">פרקטיקת רכז/ת</button>
   </div>
 
-  <details class="icard" data-axis="14-18" data-light="red" data-kind="intervention">
-    <summary><span class="no">1</span><span class="ttl"><b>שיחת חיבור שבועית</b><span class="meta"><span class="tag red">אדום</span><span class="tag">כל סוגי הקושי</span><span class="tag">התערבות פרטנית</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">1</span><span class="ttl"><b>שיחת חיבור שבועית</b><span class="meta"><span class="tag red">אדום</span><span class="tag">כל סוגי הקושי</span><span class="tag">פרטני</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>עם כל תלמיד אדום, כשגרת קבע ולא כתגובה לאירוע. השיחה היא העוגן: היא מתקיימת גם בשבוע טוב, ודווקא אז היא בונה את האמון שיידרש בשבוע רע.</p>
+      <p>עם כל תלמיד אדום, כשגרה קבועה ולא כתגובה לאירוע. השיחה היא העוגן: היא מתקיימת גם בשבוע טוב, ודווקא אז נבנה האמון שיידרש בשבוע רע.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>קובעים יום ושעה קבועים בשבוע, 15–20 דקות, מקום שקט שאינו חדר יועצת או מנהלת (לא לשדר "זומנת").</li>
-        <li>פותחים תמיד באותו פורמט של ארבע שאלות: מה היה טוב השבוע? מה היה קשה? איפה אתה מול מה שסיכמנו? מה אני יכולה לעשות בשבילך השבוע?</li>
-        <li>בודקים יחד את הנתונים: נוכחות, אירועים, ציון שנכנס. לא כחקירה אלא כמבט משותף.</li>
-        <li>סוגרים עם סיכום אחד קטן וברור לשבוע הקרוב, של התלמיד ולא של הרכז/ת.</li>
+        <li>קובעים יום ושעה קבועים בשבוע, 15–20 דקות, במקום שקט שאינו חדר היועץ/ת או המנהל/ת (כדי לא לשדר "זומנת").</li>
+        <li>בפגישה הראשונה פותחים במה שהתלמיד כתב בשאלון שהוא טוב בו או אוהב.</li>
+        <li>מנהלים את השיחה לפי ארבע השאלות: מה טוב, מה קשה, איפה אנחנו מול המטרה, מה אני יכול/ה לעשות.</li>
+        <li>סוגרים בסיכום אחד קטן וברור לשבוע הקרוב, של התלמיד ולא של הרכז/ת.</li>
         <li>מתעדים בשתי שורות: מה עלה, מה סוכם.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>עקביות חשובה מתוכן. ביטול שיחה על ידי הרכז/ת מאשר לתלמיד את ההנחה שמבוגרים נעלמים.</li>
-        <li>לא להפוך את השיחה לתחקיר ציונים. היחס המומלץ: שני שלישים הקשבה, שליש נתונים.</li>
-        <li>אם עולה תוכן רגשי חריג (פגיעה, סכנה), עוצרים את הפורמט ומערבים מיד יועצת או גורם טיפולי לפי נוהלי בית הספר.</li>
+        <li>העקביות חשובה מהתוכן. ביטול שיחה על ידי הרכז/ת מאשר לתלמיד שמבוגרים נעלמים.</li>
+        <li>לא להפוך את השיחה לתחקיר ציונים. שני שלישים הקשבה.</li>
+        <li>תוכן רגשי חריג: עוצרים ומערבים מיד את היועץ/ת (פרק 16).</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> 15–20 דקות בשבוע, רכז/ת + תלמיד. מינימום סמסטר, השאיפה שנתיים רצופות.</span>
-        <span><b>מענים קשורים:</b> קטגוריות רגשי וחברתי לנוער 14–18 במאגר, לפי מה שעולה בשיחות.</span>
-        <span><b>קבצים:</b> דף פורמט ארבע השאלות + תבנית תיעוד דו-שורתי.</span>
+        <span><b>מופעל על ידי:</b> צבע אדום בישיבת המיפוי.</span>
+        <span><b>משך ומעורבים:</b> 15–20 דקות בשבוע. רכז/ת או מבוגר משובץ + תלמיד. לפחות שליש שלם.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="all" data-kind="practice">
-    <summary><span class="no">2</span><span class="ttl"><b>סריקת הנוכחות השבועית</b><span class="meta"><span class="tag all">כולם — איתור</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
+  <details class="icard" data-kind="practice">
+    <summary><span class="no">2</span><span class="ttl"><b>ישיבת המיפוי הכיתתית</b><span class="meta"><span class="tag all">כל הכיתה</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>אחת לשבוע, ביום קבוע. זו הפעולה שמייצרת את כל השאר: בלי סריקה שבועית, הרמזור הוא רשימה ישנה.</p>
+      <p>אחרי כל סבב מיפוי, לכל כיתה בנפרד. הפעולה שהופכת שאלונים לרמזור, ורמזור לתוכנית.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>מפיקים דוח נוכחות של השכבות מהמזכירות או מהמערכת.</li>
-        <li>מסמנים שתי רשימות: מי צבר <b>3 ימים רצופים</b> ללא הגעה, ומי עבר <b>7 ימים רצופים</b>.</li>
-        <li>מצליבים עם רשימת הרמזור הקיימת: מי שכבר מסומן נשאר, מי שחדש נכנס לבירור.</li>
-        <li>לכל שם חדש: שיחת בירור קצרה עם המחנכת תוך יום. שלוש שאלות: מה ידוע על ההיעדרויות? יש שינוי בבית? מי בקשר עם התלמיד?</li>
-        <li>מי שעבר 7 ימים — מוודאים שהנוהל הרשמי של בית הספר הופעל (פרקים 4 או 5), ומתעדים שבוצע.</li>
-        <li>מתעדים את כל הסריקה בטבלה אחת: כמה נסרקו, כמה סומנו, מה הוחלט.</li>
+        <li>לפני הישיבה: מפיקים מהמערכת את שלושת השאלונים של כל תלמיד, זה לצד זה, ואת הצבע שהמערכת מציעה.</li>
+        <li>בישיבה (מחנך/ת, יועץ/ת, רכז/ת): עוברים לפי הסדר: אדומים, צהובים, פערים, אפורים (פרק 6).</li>
+        <li>לכל תלמיד בצהוב ובאדום מסכמים ארבעה דברים: צבע סופי, מבוגר משמעותי בשמו, מטרה לשליש, ומענה אחד.</li>
+        <li>רושמים במערכת: שדה 22 (מטרה), שדה 23 (צרכים), שדה 24 (סיכום הישיבה).</li>
+        <li>סוגרים בחלוקת משימות: מי מדבר עם מי, עד מתי.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>גם היעדרות מוצדקת נספרת לצורך הסימון. הסף מסמן לבירור, לא לתיוג.</li>
-        <li>לספור גם היעדרות מצטברת ולא רק רצופה: 14 ימים מצטברים ללא סיבה מוצדקת הם נשירה סמויה לפי שני הנהלים.</li>
-        <li>לתעד גם את מי שנבדק ולא סומן, כדי שאפשר יהיה לראות תזוזה בהמשך.</li>
+        <li>הצבע שהמערכת מציעה הוא נקודת פתיחה. הצוות מכיר את התלמיד, והצוות מחליט.</li>
+        <li>להקדיש זמן גם לפערים בין הקולות. שם מסתתרים התלמידים השקטים.</li>
+        <li>לסיים בזמן. ישיבה שנמרחת לא תתקיים שוב בשליש הבא.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> כשעה בשבוע. רכז/ת + נתוני מזכירות + מחנכות.</span>
-        <span><b>קבצים:</b> תבנית טבלת סריקה + נוסח שלוש שאלות הבירור למחנכת.</span>
+        <span><b>מופעל על ידי:</b> סיום סבב מיפוי, או סוף שליש.</span>
+        <span><b>משך ומעורבים:</b> 45–60 דקות לכיתה. מחנך/ת, יועץ/ת, רכז/ת.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="orange" data-kind="intervention">
-    <summary><span class="no">3</span><span class="ttl"><b>תגובה לכישלון ראשון</b><span class="meta"><span class="tag orange">כתום</span><span class="tag green">ירוק</span><span class="tag">קושי לימודי</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">3</span><span class="ttl"><b>תגובה לכישלון ראשון</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag green">ירוק</span><span class="tag">לימודי</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>בשבוע שאחרי חלוקת תעודות או ציוני מחצית, עם כל תלמיד שנכשל במקצוע אחד ושאינו כבר בליווי אדום. כישלון ראשון הוא לרוב הסימן שמגיע אחרי ההיעדרויות, וזו ההזדמנות לטפל בו כשהוא עוד קטן.</p>
+      <p>כשבשדה 18 בשאלון המחנך/ת מופיע ציון שלילי ראשון, או אחרי חלוקת תעודות, עם תלמיד שאינו כבר בליווי אדום. כישלון ראשון הוא הזדמנות לטפל בקושי כשהוא עוד קטן.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>מפיקים מהמזכירות רשימת הנכשלים, ומסמנים את מי שזה הכישלון הראשון שלו.</li>
         <li>שיחה אישית תוך שבוע, בנימה של "שמתי לב, בוא נטפל בזה כשזה עוד קטן". לא משמעת, לא דרמה.</li>
-        <li>מבררים יחד את הסיבה: פער ידע? היעדרויות? קושי עם מורה? משהו בבית? הסיבה קובעת את המענה.</li>
-        <li>בונים תוכנית מיני של שישה שבועות: מה התלמיד עושה, מה בית הספר נותן (תגבור, מועד ב', התאמה), ונקודת בדיקה באמצע.</li>
-        <li>מעדכנים את המורה המקצועי שהתלמיד בתוכנית, ומבקשים איתות על כל שינוי.</li>
-        <li>בנקודת הבדיקה: אם אין שיפור, מעלים לכתום ושוקלים את כרטיס 4.</li>
+        <li>מבררים יחד את הסיבה. נעזרים במה שהתלמיד כתב בשאלה 5 ("מקצוע שקשה לי בו ולמה") ובשאלה 6 ("הייתי רוצה לבקש עזרה ב...").</li>
+        <li>בונים תוכנית קצרה לשישה שבועות: מה התלמיד עושה, מה בית הספר נותן (תגבור, מועד ב', התאמה), ונקודת בדיקה באמצע.</li>
+        <li>מעדכנים את המורה המקצועי, ומבקשים ממנו לאותת על כל שינוי.</li>
+        <li>בנקודת הבדיקה: אם אין שיפור, עולים לצהוב ושוקלים את כרטיס 4.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>כישלון בשני מקצועות ליבה ומעלה הוא סימון כתום-אדום אוטומטי. לא מחכים.</li>
-        <li>אם הסיבה רגשית או משפחתית, התגבור הלימודי לבדו לא יעבוד (ראו כרטיס 4).</li>
-        <li>לשמור על דיסקרטיות מול הכיתה. השיחה היא הצעת עזרה, לא עונש פומבי.</li>
+        <li>2 ציונים שליליים ומעלה הם סימן בתחום הלימודי. 3 ומעלה הם דגל אדום.</li>
+        <li>אם הסיבה רגשית או משפחתית, תגבור לבדו לא יעבוד.</li>
+        <li>דיסקרטיות מול הכיתה. השיחה היא הצעת עזרה, לא עונש.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שיחה + שישה שבועות מעקב. רכז/ת, תלמיד, מורה מקצועי, רכז/ת שכבה.</span>
-        <span><b>מענים קשורים:</b> קטגוריית למידה ותגבור לנוער 14–18 במאגר.</span>
-        <span><b>קבצים:</b> תבנית תוכנית שישה שבועות.</span>
+        <span><b>מופעל על ידי:</b> שדה 18 (ציונים שליליים), שאלות 2 ו-5 בשאלון התלמיד, שאלה 2 בשאלון ההורים.</span>
+        <span><b>משך ומעורבים:</b> שיחה + שישה שבועות מעקב. רכז/ת, תלמיד, מורה מקצועי.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="red" data-kind="intervention">
-    <summary><span class="no">4</span><span class="ttl"><b>חבילה משולבת לתלמיד אדום</b><span class="meta"><span class="tag red">אדום</span><span class="tag">לימודי + רגשי</span><span class="tag">התערבות פרטנית</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">4</span><span class="ttl"><b>חבילה משולבת: לימודי + קשר-רגשי</b><span class="meta"><span class="tag red">אדום</span><span class="tag yellow">צהוב</span><span class="tag">פרטני</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>עם תלמיד אדום שמקבל כרגע רק מענה לימודי ואין שיפור, או בכניסת תלמיד חדש לאדום כשבונים את תוכנית ההתערבות האישית מאפס. הנוהל דורש תוכנית <b>לימודית, חברתית ורגשית</b> — הכרטיס הזה הוא איך עושים את זה בפועל.</p>
+      <p>כשבונים תוכנית אישית לתלמיד אדום, או כשתלמיד צהוב מקבל רק מענה לימודי ואין שיפור. המחקר ברור: השילוב עדיף על תגבור לבדו.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>ממפים מה התלמיד מקבל היום על שלושה צירים: לימודי, רגשי-חברתי, משפחתי.</li>
-        <li>אם יש רק ציר אחד פעיל, משלימים לשניים לפחות: לצד התגבור תמיד רכיב קשר (שיחה שבועית, חונך, קבוצה חברתית).</li>
-        <li>בוחרים את הרכיב הרגשי מתוך מאגר המענים לפי מה שמתאים לתלמיד הזה, לא לפי מה שזמין השבוע.</li>
-        <li>מסנכרנים את שני הרכיבים: המתגבר והגורם הרגשי יודעים זה על זה ועל היעדים.</li>
-        <li>בודקים אחת לחודש: האם שני הצירים באמת קורים בפועל, או רק על הנייר.</li>
+        <li>ממפים מהשאלונים מה התלמיד מקבל היום, בשלושה צירים: לימודי, רגשי-חברתי, משפחתי. שאלות 13–14 בשאלון המחנך/ת מראות מי כבר מעורב.</li>
+        <li>אם פעיל רק ציר אחד, משלימים לשניים לפחות: לצד התגבור תמיד רכיב קשר (שיחה שבועית, חונך, קבוצה).</li>
+        <li>בוחרים את הרכיב הרגשי מתוך המאגר לפי התלמיד הזה, ומתחברים לחוזקה שלו.</li>
+        <li>מסנכרנים: המתגבר והגורם הרגשי יודעים זה על זה ועל המטרה לשליש.</li>
+        <li>בודקים פעם בחודש: האם שני הצירים קורים בפועל, או רק על הנייר?</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>הטעות הנפוצה: "קודם נסדר את הציונים ואז נטפל ברגשי". שני הצירים ביחד.</li>
-        <li>לא להעמיס: שני רכיבים מתואמים עדיפים על ארבעה מנותקים.</li>
-        <li>אם המצוקה הרגשית חריפה (סימני פגיעה עצמית, דיכאון), הציר הטיפולי קודם לכול ובאחריות גורם מוסמך.</li>
+        <li>הטעות הנפוצה: "קודם נסדר ציונים, אחר כך נטפל ברגשי". שני הצירים ביחד.</li>
+        <li>לא להעמיס. שני רכיבים מתואמים עדיפים על ארבעה מנותקים.</li>
+        <li>מצוקה רגשית חריפה: הציר הטיפולי קודם לכול, ובאחריות גורם מוסמך.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> מבנה ליווי מתמשך. רכז/ת כמתכלל/ת, מתגבר, גורם רגשי, מחנכת.</span>
-        <span><b>מענים קשורים:</b> שילוב של קטגוריית למידה + קטגוריה רגשית או חברתית מהמאגר, שתיים במקביל.</span>
-        <span><b>קבצים:</b> דף מיפוי שלושת הצירים.</span>
+        <span><b>מופעל על ידי:</b> סימנים בתחום הלימודי ובתחום השייכות או הבית.</span>
+        <span><b>משך ומעורבים:</b> מבנה ליווי מתמשך. רכז/ת מתכלל/ת, מתגבר, גורם רגשי, מחנך/ת.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="orange" data-kind="intervention">
-    <summary><span class="no">5</span><span class="ttl"><b>שיחת הורים מגייסת</b><span class="meta"><span class="tag orange">כתום</span><span class="tag red">אדום</span><span class="tag">משפחתי</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">5</span><span class="ttl"><b>שיחת הורים מגייסת</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag red">אדום</span><span class="tag">משפחה</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>שיחה ראשונה עם הורים של תלמיד שנכנס לליווי, <b>ולפני שנשלח אליהם מכתב רשמי כלשהו</b>. המטרה: להפוך את ההורים משותפים-בכוח לשותפים-בפועל, לפני שהקשר איתם נצבע על ידי מכתבים והתראות.</p>
+      <p>שיחה ראשונה עם הורים של תלמיד שנכנס לצהוב או לאדום, <b>לפני כל מכתב רשמי</b>. וגם כשיש פער: ההורים רואים תמונה אחרת מבית הספר.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>מתקשרים (לא מכתב, לא הודעה) ומציגים: "אני מלווה את X השנה, רציתי קודם כול להכיר ולשמוע אתכם".</li>
-        <li>פותחים בחוזקה אמיתית של הילד, ספציפית. ההורים של תלמיד מתקשה רגילים לשמוע רק רע.</li>
-        <li>שואלים ומקשיבים: איך אתם רואים את המצב? מה הוא היה פעם? מה עוזר לו בבית?</li>
-        <li>משתפים בתמונה מבית הספר בלשון דאגה ולא אשמה: "אנחנו רואים סימנים שמדאיגים אותנו ורוצים לטפל בהם יחד".</li>
-        <li>מסכמים חלוקת תפקידים אחת קטנה: דבר אחד שההורים עושים, דבר אחד שבית הספר עושה, ומועד עדכון קבוע.</li>
-        <li>שומרים על ערוץ פתוח: עדכון קצר להורים אחת לשבועיים-שלושה, כולל בשורות טובות.</li>
+        <li>מתקשרים (לא מכתב ולא הודעה): "אני מלווה את X השנה, רציתי קודם כול להכיר ולשמוע אתכם".</li>
+        <li>פותחים בחוזקה אמיתית של הילד/ה. אפשר להשתמש במה שההורים עצמם כתבו בשאלון (שאלה 3). הורים של תלמיד מתקשה רגילים לשמוע רק דברים רעים.</li>
+        <li>שואלים ומקשיבים: איך אתם רואים את המצב? מה עוזר בבית? אם ההורים כתבו "דבר נוסף שחשוב שנדע", מתחילים משם.</li>
+        <li>משתפים בתמונה מבית הספר בלשון של דאגה ולא של אשמה: "אנחנו רואים סימנים שמדאיגים אותנו, ורוצים לטפל בהם יחד".</li>
+        <li>מסכמים חלוקה קטנה: דבר אחד שההורים עושים, דבר אחד שבית הספר עושה, ומועד לעדכון.</li>
+        <li>שומרים על ערוץ פתוח: עדכון קצר כל שבועיים-שלושה, גם עם בשורות טובות.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>הנוהל מחייב לשתף את ההורים בהכנת תוכנית ההתערבות ולהציג להם אותה לפני הפעלתה. השיחה הזו היא ההזדמנות.</li>
-        <li>אם יש רקע של מצוקה קשה בבית (אלימות, הזנחה), מתאמים מראש עם יועצת ועו"ס לפני יצירת קשר.</li>
-        <li>רגישות תרבותית: בחלק מהמשפחות נכון לערב דמות מתווכת מוכרת. לברר לפני, לא להניח.</li>
-        <li>לא מבטיחים להורים דברים בשם בית הספר שלא סוכמו.</li>
+        <li>הורים שלא ענו לשאלון הם לא "הורים לא אכפתיים". לפעמים זו שפה, עומס או חוסר אמון. השיחה הזו היא ההזדמנות.</li>
+        <li>אם יש רקע של מצוקה קשה בבית (אלימות, הזנחה), מתאמים מראש עם היועץ/ת והעו"ס.</li>
+        <li>רגישות תרבותית: בחלק מהמשפחות נכון לערב דמות מתווכת מוכרת. לברר מראש.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שיחה של 30–40 דקות + עדכונים שוטפים. רכז/ת, הורים, ובהמשך מחנכת.</span>
-        <span><b>מענים קשורים:</b> קטגוריית משפחה וקהילה במאגר (מענים להורים, סדנאות הורות).</span>
-        <span><b>קבצים:</b> מערך שיחת הורים ראשונה.</span>
+        <span><b>מופעל על ידי:</b> צהוב או אדום · שאלות 7–9 בשאלון המחנך/ת · פער בין שאלון ההורים לשאלון המחנך/ת.</span>
+        <span><b>משך ומעורבים:</b> 30–40 דקות + עדכונים. רכז/ת, הורים, ובהמשך המחנך/ת.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="red" data-kind="practice">
-    <summary><span class="no">6</span><span class="ttl"><b>וידוא מיקוד רבעוני</b><span class="meta"><span class="tag red">אדום</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
+  <details class="icard" data-kind="practice">
+    <summary><span class="no">6</span><span class="ttl"><b>וידוא מיקוד בכל שליש</b><span class="meta"><span class="tag red">אדום</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>אחת לרבעון, חצי שעה של עבודה עצמית. מומלץ לפני כל נקודת דיווח להופה ולפני כל ועדת התמדה.</p>
+      <p>פעם בשליש, חצי שעה של עבודה עצמית, לפני הדיווח להופה. הכלי שתופס את הכשל המוכר מהמחקר: בלי בקרה, האדומים מקבלים פחות.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>כותבים את רשימת חמשת התלמידים האדומים ביותר.</li>
-        <li>לצד כל שם, מהיומן ולא מהזיכרון: כמה מפגשים בפועל היו ברבעון, ואילו מענים פעילים יש לו עכשיו.</li>
-        <li>משווים מול תלמידים כתומים: האם מישהו כתום מקבל יותר זמן ממישהו אדום? למה?</li>
+        <li>כותבים את חמשת התלמידים האדומים ביותר.</li>
+        <li>ליד כל שם, מהיומן ולא מהזיכרון: כמה שיחות היו בפועל בשליש, ואילו מענים פעילים יש לו עכשיו.</li>
+        <li>משווים לתלמידים הצהובים: האם צהוב כלשהו מקבל יותר זמן מאדום? למה?</li>
         <li>שאלת הכנות: ממי מהאדומים אני נמנע/ת? (תלמיד מתיש, משפחה קשה, תחושת חוסר אונים). זה אנושי, וזה בדיוק מה שהכלי בא לתפוס.</li>
-        <li>מתקנים: קובעים ביומן את הפגישות החסרות לרבעון הבא, לפני כל שיבוץ אחר.</li>
+        <li>מתקנים: קובעים ביומן את הפגישות החסרות לשליש הבא, לפני כל דבר אחר.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
         <li>הנטייה לזלוג אל מי שמשתף פעולה היא טבעית. הכלי לא מאשים, הוא מאזן.</li>
-        <li>אם תלמיד אדום באמת לא נגיש (מסרב, נעלם), זה לא נפתר בהתעלמות: זה עובר לביקור בית, ליידוע הקב"ס ולהתייעצות בקהילת הרכזים.</li>
+        <li>תלמיד אדום שלא נגיש עובר לביקור בית, לתיאום עם הקב"ס ולהתייעצות בקהילת הרכזים. לא מוותרים עליו.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> 30 דקות, הרכז/ת לבד. אפשר גם כתרגיל זוגי עם רכז/ת נוסף/ת.</span>
-        <span><b>קבצים:</b> טבלת וידוא מיקוד (5 שורות, 4 עמודות).</span>
+        <span><b>משך ומעורבים:</b> 30 דקות, הרכז/ת לבד או בזוג עם רכז/ת אחר/ת.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="all" data-kind="practice">
-    <summary><span class="no">7</span><span class="ttl"><b>שאלון מבוגר אכפתי</b><span class="meta"><span class="tag all">כולם</span><span class="tag">כלי מדידה</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">7</span><span class="ttl"><b>בניית מבוגר משמעותי</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag red">אדום</span><span class="tag">שייכות</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>פעמיים בשנה (נובמבר ואפריל), לכל התלמידים בליווי. התוצאה נכנסת לדיווח התקופתי להופה.</p>
+      <p>כשהתלמיד לא ענה על שאלה 7 ("המבוגר המשמעותי שלי בבית הספר הוא..."), כתב "אין", או כשהמחנך/ת סימן/ה שאין לו דמות משמעותית. זה הממצא החזק ביותר במחקר: מבוגר אחד שאכפת לו.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>שלוש שאלות, סולם 1–5: יש מבוגר בבית הספר שאכפת לו ממני באמת / יש מבוגר שאני יכול לפנות אליו כשקשה / מישהו בבית הספר ישים לב אם לא אגיע.</li>
-        <li>מעבירים דיגיטלית או על דף, שלוש דקות, בלי טקס.</li>
-        <li>מסכמים: ממוצע לכל תלמיד בליווי + ממוצע קבוצתי.</li>
-        <li>תלמיד בליווי שעונה 1–2 על השאלה השלישית: דגל מיידי לשיחה, גם אם הנוכחות שלו תקינה.</li>
-        <li>משווים נובמבר מול אפריל: זו עדות השינוי הרכה של העבודה.</li>
+        <li>בשיחה עם התלמיד: "אם היית צריך עזרה, למי מהמבוגרים בבית הספר הכי פחות קשה לך לפנות?" גם מורה לספורט, מזכירה או אב בית הם תשובה טובה.</li>
+        <li>אם אין אף אחד: מחפשים מבוגר שמתחבר לחוזקה של התלמיד (שאלה 8). מורה למוזיקה לתלמיד שאוהב מוזיקה.</li>
+        <li>פונים למבוגר, ומבקשים התחייבות קטנה וברורה: מפגש של 10 דקות פעם בשבוע, לשליש אחד.</li>
+        <li>נותנים לו תדריך קצר: מה ידוע, ממה להיזהר, ואיך לפנות לרכז/ת.</li>
+        <li>בודקים אחרי חודש עם שני הצדדים: האם נוצר משהו?</li>
+        <li>במיפוי החוזר במאי בודקים: האם התלמיד כותב עכשיו שם בשאלה 7?</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>זה מדד דיווח עצמי, רגיש למצב רוח רגעי. מסתכלים על מגמה, לא על מדידה בודדת.</li>
-        <li>לא להציג לתלמידים כ"משוב על הרכז/ת". זה מודד את רשת המבוגרים כולה.</li>
-        <li>ירידה קבוצתית חדה היא איתות מערכתי (אקלים, אירוע בית ספרי). להביא לצוות הבין-מקצועי, לא לקחת אישית.</li>
+        <li>אי אפשר "לשבץ" קשר. אפשר ליצור הזדמנות. אם זה לא נדלק, מנסים מבוגר אחר.</li>
+        <li>מבוגר משמעותי מחוץ לבית הספר (שאלה 6 בשאלון המחנך/ת) הוא משאב. מחזקים אותו, לא מתחרים בו.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שלוש דקות לתלמיד, פעמיים בשנה. רכז/ת מרכז/ת, מחנכות מעבירות.</span>
-        <span><b>קבצים:</b> השאלון (3 שאלות) + טבלת ריכוז. ראו נספח א'.</span>
+        <span><b>מופעל על ידי:</b> שאלה 7 בשאלון התלמיד · שאלות 5–6 בשאלון המחנך/ת.</span>
+        <span><b>מדד:</b> שיעור התלמידים שמציינים מבוגר משמעותי, סתיו מול מאי.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="14-18" data-light="orange" data-kind="intervention">
-    <summary><span class="no">8</span><span class="ttl"><b>פרוטוקול מעבר בין מסגרות</b><span class="meta"><span class="tag orange">כתום</span><span class="tag red">אדום</span><span class="tag">התערבות פרטנית</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">8</span><span class="ttl"><b>פרוטוקול מעבר בין מסגרות, ומעבר לבוגרים</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag red">אדום</span><span class="tag">רצף</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>כשתלמיד בליווי עובר בית ספר, עובר למסגרת של קידום נוער או היל"ה, או חוזר ממסגרת חוץ. וגם במעבר הפנימי הגדול: סיום י"ב והעברה לרכז/ת הבוגרים. הנוהל מטיל על היועץ/ת ליווי עד לקליטה במסגרת החלופית — הכרטיס הזה הוא איך עושים את זה.</p>
+      <p>כשתלמיד בליווי עובר בית ספר, עובר לקידום נוער או להיל"ה, או חוזר ממסגרת חוץ. וגם במעבר הגדול: סיום י"ב והעברה לרכז/ת הבוגרים.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>ברגע שידוע על מעבר: הרכז/ת לא נפרד/ת, הוא/היא מלווה את המעבר. אומרים את זה לתלמיד במפורש.</li>
-        <li>מאתרים את איש הקשר במסגרת הקולטת ומקיימים שיחת העברה מסודרת: מה עובד עם התלמיד הזה, מה מסוכן, מי המשפחה, אילו מענים פעילים.</li>
-        <li>מתאמים מפגש משולש (תלמיד + רכז/ת + הגורם הקולט) לפני המעבר או בשבוע הראשון.</li>
-        <li>שומרים על קשר רך חודש-חודשיים אחרי: הודעה, שיחה, "איך נקלטת".</li>
-        <li>במעבר לציר הבוגרים: שיחת העברה בין שני הרכזים + מפגש משולש, באותו מבנה בדיוק.</li>
+        <li>ברגע שידוע על מעבר, הרכז/ת לא נפרד/ת. הוא/היא מלווה את המעבר, ואומר/ת את זה לתלמיד במפורש.</li>
+        <li>מאתרים איש קשר במסגרת הקולטת, ומקיימים שיחת העברה: מה עובד עם התלמיד, מה החוזקות, מי המשפחה, אילו מענים פעילים.</li>
+        <li>מפגש משולש (תלמיד + רכז/ת + הגורם הקולט), לפני המעבר או בשבוע הראשון.</li>
+        <li>קשר רך חודש-חודשיים אחרי: "איך נקלטת?".</li>
+        <li>בסיום י"ב: שיחת העברה בין שני הרכזים + מפגש משולש, באותו מבנה.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>העברת מידע רגיש בין מוסדות מחייבת עמידה בכללי פרטיות והסכמה. מתאמים עם ההנהלה והיועצת מה עובר ואיך.</li>
-        <li>שיחת ההעברה מדגישה חוזקות ודרכי עבודה, לא רק תיק בעיות. התווית שמגיעה לפני התלמיד מעצבת את קליטתו.</li>
-        <li>המעבר לבוגרים הוא לא סוף ליווי, הוא לב המודל של הופה. לתת לו את אותה רצינות.</li>
+        <li>העברת מידע בין מוסדות מחייבת הסכמה. מתאמים עם ההנהלה והיועץ/ת מה עובר ואיך.</li>
+        <li>שיחת ההעברה מדגישה חוזקות ודרכי עבודה, לא רק בעיות. התווית שמגיעה לפני התלמיד מעצבת את קליטתו.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> 2–3 שעות עבודה פרוסות על חודש. רכז/ת מוסר/ת, גורם קולט, תלמיד, הורים.</span>
-        <span><b>קבצים:</b> רשימת תיוג למעבר + מבנה שיחת העברה.</span>
+        <span><b>משך ומעורבים:</b> 2–3 שעות, פרוסות על חודש. רכז/ת מוסר/ת, גורם קולט, תלמיד, הורים.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="18-26" data-light="all" data-kind="intervention">
-    <summary><span class="no">9</span><span class="ttl"><b>מיפוי חמשת התחומים</b><span class="meta"><span class="tag all">פתיחת ליווי</span><span class="tag">ציר בוגרים</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">9</span><span class="ttl"><b>מתחילים מהחוזקה</b><span class="meta"><span class="tag green">ירוק</span><span class="tag yellow">צהוב</span><span class="tag red">אדום</span><span class="tag">שייכות</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>בשיחת הפתיחה עם כל בוגר שנכנס לליווי פעיל, ושוב אחת לשנה כרענון. בציר הנשירה: זה הכרטיס שרכז/ת הבוגרים מפעיל/ה מיד אחרי ההעברה בכרטיס 8. חמשת התחומים לקוחים מהטקסונומיה של תוכנית יתד הלאומית.</p>
+      <p>עם כל תלמיד, בכל צבע. כל אחד משלושת השאלונים שואל במה התלמיד טוב: שאלות 4 ו-8 אצל התלמיד, שאלה 3 אצל ההורים ושאלה 15 אצל המחנך/ת. זה לא קישוט. זו הכניסה.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>שיחה פתוחה (לא טופס) שעוברת על חמישה תחומים: השכלה ותעסוקה / קיום פיזי, דיור ובריאות / רווחה רגשית / השתייכות משפחתית וחברתית / זכויות ומיצוין.</li>
-        <li>בכל תחום שתי שאלות: מה המצב היום? ומה היית רוצה שיקרה תוך שנה?</li>
-        <li>מסמנים יחד עם הבוגר (לא עליו) כל תחום ברמזור.</li>
-        <li>בוחרים יחד תחום אחד או שניים להתחיל מהם. עדיפות למה שהבוגר בחר: הבעלות שלו היא המנוע.</li>
-        <li>לכל תחום שנבחר: מענה אחד קונקרטי מהמאגר + צעד אחד של הבוגר + מועד בדיקה.</li>
+        <li>מרכזים לכל כיתה רשימה אחת: תלמיד ← החוזקה שלו, משלושת הקולות.</li>
+        <li>לתלמיד בצהוב ובאדום: החוזקה היא השורה הראשונה בתוכנית האישית, והנושא של השיחה הראשונה.</li>
+        <li>מחפשים במאגר מענה שמתחבר לחוזקה: ספורט, אומנות, טכנולוגיה, התנדבות, מנהיגות.</li>
+        <li>מחפשים בבית הספר תפקיד שמשתמש בחוזקה: עזרה בהפקה, צילום אירוע, הדרכת צעירים.</li>
+        <li>משתפים את המחנך/ת ואת ההורים: "שמתי לב שהוא מצוין ב..."</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>בוגר הוא לא תלמיד: הליווי הוא הזמנה, לא מסגרת. כל השפה היא של שותפות ובחירה.</li>
-        <li>תחום אדום ברווחה רגשית קודם לכל תוכנית תעסוקה.</li>
-        <li>לא לפתוח את כל החמישה בבת אחת מול בוגר מוצף.</li>
+        <li>תלמיד שכתב "אין לי במה אני טוב" נתן תשובה חשובה מאוד. זו שיחה, לא שדה ריק.</li>
+        <li>כשהקולות מציינים חוזקות שונות, זה עושר ולא סתירה.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שיחה של 45–60 דקות. רכז/ת בוגרים + הבוגר.</span>
-        <span><b>קבצים:</b> דף מיפוי חמשת התחומים (גרסת רכז/ת + גרסה לבוגר).</span>
+        <span><b>מופעל על ידי:</b> שאלות 4, 8 (תלמיד) · 3 (הורים) · 15 (מחנך/ת).</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="18-26" data-light="all" data-kind="practice">
-    <summary><span class="no">10</span><span class="ttl"><b>יישוג יזום בצמתים</b><span class="meta"><span class="tag all">כולם</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
+  <details class="icard" data-kind="practice">
+    <summary><span class="no">10</span><span class="ttl"><b>בנק הורים: הורים כמשאב</b><span class="meta"><span class="tag all">כל בית הספר</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>סביב צמתים צפויים: שחרור משירות, סיום מסלול לימודים, גיוס, מעבר דירה, פיטורים. וגם בצמתים שקטים: יום הולדת, חגים, תאריך משמעותי.</p>
+      <p>אחרי מיפוי הפתיחה. שאלה 5 בשאלון ההורים שואלת אם הם מוכנים להעביר הרצאה בתחום העניין שלהם. כל "כן, אשמח" הוא הזדמנות.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>מנהלים לוח צמתים: לכל בוגר רושמים את התאריכים הצפויים שלו כבר בשיחת המיפוי.</li>
-        <li>חודש לפני צומת: פנייה יזומה. "אני זוכרת שאתה משתחרר בעוד חודש, בוא נדבר על מה הלאה".</li>
-        <li>בצומת עצמו: מיני-מיפוי + חיבור למענים לפני שהפער נפער.</li>
-        <li>בוגר שלא עונה: לא מסמנים "לא מעוניין" אחרי ניסיון אחד. שלושה ניסיונות בערוצים שונים לאורך חודש, וההודעה האחרונה תמיד משאירה דלת.</li>
-        <li>מתעדים כל פנייה, גם כשאין מענה. שתיקה ארוכה אצל בוגר שהיה בקשר היא איתות כתום.</li>
+        <li>מרכזים את כל ההורים שענו "כן", עם תחום העניין שכתבו.</li>
+        <li>מסווגים: מקצועות וקריירה, מלאכה ויצירה, ספורט, סיפור חיים, התנדבות.</li>
+        <li>משבצים במשותף עם הרכז/ת הפדגוגי/ת: שיעורי חינוך, יום קריירה, מגמות רלוונטיות.</li>
+        <li>מתקשרים להורה, מודים, ומתאמים. לשלוח תודה בכתב אחרי ההרצאה.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>הטון הוא הכול: הודעה תבניתית שנשלחת לכולם מרגישה כספאם ושורפת אמון.</li>
-        <li>לכבד "לא", עם נקודת פתיחה עתידית אחת מוסכמת.</li>
-        <li>צמתים ביטחוניים (מלחמה, מילואים) הם צמתי-על: שווים פנייה לכלל הרשימה.</li>
+        <li>הורה שמגיע לבית הספר כמרצה, ולא בגלל בעיה, משנה את הקשר של המשפחה עם בית הספר.</li>
+        <li>הורה של תלמיד בצהוב או באדום שהציע להרצות: זו הזדמנות זהב לגייס אותו.</li>
+        <li>לשמור על פרטיות: לא לחשוף בפני הכיתה שילד/ה של המרצה בליווי.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שעה-שעתיים בחודש לניהול הלוח + הפניות. רכז/ת בוגרים.</span>
-        <span><b>קבצים:</b> תבנית לוח צמתים + שלושה נוסחי פנייה לדוגמה.</span>
+        <span><b>מופעל על ידי:</b> שאלה 5 בשאלון ההורים.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="18-26" data-light="orange" data-kind="intervention">
-    <summary><span class="no">11</span><span class="ttl"><b>שיחת מיצוי זכויות</b><span class="meta"><span class="tag orange">כתום</span><span class="tag red">אדום</span><span class="tag">קיום ופרנסה</span></span></span></summary>
+  <details class="icard" data-kind="practice">
+    <summary><span class="no">11</span><span class="ttl"><b>קריאת פערים בין הקולות</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag all">אפור</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>עם כל בוגר שסימן אדום או כתום בתחום הקיום הפיזי, ועם כל בוגר בצומת שחרור משירות. כסף שמגיע ולא נדרש הוא הפסד נקי לבוגר.</p>
+      <p>בהכנה לכל ישיבת מיפוי. המערכת מציגה מסך "פערים בשאלונים", ואלה התלמידים שהכי קל לפספס.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>עוברים יחד על רשימת תיוג: מענק שחרור ופיקדון, סיוע בשכר דירה, הנחות ארנונה, מלגות לפי פרופיל, קצבאות, זכאויות סטודנט.</li>
-        <li>לכל זכאות: בודקים יחד באתר כל-זכות או באתר הגורם, במסך אחד, עכשיו. לא "תבדוק בבית".</li>
-        <li>ממלאים יחד את הבקשה הראשונה בו במקום. הצלחה אחת מיידית משנה את היחס לכל התחום.</li>
-        <li>שאר הבקשות: רשימת משימות עם תאריכים, הבוגר מבצע, הרכז/ת עוקב/ת.</li>
-        <li>מחברים למענים רלוונטיים מהמאגר להמשך.</li>
+        <li>מסמנים כל תלמיד שבו הקולות לא מסכימים בשאלת "טוב לי" או בשאלת ההתקדמות הלימודית.</li>
+        <li>מסמנים כל תלמיד שחסר לו שאלון אחד או יותר (אפור, או חלקי).</li>
+        <li>לכל פער: השערה אחת (טבלת הפערים בפרק 4) ופעולה אחת לבירור.</li>
+        <li>לכל חוסר: מי משיג את השאלון החסר, ועד מתי.</li>
+        <li>בישיבה הבאה: מה התברר?</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>בירוקרטיה היא חסם רגשי, לא טכני. הליווי הצמוד בפעם הראשונה הוא ההתערבות.</li>
-        <li>לא מבטיחים זכאות לפני שנבדקה. מבטיחים בדיקה.</li>
-        <li>מקרים מורכבים (חובות, הוצאה לפועל): מפנים לגורם מקצועי, לא מייעצים.</li>
+        <li>"התלמיד אומר שטוב לו והמחנך/ת לא רואה בעיה" זה לא פער. "התלמיד אומר שלא טוב לו והמחנך/ת לא רואה בעיה" זה הפער הכי חשוב.</li>
+        <li>לא מעמתים את התלמיד עם מה שאמרו ההורים או המחנך/ת. כל קול מוגן.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> שיחה של 45 דקות + מעקב. רכז/ת בוגרים + הבוגר.</span>
-        <span><b>קבצים:</b> רשימת תיוג זכויות לפי פרופיל (לעדכן אחת לחצי שנה).</span>
+        <span><b>משך ומעורבים:</b> כ-20 דקות לכיתה, הרכז/ת לבד, לפני הישיבה.</span>
       </div>
     </div>
   </details>
 
-  <details class="icard" data-axis="18-26" data-light="green" data-kind="practice">
-    <summary><span class="no">12</span><span class="ttl"><b>בדיקת דופק תקופתית לבוגר ירוק</b><span class="meta"><span class="tag green">ירוק</span><span class="tag">מניעה</span><span class="tag">פרקטיקת רכז/ת</span></span></span></summary>
+  <details class="icard" data-kind="intervention">
+    <summary><span class="no">12</span><span class="ttl"><b>קבוצת שייכות</b><span class="meta"><span class="tag yellow">צהוב</span><span class="tag green">ירוק</span><span class="tag">קבוצתי</span></span></span></summary>
     <div class="body">
       <h5>מתי משתמשים</h5>
-      <p>אחת לרבעון, לכל הבוגרים הירוקים. הידרדרות אצל צעירים עצמאיים מתרחשת בשקט, בין נקודות המגע.</p>
+      <p>כשבכיתה או בשכבה יש כמה תלמידים צהובים עם סימן בתחום השייכות: "לא טוב לי", אין קשרים חברתיים, אין מבוגר משמעותי.</p>
       <h5>איך מפעילים</h5>
       <ol>
-        <li>הודעה אישית קצרה: שאלה אחת אמיתית שקשורה אליו, לא "מה נשמע" גנרי.</li>
-        <li>עונה שהכול טוב: מגיבים בחום, מתעדים, נפגשים שוב בעוד רבעון.</li>
-        <li>עונה משהו שמדליק נורה: שיחת טלפון תוך יומיים, ואם צריך מיני-מיפוי וחזרה לליווי פעיל.</li>
-        <li>לא עונה פעמיים ברצף: ניסיון בערוץ אחר, ואם עדיין שקט, סימון כתום ויישוג לפי כרטיס 10.</li>
-        <li>אחת לשנה במקום ההודעה: שיחה או מפגש אמיתי. קשר שכולו הודעות מתאדה.</li>
+        <li>בוחרים 6–10 תלמידים, ומערבבים במכוון: צהובים יחד עם כמה ירוקים בעלי חוזקה דומה. לא "קבוצת הבעייתיים".</li>
+        <li>בונים את הקבוצה סביב עשייה ולא סביב הבעיה: ספורט, מוזיקה, צילום, בישול, התנדבות. נעזרים בחוזקות שהתלמידים כתבו.</li>
+        <li>מפגש קבוע בשבוע, לאורך שליש לפחות, עם מבוגר קבוע.</li>
+        <li>בסיום השליש: תוצר או אירוע שהקבוצה מציגה לבית הספר.</li>
       </ol>
       <h5>למה לשים לב</h5>
       <ul>
-        <li>המטרה היא שהבוגר ידע שיש כתובת, לא לנטר אותו. אם זה מרגיש כמו פיקוח, זה מזיק.</li>
-        <li>הדפוס לאורך זמן הוא המידע, לא ההודעה הבודדת.</li>
-        <li>רבעון הוא ברירת מחדל. יצא ממשבר לאחרונה: חודש. ותיק ויציב: חצי שנה.</li>
+        <li>שייכות היא תנאי להתמדה. הקבוצה היא התערבות, לא פעילות העשרה.</li>
+        <li>מבוגר שמתחלף כל שבוע מבטל את הערך של הקבוצה.</li>
       </ul>
       <div class="foot">
-        <span><b>משך ומעורבים:</b> 2–3 שעות ברבעון לכל הרשימה הירוקה. רכז/ת בוגרים.</span>
-        <span><b>קבצים:</b> תבנית מעקב רבעוני (שם, תאריך, ערוץ, תגובה, החלטה).</span>
+        <span><b>מופעל על ידי:</b> שאלה 1 (תלמיד) · שאלות 3–5 (מחנך/ת).</span>
+        <span><b>תקציב:</b> סעיף "פעילויות שייכות" (פרק 13).</span>
       </div>
     </div>
   </details>
-
-  <div class="callout y" style="margin-top:18px"><b>מה עוד חסר בספריית הכרטיסים</b>שלושה כרטיסים נוספים לציר 14–18: התערבות בנשירה סמויה שאינה מתבטאת בהיעדרות (נוכח פיזית, מנותק לימודית), חזרה אחרי היעדרות ארוכה, והתערבות קבוצתית לשייכות. בנוסף: קישור 2–3 מענים ספציפיים מהמאגר החי לכל כרטיס, וקבצי העזר המסומנים בכרטיסים.</div>
-</section>
-
-<section id="s11">
-  <div class="sec-head"><span class="sec-num">11</span><h2>סולם ההסלמה הבית-ספרי</h2></div>
-  <p class="sec-lead">הנוהל הפנימי של בית הספר, מהיעדרות בודדת ועד לוועדה עם גורמי חוץ. שלבים 1–5 זהים בשני המשרדים; משלב 6 ואילך הדרך מתפצלת לפי הפיקוח (פרקים 4 ו-5). כל בית ספר מתאים את שמות בעלי התפקידים לעצמו.</p>
-
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>שלב</th><th>הטריגר</th><th>הפעולה</th><th>מי</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>היעדרות ביום נתון</td><td>דיווח נוכחות שוטף במערכת, בכל שיעור</td><td>מורים מקצועיים</td></tr>
-        <tr><td>2</td><td>תלמיד לא הגיע</td><td>טלפון לתלמיד או להורה באותו יום, ותיעוד</td><td>מחנך/ת</td></tr>
-        <tr><td>3</td><td>יומיים רצופים</td><td>בדיקה מול ההורים + עדכון היועץ/ת</td><td>מחנך/ת</td></tr>
-        <tr><td><b>4</b></td><td><b>3 ימים רצופים 🟠</b></td><td>סימון כתום ברמזור, כניסה לרשימת המעקב, שיחה של הרכז/ת עם התלמיד</td><td>רכז/ת נשירה</td></tr>
-        <tr><td>5</td><td>המעקב לא מייצר שינוי</td><td>שיחת הורים מגייסת (כרטיס 5) וביקור בית לפי שיקול דעת</td><td>רכז/ת, מחנך/ת או יועצת</td></tr>
-        <tr><td><b>6</b></td><td><b>7 ימים 🔴</b></td><td>הפעלת הנוהל המחייב: בדיקת סיבה לעומק, בניית תוכנית התערבות אישית בשיתוף ההורים, יידוע הקב"ס בכתב, ומכתב רשמי להורים</td><td>מנהל/ת, מחנך/ת, יועצת</td></tr>
-        <tr><td>7</td><td>התוכנית האישית לא הצליחה</td><td>ועדת התמדה — <b>בית-ספרית</b> (משרד העבודה) או <b>רשותית</b> (משרד החינוך)</td><td>הנהלה, יועצת, קב"ס</td></tr>
-        <tr><td>8</td><td>המצב לא נפתר גם אחרי הוועדה</td><td>ועדה נוספת עם גורם הפיקוח, ובמידת הצורך החלטה על סיום לימודים ומציאת מסגרת חלופית</td><td>הנהלה, פיקוח, קב"ס</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="callout p"><b>שני כללים על הסולם</b>אחד: <b>לא מדלגים על שלב 4</b>. זה השלב שבו רוב המערכות מפסידות את התלמיד, כי "מחכים לראות אם זה יסתדר". וזה בדיוק השלב שהופה מוסיפה מעל הנוהל. שניים: <b>הסולם הוא לטיפול, לא לענישה</b>. תלמיד שמרגיש שכל שלב מקרב אותו לעונש ילמד להיעלם טוב יותר, לא להגיע יותר.</div>
 </section>
 
 <section id="s12">
-  <div class="sec-head"><span class="sec-num">12</span><h2>סדירויות ולוח השנה</h2></div>
-
-  <h3>לוח הסדירויות לפי קצב</h3>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th>קצב</th><th>מה קורה</th></tr></thead>
-      <tbody>
-        <tr><td><b>יומי</b></td><td>בירור כל מי שלא הגיע (מחנכות) · קליטת האיתותים אצל הרכז/ת</td></tr>
-        <tr><td><b>שבועי</b></td><td>סריקת הנוכחות (כרטיס 2) · שיחות עם כל התלמידים האדומים · תיעוד כל מגע</td></tr>
-        <tr><td><b>חודשי</b></td><td>שיחות עם התלמידים הכתומים · עדכון הרמזור · <b>הדו"ח החודשי לפי הנוהל</b> · עדכון להורים · מפגש עם צוות הופה</td></tr>
-        <tr><td><b>רבעוני</b></td><td>וידוא מיקוד (כרטיס 6) · ישיבת מיפוי עם צוותי השכבות · ועדות התמדה · דיווח להופה (דצמבר, מרץ, יוני)</td></tr>
-        <tr><td><b>שנתי</b></td><td>שלוש ישיבות הצוות הבין-מקצועי · שאלון מבוגר אכפתי (×2) · תוכנית עבודה · העברת מסיימי י"ב לרצף הבוגרים · שני ימי הכשרה</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h3 style="margin-top:28px">עוגני לוח השנה</h3>
+  <div class="sec-head"><span class="sec-num">12</span><h2>לוח השנה</h2></div>
   <div class="months">
-    <div class="month"><div class="m">אוגוסט</div><div class="a">רענון הנחיות הביקור הסדיר בימי ההיערכות (ובמידת האפשר עם הקב"ס) · דיווח על מי שלא נרשם לשנה הקרובה · יום הכשרה לפתיחת שנה</div></div>
-    <div class="month"><div class="m">ספטמבר</div><div class="a">ישיבת הצוות הבין-מקצועי לבניית תוכנית העבודה · הצגת תמונת הנשירה בהנהלה · חיבור לקב"ס · <b>דיווח על מי שלא הגיע בפתיחת השנה (עד 20.9 במשרד העבודה)</b></div></div>
-    <div class="month"><div class="m">אוקטובר</div><div class="a">רשימה שמית סופית + שיבוץ מבוגר משמעותי לכל תלמיד אדום · פנייה ראשונה למשפחות (כרטיס 5) · הגשת תוכנית העבודה להופה</div></div>
-    <div class="month"><div class="m">נובמבר</div><div class="a">התאמת מענים מהמאגר לכל תלמיד ברשימה · <b>שאלון מבוגר אכפתי, סבב ראשון</b> · ועדת התמדה רשותית (משרד החינוך)</div></div>
-    <div class="month"><div class="m">דצמבר</div><div class="a"><b>ועדת התמדה ראשונה (משרד העבודה)</b> · וידוא מיקוד רבעוני · <b>דיווח תקופתי ראשון להופה</b> · תגובה לתעודות</div></div>
-    <div class="month"><div class="m">ינואר</div><div class="a">נקודת ביקורת מחצית: נתוני נוכחות מול ספטמבר · עדכון רמזור · ועדת התמדה (המשך המועד הראשון)</div></div>
-    <div class="month"><div class="m">פברואר</div><div class="a">ישיבת הצוות הבין-מקצועי — בקרה ודיוק התוכניות · הכשרת אמצע שנה · <b>ועדת התמדה, מועד שני</b></div></div>
-    <div class="month"><div class="m">מרץ</div><div class="a">ישיבת מיפוי עם הצוותים · ועדת התמדה רשותית (משרד החינוך) · וידוא מיקוד · <b>דיווח תקופתי שני</b></div></div>
-    <div class="month"><div class="m">אפריל</div><div class="a"><b>שאלון מבוגר אכפתי, סבב שני</b> · השוואה מול נובמבר · תגובה לתעודות</div></div>
-    <div class="month"><div class="m">מאי</div><div class="a"><b>ועדת התמדה, מועד שלישי</b> · הערכה שנתית · <b>תכנון הקיץ — הקיץ הוא נקודת נשירה</b></div></div>
-    <div class="month"><div class="m">יוני</div><div class="a">ישיבת הצוות הבין-מקצועי — הפקת לקחים · <b>העברת מסיימי י"ב לרכז/ת הבוגרים</b> (כרטיס 8) · <b>דיווח מסכם</b> · העברת מקל לשנה הבאה</div></div>
+    <div class="month"><div class="m">אוגוסט</div><div class="a">יום הכשרה לפתיחת שנה · הכנת מכתב ההסכמה להורים · טעינת התלמידים למערכת</div></div>
+    <div class="month"><div class="m">ספטמבר</div><div class="a">תוכנית עבודה · הצגת המודל בהנהלה ובחדר המורים · חיבור לקב"ס ולקידום נוער · שליחת מכתב ההסכמה</div></div>
+    <div class="month"><div class="m">אוקטובר</div><div class="a"><b>מיפוי פתיחה:</b> שאלוני תלמידים בשיעורי חינוך · שאלוני הורים · מחנכים ממלאים שאלות 1–16</div></div>
+    <div class="month"><div class="m">נובמבר</div><div class="a">השלמת שאלונים חסרים · <b>ישיבות מיפוי כיתתיות</b> · רמזור ראשון · שיחות ראשונות עם האדומים · שיחות הורים מגייסות</div></div>
+    <div class="month"><div class="m">דצמבר</div><div class="a"><b>רשימה שמית מלאה</b>: מבוגר משמעותי ומטרה לכל צהוב ואדום · <b>סוף שליש א'</b>: שדות 17–24 · וידוא מיקוד · <b>דיווח ראשון להופה</b></div></div>
+    <div class="month"><div class="m">ינואר</div><div class="a">בנק הורים: הרצאות ראשונות · קבוצות שייכות · בדיקת סטטוס המענים</div></div>
+    <div class="month"><div class="m">פברואר</div><div class="a">יום הכשרה של אמצע השנה · צוות בין-מקצועי: האדומים שלא זזו</div></div>
+    <div class="month"><div class="m">מרץ</div><div class="a"><b>סוף שליש ב'</b>: שדות 17–24 ועדכון צבעים · וידוא מיקוד · <b>דיווח שני להופה</b></div></div>
+    <div class="month"><div class="m">אפריל</div><div class="a">ליווי שוטף · תכנון הקיץ לאדומים ולצהובים: מי בקשר איתם בחופש?</div></div>
+    <div class="month"><div class="m">מאי</div><div class="a"><b>מיפוי חוזר</b>: שאלון תלמיד (והורים, לצהובים ולאדומים) · השוואה לסתיו</div></div>
+    <div class="month"><div class="m">יוני</div><div class="a"><b>סוף שליש ג'</b> · <b>העברת מסיימי י"ב לרכז/ת הבוגרים</b> (כרטיס 8) · <b>דיווח מסכם</b> · העברת מקל לשנה הבאה</div></div>
   </div>
-  <p class="sec-lead">הדו"ח החודשי לגורמי הפיקוח חוזר בסיום כל חודש לאורך כל השנה, ולא מופיע כאן פעם אחר פעם.</p>
 </section>
 
 <section id="s13">
@@ -1188,123 +1278,119 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
 
   <div class="card">
     <h3>תוכנית העבודה השנתית</h3>
-    <p>כל בית ספר מגיש תוכנית עבודה על תבנית אחידה של הופה, קצרה במכוון (4–5 עמודים) כדי שהמאמץ יהיה על החשיבה ולא על הכתיבה. שבעת החלקים:</p>
+    <p>כל בית ספר מגיש תוכנית על תבנית אחידה של הופה, קצרה במכוון (4–5 עמודים), כדי שהמאמץ יהיה בחשיבה ולא בכתיבה:</p>
     <ol>
-      <li><b>פיקוח וגורמי דיווח:</b> באיזה משרד בית הספר, מי המפקח/ת, מי הקב"ס, ומי הרשת המפעילה (אם רלוונטי).</li>
-      <li><b>תמונת מצב פתיחה:</b> מספר תלמידים בשכבות, כמה בסיכון, כמה בנשירה סמויה, מי מטפל היום, מה כבר פועל.</li>
-      <li><b>צוות ואנשי קשר:</b> מנהל/ת, איש קשר להופה, יועצת, קב"ס, רכז/ת שכבה, חברי הצוות הבין-מקצועי.</li>
-      <li><b>יעדים לשנה:</b> רשימה שמית עד סוף אוקטובר · מבוגר משמעותי ותוכנית אישית לכל תלמיד ברשימה · יעד תנועה ברמזור · אפס נשירה גלויה.</li>
-      <li><b>לוח פעולות שנתי</b> (פרק 12), כולל מועדי הוועדות וישיבות הצוות.</li>
-      <li><b>מדדים</b> שעוקבים אחריהם כל חודש (פרק 14).</li>
-      <li><b>מענים מהמאגר שנבחרו לבית הספר הזה</b>: מענה, לאילו תלמידים, סטטוס החיבור.</li>
+      <li><b>תמונת מצב פתיחה:</b> מספר התלמידים בשכבות היעד, מה כבר פועל, מי מטפל היום.</li>
+      <li><b>צוות ואנשי קשר:</b> מנהל/ת, רכז/ת, יועץ/ת, מחנכי השכבות, קב"ס, קידום נוער.</li>
+      <li><b>לוח המיפוי:</b> מתי עוברים השאלונים, ומתי ישיבות המיפוי לכל כיתה.</li>
+      <li><b>יעדים לשנה:</b> שיעורי מענה · רשימה שמית עד דצמבר · מבוגר משמעותי ומטרה לכל צהוב ואדום · יעד תנועה ברמזור.</li>
+      <li><b>לוח פעולות שנתי</b> (פרק 12).</li>
+      <li><b>מדדים</b> (פרק 14).</li>
+      <li><b>מענים מהמאגר</b> שנבחרו לבית הספר הזה, וסטטוס החיבור.</li>
     </ol>
-    <p><b>דיווח:</b> שלוש נקודות בשנה (דצמבר, מרץ, יוני), על אותה תבנית: מה תוכנן, מה בוצע, מה השתנה ברמזור.</p>
-    <div class="callout y"><b>רוח הדברים מול בית הספר</b>זו לא בקרה חשדנית אלא שותפות. המסר: "אנחנו רוצים לעזור לכם להצליח, ובשביל זה אנחנו צריכים לראות את אותה תמונה שאתם רואים".</div>
+    <div class="callout y" style="margin-bottom:0"><b>רוח הדברים מול בית הספר</b>זו לא בקרה חשדנית אלא שותפות. המסר: "אנחנו רוצים לעזור לכם להצליח, ובשביל זה אנחנו צריכים לראות את אותה תמונה שאתם רואים".</div>
   </div>
 
   <div class="card">
     <h3>תקציב צבוע</h3>
-    <p>הופה משקיעה 50,000 ש"ח בשנה בכל בית ספר. ההצעה: להפוך את הסכום מסכום אחד עמום לחמישה סעיפים צבועים, כך שאפשר לתכנן ולדווח לפיהם. <b>המספרים פתוחים לדיון, העיקרון חשוב.</b></p>
+    <p>הופה משקיעה 50,000 ₪ בשנה בכל בית ספר. ההצעה: לחלק את הסכום לחמישה סעיפים צבועים, כך שאפשר לתכנן ולדווח לפיהם. <b>המספרים פתוחים לדיון, העיקרון חשוב.</b></p>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>סעיף</th><th>אחוז</th><th>סכום</th><th>למה זה משמש</th></tr></thead>
         <tbody>
-          <tr><td>ליווי פרטני תלמידים בסיכון</td><td>35%</td><td>17,500 ₪</td><td>שעות ליווי, חונכות, מענים פרטניים לאדום ולכתום</td></tr>
+          <tr><td>ליווי פרטני תלמידים בסיכון</td><td>35%</td><td>17,500 ₪</td><td>שעות ליווי, חונכות, מענים פרטניים לצהוב ולאדום</td></tr>
           <tr><td>ליווי בוגרים</td><td>25%</td><td>12,500 ₪</td><td>קשר שוטף, ליווי במעברים, מפגשי בוגרים, מיצוי זכויות</td></tr>
-          <tr><td>פעילויות שייכות</td><td>15%</td><td>7,500 ₪</td><td>פעילות קבוצתית שמחזקת שייכות, כי שייכות היא תנאי להתמדה</td></tr>
-          <tr><td>פיתוח מקצועי והשתתפות במערך</td><td>10%</td><td>5,000 ₪</td><td>זמן רכזים להכשרות, לקהילה ולעבודה עם הכלים</td></tr>
-          <tr><td>סעיף גמיש בית ספרי</td><td>15%</td><td>7,500 ₪</td><td>צרכים ייחודיים, באישור מראש</td></tr>
+          <tr><td>פעילויות שייכות</td><td>15%</td><td>7,500 ₪</td><td>קבוצות שייכות, בנק הורים, פעילות סביב חוזקות</td></tr>
+          <tr><td>פיתוח מקצועי והשתתפות במערך</td><td>10%</td><td>5,000 ₪</td><td>זמן רכזים להכשרות ולקהילה, וזמן מחנכים לישיבות המיפוי</td></tr>
+          <tr><td>סעיף גמיש בית-ספרי</td><td>15%</td><td>7,500 ₪</td><td>צרכים ייחודיים, באישור מראש</td></tr>
         </tbody>
       </table>
     </div>
-    <p><b>כללי גמישות:</b> מותר להזיז עד 10% בין סעיפים בלי אישור, מעבר לזה בשיחה עם הופה. <b>פעימות:</b> 40% עם אישור התוכנית, 30% אחרי דיווח דצמבר, 30% אחרי דיווח מרץ.</p>
+    <p><b>כללי גמישות:</b> מותר להעביר עד 10% בין סעיפים בלי אישור. מעבר לזה, בתיאום עם הופה. <b>פעימות:</b> 40% עם אישור התוכנית, 30% אחרי דיווח דצמבר, 30% אחרי דיווח מרץ.</p>
   </div>
 </section>
 
 <section id="s14">
-  <div class="sec-head"><span class="sec-num">14</span><h2>מדידה, תיעוד ודיווח</h2></div>
-  <p class="sec-lead">שנה ראשונה היא שנת בניית קו בסיס. עדיף יעדים צנועים שעומדים בהם מיעדים שאפתניים שנזנחים.</p>
+  <div class="sec-head"><span class="sec-num">14</span><h2>מדידה ודיווח</h2></div>
+  <p class="sec-lead">השנה הראשונה היא שנת קו בסיס. עדיף יעדים צנועים שעומדים בהם, מיעדים שאפתניים שננטשים.</p>
 
-  <h3>מדדי הרכז/ת בבית הספר</h3>
+  <h3>מדדי בית הספר</h3>
   <div class="tbl-wrap">
     <table>
-      <thead><tr><th>מדד</th><th>מה מודדים</th></tr></thead>
+      <thead><tr><th>מדד</th><th>מה מודדים</th><th>מאיפה</th></tr></thead>
       <tbody>
-        <tr><td>מדד איתור</td><td>מספר התלמידים ברשימת הסיכון, והמגמה לאורך השנה</td></tr>
-        <tr><td>מדד תגובה</td><td>אחוז מקרי ה-3 ימים שקיבלו שיחת בירור תוך יום</td></tr>
-        <tr><td>מדד קשר</td><td>אחוז התלמידים האדומים עם שיחה מתועדת בחודש האחרון</td></tr>
-        <tr><td>מדד מבוגר משמעותי</td><td>אחוז תלמידי האדום עם מבוגר משובץ בשמו ותוכנית אישית כתובה</td></tr>
-        <tr><td>מדד ציות לנוהל</td><td>אחוז מקרי ה-7 ימים שבהם הופעל הנוהל המחייב במלואו ובזמן</td></tr>
-        <tr><td>מדד מענים</td><td>מספר התלמידים שחוברו למענה חיצוני מהמאגר, ואחוז החיבורים שנסגרו בפועל</td></tr>
-        <tr><td>מדד תנועה</td><td>כמה תלמידים עברו מאדום לכתום ומכתום לירוק</td></tr>
-        <tr><td>מדד נוכחות</td><td>אחוז הנוכחות של קבוצת היעד, מול קו הבסיס של ספטמבר</td></tr>
-        <tr><td>מדד רך</td><td>ממוצע שאלון מבוגר אכפתי, נובמבר מול אפריל</td></tr>
-        <tr><td>מדד המשכיות</td><td>אחוז מסיימי י"ב מקבוצת הליווי שהועברו בפועל לרכז/ת הבוגרים</td></tr>
+        <tr><td>מדד מיפוי</td><td>שיעור המענה בכל שאלון: תלמיד, הורים, מחנך/ת</td><td>המערכת</td></tr>
+        <tr><td>מדד תמונה</td><td>כמה תלמידים בכל צבע, וכמה נשארו אפורים</td><td>המערכת</td></tr>
+        <tr><td>מדד תגובה</td><td>אחוז התלמידים האדומים ששוחחו איתם תוך שבוע מהמיפוי</td><td>תיעוד הרכז/ת</td></tr>
+        <tr><td>מדד מבוגר משמעותי</td><td>אחוז הצהובים והאדומים עם מבוגר בשמו ומטרה לשליש</td><td>שדות 22–24</td></tr>
+        <tr><td>מדד קשר</td><td>אחוז האדומים עם שיחה מתועדת בשבועיים האחרונים</td><td>תיעוד הרכז/ת</td></tr>
+        <tr><td>מדד מענים</td><td>תלמידים שחוברו למענה, ואחוז החיבורים שנסגרו בפועל</td><td>המערכת</td></tr>
+        <tr><td>מדד תנועה</td><td>כמה עברו מאדום לצהוב ומצהוב לירוק, בין השלישים</td><td>המערכת</td></tr>
+        <tr><td>מדד שייכות</td><td>שיעור התלמידים שמציינים מבוגר משמעותי ושעונים "טוב לי", סתיו מול מאי</td><td>שאלון התלמיד</td></tr>
+        <tr><td>מדד המשכיות</td><td>אחוז מסיימי י"ב מקבוצת הליווי שהועברו בפועל לרכז/ת הבוגרים</td><td>תיעוד</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h3 style="margin-top:26px">מדדי המערך של הופה לתשפ"ז</h3>
+  <h3 style="margin-top:26px">יעדי המערך של הופה לתשפ"ז</h3>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>תחום</th><th>מדד</th><th>יעד שנה ראשונה</th></tr></thead>
       <tbody>
+        <tr><td>מיפוי</td><td>בתי ספר שהשלימו מיפוי פתיחה עד סוף נובמבר</td><td>5 מתוך 5</td></tr>
+        <tr><td>היענות</td><td>שיעור מענה: מחנך/ת · תלמידים · הורים</td><td>100% · 90% · 60%</td></tr>
+        <tr><td>קהל היעד</td><td>אדומים עם מבוגר משמעותי, תוכנית ומענה מתועד</td><td>100% מהאדומים</td></tr>
         <tr><td>תוכניות עבודה</td><td>בתי ספר שהגישו תוכנית ושלושה דיווחים בזמן</td><td>5 מתוך 5</td></tr>
-        <tr><td>פיקוח</td><td>בתי ספר שבהם מסומן הפיקוח וגורמי הדיווח בשמם</td><td>5 מתוך 5</td></tr>
-        <tr><td>תקציב</td><td>אחוז התקציב שדווח לפי סעיפים צבועים</td><td>100%</td></tr>
-        <tr><td>הכשרות</td><td>השתתפות רכזים בשני המפגשים</td><td>לפחות 9 מתוך 10</td></tr>
-        <tr><td>קהילה</td><td>בתי ספר שהציגו מקרה בלמידת עמיתים</td><td>5 מתוך 5</td></tr>
-        <tr><td>אתר המענים</td><td>חיפושים והפניות מבתי הספר</td><td>קו בסיס ברבעון ראשון, צמיחה רבעון על רבעון</td></tr>
-        <tr><td>קהל היעד</td><td>תלמידי אדום עם מבוגר משמעותי ומענה מותאם מתועד</td><td>100% מתלמידי האדום</td></tr>
+        <tr><td>תקציב</td><td>אחוז התקציב שדווח לפי הסעיפים הצבועים</td><td>100%</td></tr>
+        <tr><td>הכשרות</td><td>השתתפות רכזים בשני ימי ההכשרה</td><td>לפחות 9 מתוך 10</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="callout b"><b>עקרון המדידה</b>למדוד מהיום הראשון, כולל מדדים רכים כמו שייכות וקשר. תוצאות של קשר ושייכות מגיעות לפני תוצאות אקדמיות, ולכן חשוב לנהל ציפיות בהתאם — גם פנימית וגם מול תורמים.</div>
+  <div class="callout b"><b>עקרון המדידה</b>למדוד מהיום הראשון, כולל מדדים רכים כמו שייכות וקשר. לפי המחקר, תוצאות של קשר ושייכות מגיעות לפני תוצאות לימודיות, ולכן חשוב לנהל ציפיות בהתאם, גם בתוך בית הספר וגם מול תורמים.</div>
 </section>
 
 <section id="s15">
   <div class="sec-head"><span class="sec-num">15</span><h2>מאגר המענים והרשת הקהילתית</h2></div>
 
   <div class="card">
-    <h3>למה זה חוליה במודל ולא "שיווק של האתר"</h3>
-    <p>אתר המענים הוא שלב 3 של הרדאר: התאמת המענה. כשבית ספר לא משתמש בו, הרדאר הבית-ספרי עוצר בשלב הניתוח — מזהים תלמיד במצוקה ואין מנוע מענים מאחורי הזיהוי. הנוהל עצמו מחייב "מיפוי המענים והמשאבים העומדים לרשות בית הספר" כחלק מתוכנית העבודה. המאגר של הופה הוא בדיוק זה.</p>
-    <p><b>המצב (ספטמבר 2026):</b> 645 מענים במאגר החי, מהם 94 במסלול 14–18. סקירת רשם העמותות שנעשתה בספטמבר 2026 הניבה 139 מענה ישיר ו-324 חלקיים למניעת נשירה. קובץ של 131 מענים חדשים מוכן לייבוא וממתין להרצה, והוא מוסיף קטגוריה חדשה: "מניעת נשירה ונוער בסיכון".</p>
+    <h3>למה המאגר הוא חוליה במודל</h3>
+    <p>המיפוי מזהה, והמאגר עונה. כשבית ספר לא משתמש במאגר, המודל עוצר באמצע: מזהים תלמיד בקושי, ואין מענה מאחורי הזיהוי. מודול הנשירה ב-HOPA Secure כולל מסך "התאמת מענים" שמציע מענים לפי מה שעלה בשאלונים.</p>
   </div>
 
   <div class="card">
     <h3>ארבעה מנגנונים שמחברים את בית הספר למאגר</h3>
     <ol>
-      <li><b>שדה קבוע בדיווח:</b> לכל תלמיד אדום, "אילו מענים הותאמו?" כששואלים את זה שלוש פעמים בשנה, החיפוש הופך לחלק מהעבודה.</li>
-      <li><b>דוח שימוש רבעוני</b> לכל בית ספר: כמה חיפושים, כמה הפניות, אילו קטגוריות. מה שנמדד, קורה.</li>
-      <li><b>תרגול על מקרים אמיתיים</b> בהכשרה: כל רכז/ת מביא/ה תלמיד מסוים ובודק/ת מה האתר והבוט נותנים לו עכשיו.</li>
-      <li><b>"לא מצאתי מענה מתאים":</b> כפתור שפותח פנייה. כל פער כזה הוא תוכנית עבודה לצוות המענים, וגם מסר שהאתר חי ומגיב.</li>
+      <li><b>שדה קבוע בישיבת המיפוי:</b> לכל צהוב ואדום, "איזה מענה הותאם?".</li>
+      <li><b>דוח שימוש בכל שליש</b> לכל בית ספר: כמה חיפושים, כמה הפניות, אילו קטגוריות.</li>
+      <li><b>תרגול על מקרים אמיתיים</b> בהכשרה: כל רכז/ת מביא/ה תלמיד (בלי פרטים מזהים) ובודק/ת מה המאגר נותן לו.</li>
+      <li><b>"לא מצאתי מענה מתאים":</b> כל פער כזה מגיע לצוות המענים של הופה, והופך לתוכנית עבודה.</li>
     </ol>
   </div>
 
   <div class="links">
-    <a class="lk" href="manim-neshira.html"><b>מענים למניעת נשירה →</b><span>בחירת בית ספר ← מענים מקומיים, אזוריים וארציים + 9 מסגרות ממשלתיות</span></a>
-    <a class="lk" href="kehila-neshira.html"><b>גורמים קהילתיים →</b><span>40 אנשי קשר ברשויות: קב"ס, קידום נוער והיל"ה, שפ"ח, רווחה, מתנ"ס</span></a>
-    <a class="lk" href="https://hopa.org.il" target="_blank" rel="noopener"><b>אתר המענים של הופה →</b><span>645 מענים, חיפוש לפי אזור, קטגוריה וקהל יעד</span></a>
+    <a class="lk" href="manim-neshira.html"><b>מענים למניעת נשירה →</b><span>בחירת בית ספר: מענים מקומיים, אזוריים וארציים, ומסגרות ממשלתיות</span></a>
+    <a class="lk" href="kehila-neshira.html"><b>גורמים קהילתיים →</b><span>אנשי קשר ברשויות: קב"ס, קידום נוער והיל"ה, שפ"ח, רווחה, מתנ"ס</span></a>
+    <a class="lk" href="https://hopa.org.il" target="_blank" rel="noopener"><b>אתר המענים של הופה →</b><span>חיפוש לפי אזור, קטגוריה וקהל יעד</span></a>
     <a class="lk" href="liba.html"><b>ליבת רכז/ת הבוגרים →</b><span>המסמך המקביל לציר 18–26, שאליו עוברים מסיימי י"ב</span></a>
   </div>
 
-  <div class="callout y"><b>הבוט כדלת קלה</b>לרכז/ת בלחץ זמן, וואטסאפ זמין יותר מאתר. מספר הבוט של הופה הוא 058-558-5991, וכדאי שהוא יהיה מדבקה על השולחן ולא שורה במסמך.</div>
+  <div class="callout y"><b>הבוט כדלת קלה</b>לרכז/ת בלחץ זמן, וואטסאפ זמין יותר מאתר. מספר הבוט של הופה: <span class="ltr">058-558-5991</span>. כדאי שיהיה מדבקה על השולחן, ולא רק שורה במסמך.</div>
 </section>
 
 <section id="s16">
-  <div class="sec-head"><span class="sec-num">16</span><h2>נהלים, גבולות ואתיקה</h2></div>
+  <div class="sec-head"><span class="sec-num">16</span><h2>גבולות, אתיקה ומצבי חירום</h2></div>
 
   <div class="card">
-    <h3>16.1 נוהל מצב משבר וחירום</h3>
-    <p>כשתלמיד נמצא במצוקה חריפה, בסכנה לעצמו או לאחרים, תפקיד הרכז/ת אינו לטפל אלא <b>לזהות, להישאר בקשר, ולהסלים לגורם המתאים</b>:</p>
+    <h3>16.1 מצב משבר או חירום</h3>
+    <p>כשתלמיד נמצא במצוקה חריפה, או בסכנה לעצמו או לאחרים, תפקיד הרכז/ת הוא לא לטפל אלא <b>לזהות, להישאר בקשר, ולהעביר לגורם המתאים</b>. זה נכון גם כשהמצוקה עולה מתשובה פתוחה בשאלון:</p>
     <ol>
-      <li>להישאר עם התלמיד בקשר רציף ולא להשאיר אותו לבד.</li>
-      <li>ליצור קשר מיידי עם היועצת ועם הנהלת בית הספר, לפי נוהלי בית הספר.</li>
-      <li>במצב של סכנת חיים מיידית: מד"א 101, משטרה 100.</li>
-      <li>ערוצי תמיכה נפשית מיידית: ער"ן 1201, סה"ר (צ'אט אונליין).</li>
-      <li>חשד לפגיעה או להזנחה: <b>חובת דיווח בחוק</b> — לפקיד סעד או למשטרה, ובמקביל ליועצת ולהנהלה. חובת הדיווח אינה נתונה לשיקול דעת.</li>
-      <li>לתעד את האירוע ואת הפעולות שננקטו.</li>
+      <li>להישאר בקשר רציף עם התלמיד, ולא להשאיר אותו לבד.</li>
+      <li>לפנות מיד ליועץ/ת ולהנהלה, לפי נוהלי בית הספר.</li>
+      <li>סכנת חיים מיידית: מד"א <span class="ltr">101</span>, משטרה <span class="ltr">100</span>.</li>
+      <li>תמיכה נפשית מיידית: ער"ן <span class="ltr">1201</span>, סה"ר (צ'אט מקוון).</li>
+      <li>חשד לפגיעה או להזנחה: <b>חובת דיווח בחוק</b> לפקיד סעד או למשטרה, ובמקביל ליועץ/ת ולהנהלה. חובת הדיווח אינה נתונה לשיקול דעת.</li>
+      <li>לתעד את האירוע ואת מה שנעשה.</li>
     </ol>
   </div>
 
@@ -1312,15 +1398,16 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
     <h3>16.2 גבולות מקצועיים ואתיקה</h3>
     <p>הרכז/ת הוא/היא <b>מלווה, לא מטפל/ת ולא עובד/ת סוציאלי/ת</b>.</p>
     <ul>
-      <li><b>בתחום התפקיד:</b> קשר, הקשבה, מיפוי צרכים, חיבור למענים, ליווי בתהליך, תיאום בין הגורמים, ווידוא שהנוהל מופעל בזמן.</li>
-      <li><b>מה מעבירים הלאה:</b> טיפול נפשי, סוגיות משפטיות, מצבי סיכון רפואי או נפשי, ומצבים החורגים מהתפקיד.</li>
-      <li><b>סודיות וחיסיון:</b> מידע על התלמיד משמש רק לצורך הליווי. אין להעביר לצוות מסמכים חסויים על פי דין (אבחונים, חוות דעת פסיכולוגיות ופסיכיאטריות). מה שנאמר בשיחה נשאר בה, למעט מצבי סכנה וחובת דיווח — וזה נאמר לתלמיד מראש, בשיחה הראשונה.</li>
-      <li><b>גבולות אישיים:</b> שמירה על שעות עבודה ועל הגבול בין הקשר המקצועי לאישי, כדי לאפשר ליווי רציף לאורך שנים בלי שחיקה.</li>
-      <li><b>תיוג:</b> לא משתמשים במילה "נושר" מול התלמיד או מול הכיתה. תלמיד הוא תלמיד בליווי, לא מקרה.</li>
+      <li><b>בתחום התפקיד:</b> קשר, הקשבה, מיפוי, חיבור למענים, ליווי בתהליך, ותיאום בין הגורמים.</li>
+      <li><b>מה מעבירים הלאה:</b> טיפול נפשי, סוגיות משפטיות, מצבי סיכון, וכל מה שחורג מהתפקיד.</li>
+      <li><b>סודיות:</b> מידע על תלמיד משמש רק לליווי שלו. מה שנאמר בשיחה נשאר בה, חוץ ממצבי סכנה וחובת דיווח. את זה אומרים לתלמיד מראש, בשיחה הראשונה.</li>
+      <li><b>כל קול מוגן:</b> לא מספרים לתלמיד מה ההורים כתבו עליו, ולא להורים מה התלמיד כתב.</li>
+      <li><b>גבולות אישיים:</b> שעות עבודה, והפרדה בין הקשר המקצועי לאישי, כדי שהליווי יחזיק שנים בלי שחיקה.</li>
+      <li><b>שפה:</b> לא אומרים "נושר" או "אדום" מול התלמיד או הכיתה. הצבע הוא כלי של הצוות. התלמיד הוא תלמיד בליווי, לא מקרה.</li>
     </ul>
   </div>
 
-  <div class="callout r"><b>הסיכון המבני הגדול ביותר</b>שחיקה ותחלופה של רכזים. קהילת הרכזים והמפגש החודשי הם תנאי קיום של המודל, לא תוספת לו.</div>
+  <div class="callout r"><b>הסיכון המבני הגדול ביותר</b>שחיקה ותחלופה של רכזים. קהילת הרכזים וזמן מוגדר לתפקיד הם תנאי לקיום המודל, לא תוספת.</div>
 </section>
 
 <section id="s17">
@@ -1329,74 +1416,158 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
   <div class="card">
     <h3>שני ימי הכשרה בשנה</h3>
     <ul>
-      <li><b>מפגש פתיחת שנה (סוף אוגוסט), יום מלא:</b> שפה משותפת של הרדאר והרמזור, <b>סדנה על שני הנהלים</b> — כל רכז/ת יוצא/ת עם הנוהל של בית הספר שלו/ה בראש ובנייר, היכרות עומק עם מאגר המענים, עבודה על תוכניות העבודה, והיכרות בין הרכזים.</li>
-      <li><b>מפגש אמצע שנה (פברואר), יום מלא:</b> למידה מנתוני דיווח דצמבר, סדנת התערבויות לפי מה שעלה מהשטח, ולמידת עמיתים מובנית — כל בית ספר מציג מקרה אחד שהצליח ואחד שתקוע.</li>
+      <li><b>פתיחת שנה (סוף אוגוסט), יום מלא:</b> שאלוני המיפוי ודרך קריאתם, ניהול ישיבת מיפוי כיתתית (תרגול על מקרים), היכרות עם מודול הנשירה ב-HOPA Secure ועם מאגר המענים, ותוכניות העבודה.</li>
+      <li><b>אמצע שנה (פברואר), יום מלא:</b> מה למדנו מהמיפוי הראשון, כיול כללי הרמזור, סדנת התערבויות לפי מה שעלה מהשטח, ולמידת עמיתים: כל בית ספר מציג מקרה אחד שהצליח ואחד שתקוע.</li>
     </ul>
-    <p><b>עיקרון:</b> חלק מהתוכן משותף לרכזי הנשירה ולרכזי הבוגרים (שפה, כלים, קהילה) וחלק נפרד (התערבויות ספציפיות ונהלים), לפי עקרון הפרדת הגילאים.</p>
+    <p><b>עיקרון:</b> חלק מהתוכן משותף לרכזי הנשירה ולרכזי הבוגרים (שפה, כלים, קהילה), וחלק נפרד (התערבויות ייחודיות לכל גיל).</p>
   </div>
 
   <div class="card">
-    <h3>הקהילה — שלוש שכבות</h3>
+    <h3>הקהילה: שלוש שכבות</h3>
     <ol>
-      <li><b>קבוצת וואטסאפ מנוהלת:</b> התייעצויות שוטפות, שיתוף הצלחות, עדכונים. הנושאים שחוזרים מזינים את ההכשרות ואת ספריית הכרטיסים.</li>
-      <li><b>מפגש מקוון קצר אחת לחודש-חודשיים (45–60 דקות):</b> כל פעם בית ספר אחר מציג מקרה, בפורמט קבוע: מה היה, מה ניסינו, מה עבד, מה היינו עושים אחרת.</li>
-      <li><b>שני המפגשים הפיזיים</b> — העוגן של הקהילה.</li>
+      <li><b>קבוצת וואטסאפ מנוהלת:</b> התייעצויות, שיתוף הצלחות ועדכונים.</li>
+      <li><b>מפגש מקוון קצר כל חודש-חודשיים (45–60 דקות):</b> בכל פעם בית ספר אחר מציג מקרה, בפורמט קבוע: מה היה, מה ניסינו, מה עבד, מה היינו עושים אחרת.</li>
+      <li><b>שני המפגשים הפיזיים:</b> העוגן של הקהילה.</li>
     </ol>
-    <p>הקבוצה נפתחת במפגש הפיזי ולא לפניו: קהילה נפתחת פנים מול פנים. אחרי כל מפגש, סיכום של עמוד נכנס לספריית הכלים.</p>
   </div>
 </section>
 
 <section id="s18">
-  <div class="sec-head"><span class="sec-num">18</span><h2>נספחים וכלים</h2></div>
+  <div class="sec-head"><span class="sec-num">18</span><h2>נספחים</h2></div>
 
-  <div class="card">
-    <h3>נספח א': שאלון מבוגר אכפתי (3 שאלות)</h3>
-    <p>סולם 1–5, שלוש דקות, פעמיים בשנה (נובמבר ואפריל):</p>
+  <details class="fold" open>
+    <summary><span>נספח א': שאלוני המיפוי, הנוסח המלא<small>שלושה שאלונים: התלמיד, ההורים והמחנך/ת</small></span></summary>
+    <div class="fbody">
+      <div class="card">
+        <h3>שאלון התלמיד</h3>
+        <p style="font-size:14px;color:var(--muted)">התלמיד מדווח על עצמו: תחושה בבית הספר, למידה, נוכחות, חוזקות וקשיים.</p>
+        <ol class="qlist">
+          <li>טוב לי בבית ספר<span class="ans">טוב לי מאוד / טוב / לא טוב לי</span></li>
+          <li>אני מעריך את הלמידה שלי<span class="ans">טובה מאוד / בינונית / חלשה</span></li>
+          <li>הנוכחות שלי בבית ספר<span class="ans">טובה מאוד / בינונית / חלשה</span></li>
+          <li>מקצוע שאני טוב בו, ולמה?<span class="ans">תשובה חופשית</span></li>
+          <li>מקצוע שקשה לי בו, ולמה?<span class="ans">תשובה חופשית</span></li>
+          <li>הייתי רוצה לבקש עזרה ב...<span class="ans">תשובה חופשית</span></li>
+          <li>המבוגר המשמעותי שלי בבית ספר הוא<span class="ans">תשובה חופשית</span></li>
+          <li>משהו קטן שאני טוב בו / אוהב<span class="ans">תשובה חופשית</span></li>
+        </ol>
+        <p style="font-size:13.5px;color:var(--muted)">פרטים מזהים: שם פרטי, שם משפחה, מין, טלפון, כיתה, תעודת זהות.</p>
+      </div>
+      <div class="card">
+        <h3>שאלון ההורים</h3>
+        <p style="font-size:14px;color:var(--muted)">ההורה מדווח על הילד/ה, ומוזמן גם לתרום מתחום העניין שלו.</p>
+        <ol class="qlist">
+          <li>לילד/ה שלי טוב בבית הספר<span class="ans">טוב מאוד / טוב / לא טוב · ואז: פרטו</span></li>
+          <li>אני מרגיש/ה שהילד/ה שלי מתקדם/ת לימודית<span class="ans">5 מתקדם מאוד / 4 / 3 / 2 / 1 לא מתקדם</span></li>
+          <li>תחביב או חוזקה של הילד/ה<span class="ans">תשובה חופשית</span></li>
+          <li>דבר נוסף שחשוב לכם שנדע<span class="ans">תשובה חופשית</span></li>
+          <li>האם אתם מעוניינים להעביר הרצאות בתחום העניין שלכם?<span class="ans">כן, אשמח / לצערי לא פנוי · ואז: תחום העניין</span></li>
+        </ol>
+        <p style="font-size:13.5px;color:var(--muted)">פרטים מזהים: שם ההורה ופרטי התלמיד (שם, כיתה, טלפון, תעודת זהות).</p>
+      </div>
+      <div class="card">
+        <h3>שאלון המחנך/ת</h3>
+        <p style="font-size:14px;color:var(--muted)">תמונת מצב מלאה על כל תלמיד. ברוב השאלות: כן/לא, ופירוט.</p>
+        <h4>לימודי וחברתי</h4>
+        <ol class="qlist">
+          <li>התלמיד משתתף בשיעורים ולוקח חלק פעיל</li>
+          <li>התלמיד מראה קושי לימודי</li>
+          <li>לתלמיד יש קשר חיובי עם הצוות החינוכי</li>
+          <li>לתלמיד יש קשרים חברתיים בכיתה או בבית הספר</li>
+          <li>לתלמיד יש דמות משמעותית בבית הספר<span class="ans">ואז: שם הדמות</span></li>
+          <li>לתלמיד יש דמות משמעותית מחוץ לבית הספר<span class="ans">ואז: שם הדמות</span></li>
+        </ol>
+        <h4>בית ומשפחה</h4>
+        <ol class="qlist" start="7">
+          <li>ההורים שומרים על קשר עם בית הספר</li>
+          <li>לתלמיד יש תמיכה מהבית</li>
+          <li>קיימים קשיים משפחתיים / רגשיים / כלכליים המשפיעים על התלמיד<span class="ans">ואז: סוג הקושי</span></li>
+          <li>האם נערך ביקור בית?</li>
+        </ol>
+        <h4>גורמי טיפול</h4>
+        <ol class="qlist" start="11">
+          <li>האם קב"ס מעורב?</li>
+          <li>האם מעורב קצין מבחן?</li>
+          <li>טיפול בבית ספר / קהילה</li>
+          <li>רווחה</li>
+        </ol>
+        <h4>סיכום</h4>
+        <ol class="qlist" start="15">
+          <li>חוזקה / תחביב / תחום עניין של התלמיד</li>
+          <li>התרשמות כללית</li>
+        </ol>
+        <h4>שדות מעקב פדגוגי (סביב ישיבת הצוות, בכל שליש)</h4>
+        <ol class="qlist" start="17">
+          <li>רקע</li>
+          <li>מספר ציונים שליליים<span class="ans">0 / 1 / 2 / 3 / 4 / 5+</span></li>
+          <li>מקצוע מאתגר</li>
+          <li>מגמה</li>
+          <li>סטטוס נוכחות<span class="ans">טובה / בינונית / חלשה / לא מגיע/ה</span></li>
+          <li>מטרה לשליש הבא</li>
+          <li>צרכים והערות</li>
+          <li>סיכום והערות אחרי ישיבת הצוות</li>
+        </ol>
+      </div>
+    </div>
+  </details>
+
+  <details class="fold">
+    <summary><span>נספח ב': נוהלי הביקור הסדיר, לעיון<small>אינם חלק מהמודל. מעקב הנוכחות והנוהל נשארים באחריות בית הספר.</small></span></summary>
+    <div class="fbody">
+      <p>בתי הספר בתחום פועלים לפי אחד משני נהלים. הנוהל מופעל על ידי בית הספר. כאן רק תמצית, כדי שהרכז/ת יכיר/תכיר את השפה ויידע/תדע מתי הנוהל נכנס לתמונה (שלב 5 במסלול ההסלמה).</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>נושא</th><th>משרד החינוך</th><th>משרד העבודה (מינהל הכשרה מקצועית)</th></tr></thead>
+          <tbody>
+            <tr><td>המסמך</td><td>חוזר מנכ"ל "ביקור סדיר למניעת נשירה" (הוראה 406)</td><td>"הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה", מעודכן יולי 2026</td></tr>
+            <tr><td>נקודת הכניסה</td><td>היעדרות של 7 ימים בחודש</td><td>היעדרות של 7 ימים בחודש</td></tr>
+            <tr><td>למי מדווחים</td><td>מחלקת החינוך ברשות, קב"ס, ממונה מחוזי</td><td>מפקח פדגוגי, מפקחת על הצוותים הטיפוליים, רשת מפעילה, קב"ס</td></tr>
+            <tr><td>דיווח שוטף</td><td>דיווח המנהל/ת על תלמיד מעל 7 ימי היעדרות</td><td>דו"ח חודשי קבוע (טופס 8.1)</td></tr>
+            <tr><td>ועדות</td><td>ועדת התמדה <b>רשותית</b>, לפחות פעמיים בשנה</td><td>ועדות התמדה <b>בית-ספריות</b>, בשלושה מועדים בשנה</td></tr>
+            <tr><td>צוות פנימי</td><td>צוות בין-מקצועי מוסדי</td><td>צוות בין-מקצועי למניעת נשירה, 3 פעמים בשנה לפחות</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>מיפוי הפיקוח:</b> אדיבי אשקלון, מרום עכו, מגשימים בית שאן ומבואות חרמון: משרד החינוך. בית הערבה: משרד העבודה.</p>
+      <p><b>הנקודה החשובה לרכז/ת:</b> שיחת ההורים המגייסת (כרטיס 5) צריכה לקרות <b>לפני</b> המכתב הרשמי של הנוהל. ותוכנית ההתערבות האישית שהנוהל דורש יכולה להישען על מה שכבר נבנה בישיבת המיפוי.</p>
+      <ul>
+        <li><a href="https://apps.education.gov.il/mankal/horaa.aspx?siduri=406" target="_blank" rel="noopener">חוזר מנכ"ל משרד החינוך: ביקור סדיר למניעת נשירה</a></li>
+        <li><a href="https://pedagogiamh.co.il/bikur-sadir.html" target="_blank" rel="noopener">הנחיות מינהל הכשרה מקצועית, כולל הטפסים 8.1–8.6</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="fold">
+    <summary><span>נספח ג': מקורות המחקר<small>הסקירה המלאה בתיקיית הופה תשפ"ז</small></span></summary>
+    <div class="fbody">
+      <h4 style="margin:6px 0">בינלאומיים (אומתו מול המקור)</h4>
+      <ul>
+        <li><a href="https://onlinelibrary.wiley.com/doi/full/10.4073/csr.2011.8" target="_blank" rel="noopener">Wilson et al. 2011, Campbell Systematic Reviews</a></li>
+        <li><a href="https://ies.ed.gov/ncee/wwc/Docs/InterventionReports/wwc_checkconnect_050515.pdf" target="_blank" rel="noopener">דוח WWC על Check &amp; Connect, 2015</a></li>
+        <li><a href="https://www.mdrc.org/work/publications/two-years-case-management" target="_blank" rel="noopener">MDRC על Communities In Schools, 2017</a></li>
+        <li><a href="https://journals.sagepub.com/doi/full/10.1177/2332858418799085" target="_blank" rel="noopener">City Connects, AERA Open</a></li>
+        <li><a href="https://link.springer.com/article/10.1007/s11121-012-0330-1" target="_blank" rel="noopener">Tanner-Smith &amp; Wilson 2013, על היעדרויות</a></li>
+        <li><a href="https://files.eric.ed.gov/fulltext/ED521554.pdf" target="_blank" rel="noopener">כלי ה-Early Warning System</a></li>
+      </ul>
+      <h4 style="margin:12px 0 6px">ישראליים (מקורות ראשוניים)</h4>
+      <ul>
+        <li><a href="https://brookdale.jdc.org.il/wp-content/uploads/2023/01/Heb_Repoprt_RR-902_22.pdf" target="_blank" rel="noopener">ברוקדייל: נשירה בחינוך הבדואי בנגב, 2022</a></li>
+        <li><a href="https://www.thejoint.org.il/wp-content/uploads/2021/08/Endangeredyouthmodelseval.pdf" target="_blank" rel="noopener">אשלים: הערכת מודלים של מרכזי נוער בסיכון, 2008</a></li>
+        <li><a href="https://fs.knesset.gov.il/globaldocs/MMM/4d1107dc-1277-e511-80d1-00155d0ad6b2/2_4d1107dc-1277-e511-80d1-00155d0ad6b2_11_7779.pdf" target="_blank" rel="noopener">מרכז המחקר והמידע של הכנסת על היל"ה, 2015</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="card" style="margin-top:14px">
+    <h3>נספח ד': שאלות פתוחות להחלטה</h3>
     <ol>
-      <li>יש מבוגר בבית הספר שאכפת לו ממני באמת.</li>
-      <li>יש מבוגר בבית הספר שאני יכול/ה לפנות אליו כשקשה לי.</li>
-      <li>מישהו בבית הספר ישים לב אם לא אגיע.</li>
+      <li><b>כללי הרמזור:</b> האם הספים שבפרק 4 מתאימים, או לכייל אותם אחרי השליש הראשון? ומי מאשר/ת שינוי?</li>
+      <li><b>התאמה למערכת:</b> לוודא שמנוע הרמזור ב-HOPA Secure פועל לפי אותם כללים שבמודל.</li>
+      <li><b>היקף המשרה של הרכז/ת:</b> כמה שעות שבועיות, וכמה תלמידים אפשר ללוות בהן?</li>
+      <li><b>שאלון התלמיד בערבית:</b> לאילו בתי ספר נדרש, ומי מגיה/ה את התרגום?</li>
+      <li><b>מיפוי חוזר להורים:</b> רק לצהובים ולאדומים, או לכולם?</li>
+      <li><b>אחוזי התקציב:</b> אחידים לכל בתי הספר, או מותאמים לכל אחד?</li>
     </ol>
-    <p><b>דגל אדום:</b> תלמיד בליווי שעונה 1–2 על שאלה 3 — שיחה מיידית, גם אם הנוכחות שלו תקינה.</p>
-  </div>
-
-  <div class="card">
-    <h3>נספח ב': רשימת הקבצים שנדרשים להשלמת הערכה</h3>
-    <ul>
-      <li>דף פורמט ארבע השאלות + תבנית תיעוד דו-שורתי (כרטיס 1)</li>
-      <li>תבנית טבלת סריקת נוכחות שבועית + שלוש שאלות בירור למחנכת (כרטיס 2)</li>
-      <li>תבנית תוכנית שישה שבועות (כרטיס 3)</li>
-      <li>דף מיפוי שלושת הצירים (כרטיס 4)</li>
-      <li>מערך שיחת הורים ראשונה (כרטיס 5)</li>
-      <li>טבלת וידוא מיקוד (כרטיס 6)</li>
-      <li>שאלון מבוגר אכפתי + טבלת ריכוז (כרטיס 7)</li>
-      <li>רשימת תיוג למעבר + מבנה שיחת העברה (כרטיס 8)</li>
-      <li>תבנית תוכנית עבודה שנתית ותבנית דיווח תקופתי</li>
-      <li><b>דף אחד לכל רכז/ת: הנוהל של בית הספר שלי</b> — הפיקוח, גורמי הדיווח בשמם ובטלפון, והטפסים הרלוונטיים</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>נספח ג': שאלות פתוחות להחלטה</h3>
-    <ol>
-      <li><b>גורמי הדיווח בשמם:</b> המיפוי לפי משרד סגור (פרק 3). מה שנשאר להשלים בפגישת הפתיחה: שמות המפקח/ת והקב"ס וטלפוניהם, לכל בית ספר.</li>
-      <li><b>היקף המשרה של רכז/ת הנשירה:</b> כמה שעות שבועיות, ומה מספר התלמידים המקסימלי שאפשר להחזיק בהן?</li>
-      <li><b>מי המבוגר המשמעותי:</b> תמיד הרכז/ת, או שהוא/היא משבץ/ת מבוגרים אחרים ומתכלל/ת?</li>
-      <li><b>אחוזי הצביעה בתקציב</b> — אחידים לכל בתי הספר או מותאמים לפרופיל?</li>
-      <li><b>שאלוני הורים, תלמידים ומחנכים</b> למיפוי בית-ספרי — לבנות בתשפ"ז או להסתפק בשאלון מבוגר אכפתי בשנה הראשונה?</li>
-      <li><b>קריאה שנייה:</b> מי מאשר/ת את 12 הכרטיסים (עיקרון ארבע עיניים)?</li>
-    </ol>
-  </div>
-
-  <div class="card">
-    <h3>הנהלים והמסמכים המחייבים</h3>
-    <ul>
-      <li><a href="https://apps.education.gov.il/mankal/horaa.aspx?siduri=406" target="_blank" rel="noopener">חוזר מנכ"ל משרד החינוך — ביקור סדיר למניעת נשירה</a></li>
-      <li><a href="https://pedagogiamh.co.il/bikur-sadir.html" target="_blank" rel="noopener">הנחיות לדיווח וטיפול בבעיית ביקור סדיר ומניעת נשירה — מינהל הכשרה מקצועית, משרד העבודה</a> (כולל הטפסים 8.1–8.6)</li>
-      <li>חוק לימוד חובה, תש"ט–1949</li>
-      <li><a href="https://meyda.education.gov.il/files/PortalBaaluyot/POB/kabas/kabatim-book.pdf" target="_blank" rel="noopener">כוחו של קצין הביקור הסדיר — קולות מהשדה, משרד החינוך</a></li>
-    </ul>
-    <p class="sec-lead">בכל מקרה של סתירה, הנוסח המחייב הוא המסמך המקורי ולא התמצית שבמודל הזה.</p>
   </div>
 </section>
 
@@ -1406,8 +1577,8 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
   <div class="wrap frow">
     <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="הופה"></a>
     <p class="fnote">
-      מודל ההפעלה למניעת נשירה 14–18 · הופה (תחת אלומות 580560407) · טיוטה לעבודה, תשפ"ז<br>
-      מבוסס על נוהל משרד החינוך, נוהל מינהל הכשרה מקצועית במשרד העבודה, מסמך החשיבה של הופה לתשפ"ז, 12 כרטיסי ההתערבות וסקירת המענים.
+      מודל ההפעלה למניעת נשירה 14–18 · הופה · טיוטה לעבודה, תשפ"ז<br>
+      מבוסס על שאלוני המיפוי הפדגוגי של הופה, סקירת המחקר על מניעת נשירה בארץ ובעולם (יוני 2026), ומסמך החשיבה של הופה לתשפ"ז.
       מקביל למודל ההפעלה של תוכנית הבוגרים. <a href="https://hopa.org.il">hopa.org.il</a>
     </p>
   </div>
@@ -1424,11 +1595,8 @@ footer .fnote{font-size:13px;color:var(--muted);max-width:620px}
       var f = b.dataset.f;
       cards.forEach(function(c){
         var show = f === 'all'
-          || c.dataset.axis === f
-          || c.dataset.light === f
           || c.dataset.kind === f
-          || (f === 'red' && c.querySelector('.tag.red'))
-          || (f === 'orange' && c.querySelector('.tag.orange'));
+          || !!c.querySelector('.tag.' + f);
         c.hidden = !show;
       });
     });
