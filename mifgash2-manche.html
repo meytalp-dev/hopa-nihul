@@ -13,13 +13,13 @@
   button,input{font-family:inherit;font-size:inherit}
   a{color:var(--pink-dark)}
   .in{max-width:1180px;margin:0 auto;padding:0 14px}
-  header{background:#111;color:#fff;padding:14px 0}
+  header{background:linear-gradient(160deg,#fff 0%,var(--pink-soft) 100%);color:var(--ink);padding:14px 0;border-bottom:1px solid var(--line)}
   .hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   header h1{margin:0;font-size:20px;font-weight:900}
   header .sub{font-size:13px;opacity:.8}
-  .clockbox{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#222;border-radius:12px;padding:7px 13px}
-  .clockbox input{width:74px;background:#111;border:1px solid #444;color:var(--yellow);border-radius:8px;padding:5px 8px;text-align:center;font-weight:800;direction:ltr}
-  .clockbox .now{font-size:19px;font-weight:900;color:var(--yellow);font-variant-numeric:tabular-nums}
+  .clockbox{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:7px 13px}
+  .clockbox input{width:74px;background:#fff;border:1px solid var(--line);color:var(--pink-dark);border-radius:8px;padding:5px 8px;text-align:center;font-weight:800;direction:ltr}
+  .clockbox .now{font-size:19px;font-weight:900;color:var(--pink-dark);font-variant-numeric:tabular-nums}
   .tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
   .tabs .in{display:flex;gap:6px;padding-top:8px;padding-bottom:8px;overflow-x:auto}
   .tabs button{flex:none;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:6px 15px;font-weight:800;font-size:13px;cursor:pointer}
@@ -30,7 +30,7 @@
   .blk.now{border-inline-start-color:var(--pink);box-shadow:0 6px 26px rgba(232,52,138,.2)}
   .blk.done{opacity:.5}
   .bh{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer}
-  .bh .tm{background:#111;color:var(--yellow);border-radius:9px;padding:4px 10px;font-weight:900;font-size:13.5px;font-variant-numeric:tabular-nums;flex:none}
+  .bh .tm{background:var(--pink-soft);color:var(--pink-dark);border-radius:9px;padding:4px 10px;font-weight:900;font-size:13.5px;font-variant-numeric:tabular-nums;flex:none}
   .bh .ti{flex:1;min-width:0}
   .bh h3{margin:0;font-size:15.5px;font-weight:900}
   .bh small{color:var(--muted);font-size:12.5px}
@@ -106,10 +106,11 @@
     <div class="card"><div class="stat" id="lstat"></div>
       <div style="margin-top:10px"><button class="btn ghost" id="refresh">🔄 רענון</button>
       <span style="font-size:12px;color:var(--muted);margin-inline-start:8px" id="lastup"></span></div></div>
+    <div class="card"><h2>1 · משפטי המטרה</h2><div class="wall" id="lw-c"></div></div>
     <div class="card"><h2>2 · על מה החדר רוצה להוציא את 70 השעות</h2><div class="hbars" id="lw-h"></div></div>
-    <div class="card"><h2>3 · את מי מגייסים — לפי חדר</h2><div class="rooms" id="lw-p"></div></div>
-    <div class="card"><h2>4 · מה החדר הוסיף לצ׳ק-ליסט י"ב</h2><div class="wall" id="lw-c"></div></div>
-    <div class="card"><h2>6 · שיבוץ השולחנות ל-21.10</h2><div class="tb" id="lw-t"></div></div>
+    <div class="card"><h2>3 · הפעולות — לפי חדר</h2><div class="rooms" id="lw-p"></div></div>
+    <div class="card"><h2>4 · מי הכין את הפגישה עם המנהל/ת</h2><div class="tb" id="lw-g"></div></div>
+    <div class="card"><h2>4 · שיבוץ השולחנות ל-21.10</h2><div class="tb" id="lw-t"></div></div>
   </div>
 
   <div class="pane" id="p-prep">
@@ -150,92 +151,58 @@ function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
 var BLOCKS=[
-{n:0,d:5,t:'למה אנחנו כאן',s:'לירון 2 · מיטל 3',body:
-  '<h4>הפתיחה — ההקשר החדש</h4>'+
-  '<div class="say">״משרד העבודה הקצה שעתיים שבועיות לכל רכז/ת חברתי/ת לליווי בוגרים. זה כבר בתפקיד, וזה כבר מתוקצב. '+
-  'אנחנו לא כאן כדי לשכנע אתכם שזה חשוב — אנחנו כאן כדי לענות על שאלה אחת: מה עושים עם השעתיים האלה.״</div>'+
-  '<div class="good"><b>למה זה הפתיח הנכון:</b> הוא מבטל את כל הפער בין רכזי הופה לשאר. '+
-  'השעתיים ניתנו לכולם — אז החדר אחיד מהשנייה הראשונה.</div>'+
-  '<h4>המספר שמסגר את היום</h4>'+
-  '<p><b>70 שעות בשנה.</b> ״לא מעט, ולא הרבה. מספיק לתוכנית אחת שעובדת, ולא מספיק לעשות הכול. '+
-  'לכן זו תוכנית עבודה ולא רשימת משאלות.״</p>'+
-  '<h4>הודעה לצ׳אט</h4>'+
-  '<div class="chatbox">הדף המלווה — פותחים עכשיו ומשאירים פתוח:\nhttps://meytalp-dev.github.io/hopa-nihul/mifgash2.html</div>'},
+{n:0,d:10,t:'פתיחה · רויטל ולירון',s:'הרציונל — לפני המצגת',body:
+  '<p>רויטל ולירון פותחות ומדברות על הרציונל. המצגת עוד לא עולה — רק שקף הפתיחה.</p>'+
+  '<h4>בסוף הפתיחה — הודעה לצ׳אט</h4>'+
+  '<div class="chatbox">הדף המלווה — פותחים עכשיו ומשאירים פתוח:\nhttps://meytalp-dev.github.io/hopa-nihul/mifgash2.html</div>'+
+  '<div class="good"><b>המשפך של היום (שקף 2):</b> למה ← מה התוכנית השנתית ← מה עושים כבר עכשיו ← המנהל/ת. '+
+  'לומר בקול: ״נתחיל רחב, ונסיים כשכל אחד יודע מה הוא עושה מחר.״</div>'},
 
-{n:1,d:12,t:'בוגר אמיתי',s:'ראיון · מיטל מראיינת',body:
-  '<h4>ארבע השאלות (לתת לבוגר מראש)</h4>'+
-  '<ul><li>איך נראה השבוע הראשון אחרי הטקס?</li>'+
-  '<li><b>מישהו מבית הספר יצר איתך קשר אחרי שסיימת? מי, מתי, ומה אמר?</b></li>'+
-  '<li>מה היה הכי קשה בשנה הראשונה — שלא ידעת שיהיה קשה?</li>'+
-  '<li>משפט אחד לרכז/ת אחד/ת בחדר.</li></ul>'+
-  '<div class="good"><b>למה הבוגר נשאר גם כשהמפגש נהיה תכנוני:</b> בלעדיו זו ישיבת תכנון. איתו — יש למי מתכננים. '+
-  'זה מה שיגרום להם למלא את הטפסים ברצינות ולא לאדיבות.</div>'+
-  '<div class="warn">בוגר בן 19 מול 64 מבוגרים בזום <b>לא ישרוד מונולוג</b>. שואלים, נותנים לענות, לא ממלאים שתיקות.</div>'+
-  '<h4>אם אין בוגר</h4><p>3 הקלטות של 60 שניות שנאספו מראש בוואטסאפ — רצוי בוגר, בוגרת, ובוגר מהחברה הערבית.</p>'},
+{n:1,d:5,t:'למה · המטרה שלי',s:'שקפים 3–5',body:
+  '<div class="say">״ביום שאחרי הטקס, בוגר מאבד בבת אחת את המסגרת, את המבוגרים ואת השגרה. ליווי בוגרים אומר שהקשר לא נגמר בשער.״</div>'+
+  '<p>70 השעות — ״מספיק לתוכנית אחת שעובדת, לא מספיק לעשות הכול. לכן מתחילים מהמטרה.״</p>'+
+  '<h4>3 דקות — משפט המטרה</h4>'+
+  '<p>כל אחד משלים בדף: <b>״השנה, בבית הספר שלי, ליווי בוגרים אומר ש…״</b>. המשפטים עולים חי על שקף 5 — מקריאים 3–4.</p>'+
+  '<div class="warn">לא חוזרים על הרציונל של רויטל ולירון. משפט אחד, ומיד לכתיבה.</div>'},
 
-{n:2,d:10,t:'שמונת הפרקים + תעדוף 70 השעות',s:'המבנה של כל התהליך',body:
-  '<h4>4 דקות — הפרקים</h4>'+
-  '<p>שמונה פרקים על שקף אחד. <b>״בבני ברק כל שולחן ייקח פרק אחד ויהפוך למומחה בו. ב-4.11 נרכיב את הכול.״</b></p>'+
-  '<h4>6 דקות — התעדוף החי</h4>'+
-  '<ul><li>כל אחד מחלק 70 שעות בין ארבע קבוצות-על בדף (סליידרים). הדף לא נותן לחרוג.</li>'+
-  '<li>התמונה המשותפת עולה על המסך — טאב ״תשובות חיות״.</li></ul>'+
-  '<div class="say">״אין כאן תשובה נכונה. יש בחירה — וזה בדיוק העניין. מי שלא ויתר על כלום, לא בנה תוכנית עבודה.״</div>'+
-  '<div class="good"><b>מה לעשות עם התוצאה:</b> להצביע על הפער. אם החדר שם 40 שעות ב״קשר שוטף״ ו-5 ב״מערכת״ — '+
-  'לשאול בקול: ״מי יעשה את השיחות האלה כשאף אחד בבית הספר לא יודע שאתם עושים אותן?״</div>'},
+{n:2,d:35,t:'התוכנית השנתית',s:'שקפים 6–12 · מליאה',body:
+  '<h4>א · למה צריך תוכנית (3′)</h4>'+
+  '<div class="say">״בלי תוכנית, ליווי בוגרים הוא ׳להיות זמין׳ — ומי שמקבל ליווי הוא מי שהתקשר. תוכנית מגיעה גם לבוגר ששותק.״</div>'+
+  '<p>שלוש שאלות שכל תוכנית עונה עליהן: עם מי · מתי · מה נחשב הצלחה.</p>'+
+  '<h4>ב · שמונת הרכיבים + בחירת 3 (10′)</h4>'+
+  '<p>עוברים על הרכיבים בקצב. ואז: <b>״סמנו בדף את 3 הרכיבים שהכי חשובים אצלכם השנה. זה השלד.״</b> שקף 9 מראה חי מה החדר בחר.</p>'+
+  '<div class="good">לשאול על הרכיב שאף אחד לא בחר: ״מי מוותר על זה — ומה המחיר?״</div>'+
+  '<h4>ג · מבנה השנה (7′)</h4>'+
+  '<p>שישה צמתים: יוני קליטה · ספטמבר עדכון · חלון המלגות · חגים וימי הולדת · לפני שחרור · סקר בפסח. ״כל צומת הוא הזדמנות שחוזרת כל שנה.״</p>'+
+  '<h4>ד · ארבעה מדדים (5′)</h4>'+
+  '<p>״ב-4.11 כל אחד יציב לעצמו יעד. היום רק מכירים.״</p>'+
+  '<h4>ה · 70 השעות (10′)</h4>'+
+  '<p>סליידרים בדף, ״שליחת השלד שלי״. שקף 12 מראה את הממוצע.</p>'+
+  '<div class="say">״מי שלא ויתר על כלום, לא בנה תוכנית.״</div>'},
 
-{n:3,d:25,t:'פרק א׳ · מי איתי',s:'8 חדרים × 8 · 3 רכזי הופה בכל חדר',body:
-  '<div class="say">״70 שעות של אדם אחד זה מעט. 70 שעות של אדם אחד שגייס עוד ארבעה — זו תוכנית.״</div>'+
-  '<h4>בחדר</h4>'+
-  '<ul><li><b>3′</b> — סבב שמות (שם, בית ספר, כמה שנים בתפקיד)</li>'+
-  '<li><b>8′</b> — מי בבית הספר שלי כבר נוגע/ת בבוגרים, גם אם זה לא בתפקיד? (מסמנים בדף)</li>'+
-  '<li><b>9′</b> — <b>את מי אני מגייס/ת ראשון, ומה בדיוק אבקש?</b> כל אחד כותב בדף. זה החלק שנשאר.</li>'+
-  '<li><b>5′</b> — רכזי הופה עונים על שאלה אחת: ״את מי גייסנו אצלנו, ומה זה נתן?״</li></ul>'+
-  '<div class="warn"><b>הסיכון:</b> רכז הופה שהופך את זה להרצאה. בתדריך מראש: ״אתם עונים על שאלה אחת. לא מלמדים.״</div>'+
-  '<div class="good"><b>הניסוח שעושה את ההבדל:</b> לא ״מי יכול לעזור״ אלא <b>״מה בדיוק אבקש ממנו/ה״</b>. '+
-  'בקשה מעורפלת לא מגייסת אף אחד.</div>'+
-  '<div class="chatbox">בחדר: מי בבית הספר שלכם כבר נוגע בבוגרים — גם אם זה לא בתפקיד שלו?\nואת מי אתם מגייסים ראשון, ומה בדיוק תבקשו ממנו/ה? (סעיף 3 בדף)</div>'},
+{n:3,d:30,t:'מה עושים כבר עכשיו',s:'שקפים 13–15 · מליאה 5′ + חדרים 20′ + מליאה 5′',body:
+  '<h4>מליאה — 5 דקות</h4>'+
+  '<div class="say">״לכל אחד מ-3 הרכיבים שבחרתם — פעולה אחת שאפשר להתחיל כבר החודש. אין רשימה מוכנה: אתם מכירים את בית הספר שלכם.״</div>'+
+  '<p>שקף 13: ✗ ״לחזק את הקשר״ מול ✓ ״לבקש מהמזכירות את רשימת מחזור תשפ״ה עד סוף החודש״. <b>מי · עד מתי · אפשר לדעת אם קרתה.</b></p>'+
+  '<h4>בחדר — 20 דקות (8 חדרים, 3 רכזי הופה בכל חדר)</h4>'+
+  '<ul><li><b>3′</b> — כל אחד: המטרה ו-3 הרכיבים</li>'+
+  '<li><b>9′</b> — כותבים בדף פעולה לכל רכיב: מה · מי איתי · עד מתי</li>'+
+  '<li><b>8′</b> — משתפים בחדר את הפעולה שהכי בטוחים בה, ולוקחים רעיון אחד</li></ul>'+
+  '<div class="warn"><b>רכזי הופה בחדר לא מרצים.</b> עונים על שאלה אחת: ״מה עשינו ראשון, ומה זה נתן?״ ועוזרים לחדד פעולה מעורפלת.</div>'+
+  '<div class="chatbox">בחדר: כל אחד כותב בסעיף 3 בדף פעולה אחת לכל רכיב — מה, מי איתי, עד מתי.\nבסוף משתפים בחדר את הפעולה שהכי בטוחים בה.</div>'+
+  '<h4>חזרה למליאה — 5 דקות</h4>'+
+  '<p>שקף 15 מראה את הפעולות לפי חדר. מקריאים 4–5 שהן הכי קונקרטיות.</p>'+
+  '<div class="good">ארגז הכלים (נוסחים, תבנית רשימה, ברכות) נמצא בנספח בסוף הדף — ״זה לאחרי המפגש, לא עכשיו.״</div>'},
 
-{n:4,d:22,t:'פרק ב׳ · צ׳ק-ליסט שכבת י"ב',s:'בונים אותו ביחד, לא מקבלים מוכן',body:
-  '<div class="say">״כמעט כל מה שצריך בשביל ללוות בוגר אפשר להשיג בזמן שהוא עדיין יושב מולך. אחרי הטקס הכול נהיה פי עשר קשה.״</div>'+
-  '<h4>מבנה</h4>'+
-  '<ul><li><b>8′</b> — עוברים על שמונת הסעיפים בדף. כל אחד מסמן מה כבר קורה אצלו ומה חסר.</li>'+
-  '<li><b>9′</b> — <b>מה חסר ברשימה?</b> מוסיפים לצ׳ק-ליסט המשותף. זה הבלוק שבו החדר כותב, לא מקבל.</li>'+
-  '<li><b>5′</b> — מקריאים בקול 6–8 מהתוספות.</li></ul>'+
-  '<div class="good"><b>למה בונים ולא מחלקים:</b> צ׳ק-ליסט שהחדר כתב — מיושם. צ׳ק-ליסט שחולק — נשמר בתיקייה. '+
-  'זה כל ההבדל, וזה עולה תשע דקות.</div>'+
-  '<div class="warn"><b>הסעיף שאסור לפספס:</b> <b>תאריך גיוס</b>. זה הפרט היחיד שכמעט אי אפשר להשיג אחרי שהם מתפזרים. '+
-  'אם אף אחד לא מעלה אותו — מיטל מעלה.</div>'},
-
-{n:5,d:10,t:'פרק ג׳ · הקשר',s:'מליאה · קצר וחד',body:
-  '<div class="say">״ליווי בוגרים הוא לא ׳להיות זמין׳. זו יוזמה מתוזמנת — ובלי החלטה מראש על הקצב, זה פשוט לא קורה.״</div>'+
-  '<h4>שלוש רמות</h4>'+
-  '<ul><li>🟢 <b>מרחוק</b> — 3 שיחות בשנה · רוב הבוגרים</li>'+
-  '<li>🟠 <b>מקרוב</b> — שיחה בחודש · מי שבצומת</li>'+
-  '<li>🔴 <b>בפעולה</b> — אינטנסיבי · עד שהצורך נענה</li></ul>'+
-  '<h4>שתי נקודות שמזיזות</h4>'+
-  '<ul><li><b>הערוץ:</b> וואטסאפ ולא מייל. בכל התוכניות שנבדקו — הודעות הן מה שעובד.</li>'+
-  '<li><b>הצמתים שקובעים את היומן:</b> יוני קליטת מחזור · ספטמבר–דצמבר חלון מלגות · 3 חודשים לפני שחרור · פסח סקר שנתי.</li></ul>'+
-  '<div class="good">שלושת הפרקים שנשארו — מענים, קהילה, תיעוד, הנהלה — נבנים בבני ברק. לא מנסים לכסות הכול היום.</div>'},
-
-{n:6,d:6,t:'עד 21.10 + בחירת שולחן',s:'הגשר',body:
-  '<h4>שתי משימות</h4>'+
-  '<ul><li><b>שיחה אחת עם בוגר/ת</b> — 3 שאלות, דף ״השיחה שלי״</li>'+
-  '<li><b>לברר מי השותף/ה שלך</b> ולדבר איתו/ה 10 דקות</li></ul>'+
+{n:4,d:10,t:'הפגישה עם המנהל/ת · סגירה',s:'שקפים 16–22',body:
+  '<div class="say">״הכול מתנקז לפגישה עם המנהל/ת. אתם מגיעים עם מטרה, שלד ופעולות — ואתם קובעים מתי, עד 4.11.״</div>'+
+  '<p>5 דקות שקטות בסעיף 4 בדף: מתי אקבע + מה אבקש מההנהלה. ואז <b>״הדף שלי״</b> — להדפסה או לוואטסאפ.</p>'+
+  '<h4>עד 21.10</h4><ul><li>להתחיל פעולה אחת</li><li>שיחה אחת עם בוגר/ת (דף ״השיחה שלי״)</li><li>לקבוע את הפגישה עם המנהל/ת</li></ul>'+
   '<div class="chatbox">דף ״השיחה שלי״ — ממלאים אחרי השיחה, לוקח דקה:\nhttps://meytalp-dev.github.io/hopa-nihul/sicha.html</div>'+
-  '<h4>בחירת שולחן — 3 דקות</h4>'+
-  '<p>כל אחד בוחר בדף באיזה פרק הוא רוצה לשבת ב-21.10. <b>לפי זה משבצים את השולחנות.</b> '+
-  'הטאב ״תשובות חיות״ מראה את החלוקה — אם פרק אחד ריק, מיטל מבקשת מתנדבים בקול.</p>'+
-  '<div class="warn">בלי הבחירה הזאת — שיבוץ השולחנות ב-21.10 נעשה בעיוורון.</div>'+
-  '<h4>פרטיות</h4><p>על הקיר ב-21.10 — <b>ציטוטים בלבד, בלי שמות ובלי בתי ספר</b>. לומר את זה בפירוש.</p>'},
-
-{n:7,d:5,t:'סגירה + הדלת',s:'בלי פיץ׳',body:
-  '<h4>מה נשלח היום</h4><ul><li>הצ׳ק-ליסט המלא של י"ב, כולל מה שהחדר הוסיף</li>'+
-  '<li>שמונת הפרקים בדף אחד</li><li>קישור למאגר המענים</li><li>דף ״השיחה שלי״</li></ul>'+
-  '<div class="say">״21.10, בני ברק. תבואו עם מה ששמעתם ועם שם של שותף/ה.״</div>'+
-  '<h4>הדלת — שקף אחד</h4>'+
-  '<div class="say">״25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה, ויש להם ליווי ומערכת. '+
-  'מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים בסעיף 7, ואחזור אליו. זה הכול.״</div>'+
-  '<div class="warn">אחרי המשפט הזה — <b>לא חוזרים לנושא</b>. כל חזרה הופכת את המפגש לשיווק בדיעבד.</div>'}
+  '<p><b>בחירת שולחן ל-21.10</b> — בדף. אם רכיב ריק, מבקשים מתנדבים.</p>'+
+  '<h4>הדלת — משפט אחד</h4>'+
+  '<div class="say">״25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה. מי שרוצה להבין מה זה אומר — משאיר פרטים בסוף הדף.״</div>'+
+  '<div class="warn">אחרי המשפט הזה — <b>לא חוזרים לנושא</b>.</div>'}
 ];
 
 function hhmm(m){var h=Math.floor(m/60)%24;return String(h).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
@@ -278,9 +245,7 @@ setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()
   };
 });
 
-var CHK=['לוודא מי הבוגר שמגיע — ולשלוח לו את 4 השאלות מראש',
- 'להקליט 3 קטעי גיבוי של 60 שניות בוואטסאפ',
- 'לבדוק את הדף המלווה מהנייד ומהמחשב',
+var CHK=['לבדוק את הדף המלווה מהנייד ומהמחשב — כולל ״הדף האישי שלי״ והעתקת נוסחים',
  '🧹 להריץ את איפוס נתוני המפגש — אחרי הבדיקות',
  'לשבץ מראש 8 חדרי זום, 3 רכזי הופה בכל חדר',
  'לפתוח את המצגת במסך שני',
@@ -318,11 +283,12 @@ function items(kind){
     .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
 }
 function drawLive(){
-  var h=items('shaot'),p=items('shutaf'),c=items('cklist'),t=items('shulchan'),d=items('delet');
+  var h=items('shaot'),p=items('shutaf'),c=items('matara'),t=items('shulchan'),d=items('delet');
   $('lstat').innerHTML=
-    '<div>תעדפו שעות<b>'+h.length+'</b></div>'+
-    '<div>גיוסים<b>'+p.length+'</b></div>'+
-    '<div>תוספות לצ׳ק-ליסט<b>'+c.length+'</b></div>'+
+    '<div>שלחו שלד<b>'+h.length+'</b></div>'+
+    '<div>פעולות בחדרים<b>'+p.length+'</b></div>'+
+    '<div>משפטי מטרה<b>'+c.length+'</b></div>'+
+    '<div>הכינו פגישה<b>'+items('pgisha').length+'</b></div>'+
     '<div>בחרו שולחן<b>'+t.length+'</b></div>'+
     '<div>ביקשו פרטים<b>'+d.length+'</b></div>';
 
@@ -348,6 +314,12 @@ function drawLive(){
     var l=t.filter(function(x){return String(x.chapter).indexOf(ch.n+' · ')===0});
     return '<div class="tbi" style="border-color:'+ch.c+'"><h4>'+ch.n+' · '+esc(ch.t)+' <span style="color:'+ch.c+'">('+l.length+')</span></h4>'+
       '<ul>'+(l.length?l.map(function(x){return '<li>'+esc(x.me)+'</li>'}).join(''):'<li style="color:#7d7d8a">—</li>')+'</ul></div>';
+  }).join('');
+  var g=items('pgisha'),WHEN=['עד 21.10','בין 21.10 ל-4.11','כבר קבעתי'];
+  $('lw-g').innerHTML=WHEN.map(function(w){
+    var l=g.filter(function(x){return x.when===w});
+    return '<div class="tbi"><h4>'+esc(w)+' ('+l.length+')</h4><ul>'+
+      (l.length?l.map(function(x){return '<li>'+esc(x.me)+' · '+esc(x.school)+'</li>'}).join(''):'<li style="color:#7d7d8a">—</li>')+'</ul></div>';
   }).join('');
   $('lastup').textContent='עודכן '+new Date().toLocaleTimeString('he-IL');
 }

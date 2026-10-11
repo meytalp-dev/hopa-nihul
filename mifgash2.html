@@ -8,26 +8,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
-    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f6f2f7;--card:#fff;--ok:#22b573;
-    --shadow:0 4px 18px rgba(31,31,38,.07)}
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;--yellow-soft:#fffbd6;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#ebe6ee;--bg:#f8f5f9;--card:#fff;--ok:#22b573;
+    --shadow:0 4px 18px rgba(31,31,38,.06)}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
   body{font-family:'Rubik',system-ui,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
   button,textarea,input,select{font-family:inherit;font-size:inherit}
   a{color:var(--pink-dark)}
   .in{max-width:720px;margin:0 auto;padding:0 16px}
 
-  header{background:#111;color:#fff;padding:18px 0 24px;position:relative;overflow:hidden}
-  header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%);pointer-events:none}
+  header{background:linear-gradient(160deg,#fff 0%,var(--pink-soft) 100%);padding:18px 0 22px;border-bottom:1px solid var(--line)}
   .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex;align-items:center}
-  .logo img{height:38px;display:block}
-  header h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.3px}
-  header .sub{font-size:13.5px;opacity:.85;margin-top:3px}
-  .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+  .logo img{height:42px;display:block}
+  header h1{margin:0;font-size:24px;font-weight:900;letter-spacing:-.3px}
+  header .sub{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .meet{margin-top:12px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:5px 14px;font-weight:800;font-size:13.5px}
   .meet small{font-weight:500;opacity:.75}
 
-  nav.toc{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 2px 10px rgba(31,31,38,.05)}
+  /* המשפך */
+  .funnel{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:16px}
+  .funnel a{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:9px 14px;font-weight:800;font-size:14.5px}
+  .funnel a small{font-weight:500;color:var(--muted);font-size:12.5px}
+  .funnel a:nth-child(1){width:100%;border-color:var(--pink)}
+  .funnel a:nth-child(2){width:86%;border-color:#f19bc4}
+  .funnel a:nth-child(3){width:72%;border-color:#f6c9de}
+  .funnel a:nth-child(4){width:58%;background:var(--yellow-soft);border-color:#f2e27a}
+
+  nav.toc{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 2px 10px rgba(31,31,38,.04)}
   nav.toc .in{display:flex;gap:6px;overflow-x:auto;padding-top:9px;padding-bottom:9px;scrollbar-width:none}
   nav.toc .in::-webkit-scrollbar{display:none}
   nav.toc a{flex:none;text-decoration:none;color:var(--muted);font-size:12.5px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
@@ -37,35 +44,51 @@
   section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:64px}
   .sec-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
   .sec-head .num{background:var(--pink);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex:none;margin-top:2px}
-  .sec-head h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.2px}
+  .sec-head h2{margin:0;font-size:18.5px;font-weight:900;letter-spacing:-.2px}
   .sec-head small{display:block;color:var(--muted);font-size:13px;font-weight:500;margin-top:1px}
   .sec-head .time{margin-inline-start:auto;background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:800;flex:none;white-space:nowrap}
+  h3.sub{margin:22px 0 4px;font-size:16px;font-weight:900;display:flex;align-items:center;gap:8px}
+  h3.sub .k{background:var(--pink-soft);color:var(--pink-dark);border-radius:8px;padding:1px 8px;font-size:12.5px}
 
   p{margin:0 0 10px}
-  .lead{font-size:15.5px}
-  .quote{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 12px 12px 0;padding:12px 14px;font-size:15px;font-weight:600;margin:12px 0}
+  .lead{font-size:16px}
+  .quote{border-inline-start:4px solid var(--pink);background:var(--pink-soft);border-radius:0 12px 12px 0;padding:13px 15px;font-size:16px;font-weight:600;margin:12px 0;line-height:1.6}
   .callout{background:var(--pink-soft);border-radius:14px;padding:13px 15px;margin:12px 0;font-size:14.5px}
   .callout b{color:var(--pink-dark)}
-  .callout.y{background:#fffdf0;border:1.5px solid #f6e98a}
+  .callout.y{background:var(--yellow-soft);border:1.5px solid #f2e27a}
   .callout.g{background:#e8f8ef;border:1.5px solid #b8e6c9}
-  ul{margin:6px 0 12px;padding-inline-start:22px}li{margin-bottom:5px}
+  ul,ol{margin:6px 0 12px;padding-inline-start:22px}li{margin-bottom:5px}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:6px}
 
-  .hours{background:#111;color:#fff;border-radius:18px;padding:18px;margin:12px 0}
-  .hours .big{font-size:52px;font-weight:900;color:var(--yellow);line-height:1}
-  .hours .lb{font-size:15px;font-weight:600;margin-top:4px}
-  .hours .sm{font-size:12.5px;opacity:.6;margin-top:6px}
+  .stat70{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:16px;padding:12px 16px;margin:12px 0}
+  .stat70 .big{font-size:44px;font-weight:900;color:var(--pink);line-height:1}
+  .stat70 .lb{font-size:14px;font-weight:600}
+  .stat70 .lb small{display:block;color:var(--muted);font-weight:500;font-size:12.5px}
 
-  .qcard{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:9px}
-  .qcard .t{font-weight:800;font-size:15px;display:flex;gap:8px;align-items:center}
-  .qcard .d{font-size:13.5px;color:var(--muted);margin-top:3px}
+  .qcard{border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-top:8px}
+  .qcard .t{font-weight:800;font-size:14.5px}
+  .qcard .d{font-size:13.5px;color:var(--muted);margin-top:2px}
 
-  /* 8 הפרקים */
-  .chaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;margin-top:10px}
-  .chap{border:1.5px solid var(--line);border-radius:13px;padding:11px 12px;position:relative;overflow:hidden}
-  .chap:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--pink)}
+  /* רכיבי התוכנית */
+  .chaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;margin-top:10px}
+  .chap{border:1.5px solid var(--line);border-radius:13px;padding:11px 12px;position:relative;overflow:hidden;cursor:pointer;background:#fff;text-align:start;transition:.15s}
+  .chap:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--c,var(--pink))}
   .chap .n{font-size:11px;font-weight:800;color:var(--muted)}
-  .chap .t{font-size:14px;font-weight:800;line-height:1.25;margin-top:1px}
-  .chap .d{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .chap .t{font-size:14.5px;font-weight:800;line-height:1.25;margin-top:1px}
+  .chap .d{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .chap.on{border-color:var(--pink);background:var(--pink-soft)}
+  .chap.on .n:after{content:" · בראש סדר העדיפויות ✓";color:var(--pink-dark)}
+
+  /* מבנה השנה */
+  .year{position:relative;margin-top:10px;padding-inline-start:20px}
+  .year:before{content:"";position:absolute;inset-inline-start:6px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .year>div{position:relative;margin-bottom:11px}
+  .year>div:before{content:"";position:absolute;inset-inline-start:-19px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2.5px solid var(--pink)}
+  .year .m{font-size:12px;font-weight:800;color:var(--pink-dark)}
+  .year .t{font-size:14.5px;font-weight:700;line-height:1.35}
+
+  .meas{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+  .meas div{background:var(--yellow-soft);border-radius:12px;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.35}
 
   /* תעדוף שעות */
   .sl{margin-top:12px}
@@ -77,59 +100,91 @@
   .sl .tot b{font-size:20px}
   .sl .tot.over{color:#c0392b}
 
+  /* פעולות */
+  .act{border:1.5px solid var(--line);border-radius:15px;padding:13px 14px;margin-top:10px;position:relative;overflow:hidden}
+  .act:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c,var(--pink))}
+  .act .h{font-weight:900;font-size:15.5px}
+  .act .q{font-size:13.5px;color:var(--muted);margin:2px 0 6px}
+  .act .three{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.act .three>div{flex:1 1 140px}
+  .empty{border:1.5px dashed var(--line);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:14px;margin-top:10px}
+
   input[type=text],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink);outline:none;transition:.15s}
   input[type=text]:focus,textarea:focus,select:focus{border-color:var(--pink)}
-  textarea{min-height:76px;resize:vertical}
+  textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
   .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 160px}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;transition:.15s;text-decoration:none}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 22px;font-weight:800;font-size:15px;cursor:pointer;transition:.15s;text-decoration:none}
   .btn:active{transform:scale(.97)}
-  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.32)}
+  .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.28)}
   .btn.pink:hover{background:var(--pink-dark)}
   .btn.pink:disabled{opacity:.55;cursor:default;box-shadow:none}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:9px 16px;border-radius:11px;font-weight:700}
-  .btn.yellow{background:var(--yellow);color:#111;box-shadow:0 8px 22px rgba(255,242,0,.35)}
+  .btn.yellow{background:var(--yellow);color:#111}
   .btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:11px}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
   .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
-  .chips button:hover{border-color:var(--pink)}
   .chips button.on{background:var(--pink);border-color:var(--pink);color:#fff}
 
-  .wall{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;min-height:30px}
-  .wall span{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:700;animation:pop .3s ease}
+  .wall{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;min-height:10px}
+  .wall span{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:6px 12px;font-size:13.5px;font-weight:600;animation:pop .3s ease}
   .wall span i{font-style:normal;font-weight:500;color:var(--muted)}
   @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
   .livehint{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-  .roomsel{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
-  .roomsel button{width:46px;height:46px;border:2px solid var(--line);background:#fff;border-radius:13px;font-weight:900;font-size:16px;cursor:pointer}
-  .roomsel button:hover{border-color:var(--pink)}
+  .roomsel{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+  .roomsel button{width:44px;height:44px;border:2px solid var(--line);background:#fff;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer}
   .roomsel button.on{background:var(--pink);border-color:var(--pink);color:#fff}
 
-  /* צ'ק-ליסט י"ב */
-  .ck{display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:7px;cursor:pointer}
-  .ck input{width:19px;height:19px;accent-color:var(--pink);flex:none;margin-top:2px}
-  .ck .t{font-size:14px;font-weight:700;line-height:1.3}
-  .ck .d{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .ck.on{border-color:var(--pink);background:var(--pink-soft)}
-
-  .sent{background:#e8f8ef;border:1.5px solid #b8e6c9;color:#14613b;border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px;margin-top:10px}
   .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
 
-  .doorbox{background:#111;color:#fff;border-radius:18px;padding:18px;margin-top:14px}
-  .doorbox h3{margin:0 0 6px;font-size:17px;font-weight:900}
-  .doorbox p{font-size:14px;opacity:.85}
-  .doorbox label.fl{color:#fff;opacity:.7}
+  .doorbox{background:var(--yellow-soft);border:1.5px solid #f2e27a;border-radius:16px;padding:16px;margin-top:16px}
+  .doorbox h3{margin:0 0 6px;font-size:16px;font-weight:900}
+  .doorbox p{font-size:14px}
+
+  /* נספח */
+  section.appx{background:#fff;border:1.5px dashed #e3d9e7;box-shadow:none}
+  details{border:1.5px solid var(--line);border-radius:14px;margin-top:9px;overflow:hidden}
+  details summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+  details summary::-webkit-details-marker{display:none}
+  details summary:after{content:"＋";margin-inline-start:auto;color:var(--pink);font-weight:900}
+  details[open] summary:after{content:"−"}
+  details .body{padding:0 14px 14px}
+  .tpl{position:relative;background:#faf8fb;border:1.5px dashed var(--line);border-radius:12px;padding:12px 14px;padding-inline-end:84px;font-size:14px;white-space:pre-wrap;margin-top:8px;cursor:pointer}
+  .tpl .tt{display:block;font-weight:800;font-size:13px;color:var(--pink-dark);margin-bottom:3px;white-space:normal}
+  .tpl .cp{position:absolute;inset-inline-end:9px;top:9px;border:none;background:var(--pink);color:#fff;border-radius:9px;padding:5px 11px;font-size:12.5px;font-weight:800;cursor:pointer}
+  .cols{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .cols span{border:1.5px solid var(--line);border-radius:10px;padding:6px 11px;font-size:13.5px;font-weight:700}
+  .cols span.req{border-color:var(--pink);background:var(--pink-soft)}
+  .cols span i{font-style:normal;font-weight:500;color:var(--muted);font-size:12px}
+  .ck{display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:7px;cursor:pointer}
+  .ck input{width:19px;height:19px;accent-color:var(--pink);flex:none;margin-top:2px}
+  .ck .t{font-size:14px;font-weight:700;line-height:1.3;display:block}
+  .ck .d{font-size:12.5px;color:var(--muted);display:block}
+  .ck.on{border-color:var(--pink);background:var(--pink-soft)}
+
+  /* הדף האישי */
+  #mypage{display:none;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:22px;margin:14px auto 0}
+  #mypage.on{display:block}
+  #mypage h2{margin:0;font-size:21px;font-weight:900}
+  #mypage h3{margin:16px 0 5px;font-size:15px;font-weight:900;color:var(--pink-dark);border-bottom:1.5px solid var(--line);padding-bottom:3px}
+  #mypage table{width:100%;border-collapse:collapse;font-size:13.5px}
+  #mypage td{padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  #mypage .miss{color:#c0392b;font-weight:800}
 
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
   footer a{font-weight:700}
-  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transform:translateY(14px);transition:.25s;pointer-events:none;z-index:99}
+  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transform:translateY(14px);transition:.25s;pointer-events:none;z-index:99}
   #toast.show{opacity:1;transform:none}
-  @media(max-width:520px){header h1{font-size:20px}.sec-head h2{font-size:16.5px}}
+  @media print{
+    body{background:#fff}
+    header,nav.toc,main,footer,#toast,.noprint{display:none!important}
+    #mypage{display:block!important;box-shadow:none;margin:0;padding:0}
+  }
+  @media(max-width:520px){header h1{font-size:21px}.sec-head h2{font-size:17px}.funnel a{font-size:13.5px}}
 </style>
 </head>
 <body>
@@ -144,6 +199,12 @@
       </div>
     </div>
     <div class="meet">14.10.2026 · זום <small>90 דקות · מפגש 1 מתוך 3</small></div>
+    <div class="funnel">
+      <a href="#s1">1 · למה <small>הרציונל והמטרה שלי</small></a>
+      <a href="#s2">2 · מה <small>התוכנית השנתית</small></a>
+      <a href="#s3">3 · מה עושים כבר עכשיו <small>הפעולות שלי</small></a>
+      <a href="#s4">4 · לאן <small>הפגישה עם המנהל/ת</small></a>
+    </div>
   </div>
 </header>
 
@@ -151,153 +212,193 @@
 
 <main class="in">
 
-  <!-- 0 -->
-  <section id="s0">
-    <div class="sec-head"><div class="num">0</div><div><h2>למה אנחנו כאן</h2><small>ושלוש דקות על מה שמשתנה השנה</small></div><div class="time">5 דק'</div></div>
-    <p class="lead">משרד העבודה הקצה <b>שעתיים שבועיות לכל רכז/ת חברתי/ת</b> לליווי בוגרים. זה כבר בתפקיד, וזה כבר מתוקצב.</p>
-    <div class="quote">אנחנו לא כאן כדי לשכנע אתכם שזה חשוב. אנחנו כאן כדי לענות על שאלה אחת: <b>מה עושים עם השעתיים האלה.</b></div>
-
-    <div class="hours">
-      <div class="big">70</div>
-      <div class="lb">שעות בשנה — זה מה ששתי שעות שבועיות שוות</div>
-      <div class="sm">שנת לימודים של כ-35 שבועות פעילים</div>
-    </div>
-    <div class="callout">70 שעות זה לא מעט, וזה גם לא הרבה. זה מספיק בשביל <b>תוכנית אחת שעובדת</b>, ולא מספיק בשביל לעשות הכול. <b>לכן זו תוכנית עבודה ולא רשימת משאלות.</b></div>
-
-    <div class="callout y">
-      <b>שלושה מפגשים, תוצר אחד:</b><br>
-      היום בונים את השלד · ב-21.10 בבני ברק מייצרים את הרעיונות · וב-4.11 כל אחד יוצא עם
-      <b>תוכנית עבודה מוכנה להנחה על שולחן המנהל/ת.</b>
-    </div>
-  </section>
-
-  <!-- 1 -->
+  <!-- 1 · למה -->
   <section id="s1">
-    <div class="sec-head"><div class="num">1</div><div><h2>בוגר אמיתי</h2><small>ראיון · לפני שנתכנן, נשמע</small></div><div class="time">12 דק'</div></div>
-    <p>ארבע שאלות. שווה להקשיב לשנייה במיוחד.</p>
-    <div class="qcard"><div class="t">1 · איך נראה השבוע הראשון אחרי הטקס?</div></div>
-    <div class="qcard"><div class="t">2 · מישהו מבית הספר יצר איתך קשר אחרי שסיימת?</div><div class="d">מי, מתי, ומה הוא אמר</div></div>
-    <div class="qcard"><div class="t">3 · מה היה הכי קשה בשנה הראשונה — שלא ידעת שיהיה קשה?</div></div>
-    <div class="qcard"><div class="t">4 · משפט אחד לרכז/ת בחדר הזה</div></div>
-    <label class="fl">משפט אחד שנשאר לך (נשמר רק במכשיר שלך)</label>
-    <textarea id="note1" placeholder="מה שמעת שלא ידעת?"></textarea>
+    <div class="sec-head"><div class="num">1</div><div><h2>למה</h2><small>הרציונל · ומה המטרה שלי</small></div><div class="time">5 דק'</div></div>
+    <div class="quote">ביום שאחרי הטקס, בוגר מאבד בבת אחת את המסגרת, את המבוגרים ואת השגרה שליוו אותו שתים-עשרה שנה. ליווי בוגרים אומר שהקשר לא נגמר בשער — ושבית הספר נשאר כתובת עד שהבוגר מוצא את דרכו.</div>
+    <div class="stat70">
+      <div class="big">70</div>
+      <div class="lb">שעות בשנה לליווי בוגרים<small>שתי שעות שבועיות שמשרד העבודה הקצה לכל רכז/ת חברתי/ת</small></div>
+    </div>
+    <p>70 שעות זה מספיק בשביל תוכנית אחת שעובדת, ולא מספיק בשביל לעשות הכול. לכן מתחילים מהמטרה.</p>
+
+    <label class="fl">המטרה שלי — השלימו את המשפט</label>
+    <textarea id="m_txt" maxlength="220" placeholder="השנה, בבית הספר שלי, ליווי בוגרים אומר ש…"></textarea>
+    <div class="btnrow"><button class="btn pink" id="m_send">שיתוף המטרה</button></div>
+    <div class="err" id="m_err"></div>
+    <div class="wall" id="m_wall"></div>
+    <div class="livehint"><span class="dot"></span> <span id="m_count">0</span> משפטי מטרה</div>
   </section>
 
-  <!-- 2 -->
+  <!-- 2 · מה -->
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>שמונת הפרקים</h2><small>מבנה תוכנית העבודה · ועל מה נוציא את 70 השעות</small></div><div class="time">10 דק'</div></div>
-    <p>כל תוכנית עבודה לליווי בוגרים מורכבת משמונה פרקים. <b>בבני ברק כל שולחן ייקח פרק אחד ויהפוך למומחה בו</b> — וב-4.11 נרכיב את הכול.</p>
-    <div class="chaps" id="chaps"></div>
+    <div class="sec-head"><div class="num">2</div><div><h2>התוכנית השנתית</h2><small>מה המטרה שלה · מה היא כוללת · ואיך יודעים שהיא עובדת</small></div><div class="time">35 דק'</div></div>
 
-    <h3 style="margin:20px 0 2px;font-size:16px">התעדוף שלך · 70 שעות</h3>
-    <p class="livehint" style="margin-bottom:0">אין תשובה נכונה. יש בחירה — וזה בדיוק העניין.</p>
+    <h3 class="sub"><span class="k">א</span> למה צריך תוכנית</h3>
+    <p>בלי תוכנית, ליווי בוגרים הוא "להיות זמין" — ומי שמקבל ליווי הוא מי שהתקשר. תוכנית שנתית הופכת את זה ל<b>יוזמה מתוזמנת</b>, שמגיעה גם לבוגר ששותק.</p>
+    <div class="qcard"><div class="t">עם מי</div><div class="d">מי בבית הספר שותף, ולא רק אני</div></div>
+    <div class="qcard"><div class="t">מתי</div><div class="d">מה קורה בכל חלק של השנה — ולא "כשיהיה זמן"</div></div>
+    <div class="qcard"><div class="t">מה נחשב הצלחה</div><div class="d">מה נבדוק בסוף השנה, ונדע שזה עבד</div></div>
+
+    <h3 class="sub"><span class="k">ב</span> שמונת הרכיבים</h3>
+    <p>כל תוכנית לליווי בוגרים בנויה משמונה רכיבים. אי אפשר להשקיע בכולם באותה מידה — <b>סמנו את 3 הרכיבים שהכי חשובים אצלכם השנה.</b> זה השלד של התוכנית שלכם.</p>
+    <div class="chaps" id="chaps"></div>
+    <div class="hint" id="topHint">נבחרו 0 מתוך 3</div>
+
+    <h3 class="sub"><span class="k">ג</span> מבנה השנה</h3>
+    <p>התוכנית נשענת על כמה צמתים קבועים. כל צומת הוא הזדמנות שחוזרת כל שנה:</p>
+    <div class="year" id="year"></div>
+
+    <h3 class="sub"><span class="k">ד</span> איך יודעים שזה עובד</h3>
+    <p>ארבעה מדדים שאפשר לספור בסוף השנה. ב-4.11 כל אחד יציב לעצמו יעד:</p>
+    <div class="meas" id="meas"></div>
+
+    <h3 class="sub"><span class="k">ה</span> 70 השעות שלי</h3>
+    <p class="hint" style="margin-top:0">אין תשובה נכונה. יש בחירה — מי שלא ויתר על כלום, לא בנה תוכנית.</p>
     <div class="sl" id="sliders"></div>
-    <div class="btnrow"><button class="btn pink" id="h_send">שליחת התעדוף שלי</button></div>
+    <div class="btnrow"><button class="btn pink" id="h_send">שליחת השלד שלי</button></div>
     <div class="err" id="h_err"></div>
-    <div id="h_res" class="livehint"><span class="dot"></span> <span id="h_count">0</span> רכזים תעדפו · התמונה המשותפת עולה על המסך</div>
+    <div class="livehint"><span class="dot"></span> <span id="h_count">0</span> רכזים שלחו שלד · התמונה המשותפת עולה על המסך</div>
   </section>
 
-  <!-- 3 -->
+  <!-- 3 · פעולות -->
   <section id="s3">
-    <div class="sec-head"><div class="num">3</div><div><h2>פרק א׳ · מי איתי</h2><small>חדרים · כי רכז לבד לא שורד</small></div><div class="time">25 דק'</div></div>
-    <div class="callout g"><b>העיקרון:</b> 70 שעות של אדם אחד זה מעט. 70 שעות של אדם אחד <b>שגייס עוד ארבעה</b> — זו תוכנית.</div>
+    <div class="sec-head"><div class="num">3</div><div><h2>מה עושים כבר עכשיו</h2><small>חדרים · כל אחד חושב על הפעולות שלו</small></div><div class="time">30 דק'</div></div>
+    <p>לכל אחד מ-3 הרכיבים שבחרתם — <b>פעולה אחת שאפשר להתחיל כבר החודש.</b> לא רשימה מוכנה: אתם מכירים את בית הספר שלכם.</p>
+    <div class="callout y"><b>פעולה טובה היא קטנה ומדויקת:</b> יש לה מי, יש לה עד מתי, ואפשר לדעת אם היא קרתה. "לחזק את הקשר עם הבוגרים" — זו לא פעולה. "לבקש מהמזכירות את רשימת מחזור תשפ״ה עד סוף החודש" — זו פעולה.</div>
 
+    <div id="acts"></div>
+
+    <h3 class="sub">בחדר</h3>
     <label class="fl">באיזה חדר את/ה?</label>
     <div class="roomsel" id="roomsel"></div>
-
     <div id="roomwrap" style="display:none">
-      <p><b>בחדר, בקול:</b> מי בבית הספר שלי כבר נוגע/ת בבוגרים — גם אם זה לא בתפקיד שלו/ה?</p>
-      <label class="fl">סמנו את מי שיש לכם בבית הספר</label>
-      <div class="chips" id="partners"></div>
-
-      <label class="fl">ואת מי אני מגייס/ת <b>ראשון</b> — ומה בדיוק אבקש ממנו/ה?</label>
-      <input type="text" id="p_who" placeholder="למשל: היועצת — שתיתן לי 20 דקות בישיבת י״ב" maxlength="130">
-      <div class="btnrow"><button class="btn pink" id="p_send">הוספה לחדר</button></div>
+      <p style="font-size:14px">כל אחד משתף את הפעולה שהכי בטוח/ה בה. שומעים, שואלים, ו<b>לוקחים רעיון אחד מהחדר</b>.</p>
+      <label class="fl">הפעולה שאני משתף/ת בחדר</label>
+      <input type="text" id="p_txt" maxlength="140" placeholder="מה, מי ועד מתי">
+      <div class="btnrow"><button class="btn pink" id="p_send">שיתוף בחדר</button></div>
       <div class="err" id="p_err"></div>
       <div class="wall" id="p_wall"></div>
-      <div class="livehint"><span class="dot"></span> חדר <b id="r_num">—</b> · <span id="p_count">0</span> גיוסים</div>
+      <div class="livehint"><span class="dot"></span> חדר <b id="r_num">—</b> · <span id="p_count">0</span> פעולות</div>
+      <label class="fl">רעיון שלקחתי מהחדר</label>
+      <input type="text" id="p_steal" maxlength="140" placeholder="מה שמעתי ואני רוצה לנסות">
     </div>
-
-    <div class="callout y" style="margin-top:16px">
-      <b>לרכזי הופה בחדר:</b> לא להרצות. לענות על שאלה אחת — <i>״את מי גייסנו אצלנו, ומה זה נתן?״</i>
-    </div>
+    <div class="callout" style="margin-top:14px"><b>לרכזי הופה בחדר:</b> לא להרצות. לענות על שאלה אחת — <i>״מה עשינו ראשון, ומה זה נתן?״</i></div>
+    <p class="hint">נתקעתם? בנספח בסוף הדף יש ארגז כלים — נוסחים, תבנית רשימה ולוח ברכות. הוא שם בשביל אחרי המפגש.</p>
   </section>
 
-  <!-- 4 -->
+  <!-- 4 · לאן -->
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>פרק ב׳ · שכבת י"ב</h2><small>בונים את הצ׳ק-ליסט ביחד</small></div><div class="time">22 דק'</div></div>
-    <div class="callout"><b>החלון שנסגר:</b> כמעט כל מה שצריך בשביל ללוות בוגר אפשר להשיג בזמן שהוא עדיין יושב מולך. אחרי הטקס — הכול נהיה פי עשר קשה.</div>
-
-    <p><b>סמנו מה כבר קורה אצלכם, ומה חסר:</b></p>
-    <div id="ckList"></div>
-
-    <label class="fl">מה עוד צריך להיכנס לצ׳ק-ליסט — משהו שלא ברשימה?</label>
-    <input type="text" id="c_add" placeholder="רעיון משלכם" maxlength="110">
-    <div class="btnrow"><button class="btn pink" id="c_send">הוספה לצ׳ק-ליסט המשותף</button></div>
-    <div class="err" id="c_err"></div>
-    <div class="wall" id="c_wall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="c_count">0</span> סעיפים שהחדר הוסיף</div>
-
-    <div class="callout g" style="margin-top:14px"><b>התוצר:</b> הצ׳ק-ליסט המלא — הרשמי + מה שהחדר הוסיף — נשלח לכם אחרי המפגש, ונכנס למחברת של 21.10.</div>
-  </section>
-
-  <!-- 5 -->
-  <section id="s5">
-    <div class="sec-head"><div class="num">5</div><div><h2>פרק ג׳ · הקשר</h2><small>מתי, לכמה, ובאיזה ערוץ</small></div><div class="time">10 דק'</div></div>
-    <p>ליווי בוגרים הוא לא "להיות זמין". זו <b>יוזמה מתוזמנת</b> — ובלי החלטה מראש על הקצב, זה פשוט לא קורה.</p>
-
-    <div class="qcard"><div class="t">🟢 מרחוק</div><div class="d">3 שיחות בשנה · רוב הבוגרים</div></div>
-    <div class="qcard"><div class="t">🟠 מקרוב</div><div class="d">שיחה בחודש · מי שבצומת או שמשהו לא ברור</div></div>
-    <div class="qcard"><div class="t">🔴 בפעולה</div><div class="d">קשר אינטנסיבי · עד שהצורך נענה</div></div>
-
-    <div class="callout y"><b>הערוץ:</b> וואטסאפ, לא מייל. בכל התוכניות שנבדקו בעולם — הודעות הן הערוץ שעובד, והשיחה היא מה שמזיז.</div>
-    <div class="callout"><b>הצמתים שקובעים את היומן:</b> יוני — קליטת מחזור · ספטמבר–דצמבר — חלון המלגות · 3 חודשים לפני שחרור · פסח — סקר שנתי.</div>
-  </section>
-
-  <!-- 6 -->
-  <section id="s6">
-    <div class="sec-head"><div class="num">6</div><div><h2>עד 21.10</h2><small>שתי משימות קטנות</small></div><div class="time">6 דק'</div></div>
-
-    <div class="callout y" style="font-size:15.5px">
-      <b>1 · שיחה אחת עם בוגר/ת.</b> שלוש שאלות: מה את/ה עושה עכשיו · מה הכי קשה · מה היית רוצה שבית הספר היה עושה בשנה האחרונה.<br><br>
-      <b>2 · לברר מי השותף/ה שלך</b> — ולדבר איתו/ה 10 דקות.
+    <div class="sec-head"><div class="num">4</div><div><h2>הפגישה עם המנהל/ת</h2><small>הכול מתנקז לשם · קובעים מתי שנוח, עד 4.11</small></div><div class="time">10 דק'</div></div>
+    <p>תוכנית עבודה שלא נבנתה עם המנהל/ת נשארת בתיקייה. בפגישה מציגים את מה שבניתם היום:</p>
+    <ol>
+      <li><b>המטרה</b> — המשפט שכתבתי</li>
+      <li><b>השלד</b> — 3 הרכיבים, ואיך מתחלקות 70 השעות</li>
+      <li><b>הפעולות הראשונות</b> — מה אני מתחיל/ה כבר החודש</li>
+      <li><b>מה אני צריך/ה מההנהלה</b></li>
+      <li><b>מקום בתוכנית העבודה הבית ספרית</b> — ופגישת המשך אחרי 4.11</li>
+    </ol>
+    <div class="two">
+      <div><label class="fl">השם שלי</label><input type="text" id="g_me" maxlength="40"></div>
+      <div><label class="fl">בית הספר</label><input type="text" id="g_school" maxlength="50"></div>
     </div>
-    <div class="btnrow"><a class="btn yellow" href="sicha.html" target="_blank" rel="noopener">📞 דף "השיחה שלי"</a></div>
-    <p class="livehint">ב-21.10 בבני ברק נפתח מהמשפטים שתביאו. על הקיר יופיעו ציטוטים בלבד — בלי שמות ובלי בתי ספר.</p>
+    <label class="fl">מתי אני מתכנן/ת לקבוע את הפגישה?</label>
+    <select id="g_when"><option value="">בחרו…</option><option>עד 21.10</option><option>בין 21.10 ל-4.11</option><option>כבר קבעתי</option></select>
+    <label class="fl">מה אבקש מההנהלה</label>
+    <textarea id="g_ask" maxlength="300" placeholder="למשל: 10 דקות בישיבת צוות · שהשעתיים יופיעו במערכת השעות שלי"></textarea>
+    <div class="btnrow"><button class="btn pink" id="g_send">שמירה</button></div>
+    <div class="err" id="g_err"></div>
+    <div class="livehint"><span class="dot"></span> <span id="g_count">0</span> רכזים הכינו את הפגישה</div>
 
-    <label class="fl">באיזה פרק הייתי רוצה לשבת ב-21.10?</label>
+    <h3 class="sub">הדף שלי</h3>
+    <p>המטרה, השלד, השעות, הפעולות וההכנה לפגישה — בדף אחד. להדפסה, ל-PDF, או לשלוח לעצמכם.</p>
+    <div class="btnrow">
+      <button class="btn yellow" id="myBtn">📄 הדף שלי</button>
+      <a class="btn ghost" id="waBtn" href="#" target="_blank" rel="noopener">💬 שליחה לעצמי בוואטסאפ</a>
+    </div>
+
+    <h3 class="sub">עד 21.10</h3>
+    <ul>
+      <li><b>להתחיל פעולה אחת</b> מהשלוש — באמת</li>
+      <li><b>שיחה אחת עם בוגר/ת</b> — שלוש שאלות ב<a href="sicha.html" target="_blank" rel="noopener">דף "השיחה שלי"</a>. ב-21.10 נפתח מהמשפטים שתביאו (בלי שמות)</li>
+      <li><b>לקבוע את הפגישה עם המנהל/ת</b> — עד 4.11</li>
+    </ul>
+
+    <label class="fl">ב-21.10 בבני ברק כל שולחן מעמיק ברכיב אחד. באיזה הייתי רוצה לשבת?</label>
     <div class="two">
       <div><input type="text" id="t_me" placeholder="השם שלי + בית ספר" maxlength="60"></div>
-      <div><select id="t_ch"><option value="">בחרו פרק…</option></select></div>
+      <div><select id="t_ch"><option value="">בחרו רכיב…</option></select></div>
     </div>
     <div class="btnrow"><button class="btn pink" id="t_send">שמירת הבחירה</button></div>
     <div class="err" id="t_err"></div>
-    <div class="wall" id="t_wall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="t_count">0</span> בחרו פרק</div>
-  </section>
-
-  <!-- 7 -->
-  <section id="s7">
-    <div class="sec-head"><div class="num">7</div><div><h2>סגירה</h2><small></small></div><div class="time">5 דק'</div></div>
-    <ul>
-      <li>הצ׳ק-ליסט של שכבת י"ב — המלא, כולל מה שהוספתם</li>
-      <li>שמונת הפרקים בדף אחד</li>
-      <li>קישור למאגר המענים — <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></li>
-      <li>דף "השיחה שלי"</li>
-    </ul>
-    <div class="callout"><b>21.10 · בני ברק ·</b> שולחנות הרעיונות. תבואו עם מה ששמעתם ועם שם של שותף/ה.</div>
+    <div class="livehint"><span class="dot"></span> <span id="t_count">0</span> בחרו שולחן</div>
 
     <div class="doorbox">
-      <h3>🚪 הדלת</h3>
-      <p>25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה, ויש להם ליווי ומערכת. מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים ואחזור אליו. זה הכול.</p>
-      <label class="fl">שם + בית ספר + טלפון</label>
-      <input type="text" id="d_txt" placeholder="רק אם בא לכם 🙂" maxlength="90">
+      <h3>הדלת</h3>
+      <p>25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה, ויש להם ליווי ומערכת. מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים ונחזור אליו. זה הכול.</p>
+      <input type="text" id="d_txt" placeholder="שם + בית ספר + טלפון — רק אם בא לכם" maxlength="90">
       <div class="btnrow"><button class="btn yellow" id="d_send">שלחו לי פרטים</button></div>
       <div class="err" id="d_err"></div>
     </div>
   </section>
 
+  <!-- נספח -->
+  <section id="s5" class="appx">
+    <div class="sec-head"><div class="num" style="background:var(--yellow);color:#111">+</div><div><h2>נספח · ארגז כלים</h2><small>לאחרי המפגש — כשמתחילים לעבוד</small></div></div>
+
+    <details>
+      <summary>גיוס הצוות — את מי פונים ומה מבקשים</summary>
+      <div class="body">
+        <div class="qcard"><div class="t">מחנכי י"ב</div><div class="d">שבועיים לפני הטקס: לאסוף בכיתה טלפון אישי ותאריך גיוס · להיות בקבוצת המחזור</div></div>
+        <div class="qcard"><div class="t">מחנכים של מחזורים קודמים</div><div class="d">לשלוח את רשימת הכיתה · להתקשר ל-5 בוגרים שהיו קרובים אליהם</div></div>
+        <div class="qcard"><div class="t">יועצ/ת</div><div class="d">לסמן מי בסיכון להיעלם · 20 דקות בישיבת צוות י"ב</div></div>
+        <div class="qcard"><div class="t">מזכירות</div><div class="d">רשימות המחזורים (שם, טלפון, שנת סיום) · תאריכי לידה לברכות</div></div>
+        <div class="tpl" data-copy><span class="tt">נוסח פנייה לחבר/ת צוות</span>היי [שם], אני מרכז/ת השנה את ליווי הבוגרים של בית הספר — משרד העבודה הקצה לזה שעתיים בשבוע.
+יש לי בקשה אחת קטנה ממך: [הבקשה — למשל לשלוח לי את רשימת הכיתה שלך ממחזור תשפ״ה].
+זה ייקח לך בערך [10 דקות], ויעזור לי לשמור על קשר עם הבוגרים שלנו. תודה! 💛</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>הרשימה — מאיפה מביאים ומה חובה</summary>
+      <div class="body">
+        <ul>
+          <li><b>מזכירות</b> — רשימות המחזורים מהמערכת הבית ספרית</li>
+          <li><b>מחנכים</b> — רשימות כיתה וקבוצות הוואטסאפ של הכיתה</li>
+          <li><b>קבוצות מחזור קיימות</b> — שואלים את הבוגרים מי חסר</li>
+          <li><b>כל שיחה = עדכון</b> · סבב מלא ביוני ובספטמבר · מספר שלא עונה — לא מוחקים</li>
+        </ul>
+        <div class="cols" id="cols"></div>
+        <div class="btnrow"><button class="btn ghost" id="csvBtn">⬇ הורדת תבנית רשימה (אקסל)</button></div>
+        <p class="hint">הרשימה נשמרת בבית הספר בלבד, ולא נשלחת בוואטסאפ.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>ברכות וחגים — לוח ונוסחים</summary>
+      <div class="body">
+        <ul>
+          <li><b>כל חודש</b> — ימי הולדת, ברכה אישית בפרטי</li>
+          <li><b>חגים</b> — ראש השנה · חנוכה וחג המולד · פורים ועיד אל-פיטר · פסח ונבי שועייב · עיד אל-אדחא — בקבוצת המחזור</li>
+          <li><b>אירועים</b> — טקס הסיום · יום הגיוס · לפני השחרור</li>
+        </ul>
+        <p class="hint">לוחצים על נוסח — הוא מועתק. מחליפים את מה שבסוגריים.</p>
+        <div id="tpls"></div>
+      </div>
+    </details>
+
+    <details>
+      <summary>צ׳ק-ליסט שכבת י"ב</summary>
+      <div class="body">
+        <p class="hint" style="margin-top:0">מה כבר קורה אצלכם? (נשמר במכשיר שלכם)</p>
+        <div id="ckList"></div>
+      </div>
+    </details>
+  </section>
+
 </main>
+
+<div class="in"><div id="mypage"></div></div>
 
 <footer class="in">
   תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a><br>
@@ -312,25 +413,34 @@ var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRU
 var GS_SECRET='hopa-nihul-2026';
 var KEY_PREFIX='m2-';
 var POLL_MS=8000;
+var STORE={};
 
 var CHAPTERS=[
-  {n:1,t:'השותפים',      d:'מי בבית הספר איתי'},
-  {n:2,t:'שכבת י״ב',     d:'לפני שהם הולכים'},
-  {n:3,t:'המאגר',        d:'רשימה שלא מתפוררת'},
-  {n:4,t:'הקשר השוטף',   d:'מתי, לכמה, איך'},
-  {n:5,t:'מענים וזכויות',d:'מה עושים עם מה ששמענו'},
-  {n:6,t:'קהילה ואירועים',d:'יום בוגרים, מחזור, חוזרים'},
-  {n:7,t:'תיעוד ומדידה', d:'איך יודעים שזה עובד'},
-  {n:8,t:'מול ההנהלה',   d:'גיבוי, תקציב ומקום בתוכנית'}
+  {n:1,t:'השותפים',       d:'מי בבית הספר איתי',          q:'מי כבר נוגע בבוגרים, ואת מי צריך לגייס?',c:'#E8348A'},
+  {n:2,t:'שכבת י״ב',      d:'לפני שהם הולכים',            q:'מה חייב לקרות לפני שהם יוצאים מהשער?',c:'#f0a500'},
+  {n:3,t:'המאגר',         d:'רשימה שלא מתפוררת',          q:'איך תהיה לי רשימה עדכנית של כל בוגר?',c:'#22b573'},
+  {n:4,t:'הקשר השוטף',    d:'מתי, לכמה, באיזה ערוץ',      q:'באיזה קצב ובאיזה ערוץ שומרים על קשר?',c:'#4a9fe0'},
+  {n:5,t:'מענים וזכויות', d:'מה עושים עם מה ששמענו',      q:'מה עושים כשבוגר מספר שהוא תקוע?',c:'#9b6fd4'},
+  {n:6,t:'קהילה ואירועים',d:'יום בוגרים, מחזור, חוזרים',  q:'מה מחזיר בוגרים לבית הספר?',c:'#e07a5f'},
+  {n:7,t:'תיעוד ומדידה',  d:'איך יודעים שזה עובד',        q:'איך נדע בסוף השנה שזה עבד?',c:'#2a9d8f'},
+  {n:8,t:'מול ההנהלה',    d:'גיבוי, תקציב ומקום בתוכנית', q:'מה אני צריך/ה מההנהלה כדי שזה יקרה?',c:'#6a4c93'}
 ];
-/* ארבע קבוצות-על לתעדוף 70 השעות */
+var YEAR=[
+  {m:'יוני',t:'טקס הסיום — קליטת המחזור לרשימה ולקבוצה, לפני שמתפזרים'},
+  {m:'ספטמבר',t:'סבב עדכון — מי התגייס, מי התחיל ללמוד, מי בלי מסגרת'},
+  {m:'ספטמבר–דצמבר',t:'חלון המלגות והזכויות'},
+  {m:'לאורך השנה',t:'חגים וימי הולדת — הקשר שלא צריך סיבה'},
+  {m:'3 חודשים לפני שחרור',t:'שיחת שחרור — זכויות, מענקים, מה הלאה'},
+  {m:'פסח',t:'סקר בוגרים שנתי קצר'}
+];
+var MEASURES=['בוגרי המחזור האחרון שיש לנו טלפון אישי שלהם','בוגרים שדיברנו איתם לפחות פעם אחת השנה',
+  'בוגרים שחוברו למענה — ובדקנו שהחיבור עבד','בוגרים במצב "לומד / עובד / משרת"'];
 var BUCKETS=[
   {k:'lifnei',t:'לפני שהם הולכים',d:'י״ב + מאגר',def:20},
   {k:'kesher',t:'קשר שוטף',      d:'שיחות ומעקב',def:25},
   {k:'manim', t:'מענים וזכויות', d:'חיבורים וסנגור',def:15},
   {k:'maarech',t:'מערכת',        d:'שותפים, תיעוד, הנהלה, אירועים',def:10}
 ];
-var PARTNERS=['יועצ/ת','מחנכ/ת י״ב','מזכירות','רכז/ת מלגות','רכז/ת התמדה','עו״ס/מד״צ','מנהל/ת','ועד הורים','בוגר/ת מתנדב/ת','רכז/ת שכבה'];
 var CHECKLIST=[
   {t:'לאסוף טלפון אישי (לא של ההורים)',d:'שבועיים לפני הטקס, בשיעור'},
   {t:'לאסוף תאריך גיוס / תחילת שירות',d:'הפרט היחיד שכמעט אי אפשר להשיג אחר כך'},
@@ -341,12 +451,27 @@ var CHECKLIST=[
   {t:'לסמן מי בסיכון להיעלם',d:'בלי מסגרת, בלי משפחה תומכת, בלי תוכנית'},
   {t:'לחבר למענה אחד לפני שהם יוצאים',d:'מכינה, מלגה, מרכז צעירים'}
 ];
+/* אותם שמות עמודה שמערכת הבוגרים של הופה מזהה בייבוא */
+var LIST_COLS=[
+  {t:'שם מלא',req:1},{t:'טלפון',req:1,d:'אישי'},{t:'שנת סיום',req:1},
+  {t:'תאריך לידה',d:'לברכות'},{t:'תעודת זהות'},{t:'מגמה'},{t:'עיר'},
+  {t:'תאריך גיוס'},{t:'מה עושה היום'},{t:'תאריך שיחה אחרונה'},{t:'הערות'}
+];
+var TEMPLATES=[
+  {t:'יום הולדת',x:'מזל טוב [שם]! 🎉 כל בית הספר מאחל לך שנה מעולה, מלאה בהצלחות.\nאם יש משהו שאפשר לעזור בו — אני כאן. [השם שלך]'},
+  {t:'ברכת חג בקבוצת המחזור',x:'חג [שם החג] שמח לכל בוגרי מחזור [שנה]! 💛\nמקווים שאתם בטוב. מי שרוצה לעדכן מה נשמע, או צריך משהו — אני כאן בפרטי. [השם שלך]'},
+  {t:'עיד',x:'עיד מבארכ [שם]! 🌙 מאחלים לך ולמשפחה חג שמח.\nאם יש משהו שאפשר לעזור בו — אני כאן. [השם שלך]'},
+  {t:'יום הגיוס',x:'[שם], היום זה קורה! 💪 מאחלים לך שירות משמעותי ובטוח.\nבית הספר ממשיך להיות כאן בשבילך — אפשר לכתוב לי בכל זמן. [השם שלך]'},
+  {t:'לפני השחרור',x:'היי [שם], מה שלומך? השחרור מתקרב 🙂\nיש מלגות, מענקים וזכויות שכדאי להכיר כבר עכשיו. רוצה שנדבר 10 דקות השבוע?'},
+  {t:'עדכון פרטים לרשימה',x:'היי [שם], זה [השם שלך] מ[בית הספר] 🙂 אני מעדכן/ת את רשימת הבוגרים שלנו.\nמה את/ה עושה היום? ואם יש לך מספר של חברים מהמחזור שאין לנו — אשמח.'}
+];
 
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},2100)}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsJson(k,def){try{return JSON.parse(lsGet(k))||def}catch(e){return def}}
 
 var devId=lsGet('hopa-m2-dev');
 if(!devId){devId=Date.now().toString(36)+Math.random().toString(36).slice(2,7);lsSet('hopa-m2-dev',devId)}
@@ -384,38 +509,62 @@ async function put(kind,id,payload){
     catch(e2){ return false }
   }
 }
-function wire(btnId,errId,collect,kind,okMsg,after){
+function wire(btnId,errId,collect,kind,okMsg,after,idFn){
   var btn=$(btnId);if(!btn)return;
   btn.onclick=async function(){
     var e=$(errId); if(e)e.textContent='';
     var data=collect(); if(!data)return;
     var old=btn.textContent; btn.disabled=true; btn.textContent='שולח…';
-    var ok=await put(kind,devId,Object.assign({ts:new Date().toISOString(),dev:devId},data));
+    var ok=await put(kind,idFn?idFn():devId,Object.assign({ts:new Date().toISOString(),dev:devId},data));
     btn.disabled=false; btn.textContent=old;
     if(ok){ toast(okMsg); if(after)after(); pollNow() }
     else if(e){ e.textContent='לא הצלחנו לשלוח — בדקו אינטרנט ונסו שוב.' }
   };
 }
+/* שמירה מקומית של שדה טקסט */
+function keep(id){
+  var el=$(id),v=lsGet('hopa-m2-'+id); if(v)el.value=v;
+  ['input','change'].forEach(function(ev){el.addEventListener(ev,function(){lsSet('hopa-m2-'+id,el.value)})});
+}
 
 /* ===================== ניווט ===================== */
-var SECS=[['s0','למה כאן'],['s1','בוגר אמיתי'],['s2','8 הפרקים'],['s3','א׳ מי איתי'],
-          ['s4','ב׳ י״ב'],['s5','ג׳ הקשר'],['s6','עד 21.10'],['s7','סגירה']];
+var SECS=[['s1','1 · למה'],['s2','2 · התוכנית'],['s3','3 · פעולות'],['s4','4 · המנהל/ת'],['s5','נספח']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var tocLinks=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
-  var y=scrollY+120,cur=0;
+  var y=scrollY+120,cur=-1;
   SECS.forEach(function(s,i){var el=$(s[0]);if(el&&el.offsetTop<=y)cur=i});
   tocLinks.forEach(function(a,i){a.classList.toggle('on',i===cur)});
 },{passive:true});
 
-/* ===================== 1 · הערה ===================== */
-$('note1').value=lsGet('hopa-m2-note')||'';
-$('note1').addEventListener('input',function(){lsSet('hopa-m2-note',this.value)});
+/* ===================== 1 · מטרה ===================== */
+keep('m_txt');
+wire('m_send','m_err',function(){
+  var t=$('m_txt').value.trim();
+  if(t.length<8){$('m_err').textContent='השלימו את המשפט.';return null}
+  return {text:t};
+},'matara','המטרה שותפה ✓',function(){$('m_send').textContent='שותף ✓'});
 
-/* ===================== 2 · פרקים + תעדוף ===================== */
-$('chaps').innerHTML=CHAPTERS.map(function(c){
-  return '<div class="chap"><div class="n">פרק '+c.n+'</div><div class="t">'+esc(c.t)+'</div><div class="d">'+esc(c.d)+'</div></div>';
-}).join('');
+/* ===================== 2 · רכיבים, שנה, מדדים, שעות ===================== */
+var top3=lsJson('hopa-m2-top',[]);
+function paintChaps(){
+  $('chaps').innerHTML=CHAPTERS.map(function(c){
+    return '<button type="button" class="chap'+(top3.indexOf(c.n)>-1?' on':'')+'" style="--c:'+c.c+'" data-n="'+c.n+'">'+
+      '<div class="n">רכיב '+c.n+'</div><div class="t">'+esc(c.t)+'</div><div class="d">'+esc(c.q)+'</div></button>';
+  }).join('');
+  $('topHint').textContent='נבחרו '+top3.length+' מתוך 3';
+  [].slice.call($('chaps').children).forEach(function(b){
+    b.onclick=function(){
+      var n=Number(b.dataset.n),i=top3.indexOf(n);
+      if(i>-1)top3.splice(i,1);
+      else{ if(top3.length>=3){toast('אפשר 3 — הורידו אחד קודם');return} top3.push(n) }
+      lsSet('hopa-m2-top',JSON.stringify(top3));paintChaps();paintActs();
+    };
+  });
+}
+paintChaps();
+$('year').innerHTML=YEAR.map(function(y){return '<div><div class="m">'+esc(y.m)+'</div><div class="t">'+esc(y.t)+'</div></div>'}).join('');
+$('meas').innerHTML=MEASURES.map(function(m){return '<div>'+esc(m)+'</div>'}).join('');
 $('t_ch').innerHTML+=CHAPTERS.map(function(c){return '<option value="'+c.n+' · '+esc(c.t)+'">'+c.n+' · '+esc(c.t)+'</option>'}).join('');
 
 var hrs={};
@@ -437,25 +586,43 @@ function paintHours(){
 paintHours();
 wire('h_send','h_err',function(){
   var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k]});
+  if(top3.length<1){$('h_err').textContent='סמנו קודם את הרכיבים החשובים לכם (סעיף ב).';return null}
   if(sum>70){$('h_err').textContent='חרגתם מ-70 שעות. זה בדיוק התרגיל — צריך לוותר על משהו.';return null}
-  return {hours:hrs,total:sum};
-},'shaot','התעדוף נשלח ✓',function(){$('h_send').textContent='נשלח ✓'});
+  return {hours:hrs,total:sum,top:top3.slice()};
+},'shaot','השלד נשלח ✓',function(){$('h_send').textContent='נשלח ✓'});
 
-/* ===================== 3 · חדרים ושותפים ===================== */
+/* ===================== 3 · פעולות ===================== */
+var acts=lsJson('hopa-m2-acts',{});
+function paintActs(){
+  if(!top3.length){
+    $('acts').innerHTML='<div class="empty">קודם בוחרים 3 רכיבים בסעיף 2 — ואז הם מופיעים כאן.<br><a href="#s2">← לבחירת הרכיבים</a></div>';
+    return;
+  }
+  $('acts').innerHTML=top3.map(function(n){
+    var c=CHAPTERS[n-1],a=acts[n]||{};
+    return '<div class="act" style="--c:'+c.c+'"><div class="h">'+esc(c.t)+'</div><div class="q">'+esc(c.q)+'</div>'+
+      '<input type="text" data-n="'+n+'" data-f="what" maxlength="140" placeholder="מה אני עושה כבר החודש?" value="'+esc(a.what||'')+'">'+
+      '<div class="three"><div><input type="text" data-n="'+n+'" data-f="who" maxlength="60" placeholder="מי איתי" value="'+esc(a.who||'')+'"></div>'+
+      '<div><input type="text" data-n="'+n+'" data-f="when" maxlength="40" placeholder="עד מתי" value="'+esc(a.when||'')+'"></div></div></div>';
+  }).join('')+'<div class="btnrow"><button class="btn pink" id="a_send">שמירת הפעולות שלי</button></div><div class="err" id="a_err"></div>';
+  [].slice.call($('acts').querySelectorAll('input')).forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var n=inp.dataset.n;acts[n]=acts[n]||{};acts[n][inp.dataset.f]=inp.value;lsSet('hopa-m2-acts',JSON.stringify(acts));
+    });
+  });
+  wire('a_send','a_err',function(){
+    var l=myActs(); if(!l.length){$('a_err').textContent='כתבו לפחות פעולה אחת.';return null}
+    return {acts:l};
+  },'peulot','הפעולות נשמרו ✓');
+}
+function myActs(){
+  return top3.map(function(n){var a=acts[n]||{};return {ch:CHAPTERS[n-1].t,what:(a.what||'').trim(),who:(a.who||'').trim(),when:(a.when||'').trim()}})
+    .filter(function(a){return a.what});
+}
+paintActs();
+
 var myRoom=lsGet('hopa-m2-room')||'';
 $('roomsel').innerHTML=[1,2,3,4,5,6,7,8].map(function(n){return '<button data-r="'+n+'">'+n+'</button>'}).join('');
-var myPartners=[];
-try{myPartners=JSON.parse(lsGet('hopa-m2-partners'))||[]}catch(e){myPartners=[]}
-$('partners').innerHTML=PARTNERS.map(function(p){
-  return '<button type="button" data-v="'+esc(p)+'"'+(myPartners.indexOf(p)>-1?' class="on"':'')+'>'+esc(p)+'</button>';
-}).join('');
-[].slice.call($('partners').children).forEach(function(b){
-  b.onclick=function(){
-    var v=b.dataset.v,i=myPartners.indexOf(v);
-    if(i>-1)myPartners.splice(i,1);else myPartners.push(v);
-    b.classList.toggle('on');lsSet('hopa-m2-partners',JSON.stringify(myPartners));
-  };
-});
 function paintRoom(){
   [].slice.call($('roomsel').children).forEach(function(b){b.classList.toggle('on',b.dataset.r===myRoom)});
   $('roomwrap').style.display=myRoom?'block':'none';
@@ -465,60 +632,115 @@ function paintRoom(){
 [].slice.call($('roomsel').children).forEach(function(b){
   b.onclick=function(){myRoom=b.dataset.r;lsSet('hopa-m2-room',myRoom);paintRoom()};
 });
+keep('p_steal');
 var pSeq=0;
-$('p_send').onclick=async function(){
-  var t=$('p_who').value.trim();
-  if(!t){$('p_err').textContent='את מי אתם מגייסים, ומה תבקשו?';return}
-  if(!myRoom){$('p_err').textContent='בחרו קודם מספר חדר.';return}
-  $('p_err').textContent='';
-  var btn=this,old=btn.textContent;btn.disabled=true;btn.textContent='שולח…';
-  var ok=await put('shutaf',devId+'-'+(++pSeq),{room:myRoom,text:t,tags:myPartners.slice(),ts:new Date().toISOString()});
-  btn.disabled=false;btn.textContent=old;
-  if(ok){$('p_who').value='';toast('נוסף ✓');pollNow()}
-  else $('p_err').textContent='לא נשלח — נסו שוב.';
-};
-paintRoom();
+wire('p_send','p_err',function(){
+  var t=$('p_txt').value.trim();
+  if(!t){$('p_err').textContent='איזו פעולה אתם משתפים?';return null}
+  return {room:myRoom,text:t};
+},'shutaf','שותף בחדר ✓',function(){$('p_txt').value=''},function(){return devId+'-'+(++pSeq)});
 
-/* ===================== 4 · צ'ק-ליסט י"ב ===================== */
-var ckState={};
-try{ckState=JSON.parse(lsGet('hopa-m2-ck'))||{}}catch(e){ckState={}}
-$('ckList').innerHTML=CHECKLIST.map(function(c,i){
-  return '<label class="ck'+(ckState[i]?' on':'')+'" data-i="'+i+'"><input type="checkbox"'+(ckState[i]?' checked':'')+'>'+
-    '<span><span class="t">'+esc(c.t)+'</span><span class="d">'+esc(c.d)+'</span></span></label>';
-}).join('');
-[].slice.call($('ckList').children).forEach(function(l){
-  l.querySelector('input').onchange=function(){
-    ckState[l.dataset.i]=this.checked;lsSet('hopa-m2-ck',JSON.stringify(ckState));l.classList.toggle('on',this.checked);
-  };
-});
-var cSeq=0;
-$('c_send').onclick=async function(){
-  var t=$('c_add').value.trim();
-  if(!t){$('c_err').textContent='מה להוסיף?';return}
-  $('c_err').textContent='';
-  var btn=this,old=btn.textContent;btn.disabled=true;btn.textContent='שולח…';
-  var ok=await put('cklist',devId+'-'+(++cSeq),{text:t,ts:new Date().toISOString()});
-  btn.disabled=false;btn.textContent=old;
-  if(ok){$('c_add').value='';toast('נוסף לצ׳ק-ליסט ✓');pollNow()}
-  else $('c_err').textContent='לא נשלח — נסו שוב.';
-};
-
-/* ===================== 6 · בחירת פרק ===================== */
+/* ===================== 4 · המנהל/ת ===================== */
+['g_me','g_school','g_when','g_ask','t_me'].forEach(keep);
+wire('g_send','g_err',function(){
+  var me=$('g_me').value.trim(),sc=$('g_school').value.trim();
+  if(!me||!sc){$('g_err').textContent='שם ובית ספר.';return null}
+  if(!$('g_when').value){$('g_err').textContent='מתי תקבעו את הפגישה?';return null}
+  return {me:me,school:sc,when:$('g_when').value,ask:$('g_ask').value.trim()};
+},'pgisha','נשמר ✓ — הכול נכנס לדף שלך',function(){$('g_send').textContent='נשמר ✓'});
+if(!$('t_me').value){
+  var nm=[lsGet('hopa-m2-g_me'),lsGet('hopa-m2-g_school')].filter(Boolean).join(' · ');
+  if(nm)$('t_me').value=nm;
+}
 wire('t_send','t_err',function(){
   var me=$('t_me').value.trim(),ch=$('t_ch').value;
-  if(!me||!ch){$('t_err').textContent='שם + פרק.';return null}
+  if(!me||!ch){$('t_err').textContent='שם + רכיב.';return null}
   return {me:me,chapter:ch};
 },'shulchan','נשמר 💛 נשבץ לפי זה',function(){$('t_send').textContent='נשמר ✓'});
-
-/* ===================== 7 · דלת ===================== */
 wire('d_send','d_err',function(){
   var t=$('d_txt').value.trim();
   if(!t){$('d_err').textContent='שם, בית ספר וטלפון.';return null}
   return {txt:t};
 },'delet','תודה — נחזור אליך 💛',function(){$('d_txt').disabled=true;$('d_send').textContent='נשלח ✓'});
 
+/* ===================== הדף שלי ===================== */
+function renderMine(){
+  var me=$('g_me').value.trim(),sc=$('g_school').value.trim(),sum=0;
+  var hrows=BUCKETS.map(function(b){sum+=hrs[b.k];return '<tr><td>'+esc(b.t)+' <span style="color:var(--muted)">· '+esc(b.d)+'</span></td><td style="text-align:center;font-weight:800;width:70px">'+hrs[b.k]+' ש׳</td></tr>'}).join('');
+  var al=myActs();
+  $('mypage').innerHTML=
+    '<div style="display:flex;align-items:center;gap:12px"><img src="hopa-logo.png" alt="הופה" style="height:40px">'+
+    '<div><h2>ליווי בוגרים · תשפ״ז · השלד שלי</h2><div style="color:var(--muted);font-size:13px">'+
+    esc(me)+(sc?' · '+esc(sc):'')+' · מפגש רכזים 14.10.2026</div></div></div>'+
+    '<h3>1 · המטרה</h3><p>'+($('m_txt').value.trim()?esc($('m_txt').value.trim()):'<span class="miss">עוד לא כתבתי (סעיף 1)</span>')+'</p>'+
+    '<h3>2 · השלד</h3><p><b>3 הרכיבים בראש סדר העדיפויות:</b> '+(top3.length?top3.map(function(n){return esc(CHAPTERS[n-1].t)}).join(' · '):'<span class="miss">עוד לא בחרתי</span>')+'</p>'+
+    '<table>'+hrows+'<tr><td><b>סה״כ</b></td><td style="text-align:center;font-weight:900">'+sum+' / 70</td></tr></table>'+
+    '<h3>3 · הפעולות הראשונות</h3>'+(al.length?'<table>'+al.map(function(a){
+      return '<tr><td style="width:28%;font-weight:800">'+esc(a.ch)+'</td><td>'+esc(a.what)+(a.who?'<br><span style="color:var(--muted)">מי: '+esc(a.who)+'</span>':'')+'</td><td style="width:22%;color:var(--muted)">'+esc(a.when)+'</td></tr>'}).join('')+'</table>'
+      :'<p class="miss">עוד לא כתבתי (סעיף 3)</p>')+
+    ($('p_steal').value.trim()?'<p style="margin-top:8px"><b>רעיון מהחדר:</b> '+esc($('p_steal').value.trim())+'</p>':'')+
+    '<h3>4 · הפגישה עם המנהל/ת</h3>'+
+    '<p><b>מתי:</b> '+($('g_when').value?esc($('g_when').value):'<span class="miss">לקבוע</span>')+' · עד 4.11</p>'+
+    '<p><b>מציגים:</b> המטרה · השלד ו-70 השעות · הפעולות הראשונות · מה אני צריך/ה מההנהלה · מקום בתוכנית העבודה הבית ספרית</p>'+
+    ($('g_ask').value.trim()?'<p><b>מה אבקש:</b> '+esc($('g_ask').value.trim())+'</p>':'')+
+    '<h3>עד 21.10</h3><ul><li>להתחיל פעולה אחת</li><li>שיחה אחת עם בוגר/ת</li><li>לקבוע את הפגישה עם המנהל/ת (עד 4.11)</li></ul>'+
+    '<div class="btnrow noprint"><button class="btn pink" type="button" onclick="window.print()">🖨️ הדפסה / שמירה כ-PDF</button></div>'+
+    '<p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">תוכנית הבוגרים · הופה · hopa.org.il</p>';
+}
+function mineText(){
+  var L=['ליווי בוגרים · השלד שלי · 14.10'],sum=0;
+  var who=[$('g_me').value.trim(),$('g_school').value.trim()].filter(Boolean).join(' · ');if(who)L.push(who);
+  if($('m_txt').value.trim())L.push('','*המטרה*',$('m_txt').value.trim());
+  if(top3.length)L.push('','*3 הרכיבים*',top3.map(function(n){return CHAPTERS[n-1].t}).join(' · '));
+  L.push('','*70 השעות*');BUCKETS.forEach(function(b){L.push('• '+b.t+': '+hrs[b.k])});
+  var al=myActs();if(al.length){L.push('','*הפעולות הראשונות*');al.forEach(function(a){L.push('• '+a.what+(a.who?' (עם '+a.who+')':'')+(a.when?' — '+a.when:''))})}
+  L.push('','*הפגישה עם המנהל/ת* — '+($('g_when').value||'לקבוע')+' (עד 4.11)');
+  L.push('','הדף המלא: '+location.href.split('#')[0]);
+  return L.join('\n');
+}
+$('myBtn').onclick=function(){renderMine();$('mypage').classList.add('on');$('mypage').scrollIntoView({behavior:'smooth',block:'start'})};
+$('waBtn').addEventListener('click',function(){this.href='https://wa.me/?text='+encodeURIComponent(mineText())});
+
+/* ===================== נספח ===================== */
+function copyText(txt){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){toast('הועתק ✓')},function(){fallbackCopy(txt)});return;
+  }
+  fallbackCopy(txt);
+}
+function fallbackCopy(txt){
+  var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');toast('הועתק ✓')}catch(e){toast('לא הצלחתי להעתיק — סמנו ידנית')}
+  ta.remove();
+}
+$('tpls').innerHTML=TEMPLATES.map(function(x){return '<div class="tpl" data-copy><span class="tt">'+esc(x.t)+'</span>'+esc(x.x)+'</div>'}).join('');
+[].slice.call(document.querySelectorAll('.tpl[data-copy]')).forEach(function(box){
+  var tt=box.querySelector('.tt');
+  var txt=(tt?box.textContent.slice(tt.textContent.length):box.textContent).trim();
+  var b=document.createElement('button');b.className='cp';b.type='button';b.textContent='העתקה';box.appendChild(b);
+  box.onclick=function(){copyText(txt)};
+});
+$('cols').innerHTML=LIST_COLS.map(function(c){
+  return '<span'+(c.req?' class="req"':'')+'>'+esc(c.t)+(c.d?' <i>· '+esc(c.d)+'</i>':'')+'</span>';
+}).join('')+'<span style="border:0;color:var(--muted);font-weight:500;font-size:12.5px">ורוד = חובה</span>';
+$('csvBtn').onclick=function(){
+  var csv='﻿'+LIST_COLS.map(function(c){return c.t}).join(',')+'\r\n';
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='רשימת-בוגרים.csv';document.body.appendChild(a);a.click();a.remove();
+  toast('התבנית ירדה ✓');
+};
+var ckState=lsJson('hopa-m2-ck',{});
+$('ckList').innerHTML=CHECKLIST.map(function(c,i){
+  return '<label class="ck'+(ckState[i]?' on':'')+'" data-i="'+i+'"><input type="checkbox"'+(ckState[i]?' checked':'')+'>'+
+    '<span><span class="t">'+esc(c.t)+'</span><span class="d">'+esc(c.d)+'</span></span></label>';
+}).join('');
+[].slice.call($('ckList').children).forEach(function(l){
+  l.querySelector('input').onchange=function(){ckState[l.dataset.i]=this.checked;lsSet('hopa-m2-ck',JSON.stringify(ckState));l.classList.toggle('on',this.checked)};
+});
+
 /* ===================== קריאה חיה ===================== */
-var STORE={};
 function items(kind){
   var pre='intake_'+KEY_PREFIX+kind+'-';
   return Object.keys(STORE).filter(function(k){return k.indexOf(pre)===0})
@@ -533,17 +755,15 @@ function renderRoomWall(){
   $('p_count').textContent=l.length;
 }
 function renderAll(){
+  var m=items('matara');
+  $('m_wall').innerHTML=m.slice(-24).map(function(x){return chip(esc(x.text))}).join('');
+  $('m_count').textContent=m.length;
   $('h_count').textContent=items('shaot').length;
   renderRoomWall();
-  var c=items('cklist');
-  $('c_wall').innerHTML=c.slice(-40).map(function(x){return chip(esc(x.text))}).join('');
-  $('c_count').textContent=c.length;
-  var t=items('shulchan');
-  $('t_wall').innerHTML=t.slice(-60).map(function(x){
-    return chip(esc(String(x.me).split(' ')[0])+' <i>· '+esc(String(x.chapter).split(' · ')[1]||x.chapter)+'</i>');
-  }).join('');
-  $('t_count').textContent=t.length;
+  $('g_count').textContent=items('pgisha').length;
+  $('t_count').textContent=items('shulchan').length;
 }
+paintRoom();
 var polling=false;
 async function pollNow(){
   if(polling)return; polling=true;
