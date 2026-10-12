@@ -214,15 +214,28 @@
 
   <!-- 1 · למה -->
   <section id="s1">
-    <div class="sec-head"><div class="num">1</div><div><h2>למה</h2><small>הרציונל · ומה המטרה שלי</small></div><div class="time">5 דק'</div></div>
+    <div class="sec-head"><div class="num">1</div><div><h2>למה</h2><small>הרציונל · הבוגר שלא שכחנו · ומה המטרה שלי</small></div><div class="time">15 דק'</div></div>
     <div class="quote">ביום שאחרי הטקס, בוגר מאבד בבת אחת את המסגרת, את המבוגרים ואת השגרה שליוו אותו שתים-עשרה שנה. ליווי בוגרים אומר שהקשר לא נגמר בשער — ושבית הספר נשאר כתובת עד שהבוגר מוצא את דרכו.</div>
-    <div class="stat70">
-      <div class="big">70</div>
-      <div class="lb">שעות בשנה לליווי בוגרים<small>שתי שעות שבועיות שמשרד העבודה הקצה לכל רכז/ת חברתי/ת</small></div>
-    </div>
-    <p>70 שעות זה מספיק בשביל תוכנית אחת שעובדת, ולא מספיק בשביל לעשות הכול. לכן מתחילים מהמטרה.</p>
+    <p>לא רק לשמור על קשר: לעזור לו להשתלב בעבודה, בלימודים, בשירות ובחיים. ולתלמידים שעוד בכיתה זה מראה שגם אחרי השער יש להם כתובת.</p>
+
+    <h3 class="sub"><span class="k">10′</span> הבוגר שלא שכחנו</h3>
+    <p>חשבו על בוגר/ת אחד/ת מבית הספר שלכם, וענו לעצמכם. <b>בלי שמות.</b></p>
+    <p class="hint" style="margin-top:0">נשמר רק במכשיר שלכם. לא נשלח לאף אחד.</p>
+    <label class="fl">איפה הוא היום, ומה אנחנו באמת יודעים עליו?</label>
+    <textarea id="b_q1" maxlength="400"></textarea>
+    <label class="fl">מה היה יכול לעזור לו במעבר מבית הספר לחיים הבוגרים?</label>
+    <textarea id="b_q2" maxlength="400"></textarea>
+    <label class="fl">מה היינו צריכים לעשות אחרת כדי שיצליח?</label>
+    <textarea id="b_q3" maxlength="400"></textarea>
+
+    <h3 class="sub">לא כל בוגר צריך אותו ליווי</h3>
+    <div class="qcard"><div class="t">משתלבים היטב</div><div class="d">צריכים קשר ושייכות</div></div>
+    <div class="qcard"><div class="t">בצומת החלטה</div><div class="d">צריכים הכוונה</div></div>
+    <div class="qcard"><div class="t">בסיכון לניתוק</div><div class="d">צריכים ליווי יזום ואינטנסיבי יותר</div></div>
+    <p style="margin-top:12px">אי אפשר לעשות הכול — צריך לבחור איפה ההשקעה. לכן מתחילים מהמטרה.</p>
 
     <label class="fl">המטרה שלי — השלימו את המשפט</label>
+    <p class="hint" style="margin-top:0">רמז: איזה שינוי אני רוצה לראות אצל הבוגרים בזכות הליווי שלי?</p>
     <textarea id="m_txt" maxlength="220" placeholder="השנה, בבית הספר שלי, ליווי בוגרים אומר ש…"></textarea>
     <div class="btnrow"><button class="btn pink" id="m_send">שיתוף המטרה</button></div>
     <div class="err" id="m_err"></div>
@@ -232,7 +245,7 @@
 
   <!-- 2 · מה -->
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>התוכנית השנתית</h2><small>מה המטרה שלה · מה היא כוללת · ואיך יודעים שהיא עובדת</small></div><div class="time">35 דק'</div></div>
+    <div class="sec-head"><div class="num">2</div><div><h2>התוכנית השנתית</h2><small>מה המטרה שלה · מה היא כוללת · ואיך יודעים שהיא עובדת</small></div><div class="time">30 דק'</div></div>
 
     <h3 class="sub"><span class="k">א</span> למה צריך תוכנית</h3>
     <p>בלי תוכנית, ליווי בוגרים הוא "להיות זמין" — ומי שמקבל ליווי הוא מי שהתקשר. תוכנית שנתית הופכת את זה ל<b>יוזמה מתוזמנת</b>, שמגיעה גם לבוגר ששותק.</p>
@@ -253,7 +266,8 @@
     <p>ארבעה מדדים שאפשר לספור בסוף השנה. ב-4.11 כל אחד יציב לעצמו יעד:</p>
     <div class="meas" id="meas"></div>
 
-    <h3 class="sub"><span class="k">ה</span> 70 השעות שלי</h3>
+    <h3 class="sub"><span class="k">ה</span> איפה ההשקעה שלכם</h3>
+    <p style="margin-bottom:4px">איך מתחלק המאמץ בין ארבעת התחומים — באחוזים, עד 100%.</p>
     <p class="hint" style="margin-top:0">אין תשובה נכונה. יש בחירה — מי שלא ויתר על כלום, לא בנה תוכנית.</p>
     <div class="sl" id="sliders"></div>
     <div class="btnrow"><button class="btn pink" id="h_send">שליחת השלד שלי</button></div>
@@ -263,7 +277,7 @@
 
   <!-- 3 · פעולות -->
   <section id="s3">
-    <div class="sec-head"><div class="num">3</div><div><h2>מה עושים כבר עכשיו</h2><small>חדרים · כל אחד חושב על הפעולות שלו</small></div><div class="time">30 דק'</div></div>
+    <div class="sec-head"><div class="num">3</div><div><h2>מה עושים כבר עכשיו</h2><small>חדרים · כל אחד חושב על הפעולות שלו</small></div><div class="time">25 דק'</div></div>
     <p>לכל אחד מ-3 הרכיבים שבחרתם — <b>פעולה אחת שאפשר להתחיל כבר החודש.</b> לא רשימה מוכנה: אתם מכירים את בית הספר שלכם.</p>
     <div class="callout y"><b>פעולה טובה היא קטנה ומדויקת:</b> יש לה מי, יש לה עד מתי, ואפשר לדעת אם היא קרתה. "לחזק את הקשר עם הבוגרים" — זו לא פעולה. "לבקש מהמזכירות את רשימת מחזור תשפ״ה עד סוף החודש" — זו פעולה.</div>
 
@@ -293,7 +307,7 @@
     <p>תוכנית עבודה שלא נבנתה עם המנהל/ת נשארת בתיקייה. בפגישה מציגים את מה שבניתם היום:</p>
     <ol>
       <li><b>המטרה</b> — המשפט שכתבתי</li>
-      <li><b>השלד</b> — 3 הרכיבים, ואיך מתחלקות 70 השעות</li>
+      <li><b>השלד</b> — 3 הרכיבים, ואיפה ההשקעה</li>
       <li><b>הפעולות הראשונות</b> — מה אני מתחיל/ה כבר החודש</li>
       <li><b>מה אני צריך/ה מההנהלה</b></li>
       <li><b>מקום בתוכנית העבודה הבית ספרית</b> — ופגישת המשך אחרי 4.11</li>
@@ -311,7 +325,7 @@
     <div class="livehint"><span class="dot"></span> <span id="g_count">0</span> רכזים הכינו את הפגישה</div>
 
     <h3 class="sub">הדף שלי</h3>
-    <p>המטרה, השלד, השעות, הפעולות וההכנה לפגישה — בדף אחד. להדפסה, ל-PDF, או לשלוח לעצמכם.</p>
+    <p>המטרה, השלד, ההשקעה, הפעולות וההכנה לפגישה — בדף אחד. להדפסה, ל-PDF, או לשלוח לעצמכם.</p>
     <div class="btnrow">
       <button class="btn yellow" id="myBtn">📄 הדף שלי</button>
       <a class="btn ghost" id="waBtn" href="#" target="_blank" rel="noopener">💬 שליחה לעצמי בוואטסאפ</a>
@@ -331,16 +345,7 @@
     </div>
     <div class="btnrow"><button class="btn pink" id="t_send">שמירת הבחירה</button></div>
     <div class="err" id="t_err"></div>
-    <div class="livehint"><span class="dot"></span> <span id="t_count">0</span> בחרו שולחן</div>
-
-    <div class="doorbox">
-      <h3>הדלת</h3>
-      <p>25 מבתי הספר כאן כבר בתוכנית הבוגרים של הופה, ויש להם ליווי ומערכת. מי שרוצה להבין מה זה אומר בפועל — משאיר פרטים ונחזור אליו. זה הכול.</p>
-      <input type="text" id="d_txt" placeholder="שם + בית ספר + טלפון — רק אם בא לכם" maxlength="90">
-      <div class="btnrow"><button class="btn yellow" id="d_send">שלחו לי פרטים</button></div>
-      <div class="err" id="d_err"></div>
-    </div>
-  </section>
+    <div class="livehint"><span class="dot"></span> <span id="t_count">0</span> בחרו שולחן</div>  </section>
 
   <!-- נספח -->
   <section id="s5" class="appx">
@@ -436,10 +441,10 @@ var YEAR=[
 var MEASURES=['בוגרי המחזור האחרון שיש לנו טלפון אישי שלהם','בוגרים שדיברנו איתם לפחות פעם אחת השנה',
   'בוגרים שחוברו למענה — ובדקנו שהחיבור עבד','בוגרים במצב "לומד / עובד / משרת"'];
 var BUCKETS=[
-  {k:'lifnei',t:'לפני שהם הולכים',d:'י״ב + מאגר',def:20},
-  {k:'kesher',t:'קשר שוטף',      d:'שיחות ומעקב',def:25},
-  {k:'manim', t:'מענים וזכויות', d:'חיבורים וסנגור',def:15},
-  {k:'maarech',t:'מערכת',        d:'שותפים, תיעוד, הנהלה, אירועים',def:10}
+  {k:'lifnei',t:'לפני שהם הולכים',d:'י״ב + מאגר',def:30},
+  {k:'kesher',t:'קשר שוטף',      d:'שיחות ומעקב',def:35},
+  {k:'manim', t:'מענים וזכויות', d:'חיבורים וסנגור',def:20},
+  {k:'maarech',t:'מערכת',        d:'שותפים, תיעוד, הנהלה, אירועים',def:15}
 ];
 var CHECKLIST=[
   {t:'לאסוף טלפון אישי (לא של ההורים)',d:'שבועיים לפני הטקס, בשיעור'},
@@ -537,7 +542,8 @@ addEventListener('scroll',function(){
   tocLinks.forEach(function(a,i){a.classList.toggle('on',i===cur)});
 },{passive:true});
 
-/* ===================== 1 · מטרה ===================== */
+/* ===================== 1 · הבוגר שלא שכחנו (מקומי בלבד) + מטרה ===================== */
+keep('b_q1');keep('b_q2');keep('b_q3');
 keep('m_txt');
 wire('m_send','m_err',function(){
   var t=$('m_txt').value.trim();
@@ -568,27 +574,27 @@ $('meas').innerHTML=MEASURES.map(function(m){return '<div>'+esc(m)+'</div>'}).jo
 $('t_ch').innerHTML+=CHAPTERS.map(function(c){return '<option value="'+c.n+' · '+esc(c.t)+'">'+c.n+' · '+esc(c.t)+'</option>'}).join('');
 
 var hrs={};
-BUCKETS.forEach(function(b){hrs[b.k]=Number(lsGet('hopa-m2-h-'+b.k))||b.def});
+BUCKETS.forEach(function(b){var v=lsGet('hopa-m2-p-'+b.k);hrs[b.k]=v===null?b.def:Number(v)||0});
 $('sliders').innerHTML=BUCKETS.map(function(b){
   return '<div class="row"><span class="nm">'+esc(b.t)+'<br><span style="font-weight:500;color:var(--muted);font-size:11.5px">'+esc(b.d)+'</span></span>'+
-    '<input type="range" min="0" max="70" step="5" value="'+hrs[b.k]+'" data-k="'+b.k+'">'+
-    '<span class="v" id="v-'+b.k+'">'+hrs[b.k]+' ש׳</span></div>';
+    '<input type="range" min="0" max="100" step="5" value="'+hrs[b.k]+'" data-k="'+b.k+'">'+
+    '<span class="v" id="v-'+b.k+'">'+hrs[b.k]+'%</span></div>';
 }).join('')+'<div class="tot" id="htot"></div>';
 function paintHours(){
-  var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k];$('v-'+b.k).textContent=hrs[b.k]+' ש׳'});
+  var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k];$('v-'+b.k).textContent=hrs[b.k]+'%'});
   var el=$('htot');
-  el.className='tot'+(sum>70?' over':'');
-  el.innerHTML='סה״כ <b>'+sum+'</b> מתוך 70'+(sum>70?' — חרגתם ב-'+(sum-70)+' שעות':(sum<70?' · נשארו '+(70-sum):' ✓'));
+  el.className='tot'+(sum>100?' over':'');
+  el.innerHTML='סה״כ <b>'+sum+'%</b> מתוך 100%'+(sum>100?' — חרגתם ב-'+(sum-100)+'%':(sum<100?' · נשארו '+(100-sum)+'%':' ✓'));
 }
 [].slice.call($('sliders').querySelectorAll('input')).forEach(function(inp){
-  inp.addEventListener('input',function(){hrs[this.dataset.k]=Number(this.value);lsSet('hopa-m2-h-'+this.dataset.k,this.value);paintHours()});
+  inp.addEventListener('input',function(){hrs[this.dataset.k]=Number(this.value);lsSet('hopa-m2-p-'+this.dataset.k,this.value);paintHours()});
 });
 paintHours();
 wire('h_send','h_err',function(){
   var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k]});
   if(top3.length<1){$('h_err').textContent='סמנו קודם את הרכיבים החשובים לכם (סעיף ב).';return null}
-  if(sum>70){$('h_err').textContent='חרגתם מ-70 שעות. זה בדיוק התרגיל — צריך לוותר על משהו.';return null}
-  return {hours:hrs,total:sum,top:top3.slice()};
+  if(sum>100){$('h_err').textContent='חרגתם מ-100%. זה בדיוק התרגיל — צריך לוותר על משהו.';return null}
+  return {pct:hrs,total:sum,top:top3.slice()};
 },'shaot','השלד נשלח ✓',function(){$('h_send').textContent='נשלח ✓'});
 
 /* ===================== 3 · פעולות ===================== */
@@ -657,16 +663,11 @@ wire('t_send','t_err',function(){
   if(!me||!ch){$('t_err').textContent='שם + רכיב.';return null}
   return {me:me,chapter:ch};
 },'shulchan','נשמר 💛 נשבץ לפי זה',function(){$('t_send').textContent='נשמר ✓'});
-wire('d_send','d_err',function(){
-  var t=$('d_txt').value.trim();
-  if(!t){$('d_err').textContent='שם, בית ספר וטלפון.';return null}
-  return {txt:t};
-},'delet','תודה — נחזור אליך 💛',function(){$('d_txt').disabled=true;$('d_send').textContent='נשלח ✓'});
 
 /* ===================== הדף שלי ===================== */
 function renderMine(){
   var me=$('g_me').value.trim(),sc=$('g_school').value.trim(),sum=0;
-  var hrows=BUCKETS.map(function(b){sum+=hrs[b.k];return '<tr><td>'+esc(b.t)+' <span style="color:var(--muted)">· '+esc(b.d)+'</span></td><td style="text-align:center;font-weight:800;width:70px">'+hrs[b.k]+' ש׳</td></tr>'}).join('');
+  var hrows=BUCKETS.map(function(b){sum+=hrs[b.k];return '<tr><td>'+esc(b.t)+' <span style="color:var(--muted)">· '+esc(b.d)+'</span></td><td style="text-align:center;font-weight:800;width:70px">'+hrs[b.k]+'%</td></tr>'}).join('');
   var al=myActs();
   $('mypage').innerHTML=
     '<div style="display:flex;align-items:center;gap:12px"><img src="hopa-logo.png" alt="הופה" style="height:40px">'+
@@ -674,14 +675,14 @@ function renderMine(){
     esc(me)+(sc?' · '+esc(sc):'')+' · מפגש רכזים 14.10.2026</div></div></div>'+
     '<h3>1 · המטרה</h3><p>'+($('m_txt').value.trim()?esc($('m_txt').value.trim()):'<span class="miss">עוד לא כתבתי (סעיף 1)</span>')+'</p>'+
     '<h3>2 · השלד</h3><p><b>3 הרכיבים בראש סדר העדיפויות:</b> '+(top3.length?top3.map(function(n){return esc(CHAPTERS[n-1].t)}).join(' · '):'<span class="miss">עוד לא בחרתי</span>')+'</p>'+
-    '<table>'+hrows+'<tr><td><b>סה״כ</b></td><td style="text-align:center;font-weight:900">'+sum+' / 70</td></tr></table>'+
+    '<table>'+hrows+'<tr><td><b>סה״כ</b></td><td style="text-align:center;font-weight:900">'+sum+'%</td></tr></table>'+
     '<h3>3 · הפעולות הראשונות</h3>'+(al.length?'<table>'+al.map(function(a){
       return '<tr><td style="width:28%;font-weight:800">'+esc(a.ch)+'</td><td>'+esc(a.what)+(a.who?'<br><span style="color:var(--muted)">מי: '+esc(a.who)+'</span>':'')+'</td><td style="width:22%;color:var(--muted)">'+esc(a.when)+'</td></tr>'}).join('')+'</table>'
       :'<p class="miss">עוד לא כתבתי (סעיף 3)</p>')+
     ($('p_steal').value.trim()?'<p style="margin-top:8px"><b>רעיון מהחדר:</b> '+esc($('p_steal').value.trim())+'</p>':'')+
     '<h3>4 · הפגישה עם המנהל/ת</h3>'+
     '<p><b>מתי:</b> '+($('g_when').value?esc($('g_when').value):'<span class="miss">לקבוע</span>')+' · עד 4.11</p>'+
-    '<p><b>מציגים:</b> המטרה · השלד ו-70 השעות · הפעולות הראשונות · מה אני צריך/ה מההנהלה · מקום בתוכנית העבודה הבית ספרית</p>'+
+    '<p><b>מציגים:</b> המטרה · השלד ואיפה ההשקעה · הפעולות הראשונות · מה אני צריך/ה מההנהלה · מקום בתוכנית העבודה הבית ספרית</p>'+
     ($('g_ask').value.trim()?'<p><b>מה אבקש:</b> '+esc($('g_ask').value.trim())+'</p>':'')+
     '<h3>עד 21.10</h3><ul><li>להתחיל פעולה אחת</li><li>שיחה אחת עם בוגר/ת</li><li>לקבוע את הפגישה עם המנהל/ת (עד 4.11)</li></ul>'+
     '<div class="btnrow noprint"><button class="btn pink" type="button" onclick="window.print()">🖨️ הדפסה / שמירה כ-PDF</button></div>'+
@@ -692,7 +693,7 @@ function mineText(){
   var who=[$('g_me').value.trim(),$('g_school').value.trim()].filter(Boolean).join(' · ');if(who)L.push(who);
   if($('m_txt').value.trim())L.push('','*המטרה*',$('m_txt').value.trim());
   if(top3.length)L.push('','*3 הרכיבים*',top3.map(function(n){return CHAPTERS[n-1].t}).join(' · '));
-  L.push('','*70 השעות*');BUCKETS.forEach(function(b){L.push('• '+b.t+': '+hrs[b.k])});
+  L.push('','*איפה ההשקעה*');BUCKETS.forEach(function(b){L.push('• '+b.t+': '+hrs[b.k]+'%')});
   var al=myActs();if(al.length){L.push('','*הפעולות הראשונות*');al.forEach(function(a){L.push('• '+a.what+(a.who?' (עם '+a.who+')':'')+(a.when?' — '+a.when:''))})}
   L.push('','*הפגישה עם המנהל/ת* — '+($('g_when').value||'לקבוע')+' (עד 4.11)');
   L.push('','הדף המלא: '+location.href.split('#')[0]);
