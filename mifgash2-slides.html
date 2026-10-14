@@ -78,11 +78,30 @@
   .live{position:absolute;top:56px;inset-inline-end:62px;font-size:23px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:10px}
   .live i{width:14px;height:14px;border-radius:50%;background:currentColor;animation:bl 1.6s infinite}
   @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+  /* בדיקת צבע — שקף ההמתנה */
+  .tzc{display:flex;justify-content:center;gap:110px;margin-top:56px}
+  .tzc>div{display:flex;flex-direction:column;align-items:center;width:340px}
+  .tzc .o{width:210px;height:210px;border-radius:50%;background:var(--k);box-shadow:0 0 0 16px color-mix(in srgb,var(--k) 18%,transparent);
+          display:flex;align-items:center;justify-content:center;color:#fff;font-size:100px;font-weight:900}
+  .tzc b{font-size:54px;font-weight:900;color:var(--k);margin-top:34px}
+  .tzc span{font-size:30px;font-weight:600;margin-top:4px}
   #hint{position:fixed;bottom:12px;inset-inline:0;text-align:center;color:#888;font-size:13px;font-family:Rubik,Arial;z-index:5}
 </style>
 </head>
 <body>
 <div id="stage"><div id="deck">
+
+<div class="s soft" data-live="tzeva" style="align-items:center;text-align:center"><div class="live"><i></i> חי</div>
+  <div class="kick">בזמן שאתם מחכים · עוד רגע מתחילים</div>
+  <h1 style="font-size:104px">באיזה צבע אתם הבוקר?</h1>
+  <p class="big" style="margin-top:22px;font-size:40px">כנסו ל<b style="color:var(--pink-dark)">דף המלווה מהמייל</b> ולחצו על הצבע שלכם</p>
+  <div class="tzc">
+    <div style="--k:#2bb673"><div class="o" id="tzg">0</div><b>ירוק</b><span>זורם, יש לי אוויר</span></div>
+    <div style="--k:#f39a1e"><div class="o" id="tzo">0</div><b>כתום</b><span>עמוס, אבל אני כאן</span></div>
+    <div style="--k:#e5484d"><div class="o" id="tzr">0</div><b>אדום</b><span>לחוץ, צריך רגע</span></div>
+  </div>
+  <p class="med muted" style="margin-top:40px" id="tzn">אין דף? כתבו את הצבע בצ׳אט</p>
+  <p class="med" style="margin-top:10px;background:var(--yellow-soft);border-radius:999px;padding:12px 36px">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b style="color:var(--pink-dark)">הצבע הוא לא תווית, הוא זז.</b></p></div>
 
 <div class="s soft"><div class="kick">מפגש רכזים · 14.10.2026 · 1 מתוך 3</div>
   <h1>שעתיים<br>בשבוע</h1>
@@ -272,6 +291,12 @@ function items(kind){
     .sort(function(a,b){return String(a.ts||'').localeCompare(String(b.ts||''))});
 }
 function draw(){
+  var tz={g:0,o:0,r:0};
+  items('tzeva').forEach(function(x){if(tz[x.c]!==undefined)tz[x.c]++});
+  $('tzg').textContent=tz.g;$('tzo').textContent=tz.o;$('tzr').textContent=tz.r;
+  var tzt=tz.g+tz.o+tz.r;
+  $('tzn').textContent=tzt?tzt+' רכזים כבר בחרו · אין דף? כתבו בצ׳אט':'אין דף? כתבו את הצבע בצ׳אט';
+
   var m=items('matara');
   $('mwall').innerHTML=m.slice(-14).map(function(x){return '<span>'+esc(x.text)+'</span>'}).join('');
   $('mn').textContent=m.length?m.length+' משפטי מטרה':'סעיף 1 בדף';
