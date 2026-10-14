@@ -141,6 +141,14 @@
 
   .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
 
+  /* בדיקת צבע בפתיחה */
+  .tz{display:flex;gap:9px;margin-top:10px}
+  .tz button{flex:1;border:2.5px solid var(--line);background:#fff;border-radius:16px;padding:12px 6px 10px;cursor:pointer;color:var(--ink);transition:.15s}
+  .tz button i{display:block;width:38px;height:38px;border-radius:50%;margin:0 auto 7px;background:var(--k)}
+  .tz button b{display:block;font-size:16px;font-weight:900;color:var(--k)}
+  .tz button small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.3}
+  .tz button.on{border-color:var(--k);background:color-mix(in srgb,var(--k) 12%,#fff)}
+
   .doorbox{background:var(--yellow-soft);border:1.5px solid #f2e27a;border-radius:16px;padding:16px;margin-top:16px}
   .doorbox h3{margin:0 0 6px;font-size:16px;font-weight:900}
   .doorbox p{font-size:14px}
@@ -212,6 +220,18 @@
 <nav class="toc"><div class="in" id="toc"></div></nav>
 
 <main class="in">
+
+  <!-- 0 · בדיקת צבע בפתיחה -->
+  <section id="s0">
+    <div class="sec-head"><div class="num" style="background:var(--yellow);color:#111">0</div><div><h2>באיזה צבע אתם היום?</h2><small>לוחצים על צבע · התמונה המשותפת עולה על המסך</small></div></div>
+    <div class="tz" id="tz">
+      <button type="button" data-c="g" style="--k:#2bb673"><i></i><b>ירוק</b><small>זורם, יש לי אוויר</small></button>
+      <button type="button" data-c="o" style="--k:#f39a1e"><i></i><b>כתום</b><small>עמוס, אבל אני כאן</small></button>
+      <button type="button" data-c="r" style="--k:#e5484d"><i></i><b>אדום</b><small>לחוץ, צריך רגע</small></button>
+    </div>
+    <div class="err" id="tz_err"></div>
+    <p class="hint" style="margin-top:4px">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. הצבע הוא לא תווית, הוא זז. אפשר להחליף צבע בכל רגע.</p>
+  </section>
 
   <!-- 1 · למה -->
   <section id="s1">
@@ -534,7 +554,7 @@ function keep(id){
 }
 
 /* ===================== ניווט ===================== */
-var SECS=[['s1','1 · למה'],['s2','2 · התוכנית'],['s3','3 · פעולות'],['s4','4 · המנהל/ת'],['s5','נספח']];
+var SECS=[['s0','צבע'],['s1','1 · למה'],['s2','2 · התוכנית'],['s3','3 · פעולות'],['s4','4 · המנהל/ת'],['s5','נספח']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var tocLinks=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -542,6 +562,19 @@ addEventListener('scroll',function(){
   SECS.forEach(function(s,i){var el=$(s[0]);if(el&&el.offsetTop<=y)cur=i});
   tocLinks.forEach(function(a,i){a.classList.toggle('on',i===cur)});
 },{passive:true});
+
+/* ===================== 0 · בדיקת צבע (רמזור) — הצבעה אחת למכשיר, אפשר להחליף ===================== */
+var myTz=lsGet('hopa-m2-tz')||'';
+function paintTz(){[].slice.call($('tz').children).forEach(function(b){b.classList.toggle('on',b.dataset.c===myTz)})}
+paintTz();
+[].slice.call($('tz').children).forEach(function(b){
+  b.onclick=async function(){
+    var prev=myTz; myTz=b.dataset.c; lsSet('hopa-m2-tz',myTz); paintTz(); $('tz_err').textContent='';
+    var ok=await put('tzeva',devId,{ts:new Date().toISOString(),dev:devId,c:myTz});
+    if(ok) toast('הצבע שלך על המסך ✓');
+    else { myTz=prev; lsSet('hopa-m2-tz',prev); paintTz(); $('tz_err').textContent='לא הצלחנו לשלוח — בדקו אינטרנט ונסו שוב.' }
+  };
+});
 
 /* ===================== 1 · הבוגר שלא שכחנו (מקומי בלבד) + מטרה ===================== */
 keep('b_q1');keep('b_q2');keep('b_q3');

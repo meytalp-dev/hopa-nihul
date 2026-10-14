@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>באיזה צבע אתם היום · מסך המתנה · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;--yellow-soft:#fffbd6;--ink:#1f1f26;--muted:#8a8a96;--line:#ebe6ee;
+        --green:#2bb673;--orange:#f39a1e;--red:#e5484d}
+  *{box-sizing:border-box}html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#e9e4ec}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;color:var(--ink)}
+  #stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  #deck{width:1920px;height:1080px;transform-origin:center;position:relative;flex:none;
+        background:linear-gradient(160deg,#fff 0%,var(--pink-soft) 100%);
+        display:flex;flex-direction:column;align-items:center;padding:90px 130px 70px;text-align:center}
+
+  .top{width:100%;display:flex;justify-content:space-between;align-items:flex-start}
+  .kick{font-size:29px;font-weight:800;color:var(--pink);letter-spacing:.5px;text-align:start}
+  .kick small{display:block;font-size:24px;font-weight:500;color:var(--muted);margin-top:6px}
+  .clock{text-align:end}
+  .clock .lbl{font-size:22px;font-weight:700;color:var(--muted)}
+  .clock .t{font-size:64px;font-weight:900;color:var(--pink-dark);line-height:1;font-variant-numeric:tabular-nums;direction:ltr}
+
+  h1{font-size:118px;font-weight:900;margin:34px 0 0;line-height:1.02;letter-spacing:-3px}
+  .sub{font-size:38px;font-weight:600;color:var(--muted);margin-top:22px}
+  .sub b{color:var(--pink-dark)}
+
+  .colors{display:flex;gap:90px;margin-top:50px}
+  .c{display:flex;flex-direction:column;align-items:center;width:380px}
+  .dot{width:230px;height:230px;border-radius:50%;background:var(--k);
+       box-shadow:0 0 0 16px color-mix(in srgb,var(--k) 18%,transparent);animation:br 4s ease-in-out infinite}
+  .c:nth-child(2) .dot{animation-delay:1.3s}.c:nth-child(3) .dot{animation-delay:2.6s}
+  @keyframes br{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .dot{display:flex;align-items:center;justify-content:center;color:#fff;font-size:110px;font-weight:900;font-variant-numeric:tabular-nums}
+  .tot{font-size:30px;font-weight:700;color:var(--muted);margin-top:26px;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+  .tot i{width:14px;height:14px;border-radius:50%;background:var(--pink);animation:bl 1.6s infinite}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+  .nm{font-size:58px;font-weight:900;margin-top:40px;color:var(--k)}
+  .d{font-size:32px;font-weight:600;margin-top:8px;line-height:1.3}
+
+  .hopa{margin-top:auto;font-size:30px;font-weight:600;color:var(--ink);background:var(--yellow-soft);
+        border-radius:999px;padding:18px 44px}
+  .hopa b{color:var(--pink-dark)}
+  .credit{position:absolute;bottom:20px;inset-inline-start:40px;font-size:16px;color:var(--muted)}
+  .credit a{color:inherit}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+  <div class="top">
+    <div class="kick">מפגש רכזים · 14.10.2026 · שעתיים בשבוע<small>עוד רגע מתחילים, ממתינים שכולם יתאספו</small></div>
+    <div class="clock"><div class="lbl" id="clbl">מתחילים בעוד</div><div class="t" id="cd">--:--</div></div>
+  </div>
+
+  <h1>באיזה צבע אתם היום?</h1>
+  <div class="sub">פתחו את <b>דף המפגש מהמייל</b> ולחצו על הצבע שלכם · אין דף? כתבו בצ׳אט</div>
+
+  <div class="colors">
+    <div class="c" style="--k:var(--green)"><div class="dot" id="ng">0</div><div class="nm">ירוק</div><div class="d">זורם, יש לי אוויר</div></div>
+    <div class="c" style="--k:var(--orange)"><div class="dot" id="no">0</div><div class="nm">כתום</div><div class="d">עמוס, אבל אני כאן</div></div>
+    <div class="c" style="--k:var(--red)"><div class="dot" id="nr">0</div><div class="nm">אדום</div><div class="d">לחוץ, צריך רגע</div></div>
+  </div>
+  <div class="tot"><i></i><span id="ntot">ממתינים לצבע הראשון…</span></div>
+
+  <div class="hopa">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b>הצבע הוא לא תווית, הוא זז.</b></div>
+  <div class="credit">נבנה ב-<a href="https://impactos.co.il/" target="_blank" rel="noopener" dir="ltr">impactos</a></div>
+
+</div></div>
+<script>
+  function fit(){var d=document.getElementById('deck');var s=Math.min(innerWidth/1920,innerHeight/1080);d.style.transform='scale('+s+')'}
+  addEventListener('resize',fit);fit();
+
+  // שעת ההתחלה: ‎?t=11:00‎ בכתובת, ברירת מחדל 11:00
+  var q=new URLSearchParams(location.search).get('t')||'11:00';
+  var p=q.split(':'),start=new Date();start.setHours(+p[0]||11,+p[1]||0,0,0);
+  function tick(){
+    var ms=start-new Date(),cd=document.getElementById('cd'),l=document.getElementById('clbl');
+    if(ms<=0){l.textContent='';cd.textContent='מתחילים!';cd.style.direction='rtl';return}
+    var s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60;
+    cd.textContent=(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(ss).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+
+  // ספירה חיה מדף המפגש (mifgash2.html, סעיף 0) — מכשיר אחד = צבע אחד, ההחלפה האחרונה קובעת
+  var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+  var GS_SECRET='hopa-nihul-2026';
+  function jsonp(params,tmo){
+    return new Promise(function(res,rej){
+      var cb='cb'+Math.random().toString(36).slice(2);
+      params=Object.assign({},params,{callback:cb});
+      var s=document.createElement('script');
+      var t=setTimeout(function(){cl();rej(new Error('timeout'))},tmo||20000);
+      function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}s.remove();clearTimeout(t)}
+      window[cb]=function(d){cl();res(d)};
+      s.src=EXEC_URL+'?'+new URLSearchParams(params).toString();
+      s.onerror=function(){cl();rej(new Error('network'))};
+      document.head.appendChild(s);
+    });
+  }
+  var busy=false;
+  async function poll(){
+    if(busy)return;busy=true;
+    try{
+      var r=await jsonp({action:'storeAll',secret:GS_SECRET});
+      if(r&&r.ok&&r.store){
+        var n={g:0,o:0,r:0};
+        Object.keys(r.store).forEach(function(k){
+          var o=r.store[k]||{};
+          if(k.indexOf('intake_m2-tzeva-')===0&&!o.del&&n[o.c]!==undefined)n[o.c]++;
+        });
+        document.getElementById('ng').textContent=n.g;
+        document.getElementById('no').textContent=n.o;
+        document.getElementById('nr').textContent=n.r;
+        var tot=n.g+n.o+n.r;
+        document.getElementById('ntot').textContent=tot?tot+' רכזים כבר בחרו צבע':'ממתינים לצבע הראשון…';
+      }
+    }catch(e){}
+    busy=false;
+  }
+  poll();setInterval(function(){if(!document.hidden)poll()},6000);
+</script>
+</body>
+</html>
