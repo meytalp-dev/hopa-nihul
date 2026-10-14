@@ -84,7 +84,7 @@
   .tzc .o{width:210px;height:210px;border-radius:50%;background:var(--k);box-shadow:0 0 0 16px color-mix(in srgb,var(--k) 18%,transparent);
           display:flex;align-items:center;justify-content:center;color:#fff;font-size:100px;font-weight:900}
   .tzc b{font-size:54px;font-weight:900;color:var(--k);margin-top:34px}
-  .tzc span{font-size:30px;font-weight:600;margin-top:4px}
+  .tzc span{font-size:30px;font-weight:600;margin-top:4px;transition:opacity .5s}
   #hint{position:fixed;bottom:12px;inset-inline:0;text-align:center;color:#888;font-size:13px;font-family:Rubik,Arial;z-index:5}
 </style>
 </head>
@@ -96,9 +96,9 @@
   <h1 style="font-size:104px">באיזה צבע אתם הבוקר?</h1>
   <p class="big" style="margin-top:22px;font-size:40px">כנסו ל<b style="color:var(--pink-dark)">דף המלווה מהמייל</b> ולחצו על הצבע שלכם</p>
   <div class="tzc">
-    <div style="--k:#2bb673"><div class="o" id="tzg">0</div><b>ירוק</b><span>זורם, יש לי אוויר</span></div>
-    <div style="--k:#f39a1e"><div class="o" id="tzo">0</div><b>כתום</b><span>עמוס, אבל אני כאן</span></div>
-    <div style="--k:#e5484d"><div class="o" id="tzr">0</div><b>אדום</b><span>לחוץ, צריך רגע</span></div>
+    <div style="--k:#2bb673"><div class="o" id="tzg">0</div><b>ירוק</b><span class="tzd">יציב/ה, הכול זורם</span></div>
+    <div style="--k:#f39a1e"><div class="o" id="tzo">0</div><b>כתום</b><span class="tzd">בצומת, הרבה על הראש</span></div>
+    <div style="--k:#e5484d"><div class="o" id="tzr">0</div><b>אדום</b><span class="tzd">צריך/ה קצת תמיכה היום</span></div>
   </div>
   <p class="med muted" style="margin-top:40px" id="tzn">אין דף? כתבו את הצבע בצ׳אט</p>
   <p class="med" id="tzq" style="margin-top:10px;background:var(--yellow-soft);border-radius:999px;padding:12px 36px;transition:opacity .5s">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b style="color:var(--pink-dark)">הצבע הוא לא תווית, הוא זז.</b></p></div>
@@ -339,11 +339,21 @@ var TZQ=[
   'מספר שלא עונה? <b style="color:var(--pink-dark)">לא מוחקים.</b>',
   'גם לתלמידים שעוד בכיתה זה מראה: <b style="color:var(--pink-dark)">אחרי השער יש להם כתובת.</b>'
 ];
-var tzqI=0;
+/* הנוסחים מתחת לצבעים מתחלפים יחד עם המשפט: בוגרים · אנרגיה · קפה */
+var TZD=[
+  ['יציב/ה, הכול זורם','בצומת, הרבה על הראש','צריך/ה קצת תמיכה היום'],
+  ['מלא/ה אנרגיה','קצת עייף/ה, אבל כאן','היה בוקר עמוס'],
+  ['קפה ראשון, ואני מוכן/ה','הקפה עוד לא השפיע','צריך עוד קפה']
+];
+var tzqI=0,tzdI=0;
 setInterval(function(){
   if(cur!==0)return;
-  var el=$('tzq');el.style.opacity=0;
-  setTimeout(function(){tzqI=(tzqI+1)%TZQ.length;el.innerHTML=TZQ[tzqI];el.style.opacity=1},500);
+  var el=$('tzq'),ds=[].slice.call(document.querySelectorAll('.tzd'));
+  el.style.opacity=0;ds.forEach(function(d){d.style.opacity=0});
+  setTimeout(function(){
+    tzqI=(tzqI+1)%TZQ.length;el.innerHTML=TZQ[tzqI];el.style.opacity=1;
+    tzdI=(tzdI+1)%TZD.length;ds.forEach(function(d,i){d.textContent=TZD[tzdI][i];d.style.opacity=1});
+  },500);
 },8000);
 
 var busy=false;
