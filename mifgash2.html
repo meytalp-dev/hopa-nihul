@@ -196,6 +196,7 @@
       <div>
         <h1>שעתיים בשבוע</h1>
         <div class="sub">בונים תוכנית עבודה לליווי בוגרים · מפגש רכזים חברתיים</div>
+        <div class="sub" id="hello" hidden style="font-weight:800;margin-top:4px"></div>
       </div>
     </div>
     <div class="meet">14.10.2026 · זום <small>90 דקות · מפגש 1 מתוך 3</small></div>
@@ -648,6 +649,15 @@ wire('p_send','p_err',function(){
 
 /* ===================== 4 · המנהל/ת ===================== */
 ['g_me','g_school','g_when','g_ask','t_me'].forEach(keep);
+/* קישור אישי מהמייל (14.10.26): ?n=<שם>&s=<בית ספר> — השם ובית הספר כבר ממולאים,
+   ובראש הדף "הדף של …". מה שהמשתתף/ת כבר כתב/ה בעצמו/ה לא נדרס. */
+(function(){
+  var q=new URLSearchParams(location.search),n=(q.get('n')||'').trim().slice(0,40),s=(q.get('s')||'').trim().slice(0,50);
+  if(n&&!$('g_me').value){$('g_me').value=n;lsSet('hopa-m2-g_me',n)}
+  if(s&&!$('g_school').value){$('g_school').value=s;lsSet('hopa-m2-g_school',s)}
+  var me=$('g_me').value.trim(),sc=$('g_school').value.trim();
+  if(me){$('hello').textContent='הדף של '+me+(sc?' · '+sc:'');$('hello').hidden=false}
+})();
 wire('g_send','g_err',function(){
   var me=$('g_me').value.trim(),sc=$('g_school').value.trim();
   if(!me||!sc){$('g_err').textContent='שם ובית ספר.';return null}
