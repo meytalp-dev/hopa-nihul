@@ -101,7 +101,7 @@
     <div style="--k:#e5484d"><div class="o" id="tzr">0</div><b>אדום</b><span>לחוץ, צריך רגע</span></div>
   </div>
   <p class="med muted" style="margin-top:40px" id="tzn">אין דף? כתבו את הצבע בצ׳אט</p>
-  <p class="med" style="margin-top:10px;background:var(--yellow-soft);border-radius:999px;padding:12px 36px">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b style="color:var(--pink-dark)">הצבע הוא לא תווית, הוא זז.</b></p></div>
+  <p class="med" id="tzq" style="margin-top:10px;background:var(--yellow-soft);border-radius:999px;padding:12px 36px;transition:opacity .5s">זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b style="color:var(--pink-dark)">הצבע הוא לא תווית, הוא זז.</b></p></div>
 
 <div class="s soft"><div class="kick">מפגש רכזים · 14.10.2026 · 1 מתוך 3</div>
   <h1>שעתיים<br>בשבוע</h1>
@@ -328,6 +328,24 @@ function draw(){
   }).join('');
   $('tn').textContent='מי יושב איפה · '+t.length+' בחרו';
 }
+/* שקף 1: משפטים על בוגרים מתחלפים מתחת לרמזור (מתוך תכני המפגש) */
+var TZQ=[
+  'זו שיטת הרמזור של הופה. ככה בודקים גם בוגרים. <b style="color:var(--pink-dark)">הצבע הוא לא תווית, הוא זז.</b>',
+  'ליווי בוגרים אומר שהקשר <b style="color:var(--pink-dark)">לא נגמר בשער.</b>',
+  'ביום שאחרי הטקס, בוגר מאבד בבת אחת <b style="color:var(--pink-dark)">את המסגרת, את המבוגרים ואת השגרה.</b>',
+  'בית הספר נשאר כתובת <b style="color:var(--pink-dark)">עד שהבוגר מוצא את דרכו.</b>',
+  'בלי תוכנית, מי שמקבל ליווי הוא מי שהתקשר. <b style="color:var(--pink-dark)">תוכנית מגיעה גם לבוגר ששותק.</b>',
+  'חגים וימי הולדת: <b style="color:var(--pink-dark)">הקשר שלא צריך סיבה.</b>',
+  'מספר שלא עונה? <b style="color:var(--pink-dark)">לא מוחקים.</b>',
+  'גם לתלמידים שעוד בכיתה זה מראה: <b style="color:var(--pink-dark)">אחרי השער יש להם כתובת.</b>'
+];
+var tzqI=0;
+setInterval(function(){
+  if(cur!==0)return;
+  var el=$('tzq');el.style.opacity=0;
+  setTimeout(function(){tzqI=(tzqI+1)%TZQ.length;el.innerHTML=TZQ[tzqI];el.style.opacity=1},500);
+},8000);
+
 var busy=false;
 async function poll(){
   if(busy)return;busy=true;
