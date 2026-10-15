@@ -68,7 +68,7 @@
   .links a{font-size:13px;font-weight:700;text-decoration:none;border-radius:9px;padding:5px 10px;background:var(--pink-soft);color:var(--pink-dark)}
   .msg{background:#f8f6f9;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:6px}
   .msg .to{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px}
-  .msg pre{margin:0;white-space:pre-wrap;font:inherit;font-size:14px}
+  .msg pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px}
   .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
   .btn{font:inherit;font-size:13.5px;font-weight:700;border:0;border-radius:10px;padding:8px 14px;background:var(--pink);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
@@ -77,6 +77,12 @@
   .note:focus{outline:none;border-color:var(--pink);border-style:solid}
   .hasnote{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px}
   .hide{display:none!important}
+  .tag.map{background:var(--green-soft);color:var(--green)}
+  .fields{display:grid;gap:8px;margin-top:4px}
+  .fld{display:block}
+  .fld span{display:block;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .fld textarea{width:100%;font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;background:#fff;resize:vertical;min-height:40px}
+  .fld textarea:focus{outline:none;border-color:var(--green)}
 
   .asbox{background:var(--blue);color:#fff;border-radius:16px;padding:14px 16px;margin-top:18px}
   .asbox h3{margin:0 0 4px;font-size:16px}
@@ -103,7 +109,7 @@
 <header><div class="in">
   <div class="hrow">
     <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-    <div><h1>משימות נשירה ובוגרים</h1><div class="sub">מהמסמך "משימות הופה", מההודעות של לירון (4.10) ומהשיחה עם נתי · לוחצים על משימה כדי לראות מה צריך</div></div>
+    <div><h1>משימות נשירה ובוגרים</h1><div class="sub">מהמסמך "משימות הופה", מההודעות של לירון, מהשיחה עם נתי ומתוכניות העבודה תשפ"ז (15.10) · לוחצים על משימה כדי לראות מה צריך</div></div>
   </div>
   <div class="kpis">
     <div class="kpi"><b id="kOpen">–</b><span>פתוחות</span></div>
@@ -118,6 +124,7 @@
   <button data-f="all">הכל</button>
   <button data-f="done">בוצעו</button>
   <button data-f="asmaa" class="as">של אסמאא</button>
+  <button data-f="maps">🗺️ מפות גורמים</button>
 </div></nav>
 
 <main class="in">
@@ -235,8 +242,9 @@ const SECTIONS = [
    steps:['לעבור על דף ההכנה לשירות','לבדוק מול דרך דוד ומדור מיטב מה עוד אפשר'],
    links:[['הכנה לשירות','hachana.html'],['שיתופי פעולה','shutafuyot.html']]},
   {id:'r-12', t:'השלמת 12 שנות לימוד ובגרויות: מקומות ואנשי קשר לפי אזור', src:'מסמך',
-   steps:['למפות לכל בית ספר מקום השלמה קרוב','למצוא איש קשר בכל מקום'],
-   links:[['מענים · תעסוקה והכשרה','manim-taasuka.html'],['מענים · זכויות','manim-zchuyot.html']]},
+   why:'בכל מפת גורמים של בית ספר (למטה) יש עכשיו שורה "השלמת בגרויות: גורם מפנה". במאגר המענים כבר יש: תוכנית משל"י (השלמת 12 שנות לימוד, מימון מלא ומלגת קיום), מכינת הבוגרים, מרכז ההשכלה, בגרות לחיילים משוחררים (ווצ\'ר), תכנית תל"מ, וצמ"ה בירושלים. חסר: גורם מפנה מקומי בכל רשות.',
+   steps:['למפות לכל בית ספר מקום השלמה קרוב ואת מי ברשות מפנים אליו (קידום נוער, היל"ה, מרכז צעירים)','למצוא איש קשר בכל מקום ולרשום במפת הגורמים של בית הספר','להוסיף למאגר המענים מה שחסר'],
+   links:[['משל"י','https://www.hac.ac.il/'],['מכינת הבוגרים','https://www.bagruyot.org.il/'],['בגרות לחיילים משוחררים','https://www.hachvana.mod.gov.il/MainEducation/TwelveYearsStudies/Pages/default.aspx'],['מענים · תעסוקה והכשרה','manim-taasuka.html'],['מענים · זכויות','manim-zchuyot.html']]},
   {id:'r-train', t:'השכלה והכשרה: עוד מקומות להכשרה תעסוקתית וקורסים', src:'מסמך',
    links:[['מענים · תעסוקה והכשרה','manim-taasuka.html']]},
   {id:'r-yated', t:'עו"ס יתד בכל רשות: למי פונים', src:'מסמך',
@@ -262,14 +270,122 @@ const SECTIONS = [
    why:'ריאן = מרכז תעסוקה כמעט בכל רשות · צופן = הכשרות הייטק · קו משווה = ליווי לאקדמיה · אג\'יק = לקייה, רהט ונווה מדבר · שירות אזרחי דרך האגודה להתנדבות.',
    steps:['לבדוק לכל בית ספר מה מהן פועל באזור','לחבר את הרכז/ת לאיש הקשר'],
    links:[['מענים לחברה הערבית','manim-aravit.html']]}
+ ]},
+
+ {id:'majors', ico:'🎓', title:'מגמות י"א–י"ב: שותפים מהתיכון ועד הסמכה וקריירה', tasks:[
+  {id:'m-collect', t:'לאסוף את המגמות שפועלות השנה בי"א וי"ב בכל בית ספר', src:'תוכנית עבודה',
+   why:'ב-22 מתוך 26 בתי הספר המגמות עוד "להשלמה בפגישה". בלי המגמות אי אפשר לחבר שותפים לפי תחום. מגמה שחוזרת בכמה בתי ספר מקבלת שותף אשכולי אחד.',
+   steps:['בפגישת העבודה בכל בית ספר: אילו מגמות פועלות בי"א ובי"ב, וכמה תלמידים בכל אחת','לרשום בשורה "מגמות" במפת הגורמים של בית הספר (למטה)','לסמן מגמות שחוזרות בכמה בתי ספר באותו אשכול, כדי לחפש להן שותף משותף'],
+   links:[['תיקייה · החברה הכללית','https://drive.google.com/drive/folders/1PbzmsXWdpDn7ZaGdDHICZengo00I55vX'],['תיקייה · החברה הערבית','https://drive.google.com/drive/folders/1G7ZqZcQWbruEILhxZPWG3SRmB2YskTse']]},
+  {id:'m-elec', t:'חשמל, קירור ומיזוג (סח\'נין, טורעאן): שותפים מי"א ועד הסמכה', who:'אסמאא', src:'תוכנית עבודה',
+   why:'מהמאגר, לאמת התאמה לפני פנייה: חשמלאי יומי בעמק הירדן (צורים) · המכללה הטכנולוגית כנרת (הנדסאי חשמל) · מכללת אורט קריית ביאליק (חשמל ומכטרוניקה) · שוברי משרד העבודה להכשרה (כולל חשמל) · מלגת מה"ט, 90% מימון להנדסאים · הזנק להנדסאים במכללת עתיד מעלות.',
+   steps:['לאמת עם בית הספר שהמגמות פועלות ובכמה תלמידים','בי"א–י"ב: מעסיק או מכללה באזור לסיור או להתנסות','לבוגרים: מסלול הסמכה (חשמלאי מוסמך, הנדסאי) ומלגה שמממנת אותו','לרשום את השותף במפת הגורמים של סח\'נין ושל טורעאן'],
+   links:[['צורים','https://www.zurim.org.il'],['כנרת','https://www.ktec.co.il/'],['שוברי משרד העבודה','https://www.labor-shovarim.co.il/'],['מלגת מה"ט','https://www.hachvana.mod.gov.il/MainEducation/PracticalEngineer/Pages/PracticalEngScholarship.aspx']]},
+  {id:'m-car', t:'אוטוטרוניקה ורכב (סח\'נין, טורעאן): שותפים מי"א ועד הסמכה', who:'אסמאא', src:'תוכנית עבודה',
+   why:'במאגר אין מענה ייעודי לרכב. מה שכן רלוונטי: מלגת מה"ט, הזנק לעתיד (ליווי ללימודי הנדסאות) ושוברי משרד העבודה. צריך לאתר מוסכים ויבואני רכב באזור.',
+   steps:['לאתר 2–3 מוסכים או מרכזי שירות באזור לסיור והתנסות לי"א–י"ב','לבדוק מסלולי הנדסאי רכב ומכטרוניקה ללימודי המשך','להוסיף למאגר המענים מה שנמצא'],
+   links:[['הזנק לעתיד','https://heznek.org/'],['שוברי משרד העבודה','https://www.labor-shovarim.co.il/']]},
+  {id:'m-hair', t:'עיצוב שיער, איפור וטיפוח (סח\'נין, ג\'וליס): שותפים והמשך', who:'אסמאא', src:'תוכנית עבודה',
+   why:'במאגר אין מענה בתחום. זה פער: שתי מגמות בשני בתי ספר.',
+   steps:['לאתר מספרות וסלונים באזור לסיור והתנסות לי"א–י"ב','לאתר מכללה או קורס הסמכה בתחום באזור','לבדוק אם שוברי משרד העבודה מכסים את התחום','לבוגרות: ליווי לעסק עצמאי (מעוף, קרנות לעסקים קטנים)']},
+  {id:'m-julis', t:'ג\'וליס: ניהול משרד, מטפלות מעון יום, סטיילינג', who:'אסמאא', src:'תוכנית עבודה',
+   why:'המגמות מאתר בית הספר, צריך לאמת בפגישה.',
+   steps:['לאמת אילו מגמות פועלות השנה','מטפלות מעון: לבדוק מעונות ביישוב ובאזור להתנסות, והכשרת מטפלות להמשך','ניהול משרד: לבדוק קורסי הנהלת חשבונות ומזכירות (שוברי משרד העבודה מכסים הנהלת חשבונות)']},
+  {id:'m-motzkin', t:'מוצקין: עיצוב, קונדיטוריה, מכונות', src:'תוכנית עבודה',
+   why:'מהמאגר, לאמת: מכונות → אורט בראודה כרמיאל (הנדסת מכונות), אורט שחקים נהריה (הנדסאי מכונות ומדיה), אורט קריית ביאליק · קונדיטוריה → שוברי משרד העבודה (קולינריה) · עיצוב → אין עדיין שותף.',
+   steps:['לאמת את המגמות עם אביחי','לבחור לכל מגמה שותף אחד לסיור בי"א–י"ב ומסלול המשך אחד לבוגרים','מוצקין כבר עובדים עם תעסוקתחייל (נתי): לחבר משתחררים לפי מגמה'],
+   links:[['אורט בראודה','https://w3.braude.ac.il/'],['אורט שחקים','https://sn.ort.org.il/'],['אורט קריית ביאליק','https://c.ort.org.il/kiryat-bialik/']]}
+ ]},
+
+ {id:'clusters', ico:'🧩', title:'אשכולות: שותפויות אזוריות', tasks:[
+  {id:'c-galil-t', t:'גליל תחתון (סח\'נין, טורעאן, ביר אלמכסור): שלושה שותפים למגמות המרכזיות', who:'אסמאא', src:'תוכנית עבודה',
+   steps:['לאתר שלושה שותפים שמתאימים למגמות שחוזרות (חשמל, רכב)','לבחון פעילות משותפת לשלושת בתי הספר','לרשום החלטה, תאריך ואחראי בסעיף 4 במסמך המרכזי']},
+  {id:'c-galil-m', t:'גליל מערבי (ירכא, ג\'וליס): מגמות בפועל, ניידות ומסלולי המשך', who:'אסמאא', src:'תוכנית עבודה',
+   steps:['לברר אילו מגמות פועלות בפועל בשני בתי הספר','לבדוק תחבורה וניידות למוסדות לימוד ולמעסיקים','לבחור חיבור ראשון']},
+  {id:'c-haifa', t:'חיפה (אורט כרמל): שלושה מסלולי המשך למגמות הגדולות', who:'אסמאא', src:'תוכנית עבודה',
+   steps:['לברר את המגמות הגדולות','לבנות לכל אחת מסלול המשך (מכללה, הכשרה, מעסיק)','ליצור קשר עם שותפים בעיר']},
+  {id:'c-negev', t:'נגב (רהט, לקייה, נווה מדבר): נגישות, תחבורה ושותפים', who:'אסמאא', src:'תוכנית עבודה',
+   why:'בנגב שיעורי ה-NEET הגבוהים בישראל. אג\'יק פועלת בלקייה, ברהט ובנווה מדבר.',
+   steps:['לבדוק נגישות ותחבורה למוסדות לימוד ולמעסיקים','למפות שותפים ביישובים ובאזור','לבחור מסלול ראשון']},
+  {id:'c-north', t:'צפון (8 בתי ספר): שותפים משותפים ומפגש מעסיקים אזורי', src:'תוכנית עבודה',
+   why:'מרום עכו · כרמיאל · מוצקין · בית שאן · דרור גליל · תיכון שיח · עמל רמת דוד · תיכון חברתי חיפה.',
+   steps:['שיחות עם שמונת בתי הספר','איתור שותפים משותפים למגמות שחוזרות','סיור או מפגש מעסיקים אזורי אחד לפחות']},
+  {id:'c-center', t:'מרכז (תל אביב יפו, פלמחים, נחלים): חיבור ראשון לשותף', src:'תוכנית עבודה',
+   steps:['שיחות עם שלושת בתי הספר','בחירת חיבור ראשון לשותף']},
+  {id:'c-south', t:'דרום (אשקלון, אשדוד, מצפה רמון): שני שותפים ופעילות משותפת', src:'תוכנית עבודה',
+   steps:['שיחות עם שלושת בתי הספר','איתור שני שותפים מתאימים','בחינת פעילות משותפת']},
+  {id:'c-assign', t:'לשייך לאשכול את אורט צור ברק ותיכון חושן', src:'תוכנית עבודה',
+   why:'בדף המענים של בתי הספר החדשים חושן מופיע בירושלים וצור ברק בדרום. לאמת בפגישת הפתיחה.',
+   steps:['לאמת מיקום בפגישת הפתיחה','לעדכן את האשכול במסמך המרכזי ובמסמך של בית הספר']}
  ]}
 ];
+
+/* ---------- מפת גורמים לכל בית ספר (מתוכניות העבודה תשפ"ז של לירון, 15.10) ----------
+   השדות נשמרים ב-ST.items[id].map. בלי טלפונים בקוד, הדף ציבורי. */
+const SCHOOLS = [
+ {doc:'1fT3j5H16iwJaB3w29d93s86EPZxgoCW01TcjMLB-Nog', n:'אורט כרמל חיפה', ar:1, cl:'אשכול חיפה', mgr:'וליד דאו', rk:'חנין מלשה', al:'57 בוגרים'},
+ {doc:'1oUJJDOTI4P-fvJ2QZZXSVfafwzy7hFqMIPYDb6eCjVE', n:'דרור נווה מדבר', ar:1, cl:'אשכול נגב', mgr:'עבד אבו אלקיעאן', rk:'היאם אזברגה', al:'20 בוגרים'},
+ {doc:'1RpfqAJJghcT5YCoGD9RShzZWPlPhjDVh-2uJ7qg6fZg', n:'טכנולוגי לקייה', ar:1, cl:'אשכול נגב', mgr:'עלי אלחואגרה', rk:'ראניה חגו', al:'בשלבי קליטה'},
+ {doc:'1_QI17T83rS9Kqp3DQw2kxCCzQbJhkXYB9HNUvfSQOUI', n:'מנאראת טורעאן', ar:1, cl:'אשכול גליל תחתון', mgr:'עלי עדאווי', rk:'מוניר זרעיני', al:'בשלבי קליטה', maj:'אוטוטרוניקה · חשמל · קירור ומיזוג'},
+ {doc:'16_F2f0DtU4e3Di1MwcRHaoLOm0y2hmyNL2VHomlxjnw', n:'עמל טכנולוגי רהט', ar:1, cl:'אשכול נגב', mgr:'ראיד הוזייל', rk:'זהור אלעוברה', al:'בשלבי קליטה'},
+ {doc:'1eB1n2V9cx3Ad6Nk5jEKd1wTtJ8UymoimtgwqbFnwb8I', n:'עתיד אבדאע ביר אלמכסור', ar:1, cl:'אשכול גליל תחתון', mgr:'ופיק אגבאריה', rk:'עלי עותמאן', al:'בשלבי קליטה'},
+ {doc:'1Q1ToHlmZuf0RPQs82dwyO73EkYnvf8v11OTD_-w-nMQ', n:'תיכון אלאמאני סח\'נין', ar:1, cl:'אשכול גליל תחתון', mgr:'מוחמד גזאל', rk:'סוזן קאסום', al:'75 בוגרים', maj:'אוטוטק ואוטוטרוניקה · עיצוב שיער ואיפור · חשמלאי מוסמך · חשמל תלת פאזי · מבנאות אלומיניום · קירור ומיזוג'},
+ {doc:'1tNuKucEPVWjluIiNBUT8H_wT82bqQm2Z-rVF5ympvhA', n:'תיכון ח\'טוואת ירכא אבו סנאן', ar:1, cl:'אשכול גליל מערבי', mgr:'נסרין נבואני', rk:'רשא סייד אחמד', al:'בשלבי קליטה'},
+ {doc:'1-nmOzDCtkpBDovKJQjVw0W4buw2_ktka9losYBxKS6I', n:'תיכון יוצר עתיד בנות ג\'וליס', ar:1, cl:'אשכול גליל מערבי', mgr:'שאדיה נבואני', rk:'בהייה מולא', al:'בשלבי קליטה', maj:'ניהול מערכות משרדיות · עיצוב שיער וטיפוח · מטפלות מעון יום · סטיילינג'},
+ {doc:'13gZ4ebz0yzUMmUZYTN2d2Ln59E8QCou-qW6RH6uZNI0', n:'אורט אדיבי אשקלון', cl:'אשכול דרום', mgr:'רנל אדרי', rk:'סיגל דדון', al:'296 בוגרים'},
+ {doc:'1lcBzhxLHWNJ_4x9hj_Ac5yhiqlNgAU0Epej9Tk2Ktbw', n:'אורט בית הערבה', cl:'אשכול ירושלים', mgr:'רווית גל', rk:'יעקב גרונספלד', al:'411 בוגרים'},
+ {doc:'1j-4o3KnHhTgPMoMVCzx2kFvfHxwVOb_QlQey0-ZYtSg', n:'אורט מגשימים בית שאן', cl:'אשכול צפון', mgr:'יוחנן כהן', rk:'חן עמרן', al:'77 בוגרים'},
+ {doc:'1MsS-be82tWXNDG7MpziTzh-XLQGAvI2pj5HgoVR15Rc', n:'אורט מרום עכו', cl:'אשכול צפון', mgr:'הדר בן סימון', rk:'טוהר מרסדס כהן', al:'354 בוגרים'},
+ {doc:'1jtwvQQeRnDL45SeU7SRhZlpuva-ZYdpO5NadYcA_4kQ', n:'אורט צור ברק', cl:'אזור להשלמה', mgr:'סיגל כהן', rk:'טלי יונה', al:'50 בוגרים'},
+ {doc:'1pp4juchGX4ooebwr0J88tVn0TJZATUnAxY0IvV_HLCs', n:'דרור גליל', cl:'אשכול צפון', mgr:'עינת וינברן', rk:'רינה שריד', al:'בשלבי קליטה'},
+ {doc:'1SXAAxM1lTRNvA7Q9I5_bN5YHzJlh-06jBX6M1XgqJsM', n:'התיכון החברתי מצפה רמון', cl:'אשכול דרום', mgr:'תמר צביבך', rk:'ענבל לוי', al:'בשלבי קליטה'},
+ {doc:'1VnjWgywElGkN6tW6f5-63lQ__AHrxD2Vu57MBO3XkOU', n:'התיכון החברתי תל אביב יפו', cl:'אשכול מרכז', mgr:'יפית שפירא', rk:'לי ארנן', al:'121 בוגרים'},
+ {doc:'1u7HI4hjBjUu-Nj_8rt6LcY5giU_X_9YGQrSB_E5xhwY', n:'מרכז תורני טכנולוגי נחלים', cl:'אשכול מרכז', mgr:'אליהו טובול', rk:'טל מילוא', al:'להשלמה'},
+ {doc:'12Af3qOMs4kTvEAX4hoIb6mVBMklDmLKl3wbfeLxZJgs', n:'עמל טכנולוגי אשדוד', cl:'אשכול דרום', mgr:'מגי רביבו', rk:'ריקי מסס', al:'בשלבי קליטה'},
+ {doc:'19MghG3BOHn3Vc05hg_gpADLvdYbUMtuIfCjqtcXW7S0', n:'עמל רמת דוד', cl:'אשכול צפון', mgr:'שי סודרי', rk:'מוניק איפרח ממן', al:'בשלבי קליטה'},
+ {doc:'1YlO5A6iX4owJe_mPt74qCNG7_0fe0AAcwTMOMTKFVz0', n:'עתיד יוצר מגשימים כרמיאל', cl:'אשכול צפון', mgr:'שיראל פרץ', rk:'לבנה בן חמו', al:'237 בוגרים'},
+ {doc:'1eOdkLfUDqoeglhjXDWd7URy7sUAHIiZTB0JLnvtEe08', n:'עתיד שמיים קריית מוצקין', cl:'אשכול צפון', mgr:'משה בחר', rk:'אביחי חריר', al:'141 בוגרים', maj:'עיצוב · קונדיטוריה · מכונות'},
+ {doc:'1gMplbrG-3_azloqMz1qh6bXij_Ncg9rrDcSS6769VYY', n:'תיכון חברתי חיפה', cl:'אשכול צפון', mgr:'טרם הוגדר', rk:'טרם הוגדר', al:'בשלבי קליטה'},
+ {doc:'1-mEzKusELfhqBiB0Y5tvNUxU42IBNaVnyts8Km3oLXg', n:'תיכון חושן', cl:'אזור להשלמה', mgr:'שרי שמבורסקי', rk:'ברכי בר לב', al:'109 בוגרים'},
+ {doc:'1mYpXjFK43z4ky-icO-GrODWVhOrsQhTEQNm-094YiZw', n:'תיכון יוצר עתיד פלמחים', cl:'אשכול מרכז', mgr:'ורד אזולאי יהב', rk:'שירן עוגן', al:'בשלבי קליטה'},
+ {doc:'1zEtA6QFzE4mcTn7PcnGyX4CC6Io0vMVDkJXJTxsr2bU', n:'תיכון שיח', cl:'אשכול צפון', mgr:'גל שמיר', rk:'טליה ברנע', al:'בשלבי קליטה'}
+];
+/* הגורמים שממפים לכל בית ספר. מגמות ושותפים לפי מגמה = הרצף מי"א ועד הסמכה וקריירה */
+const GORMIM = [
+ ['majors','מגמות בי"א ובי"ב השנה (וכמה תלמידים)'],
+ ['mpartners','שותפים לפי מגמה: סיור והתנסות בי"א–י"ב, והמשך לבוגרים להסמכה ולקריירה'],
+ ['job','תעסוקה: למי פונה בוגר שמחפש עבודה (רכז/ת תעסוקה ברשות, מרכז הכוון, ריאן)'],
+ ['bagrut','השלמת בגרויות ו-12 שנות לימוד: גורם מפנה'],
+ ['center','מרכז צעירים ברשות'],
+ ['yated','עו"ס צעירים (יתד) ורווחה'],
+ ['kabas','קב"ס וקידום נוער'],
+ ['sherut','שירות משמעותי: מכינות, שנת שירות, שירות לאומי-אזרחי'],
+ ['edu','השכלה והסמכה באזור: מכללות, הנדסאים, הכשרה מקצועית'],
+ ['rights','מלגות ומיצוי זכויות']
+];
+function schoolTask(s){
+  return {id:'map-'+s.doc.slice(0,10), school:s, t:s.n, who:s.ar?'אסמאא':'', src:s.cl,
+   why:'מנהל/ת: '+s.mgr+' · רכז/ת בוגרים: '+s.rk+' · בהופה סקיור: '+s.al+(s.maj?' · מגמות ידועות (לאמת): '+s.maj:''),
+   steps:['לקבוע פגישת עבודה עם המנהל/ת ורכז/ת הבוגרים','להשלים בפגישה את המיפוי: מגמות, צרכים, חסמים ושותפים בתוך בית הספר','למלא כאן את מפת הגורמים: שם, תפקיד וטלפון לכל אחד','לבחור יחד שלוש פעולות מרכזיות לשנה ולרשום במסמך של בית הספר'],
+   links:[['המסמך של בית הספר','https://docs.google.com/document/d/'+s.doc+'/edit'],s.ar?['מענים לחברה הערבית','manim-aravit.html']:['מענים לבוגרים','manim-bogrim.html'],['גורמים בקהילה','kehila-neshira.html']],
+   fields:GORMIM};
+}
+SECTIONS.push(
+ {id:'map-ar', ico:'🗺️', title:'מפת גורמים לכל בית ספר · החברה הערבית', tasks:SCHOOLS.filter(s=>s.ar).map(schoolTask)},
+ {id:'map-he', ico:'🗺️', title:'מפת גורמים לכל בית ספר · החברה הכללית', tasks:SCHOOLS.filter(s=>!s.ar).map(schoolTask)}
+);
+const mapVal = (id,k) => ((ST.items[id]||{}).map||{})[k] || '';
+const mapCount = t => t.fields.filter(f=>mapVal(t.id,f[0]).trim()).length;
+function mapText(t){
+  return 'מפת גורמים · '+t.t+'\n'+t.fields.map(f=>'• '+f[1].split(':')[0]+': '+(mapVal(t.id,f[0]).trim()||'—')).join('\n');
+}
 
 /* הודעה לאסמאא על משימה אחת */
 function asmaaMsg(t){
   let m='היי אסמאא 🙂\nמשימה בשבילך: '+t.t+'\n';
   if(t.why) m+='\n'+t.why+'\n';
   if(t.steps) m+='\nמה צריך:\n'+t.steps.map((s,i)=>(i+1)+'. '+s).join('\n')+'\n';
+  if(t.fields) m+='\nהגורמים למפות (שם, תפקיד וטלפון):\n'+t.fields.map(f=>'• '+f[1]).join('\n')+'\n';
   if(t.links) m+='\nחומרים:\n'+t.links.map(l=>'• '+l[0]+': '+absUrl(l[1])).join('\n')+'\n';
   return m+'\nתעדכני אותי מה מצאת. תודה! 💛';
 }
@@ -337,6 +453,7 @@ function visible(t){
   if(FILTER==='open') return !d;
   if(FILTER==='done') return d;
   if(FILTER==='asmaa') return t.who==='אסמאא';
+  if(FILTER==='maps') return !!t.fields;
   return true;
 }
 function taskHtml(t){
@@ -345,12 +462,15 @@ function taskHtml(t){
   if(isAs) msgs.unshift(['הודעה לאסמאא', asmaaMsg(t)]);
   return `<div class="task${s.done?' done':''}${OPEN.has(t.id)?' open':''}${isAs?' asmaa':''}" data-id="${t.id}">
     <div class="th"><input type="checkbox" ${s.done?'checked':''} aria-label="בוצע">
-      <div class="t">${esc(t.t)}${t.urg?'<span class="tag urg">דחוף</span>':''}${isAs?'<span class="tag who">אסמאא</span>':''}<span class="tag src">${esc(t.src)}</span>
+      <div class="t">${esc(t.t)}${t.urg?'<span class="tag urg">דחוף</span>':''}${isAs?'<span class="tag who">אסמאא</span>':''}<span class="tag src">${esc(t.src)}</span>${t.fields?`<span class="tag map" data-cnt="${t.id}">${mapCount(t)}/${t.fields.length} גורמים</span>`:''}
       ${s.note?`<span class="hasnote">📝 ${esc(s.note)}</span>`:''}${s.done&&s.at?`<span class="hasnote">✓ בוצע ${new Date(s.at).toLocaleDateString('he-IL')}</span>`:''}</div>
       <span class="arr">▼</span></div>
     <div class="tb">
       ${t.why?`<p class="why">${esc(t.why)}</p>`:''}
       ${t.steps?`<h4>מה עושים</h4><ol>${t.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`:''}
+      ${t.fields?`<h4>מפת הגורמים</h4><div class="fields">${t.fields.map(f=>`<label class="fld"><span>${esc(f[1])}</span>
+        <textarea rows="1" data-map="${t.id}|${f[0]}" placeholder="${f[0]==='majors'&&t.school.maj?esc(t.school.maj)+' (לאמת)':'שם · תפקיד · טלפון'}">${esc(mapVal(t.id,f[0]))}</textarea></label>`).join('')}</div>
+        <div class="acts"><button class="btn ghost" data-mapcopy="${t.id}">📋 העתק את המפה</button></div>`:''}
       ${t.links?`<h4>מה צריך</h4><div class="links">${t.links.map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}</div>`:''}
       ${msgs.length?`<h4>הודעות מוכנות</h4>${msgs.map((m,i)=>`<div class="msg"><div class="to">${esc(m[0])}</div><pre>${esc(m[1])}</pre>
         <div class="acts"><button class="btn${isAs&&i===0?' blue':''}" data-copy="${t.id}|${i}">📋 העתק</button><a class="btn ghost" href="https://wa.me/" target="_blank" rel="noopener">💬 פתח וואטסאפ</a></div></div>`).join('')}`:''}
@@ -400,6 +520,8 @@ $('#list').addEventListener('click',e=>{
     save(); render(); toast(e.target.checked?'סומן כבוצע ✓':'חזר לפתוחות');
     return;
   }
+  const mc=e.target.closest('[data-mapcopy]');
+  if(mc){ copyText(mapText(findTask(mc.dataset.mapcopy))); return; }
   const cp=e.target.closest('[data-copy]');
   if(cp){
     const [tid,i]=cp.dataset.copy.split('|'), t=findTask(tid);
@@ -413,6 +535,14 @@ $('#list').addEventListener('click',e=>{
 });
 let noteTimer=null;
 $('#list').addEventListener('input',e=>{
+  if(e.target.matches('[data-map]')){
+    const [id,k]=e.target.dataset.map.split('|'), cur=st(id);
+    ST.items[id]=Object.assign({},cur,{map:Object.assign({},cur.map,{[k]:e.target.value})});
+    const t=findTask(id), c=document.querySelector(`[data-cnt="${id}"]`);
+    if(c) c.textContent=mapCount(t)+'/'+t.fields.length+' גורמים';
+    clearTimeout(noteTimer); noteTimer=setTimeout(save,800);
+    return;
+  }
   if(!e.target.matches('[data-note]')) return;
   const id=e.target.dataset.note;
   ST.items[id]=Object.assign({},st(id),{note:e.target.value});
@@ -430,7 +560,9 @@ $('#copyAll').onclick=()=>{
   const ts=SECTIONS.flatMap(s=>s.tasks).filter(t=>t.who==='אסמאא'&&!st(t.id).done);
   if(!ts.length){ toast('אין משימות פתוחות לאסמאא'); return; }
   let m='היי אסמאא 🙂\nריכזתי את המשימות שלך בתחום החברה הערבית, הדרוזית והבדואית.\nבתי הספר: '+ASMAA_SCHOOLS+'.\n\n';
-  m+=ts.map((t,i)=>(i+1)+'. '+t.t+(t.steps?'\n   '+t.steps.join(' · '):'')).join('\n\n');
+  const plain=ts.filter(t=>!t.fields), maps=ts.filter(t=>t.fields);
+  m+=plain.map((t,i)=>(i+1)+'. '+t.t+(t.steps?'\n   '+t.steps.join(' · '):'')).join('\n\n');
+  if(maps.length) m+='\n\n🗺️ מפת גורמים לכל בית ספר: '+maps.map(t=>t.t).join(' · ')+'\nבכל בית ספר: פגישת עבודה עם המנהל/ת ורכז/ת הבוגרים, ולמפות (שם, תפקיד וטלפון):\n'+GORMIM.map(f=>'• '+f[1]).join('\n');
   m+='\n\nחומרים:\n• מענים לחברה הערבית: '+absUrl('manim-aravit.html')+'\n• תיק החפיפה שלך: '+absUrl('rakezet-migzar.html');
   m+='\n\nנעבור על זה יחד בשיחה הבאה. תודה! 💛';
   copyText(m);
