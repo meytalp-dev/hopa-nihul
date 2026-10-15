@@ -99,6 +99,25 @@
     .num{font-size:16px}
   }
 
+  .edbtn{display:inline-block;margin-top:6px;font:inherit;font-size:12px;font-weight:700;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;cursor:pointer}
+  .edbtn:hover{border-color:var(--pink)}
+  .edited{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+  #ed{position:fixed;inset:0;background:rgba(17,17,17,.55);z-index:40;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
+  #ed[hidden]{display:none}
+  #edForm{background:#fff;border-radius:18px;padding:18px;max-width:560px;width:100%}
+  #edForm h2{margin:0 0 10px;font-size:18px;font-weight:900}
+  #edForm fieldset{border:0;border-top:1px solid var(--line);margin:0;padding:10px 0 4px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #edForm legend{font-size:12.5px;font-weight:900;color:var(--pink-dark);padding:0}
+  #edForm label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--muted)}
+  #edForm label.w{grid-column:1/-1}
+  #edForm label.chk{flex-direction:row;align-items:center;gap:6px;color:var(--ink);font-size:13.5px;grid-column:1/-1}
+  #edForm label.chk input{width:18px;height:18px;accent-color:var(--green)}
+  #edForm input:not([type=checkbox]),#edForm select{font:inherit;font-size:14px;color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;background:#fff;width:100%}
+  #edForm input:focus,#edForm select:focus{outline:none;border-color:var(--pink)}
+  .edbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .btn2{font:inherit;font-weight:700;border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;background:#fff;cursor:pointer}
+  .btn3{font:inherit;font-size:12.5px;font-weight:700;border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;margin-inline-start:auto}
+  @media(max-width:520px){ #edForm fieldset{grid-template-columns:1fr} #ed{padding:10px} }
   #gate{position:fixed;inset:0;background:#111;display:grid;place-items:center;z-index:50;padding:16px}
   #gate div{background:#fff;border-radius:18px;padding:24px;max-width:320px;width:100%;text-align:center}
   #gate input{width:100%;font:inherit;font-size:22px;text-align:center;letter-spacing:4px;border:1.5px solid var(--line);border-radius:12px;padding:8px;margin:12px 0}
@@ -155,10 +174,44 @@
   <p class="src">מספרי הבוגרים ומה שחסר: לפי HOPA Secure ב-22.9 · קבוצות הבוגרים: לפי מיטל ב-17.9, עודכן 7.10 · תוכניות העבודה: מהופה דש ב-7.10.2026 · אנשי הקשר: מלוח המונדיי של הופה דש ב-4.10.2026 · שמות המשתמש: מ-HOPA Secure ב-4.10.2026 · שאלונים והערות: נשמרים בגיליון המשותף, ואפשר לעדכן מכל מכשיר</p>
 </div></main>
 
+<div id="ed" hidden><form id="edForm" autocomplete="off">
+  <h2>עריכה · <span id="edTitle"></span></h2>
+  <fieldset><legend>רשימת הבוגרים</legend>
+    <label>בוגרים במערכת<input name="al" type="number" min="0" inputmode="numeric"></label>
+    <label>מצב הרשימה<select name="list"><option value="yes">מלאה</option><option value="part">חלקית</option><option value="no">אין רשימה</option></select></label>
+    <label class="w">מה חסר ברשימה<input name="miss"></label>
+  </fieldset>
+  <fieldset><legend>קבוצת בוגרים</legend>
+    <label class="chk"><input name="wa" type="checkbox"> יש קבוצת בוגרים</label>
+    <label class="w">קישור לקבוצה<input name="waLink" inputmode="url" dir="ltr" placeholder="https://chat.whatsapp.com/..."></label>
+  </fieldset>
+  <fieldset><legend>מיקום</legend>
+    <label class="w">עיר / יישוב<input name="city"></label>
+    <label>אזור<select name="region"></select></label>
+    <label>מגזר<select name="sector"></select></label>
+  </fieldset>
+  <fieldset><legend>רכז/ת בוגרים</legend>
+    <label class="w">שם<input name="cn"></label>
+    <label>טלפון<input name="cp" type="tel" dir="ltr"></label>
+    <label>מייל<input name="ce" inputmode="email" dir="ltr"></label>
+    <label class="w">הערה על הרכז/ת<input name="cnote"></label>
+  </fieldset>
+  <fieldset><legend>מנהל/ת</legend>
+    <label class="w">שם<input name="mn"></label>
+    <label>טלפון<input name="mp" type="tel" dir="ltr"></label>
+    <label>מייל<input name="me" inputmode="email" dir="ltr"></label>
+  </fieldset>
+  <div class="edbar">
+    <button type="submit" class="btn">שמירה</button>
+    <button type="button" id="edCancel" class="btn2">ביטול</button>
+    <button type="button" id="edReset" class="btn3">חזרה לנתונים המקוריים</button>
+  </div>
+</form></div>
+
 <footer><a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
 
 <script>
-const D = [{"n":"אורט בית הערבה","city":"ירושלים","al":438,"list":"part","miss":"7–11 טלפונים, 15 בלי שנה","wa":true,"waLink":"https://chat.whatsapp.com/CpxDyf4Cm9hK1gKMP25jB1","coord":{"n":"יעקב גרונספלד","p":"054-699-5254","e":"1002469702@avoda-edu.org.il"},"cnote":"","u":{"mgr":[{"e":"1002105447@avoda-edu.org.il","n":"רווית גל"}],"coord":[{"e":"1002469702@avoda-edu.org.il","n":"יעקב גרונספלד"}],"edu":0},"mgr":{"n":"מיטל פלג / רווית גל","p":"050-399-3021","e":"1002105447@avoda-edu.org.il"}},
+const BASE = [{"n":"אורט בית הערבה","city":"ירושלים","al":438,"list":"part","miss":"7–11 טלפונים, 15 בלי שנה","wa":true,"waLink":"https://chat.whatsapp.com/CpxDyf4Cm9hK1gKMP25jB1","coord":{"n":"יעקב גרונספלד","p":"054-699-5254","e":"1002469702@avoda-edu.org.il"},"cnote":"","u":{"mgr":[{"e":"1002105447@avoda-edu.org.il","n":"רווית גל"}],"coord":[{"e":"1002469702@avoda-edu.org.il","n":"יעקב גרונספלד"}],"edu":0},"mgr":{"n":"מיטל פלג / רווית גל","p":"050-399-3021","e":"1002105447@avoda-edu.org.il"}},
 {"n":"אורט מרום עכו","city":"עכו","al":354,"list":"part","miss":"2 טלפונים","wa":true,"waLink":"https://chat.whatsapp.com/C1gL9qpvuT8EmjideUD28r","coord":{"n":"טוהר מרסדס כהן","p":"050-828-2032","e":"Toharmarom2025@gmail.com"},"cnote":"","u":{"mgr":[{"e":"avdihadar@gmail.com","n":"הדר בן סימון"}],"coord":[{"e":"toharmarom2025@gmail.com","n":"טוהר מרסדס כהן"}],"edu":7},"mgr":{"n":"הדר בן סימון","p":"052-467-7981","e":"avdihadar@gmail.com"}},
 {"n":"אורט אדיבי אשקלון","city":"אשקלון","al":296,"list":"part","miss":"243 בלי ת\"ז","wa":true,"waLink":"https://chat.whatsapp.com/Cqwlazx7GTOKGz2xV959eP","coord":{"n":"סיגל דדון","p":"053-778-0196","e":"sigadadon8@gmail.com"},"cnote":"","u":{"mgr":[{"e":"alikia@admin.ort.org.il","n":"אליקי אלקובי"}],"coord":[{"e":"sigald@afridar.ort.org.il","n":"סיגל דדון"}],"edu":0},"mgr":{"n":"רנל אדרי","p":"053-366-6830","e":"ranele@admin.ort.org.il"}},
 {"n":"עתיד מגשימים כרמיאל","city":"כרמיאל","al":237,"list":"part","miss":"131 בלי טלפון, 3 ת\"ז פסולות","wa":false,"waLink":"","coord":{"n":"לבנה בן חמו","p":"050-440-0956","e":"lebanabenhamob@gmail.com"},"cnote":"","u":{"mgr":[{"e":"irisb@atid.org.il","n":"שיראל פרץ"}],"coord":[{"e":"lebanabenhamob@gmail.com","n":"לבנה בן חמו"}],"edu":0},"mgr":{"n":"שיראל פרץ","p":"052-657-2714","e":"irisb@atid.org.il"}},
@@ -200,8 +253,9 @@ const REGION = {"אורט בית הערבה":"ירושלים","תיכון חוש
   "עתיד שמיים מוצקין":"חיפה","אורט כרמל חיפה":"חיפה","תיכון חברתי חיפה":"חיפה",
   "התיכון החברתי תל אביב":"מרכז","תיכון נחלים":"מרכז","יוצר עתיד פלמחים":"מרכז",
   "אורט אדיבי אשקלון":"דרום","עמל טכנולוגי אשדוד":"דרום","אורט צור ברק":"דרום","התיכון החברתי מצפה רמון":"דרום","טכנולוגי לקייה":"דרום","עמל טכנולוגי רהט":"דרום","דרור נווה מדבר":"דרום"};
-const sectorOf = n => SECTOR[n]||'יהודי';
-const regionOf = n => REGION[n]||'';
+const edOf = n => (typeof ST!=='undefined'&&ST.edit&&ST.edit[n])||{};
+const sectorOf = n => edOf(n).sector||SECTOR[n]||'יהודי';
+const regionOf = n => edOf(n).region||REGION[n]||'';
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -231,7 +285,7 @@ function person(p,note,us){
 }
 function row(s){
   const l=LIST[s.list];
-  return `<td class="n"><b>${esc(s.n)}</b><span class="city">${esc(s.city)}</span><span class="tags">${esc([regionOf(s.n),sectorOf(s.n)].filter(Boolean).join(' · '))}</span></td>
+  return `<td class="n"><b>${esc(s.n)}</b><span class="city">${esc(s.city)}</span><span class="tags">${esc([regionOf(s.n),sectorOf(s.n)].filter(Boolean).join(' · '))}</span><button class="edbtn" data-edit>✏️ עריכה</button>${edOf(s.n).d?`<span class="edited">עודכן ידנית ${esc(edOf(s.n).d)}</span>`:''}</td>
     <td><span class="lbl">בוגרים במערכת</span><span class="num">${s.al}</span> <span class="pill ${l[0]}">${l[1]}</span></td>
     <td class="miss"><span class="lbl">מה חסר ברשימה</span>${esc(s.miss)||'<span style="color:var(--green)">—</span>'}</td>
     <td class="wa"><span class="lbl">קבוצת בוגרים</span>${s.wa?'<span class="pill ok">✓ יש</span>':'<span class="pill no">אין</span>'}${s.waLink?`<a href="${esc(s.waLink)}" target="_blank" rel="noopener">פתיחת הקבוצה ↗</a>`:''}</td>
@@ -250,7 +304,19 @@ const QS = [['join','שאלון הצטרפות לקבוצה'],['map','שאלון
 /* מה שכבר נשלח לפני שהעמודה נוספה (מיטל, 13.10.2026) */
 const Q_DEFAULT = {map:{"עתיד שמיים מוצקין":"13.10","תיכון שיח":"13.10","תיכון חושן":"13.10","אורט בית הערבה":"13.10"}};
 const STATUS = {open:'פתוח',wait:'ממתין',done:'טופל'};
-let ST = {q:{}, notes:{}, updated:''};
+let ST = {q:{}, notes:{}, edit:{}, updated:''};
+/* עריכות ידניות (ST.edit) גוברות על הנתונים הקבועים בקוד */
+let D = BASE;
+function applyEdits(){
+  D = BASE.map(s=>{
+    const e=ST.edit&&ST.edit[s.n]; if(!e) return s;
+    const o=Object.assign({},s);
+    ['city','al','list','miss','wa','waLink','cnote'].forEach(k=>{ if(e[k]!==undefined) o[k]=e[k]; });
+    if(e.coord) o.coord=Object.assign({},s.coord,e.coord);
+    if(e.mgr) o.mgr=Object.assign({},s.mgr,e.mgr);
+    return o;
+  });
+}
 
 const today = ()=>{const d=new Date();return d.getDate()+'.'+(d.getMonth()+1)+'.'+d.getFullYear();};
 function qGet(n,k){
@@ -296,13 +362,13 @@ function save(){
   }, 700);
 }
 async function load(){
-  const local=parse(lsGet(STATE_KEY)); if(local) ST=Object.assign({q:{},notes:{}},local);
+  const local=parse(lsGet(STATE_KEY)); if(local) ST=Object.assign({q:{},notes:{},edit:{}},local);
   draw();
   try{
     const r=await jsonp({action:'storeAll', secret:GS_SECRET});
     if(!r.ok) throw new Error(r.error);
     const remote=parse(r.store[STATE_KEY]);
-    if(remote && (!local || !local.updated || (remote.updated||'') >= local.updated)) ST=Object.assign({q:{},notes:{}},remote);
+    if(remote && (!local || !local.updated || (remote.updated||'') >= local.updated)) ST=Object.assign({q:{},notes:{},edit:{}},remote);
     else if(local && local.updated && (!remote || local.updated > (remote.updated||''))) save();
     $('#sync').textContent='✓ מסונכרן עם הגיליון';
   }catch(e){ $('#sync').textContent='⚠️ אין חיבור לגיליון — מוצג מה שנשמר במכשיר'; }
@@ -312,9 +378,43 @@ function draw(){
   // שומר טיוטות שעוד לא נוספו
   const drafts={};
   document.querySelectorAll('#rows tr').forEach((tr,i)=>{const t=tr.querySelector('.nadd textarea');if(t&&t.value)drafts[i]=t.value;});
+  applyEdits();
   $('#rows').innerHTML=D.map(s=>`<tr>${row(s)}</tr>`).join('');
   document.querySelectorAll('#rows tr').forEach((tr,i)=>{if(drafts[i])tr.querySelector('.nadd textarea').value=drafts[i];});
+  kpis();
   render();
+}
+function kpis(){
+  const total=D.reduce((a,s)=>a+(+s.al||0),0);
+  $('#kpis').innerHTML=[
+    [D.length,'בתי ספר'],
+    [total.toLocaleString('he-IL'),'בוגרים במערכת'],
+    [D.filter(s=>s.list==='no').length,'בלי רשימה'],
+    [D.filter(s=>s.list==='part').length,'רשימה חלקית'],
+    [`${D.filter(s=>s.wa).length}/${D.length}`,'קבוצות בוגרים'],
+    [D.filter(s=>!s.coord.n).length,'בלי רכז/ת'],
+  ].map(([n,l])=>`<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+/* ---------- חלון עריכה ---------- */
+let EDN=null;
+function openEdit(n){
+  EDN=n; const s=D.find(x=>x.n===n), f=$('#edForm');
+  $('#edTitle').textContent=n;
+  const v={al:s.al,list:s.list,miss:s.miss,city:s.city,region:regionOf(n),sector:sectorOf(n),wa:s.wa,waLink:s.waLink,
+    cn:s.coord.n,cp:s.coord.p,ce:s.coord.e,cnote:s.cnote,mn:s.mgr.n,mp:s.mgr.p,me:s.mgr.e};
+  Object.entries(v).forEach(([k,x])=>{const el=f.elements[k]; if(!el) return; if(el.type==='checkbox') el.checked=!!x; else el.value=x==null?'':x;});
+  $('#edReset').hidden=!ST.edit[n];
+  $('#ed').hidden=false; document.body.style.overflow='hidden';
+}
+function closeEdit(){ $('#ed').hidden=true; document.body.style.overflow=''; EDN=null; }
+function saveEdit(){
+  const f=$('#edForm').elements, g=k=>f[k].value.trim();
+  ST.edit[EDN]={d:today(),al:+g('al')||0,list:g('list'),miss:g('miss'),city:g('city'),region:g('region'),sector:g('sector'),
+    wa:f.wa.checked,waLink:g('waLink'),cnote:g('cnote'),
+    coord:{n:g('cn'),p:g('cp'),e:g('ce')},mgr:{n:g('mn'),p:g('mp'),e:g('me')}};
+  if(ST.edit[EDN].waLink) ST.edit[EDN].wa=true;
+  closeEdit(); save(); draw();
 }
 
 let F='all';
@@ -338,20 +438,22 @@ function render(){
   $('#empty').hidden=shown>0;
 }
 function init(){
-  load();
-  const total=D.reduce((a,s)=>a+s.al,0);
-  $('#kpis').innerHTML=[
-    [D.length,'בתי ספר'],
-    [total.toLocaleString('he-IL'),'בוגרים במערכת'],
-    [D.filter(s=>s.list==='no').length,'בלי רשימה'],
-    [D.filter(s=>s.list==='part').length,'רשימה חלקית'],
-    [`${D.filter(s=>s.wa).length}/${D.length}`,'קבוצות בוגרים'],
-    [D.filter(s=>!s.coord.n).length,'בלי רכז/ת'],
-  ].map(([n,l])=>`<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join('');
   $('#q').addEventListener('input',render);
   const opts=(vals,all)=>`<option value="">${all}</option>`+vals.map(v=>`<option>${v}</option>`).join('');
   $('#fReg').innerHTML=opts(['צפון','חיפה','מרכז','ירושלים','דרום'],'כל האזורים');
   $('#fSec').innerHTML=opts(['יהודי','ערבי','בדואי','דרוזי'],'כל המגזרים');
+  const f=$('#edForm');
+  f.elements.region.innerHTML=opts(['צפון','חיפה','מרכז','ירושלים','דרום'],'—');
+  f.elements.sector.innerHTML=opts(['יהודי','ערבי','בדואי','דרוזי'],'—');
+  f.addEventListener('submit',e=>{e.preventDefault();saveEdit();});
+  $('#edCancel').addEventListener('click',closeEdit);
+  $('#ed').addEventListener('click',e=>{ if(e.target.id==='ed') closeEdit(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!$('#ed').hidden) closeEdit(); });
+  $('#edReset').addEventListener('click',()=>{
+    if(!confirm('לחזור לנתונים המקוריים של בית הספר הזה?')) return;
+    delete ST.edit[EDN]; closeEdit(); save(); draw();
+  });
+  load();
   $('#fReg').addEventListener('change',render);
   $('#fSec').addEventListener('change',render);
   const schoolOf=el=>D[[...document.querySelectorAll('#rows tr')].indexOf(el.closest('tr'))].n;
@@ -367,6 +469,8 @@ function init(){
     }
   });
   $('#rows').addEventListener('click',async e=>{
+    const ed=e.target.closest('[data-edit]');
+    if(ed){ openEdit(schoolOf(ed)); return; }
     const add=e.target.closest('[data-nadd]');
     if(add){
       const box=add.closest('.nadd'), ta=box.querySelector('textarea'), txt=ta.value.trim();
