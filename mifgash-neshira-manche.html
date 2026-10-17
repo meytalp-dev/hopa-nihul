@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>רץ־שיט · מפגש רכזות מניעת נשירה · הופה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
+    --ink:#1f1f26;--muted:#7d7d8a;--line:#e6e2ea;--bg:#f4f1f6;--shadow:0 3px 14px rgba(31,31,38,.07);
+    --c-gray:#9a9aa6;--c-green:#22b573;--c-yellow:#f2c200;--c-red:#e0413a}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  button,input{font-family:inherit;font-size:inherit}
+  a{color:var(--pink-dark)}
+  .in{max-width:1180px;margin:0 auto;padding:0 14px}
+  header{background:#111;color:#fff;padding:14px 0}
+  .hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{height:34px;background:#fff;border-radius:9px;padding:4px 8px}
+  header h1{margin:0;font-size:20px;font-weight:900}
+  header .sub{font-size:13px;opacity:.8}
+  .clockbox{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#222;border-radius:12px;padding:7px 13px}
+  .clockbox input{width:74px;background:#111;border:1px solid #444;color:var(--yellow);border-radius:8px;padding:5px 8px;text-align:center;font-weight:800;direction:ltr}
+  .clockbox .now{font-size:19px;font-weight:900;color:var(--yellow);font-variant-numeric:tabular-nums}
+  .draft{background:var(--yellow);color:#111;font-weight:800;font-size:13px;text-align:center;padding:6px 14px}
+  .tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  .tabs .in{display:flex;gap:6px;padding-top:8px;padding-bottom:8px;overflow-x:auto}
+  .tabs button{flex:none;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:6px 15px;font-weight:800;font-size:13px;cursor:pointer}
+  .tabs button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  main{padding:14px 0 60px}
+  .pane{display:none}.pane.on{display:block}
+  .blk{background:#fff;border-radius:15px;box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden;border-inline-start:5px solid var(--line)}
+  .blk.now{border-inline-start-color:var(--pink);box-shadow:0 6px 26px rgba(232,52,138,.2)}
+  .blk.done{opacity:.5}
+  .bh{display:flex;align-items:center;gap:11px;padding:11px 14px;cursor:pointer}
+  .bh .tm{background:#111;color:var(--yellow);border-radius:9px;padding:4px 10px;font-weight:900;font-size:13.5px;font-variant-numeric:tabular-nums;flex:none}
+  .bh .ti{flex:1;min-width:0}
+  .bh h3{margin:0;font-size:15.5px;font-weight:900}
+  .bh small{color:var(--muted);font-size:12.5px}
+  .bh .dur{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;flex:none}
+  .bh .go{border:none;background:var(--yellow);border-radius:9px;padding:6px 12px;font-weight:800;font-size:12.5px;cursor:pointer;flex:none}
+  .bb{padding:0 14px 14px;display:none;border-top:1px solid var(--line);padding-top:12px}
+  .blk.open .bb{display:block}
+  .bb h4,.card h4{margin:12px 0 4px;font-size:13px;font-weight:800;color:var(--pink-dark)}
+  .bb h4:first-child{margin-top:0}
+  .bb p,.card p{margin:0 0 8px;font-size:14px}
+  .bb ul,.bb ol,.card ul{margin:4px 0 10px;padding-inline-start:20px;font-size:14px}.bb li,.card li{margin-bottom:4px}
+  .src{font-size:12px;color:var(--muted);margin-top:6px}
+  .say{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:14.5px;font-weight:600;margin:8px 0}
+  .warn{background:#fff4f4;border:1.5px solid #f5c9c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
+  .warn b{color:#c0392b}
+  .good{background:#e8f8ef;border:1.5px solid #b8e6c9;border-radius:11px;padding:10px 13px;font-size:13.5px;margin:8px 0}
+  .good b{color:#14613b}
+  .chatbox{background:#f8f6fa;border:1.5px dashed var(--line);border-radius:11px;padding:10px 12px;padding-inline-end:76px;font-size:13.5px;margin:8px 0;white-space:pre-wrap;position:relative}
+  .chatbox button{position:absolute;inset-inline-end:8px;top:8px;border:none;background:var(--pink);color:#fff;border-radius:8px;padding:4px 11px;font-size:12px;font-weight:800;cursor:pointer}
+  .card{background:#fff;border-radius:15px;box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
+  .card h2{margin:0 0 8px;font-size:16px;font-weight:900}
+  .lights{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+  .lights>div{border-radius:11px;padding:9px 10px;font-size:13px;background:#faf9fb;border-top:5px solid}
+  .lights b{display:block;font-size:14px}
+  .l-gray{border-color:var(--c-gray)!important}.l-green{border-color:var(--c-green)!important}
+  .l-yellow{border-color:var(--c-yellow)!important}.l-red{border-color:var(--c-red)!important}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 10px}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:start;vertical-align:top}
+  th{background:var(--pink-soft);color:var(--pink-dark);font-weight:800}
+  .tw{overflow-x:auto}
+  .ans{display:none}.ans.on{display:block}
+  .btn{border:none;border-radius:11px;padding:9px 17px;font-weight:800;font-size:13.5px;cursor:pointer;background:var(--yellow);color:#111}
+  .chk{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
+  .chk:last-child{border-bottom:none}
+  .chk input{width:19px;height:19px;accent-color:var(--pink);flex:none;margin-top:2px}
+  .chk.done span{text-decoration:line-through;opacity:.5}
+  .lnk{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .lnk a{background:#111;color:#fff;text-decoration:none;border-radius:11px;padding:9px 15px;font-weight:800;font-size:13px}
+  .lnk a.y{background:var(--yellow);color:#111}
+  footer{text-align:center;font-size:12.5px;color:var(--muted);padding:10px 14px 30px}
+  #toast{position:fixed;inset-inline:0;bottom:20px;margin:auto;width:max-content;max-width:90vw;background:#111;color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast.show{opacity:1}
+  @media(max-width:620px){
+    .lights{grid-template-columns:repeat(2,1fr)}
+    .bh{flex-wrap:wrap}.bh .ti{flex-basis:calc(100% - 80px)}
+    .clockbox{margin-inline-start:0}
+  }
+</style>
+</head>
+<body>
+
+<header><div class="in hrow">
+  <a href="https://hopa.org.il" target="_blank"><img class="logo" src="hopa-logo.png" alt="הופה"></a>
+  <div><h1>רץ־שיט · מפגש רכזות מניעת נשירה</h1><div class="sub">״מהשאלונים לרמזור״ · זום · 60 דקות · <span id="dateTxt">תאריך: יעודכן</span></div></div>
+  <div class="clockbox"><span style="font-size:12px;opacity:.6">התחלה</span><input id="start" value="10:00"><span class="now" id="now">--:--</span></div>
+</div></header>
+<div class="draft">טיוטה לאישור לירון · מבוסס על מודל ההפעלה למניעת נשירה <span dir="ltr">14–18</span></div>
+
+<div class="tabs"><div class="in">
+  <button data-p="run" class="on">🎬 רץ־שיט</button>
+  <button data-p="cases">🧩 המקרים לתרגיל</button>
+  <button data-p="prep">✅ הכנות</button>
+  <button data-p="links">🔗 קישורים</button>
+</div></div>
+
+<main class="in">
+  <div class="pane on" id="p-run">
+    <div class="card">
+      <h2>מטרת המפגש</h2>
+      <p>אנחנו באמצע אוקטובר, ומיפוי הפתיחה צריך להסתיים עד סוף נובמבר. בסוף השעה כל רכזת יודעת
+        <b>איך קוראים את שלושת השאלונים, איך נקבע הצבע, ומה עושים מחר בבוקר</b> עם כל צבע.</p>
+      <p style="color:var(--muted);font-size:13px;margin:0">משתתפות: רכזות מניעת הנשירה בחמשת בתי הספר:
+        אדיבי אשקלון, מגשימים בית שאן, בית הערבה, מרום עכו ומבואות חרמון.</p>
+    </div>
+    <div id="blocks"></div>
+  </div>
+
+  <div class="pane" id="p-cases">
+    <div class="card">
+      <h2>מקרה 1 · נועה (שם בדוי), כיתה י׳</h2>
+      <p style="color:var(--muted);font-size:13px">משתפים מסך עם הכרטיס הזה, ופותחים סקר: ״איזה צבע?״</p>
+      <div class="tw"><table>
+        <tr><th>קול</th><th>מה כתוב בשאלון</th></tr>
+        <tr><td><b>התלמידה</b></td><td>טוב לי בבית הספר: ״בינוני״ · הלמידה שלי: ״חלשה״ · הנוכחות שלי: ״טובה״ · טובה ב: ציור · מבוגר משמעותי: <i>השאירה ריק</i></td></tr>
+        <tr><td><b>ההורים</b></td><td>טוב לה בבית הספר: ״כן, בסדר״ · התקדמות לימודית: 4 מתוך 5 · תחביב: ציור, מעצבת חולצות לחברות</td></tr>
+        <tr><td><b>המחנכת</b></td><td>2 ציונים שליליים · משתתפת מעט · אין קשרים חברתיים בולטים · אין דמות משמעותית בבית הספר · ״קרובה מאוד לסבתא״ · ההורים בקשר</td></tr>
+      </table></div>
+      <button class="btn" data-ans="a1">הצגת התשובה</button>
+      <div class="ans" id="a1">
+        <div class="good" style="margin-top:10px"><b>צהוב.</b> יש סימנים בשני תחומים: לימודי (״חלשה״ ועוד 2 שליליים) ושייכות (לא ציינה מבוגר ואין לה קשרים חברתיים).
+          זה לא אדום, כי אין דגל אדום: יש לה דמות משמעותית מחוץ לבית הספר, הסבתא.</div>
+        <ul>
+          <li><b>הפער:</b> ההורים חושבים שהיא מתקדמת (4), אבל יש לה 2 ציונים שליליים. המשמעות: שיחת הורים מגייסת (כרטיס 5) לפני כל מכתב.</li>
+          <li><b>החוזקה היא הכתובת:</b> ציור. אפשר לחבר אותה למענה של העשרה, או לקבוצת שייכות (כרטיסים 9 ו-12).</li>
+          <li><b>עכשיו:</b> שיחה אישית תוך שבועיים, מבוגר משמעותי בשמו, מטרה אחת לשליש ומענה אחד מהמאגר.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>מקרה 2 · יוסי (שם בדוי), כיתה ט׳</h2>
+      <div class="tw"><table>
+        <tr><th>קול</th><th>מה כתוב בשאלון</th></tr>
+        <tr><td><b>התלמיד</b></td><td>טוב לי בבית הספר: ״טוב מאוד״ · הלמידה שלי: ״בסדר״ · מבוגר משמעותי: ״המאמן מהכדורגל״</td></tr>
+        <tr><td><b>ההורים</b></td><td><i>לא ענו, גם לא אחרי תזכורת</i></td></tr>
+        <tr><td><b>המחנך</b></td><td>3 ציונים שליליים · משתתף באופן פעיל · יש לו חברים · ההורים לא בקשר</td></tr>
+      </table></div>
+      <button class="btn" data-ans="a2">הצגת התשובה</button>
+      <div class="ans" id="a2">
+        <div class="warn" style="margin-top:10px"><b>אדום.</b> שלושה ציונים שליליים ומעלה הם דגל אדום, ודגל אדום אחד מספיק.
+          ״טוב לי מאוד״ לא מבטל אותו. <b>האדום תמיד גובר.</b></div>
+        <ul>
+          <li><b>הפער:</b> הוא מרגיש טוב, אבל הלימודים קורסים, וההורים לא בתמונה. ייתכן שהמשפחה לא יודעת מה קורה.</li>
+          <li><b>שתיקת ההורים היא מידע:</b> שלא ענו לשאלון זה בעצמו סימן בתחום ״בית ומשפחה״. ממלאים את השאלון איתם בטלפון, שלוש דקות, וזו כבר פתיחת קשר.</li>
+          <li><b>העוגן כבר קיים:</b> המאמן. אפשר לגייס אותו, ובמקביל לבנות גשר לאיש צוות (כרטיס 7).</li>
+          <li><b>עכשיו:</b> שיחה תוך שבוע, ואחריה שיחה שבועית קבועה ותוכנית אישית משולבת: לימודי וגם קשר־רגשי.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>שלושה פערים לחדרים (מקטע 4)</h2>
+      <p style="color:var(--muted);font-size:13px">חדר אחד לכל פער. השאלה לכל החדרים: ״מה הייתן עושות השבוע?״</p>
+      <ol style="font-size:14px">
+        <li><b>חדר 1:</b> התלמיד כתב ״לא טוב לי״, אבל לפי המחנכת הכול תקין.</li>
+        <li><b>חדר 2:</b> התלמידה ציינה מבוגר משמעותי, אבל לפי המחנכת אין לה דמות משמעותית.</li>
+        <li><b>חדר 3:</b> המבוגר שהתלמיד ציין הוא לא איש צוות. זה השכן, שהוא נהג אוטובוס.</li>
+      </ol>
+      <button class="btn" data-ans="a3">מה המודל ממליץ</button>
+      <div class="ans" id="a3"><ul style="margin-top:10px">
+        <li><b>1:</b> ייתכן שזו מצוקה שקטה שלא נראית בכיתה. שיחה תוך שבוע, וזה סימן חשוב במיוחד.</li>
+        <li><b>2:</b> יש קשר שהצוות לא מכיר. פונים לאותו מבוגר ומגייסים אותו לתוכנית.</li>
+        <li><b>3:</b> העוגן נמצא מחוץ לבית הספר. מחזקים אותו, ובמקביל בונים גשר לאיש צוות (כרטיס 7).</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="pane" id="p-prep">
+    <div class="card"><h2>לפני המפגש</h2><div id="chklist"></div></div>
+    <div class="card"><h2>סקרים להכין מראש בזום</h2>
+      <ul>
+        <li><b>סקר 1 (מקרה נועה):</b> ״איזה צבע?״ אפור / ירוק / צהוב / אדום</li>
+        <li><b>סקר 2 (מקרה יוסי):</b> ״איזה צבע?״ אפור / ירוק / צהוב / אדום</li>
+        <li><b>סקר 3 (סגירה):</b> ״איפה בית הספר שלך במיפוי הפתיחה?״ טרם התחלנו / שאלוני תלמידים יצאו / גם הורים ומחנכים / סיימנו</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pane" id="p-links">
+    <div class="card"><h2>לשתף בצ׳אט</h2><div class="lnk">
+      <a class="y" href="model-neshira.html" target="_blank">📘 מודל ההפעלה המלא</a>
+      <a href="manim-neshira.html" target="_blank">🧭 מענים למניעת נשירה</a></div></div>
+  </div>
+</main>
+
+<footer>הופה · <a href="https://hopa.org.il" target="_blank">hopa.org.il</a> · פתאום הכל נראה אפשרי</footer>
+<div id="toast"></div>
+
+<script>
+var MEETING_DATE='';
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2000)}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+if(MEETING_DATE)$('dateTxt').textContent=MEETING_DATE;
+
+var MODEL='https://meytalp-dev.github.io/hopa-nihul/model-neshira.html';
+var BLOCKS=[
+{n:1,d:8,t:'פתיחה',s:'היכרות וחזון',body:
+  '<div class="say">״לכל אחת מכן יש תלמיד אחד שהיא חושבת עליו כבר עכשיו. בלי שם: מה גורם לך לחשוב עליו?״</div>'+
+  '<h4>סבב (5 דקות)</h4><p>שם, בית ספר, ומשפט אחד על התלמיד. דקה לכל אחת, לא יותר.</p>'+
+  '<h4>החזון, במשפט אחד</h4>'+
+  '<div class="say">״כל תלמיד מוכר בשמו ובחוזקות שלו. תלמיד שמתחיל להתרחק מזוהה מוקדם, יש לו מבוגר משמעותי אחד שלא נעלם, והוא מחובר בזמן למענה שמתאים לו.״</div>'+
+  '<div class="good"><b>למה זה חשוב:</b> רוב התלמידים שהסבב יעלה הם ״נשירה סמויה״. הם עוד בבית הספר, אבל כבר מתנתקים ממנו. זו בדיוק העבודה שלנו.</div>'+
+  '<div class="src">מודל ההפעלה · פרק 1</div>'},
+
+{n:2,d:10,t:'למה ככה',s:'שלושה ממצאים, לא יותר',body:
+  '<h4>1 · מבוגר משמעותי אחד</h4>'+
+  '<p>מבוגר אחד, קבוע, לאורך זמן (Check &amp; Connect). זה הממצא החזק ביותר בתחום. <b>הקביעות חשובה מהתוכן.</b></p>'+
+  '<h4>2 · ההטמעה חשובה יותר מהשיטה</h4>'+
+  '<p>מטא־אנליזה של 167 מחקרים: רוב התוכניות עובדות, ואף אחת לא בלטה מעל האחרות. מה שמכריע הוא הביצוע. ותוכניות שעיקרן מעקב נוכחות היו פחות יעילות.</p>'+
+  '<h4>3 · האדומים מקבלים פחות</h4>'+
+  '<p>בניסוי מבוקר (MDRC, 2017) תלמידים בסיכון גבוה קיבלו <b>פחות</b> שירות מתלמידים בסיכון בינוני. בלי בקרה, המערכת זולגת מעצמה אל המקרים הקלים.</p>'+
+  '<div class="say">״לכן המודל שלנו פשוט: ממפים את כולם, נותנים לכל תלמיד בסיכון מבוגר אחד, ופעם בשליש בודקים שהאדומים באמת מקבלים את עיקר הזמן.״</div>'+
+  '<div class="warn"><b>לא להבטיח</b> שיפור בנוכחות או בציונים. מה שמבטיחים הוא זיהוי, קשר ומענה.</div>'+
+  '<div class="src">מודל ההפעלה · פרק 2 · כרטיס 6</div>'},
+
+{n:3,d:15,t:'שלושה קולות ← רמזור',s:'הסבר + תרגיל על שני מקרים',body:
+  '<h4>שלושה שאלונים (3 דקות)</h4>'+
+  '<ul><li><b>התלמיד:</b> 8 שאלות, כ-5 דקות, בשיעור חינוך. רק הוא יכול לספר איך הוא מרגיש וממי הוא מוכן לקבל עזרה.</li>'+
+  '<li><b>ההורים:</b> 5 שאלות, כ-3 דקות, בקישור לנייד. הם מספרים מה קורה בבית ומה הילד אוהב.</li>'+
+  '<li><b>המחנך/ת:</b> 24 שדות, בישיבה. מכאן מגיעה התמונה המקצועית, וגם המידע מי כבר מטפל בתלמיד.</li></ul>'+
+  '<h4>הרמזור (4 דקות)</h4>'+
+  '<div class="lights">'+
+  '<div class="l-gray"><b>אפור</b>טרם מופה. זה לא ״בסדר״, זה ״לא יודעים״</div>'+
+  '<div class="l-green"><b>ירוק</b>אין סימן, או סימן בתחום אחד</div>'+
+  '<div class="l-yellow"><b>צהוב</b>סימנים בשני תחומים, או אין מבוגר משמעותי</div>'+
+  '<div class="l-red"><b>אדום</b>שלושה תחומים ומעלה, או דגל אדום אחד</div></div>'+
+  '<p><b>חמשת התחומים:</b> לימודי · מעורבות · שייכות וקשר · בית ומשפחה · גורמי טיפול.</p>'+
+  '<p><b>דגלים אדומים</b> (כל אחד מהם מספיק): ״לא מגיע/ה״ · 3 ציונים שליליים ומעלה · ״לא טוב לי״ בלי מבוגר משמעותי · אין דמות משמעותית בכלל · קשיים בבית בלי תמיכה · קצין מבחן · תוכן שמעיד על מצוקה או סכנה.</p>'+
+  '<div class="warn"><b>תוכן של מצוקה, פגיעה או סכנה</b> בתשובה פתוחה: לא מחכים לרמזור. פועלים מיד לפי נוהלי בית הספר (פרק 16).</div>'+
+  '<h4>תרגיל (8 דקות): טאב ״המקרים לתרגיל״</h4>'+
+  '<ol><li>משתפים מסך עם מקרה נועה ופותחים את סקר 1. אחרי דקה מציגים את התשובה.</li>'+
+  '<li>אותו דבר עם מקרה יוסי וסקר 2.</li></ol>'+
+  '<div class="say">״המערכת מציעה צבע. אבל את הצבע הסופי קובעים אנשים שמכירים את התלמיד, בישיבת המיפוי. ובספק? האדום תמיד גובר. עדיף לגלות בשיחה שזו הייתה התרעת שווא, מאשר להחמיץ תלמיד.״</div>'+
+  '<div class="src">מודל ההפעלה · פרקים 3–4</div>'},
+
+{n:4,d:10,t:'הפער בין הקולות',s:'חדרים קטנים',body:
+  '<div class="say">״כשהקולות לא מסכימים זו לא טעות במיפוי. לרוב זו התובנה הכי חשובה. שם מסתתרים התלמידים השקטים.״</div>'+
+  '<h4>חדרים (6 דקות)</h4>'+
+  '<p>שלושה חדרים, ובכל אחד פער אחד (בטאב ״המקרים לתרגיל״). שאלה אחת לכל החדרים: <b>״מה הייתן עושות השבוע?״</b></p>'+
+  '<div class="chatbox">חדר 1 · התלמיד כתב ״לא טוב לי״, אבל לפי המחנכת הכול תקין.\nחדר 2 · התלמידה ציינה מבוגר משמעותי, אבל לפי המחנכת אין לה דמות משמעותית.\nחדר 3 · המבוגר שהתלמיד ציין הוא לא איש צוות. זה השכן, שהוא נהג אוטובוס.\n\nהשאלה: מה הייתן עושות השבוע?</div>'+
+  '<h4>חזרה למליאה (4 דקות)</h4><p>משפט אחד מכל חדר. אחר כך מציגים את מה שהמודל ממליץ.</p>'+
+  '<div class="good"><b>הכלל:</b> שיחה פתוחה עם התלמיד, <b>בלי לעמת אותו עם השאלון</b>.</div>'+
+  '<div class="src">מודל ההפעלה · פרק 4 · כרטיס 11</div>'},
+
+{n:5,d:10,t:'מה עושים מחר',s:'צבע ← פעולה · שיחת החיבור · ישיבת המיפוי',body:
+  '<div class="say">״רמזור בלי מענה הוא דשבורד, לא תוכנית. כל צבע מחייב פעולה.״</div>'+
+  '<div class="tw"><table><tr><th>צבע</th><th>מה עושים</th></tr>'+
+  '<tr><td><b>ירוק</b></td><td>מעקב שגרתי. החוזקה שהתלמיד כתב נכנסת למענים קבוצתיים. התלמיד יודע מי הרכזת.</td></tr>'+
+  '<tr><td><b>צהוב</b></td><td>שיחה תוך שבועיים · מבוגר משמעותי בשמו · מטרה אחת לשליש · שיחה פעם בחודש · שיחת הורים מגייסת · מענה אחד מהמאגר</td></tr>'+
+  '<tr><td><b>אדום</b></td><td>שיחה תוך שבוע · שיחה שבועית קבועה · תוכנית אישית כתובה: לימודי וגם קשר־רגשי · הורים, ובמידת הצורך ביקור בית · תיאום עם מי שכבר מעורב</td></tr></table></div>'+
+  '<h4>שיחת החיבור: ארבע שאלות (כרטיס 1)</h4>'+
+  '<ol><li>🙂 <b>מה טוב?</b> בפגישה הראשונה פותחים במה שהתלמיד כתב שהוא טוב בו.</li><li>😕 <b>מה קשה?</b></li><li>🎯 <b>איפה אנחנו</b> מול המטרה לשליש?</li><li>🤝 <b>מה אני יכולה לעשות</b> בשבילך השבוע?</li></ol>'+
+  '<p>15–20 דקות, ביום ובשעה קבועים, ושני שלישים מהזמן הקשבה. <b>השיחה מתקיימת גם בשבוע טוב.</b> ביטול מצד המבוגר מלמד את התלמיד שמבוגרים נעלמים.</p>'+
+  '<h4>ישיבת המיפוי הכיתתית (כרטיס 2): 45–60 דקות לכיתה</h4>'+
+  '<p>משתתפים המחנך/ת, היועץ/ת והרכזת. הסדר: תמונה כללית (5) · אדומים (20) · צהובים (15) · פערים ואפורים (10) · חלוקת משימות (5).</p>'+
+  '<p>לכל צהוב ואדום יוצאים עם ארבעה דברים: <b>צבע סופי · מבוגר בשמו · מטרה לשליש · מענה אחד.</b></p>'+
+  '<div class="src">מודל ההפעלה · פרקים 5–7 · כרטיסים 1–2</div>'},
+
+{n:6,d:7,t:'סגירה',s:'לוח זמנים · מה לוקחים',body:
+  '<h4>שלושה תאריכים</h4>'+
+  '<ul><li><b>עד סוף נובמבר:</b> מיפוי הפתיחה, שלושת השאלונים לכל שכבות היעד</li>'+
+  '<li><b>עד אמצע דצמבר:</b> רשימה שמית. לכל צהוב ואדום יש מבוגר משמעותי בשמו, מטרה לשליש ומענה</li>'+
+  '<li><b>דצמבר:</b> דיווח ראשון להופה</li></ul>'+
+  '<h4>יעדי היענות</h4><p>מחנכים <b>100%</b> · תלמידים <b>90%</b> · הורים <b>60%</b> ומעלה.</p>'+
+  '<div class="good"><b>טיפ ליעד:</b> תלמידים ממלאים בשיעור חינוך, באותו שבוע לכל השכבה. לא שולחים קישור הביתה ומקווים. הורים שלא ענו גם אחרי תזכורת ממלאים את השאלון בטלפון, וזו כבר פתיחת קשר.</div>'+
+  '<h4>סקר 3 + סבב מהיר</h4><p>״איפה בית הספר שלך במיפוי?״, ואחר כך כל אחת אומרת במשפט אחד מה היא עושה עד המפגש הבא.</p>'+
+  '<div class="chatbox">מודל ההפעלה המלא, עם 12 כרטיסי ההתערבות ונוסח השאלונים:\n'+MODEL+'</div>'+
+  '<div class="say">״המיפוי הוא הכניסה. אנחנו לא מחכים שתלמיד יתפוצץ. נתראה במפגש הבא, ואז כל בית ספר יביא מקרה אחד מהמיפוי.״</div>'+
+  '<div class="src">מודל ההפעלה · פרקים 3, 6, 7, 17</div>'}
+];
+
+function hhmm(m){var h=Math.floor(m/60)%24;return String(h).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function startMins(){var v=($('start').value||'10:00').split(':');return (Number(v[0])||10)*60+(Number(v[1])||0)}
+var openSet={0:true},current=lsGet('mn-cur')?Number(lsGet('mn-cur')):-1;
+function drawBlocks(){
+  var t=startMins(),html='';
+  BLOCKS.forEach(function(b,i){
+    html+='<div class="blk'+(i===current?' now':'')+(current>i?' done':'')+(openSet[i]?' open':'')+'">'+
+      '<div class="bh" data-t="'+i+'"><span class="tm">'+hhmm(t)+'</span>'+
+      '<div class="ti"><h3>'+b.n+' · '+esc(b.t)+'</h3><small>'+esc(b.s)+'</small></div>'+
+      '<span class="dur">'+b.d+' דק׳</span>'+
+      '<button class="go" data-g="'+i+'">'+(i===current?'▶ עכשיו':'התחלנו')+'</button></div>'+
+      '<div class="bb">'+b.body+'</div></div>';
+    t+=b.d;
+  });
+  $('blocks').innerHTML=html;
+  [].slice.call($('blocks').querySelectorAll('.bh')).forEach(function(h){
+    h.onclick=function(e){
+      if(e.target.dataset.g!==undefined){current=Number(e.target.dataset.g);lsSet('mn-cur',current);drawBlocks();return}
+      var i=Number(h.dataset.t);openSet[i]=!openSet[i];drawBlocks();
+    };
+  });
+  [].slice.call($('blocks').querySelectorAll('.chatbox')).forEach(function(box){
+    var txt=box.textContent;
+    var b=document.createElement('button');b.textContent='העתקה';
+    b.onclick=function(e){e.stopPropagation();copy(txt)};
+    box.appendChild(b);
+  });
+}
+function copy(txt){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast('הועתק ✓')},fb)}else fb();
+  function fb(){var a=document.createElement('textarea');a.value=txt;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('הועתק ✓')}catch(e){toast('לא הצלחתי להעתיק')}a.remove()}
+}
+$('start').addEventListener('input',drawBlocks);
+drawBlocks();
+setInterval(function(){var d=new Date();$('now').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')},1000);
+
+[].slice.call(document.querySelectorAll('.tabs button')).forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p)});
+  };
+});
+[].slice.call(document.querySelectorAll('[data-ans]')).forEach(function(b){
+  b.onclick=function(){var a=$(b.dataset.ans);a.classList.toggle('on');b.textContent=a.classList.contains('on')?'הסתרה':(b.dataset.ans==='a3'?'מה המודל ממליץ':'הצגת התשובה')};
+});
+
+var CHK=['לקבוע תאריך ושעה, ולשלוח קישור זום לחמש הרכזות',
+ 'להכין בזום את שלושת הסקרים (טאב הכנות)',
+ 'להכין שלושה חדרים לחלק 4',
+ 'לפתוח את טאב ״המקרים לתרגיל״ בחלון נפרד לשיתוף מסך',
+ 'לבקש מכל רכזת לבוא עם תלמיד אחד בראש (בלי שם)',
+ 'לוודא שלכל הרכזות יש גישה למודול הנשירה ב-HOPA Secure'];
+$('chklist').innerHTML=CHK.map(function(t,i){
+  var on=lsGet('mn-chk'+i)==='1';
+  return '<label class="chk'+(on?' done':'')+'" data-i="'+i+'"><input type="checkbox"'+(on?' checked':'')+'><span>'+esc(t)+'</span></label>';
+}).join('');
+[].slice.call($('chklist').children).forEach(function(l){
+  l.querySelector('input').onchange=function(){lsSet('mn-chk'+l.dataset.i,this.checked?'1':'0');l.classList.toggle('done',this.checked)};
+});
+</script>
+</body>
+</html>
