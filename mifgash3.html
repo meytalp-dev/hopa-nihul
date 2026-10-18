@@ -81,7 +81,7 @@
   .timer button{margin-inline-start:auto;background:var(--yellow);color:#111;border:none;border-radius:11px;padding:10px 20px;font-weight:800;cursor:pointer}
   .timer.run .t{color:var(--yellow)}
 
-  input[type=text],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+  input[type=text],input[type=date],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
   input:focus,textarea:focus,select:focus{border-color:var(--pink)}
   textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
@@ -139,6 +139,7 @@
       <div><span class="t">40′</span><span class="n">אליאס הפוך</span><span class="d">4 קלפי אתגר</span></div>
       <div><span class="t">30′</span><span class="n">כותבים את הפרק</span><span class="d">5 פעולות</span></div>
       <div><span class="t">17′</span><span class="n">סבב ברק וסגירה</span><span class="d"></span></div>
+      <div><span class="t">5′</span><span class="n">בית הספר שלי</span><span class="d">תאריכים · נערי דוד</span></div>
     </div>
     <div class="btnrow">
       <a class="btn yellow" href="machberet.html" target="_blank" rel="noopener" id="mbLink">📓 המחברת</a>
@@ -212,6 +213,45 @@
     </div>
   </section>
 
+  <section id="s7">
+    <div class="sec-head"><div class="num">7</div><div><h2>בית הספר שלי</h2><small>כל רכז/ת ממלא/ת לבד · לפני שיוצאים</small></div><div class="time">5 דק'</div></div>
+    <p>שלושה דברים שאנחנו צריכים מבית הספר, כדי לתאם איתכם את השנה.</p>
+
+    <div class="two">
+      <div><label class="fl">שם</label><input type="text" id="b_who" maxlength="60"></div>
+      <div><label class="fl">בית ספר</label><select id="b_school"><option value="" disabled selected>בחרו בית ספר</option></select></div>
+    </div>
+
+    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">1 · ימי חשיפה לתוכנית הבוגרים</label>
+    <p class="livehint" style="margin-top:0">יום אחד לתלמידי י"ב, ויום אחד להורים.</p>
+    <div class="two">
+      <div><label class="fl">יום חשיפה לתלמידי י"ב</label><input type="date" id="b_d_students"></div>
+      <div><label class="fl">יום חשיפה להורים</label><input type="date" id="b_d_parents"></div>
+    </div>
+
+    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">2 · תוכניות הכוון שכבר קיימות אצלכם</label>
+    <p class="livehint" style="margin-top:0">הכוון לשירות, ללימודים ולתעסוקה: מכינות, ימי הכנה לצה"ל, סדנאות, שותפים מבחוץ. כדי שלא נכפיל את מה שכבר עובד.</p>
+    <label class="fl">בשכבת י"א</label>
+    <textarea id="b_p11" maxlength="400" placeholder="אין עדיין? כתבו &quot;אין&quot;"></textarea>
+    <label class="fl">בשכבת י"ב</label>
+    <textarea id="b_p12" maxlength="400" placeholder="אין עדיין? כתבו &quot;אין&quot;"></textarea>
+
+    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">3 · נערי דוד</label>
+    <div class="callout">
+      <b>נערי דוד</b> היא תוכנית בשיתוף הצבא שמלווה את הצעירים מרגע הגיוס ועד תום השירות, כדי שיתמידו בשירות.
+      בדיוק ברגע שבו הליווי של בית הספר נגמר, והצעיר/ה עובר/ת למסגרת הכי תובענית שהכיר/ה — יש מי שממשיך איתו.
+      <b>לפחות 25 צעירים מבוגרי הופה כבר הצטרפו.</b>
+    </div>
+    <p><b>אנחנו מבקשים מבתי הספר להירשם</b>, כדי שגם התלמידים והבוגרים שלכם שלקראת גיוס יוכלו להצטרף לליווי.</p>    <div class="tsel" id="b_dd" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+      <button type="button" data-v="yes"><span class="t" style="display:block">כן, בית הספר נרשם</span></button>
+      <button type="button" data-v="check"><span class="t" style="display:block">צריך לבדוק עם ההנהלה</span></button>
+    </div>
+
+    <div class="btnrow"><button class="btn pink" id="b_send">שליחה 💛</button></div>
+    <div class="err" id="b_err"></div>
+    <div class="callout g" style="margin-top:12px"><b>אפשר לעדכן בכל זמן.</b> השליחה האחרונה של בית הספר היא זו שנשמרת.</div>
+  </section>
+
 </main>
 
 <footer class="in">תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
@@ -254,7 +294,7 @@ async function put(key,payload){
 }
 
 /* ---------- ניווט ---------- */
-var SECS=[['s0','איך זה עובד'],['s1','הקיר'],['s2','השולחן שלי'],['s3','אליאס'],['s4','אליאס הפוך'],['s5','כותבים'],['s6','סבב ברק']];
+var SECS=[['s0','איך זה עובד'],['s1','הקיר'],['s2','השולחן שלי'],['s3','אליאס'],['s4','אליאס הפוך'],['s5','כותבים'],['s6','סבב ברק'],['s7','בית הספר שלי']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -365,6 +405,52 @@ $('w_send').onclick=async function(){
   btn.disabled=false;btn.textContent='שליחת הפרק 💛';
   if(ok){toast('הפרק נשלח ✓ יוצג ב-4.11');pollNow()}
   else $('w_err').textContent='לא נשלח — נסו שוב. מה שכתבתם שמור במכשיר.';
+};
+
+/* ---------- בית הספר שלי ---------- */
+/* 64 בתי הספר — השמות האחידים (pedagogia-mh/school-names.js) */
+var SCHOOLS=["אבו סנאן", "אום אל פחם בנות", "אום אל פחם בנים", "אור דניאל", "אור העתיד תורני מקצועי", "אורט אורמת", "אורט בית הערבה", "אורט כרמל", "אורט תל נוף", "אורט תעשייה אווירית", "אכסאל", "אל אמאני סכנין", "אלחכמה כסרא-סמיע", "אנרג'י טק", "בית אל", "בית דוד", "בית חנינה בנות", "בית חנינה בנים", "ג'וליס בנות", "דן גורמה", "דרור גליל", "דרור נווה מדבר", "הדר", "התיכון החברתי חיפה", "חוש\"ן", "טורען", "טל חרמון", "ישיבת חנוך לנער", "ישיבת עתיד אור מנחם", "כפר זיתים", "כפר יסיף", "כפר עקב", "לקייה", "מצפה רמון", "מרחביה/מעיינות", "נחלים", "נצרת", "סור באהר", "סכנין תל שבע", "עמל אשדוד", "עמל טייבה ב'", "עמל טק אין", "עמל רהט", "ערערה", "עתיד באר שבע", "עתיד בת עמי", "עתיד גליל מערבי ירכא בנים", "עתיד טק ביר אל מכסור", "עתיד כפר חב\"ד", "עתיד כרמיאל", "עתיד פלמחים", "צור ברק", "צור ים", "קמ\"ג דימונה", "רימונים", "רמת דוד", "שגב שלום", "שפרעם", "תיכון החממה", "תיכון חברתי ת\"א", "תיכון טכנולוגי אי טק סקול (מסעדה)", "תיכון עוצמ\"ה עתיד זוקו", "תיכון שיח", "תפן ליזמות"];
+/* בתי ספר בתוכנית הופה שאינם ברשימת 64 */
+var HOPA_EXTRA=["אורט מרום עכו","אורט אדיבי אשקלון","עתיד שמיים מוצקין","מגשימים בית שאן"];
+/* 26 בתי הספר בתוכנית הופה (maakav.html), בשמות האחידים */
+var HOPA=["אורט בית הערבה","עתיד כרמיאל","נחלים","תיכון חברתי ת\"א","חוש\"ן","תיכון שיח","אל אמאני סכנין","רמת דוד","עמל אשדוד","אורט כרמל","צור ברק","טורען","דרור נווה מדבר","עתיד טק ביר אל מכסור","לקייה","ג'וליס בנות","עתיד פלמחים","דרור גליל","עמל רהט","עתיד גליל מערבי ירכא בנים","התיכון החברתי חיפה","מצפה רמון"].concat(HOPA_EXTRA);
+$('b_school').insertAdjacentHTML('beforeend',SCHOOLS.map(function(s){return '<option>'+esc(s)+'</option>'}).join('')+
+  '<optgroup label="בתי ספר נוספים בתוכנית הופה">'+HOPA_EXTRA.map(function(s){return '<option>'+esc(s)+'</option>'}).join('')+'</optgroup>');
+SCHOOLS=SCHOOLS.concat(HOPA_EXTRA);
+function isHopa(){return HOPA.indexOf($('b_school').value)>-1}
+var B_FIELDS=['b_who','b_school','b_d_students','b_d_parents','b_p11','b_p12'];
+var qs=new URLSearchParams(location.search);
+B_FIELDS.forEach(function(k){
+  var el=$(k),v=lsGet('hopa-m3-f-'+k)||'';
+  if(k==='b_who'&&!v)v=qs.get('n')||'';
+  if(k==='b_school'&&!v)v=qs.get('s')||'';
+  if(k==='b_school'&&SCHOOLS.indexOf(v)<0)v='';
+  if(v)el.value=v;
+  el.addEventListener(k==='b_school'?'change':'input',function(){lsSet('hopa-m3-f-'+k,this.value)});
+});
+var bDD=lsGet('hopa-m3-f-b_dd')||'';
+function paintDD(){[].slice.call($('b_dd').children).forEach(function(b){b.classList.toggle('on',b.dataset.v===bDD)})}
+[].slice.call($('b_dd').children).forEach(function(b){
+  b.onclick=function(){bDD=b.dataset.v;lsSet('hopa-m3-f-b_dd',bDD);paintDD()};
+});
+paintDD();
+
+$('b_send').onclick=async function(){
+  var who=$('b_who').value.trim(),school=$('b_school').value;
+  if(!who||!school){$('b_err').textContent='צריך שם ובית ספר.';return}
+  if(isHopa()){
+    if(!$('b_d_students').value||!$('b_d_parents').value){$('b_err').textContent='חסרים התאריכים של ימי החשיפה.';return}
+    if(!$('b_p11').value.trim()||!$('b_p12').value.trim()){$('b_err').textContent='חסרות תוכניות ההכוון בי"א ובי"ב (אין? כתבו "אין").';return}
+  }
+  $('b_err').textContent='';
+  var btn=this;btn.disabled=true;btn.textContent='שולח…';
+  var ok=await put('bs-'+school,{who:who,school:school,
+    dayStudents:$('b_d_students').value,dayParents:$('b_d_parents').value,
+    prog11:$('b_p11').value.trim(),prog12:$('b_p12').value.trim(),
+    naareiDavid:bDD,hopa:isHopa(),ts:new Date().toISOString()});
+  btn.disabled=false;btn.textContent='שליחה 💛';
+  if(ok)toast('נשלח ✓ תודה!');
+  else $('b_err').textContent='לא נשלח — נסו שוב. מה שכתבתם שמור במכשיר.';
 };
 
 /* ---------- קריאה חיה ---------- */
