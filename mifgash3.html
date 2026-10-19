@@ -32,7 +32,7 @@
   nav.toc a.on{background:var(--pink);border-color:var(--pink);color:#fff}
 
   main{padding:16px 0 60px}
-  section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:64px}
+  section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:112px}
   .sec-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
   .sec-head .num{background:var(--pink);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex:none;margin-top:2px}
   .sec-head h2{margin:0;font-size:18px;font-weight:900}
@@ -109,6 +109,45 @@
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
   #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
   #toast.show{opacity:1}
+
+  /* לשוניות: השולחן · התוכנית שלי */
+  .tabs{display:flex;gap:6px;padding-top:9px}
+  .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 10px;font-weight:800;font-size:14.5px;cursor:pointer;color:var(--muted)}
+  .tabs button.on{background:#111;border-color:#111;color:#fff}
+  .tabs .bd{display:inline-block;min-width:20px;background:var(--yellow);color:#111;border-radius:999px;font-size:11.5px;padding:0 6px;margin-inline-start:6px}
+  .take{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+  .take input{flex:1 1 200px}
+  .btn.addp{font-size:12.5px;padding:7px 12px}
+  .pch{border:2px solid var(--c);border-radius:15px;padding:12px 14px;margin-top:12px}
+  .pch h3{margin:0;font-size:16.5px;font-weight:900;color:var(--c)}
+  .pact{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+  .pact .top{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  .ptag{font-size:11px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--pink-soft);color:var(--pink-dark)}
+  .ptag.t1410{background:#e8f8ef;color:#177a4c}
+  .ptag.ttable{background:#fffbd0;color:#7a6a00}
+  .pact .x{margin-inline-start:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:12.5px;text-decoration:underline}
+  .sl .row{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .sl .nm{width:130px;font-weight:700;font-size:13.5px;line-height:1.25}
+  .sl .nm small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+  .sl input{flex:1;accent-color:var(--pink)}
+  .sl .v{width:46px;font-weight:900;text-align:center}
+  .sl .tot{margin-top:8px;font-weight:700;font-size:13.5px}
+  .sl .tot.over{color:#d9534f}
+  .tsel button .mk{display:block;font-size:11px;font-weight:800;color:var(--pink-dark);margin-top:3px}
+  #p_page{display:none;scroll-margin-top:110px;margin-top:14px;border:1.5px solid var(--line);border-radius:14px;padding:18px;background:#fff}
+  #p_page.on{display:block}
+  #p_page h2{margin:0;font-size:19px;font-weight:900}
+  #p_page h3{font-size:15px;margin:16px 0 6px;color:var(--pink-dark)}
+  #p_page table{width:100%;border-collapse:collapse;font-size:13.5px}
+  #p_page td,#p_page th{border:1px solid var(--line);padding:6px 8px;text-align:right;vertical-align:top}
+  #p_page th{background:#faf7fb;font-size:12.5px}
+  .miss{color:var(--muted);font-style:italic}
+  @media print{
+    body.pp *{visibility:hidden}
+    body.pp #p_page,body.pp #p_page *{visibility:visible}
+    body.pp #p_page{position:absolute;top:0;left:0;right:0;border:0;margin:0}
+    .noprint{display:none!important}
+  }
 </style>
 </head>
 <body>
@@ -121,9 +160,13 @@
   <div class="meet">21.10.2026 · בני ברק <small>שעתיים · מפגש 2 מתוך 3</small></div>
 </div></header>
 
-<nav class="toc"><div class="in" id="toc"></div></nav>
+<nav class="toc">
+  <div class="in tabs" id="tabs"><button type="button" data-tab="t" class="on">השולחן · 21.10</button><button type="button" data-tab="p">התוכנית שלי<span class="bd" id="tabBd" hidden></span></button></div>
+  <div class="in" id="toc"></div>
+</nav>
 
 <main class="in">
+<div id="tabT">
 
   <section id="s0">
     <div class="sec-head"><div class="num">0</div><div><h2>איך זה עובד היום</h2><small>שעתיים</small></div></div>
@@ -132,27 +175,34 @@
       ארבעה סבבי משחק מייצרים את הרעיונות, ובסוף השולחן כותב את הפרק.
       ב-4.11 כל שולחן מציג, וכל אחד יוצא עם תוכנית שלמה שכל החדר בנה.
     </div>
+    <div class="callout g"><b>התוכנית שהתחלתם ב-14.10 מחכה בלשונית "התוכנית שלי".</b>
+      רעיון מהשולחן שמתאים לבית הספר שלכם — לוחצים "+ לתוכנית שלי", והוא נכנס אליה.</div>
     <div class="agenda">
       <div><span class="t">10′</span><span class="n">כניסה לשולחנות</span><span class="d">משובצים מראש</span></div>
-      <div><span class="t">10′</span><span class="n">קיר הציטוטים</span><span class="d">מה הבוגרים אמרו</span></div>
+      <div><span class="t">20′</span><span class="n">מי בתחביב שלי? · בורסת המטרות</span><span class="d">משחק בטלפון</span></div>
       <div><span class="t">8′</span><span class="n">אליאס · סבב חימום</span><span class="d">מושגי התפקיד</span></div>
       <div><span class="t">40′</span><span class="n">אליאס הפוך</span><span class="d">4 קלפי אתגר</span></div>
       <div><span class="t">30′</span><span class="n">כותבים את הפרק</span><span class="d">5 פעולות</span></div>
-      <div><span class="t">17′</span><span class="n">סבב ברק וסגירה</span><span class="d"></span></div>
+      <div><span class="t">12′</span><span class="n">סבב ברק וסגירה</span><span class="d"></span></div>
       <div><span class="t">5′</span><span class="n">בית הספר שלי</span><span class="d">תאריכים · נערי דוד</span></div>
     </div>
     <div class="btnrow">
       <a class="btn yellow" href="machberet.html" target="_blank" rel="noopener" id="mbLink">📓 המחברת</a>
-      <a class="btn ghost" href="kir.html" target="_blank" rel="noopener">🧱 קיר הציטוטים</a>
+      <a class="btn pink" href="bursa.html" target="_blank" rel="noopener" data-game>כניסה למשחק</a>
     </div>
   </section>
 
   <section id="s1">
-    <div class="sec-head"><div class="num">1</div><div><h2>קיר הציטוטים</h2><small>נפתחים ממה ששמעתם</small></div><div class="time">20 דק'</div></div>
-    <p><b>סבב בשולחן, כ-100 שניות לאדם.</b> לא סיכום השיחה — <b>המשפט</b>. מה הוא אמר, ואיך זה נחת עליך.</p>
-    <div class="callout">בסוף הסבב השולחן בוחר ציטוט אחד, כותב על כרטיס ותולה על הקיר. <small style="color:var(--muted)">בלי שם הבוגר ובלי שם בית הספר.</small></div>
-    <div class="callout g"><b>לא הספקת להתקשר?</b> מקשיבים, ובסוף עונים בשולחן על שאלה אחת: <i>״למה לא יצא לך?״</i> — התשובה הזאת שווה בדיוק כמו ציטוט.</div>
-    <div class="quote">ארבע התמות שיעלו מהקיר הן בדיוק ארבע השאלות של שיחת בוגר. לא המצאנו את זה — <b>הבוגרים שלכם הכתיבו את זה השבוע.</b></div>
+    <div class="sec-head"><div class="num">1</div><div><h2>מי בתחביב שלי? · בורסת המטרות</h2><small>משחק הפתיחה · בטלפון</small></div><div class="time">20 דק'</div></div>
+    <p><b>נפגשים סוף סוף פנים אל פנים — אז קודם מכירים.</b></p>
+    <div class="agenda">
+      <div><span class="t">1</span><span class="n">נכנסים למשחק ובוחרים תחביב</span><span class="d">QR על המסך</span></div>
+      <div><span class="t">2</span><span class="n">מחפשים בחדר את מי שהטלפון שולח אליו, ושואלים</span><span class="d">+10 שעות</span></div>
+      <div><span class="t">3</span><span class="n">משקיעים את השעות במשפטי המטרה מ-14.10</span><span class="d">המסך מראה מי מובילה</span></div>
+    </div>
+    <div class="callout">כשמוצאים את מי שחיפשתם — מקלידים את הקוד שמופיע אצלו בטלפון. <b>שניכם מרוויחים 10 שעות.</b> מי שמכיר יותר אנשים, משקיע יותר.</div>
+    <div class="btnrow"><a class="btn pink" href="bursa.html" target="_blank" rel="noopener" data-game>כניסה למשחק</a></div>
+    <div class="quote">בסוף המשחק עולות על המסך שלוש המטרות שהחדר הכי השקיע בהן. <b>עם זה הולכים לשולחנות.</b></div>
   </section>
 
   <section id="s2">
@@ -252,6 +302,51 @@
     <div class="callout g" style="margin-top:12px"><b>אפשר לעדכן בכל זמן.</b> השליחה האחרונה של בית הספר היא זו שנשמרת.</div>
   </section>
 
+</div><!-- /tabT -->
+
+<div id="tabP" hidden>
+
+  <section id="p0">
+    <div class="sec-head"><div class="num">✓</div><div><h2>התוכנית שלי</h2><small>ממשיכה מ-14.10 · אותה תוכנית עד 4.11</small></div></div>
+    <div class="callout y" style="font-size:15px">
+      ב-14.10 התחלתם לבנות תוכנית אישית: מטרה, הפרקים שבחרתם ופעולה ראשונה לכל פרק. <b>כאן היא ממשיכה.</b><br>
+      כל רעיון טוב מהשולחן — לוחצים <b>"+ לתוכנית שלי"</b>, והוא נכנס לפרק המתאים. ב-4.11 ממשיכים מאותה תוכנית.
+    </div>
+    <div class="two">
+      <div><label class="fl">שם</label><input type="text" id="p_who" maxlength="60"></div>
+      <div><label class="fl">בית ספר</label><select id="p_school"></select></div>
+    </div>
+    <div class="callout" id="p_status" style="margin-top:12px"></div>
+  </section>
+
+  <section id="p1">
+    <div class="sec-head"><div class="num">1</div><div><h2>המטרה שלי</h2><small>איזה שינוי אני רוצה לראות אצל הבוגרים בזכות הליווי שלי?</small></div></div>
+    <textarea id="p_goal" maxlength="400"></textarea>
+  </section>
+
+  <section id="p2">
+    <div class="sec-head"><div class="num">2</div><div><h2>איפה ההשקעה</h2><small>באחוזים, עד 100%</small></div></div>
+    <div class="sl" id="p_sl"></div>
+  </section>
+
+  <section id="p3">
+    <div class="sec-head"><div class="num">3</div><div><h2>הפרקים והפעולות שלי</h2><small>אפשר להוסיף פרק — גם אם לא בחרתם בו ב-14.10</small></div></div>
+    <div class="tsel" id="p_chaps"></div>
+    <div id="p_list"></div>
+  </section>
+
+  <section id="p4">
+    <div class="sec-head"><div class="num">4</div><div><h2>שמירה והדף שלי</h2><small>הכול נשמר גם במכשיר</small></div></div>
+    <div class="btnrow">
+      <button class="btn pink" type="button" id="p_save">שמירת התוכנית</button>
+      <button class="btn ghost" type="button" id="p_show">הדף שלי · להדפסה</button>
+    </div>
+    <div class="livehint" id="p_saved"></div>
+    <div id="p_page"></div>
+  </section>
+
+</div><!-- /tabP -->
+
 </main>
 
 <footer class="in">תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
@@ -294,7 +389,7 @@ async function put(key,payload){
 }
 
 /* ---------- ניווט ---------- */
-var SECS=[['s0','איך זה עובד'],['s1','הקיר'],['s2','השולחן שלי'],['s3','אליאס'],['s4','אליאס הפוך'],['s5','כותבים'],['s6','סבב ברק'],['s7','בית הספר שלי']];
+var SECS=[['s0','איך זה עובד'],['s1','המשחק'],['s2','השולחן שלי'],['s3','אליאס'],['s4','אליאס הפוך'],['s5','כותבים'],['s6','סבב ברק'],['s7','בית הספר שלי']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -347,9 +442,18 @@ function paintChapter(){
   $('cards').innerHTML=(CARDS[c.key]||[]).map(function(q,i){
     return '<div class="card" style="border-color:'+c.c+'">'+
       '<div class="rn">סבב '+(i+1)+' מתוך 4</div><div class="q">'+esc(q)+'</div>'+
-      '<div class="st"><button class="btn ghost" data-i="'+i+'">✓ סיימנו את הסבב</button></div></div>';
+      '<div class="st"><button class="btn ghost" data-i="'+i+'">✓ סיימנו את הסבב</button></div>'+
+      '<div class="take"><input type="text" maxlength="140" placeholder="רעיון מהסבב שאני לוקח/ת לבית הספר שלי">'+
+      '<button class="btn ghost addp" type="button" data-take>+ לתוכנית שלי</button></div></div>';
   }).join('');
-  [].slice.call($('cards').querySelectorAll('button')).forEach(function(b){
+  [].slice.call($('cards').querySelectorAll('[data-take]')).forEach(function(b){
+    b.onclick=function(){
+      var inp=b.parentNode.querySelector('input'),t=inp.value.trim();
+      if(!t){toast('כתבו קודם את הרעיון');inp.focus();return}
+      if(addAct(c.n,{what:t},'table'))inp.value='';
+    };
+  });
+  [].slice.call($('cards').querySelectorAll('.st button')).forEach(function(b){
     var k='hopa-m3-done-'+myKey+'-'+b.dataset.i;
     if(lsGet(k)==='1')b.parentNode.parentNode.classList.add('done');
     b.onclick=function(){
@@ -366,8 +470,15 @@ function paintChapter(){
           '<div><input type="text" id="a'+n+'w" placeholder="מתי בשנה" maxlength="30"></div>'+
           '<div><input type="text" id="a'+n+'h" placeholder="שעות" maxlength="12"></div>'+
           '<div><input type="text" id="a'+n+'p" placeholder="מי איתי" maxlength="30"></div>'+
-        '</div></div></div>';
+        '</div><button type="button" class="btn ghost addp" data-addn="'+n+'" style="margin-top:6px">+ לתוכנית שלי</button></div></div>';
     }).join('');
+  [].slice.call($('acts').querySelectorAll('[data-addn]')).forEach(function(b){
+    b.onclick=function(){
+      var n=b.dataset.addn,t=$('a'+n).value.trim();
+      if(!t){toast('כתבו קודם את הפעולה');$('a'+n).focus();return}
+      addAct(c.n,{what:t,when:$('a'+n+'w').value.trim(),hours:$('a'+n+'h').value.trim(),who:$('a'+n+'p').value.trim()},'table');
+    };
+  });
   restoreDraft();
 }
 
@@ -453,6 +564,255 @@ $('b_send').onclick=async function(){
   else $('b_err').textContent='לא נשלח — נסו שוב. מה שכתבתם שמור במכשיר.';
 };
 
+/* ---------- התוכנית שלי (ממשיכה מ-14.10, 18.10.26) ----------
+   מקור 14.10: קודם המכשיר (hopa-m2-* — אותו דומיין), ואם אין — השרת לפי שם ובית ספר
+   (intake_m2-pgisha / m2-shulchan נושאים שם; matara/shaot/peulot לפי אותו dev).
+   נשמר: hopa-m3-plan במכשיר + intake_m3-tochnit-<dev> בשרת (4.11 יקרא משם). */
+var PLAN_KEY='hopa-m3-plan';
+var BUCKETS=[{k:'lifnei',t:'לפני שהם הולכים',d:'י״ב + מאגר'},{k:'kesher',t:'קשר שוטף',d:'שיחות ומעקב'},
+  {k:'manim',t:'מענים וזכויות',d:'חיבורים וסנגור'},{k:'maarech',t:'מערכת',d:'שותפים, תיעוד, הנהלה, אירועים'}];
+var BDEF={lifnei:30,kesher:35,manim:20,maarech:15};
+var SRC_TAG={'1410':['t1410','מ-14.10'],'table':['ttable','מהשולחן'],'me':['','שלי']};
+function lsJson(k,d){try{return JSON.parse(lsGet(k))||d}catch(e){return d}}
+var plan=lsJson(PLAN_KEY,null)||{goal:'',pct:null,chaps:[],acts:[],imp:''};
+var storeLoaded=false,saveT=null,lookT=null;
+function nrm(s){return String(s||'').replace(/[\s\-–'"`״׳.,·()\/]/g,'').toLowerCase()}
+function chapNByTitle(t){for(var i=0;i<CHAPTERS.length;i++)if(CHAPTERS[i].t===t)return CHAPTERS[i].n;return 0}
+
+function from1410Local(){
+  var goal=(lsGet('hopa-m2-m_txt')||'').trim(),top=lsJson('hopa-m2-top',[]),a=lsJson('hopa-m2-acts',{}),pct=null;
+  BUCKETS.forEach(function(b){var v=lsGet('hopa-m2-p-'+b.k);if(v!==null){pct=pct||{};pct[b.k]=Number(v)||0}});
+  if(pct)BUCKETS.forEach(function(b){if(pct[b.k]==null)pct[b.k]=BDEF[b.k]});
+  var acts=[];
+  top.forEach(function(n){var x=a[n]||{};if((x.what||'').trim())acts.push({ch:Number(n),what:x.what.trim(),who:(x.who||'').trim(),when:(x.when||'').trim()})});
+  if(!goal&&!top.length&&!acts.length)return null;
+  return {goal:goal,top:top,pct:pct,acts:acts};
+}
+function remoteFor(dev){
+  var g=STORE['intake_m2-matara-'+dev],h=STORE['intake_m2-shaot-'+dev],p=STORE['intake_m2-peulot-'+dev];
+  var goal=g&&!g.del?String(g.text||'').trim():'';
+  var top=h&&!h.del&&h.top?h.top.map(Number):[];
+  var pct=h&&!h.del&&h.pct?h.pct:null;
+  var acts=[];
+  ((p&&!p.del&&p.acts)||[]).forEach(function(x,i){
+    var n=chapNByTitle(x.ch)||top[i]||0;
+    if(n&&x.what){acts.push({ch:n,what:String(x.what),who:String(x.who||''),when:String(x.when||'')});if(top.indexOf(n)<0)top.push(n)}
+  });
+  if(!goal&&!top.length&&!acts.length)return null;
+  return {goal:goal,top:top,pct:pct,acts:acts};
+}
+function from1410Remote(name,school){
+  var nn=nrm(name),ns=nrm(school);if(nn.length<3)return null;
+  var cands={};
+  Object.keys(STORE).forEach(function(k){
+    var m=k.match(/^intake_m2-(pgisha|shulchan)-(.+)$/);if(!m)return;
+    var x=STORE[k]||{};if(x.del)return;
+    var parts=String(x.me||'').split('·'),pn=nrm(parts[0]),ps=nrm(x.school||parts.slice(1).join(''));
+    var nameOk=pn&&(pn===nn||(nn.length>=5&&pn.length>=5&&(pn.indexOf(nn)>-1||nn.indexOf(pn)>-1)));
+    if(!nameOk)return;
+    var schOk=ns&&ps&&(ps.indexOf(ns)>-1||ns.indexOf(ps)>-1);
+    if(ns&&ps&&!schOk)return;
+    var dev=x.dev||m[2];cands[dev]=Math.max(cands[dev]||0,schOk?2:1);
+  });
+  var best=null,bs=-1;
+  Object.keys(cands).forEach(function(dev){
+    var d=remoteFor(dev);if(!d)return;
+    var s=cands[dev]*100+d.acts.length*3+(d.goal?2:0)+d.top.length;
+    if(s>bs){bs=s;best=d}
+  });
+  return best;
+}
+function importData(src,d){
+  if(plan.imp||!d)return false;
+  if(!plan.goal&&d.goal)plan.goal=d.goal;
+  if(!plan.pct&&d.pct)plan.pct=Object.assign({},d.pct);
+  (d.top||[]).forEach(function(n){n=Number(n);if(n&&plan.chaps.indexOf(n)<0)plan.chaps.push(n)});
+  d.acts.forEach(function(a){addAct(a.ch,{what:a.what,who:a.who,when:a.when},'1410',true)});
+  plan.imp=src;savePlan();
+  if($('p_goal'))$('p_goal').value=plan.goal||'';
+  return true;
+}
+function addAct(n,a,src,quiet){
+  n=Number(n);if(!n||!a.what)return false;
+  if(plan.chaps.indexOf(n)<0)plan.chaps.push(n);
+  var dup=plan.acts.some(function(x){return x.ch===n&&nrm(x.what)===nrm(a.what)});
+  if(dup){if(!quiet)toast('זה כבר בתוכנית שלך');return false}
+  plan.acts.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ch:n,what:a.what,
+    who:a.who||'',when:a.when||'',hours:a.hours||'',src:src});
+  if(!quiet){savePlan();paintPlan();toast('נכנס לתוכנית שלך ✓')}
+  return true;
+}
+function visibleActs(){return plan.acts.filter(function(a){return plan.chaps.indexOf(a.ch)>-1&&(a.what||'').trim()})}
+function paintBadge(){var n=visibleActs().length,b=$('tabBd');b.hidden=!n;b.textContent=n}
+function savePlan(){
+  lsSet(PLAN_KEY,JSON.stringify(plan));paintBadge();
+  clearTimeout(saveT);saveT=setTimeout(pushPlan,5000);
+}
+async function pushPlan(){
+  clearTimeout(saveT);
+  var who=(lsGet('hopa-m3-f-b_who')||'').trim(),school=lsGet('hopa-m3-f-b_school')||'';
+  if(!plan.goal&&!visibleActs().length)return false;
+  var ok=await put('tochnit-'+devId,{who:who,school:school,goal:plan.goal,pct:plan.pct,chaps:plan.chaps,
+    acts:visibleActs(),imp:plan.imp,ts:new Date().toISOString()});
+  $('p_saved').textContent=ok?'נשמר ✓':'לא נשמר בשרת — הכול שמור במכשיר. נסו שוב.';
+  return ok;
+}
+
+/* זהות — אותם שדות כמו "בית הספר שלי" (סעיף 7) */
+$('p_school').innerHTML=$('b_school').innerHTML;
+(function(){
+  var w=lsGet('hopa-m3-f-b_who')||qs.get('n')||lsGet('hopa-m2-g_me')||'';
+  var s=lsGet('hopa-m3-f-b_school')||qs.get('s')||lsGet('hopa-m2-g_school')||'';
+  if(SCHOOLS.indexOf(s)<0)s='';
+  $('p_who').value=w;if(s)$('p_school').value=s;
+  if(w&&!$('b_who').value){$('b_who').value=w;lsSet('hopa-m3-f-b_who',w)}
+  if(s&&!$('b_school').value){$('b_school').value=s;lsSet('hopa-m3-f-b_school',s)}
+})();
+function idChanged(){clearTimeout(lookT);lookT=setTimeout(function(){planOnStore();savePlan()},900)}
+$('p_who').addEventListener('input',function(){lsSet('hopa-m3-f-b_who',this.value);$('b_who').value=this.value;idChanged()});
+$('p_school').addEventListener('change',function(){lsSet('hopa-m3-f-b_school',this.value);$('b_school').value=this.value;idChanged()});
+$('b_who').addEventListener('input',function(){$('p_who').value=this.value;idChanged()});
+$('b_school').addEventListener('change',function(){$('p_school').value=this.value;idChanged()});
+
+function planOnStore(loaded){
+  if(loaded)storeLoaded=true;
+  if(!storeLoaded){paintStatus();return}
+  var did=!plan.imp&&importData('remote',from1410Remote($('p_who').value,$('p_school').value));
+  paintStatus();
+  if(did&&!$('tabP').hidden)paintPlan();   /* רק כשנוסף משהו — לא לדרוס הקלדה בכל סקר */
+}
+function paintStatus(){
+  var el=$('p_status'),cls='callout',h;
+  if(plan.imp){cls+=' g';h='<b>מצאנו את מה שכתבת ב-14.10 ✓</b> זה כבר כאן, ואפשר להמשיך לערוך ולהוסיף.'}
+  else if(!$('p_who').value.trim()){cls+=' y';h='כתבו שם ובית ספר — ננסה למצוא את מה שכתבתם ב-14.10.'}
+  else if(!storeLoaded){h='מחפשים את מה שכתבת ב-14.10…'}
+  else{cls+=' y';h='<b>לא מצאנו את מה שכתבת ב-14.10.</b> אולי מילאת ממכשיר אחר, או שלא היית במפגש. אפשר פשוט להתחיל כאן: מטרה, פרקים ופעולה לכל פרק.'}
+  el.className=cls;el.innerHTML=h;
+}
+
+/* המטרה */
+$('p_goal').value=plan.goal||'';
+$('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
+
+/* איפה ההשקעה */
+function pctNow(){return plan.pct||BDEF}
+$('p_sl').innerHTML=BUCKETS.map(function(b){
+  return '<div class="row"><span class="nm">'+esc(b.t)+'<small>'+esc(b.d)+'</small></span>'+
+    '<input type="range" min="0" max="100" step="5" data-k="'+b.k+'">'+
+    '<span class="v" id="pv-'+b.k+'"></span></div>';
+}).join('')+'<div class="tot" id="p_tot"></div>';
+function paintPct(){
+  var p=pctNow(),sum=0;
+  BUCKETS.forEach(function(b){sum+=Number(p[b.k])||0;$('pv-'+b.k).textContent=(Number(p[b.k])||0)+'%'});
+  var el=$('p_tot');el.className='tot'+(sum>100?' over':'');
+  el.innerHTML='סה״כ <b>'+sum+'%</b> מתוך 100%'+(sum>100?' — חרגתם ב-'+(sum-100)+'%':(sum<100?' · נשארו '+(100-sum)+'%':' ✓'));
+}
+[].slice.call($('p_sl').querySelectorAll('input')).forEach(function(inp){
+  inp.value=Number(pctNow()[inp.dataset.k])||0;
+  inp.addEventListener('input',function(){plan.pct=Object.assign({},pctNow());plan.pct[this.dataset.k]=Number(this.value);paintPct();savePlan()});
+});
+paintPct();
+
+/* הפרקים והפעולות */
+function paintPlan(){
+  [].slice.call($('p_sl').querySelectorAll('input')).forEach(function(inp){inp.value=Number(pctNow()[inp.dataset.k])||0});
+  paintPct();paintStatus();
+  $('p_chaps').innerHTML=CHAPTERS.map(function(c){
+    var on=plan.chaps.indexOf(c.n)>-1;
+    return '<button type="button" data-n="'+c.n+'" class="'+(on?'on':'')+'" style="--accent:'+c.c+'">'+
+      '<span class="n">'+(on?'✓ בתוכנית שלי':'פרק '+c.n)+'</span><span class="t" style="display:block">'+esc(c.t)+'</span>'+
+      '<span class="d">'+esc(c.d)+'</span>'+(c.key===myKey?'<span class="mk">השולחן שלי היום</span>':'')+'</button>';
+  }).join('');
+  [].slice.call($('p_chaps').children).forEach(function(b){
+    b.onclick=function(){
+      var n=Number(b.dataset.n),i=plan.chaps.indexOf(n);
+      if(i>-1)plan.chaps.splice(i,1);else plan.chaps.push(n);
+      savePlan();paintPlan();
+    };
+  });
+  if(!plan.chaps.length){$('p_list').innerHTML='<p class="livehint" style="margin-top:12px">בחרו למעלה את הפרקים שלכם — ואז מוסיפים פעולות לכל אחד.</p>';return}
+  var order=plan.chaps.slice().sort(function(a,b){return a-b});
+  $('p_list').innerHTML=order.map(function(n){
+    var c=CHAPTERS[n-1],l=plan.acts.filter(function(a){return a.ch===n});
+    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+'</h3>'+
+      (l.length?l.map(function(a){
+        var tg=SRC_TAG[a.src]||SRC_TAG.me;
+        return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span>'+
+          '<button type="button" class="x">הסרה</button></div>'+
+          '<input type="text" data-f="what" maxlength="140" placeholder="הפעולה" value="'+esc(a.what)+'">'+
+          '<div class="three" style="margin-top:6px">'+
+            '<div><input type="text" data-f="when" maxlength="30" placeholder="מתי בשנה" value="'+esc(a.when)+'"></div>'+
+            '<div><input type="text" data-f="hours" maxlength="12" placeholder="שעות" value="'+esc(a.hours)+'"></div>'+
+            '<div><input type="text" data-f="who" maxlength="40" placeholder="מי איתי" value="'+esc(a.who)+'"></div>'+
+          '</div></div>';
+      }).join(''):'<p class="livehint">עוד אין פעולות בפרק הזה.</p>')+
+      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div></div>';
+  }).join('');
+  [].slice.call($('p_list').querySelectorAll('.pact')).forEach(function(row){
+    var a=plan.acts.filter(function(x){return x.id===row.dataset.id})[0];if(!a)return;
+    [].slice.call(row.querySelectorAll('input')).forEach(function(inp){
+      inp.addEventListener('input',function(){a[inp.dataset.f]=inp.value;savePlan()});
+    });
+    row.querySelector('.x').onclick=function(){
+      plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר');
+    };
+  });
+  [].slice.call($('p_list').querySelectorAll('[data-new]')).forEach(function(b){
+    b.onclick=function(){
+      var id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      plan.acts.push({id:id,ch:Number(b.dataset.new),what:'',who:'',when:'',hours:'',src:'me'});
+      savePlan();paintPlan();
+      var inp=$('p_list').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
+    };
+  });
+}
+
+/* שמירה והדף שלי */
+$('p_save').onclick=async function(){
+  if(!plan.goal&&!visibleActs().length){toast('עוד אין מה לשמור');return}
+  var btn=this;btn.disabled=true;btn.textContent='שומר…';
+  var ok=await pushPlan();
+  btn.disabled=false;btn.textContent='שמירת התוכנית';
+  if(ok)toast('התוכנית נשמרה ✓');
+};
+function renderPlanPage(){
+  var who=$('p_who').value.trim(),sc=$('p_school').value,p=pctNow(),sum=0;
+  var hrows=BUCKETS.map(function(b){var v=Number(p[b.k])||0;sum+=v;return '<tr><td>'+esc(b.t)+' <span style="color:var(--muted)">· '+esc(b.d)+'</span></td><td style="text-align:center;font-weight:800;width:70px">'+v+'%</td></tr>'}).join('');
+  var order=plan.chaps.slice().sort(function(a,b){return a-b});
+  var chs=order.map(function(n){
+    var l=plan.acts.filter(function(a){return a.ch===n&&(a.what||'').trim()});
+    return '<h3>'+esc(CHAPTERS[n-1].t)+'</h3>'+(l.length?'<table><tr><th>הפעולה</th><th style="width:20%">מתי</th><th style="width:12%">שעות</th><th style="width:20%">מי איתי</th></tr>'+
+      l.map(function(a){return '<tr><td>'+esc(a.what)+'</td><td>'+esc(a.when)+'</td><td>'+esc(a.hours)+'</td><td>'+esc(a.who)+'</td></tr>'}).join('')+'</table>'
+      :'<p class="miss">עוד אין פעולות</p>');
+  }).join('');
+  $('p_page').innerHTML=
+    '<div style="display:flex;align-items:center;gap:12px"><img src="hopa-logo.png" alt="הופה" style="height:40px">'+
+    '<div><h2>ליווי בוגרים · תשפ״ז · התוכנית שלי</h2><div style="color:var(--muted);font-size:13px">'+
+    esc(who)+(sc?' · '+esc(sc):'')+' · מפגשי רכזים 14.10 · 21.10</div></div></div>'+
+    '<h3>המטרה</h3><p>'+(plan.goal.trim()?esc(plan.goal.trim()):'<span class="miss">עוד לא כתבתי</span>')+'</p>'+
+    '<h3>איפה ההשקעה</h3><table>'+hrows+'<tr><td><b>סה״כ</b></td><td style="text-align:center;font-weight:900">'+sum+'%</td></tr></table>'+
+    (chs||'<h3>הפרקים</h3><p class="miss">עוד לא בחרתי פרקים</p>')+
+    '<div class="btnrow noprint"><button class="btn pink" type="button" id="p_print">הדפסה / שמירה כ-PDF</button></div>'+
+    '<p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">תוכנית הבוגרים · הופה · hopa.org.il</p>';
+  $('p_print').onclick=function(){document.body.classList.add('pp');window.print()};
+}
+addEventListener('afterprint',function(){document.body.classList.remove('pp')});
+$('p_show').onclick=function(){renderPlanPage();$('p_page').classList.add('on');$('p_page').scrollIntoView({behavior:'smooth',block:'start'})};
+
+/* לשוניות */
+function showTab(t){
+  $('tabT').hidden=t!=='t';$('tabP').hidden=t!=='p';
+  [].slice.call($('tabs').children).forEach(function(b){b.classList.toggle('on',b.dataset.tab===t)});
+  $('toc').style.display=t==='t'?'':'none';
+  lsSet('hopa-m3-tab',t);
+  if(t==='p')paintPlan();
+}
+[].slice.call($('tabs').children).forEach(function(b){b.onclick=function(){showTab(b.dataset.tab);scrollTo(0,0)}});
+
+importData('local',from1410Local());
+paintBadge();paintStatus();
+showTab(location.hash==='#plan'?'p':(lsGet('hopa-m3-tab')||'t'));
+
 /* ---------- קריאה חיה ---------- */
 var STORE={};
 async function pollNow(){
@@ -472,6 +832,7 @@ function draw(){
   }).join('')||'<span style="border:0;color:var(--muted)">עדיין ריק</span>';
   var n=0;CHAPTERS.forEach(function(c){var x=STORE['intake_'+KEY_PREFIX+'perek-'+c.key];if(x&&!x.del&&x.acts)n++});
   $('lines_count').textContent=n;
+  planOnStore(true);
 }
 pollNow();
 setInterval(function(){if(!document.hidden)pollNow()},9000);
