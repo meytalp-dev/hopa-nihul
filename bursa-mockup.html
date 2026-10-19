@@ -17,7 +17,8 @@
   h1{margin:0;font-size:26px;font-weight:900}
   header p{margin:6px 0 0;opacity:.85;font-size:15px;max-width:820px}
   .pill{display:inline-block;margin-top:12px;background:var(--yellow);color:#111;border-radius:999px;padding:5px 14px;font-weight:800;font-size:13.5px}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+  .phones{display:flex;flex-direction:column;gap:18px}
   .steps div{background:#fff;border-radius:14px;padding:12px 14px;font-size:14px;box-shadow:0 4px 18px rgba(31,31,38,.06)}
   .steps b{display:block;color:var(--pink);font-size:13px}
   .grid{display:grid;grid-template-columns:400px 1fr;gap:18px;margin-top:18px;align-items:start}
@@ -37,6 +38,7 @@
     .phone{margin:0 auto;width:100%;max-width:390px;height:720px}
     .steps{grid-template-columns:1fr 1fr}
   }
+  @media (min-width:1001px) and (max-width:1300px){.steps{grid-template-columns:repeat(3,1fr)}}
   @media (max-width:520px){.steps{grid-template-columns:1fr}h1{font-size:22px}}
 </style>
 </head>
@@ -56,12 +58,18 @@
     <div><b>2 · מי בתחביב שלי?</b>בלוח ההפעלה לוחצים על שלב 2. הטלפון מראה את מי לחפש. מקלידים את הקוד שלו — זיקוקים.</div>
     <div><b>3 · בורסת המטרות</b>שלב 3: משקיעים את השעות. המסך הגדול מראה איזו מטרה מובילה.</div>
     <div><b>4 · סיכום</b>שלב 4: שלוש המטרות שהחדר בחר. אפשר לשלוח גם גונג ומבזק.</div>
+    <div><b>5 · שולחנות הרעיונות</b>שלב 5: בטלפון השולחן — הגרלה, 2 רכיבים, שאלה, 90 שניות רעיונות. כל רעיון = נקודה. המסך מראה מי מוביל.</div>
   </div>
   <button class="reset" id="reset" type="button">התחלה מחדש</button>
 
   <div class="grid">
-    <div class="panel"><h2>הטלפון של הרכז/ת <span>נסו בעצמכם</span></h2>
-      <div class="phone"><iframe id="fPhone" title="הטלפון" src="bursa.html?demo=1" allow="autoplay"></iframe></div>
+    <div class="phones">
+      <div class="panel"><h2>הטלפון של הרכז/ת <span>נסו בעצמכם</span></h2>
+        <div class="phone"><iframe id="fPhone" title="הטלפון" src="bursa.html?demo=1" allow="autoplay"></iframe></div>
+      </div>
+      <div class="panel"><h2>טלפון השולחן <span>שלב 5 · הרשם/ת</span></h2>
+        <div class="phone"><iframe id="fTable" title="טלפון השולחן" src="bursa.html?v=table&demo=1" allow="autoplay"></iframe></div>
+      </div>
     </div>
     <div>
       <div class="panel"><h2>המסך הגדול באולם</h2>
@@ -77,7 +85,7 @@
 <script>
 document.getElementById('reset').onclick=function(){
   try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('hopa-bursa-demo-')===0)localStorage.removeItem(k)})}catch(e){}
-  ['fPhone','fScreen','fAdmin'].forEach(function(id){var f=document.getElementById(id);f.src=f.src});
+  ['fPhone','fTable','fScreen','fAdmin'].forEach(function(id){var f=document.getElementById(id);f.src=f.src});
 };
 </script>
 </body>

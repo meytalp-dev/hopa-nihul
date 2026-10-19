@@ -126,7 +126,7 @@
   .lb .tx{font-size:2.5vh;font-weight:700;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
   .lb .bar{height:1.3vh;background:#2a2a2a;border-radius:99px;margin-top:.7vh;overflow:hidden}
   .lb .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:99px;transition:width .8s}
-  .lb .v{font-size:3vh;font-weight:900;color:var(--yellow);width:9vw;text-align:left;flex:none;font-variant-numeric:tabular-nums}
+  .lb .v{font-size:3vh;font-weight:900;color:var(--yellow);min-width:5vw;text-align:left;flex:none;font-variant-numeric:tabular-nums}
   .tickr{margin-top:2vh;background:#1c1c1c;border-radius:1.5vh;padding:1.2vh 2vw;font-size:2.6vh;font-weight:700;white-space:nowrap;overflow:hidden}
   .tickr b{color:var(--ok)}
   .podium{display:flex;flex-direction:column;gap:2.5vh}
@@ -153,6 +153,56 @@
   table.st{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
   table.st td,table.st th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:right}
   .lnk{display:block;text-align:center;margin-top:10px;font-weight:700;color:var(--pink-dark)}
+
+  /* ---------- שולחנות הרעיונות ---------- */
+  .tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+  .tgrid button{border:2px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:right;cursor:pointer;font-weight:900;font-size:17px}
+  .tgrid button small{display:block;font-weight:600;color:var(--muted);font-size:12.5px}
+  .chgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+  .chgrid button{border:2px solid var(--line);border-inline-start:8px solid var(--c);background:#fff;border-radius:14px;padding:13px 12px;text-align:right;cursor:pointer;font-weight:900;font-size:15.5px}
+  .chgrid button.on{background:var(--c);border-color:var(--c);color:#fff;animation:pop .4s}
+  .chgrid button:disabled{cursor:default;color:var(--ink)}
+  .stepb{display:inline-block;background:#111;color:var(--yellow);border-radius:999px;padding:4px 13px;font-weight:900;font-size:13px}
+  .chname{display:inline-block;color:#fff;border-radius:999px;padding:4px 13px;font-weight:900;font-size:13px;margin-inline-start:6px}
+  .bigh{font-size:24px;font-weight:900;line-height:1.25;margin:12px 0 4px}
+  .qbtn{display:block;width:100%;text-align:right;border:2px solid var(--line);background:#fff;border-radius:14px;padding:15px;font-size:16.5px;font-weight:800;margin-top:9px;cursor:pointer;line-height:1.35}
+  .qbtn:active{transform:scale(.98)}
+  .bigq{font-size:19px;font-weight:900;line-height:1.35;background:#fffdf0;border-inline-start:5px solid var(--yellow);border-radius:0 14px 14px 0;padding:12px 14px;margin-top:10px}
+  .tmr{display:flex;align-items:center;gap:12px;background:#111;color:#fff;border-radius:16px;padding:12px 16px;margin-top:12px}
+  .tmr .t{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--yellow);line-height:1}
+  .tmr button{margin-inline-start:auto;background:var(--yellow);color:#111;border:none;border-radius:12px;padding:12px 22px;font-weight:900;font-size:16px;cursor:pointer}
+  .tmr.over .t{color:#ff6b6b}
+  .addrow{display:flex;gap:8px;margin-top:12px}
+  .addrow input{flex:1}
+  .addrow button{background:var(--pink);color:#fff;border:none;border-radius:12px;padding:0 18px;font-weight:900;font-size:16px;cursor:pointer;white-space:nowrap}
+  .ideas{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .ideas span{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:7px 13px;font-weight:700;font-size:14.5px;animation:pop .4s}
+  .icount{margin-top:10px;font-weight:900;font-size:15px;color:var(--pink-dark)}
+  .back{display:block;background:none;border:none;color:var(--muted);text-decoration:underline;font-size:13.5px;margin:14px auto 0;cursor:pointer}
+  .irow{display:flex;align-items:center;gap:8px;background:#fff;border-radius:14px;padding:11px 13px;margin-top:8px;box-shadow:var(--shadow)}
+  .irow .x{flex:1;font-weight:700;font-size:15px}
+  .irow button{background:var(--pink);color:#fff;border:none;border-radius:11px;padding:8px 12px;font-weight:900;font-size:13px;cursor:pointer;white-space:nowrap}
+  .irow button:disabled{background:#cfe9da;color:#177a4c}
+  .donecard{text-align:center}
+  .donecard .p{font-size:64px;font-weight:900;color:var(--pink);line-height:1}
+  .callout-r{background:#e8f8ef;border:1.5px solid #b8e6c9;border-radius:14px;padding:10px 13px;margin-top:10px;font-size:14.5px}
+  .manual{margin-top:12px;font-size:13.5px;color:var(--muted)}.manual summary{cursor:pointer;font-weight:700}
+  .two-f{display:flex;gap:10px}.two-f>div{flex:1}
+  .where{background:#e8f8ef;border:1.5px solid #b8e6c9;border-radius:14px;padding:11px 14px;margin-top:12px;font-size:15px}
+  .where ol{margin:6px 0 0;padding-inline-start:20px}.where li{margin-bottom:4px}
+  .where p{margin:8px 0 0;font-size:13px;color:var(--muted)}.where p span{font-weight:800;color:var(--ink)}
+  ol.rules{margin:12px 0 0;padding-inline-start:20px;font-size:15.5px;line-height:1.5}ol.rules li{margin-bottom:5px}
+  .guess{display:flex;align-items:center;gap:12px;margin-top:12px}
+  .guess button{flex:1;background:var(--yellow);color:#111;border:none;border-radius:14px;padding:16px;font-weight:900;font-size:18px;cursor:pointer}
+  .guess button:active{transform:scale(.96)}
+  .guess span{font-size:40px;font-weight:900;color:var(--pink);min-width:60px;text-align:center}
+  /* מסך גדול — שולחנות */
+  .lb .n.s-arab{background:#f0a500;color:#111}.lb .n.s-har{background:#4a9fe0}
+  .lb .meta{font-size:2vh;opacity:.7;font-weight:600}
+  .cov div{display:flex;align-items:center;gap:.8vw;background:#1c1c1c;border-radius:1.2vh;padding:.9vh 1.2vw;margin-bottom:.9vh;font-size:2.4vh;font-weight:800;border-inline-start:.8vh solid var(--c)}
+  .cov div span{flex:1}
+  .cov i{font-style:normal;background:#333;border-radius:99px;padding:.2vh .8vw;font-size:2vh}
+  .cov div.empty{opacity:.45}
 </style>
 </head>
 <body>
@@ -213,6 +263,8 @@
       <div id="gList"></div>
     </div>
 
+    <div id="pTables" hidden></div>
+
     <div id="pEnd" hidden>
       <div class="card"><h2>איזה כיף שהייתם!</h2>
         <p class="muted" style="margin:0 0 6px">שלוש המטרות שהחדר הכי השקיע בהן:</p>
@@ -222,10 +274,13 @@
     </div>
   </div>
 
+  <div id="vTable" hidden></div>
+
   <div id="vAdmin" hidden>
     <div class="card"><h2>לוח הפעלה</h2>
       <div class="phases" id="aPhases"></div>
       <a class="lnk" id="aScreen" target="_blank" rel="noopener">פתיחת המסך הגדול ←</a>
+      <a class="lnk" id="aTable" target="_blank" rel="noopener" style="margin-top:4px">טלפון השולחן (לרשם/ת) ←</a>
     </div>
     <div class="card"><h2>גונג ומבזק</h2>
       <p class="muted" style="margin:0">מופיע בגדול על המסך ובכל הטלפונים.</p>
@@ -259,13 +314,17 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="elias-data.js"></script>
 <script>
 var EXEC_URL='https://script.google.com/macros/s/AKfycbzXVjly2MZPu0KeTNu1AeDfqF5Na1UQc7mnc1rCbn7RnXmcpPGC8kkS--K5vhmV65ZW/exec';
 var qs=new URLSearchParams(location.search),MODE=qs.get('v')||'player',DEMO=qs.get('demo')==='1';
 var LS=DEMO?'hopa-bursa-demo-':'hopa-bursa-';
-var PH_T={lobby:'נרשמים',meet:'מי בתחביב שלי?',bursa:'בורסת המטרות',end:'סיכום'};
+var PH_T={lobby:'נרשמים',meet:'מי בתחביב שלי?',bursa:'בורסת המטרות',end:'סיכום',tables:'שולחנות הרעיונות'};
 var SPLASH={meet:['שלב 1','מי בתחביב שלי?','מצאו את מי שעל המסך שלכם — ושאלו אותו'],
-  bursa:['שלב 2','הבורסה נפתחה!','השקיעו את השעות במטרות שאתם רוצים'],end:['סיום','הפעמון צלצל!','אלה המטרות שהחדר בחר']};
+  bursa:['שלב 2','הבורסה נפתחה!','השקיעו את השעות במטרות שאתם רוצים'],end:['סיום','הפעמון צלצל!','אלה המטרות שהחדר בחר'],
+  tables:['שלב 3','שולחנות הרעיונות','כל רעיון = נקודה לשולחן']};
+var SEC_CLS={'כללי':'','כללי ודרוזי':'','ערבי':'s-arab','חרדי':'s-har'};
+function chap(n){return chapterByNum(n)}
 var ICO={
   vol:'<svg class="i" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>',
   off:'<svg class="i" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>',
@@ -390,6 +449,13 @@ var D_ANS={reading:['"השמחה של אחרים" — מומלץ!','כל הספ�
   music:['עומר אדם, בלופ','פיירוז בבוקר','נועה קירל, הילדים בחרו'],travel:['נחל עמוד באביב','לפלנד!','ואדי רם בירדן'],series:['"שטיסל"','"פאודה"','"הכתר"'],garden:['עגבניות שרי במרפסת','נענע ובזיליקום','סוקולנטים'],
   craft:['סריגה של צעיף','קרמיקה בחוג','פסיפס לבית'],dance:['זומבה, פעם בשבוע','ריקודי עם','דבקה בחתונות'],photo:['שקיעה בים','הילדים בים','פרחים בגליל'],pets:['לולה, היא נובחת על דוורים','מיצי, ישנה על המקלדת','רקס'],games:['קטאן','ראמי עם המשפחה','שבע בום']};
 function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+/* בהדגמה: אותו מבנה שולחנות, בלי שמות המנחים */
+var D_TABLES=[[1,'כללי ודרוזי'],[2,'כללי'],[3,'כללי'],[4,'כללי'],[5,'כללי'],[6,'ערבי'],[7,'ערבי'],[8,'ערבי'],[9,'ערבי'],[10,'חרדי'],[11,'חרדי']]
+  .map(function(x){return {n:x[0],lead:'מנחה '+x[0],sec:x[1],s:[]}});
+var D_TMAP={'נחלים':10,'צור ברק':4,'עתיד כרמיאל':1,'אורט כרמל':7,'טורען':6,'לקייה':8,'תיכון שיח':2,'רמת דוד':3,'עמל אשדוד':4,'כפר יסיף':7,'חוש"ן':5,'אל אמאני סכנין':6,'התיכון החברתי חיפה':2,'דרור גליל':3};
+var D_IDEAS=['קבוצת וואטסאפ למחזור עוד לפני הטקס','מחנכת י״ב אוספת טלפונים בשיעור האחרון','ערב בוגרים בחנוכה','בוגר מנטור לכל כיתה','הודעת ברכה ביום ההולדת',
+  'שיחה עם היועצת על מי בסיכון','מצגת 5 דקות בישיבת הנהלה','טופס עדכון פרטים בקישור אחד','דף זכויות ומלגות במייל','שולחן בוגרים ביום הפתוח','בוגרים מספרים לי״ב על השנה הראשונה','טבלת מעקב פשוטה בגוגל שיטס'];
+function dTablePts(t){var p=Number(t&&t.elias)||0;(t&&t.items||[]).forEach(function(it){p+=(it.ideas||[]).length+(it.done?10:0)});return p}
 function dLoad(){try{return JSON.parse(localStorage.getItem(LS+'state'))}catch(e){return null}}
 function dSave(s){try{localStorage.setItem(LS+'state',JSON.stringify(s))}catch(e){}}
 function dFake(i,used){
@@ -427,7 +493,20 @@ function dMeet(s,p,o){
 }
 function demoApi(q){
   var s=dState(),a=q.action,r;
-  if(a==='meta')r={ok:true,hobbies:D_HOB,goals:D_GOALS,step:10};
+  s.tb=s.tb||{};s.ttick=s.ttick||[];
+  if(a==='meta')r={ok:true,hobbies:D_HOB,goals:D_GOALS,step:10,tables:D_TABLES};
+  else if(a==='tableGet'){var t=s.tb[q.n]||null;r={ok:true,t:t,pts:dTablePts(t)}}
+  else if(a==='tableSave'){
+    var nt=JSON.parse(q.json),ot=s.tb[q.n];
+    nt.items.forEach(function(it,i){var o=ot&&ot.items&&ot.items[i];if(o&&o.ch===it.ch)o.ideas.forEach(function(x){if(it.ideas.indexOf(x)<0)it.ideas.push(x)})});
+    nt.items.forEach(function(it,i){var o=ot&&ot.items&&ot.items[i];
+      it.ideas.slice(o?o.ideas.length:0).forEach(function(x){s.ttick.push({n:Number(q.n),ch:it.ch,t:x})});
+      if(it.done&&!(o&&o.done))s.ttick.push({n:Number(q.n),ch:it.ch,t:it.act.what,act:1})});
+    s.ttick=s.ttick.slice(-20);s.tb[q.n]=nt;r={ok:true,pts:dTablePts(nt)};
+  }
+  else if(a==='addIdea'){var t=s.tb[q.n],it=t&&t.items.filter(function(x){return !x.done&&x.q>=0})[0];
+    if(!it)r={ok:false,error:'המנחה עוד לא בחר/ה שאלה'};else{if(it.ideas.indexOf(q.t)<0){it.ideas.push(q.t);s.ttick.push({n:Number(q.n),ch:it.ch,t:q.t})}r={ok:true,pts:dTablePts(t)}}}
+  else if(a==='plus'){var p=s.p[q.id];p.plus=p.plus||[];if(p.plus.indexOf(q.key)<0){p.plus.push(q.key);p.w+=5}r={ok:true,w:p.w,gained:5}}
   else if(a==='join'){
     var h=String(q.h).split(','),ans=JSON.parse(q.a||'{}'),used={};dPlayers(s).forEach(function(x){used[x.code]=1});
     var code;do{code=String(100+Math.floor(Math.random()*900))}while(used[code]);
@@ -437,7 +516,9 @@ function demoApi(q){
     var p=s.p[q.id];if(!p)return {ok:false,gone:true};
     if(s.cfg.phase==='meet'&&!p.t)dPick(p,s);
     var nf=p.nf||[];p.nf=[];
-    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv};
+    var tn=D_TMAP[p.s]||0,tt=tn?s.tb[tn]:null;
+    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv,
+      table:tn,tb:tn?{t:tt||null,pts:dTablePts(tt)}:null,plus:p.plus||[]};
   }else if(a==='meet'){
     var p=s.p[q.id],o=dPlayers(s).filter(function(x){return x.code===String(q.code)})[0];
     if(s.cfg.phase!=='meet')r={ok:false,error:'שלב ההיכרות עוד לא התחיל או כבר נגמר'};
@@ -454,7 +535,9 @@ function demoApi(q){
     var ps=dPlayers(s),hob={};ps.forEach(function(p){p.h.forEach(function(k){hob[k]=(hob[k]||0)+1})});
     var top=Object.keys(s.inv).map(function(g){return {g:Number(g),v:s.inv[g]}}).sort(function(x,y){return y.v-x.v}),inv=0,w=0;
     top.forEach(function(x){inv+=x.v});ps.forEach(function(p){w+=p.w});
-    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,players:ps.length,meets:s.meets,feed:s.feed||[],
+    var tbl=D_TABLES.map(function(T){var t=s.tb[T.n];return {n:T.n,lead:T.lead,sec:T.sec,pts:dTablePts(t),comps:t?t.comps:[],
+      ideas:t?t.items.reduce(function(x,it){return x+it.ideas.length},0):0,acts:t?t.items.filter(function(it){return it.done}).map(function(it){return {ch:it.ch,what:it.act.what}}):[]}});
+    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,players:ps.length,meets:s.meets,feed:s.feed||[],tables:tbl,ttick:s.ttick.slice(-8),
       hobbies:Object.keys(hob).map(function(k){return {t:D_HOB[k].t,n:hob[k]}}).sort(function(x,y){return y.n-x.n}),
       top:top.slice(0,10),tick:s.tick.slice(-10),invested:inv,wallet:w,investors:ps.filter(function(p){return Object.keys(p.inv).length}).length};
   }else if(a==='admin'){
@@ -479,6 +562,22 @@ function demoSim(){
     var hot=[0,2,5,1,8];
     for(var j=0;j<2;j++){var pp=rnd(fakes);if(pp.w>=10){var g=Math.random()<.6?rnd(hot):Math.floor(Math.random()*D_GOALS.length);
       pp.w-=10;pp.inv[g]=(pp.inv[g]||0)+10;s.inv[g]=(s.inv[g]||0)+10;s.tick=s.tick.concat([{g:g,a:10,t:Date.now()}]).slice(-25)}}
+  }
+  if(s.cfg.phase==='tables'){
+    s.tb=s.tb||{};s.ttick=s.ttick||[];
+    var mine=Number(localStorage.getItem(LS+'tb-state')?(JSON.parse(localStorage.getItem(LS+'tb-state'))||{}).n:0);
+    var n=1+Math.floor(Math.random()*11);
+    if(n!==mine){
+      var t=s.tb[n];
+      if(!t){var d=1+Math.floor(Math.random()*8),cs=[d];while(cs.length<3){var x=1+Math.floor(Math.random()*8);if(cs.indexOf(x)<0)cs.push(x)}
+        t=s.tb[n]={drawn:d,comps:cs,items:cs.map(function(c){return {ch:c,q:Math.floor(Math.random()*4),ideas:[],best:-1,act:{what:'',hours:'',who:''},done:false}})}}
+      var it=t.items.filter(function(i){return !i.done})[0];
+      if(it){
+        if(it.ideas.length<4||Math.random()<.6){var idea=rnd(D_IDEAS);it.ideas.push(idea);s.ttick.push({n:n,ch:it.ch,t:idea})}
+        else{it.done=true;it.best=0;it.act={what:it.ideas[0],hours:String(4+Math.floor(Math.random()*10)),who:'מחנכי י״ב'};s.ttick.push({n:n,ch:it.ch,t:it.act.what,act:1})}
+        s.ttick=s.ttick.slice(-20);
+      }
+    }
   }
   dSave(s);
 }
@@ -568,7 +667,8 @@ function paint(){
   countWallet(ME.w);
   $('myCode').textContent=ME.code;
   $('hTitle').textContent=PH_T[ME.phase]||'';
-  ['lobby','meet','bursa','end'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=ME.phase!==p});
+  ['lobby','meet','bursa','end','tables'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=ME.phase!==p});
+  document.querySelector('.mycode').hidden=ME.phase==='tables';
   if(ME.phase!==lastPhase){
     if(lastPhase!==null)splash(ME.phase);
     lastPhase=ME.phase;scrollTo(0,0);
@@ -576,6 +676,72 @@ function paint(){
   if(ME.phase==='meet')paintMeet();
   if(ME.phase==='bursa')paintBursa();
   if(ME.phase==='end')paintEnd();
+  if(ME.phase==='tables')paintTables();
+}
+
+/* ---------- שלב השולחנות בטלפון של הרכז/ת ---------- */
+var myTableOverride=Number(lsGet('mytable')||0),tbOv=null;
+function paintTables(){
+  var n=myTableOverride||ME.table,T=META&&META.tables?META.tables.filter(function(x){return x.n===n})[0]:null;
+  var box=$('pTables');
+  if(!n||!T){
+    box.dataset.n='';
+    box.innerHTML='<div class="card"><h2>באיזה שולחן את/ה?</h2><div class="tgrid" id="ptg"></div></div>';
+    $('ptg').innerHTML=(META?META.tables:[]).map(function(t){return '<button data-n="'+t.n+'">שולחן '+t.n+'<small>'+esc(t.lead)+' · '+esc(t.sec)+'</small></button>'}).join('');
+    [].slice.call($('ptg').children).forEach(function(b){b.onclick=function(){myTableOverride=Number(b.dataset.n);lsSet('mytable',myTableOverride);paintTables();tick()}});
+    return;
+  }
+  if(box.dataset.n!==String(n)){
+    box.dataset.n=n;
+    box.innerHTML='<div class="card" id="ptHead"></div>'+
+      '<div class="card" id="ptAdd" hidden><h2>אני הרשם/ת של השולחן</h2><p class="muted" style="margin:0">כל רעיון שעולה בשולחן — מקלידים כאן. <b>+1 לשולחן</b></p>'+
+      '<div class="addrow"><input type="text" id="ptI" maxlength="140" placeholder="רעיון…" enterkeyhint="send"><button id="ptB">+ רעיון</button></div></div>'+
+      '<div id="ptList"></div>';
+    var send=async function(){
+      var x=$('ptI').value.trim();if(!x)return;$('ptI').value='';$('ptI').focus();
+      sCoin();buzz(20);floater('+1',$('ptB'));
+      try{var r=await call({action:'addIdea',n:n,t:x},2);if(!r.ok)toast(r.error);else tick()}catch(e){toast('לא נשלח — נסו שוב');$('ptI').value=x}
+    };
+    $('ptB').onclick=send;$('ptI').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();send()}};
+  }
+  var tb=myTableOverride&&myTableOverride!==ME.table?tbOv:ME.tb;
+  if(myTableOverride&&myTableOverride!==ME.table&&Date.now()-tbOvAt>5000)loadOv(myTableOverride);
+  var t=tb&&tb.t,pts=tb?tb.pts:0;
+  var cur=null;if(t&&t.items&&t.items.length){cur=t.items.filter(function(it){return !it.done})[0]||null}
+  var head='<span class="stepb">שולחן '+n+'</span> <span class="muted" style="font-weight:700">'+esc(T.lead)+' · '+esc(T.sec)+'</span>'+
+    '<div class="bigh">'+pts+' נקודות לשולחן</div>';
+  if(!cur||!cur.ch)head+='<p class="muted" style="margin:0">'+(t&&t.items&&t.items.length?'השולחן סיים את הרכיבים. כל הכבוד!':'המנחה בוחר/ת רכיבים. תכף מתחילים.')+'</p>';
+  else{var c=chap(cur.ch),q=cur.q>=0&&CARDS[c.key]?CARDS[c.key][cur.q]:'';
+    head+='<span class="chname" style="background:'+c.c+';margin:0">'+esc(c.t)+'</span>'+(q?'<div class="bigq">'+esc(q)+'</div>':'<p class="muted" style="margin:8px 0 0">המנחה בוחר/ת שאלה…</p>')}
+  if($('ptHead').innerHTML!==head)$('ptHead').innerHTML=head;
+  $('ptAdd').hidden=!(cur&&cur.q>=0);
+  var all=[];(t&&t.items||[]).forEach(function(it){(it.ideas||[]).forEach(function(x){all.push({ch:it.ch,t:x})})});
+  var list=all.length?'<div class="card" style="padding-bottom:12px"><h2>הרעיונות של השולחן</h2><p class="muted" style="margin:0">מתאים לבית הספר שלך? לוחצים — וזה נכנס לתוכנית שלך. <b>+5 שעות</b></p>'+
+    all.slice().reverse().map(function(x){var k=n+':'+x.ch+':'+x.t,on=(ME.plus||[]).indexOf(k)>-1;
+      return '<div class="irow"><span class="x">'+esc(x.t)+'</span><button data-k="'+esc(k)+'" data-ch="'+x.ch+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+ לתוכנית שלי')+'</button></div>'}).join('')+'</div>':'';
+  if($('ptList').dataset.h!==list){$('ptList').innerHTML=list;$('ptList').dataset.h=list;
+    [].slice.call($('ptList').querySelectorAll('.irow button')).forEach(function(b){
+      b.onclick=async function(){
+        var k=b.dataset.k,ch=Number(b.dataset.ch),txt=b.parentNode.querySelector('.x').textContent;
+        b.disabled=true;b.textContent='בתוכנית ✓';ME.plus=(ME.plus||[]).concat([k]);
+        addToPlan(ch,txt);sCoin();buzz(25);floater('+5',$('wallet'));
+        try{var r=await call({action:'plus',id:myId,key:k},2);if(r.ok&&r.gained){countWallet(r.w)}}catch(e){}
+      };
+    });
+  }
+}
+var tbOvAt=0;
+async function loadOv(n){tbOvAt=Date.now();try{var r=await call({action:'tableGet',n:n},1);if(r.ok){tbOv={t:r.t,pts:r.pts};paintTables()}}catch(e){}}
+/* כותב ל"התוכנית שלי" של דף המפגש (אותו דומיין) */
+function addToPlan(ch,txt){
+  if(DEMO)return;
+  try{
+    var p=JSON.parse(localStorage.getItem('hopa-m3-plan'))||{goal:'',pct:null,chaps:[],acts:[],imp:''};
+    if(p.acts.some(function(a){return a.ch===ch&&a.what===txt}))return;
+    if(p.chaps.indexOf(ch)<0)p.chaps.push(ch);
+    p.acts.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ch:ch,what:txt,who:'',when:'',hours:'',src:'table'});
+    localStorage.setItem('hopa-m3-plan',JSON.stringify(p));
+  }catch(e){}
 }
 function paintMeet(){
   var t=ME.target,key=t?t.n+'|'+t.s:'';
@@ -638,8 +804,199 @@ function paintEnd(){
   $('eTop').innerHTML=top.map(function(x,i){return '<div class="goal has"><div class="muted" style="font-weight:800">'+(i+1)+' · '+x.v+' שעות</div><div class="tx">'+esc(META.goals[x.g])+'</div></div>'}).join('')||'<p class="muted">עוד לא הושקעו שעות.</p>';
 }
 
+/* ================= דף המנחה בטלפון — שלב אחד בכל מסך, "סיימתי" בסוף כל שלב (נוסח מיטל 19.10.26) ================= */
+var ST=null,stPush=null,tTimer=null,tLeft=90,livePoll=null;
+function stNew(n){return {n:n,step:'scribe',elias:0,drawn:0,comps:[],ci:0,items:[]}}
+function stLoad(){try{return JSON.parse(lsGet('tb-state'))}catch(e){return null}}
+function stSave(now){
+  lsSet('tb-state',JSON.stringify(ST));paintTablePts();
+  clearTimeout(stPush);stPush=setTimeout(pushTable,now?0:500);
+}
+async function pushTable(){
+  if(!ST||!ST.n)return;
+  try{var r=await call({action:'tableSave',n:ST.n,json:JSON.stringify({elias:ST.elias||0,drawn:ST.drawn,comps:ST.comps,items:ST.items})},3);if(!r.ok)toast(r.error)}catch(e){toast('לא נשמר — בודקים חיבור…')}
+}
+function localPts(){var p=Number(ST&&ST.elias)||0;(ST&&ST.items||[]).forEach(function(it){p+=(it.ideas||[]).length+(it.done?10:0)});return p}
+function paintTablePts(){var w=$('wallet');w.hidden=!ST||!ST.n||ST.step==='table';var v=localPts();if(w.dataset.v!==String(v)){w.dataset.v=v;w.innerHTML=v+' <small>נק׳</small>';popEl(w)}}
+function curItem(){return ST.items[ST.ci]}
+function newItem(c){return {ch:c,q:-1,ideas:[],best:-1,act:{what:'',hours:'',who:'',when:''},done:false}}
+function go(step){ST.step=step;stSave();paintTable();scrollTo(0,0)}
+function doneBtn(id,label,dis){return '<button class="btn pink" id="'+id+'"'+(dis?' disabled':'')+'>'+(label||'סיימתי ✓ · לשלב הבא')+'</button>'}
+function stepHead(k,title,sub){return '<span class="stepb">'+k+'</span><div class="bigh">'+title+'</div>'+(sub?'<p class="muted" style="margin:0">'+sub+'</p>':'')}
+function compHead(){var it=curItem(),c=chap(it.ch);return '<span class="stepb">רכיב '+(ST.ci+1)+' מתוך '+ST.items.length+'</span><span class="chname" style="background:'+c.c+'">'+esc(c.t)+'</span>'}
+/* רעיונות שהרכז/ת מקליד/ה בטלפון שלו/ה — נמשכים לכאן כל 3 שניות */
+function startLive(){
+  if(livePoll)return;
+  livePoll=setInterval(async function(){
+    if(!ST||(ST.step!=='ideas'&&ST.step!=='act'))return stopLive();
+    try{var g=await call({action:'tableGet',n:ST.n},1);
+      if(g.ok&&g.t&&g.t.items){var it=curItem(),o=g.t.items[ST.ci],added=0;
+        if(o&&o.ch===it.ch)o.ideas.forEach(function(x){if(it.ideas.indexOf(x)<0){it.ideas.push(x);added++}});
+        if(added){lsSet('tb-state',JSON.stringify(ST));sCoin();paintTablePts();if(ST.step==='ideas')drawIdeas();else paintTable()}}
+    }catch(e){}
+  },3000);
+}
+function stopLive(){if(livePoll){clearInterval(livePoll);livePoll=null}}
+function drawIdeas(){
+  var it=curItem();if(!$('il'))return;
+  $('il').innerHTML=it.ideas.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')||'<span style="background:#f3f3f3;color:#999">עוד אין רעיונות</span>';
+  $('ic').textContent=it.ideas.length+' רעיונות = '+it.ideas.length+' נקודות';
+}
+
+async function initTable(){
+  $('vTable').hidden=false;$('hTitle').textContent='דף המנחה';
+  try{var r=await call({action:'meta'});if(r.ok)META=r}catch(e){}
+  ST=stLoad();
+  if(ST&&ST.n&&localPts()===0){
+    try{var g=await call({action:'tableGet',n:ST.n},2);
+      if(g.ok&&g.t&&g.t.items&&g.t.items.length){ST.elias=g.t.elias||0;ST.drawn=g.t.drawn;ST.comps=g.t.comps;ST.items=g.t.items;
+        var i=ST.items.findIndex(function(it){return !it.done});ST.ci=i<0?ST.items.length-1:i;ST.step=i<0?'more':'q'}
+    }catch(e){}
+  }
+  paintTable();
+}
+function chBtns(list,sel,dis){
+  return list.map(function(n){var c=chap(n);return '<button data-n="'+n+'" style="--c:'+c.c+'" class="'+(sel.indexOf(n)>-1?'on':'')+'"'+(dis.indexOf(n)>-1?' disabled':'')+'>'+esc(c.t)+'</button>'}).join('');
+}
+function paintTable(){
+  var v=$('vTable'),h='',all=[1,2,3,4,5,6,7,8];
+  if(ST&&(ST.step==='ideas'||ST.step==='act'))startLive();else stopLive();
+  if(!ST||!ST.n||ST.step==='table'){
+    v.innerHTML='<div class="card">'+stepHead('דף המנחה','איזה שולחן אתם?')+'<div class="tgrid" id="tg"></div></div>';
+    $('tg').innerHTML=(META?META.tables:[]).map(function(t){return '<button data-n="'+t.n+'">שולחן '+t.n+'<small>'+esc(t.lead)+' · '+esc(t.sec)+'</small></button>'}).join('');
+    [].slice.call($('tg').children).forEach(function(b){b.onclick=function(){ST=stNew(Number(b.dataset.n));stSave(true);sCoin();paintTable()}});
+    $('wallet').hidden=true;return;
+  }
+  $('hTitle').textContent='דף המנחה · שולחן '+ST.n;
+  paintTablePts();
+  if(ST.step==='scribe'){
+    h='<div class="card">'+stepHead('לפני הכול','מנו רכז/ת רעיונות','מישהו/י מהשולחן שכותב/ת את כל הרעיונות')+
+      '<div class="where"><b>איפה כותבים?</b><ol>'+
+      '<li>בטלפון של הרכז/ת — <b>במשחק שפתחנו בהתחלה</b> (מי בתחביב שלי).</li>'+
+      '<li>גוללים לתיבה <b>"אני הרשם/ת של השולחן"</b>.</li>'+
+      '<li>מקלידים כל רעיון ולוחצים <b>"+ רעיון"</b>.</li></ol>'+
+      '<p>סגר/ה את המשחק? נכנסים שוב מהכתובת:<br><span dir="ltr">'+esc(location.host+location.pathname.replace(/[^\/]*$/,'')+'bursa.html')+'</span></p></div>'+
+      '<label class="fl">מי הרכז/ת? (לא חובה)</label><input type="text" id="sc" maxlength="40" value="'+esc(ST.scribe||'')+'">'+
+      doneBtn('nx','סיימתי ✓ · לחלק א׳')+'</div><button class="back" id="bk">שולחן אחר</button>';
+    v.innerHTML=h;
+    $('sc').oninput=function(){ST.scribe=this.value;lsSet('tb-state',JSON.stringify(ST))};
+    $('nx').onclick=function(){sCoin();go('elias')};
+    $('bk').onclick=function(){ST.step='table';paintTable()};
+  }else if(ST.step==='elias'){
+    h='<div class="card">'+stepHead('חלק א׳ · אליאס מושגים','בתוך השקית — שקית אורגנזה לבנה','עם כרטיסי מושגים (קלף ורוד)')+
+      '<ol class="rules"><li>3 סבבים של דקה. <b>בכל סבב מסביר/ה מישהו אחר.</b></li>'+
+      '<li>מסבירים את המושג שעל הכרטיס — <b>בלי להגיד את המילה או חלק ממנה.</b></li>'+
+      '<li>כל ניחוש נכון = נקודה לשולחן.</li></ol>'+
+      '<div class="tmr" id="tm"><span class="t" id="tt">1:00</span><button id="tgo">התחל סבב</button></div>'+
+      '<div class="guess"><button id="gp">+1 ניחוש נכון</button><span id="gn">'+(ST.elias||0)+'</span></div>'+
+      doneBtn('nx','סיימתי ✓ · לחלק ב׳')+'</div><button class="back" id="bk">שולחן אחר</button>';
+    v.innerHTML=h;tLeft=60;paintTimer();
+    $('tgo').onclick=function(){
+      if(tTimer){clearInterval(tTimer);tTimer=null;$('tgo').textContent='המשך';return}
+      if(tLeft<=0)tLeft=60;$('tgo').textContent='עצור';
+      tTimer=setInterval(function(){tLeft--;paintTimer();if(tLeft<=0){clearInterval(tTimer);tTimer=null;sGong();buzz([200,100,200]);toast('הזמן נגמר! מעבירים למסביר/ה הבא/ה',true);if($('tgo'))$('tgo').textContent='סבב הבא'}},1000);
+    };
+    $('gp').onclick=function(){ST.elias=(ST.elias||0)+1;$('gn').textContent=ST.elias;sCoin();buzz(20);floater('+1',$('gp'));stSave()};
+    $('nx').onclick=function(){if(tTimer){clearInterval(tTimer);tTimer=null}tLeft=90;sFanfare();boom(false);go('intro')};
+    $('bk').onclick=function(){go('scribe')};
+  }else if(ST.step==='intro'){
+    h='<div class="card">'+stepHead('חלק ב׳ · שולחנות הרעיונות','לפנייך שקית ובה 8 שקיות קטנות','שקית לכל רכיב · בכל שקית 4 שאלות')+
+      '<div class="chgrid">'+all.map(function(n){var c=chap(n);return '<button disabled style="--c:'+c.c+'">'+esc(c.t)+'</button>'}).join('')+'</div>'+
+      doneBtn('nx','התחלנו ✓')+'</div>';
+    v.innerHTML=h;$('nx').onclick=function(){go('draw')};
+  }else if(ST.step==='draw'){
+    h='<div class="card">'+stepHead('שלב 1','הגרילו רכיב אחד בהפתעה','שולפים שקית בלי להסתכל · לוחצים על הרכיב שיצא')+
+      '<div class="chgrid" id="cg">'+chBtns(all,ST.drawn?[ST.drawn]:[],[])+'</div>'+doneBtn('nx',null,!ST.drawn)+'</div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;
+    [].slice.call($('cg').children).forEach(function(b){b.onclick=function(){ST.drawn=Number(b.dataset.n);ST.comps=[ST.drawn];sCoin();stSave();paintTable()}});
+    $('nx').onclick=function(){toast('יופי!',true);go('pick')};$('bk').onclick=function(){go('intro')};
+  }else if(ST.step==='pick'){
+    var cnt=ST.comps.length-1;
+    h='<div class="card">'+stepHead('שלב 2','בחרו 2 רכיבים','שהשולחן החליט ביחד שמעניינים אתכם · לוחצים עליהם')+
+      '<div class="chgrid" id="cg">'+chBtns(all,ST.comps,[ST.drawn])+'</div>'+doneBtn('nx',null,cnt<2)+'</div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;
+    [].slice.call($('cg').children).forEach(function(b){b.onclick=function(){
+      var n=Number(b.dataset.n);if(n===ST.drawn)return;var i=ST.comps.indexOf(n);
+      if(i>-1)ST.comps.splice(i,1);else{if(ST.comps.length>=3){toast('רק 2 — הורידו אחד');shakeEl($('cg'));return}ST.comps.push(n);sCoin()}
+      stSave();paintTable()}});
+    $('nx').onclick=function(){
+      ST.items=ST.comps.map(function(c,i){var o=ST.items[i];return o&&o.ch===c?o:newItem(c)});
+      ST.ci=0;sFanfare();boom(false);go('q')};
+    $('bk').onclick=function(){go('draw')};
+  }else if(ST.step==='q'){
+    var it=curItem(),c=chap(it.ch);
+    h='<div class="card">'+compHead()+'<div class="bigh">שלב 3 · שאלו שאלה</div><p class="muted" style="margin:0">פותחים את השקית של '+esc(c.t)+' · בוחרים שאלה אחת מתוך 4</p>'+
+      (CARDS[c.key]||[]).map(function(q,i){return '<button class="qbtn" data-i="'+i+'" style="'+(it.q===i?'border-color:'+c.c+';background:#fff8fb':'')+'"><b>'+(i+1)+'.</b> '+esc(q)+'</button>'}).join('')+
+      '</div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;
+    [].slice.call(v.querySelectorAll('.qbtn')).forEach(function(b){b.onclick=function(){it.q=Number(b.dataset.i);sCoin();go('ideas')}});
+    $('bk').onclick=function(){if(ST.ci>0){ST.ci--;go('act')}else go('pick')};
+  }else if(ST.step==='ideas'){
+    var it=curItem(),c=chap(it.ch);
+    h='<div class="card">'+compHead()+'<div class="bigq">'+esc(CARDS[c.key][it.q]||'')+'</div>'+
+      '<div class="callout-r"><b>שאלו את השולחן.</b> רכז/ת אחד/ת רושם/ת את הרעיונות בטלפון שלו/ה — והם מופיעים כאן.</div>'+
+      '<div class="tmr" id="tm"><span class="t" id="tt">1:30</span><button id="tgo">התחל</button></div>'+
+      '<div class="icount" id="ic"></div><div class="ideas" id="il"></div>'+
+      '<details class="manual"><summary>אין רשם/ת? מקלידים כאן</summary><div class="addrow"><input type="text" id="ii" maxlength="140" placeholder="רעיון…"><button id="ia">+ רעיון</button></div></details>'+
+      doneBtn('nx')+'</div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;drawIdeas();paintTimer();
+    var add=function(){var x=$('ii').value.trim();if(!x)return;if(it.ideas.indexOf(x)<0)it.ideas.push(x);$('ii').value='';sCoin();buzz(20);floater('+1',$('ia'));drawIdeas();stSave()};
+    $('ia').onclick=add;$('ii').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();add()}};
+    $('tgo').onclick=function(){
+      if(tTimer){clearInterval(tTimer);tTimer=null;$('tgo').textContent='המשך';return}
+      if(tLeft<=0)tLeft=90;$('tgo').textContent='עצור';
+      tTimer=setInterval(function(){tLeft--;paintTimer();if(tLeft<=0){clearInterval(tTimer);tTimer=null;sGong();buzz([200,100,200]);toast('הזמן נגמר!',true);if($('tgo'))$('tgo').textContent='עוד 90'}},1000);
+    };
+    $('nx').onclick=function(){if(!it.ideas.length){toast('עוד אין רעיונות');shakeEl(this);return}if(tTimer){clearInterval(tTimer);tTimer=null}tLeft=90;toast('יופי!',true);go('act')};
+    $('bk').onclick=function(){go('q')};
+  }else if(ST.step==='act'){
+    var it=curItem(),c=chap(it.ch);
+    h='<div class="card">'+compHead()+'<div class="bigh">שלב 4 · בחרו רעיון אחד ופרקו אותו לפעילות</div><p class="muted" style="margin:0">לפי מה שייכנס לתוכנית השנתית</p>'+
+      '<div class="ideas" id="pk">'+it.ideas.map(function(x,i){return '<span data-i="'+i+'" style="cursor:pointer;'+(it.best===i?'background:var(--pink);color:#fff':'')+'">'+esc(x)+'</span>'}).join('')+'</div>'+
+      '<label class="fl">הפעילות</label><input type="text" id="aw" maxlength="160" value="'+esc(it.act.what)+'">'+
+      '<label class="fl">מי אחראי/ת</label><input type="text" id="ap" maxlength="60" value="'+esc(it.act.who)+'">'+
+      '<div class="two-f"><div><label class="fl">כמה שעות</label><input type="text" id="ah" maxlength="12" inputmode="numeric" value="'+esc(it.act.hours)+'"></div>'+
+      '<div><label class="fl">מתי בשנה</label><input type="text" id="aq" maxlength="40" value="'+esc(it.act.when||'')+'"></div></div>'+
+      doneBtn('nx',it.done?'סיימתי ✓':'סיימתי ✓ · +10')+'</div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;
+    [].slice.call($('pk').children).forEach(function(sp){sp.onclick=function(){it.best=Number(sp.dataset.i);
+      it.act={what:it.ideas[it.best],who:$('ap').value,hours:$('ah').value,when:$('aq').value};stSave();paintTable()}});
+    $('nx').onclick=function(){
+      var w=$('aw').value.trim(),p=$('ap').value.trim(),hh=$('ah').value.trim(),q=$('aq').value.trim(),b=this;
+      if(!w||!p||!hh){toast('חסר: '+[!w&&'הפעילות',!p&&'מי',!hh&&'שעות'].filter(Boolean).join(' · '));shakeEl(b);buzz([60,40,60]);return}
+      var first=!it.done;it.act={what:w,who:p,hours:hh,when:q};it.done=true;
+      if(first){sFireworks(false);boom(false);buzz([100,60,100,60,200]);floater('+10',$('wallet'))}
+      if(ST.ci<ST.items.length-1){ST.ci++;toast(first?'+10! עוברים לרכיב הבא':'נשמר',true);go('q')}
+      else{sFanfare();go('more')}
+    };
+    $('bk').onclick=function(){go('ideas')};
+  }else if(ST.step==='more'){
+    h='<div class="card donecard">'+stepHead('כל הכבוד!',ST.items.length+' רכיבים · '+localPts()+' נקודות')+
+      '<div class="bigh" style="font-size:20px;margin-top:16px">נשאר זמן? מעוניינים בעוד רכיב?</div>'+
+      '<button class="btn pink" id="m1">כן, עוד רכיב</button><button class="btn dark" id="m2">סיימנו</button></div>';
+    v.innerHTML=h;
+    $('m1').onclick=function(){go('pickmore')};$('m2').onclick=function(){sFireworks(true);boom(true);go('end')};
+  }else if(ST.step==='pickmore'){
+    var left=all.filter(function(n){return ST.comps.indexOf(n)<0});
+    h='<div class="card">'+stepHead('עוד רכיב','בחרו רכיב לבחירתכם')+'<div class="chgrid" id="cg">'+chBtns(left,[],[])+'</div></div><button class="back" id="bk">חזרה</button>';
+    v.innerHTML=h;
+    [].slice.call($('cg').children).forEach(function(b){b.onclick=function(){var n=Number(b.dataset.n);ST.comps.push(n);ST.items.push(newItem(n));ST.ci=ST.items.length-1;sCoin();go('q')}});
+    $('bk').onclick=function(){go('more')};
+  }else if(ST.step==='end'){
+    h='<div class="card donecard"><div class="bigh" style="margin-top:0">סיימתם!</div><div class="p">'+localPts()+'</div><div class="muted" style="font-weight:800">נקודות לשולחן '+ST.n+'</div></div>'+
+      ST.items.map(function(it,i){var c=chap(it.ch);return '<div class="card"><span class="chname" style="background:'+c.c+';margin:0">'+esc(c.t)+'</span>'+
+        '<div style="font-weight:800;font-size:16px;margin-top:8px">'+esc(it.act.what||'—')+'</div><div class="muted">'+esc(it.act.who)+(it.act.hours?' · '+esc(it.act.hours)+' שעות':'')+(it.act.when?' · '+esc(it.act.when):'')+'</div>'+
+        '<button class="back" style="margin:6px 0 0" data-i="'+i+'">עריכה</button></div>'}).join('')+
+      '<button class="back" id="m1">עוד רכיב</button>';
+    v.innerHTML=h;
+    [].slice.call(v.querySelectorAll('[data-i]')).forEach(function(b){b.onclick=function(){ST.ci=Number(b.dataset.i);go('act')}});
+    $('m1').onclick=function(){go('pickmore')};
+  }
+}
+function paintTimer(){var e=$('tt');if(!e)return;e.textContent=Math.floor(Math.max(0,tLeft)/60)+':'+String(Math.max(0,tLeft)%60).padStart(2,'0');$('tm').classList.toggle('over',tLeft<=10)}
+
 /* ================= מסך גדול ================= */
-var S=null,scrPhase='',lastMeets=-1,lastLeader=-1;
+var S=null,scrPhase='',lastMeets=-1,lastLeader=-1,lastTI=-1,lastTA=-1;
 function initScreen(){
   document.body.classList.add('scr');
   $('snd').hidden=false;
@@ -655,7 +1012,7 @@ function paintScreen(){
   $('sPh').textContent=S.players+' משתתפים';
   $('sTitle').textContent=PH_T[S.phase]||'';
   var b=$('sBody'),joinUrl=location.href.split('?')[0]+(DEMO?'?demo=1':'');
-  $('sTick').hidden=S.phase!=='bursa';
+  $('sTick').hidden=S.phase!=='bursa'&&S.phase!=='tables';
   var changed=scrPhase!==S.phase;
   if(changed&&scrPhase)splash(S.phase,3200);
   if(S.phase==='lobby'){
@@ -692,6 +1049,28 @@ function paintScreen(){
     $('sTick').innerHTML=S.tick.slice().reverse().map(function(t){
       var g=META?META.goals[t.g]:'';return '<b>▲ +'+t.a+'</b> '+esc(g.length>46?g.slice(0,46)+'…':g);
     }).join(' &nbsp;·&nbsp; ')||'&nbsp;';
+  }else if(S.phase==='tables'){
+    if(changed){
+      b.innerHTML='<div class="s-col" style="flex:1.6"><div class="lb" id="tL"></div></div>'+
+        '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.2vh">איזה רכיב לקחו</div><div class="cov" id="tC"></div></div>';
+      lastTI=-1;lastTA=-1;
+    }
+    var tbs=(S.tables||[]).slice().sort(function(a,b){return b.pts-a.pts||a.n-b.n}),mx=Math.max(1,tbs.length?tbs[0].pts:1);
+    $('tL').innerHTML=tbs.map(function(t){
+      return '<div class="r"><span class="n '+(SEC_CLS[t.sec]||'')+'">'+t.n+'</span><div class="bx"><div class="tx">'+esc(t.lead)+' <span class="meta">· '+esc(t.sec)+' · '+t.ideas+' רעיונות</span></div>'+
+        '<div class="bar"><i style="width:'+Math.round(t.pts/mx*100)+'%"></i></div></div><span class="v">'+t.pts+'</span></div>';
+    }).join('');
+    $('tC').innerHTML=CHAPTERS.map(function(c){
+      var who=(S.tables||[]).filter(function(t){return (t.comps||[]).indexOf(c.n)>-1}).map(function(t){return '<i>'+t.n+'</i>'}).join('');
+      return '<div style="--c:'+c.c+'" class="'+(who?'':'empty')+'"><span>'+esc(c.t)+'</span>'+who+'</div>';
+    }).join('');
+    var ti=0,ta=0;(S.tables||[]).forEach(function(t){ti+=t.ideas;ta+=t.acts.length});
+    if(lastTI>=0&&ti>lastTI)sCoin();
+    if(lastTA>=0&&ta>lastTA){sFireworks(false);boom(false)}
+    lastTI=ti;lastTA=ta;
+    $('sTick').hidden=false;
+    $('sTick').innerHTML=(S.ttick||[]).slice().reverse().map(function(x){var c=chap(x.ch);
+      return '<b>'+(x.act?'★':'+1')+'</b> שולחן '+x.n+' · '+esc(c?c.t:'')+': '+esc(String(x.t).slice(0,48))}).join(' &nbsp;·&nbsp; ')||'&nbsp;';
   }else{
     if(changed){
       b.innerHTML='<div class="s-col"><div class="bigl" style="margin-bottom:2vh">שלוש המטרות שהחדר הכי השקיע בהן</div><div class="podium">'+
@@ -705,11 +1084,12 @@ function paintScreen(){
 
 /* ================= לוח הפעלה ================= */
 var K=qs.get('k')||'';
-var PHASE_LIST=[['lobby','1 · נרשמים','QR על המסך'],['meet','2 · מי בתחביב שלי?','מחפשים ומקלידים קודים'],['bursa','3 · בורסת המטרות','משקיעים את השעות'],['end','4 · סיכום','3 המטרות המובילות']];
+var PHASE_LIST=[['lobby','1 · נרשמים','QR על המסך'],['meet','2 · מי בתחביב שלי?','מחפשים ומקלידים קודים'],['bursa','3 · בורסת המטרות','משקיעים את השעות'],['end','4 · סיכום','3 המטרות המובילות'],['tables','5 · שולחנות הרעיונות','טלפון השולחן + ניקוד']];
 var PRESETS=['עוד 2 דקות!','הבורסה נפתחה — השקיעו!','מי עוד לא מצא אף אחד? הרימו יד','דקה אחרונה להשקעות','עוצרים — כולם לשולחנות'];
 function initAdmin(){
   $('vAdmin').hidden=false;$('hTitle').textContent='לוח הפעלה';
   $('aScreen').href=location.href.split('?')[0]+'?v=screen'+(DEMO?'&demo=1':'');
+  $('aTable').href=location.href.split('?')[0]+'?v=table'+(DEMO?'&demo=1':'');
   $('aPresets').innerHTML=PRESETS.map(function(p){return '<button type="button">'+esc(p)+'</button>'}).join('');
   [].slice.call($('aPresets').children).forEach(function(b){b.onclick=function(){$('aFlash').value=b.textContent}});
   $('aFlashGo').onclick=async function(){
@@ -738,6 +1118,7 @@ async function adminTick(){
 
 if(MODE==='screen')initScreen();
 else if(MODE==='admin')initAdmin();
+else if(MODE==='table')initTable();
 else initPlayer();
 </script>
 </body>

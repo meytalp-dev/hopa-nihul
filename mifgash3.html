@@ -114,6 +114,7 @@
   .tabs{display:flex;gap:6px;padding-top:9px}
   .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 10px;font-weight:800;font-size:14.5px;cursor:pointer;color:var(--muted)}
   .tabs button.on{background:#111;border-color:#111;color:#fff}
+  .tabs .bd[hidden]{display:none}
   .tabs .bd{display:inline-block;min-width:20px;background:var(--yellow);color:#111;border-radius:999px;font-size:11.5px;padding:0 6px;margin-inline-start:6px}
   .take{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
   .take input{flex:1 1 200px}
@@ -142,6 +143,16 @@
   #p_page td,#p_page th{border:1px solid var(--line);padding:6px 8px;text-align:right;vertical-align:top}
   #p_page th{background:#faf7fb;font-size:12.5px}
   .miss{color:var(--muted);font-style:italic}
+  .tideas{margin-top:10px}
+  .ti-h{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:4px}
+  .ti-h span{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:0 8px;margin-inline-start:4px}
+  .ti-r{display:flex;align-items:center;gap:8px;background:#faf7fb;border-radius:11px;padding:7px 10px;margin-top:5px}
+  .ti-r.star{background:#fffbd0}
+  .ti-t{flex:1;font-size:14px;font-weight:600}
+  .ti-t small{display:block;font-size:11.5px;color:var(--muted);font-weight:500}
+  .ti-r button{background:var(--pink);color:#fff;border:none;border-radius:10px;min-width:38px;height:34px;font-weight:900;font-size:16px;cursor:pointer;padding:0 8px}
+  .ti-r button:disabled{background:#cfe9da;color:#177a4c;font-size:12px}
+  .ti-more{background:none;border:none;color:var(--pink-dark);font-weight:700;font-size:13px;margin-top:6px;cursor:pointer;text-decoration:underline}
   @media print{
     body.pp *{visibility:hidden}
     body.pp #p_page,body.pp #p_page *{visibility:visible}
@@ -171,18 +182,17 @@
   <section id="s0">
     <div class="sec-head"><div class="num">0</div><div><h2>איך זה עובד היום</h2><small>שעתיים</small></div></div>
     <div class="callout y" style="font-size:15px">
-      <b>כל שולחן לוקח פרק אחד מתוך תוכנית העבודה — והופך להיות המומחה שלו.</b><br>
-      ארבעה סבבי משחק מייצרים את הרעיונות, ובסוף השולחן כותב את הפרק.
-      ב-4.11 כל שולחן מציג, וכל אחד יוצא עם תוכנית שלמה שכל החדר בנה.
+      <b>יושבים לפי מגזר — כי הדרך של הבוגרים שלכם שונה.</b><br>
+      כל שולחן בוחר 3 רכיבים ובונה לכל אחד פעולה אחת: מה עושים, כמה שעות ומי אחראי.
+      ב-4.11 כל שולחן מציג, וכל אחד יוצא עם תוכנית שלמה.
     </div>
     <div class="callout g"><b>התוכנית שהתחלתם ב-14.10 מחכה בלשונית "התוכנית שלי".</b>
       רעיון מהשולחן שמתאים לבית הספר שלכם — לוחצים "+ לתוכנית שלי", והוא נכנס אליה.</div>
     <div class="agenda">
-      <div><span class="t">10′</span><span class="n">כניסה לשולחנות</span><span class="d">משובצים מראש</span></div>
       <div><span class="t">20′</span><span class="n">מי בתחביב שלי? · בורסת המטרות</span><span class="d">משחק בטלפון</span></div>
+      <div><span class="t">10′</span><span class="n">לשולחנות</span><span class="d">לפי מגזר</span></div>
       <div><span class="t">8′</span><span class="n">אליאס · סבב חימום</span><span class="d">מושגי התפקיד</span></div>
-      <div><span class="t">40′</span><span class="n">אליאס הפוך</span><span class="d">4 קלפי אתגר</span></div>
-      <div><span class="t">30′</span><span class="n">כותבים את הפרק</span><span class="d">5 פעולות</span></div>
+      <div><span class="t">70′</span><span class="n">שולחנות הרעיונות</span><span class="d">3 רכיבים · נקודות</span></div>
       <div><span class="t">12′</span><span class="n">סבב ברק וסגירה</span><span class="d"></span></div>
       <div><span class="t">5′</span><span class="n">בית הספר שלי</span><span class="d">תאריכים · נערי דוד</span></div>
     </div>
@@ -206,10 +216,9 @@
   </section>
 
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>השולחן שלי</h2><small>בוחרים פרק · ומתחילים</small></div></div>
-    <p>בחרו את הפרק שהשולחן שלכם לוקח. כל השאר בדף מתעדכן לפיו.</p>
+    <div class="sec-head"><div class="num">2</div><div><h2>השולחן שלי</h2><small>לפי בית הספר</small></div></div>
+    <div id="myTable"></div>
     <div class="tsel" id="tsel"></div>
-    <div id="mineBox"></div>
   </section>
 
   <section id="s3">
@@ -221,40 +230,24 @@
   </section>
 
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>אליאס הפוך</h2><small>4 סבבים · 10 דקות כל אחד</small></div><div class="time">40 דק'</div></div>
-    <div class="callout"><b>הפוך מאליאס:</b> לא מנחשים מושג — מקבלים אתגר אמיתי, ויש 90 שניות לזרוק כמה שיותר רעיונות.
-      <b>כל רעיון שנרשם = נקודה. לא פוסלים כלום בזמן הסבב.</b></div>
-    <div class="timer" id="tm2"><span class="t" id="t2">01:30</span><span style="font-size:13px;opacity:.7">זריקת רעיונות</span><button data-t="90" data-d="t2">התחל</button></div>
-    <p class="livehint" style="margin-top:12px">אחרי כל 90 שניות: 3 דקות לבחור את שלושת הטובים, ו-5 דקות לפרט אחד מהם — <b>מה צריך בשביל שזה יקרה, כמה שעות, ומי אחראי.</b></p>
-
-    <div id="cards"><p class="livehint">בחרו קודם את הפרק של השולחן (סעיף 2).</p></div>
-  </section>
-
-  <section id="s5">
-    <div class="sec-head"><div class="num">5</div><div><h2>כותבים את הפרק</h2><small>חמש פעולות · לא יותר</small></div><div class="time">30 דק'</div></div>
-    <p>זה מה שיוצג ב-4.11, וזה מה שייכנס לתוכנית העבודה של כל מי שיושב בחדר.</p>
-
-    <label class="fl">מי כותב/ת (שם + בית ספר)</label>
-    <input type="text" id="w_who" placeholder="הרשם/ת של השולחן" maxlength="60">
-
-    <div id="acts"></div>
-
-    <label class="fl">המשפט שנציג ב-4.11 — מה כל רכז/ת חייב/ת לדעת על הפרק הזה</label>
-    <textarea id="w_line" maxlength="220"></textarea>
-
-    <label class="fl">המלכודת — מה הכי סביר שייכשל כאן, ומה עוקף את זה</label>
-    <textarea id="w_trap" maxlength="220"></textarea>
-
-    <div class="btnrow"><button class="btn pink" id="w_send">שליחת הפרק 💛</button></div>
-    <div class="err" id="w_err"></div>
-    <div class="callout g" style="margin-top:12px"><b>אפשר לשלוח כמה פעמים.</b> השליחה האחרונה היא זו שנשמרת ומוצגת ב-4.11.</div>
+    <div class="sec-head"><div class="num">4</div><div><h2>שולחנות הרעיונות</h2><small>3 רכיבים · כל רעיון = נקודה</small></div><div class="time">70 דק'</div></div>
+    <div class="agenda">
+      <div><span class="t">1</span><span class="n">הגרלה — המפקח/ת שולף/ת שקית מהקערה</span><span class="d">רכיב 1</span></div>
+      <div><span class="t">2</span><span class="n">בוחרים עוד 2 רכיבים</span><span class="d">הכי חשובים לכם</span></div>
+      <div><span class="t">3</span><span class="n">שאלה מהשקית · 90 שניות רעיונות</span><span class="d">+1 לכל רעיון</span></div>
+      <div><span class="t">4</span><span class="n">הרעיון הכי טוב · מה, שעות, מי</span><span class="d">+10</span></div>
+    </div>
+    <div class="callout"><b>רשם/ת אחד/ת בשולחן</b> מקליד/ה הכול בטלפון השולחן. <b>לא פוסלים כלום</b> בזמן הרעיונות.</div>
+    <div class="btnrow">
+      <a class="btn pink" href="bursa.html?v=table" target="_blank" rel="noopener">אני הרשם/ת · טלפון השולחן</a>
+      <a class="btn ghost" href="bursa.html" target="_blank" rel="noopener">הרעיונות של השולחן שלי</a>
+    </div>
+    <div class="callout g"><b>רעיון שמתאים לבית הספר שלך?</b> במשחק לוחצים "+ לתוכנית שלי" — הוא נכנס ללשונית "התוכנית שלי", ומקבלים 5 שעות.</div>
   </section>
 
   <section id="s6">
-    <div class="sec-head"><div class="num">6</div><div><h2>סבב ברק</h2><small>כל שולחן — משפט אחד</small></div><div class="time">17 דק'</div></div>
-    <p>שמונה שולחנות, משפט אחד כל אחד. <b>זו הפעם הראשונה שרואים את התוכנית השלמה.</b></p>
-    <div class="wall" id="linesWall"></div>
-    <div class="livehint"><span class="dot"></span> <span id="lines_count">0</span> שולחנות שלחו את הפרק שלהם</div>
+    <div class="sec-head"><div class="num">5</div><div><h2>סבב ברק</h2><small>כל שולחן — הפעולה הכי טובה שלו</small></div><div class="time">12 דק'</div></div>
+    <p>כל שולחן, משפט אחד. <b>שומעים איך אותו רכיב נראה בכל מגזר.</b></p>
     <div class="callout y" style="margin-top:14px"><b>4.11 · זום ·</b> כל שולחן יציג 5 דקות, ואחרי כל הצגה יהיו לכם שתי דקות לכתוב מה אתם לוקחים.
       בסוף המפגש — זה הופך למסמך תוכנית העבודה שלכם.</div>
     <div class="btnrow">
@@ -264,7 +257,7 @@
   </section>
 
   <section id="s7">
-    <div class="sec-head"><div class="num">7</div><div><h2>בית הספר שלי</h2><small>כל רכז/ת ממלא/ת לבד · לפני שיוצאים</small></div><div class="time">5 דק'</div></div>
+    <div class="sec-head"><div class="num">6</div><div><h2>בית הספר שלי</h2><small>כל רכז/ת ממלא/ת לבד · לפני שיוצאים</small></div><div class="time">5 דק'</div></div>
     <p>שלושה דברים שאנחנו צריכים מבית הספר, כדי לתאם איתכם את השנה.</p>
 
     <div class="two">
@@ -389,7 +382,7 @@ async function put(key,payload){
 }
 
 /* ---------- ניווט ---------- */
-var SECS=[['s0','איך זה עובד'],['s1','המשחק'],['s2','השולחן שלי'],['s3','אליאס'],['s4','אליאס הפוך'],['s5','כותבים'],['s6','סבב ברק'],['s7','בית הספר שלי']];
+var SECS=[['s0','איך זה עובד'],['s1','המשחק'],['s2','השולחן שלי'],['s3','אליאס'],['s4','שולחנות הרעיונות'],['s6','סבב ברק'],['s7','בית הספר שלי']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -413,110 +406,31 @@ addEventListener('scroll',function(){
   paint();
 });
 
-/* ---------- בחירת שולחן ---------- */
-var myKey=lsGet('hopa-m3-chap')||'';
-$('tsel').innerHTML=CHAPTERS.map(function(c){
-  return '<button data-k="'+c.key+'" style="--accent:'+c.c+'"><span class="n">שולחן '+c.n+'</span>'+
-    '<span class="t" style="display:block">'+esc(c.t)+'</span><span class="d">'+esc(c.d)+'</span></button>';
-}).join('');
-[].slice.call($('tsel').children).forEach(function(b){
-  b.onclick=function(){myKey=b.dataset.k;lsSet('hopa-m3-chap',myKey);paintChapter()};
-});
-
-function paintChapter(){
-  [].slice.call($('tsel').children).forEach(function(b){b.classList.toggle('on',b.dataset.k===myKey)});
-  var c=myKey?chapterByKey(myKey):null;
-  if(!c){
-    $('mineBox').innerHTML='';
-    $('cards').innerHTML='<p class="livehint">בחרו קודם את הפרק של השולחן (סעיף 2).</p>';
-    $('acts').innerHTML='';
-    return;
-  }
-  document.documentElement.style.setProperty('--accent',c.c);
-  $('mbLink').href='machberet.html?p='+c.key;
-  $('mineBox').innerHTML='<div class="mine" style="border-color:'+c.c+'">'+
-    '<div class="hd"><span class="badge" style="background:'+c.c+'">שולחן '+c.n+'</span>'+
-    '<a class="btn ghost" style="margin-inline-start:auto" href="elias.html?m=ch&p='+c.key+'" target="_blank" rel="noopener">🎴 הקלפים שלנו</a></div>'+
-    '<h3>'+esc(c.t)+'</h3><div class="d">'+esc(c.d)+'</div></div>';
-
-  $('cards').innerHTML=(CARDS[c.key]||[]).map(function(q,i){
-    return '<div class="card" style="border-color:'+c.c+'">'+
-      '<div class="rn">סבב '+(i+1)+' מתוך 4</div><div class="q">'+esc(q)+'</div>'+
-      '<div class="st"><button class="btn ghost" data-i="'+i+'">✓ סיימנו את הסבב</button></div>'+
-      '<div class="take"><input type="text" maxlength="140" placeholder="רעיון מהסבב שאני לוקח/ת לבית הספר שלי">'+
-      '<button class="btn ghost addp" type="button" data-take>+ לתוכנית שלי</button></div></div>';
+/* ---------- השולחן שלי — 11 שולחנות לפי מגזר (19.10.26; זהה לשרת המשחק) ---------- */
+var myKey='';
+var TABLES=[
+  {n:1,lead:'ליאת',sec:'כללי ודרוזי',s:['עתיד גליל מערבי ירכא בנים',"ג'וליס בנות",'אלחכמה כסרא-סמיע','עתיד כרמיאל']},
+  {n:2,lead:'מיטל',sec:'כללי',s:['התיכון החברתי חיפה','צור ים','תיכון עוצמ"ה עתיד זוקו','תיכון שיח','תפן ליזמות','בית אל']},
+  {n:3,lead:'עידית',sec:'כללי',s:['רימונים','רמת דוד','דרור גליל',"אנרג'י טק",'תיכון חברתי ת"א']},
+  {n:4,lead:'סיגלית',sec:'כללי',s:['אורט אורמת','עמל אשדוד','עתיד באר שבע','צור ברק','קמ"ג דימונה','מצפה רמון','בית דוד']},
+  {n:5,lead:'רויטל',sec:'כללי',s:['אורט בית הערבה','חוש"ן','תיכון החממה','דן גורמה','עמל טק אין','אורט תעשייה אווירית','אורט תל נוף','עתיד פלמחים']},
+  {n:6,lead:'יסמין',sec:'ערבי',s:['אכסאל','אל אמאני סכנין','נצרת','טורען','תיכון טכנולוגי אי טק סקול (מסעדה)']},
+  {n:7,lead:'רביב',sec:'ערבי',s:['שפרעם','ערערה','כפר יסיף','אבו סנאן','אורט כרמל','אום אל פחם בנים','אום אל פחם בנות']},
+  {n:8,lead:'שרונה',sec:'ערבי',s:['לקייה','שגב שלום','דרור נווה מדבר','סכנין תל שבע','עמל רהט','עתיד טק ביר אל מכסור']},
+  {n:9,lead:'ויסאם',sec:'ערבי',s:['בית חנינה בנים','בית חנינה בנות','סור באהר','כפר עקב',"עמל טייבה ב'"]},
+  {n:10,lead:'יששכר',sec:'חרדי',s:['אור העתיד תורני מקצועי','הדר','ישיבת עתיד אור מנחם','נחלים','עתיד כפר חב"ד','אור דניאל']},
+  {n:11,lead:'לירון',sec:'חרדי',s:['עתיד בת עמי','טל חרמון','ישיבת חנוך לנער','כפר זיתים','מרחביה/מעיינות']}
+];
+function paintMyTable(){
+  var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];
+  $('myTable').innerHTML=T?
+    '<div class="mine" style="margin-top:0"><div class="hd"><span class="badge">שולחן '+T.n+'</span><span class="d">'+esc(T.sec)+'</span></div>'+
+    '<h3>מנחה: '+esc(T.lead)+'</h3><div class="d">'+esc(sc)+'</div></div>'
+    :'<p class="livehint" style="margin-top:0">בחרו בית ספר בלשונית "התוכנית שלי" — ונראה לכם את השולחן. או מצאו אותו כאן:</p>';
+  $('tsel').innerHTML=TABLES.map(function(t){
+    return '<button type="button" class="'+(T&&T.n===t.n?'on':'')+'"><span class="n">שולחן '+t.n+'</span><span class="t" style="display:block">'+esc(t.lead)+'</span><span class="d">'+esc(t.sec)+'</span></button>';
   }).join('');
-  [].slice.call($('cards').querySelectorAll('[data-take]')).forEach(function(b){
-    b.onclick=function(){
-      var inp=b.parentNode.querySelector('input'),t=inp.value.trim();
-      if(!t){toast('כתבו קודם את הרעיון');inp.focus();return}
-      if(addAct(c.n,{what:t},'table'))inp.value='';
-    };
-  });
-  [].slice.call($('cards').querySelectorAll('.st button')).forEach(function(b){
-    var k='hopa-m3-done-'+myKey+'-'+b.dataset.i;
-    if(lsGet(k)==='1')b.parentNode.parentNode.classList.add('done');
-    b.onclick=function(){
-      var on=b.parentNode.parentNode.classList.toggle('done');
-      lsSet(k,on?'1':'0');
-    };
-  });
-
-  $('acts').innerHTML='<label class="fl">חמש הפעולות שנכנסות לתוכנית</label>'+
-    [1,2,3,4,5].map(function(n){
-      return '<div class="rowline"><span class="n">'+n+'</span><div style="flex:1">'+
-        '<input type="text" id="a'+n+'" placeholder="הפעולה" maxlength="110">'+
-        '<div class="three" style="margin-top:6px">'+
-          '<div><input type="text" id="a'+n+'w" placeholder="מתי בשנה" maxlength="30"></div>'+
-          '<div><input type="text" id="a'+n+'h" placeholder="שעות" maxlength="12"></div>'+
-          '<div><input type="text" id="a'+n+'p" placeholder="מי איתי" maxlength="30"></div>'+
-        '</div><button type="button" class="btn ghost addp" data-addn="'+n+'" style="margin-top:6px">+ לתוכנית שלי</button></div></div>';
-    }).join('');
-  [].slice.call($('acts').querySelectorAll('[data-addn]')).forEach(function(b){
-    b.onclick=function(){
-      var n=b.dataset.addn,t=$('a'+n).value.trim();
-      if(!t){toast('כתבו קודם את הפעולה');$('a'+n).focus();return}
-      addAct(c.n,{what:t,when:$('a'+n+'w').value.trim(),hours:$('a'+n+'h').value.trim(),who:$('a'+n+'p').value.trim()},'table');
-    };
-  });
-  restoreDraft();
 }
-
-/* ---------- טיוטה מקומית ---------- */
-function draftKeys(){
-  var k=['w_who','w_line','w_trap'];
-  [1,2,3,4,5].forEach(function(n){k.push('a'+n,'a'+n+'w','a'+n+'h','a'+n+'p')});
-  return k;
-}
-function restoreDraft(){
-  draftKeys().forEach(function(k){
-    var el=$(k);if(!el)return;
-    el.value=lsGet('hopa-m3-f-'+k)||'';
-    el.oninput=function(){lsSet('hopa-m3-f-'+k,this.value)};
-  });
-}
-paintChapter();
-
-/* ---------- שליחת הפרק ---------- */
-$('w_send').onclick=async function(){
-  if(!myKey){$('w_err').textContent='בחרו קודם את הפרק של השולחן.';return}
-  var who=$('w_who').value.trim();
-  if(!who){$('w_err').textContent='מי כותב/ת?';return}
-  var acts=[];
-  for(var n=1;n<=5;n++){
-    var t=($('a'+n)||{}).value;
-    if(t&&t.trim())acts.push({t:t.trim(),when:($('a'+n+'w')||{}).value||'',hours:($('a'+n+'h')||{}).value||'',who:($('a'+n+'p')||{}).value||''});
-  }
-  if(!acts.length){$('w_err').textContent='לפחות פעולה אחת.';return}
-  $('w_err').textContent='';
-  var btn=this;btn.disabled=true;btn.textContent='שולח…';
-  var c=chapterByKey(myKey);
-  var ok=await put('perek-'+myKey,{chapter:myKey,n:c.n,title:c.t,who:who,acts:acts,
-    line:$('w_line').value.trim(),trap:$('w_trap').value.trim(),ts:new Date().toISOString()});
-  btn.disabled=false;btn.textContent='שליחת הפרק 💛';
-  if(ok){toast('הפרק נשלח ✓ יוצג ב-4.11');pollNow()}
-  else $('w_err').textContent='לא נשלח — נסו שוב. מה שכתבתם שמור במכשיר.';
-};
 
 /* ---------- בית הספר שלי ---------- */
 /* 64 בתי הספר — השמות האחידים (pedagogia-mh/school-names.js) */
@@ -668,7 +582,8 @@ $('p_school').innerHTML=$('b_school').innerHTML;
   if(w&&!$('b_who').value){$('b_who').value=w;lsSet('hopa-m3-f-b_who',w)}
   if(s&&!$('b_school').value){$('b_school').value=s;lsSet('hopa-m3-f-b_school',s)}
 })();
-function idChanged(){clearTimeout(lookT);lookT=setTimeout(function(){planOnStore();savePlan()},900)}
+function idChanged(){paintMyTable();clearTimeout(lookT);lookT=setTimeout(function(){planOnStore();savePlan()},900)}
+paintMyTable();
 $('p_who').addEventListener('input',function(){lsSet('hopa-m3-f-b_who',this.value);$('b_who').value=this.value;idChanged()});
 $('p_school').addEventListener('change',function(){lsSet('hopa-m3-f-b_school',this.value);$('b_school').value=this.value;idChanged()});
 $('b_who').addEventListener('input',function(){$('p_who').value=this.value;idChanged()});
@@ -746,7 +661,8 @@ function paintPlan(){
             '<div><input type="text" data-f="who" maxlength="40" placeholder="מי איתי" value="'+esc(a.who)+'"></div>'+
           '</div></div>';
       }).join(''):'<p class="livehint">עוד אין פעולות בפרק הזה.</p>')+
-      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div></div>';
+      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div>'+
+      '<div class="tideas" data-ch="'+n+'"></div></div>';
   }).join('');
   [].slice.call($('p_list').querySelectorAll('.pact')).forEach(function(row){
     var a=plan.acts.filter(function(x){return x.id===row.dataset.id})[0];if(!a)return;
@@ -757,6 +673,7 @@ function paintPlan(){
       plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר');
     };
   });
+  paintTableIdeas();
   [].slice.call($('p_list').querySelectorAll('[data-new]')).forEach(function(b){
     b.onclick=function(){
       var id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -766,6 +683,52 @@ function paintPlan(){
     };
   });
 }
+
+/* רעיונות מהשולחנות (21.10) — מכל 11 השולחנות, לפי רכיב, בלי שמות. קודם המגזר שלי. */
+var GAME_URL='https://script.google.com/macros/s/AKfycbzXVjly2MZPu0KeTNu1AeDfqF5Na1UQc7mnc1rCbn7RnXmcpPGC8kkS--K5vhmV65ZW/exec';
+var TIDEAS=null,tiOpen={};
+function gameJsonp(params){
+  return new Promise(function(res,rej){
+    var cb='gi'+Math.random().toString(36).slice(2),sc=document.createElement('script');
+    var t=setTimeout(function(){cl();rej(new Error('timeout'))},20000);
+    function cl(){try{delete window[cb]}catch(e){window[cb]=undefined}sc.remove();clearTimeout(t)}
+    window[cb]=function(d){cl();res(d)};
+    sc.src=GAME_URL+'?'+new URLSearchParams(Object.assign({},params,{callback:cb})).toString();
+    sc.onerror=function(){cl();rej(new Error('network'))};
+    document.head.appendChild(sc);
+  });
+}
+async function loadTableIdeas(){
+  try{var r=await gameJsonp({action:'ideas'});if(r&&r.ok){TIDEAS=r.ideas||{};paintTableIdeas()}}catch(e){}
+}
+function mySector(){
+  var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];
+  return T?T.sec:'';
+}
+function paintTableIdeas(){
+  if(!TIDEAS)return;
+  var sec=mySector();
+  [].slice.call(document.querySelectorAll('.tideas')).forEach(function(box){
+    var n=Number(box.dataset.ch),l=(TIDEAS[n]||[]).slice();
+    if(!l.length){box.innerHTML='';return}
+    l.sort(function(a,b){var sa=(a.sec===sec?0:1),sb=(b.sec===sec?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
+    var have={};plan.acts.forEach(function(x){if(x.ch===n)have[nrm(x.what)]=1});
+    var lim=tiOpen[n]?l.length:5;
+    box.innerHTML='<div class="ti-h">רעיונות מהשולחנות <span>'+l.length+'</span></div>'+
+      l.slice(0,lim).map(function(x,i){var on=have[nrm(x.t)];
+        return '<div class="ti-r'+(x.act?' star':'')+'"><div class="ti-t">'+(x.act?'★ ':'')+esc(x.t)+
+          '<small>שולחן '+x.n+' · '+esc(x.sec)+(x.act?' · '+esc(x.act.hours)+' שעות · '+esc(x.act.who):'')+'</small></div>'+
+          '<button type="button" data-i="'+i+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+')+'</button></div>';
+      }).join('')+
+      (l.length>5?'<button type="button" class="ti-more">'+(tiOpen[n]?'פחות':'עוד '+(l.length-5)+' רעיונות')+'</button>':'');
+    [].slice.call(box.querySelectorAll('.ti-r button')).forEach(function(b){
+      b.onclick=function(){var x=l[Number(b.dataset.i)];
+        addAct(n,{what:x.t,hours:x.act?x.act.hours:'',who:x.act?x.act.who:'',when:x.act?x.act.when:''},'table')};
+    });
+    var m=box.querySelector('.ti-more');if(m)m.onclick=function(){tiOpen[n]=!tiOpen[n];paintTableIdeas()};
+  });
+}
+setInterval(function(){if(!document.hidden&&!$('tabP').hidden)loadTableIdeas()},20000);
 
 /* שמירה והדף שלי */
 $('p_save').onclick=async function(){
@@ -805,7 +768,7 @@ function showTab(t){
   [].slice.call($('tabs').children).forEach(function(b){b.classList.toggle('on',b.dataset.tab===t)});
   $('toc').style.display=t==='t'?'':'none';
   lsSet('hopa-m3-tab',t);
-  if(t==='p')paintPlan();
+  if(t==='p'){paintPlan();loadTableIdeas()}
 }
 [].slice.call($('tabs').children).forEach(function(b){b.onclick=function(){showTab(b.dataset.tab);scrollTo(0,0)}});
 
@@ -821,19 +784,7 @@ async function pollNow(){
     if(r&&r.ok&&r.store){STORE=r.store;draw()}
   }catch(e){}
 }
-function draw(){
-  var out=[];
-  CHAPTERS.forEach(function(c){
-    var x=STORE['intake_'+KEY_PREFIX+'perek-'+c.key];
-    if(x&&!x.del&&x.line)out.push({c:c,line:x.line});
-  });
-  $('linesWall').innerHTML=out.map(function(o){
-    return '<span style="border-color:'+o.c.c+'"><i>'+esc(o.c.t)+' · </i>'+esc(o.line)+'</span>';
-  }).join('')||'<span style="border:0;color:var(--muted)">עדיין ריק</span>';
-  var n=0;CHAPTERS.forEach(function(c){var x=STORE['intake_'+KEY_PREFIX+'perek-'+c.key];if(x&&!x.del&&x.acts)n++});
-  $('lines_count').textContent=n;
-  planOnStore(true);
-}
+function draw(){planOnStore(true)}   /* הקריאה החיה משמשת רק למציאת התוכנית מ-14.10 */
 pollNow();
 setInterval(function(){if(!document.hidden)pollNow()},9000);
 </script>
