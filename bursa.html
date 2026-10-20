@@ -502,7 +502,7 @@ function dMeet(s,p,o){
   p.met.push(o.id);o.met.push(p.id);p.w+=10;o.w+=10;s.meets++;
   o.nf=(o.nf||[]).concat([{n:p.n,s:p.s}]).slice(-5);
   if(p.t===o.id)p.t='';if(o.t===p.id)o.t='';
-  if(s.cfg.phase==='meet'){if(!p.t)dPick(p,s);if(!o.t)dPick(o,s)}
+  if(s.cfg.phase==='meet'||s.cfg.phase==='lobby'){if(!p.t)dPick(p,s);if(!o.t)dPick(o,s)}
   s.feed=(s.feed||[]).concat([{a:p.n,b:o.n}]).slice(-6);
 }
 function demoApi(q){
@@ -525,17 +525,17 @@ function demoApi(q){
     var h=String(q.h).split(','),ans=JSON.parse(q.a||'{}'),used={};dPlayers(s).forEach(function(x){used[x.code]=1});
     var code;do{code=String(100+Math.floor(Math.random()*900))}while(used[code]);
     var p={id:'me'+Date.now().toString(36),n:q.n,s:q.s,h:h,a:ans,code:code,w:20,met:[],t:'',inv:{},nf:[]};
-    if(s.cfg.phase==='meet')dPick(p,s);s.p[p.id]=p;r={ok:true,id:p.id};
+    if(s.cfg.phase==='meet'||s.cfg.phase==='lobby')dPick(p,s);s.p[p.id]=p;r={ok:true,id:p.id};
   }else if(a==='me'){
     var p=s.p[q.id];if(!p)return {ok:false,gone:true};
-    if(s.cfg.phase==='meet'&&!p.t)dPick(p,s);
+    if((s.cfg.phase==='meet'||s.cfg.phase==='lobby')&&!p.t)dPick(p,s);
     var nf=p.nf||[];p.nf=[];
     var tn=D_TMAP[p.s]||0,tt=tn?s.tb[tn]:null;
     r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv,
       table:tn,tb:tn?{t:tt||null,pts:dTablePts(tt)}:null,plus:p.plus||[]};
   }else if(a==='meet'){
     var p=s.p[q.id],o=dPlayers(s).filter(function(x){return x.code===String(q.code)})[0];
-    if(s.cfg.phase!=='meet')r={ok:false,error:'שלב ההיכרות עוד לא התחיל או כבר נגמר'};
+    if(s.cfg.phase!=='meet'&&s.cfg.phase!=='lobby')r={ok:false,error:'שלב ההיכרות כבר נגמר'};
     else if(!o)r={ok:false,error:'אין קוד כזה. בדקו עם השותף/ה'};
     else if(o.id===p.id)r={ok:false,error:'זה הקוד שלך'};
     else if(p.met.indexOf(o.id)>-1)r={ok:false,error:'כבר נפגשתם'};
@@ -680,15 +680,16 @@ async function tick(){
 function paint(){
   countWallet(ME.w);
   $('myCode').textContent=ME.code;
-  $('hTitle').textContent=PH_T[ME.phase]||'';
-  var vp=tblLike(ME.phase)?'tables':ME.phase;
+  /* מיטל 20.10.26: מי שנרשם עובר מיד ל'מי בתחביב שלי' — שלב 'נרשמים' נראה בטלפון כמו שלב ההיכרות */
+  var vp=tblLike(ME.phase)?'tables':(ME.phase==='lobby'?'meet':ME.phase);
+  $('hTitle').textContent=PH_T[vp]||'';
   ['lobby','meet','bursa','end','tables'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=vp!==p});
   document.querySelector('.mycode').hidden=vp==='tables';
   if(ME.phase!==lastPhase){
-    if(lastPhase!==null)splash(ME.phase);
+    if(lastPhase!==null&&!(lastPhase==='lobby'&&ME.phase==='meet'))splash(ME.phase);
     lastPhase=ME.phase;scrollTo(0,0);
   }
-  if(ME.phase==='meet')paintMeet();
+  if(vp==='meet')paintMeet();
   if(ME.phase==='bursa')paintBursa();
   if(ME.phase==='end')paintEnd();
   if(vp==='tables')paintTables();
@@ -764,7 +765,8 @@ function paintMeet(){
     '<div class="muted" style="font-weight:700">חפשו את</div><div class="who">'+esc(t.n)+'</div><div class="sch">'+esc(t.s)+'</div>'+
     '<span class="hb">'+(t.same?'גם אוהב/ת ':'אוהב/ת ')+esc(t.hobby)+'</span>'+
     '<div class="q">תשאלו: '+esc(t.q)+'</div>'+(DEMO&&t.code?'<div class="demohint">בהדגמה: הקוד של '+esc(t.n)+' הוא '+t.code+'</div>':'')
-    :'<div class="who">נפגשת עם כולם!</div><div class="muted">אפשר לעזור לאחרים למצוא את מי שהם מחפשים.</div>';
+    :(ME.met>0&&ME.left<=0?'<div class="who">נפגשת עם כולם!</div><div class="muted">אפשר לעזור לאחרים למצוא את מי שהם מחפשים.</div>'
+      :'<div class="who">מחפשים לך מישהו…</div><div class="muted">עוד רגע נכנסים עוד אנשים, והטלפון ישלח אותך למישהו/י.</div>');
   if(key!==lastTarget){lastTarget=key;var c=$('tCard');c.classList.remove('newt');void c.offsetWidth;c.classList.add('newt')}
   $('sMet').textContent=ME.met;$('sLeft').textContent=Math.max(0,ME.left);
   $('badges').innerHTML=BADGES.map(function(b){return '<div class="badge'+(ME.met>=b.n?' on':'')+'"><div class="ic">'+ICO[b.ic]+'</div><b>'+b.t+'</b><span>'+b.s+'</span></div>'}).join('');
@@ -1099,7 +1101,7 @@ function paintScreen(){
 
 /* ================= לוח הפעלה ================= */
 var K=qs.get('k')||'';
-var PHASE_LIST=[['lobby','1 · נרשמים','QR על המסך'],['meet','2 · מי בתחביב שלי?','מחפשים ומקלידים קודים'],['bursa','3 · בורסת המטרות','משקיעים את השעות'],['end','4 · סיכום','3 המטרות המובילות'],['tables','5 · שולחנות הרעיונות','טלפון השולחן + ניקוד'],['barak','6 · סבב ברק','המסך נשאר על הניקוד'],['school','7 · בית הספר שלי','הטופס בדף המפגש']];
+var PHASE_LIST=[['lobby','1 · נרשמים ומחפשים','QR על המסך · מי שנרשם כבר מחפש'],['meet','2 · מי בתחביב שלי?','המסך עובר לספירת ההיכרויות'],['bursa','3 · בורסת המטרות','משקיעים את השעות'],['end','4 · סיכום','3 המטרות המובילות'],['tables','5 · שולחנות הרעיונות','טלפון השולחן + ניקוד'],['barak','6 · סבב ברק','המסך נשאר על הניקוד'],['school','7 · בית הספר שלי','הטופס בדף המפגש']];
 var PRESETS=['עוד 2 דקות!','הבורסה נפתחה — השקיעו!','מי עוד לא מצא אף אחד? הרימו יד','דקה אחרונה להשקעות','עוצרים — כולם לשולחנות'];
 function initAdmin(){
   $('vAdmin').hidden=false;$('hTitle').textContent='לוח הפעלה';
