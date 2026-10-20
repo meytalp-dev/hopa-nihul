@@ -229,13 +229,14 @@
   </section>
 
   <section class="step" data-step="2" hidden>
-    <h2 class="big">בורסת המטרות</h2>
-    <p class="lead">משקיעים את הנקודות שצברתם במשפטי המטרה שכתבתם ב-14.10.</p>
-    <div class="btnrow"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">למשחק</a></div>
+    <div id="myTable"></div>
   </section>
 
   <section class="step" data-step="3" hidden>
-    <div id="myTable"></div>
+    <div class="kicker" data-tb></div>
+    <h2 class="big">המטרות שלי</h2>
+    <p class="lead">בחרו עד 3 מטרות שהכי חשובות לכם.</p>
+    <div class="btnrow"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">לבחירה במשחק</a></div>
   </section>
 
   <section class="step" data-step="4" hidden>
@@ -304,7 +305,6 @@
 
   <div class="stepnav" id="stepnav">
     <button type="button" class="btn ghost" id="sPrev">הקודם</button>
-    <button type="button" class="btn ghost" id="sNow" hidden>חזרה לשלב הנוכחי</button>
   </div>
 
 </div><!-- /tabT -->
@@ -396,7 +396,7 @@ async function put(key,payload){
 /* ---------- שלבים: מסך אחד בכל פעם ----------
    השלב החי מגיע מהשלב שמיטל בוחרת בלוח ההפעלה של המשחק (action=ph בשרת המשחק).
    אפשר לחזור אחורה לשלב שכבר היה, אבל לא לרוץ קדימה. */
-var STEP_N=7,PH2STEP={lobby:1,meet:1,bursa:2,end:3,elias:4,tables:5,barak:6,school:7};
+var STEP_N=7,PH2STEP={lobby:1,meet:1,seat:2,bursa:3,end:3,elias:4,tables:5,barak:6,school:7};
 var EDONE=[];
 var PREVIEW=new URLSearchParams(location.search).get('demo')==='1';   /* ?demo=1 — כל השלבים פתוחים, בלי השרת */
 var liveStep=PREVIEW?STEP_N:Math.min(STEP_N,Math.max(1,Number(lsGet('hopa-m3-live'))||1)),
@@ -412,11 +412,9 @@ function paintSteps(){
   [].slice.call($('steps').querySelectorAll('button')).forEach(function(b){b.onclick=function(){showStep(Number(b.dataset.n))}});
   [].slice.call(document.querySelectorAll('section.step')).forEach(function(s){s.hidden=Number(s.dataset.step)!==viewStep});
   $('sPrev').hidden=viewStep<=1;
-  $('sNow').hidden=viewStep>=liveStep;
 }
 function showStep(n){viewStep=Math.min(liveStep,Math.max(1,n));paintSteps();scrollTo(0,0)}
 $('sPrev').onclick=function(){showStep(viewStep-1)};
-$('sNow').onclick=function(){showStep(liveStep)};
 async function pollPhase(){
   if(PREVIEW)return;
   try{
@@ -442,7 +440,7 @@ function paintElias(){
   else{b.hidden=false;m.hidden=true}
 }
 $('eDone').onclick=async function(){
-  var n=myTableN();if(!n){toast('לא מצאנו את השולחן שלך');showStep(3);return}
+  var n=myTableN();if(!n){toast('לא מצאנו את השולחן שלך');showStep(2);return}
   if(PREVIEW){EDONE=EDONE.concat([{n:n}]);paintElias();return}
   var b=this;b.disabled=true;
   try{var r=await gameJsonp({action:'eliasDone',n:n});if(r&&r.ok){EDONE=r.edone||EDONE;paintElias()}else toast((r&&r.error)||'לא נשלח — נסו שוב')}
@@ -455,7 +453,7 @@ function paintIdeas(){$('iList').innerHTML=MY_IDEAS.slice().reverse().map(functi
 async function sendIdea(){
   var t=$('iTxt').value.trim(),n=myTableN();
   if(!t)return;
-  if(!n){$('iErr').textContent='לא מצאנו את השולחן שלך — בחרו בית ספר בשלב 3.';return}
+  if(!n){$('iErr').textContent='לא מצאנו את השולחן שלך — בחרו בית ספר בשלב 2.';return}
   $('iErr').textContent='';
   if(!PREVIEW){
     $('iGo').disabled=true;
@@ -496,7 +494,7 @@ function paintMyTable(){
   if(typeof paintElias==='function')paintElias();
   var box=$('myTable');
   if(T&&!askSchool){
-    box.innerHTML='<div class="tbl"><div class="lb">השולחן שלך</div><div class="no">'+T.n+'</div>'+
+    box.innerHTML='<div class="tbl"><h2 class="big" style="margin:0 0 4px">סיימתם!</h2><div class="lb">מוזמנים להצטרף לשולחן שלכם</div><div class="no">'+T.n+'</div>'+
       '<div class="ld">'+esc(T.lead)+'</div></div>'+
       '<div class="chips">'+T.s.map(function(s){return '<span'+(s===sc?' class="me"':'')+'>'+esc(s)+'</span>'}).join('')+'</div>'+
       '<button type="button" class="chg" id="chgSc">זה לא בית הספר שלי</button>';

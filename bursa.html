@@ -32,6 +32,21 @@
 
   main{padding:14px 0 50px}
   .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:12px}
+  .card.seat{text-align:center;padding:26px 18px}
+  .card.seat h2{font-size:30px}
+  .card.seat p{font-size:18px;font-weight:700;margin:4px 0 14px}
+  .seatno{width:120px;height:120px;margin:0 auto;border-radius:50%;background:var(--pink);color:#fff;font-size:64px;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .seatld{font-size:24px;font-weight:900;margin-top:10px}
+  .pickn{margin-top:8px;font-weight:900;color:var(--pink)}
+  .goal.pick{display:flex;gap:10px;align-items:center;width:100%;text-align:right;font:inherit;cursor:pointer;border:2px solid #ebe6ee;background:#fff}
+  .goal.pick.has{border-color:var(--pink);background:#fff0f7}
+  .goal.pick[data-full]{opacity:.55}
+  .goal.pick .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--pink);color:var(--pink);font-weight:900;display:flex;align-items:center;justify-content:center;flex:none}
+  .goal.pick.has .ck{background:var(--pink);color:#fff}
+  .goal.pick .tx{flex:1}
+  .goal.pick .cnt{font-size:12px;font-weight:800;color:#7d7d8a;flex:none}
+  .howpts{margin:0 0 10px;background:#fffbd0;border-radius:12px;padding:9px 12px;font-size:14px;line-height:1.45}
+  .matchno{display:inline-block;background:var(--pink);color:#fff;border-radius:999px;padding:2px 11px;font-size:12.5px;font-weight:900;margin-bottom:6px}
   .card h2{margin:0 0 6px;font-size:18px;font-weight:900}
   .muted{color:var(--muted);font-size:13.5px}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:12px 0 4px}
@@ -210,7 +225,7 @@
 <header><div class="in">
   <div class="hrow">
     <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-    <div><h1 id="hTitle">מי בתחביב שלי?</h1><div class="sub">מפגש רכזים · 21.10 · בני ברק</div></div>
+    <div><h1 id="hTitle">פעילות היכרות</h1><div class="sub">מפגש רכזים · 21.10 · בני ברק</div></div>
     <span class="wallet" id="wallet" hidden></span>
     <button class="mute" id="muteBtn" type="button" aria-label="צליל"></button>
   </div>
@@ -244,6 +259,7 @@
     </div>
 
     <div id="pMeet" hidden>
+      <p class="howpts">מתחילים עם 20 נקודות. <b>כל התאמה +10</b>, ואז הטלפון שולח אותך למישהו נוסף. מי שמכיר/ה הכי הרבה אנשים — מופיע/ה על המסך הגדול.</p>
       <div class="card target" id="tCard"></div>
       <div class="card">
         <label class="fl" style="margin-top:0">3 · הקוד של מי שפגשת</label>
@@ -256,18 +272,22 @@
       <div class="badges" id="badges"></div>
     </div>
 
+    <div id="pSeat" hidden>
+      <div class="card seat"><h2>סיימתם!</h2><p>מוזמנים להצטרף לשולחן שלכם</p><div class="seatno" id="seatNo"></div><div class="seatld" id="seatLd"></div></div>
+    </div>
+
     <div id="pBursa" hidden>
-      <div class="card"><h2>בורסת המטרות</h2>
-        <p class="muted" style="margin:0">אלה משפטי המטרה שכתבתם ב-14.10, בלי שמות.
-        <b>השקיעו את הנקודות שהרווחתם במטרות שהייתם רוצים לאמץ לבית הספר שלכם.</b> כל לחיצה = 10 נקודות.</p></div>
+      <div class="card"><h2>המטרות שלי</h2>
+        <p class="muted" style="margin:0"><b>בחרו עד 3 מטרות</b> שהכי חשובות לכם. לחיצה נוספת מבטלת.</p>
+        <div class="pickn" id="pickN"></div></div>
       <div id="gList"></div>
     </div>
 
     <div id="pTables" hidden></div>
 
     <div id="pEnd" hidden>
-      <div class="card"><h2>איזה כיף שהייתם!</h2>
-        <p class="muted" style="margin:0 0 6px">שלוש המטרות שהחדר הכי השקיע בהן:</p>
+      <div class="card"><h2>המטרות שבחרנו</h2>
+        <p class="muted" style="margin:0 0 6px">שלוש המטרות שנבחרו הכי הרבה:</p>
         <div id="eTop"></div>
         <a class="btn dark" href="mifgash3.html" style="text-decoration:none">חזרה לדף המפגש</a>
       </div>
@@ -301,7 +321,7 @@
 </main>
 
 <div id="screen">
-  <div class="s-top"><span class="logo"><img src="hopa-logo.png" alt="הופה"></span><h1 id="sTitle">מי בתחביב שלי?</h1><span class="ph" id="sPh"></span></div>
+  <div class="s-top"><span class="logo"><img src="hopa-logo.png" alt="הופה"></span><h1 id="sTitle">פעילות היכרות</h1><span class="ph" id="sPh"></span></div>
   <div class="s-body" id="sBody"></div>
   <div class="tickr" id="sTick" hidden></div>
 </div>
@@ -310,7 +330,6 @@
 <div id="splash" hidden><span class="k" id="splK"></span><div class="m" id="splM"></div><div class="s" id="splS"></div></div>
 <div id="flash" hidden><span class="k">מבזק</span><div class="m" id="flashM"></div></div>
 <div id="toast"></div>
-<footer>תוכנית הבוגרים · <b>הופה</b> · נבנה על ידי <a href="https://impactos.co.il/" target="_blank" rel="noopener">impactos</a></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -319,11 +338,12 @@
 var EXEC_URL='https://script.google.com/macros/s/AKfycbzXVjly2MZPu0KeTNu1AeDfqF5Na1UQc7mnc1rCbn7RnXmcpPGC8kkS--K5vhmV65ZW/exec';
 var qs=new URLSearchParams(location.search),MODE=qs.get('v')||'player',DEMO=qs.get('demo')==='1';
 var LS=DEMO?'hopa-bursa-demo-':'hopa-bursa-';
-var PH_T={lobby:'נרשמים',meet:'מי בתחביב שלי?',bursa:'בורסת המטרות',end:'סיכום',elias:'אליאס מושגים',tables:'אליאס הפוך',barak:'סבב ברק',school:'בית הספר שלי'};
+var PH_T={lobby:'נרשמים',meet:'פעילות היכרות',seat:'לשולחנות',bursa:'המטרות שלי',end:'המטרות שבחרנו',elias:'אליאס מושגים',tables:'אליאס הפוך',barak:'סבב ברק',school:'בית הספר שלי'};
 /* סבב ברק ובית הספר שלי — שלבי הדף המלווה; במשחק ובמסך נראים כמו השולחנות */
 function tblLike(ph){return ph==='elias'||ph==='tables'||ph==='barak'||ph==='school'}
-var SPLASH={meet:['שלב 1','מי בתחביב שלי?','מצאו את מי שעל המסך שלכם — ושאלו אותו'],
-  bursa:['שלב 2','הבורסה נפתחה!','השקיעו את הנקודות במטרות שאתם רוצים'],end:['סיום','הפעמון צלצל!','אלה המטרות שהחדר בחר'],
+var SPLASH={meet:['שלב 1','פעילות היכרות','מצאו את מי שעל המסך שלכם — ושאלו אותו'],
+  seat:['סיימנו להכיר','סיימתם!','מוזמנים להצטרף לשולחן שלכם'],
+  bursa:['המטרות שלי','בחרו עד 3','מה הכי חשוב לכם שיקרה לבוגרים?'],end:['סיכום','המטרות שבחרנו','שלוש המטרות שנבחרו הכי הרבה'],
   elias:['בשולחנות','אליאס מושגים','מי מסיים ראשון?'],tables:['בשולחנות','אליאס הפוך','כל רעיון = נקודה לשולחן'],
   barak:['סבב ברק','סבב ברק','כל שולחן — הפעילות הכי טובה שלו'],school:['לפני שיוצאים','בית הספר שלי','ממלאים בדף המפגש']};
 var SEC_CLS={'כללי':'','כללי ודרוזי':'','דרוזי':'','ערבי':'s-arab','חרדי':'s-har','חרדי וכללי':'s-har'};
@@ -540,11 +560,12 @@ function demoApi(q){
     else if(o.id===p.id)r={ok:false,error:'זה הקוד שלך'};
     else if(p.met.indexOf(o.id)>-1)r={ok:false,error:'כבר נפגשתם'};
     else{dMeet(s,p,o);var k=o.h.filter(function(x){return p.h.indexOf(x)>-1})[0]||o.h[0];r={ok:true,gained:10,w:p.w,who:o.n,hobby:D_HOB[k].t,answer:o.a[k]||'',met:p.met.length}}
-  }else if(a==='invest'){
+  }else if(a==='invest'||a==='pick'){
     var p=s.p[q.id],g=Number(q.g);
-    if(s.cfg.phase!=='bursa')r={ok:false,error:'הבורסה עוד לא נפתחה'};
-    else if(p.w<10)r={ok:false,error:'נגמרו לך הנקודות'};
-    else{p.w-=10;p.inv[g]=(p.inv[g]||0)+10;s.inv[g]=(s.inv[g]||0)+10;s.tick=s.tick.concat([{g:g,a:10,t:Date.now()}]).slice(-25);r={ok:true,w:p.w}}
+    if(s.cfg.phase!=='bursa')r={ok:false,error:'הבחירה עוד לא נפתחה'};
+    else if(p.inv[g]){delete p.inv[g];s.inv[g]=Math.max(0,(s.inv[g]||0)-1);r={ok:true}}
+    else if(Object.keys(p.inv).length>=3)r={ok:false,error:'אפשר לבחור עד 3 — בטלו אחת קודם'};
+    else{p.inv[g]=1;s.inv[g]=(s.inv[g]||0)+1;s.tick=s.tick.concat([{g:g,a:1,t:Date.now()}]).slice(-25);r={ok:true}}
   }else if(a==='screen'){
     var ps=dPlayers(s),hob={};ps.forEach(function(p){p.h.forEach(function(k){hob[k]=(hob[k]||0)+1})});
     var top=Object.keys(s.inv).map(function(g){return {g:Number(g),v:s.inv[g]}}).sort(function(x,y){return y.v-x.v}),inv=0,w=0;
@@ -575,7 +596,7 @@ function demoSim(){
   if(s.cfg.phase==='bursa'){
     var hot=[0,2,5,1,8];
     for(var j=0;j<2;j++){var pp=rnd(fakes);if(pp.w>=10){var g=Math.random()<.6?rnd(hot):Math.floor(Math.random()*D_GOALS.length);
-      pp.w-=10;pp.inv[g]=(pp.inv[g]||0)+10;s.inv[g]=(s.inv[g]||0)+10;s.tick=s.tick.concat([{g:g,a:10,t:Date.now()}]).slice(-25)}}
+      if(!pp.inv[g]&&Object.keys(pp.inv).length<3){pp.inv[g]=1;s.inv[g]=(s.inv[g]||0)+1;s.tick=s.tick.concat([{g:g,a:1,t:Date.now()}]).slice(-25)}}}
   }
   if(s.cfg.phase==='tables'){
     s.tb=s.tb||{};s.ttick=s.ttick||[];
@@ -683,13 +704,14 @@ function paint(){
   /* מיטל 20.10.26: מי שנרשם עובר מיד ל'מי בתחביב שלי' — שלב 'נרשמים' נראה בטלפון כמו שלב ההיכרות */
   var vp=tblLike(ME.phase)?'tables':(ME.phase==='lobby'?'meet':ME.phase);
   $('hTitle').textContent=PH_T[vp]||'';
-  ['lobby','meet','bursa','end','tables'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=vp!==p});
+  ['lobby','meet','seat','bursa','end','tables'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=vp!==p});
   document.querySelector('.mycode').hidden=vp==='tables';
   if(ME.phase!==lastPhase){
     if(lastPhase!==null&&!(lastPhase==='lobby'&&ME.phase==='meet'))splash(ME.phase);
     lastPhase=ME.phase;scrollTo(0,0);
   }
   if(vp==='meet')paintMeet();
+  if(vp==='seat')paintSeat();
   if(ME.phase==='bursa')paintBursa();
   if(ME.phase==='end')paintEnd();
   if(vp==='tables')paintTables();
@@ -762,7 +784,7 @@ function addToPlan(ch,txt){
 function paintMeet(){
   var t=ME.target,key=t?t.n+'|'+t.s:'';
   $('tCard').innerHTML=t?
-    '<div class="muted" style="font-weight:800">1 · חפשו בחדר את</div><div class="who">'+esc(t.n)+'</div><div class="sch">מבית הספר '+esc(t.s)+'</div>'+
+    (ME.met>0?'<div class="matchno">התאמה מספר '+(ME.met+1)+'</div>':'')+'<div class="muted" style="font-weight:800">1 · חפשו בחדר את</div><div class="who">'+esc(t.n)+'</div><div class="sch">מבית הספר '+esc(t.s)+'</div>'+
     '<span class="hb">'+(t.same?'גם אוהב/ת ':'אוהב/ת ')+esc(t.hobby)+'</span>'+
     '<div class="q"><b>2 · מצאת? תשאלו:</b> '+esc(t.q)+'</div>'+
     '<div class="q"><b>3 · בקשו את הקוד שלו/ה ורשמו אותו כאן למטה.</b> התאמה = 10 נקודות לכל אחד/ת.</div>'+(DEMO&&t.code?'<div class="demohint">בהדגמה: הקוד של '+esc(t.n)+' הוא '+t.code+'</div>':'')
@@ -791,35 +813,45 @@ $('mGo').onclick=async function(){
   }catch(e){bad((e&&e.message&&e.message!=='timeout'&&e.message!=='network')?e.message:'לא נשלח — נסו שוב.')}
   b.disabled=false;b.textContent='מצאתי!';
 };
+/* המטרות שלי — בוחרים עד 3; לחיצה נוספת מבטלת (20.10.26, במקום הבורסה) */
+var MAX_PICK=3;
+function nPicked(){return Object.keys(ME.inv||{}).filter(function(k){return ME.inv[k]}).length}
 function paintBursa(){
   if(!META)return;
-  var tot=ME.total||{},mine=ME.inv||{};
+  var tot=ME.total||{},mine=ME.inv||{},n=nPicked();
+  $('pickN').textContent='בחרת '+n+' מתוך '+MAX_PICK;
   var html=META.goals.map(function(g,i){
-    var m=mine[i]||0,t=tot[i]||0;
-    return '<div class="goal'+(m?' has':'')+'"><div class="tx">'+esc(g)+'</div><div class="row">'+
-      '<span class="tot">בחדר: '+t+' נקודות</span>'+(m?'<span class="mine">שלי: '+m+'</span>':'')+
-      '<button class="inv" data-g="'+i+'"'+(ME.w<META.step?' disabled':'')+'>+'+META.step+'</button></div></div>';
+    var m=!!mine[i],t=tot[i]||0;
+    return '<button type="button" class="goal pick'+(m?' has':'')+'" data-g="'+i+'"'+(!m&&n>=MAX_PICK?' data-full="1"':'')+'>'+
+      '<span class="ck">'+(m?'✓':'')+'</span><span class="tx">'+esc(g)+'</span>'+(t?'<span class="cnt">'+t+'</span>':'')+'</button>';
   }).join('');
   if($('gList').dataset.h!==html){$('gList').innerHTML=html;$('gList').dataset.h=html;bindInv()}
 }
 function bindInv(){
-  [].slice.call($('gList').querySelectorAll('.inv')).forEach(function(b){
+  [].slice.call($('gList').querySelectorAll('.pick')).forEach(function(b){
     b.onclick=async function(){
-      if(ME.w<META.step){toast('נגמרו לך הנקודות');shakeEl($('wallet'));return}
-      var g=Number(b.dataset.g);
-      sCoin();buzz(25);floater('+'+META.step,b);
-      ME.w-=META.step;ME.inv[g]=(ME.inv[g]||0)+META.step;ME.total[g]=(ME.total[g]||0)+META.step;paint();
-      if(ME.w<META.step){setTimeout(function(){toast('השקעת את כל הנקודות! עכשיו תסתכלו על המסך',true);sFireworks(false);boom(false)},300)}
-      try{var r=await call({action:'invest',id:myId,g:g,amt:META.step},2);if(!r.ok){toast(r.error);await tick()}}
+      var g=Number(b.dataset.g),had=!!(ME.inv||{})[g];
+      if(!had&&nPicked()>=MAX_PICK){toast('אפשר לבחור עד 3 — בטלו אחת קודם');shakeEl(b);return}
+      ME.inv=ME.inv||{};ME.total=ME.total||{};
+      if(had){delete ME.inv[g];ME.total[g]=Math.max(0,(ME.total[g]||0)-1)}
+      else{ME.inv[g]=1;ME.total[g]=(ME.total[g]||0)+1;sCoin();buzz(25);if(nPicked()===MAX_PICK){setTimeout(function(){toast('בחרת 3! תסתכלו על המסך',true);boom(false)},250)}}
+      paint();
+      try{var r=await call({action:'pick',id:myId,g:g},2);if(!r.ok){toast(r.error);await tick()}}
       catch(e){toast('לא נשלח — נסו שוב');await tick()}
     };
   });
+}
+/* סיימתם — לשולחן */
+function paintSeat(){
+  var T=META&&ME.table?(META.tables||[]).filter(function(t){return t.n===ME.table})[0]:null;
+  $('seatNo').textContent=T?T.n:'?';
+  $('seatLd').textContent=T?T.lead:'בית הספר שלך לא משובץ — גשו למיטל';
 }
 function paintEnd(){
   if(!META)return;
   var tot=ME.total||{};
   var top=Object.keys(tot).map(function(g){return {g:Number(g),v:tot[g]}}).sort(function(a,b){return b.v-a.v}).slice(0,3);
-  $('eTop').innerHTML=top.map(function(x,i){return '<div class="goal has"><div class="muted" style="font-weight:800">'+(i+1)+' · '+x.v+' נקודות</div><div class="tx">'+esc(META.goals[x.g])+'</div></div>'}).join('')||'<p class="muted">עוד לא הושקעו נקודות.</p>';
+  $('eTop').innerHTML=top.map(function(x,i){return '<div class="goal has"><div class="muted" style="font-weight:800">'+(i+1)+' · '+x.v+' בחרו</div><div class="tx">'+esc(META.goals[x.g])+'</div></div>'}).join('')||'<p class="muted">עוד לא הושקעו נקודות.</p>';
 }
 
 /* ================= דף המנחה בטלפון — שלב אחד בכל מסך, "סיימתי" בסוף כל שלב (נוסח מיטל 19.10.26) ================= */
@@ -1051,21 +1083,29 @@ function paintScreen(){
     var fh=(S.feed||[]).slice(-3).reverse().map(function(f){return '<div><b>'+esc(f.a)+'</b> מצא/ה את <b>'+esc(f.b)+'</b></div>'}).join('');
     if($('mF').dataset.h!==fh){$('mF').innerHTML=fh;$('mF').dataset.h=fh}   /* לא לרנדר שוב — האנימציה מתחילה מחדש */
     $('mH').innerHTML=S.hobbies.map(function(h){return '<span>'+esc(h.t)+'<i>'+h.n+'</i></span>'}).join('');
+  }else if(S.phase==='seat'){
+    if(changed)b.innerHTML='<div class="s-col" style="justify-content:center;align-items:center;text-align:center"><div class="bigl">סיימתם!</div><div style="font-size:7vh;font-weight:900;margin-top:1vh">מוזמנים להצטרף לשולחן שלכם</div>'+
+      '<div class="bigl" style="margin-top:3vh"><span id="sMt"></span> היכרויות חדשות בחדר</div></div>'+
+      '<div class="s-col" style="justify-content:center"><div class="bigl" style="margin-bottom:1.5vh">הכירו הכי הרבה אנשים</div><div class="lb" id="sBest"></div></div>';
+    $('sMt').textContent=S.meets;
+    var bm=Math.max(1,(S.best&&S.best[0]?S.best[0].met:1));
+    $('sBest').innerHTML=(S.best||[]).map(function(x,i){return '<div class="r"><span class="n">'+(i+1)+'</span><div class="bx"><div class="tx">'+esc(x.n)+' <span class="meta">· '+esc(x.s)+'</span></div><div class="bar"><i style="width:'+Math.round(x.met/bm*100)+'%"></i></div></div><span class="v">'+x.met+'</span></div>'}).join('');
+    if(changed){setTimeout(function(){boom(true);sFireworks(true)},900)}
   }else if(S.phase==='bursa'){
     if(changed)b.innerHTML='<div class="s-col" style="flex:2.2"><div class="lb" id="bL"></div></div>'+
-      '<div class="s-col" style="justify-content:center;flex:.8"><div><span class="big" id="bN" style="font-size:12vh"></span></div><div class="bigl">נקודות הושקעו</div>'+
-      '<div class="bigl" style="margin-top:3vh"><span id="bI"></span> משקיעים · <span id="bW"></span> נקודות עוד בארנקים</div></div>';
+      '<div class="s-col" style="justify-content:center;flex:.8"><div><span class="big" id="bN" style="font-size:12vh"></span></div><div class="bigl">בחירות</div>'+
+      '<div class="bigl" style="margin-top:3vh"><span id="bI"></span> כבר בחרו<span id="bW" hidden></span></div></div>';
     var max=S.top.length?S.top[0].v:1;
-    if(S.top.length&&lastLeader!==-1&&S.top[0].g!==lastLeader){$('flashM').textContent='מבזק: מטרה חדשה במקום הראשון!';$('flash').hidden=false;sGong();boom(false);setTimeout(function(){$('flash').hidden=true},2600)}
+    if(S.top.length&&lastLeader!==-1&&S.top[0].g!==lastLeader){$('flashM').textContent='מטרה חדשה במקום הראשון!';$('flash').hidden=false;sGong();boom(false);setTimeout(function(){$('flash').hidden=true},2600)}
     if(S.top.length)lastLeader=S.top[0].g;
     $('bL').innerHTML=S.top.slice(0,7).map(function(x,i){
       return '<div class="r"><span class="n">'+(i+1)+'</span><div class="bx"><div class="tx">'+esc(META?META.goals[x.g]:'')+'</div>'+
         '<div class="bar"><i style="width:'+Math.round(x.v/max*100)+'%"></i></div></div><span class="v">'+x.v+'</span></div>';
-    }).join('')||'<div class="bigl">הבורסה נפתחה — מחכים להשקעה הראשונה</div>';
+    }).join('')||'<div class="bigl">בוחרים עד 3 מטרות בטלפון — מחכים לבחירה הראשונה</div>';
     if($('bN').textContent!==String(S.invested)){$('bN').textContent=S.invested;popEl($('bN'))}
     $('bI').textContent=S.investors;$('bW').textContent=S.wallet;
     $('sTick').innerHTML=S.tick.slice().reverse().map(function(t){
-      var g=META?META.goals[t.g]:'';return '<b>▲ +'+t.a+'</b> '+esc(g.length>46?g.slice(0,46)+'…':g);
+      var g=META?META.goals[t.g]:'';return '<b>✓</b> '+esc(g.length>46?g.slice(0,46)+'…':g);
     }).join(' &nbsp;·&nbsp; ')||'&nbsp;';
   }else if(tblLike(S.phase)){
     if(changed){
@@ -1111,7 +1151,7 @@ function paintScreen(){
 
 /* ================= לוח הפעלה ================= */
 var K=qs.get('k')||'';
-var PHASE_LIST=[['lobby','1 · נרשמים ומחפשים','QR על המסך · מי שנרשם כבר מחפש'],['meet','2 · מי בתחביב שלי?','המסך עובר לספירת ההיכרויות'],['bursa','3 · בורסת המטרות','משקיעים את הנקודות'],['end','4 · סיכום','3 המטרות המובילות'],['elias','5 · אליאס מושגים','מי מסיים ראשון — על המסך'],['tables','6 · אליאס הפוך','רעיונות מהטלפונים + ניקוד'],['barak','7 · סבב ברק','המסך נשאר על הניקוד'],['school','8 · בית הספר שלי','הטופס בדף המפגש']];
+var PHASE_LIST=[['lobby','1 · נרשמים ומחפשים','QR על המסך · מי שנרשם כבר מחפש'],['meet','2 · פעילות היכרות','המסך עובר לספירת ההיכרויות'],['seat','3 · לשולחנות','"סיימתם!" + מספר השולחן · מי הכיר הכי הרבה'],['bursa','4 · המטרות שלי','בוחרים עד 3'],['end','5 · סיכום','3 המטרות שנבחרו הכי הרבה'],['elias','6 · אליאס מושגים','מי מסיים ראשון — על המסך'],['tables','7 · אליאס הפוך','רעיונות מהטלפונים + ניקוד'],['barak','8 · סבב ברק','המסך נשאר על הניקוד'],['school','9 · בית הספר שלי','הטופס בדף המפגש']];
 var PRESETS=['עוד 2 דקות!','הבורסה נפתחה — השקיעו!','מי עוד לא מצא אף אחד? הרימו יד','דקה אחרונה להשקעות','עוצרים — כולם לשולחנות'];
 function initAdmin(){
   $('vAdmin').hidden=false;$('hTitle').textContent='לוח הפעלה';
