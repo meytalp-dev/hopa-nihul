@@ -142,6 +142,15 @@
   #p_page table{width:100%;border-collapse:collapse;font-size:13.5px}
   #p_page td,#p_page th{border:1px solid var(--line);padding:6px 8px;text-align:right;vertical-align:top}
   #p_page th{background:#faf7fb;font-size:12.5px}
+  .pmon{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:8px}
+  .pmon.has{border-color:var(--pink)}
+  .pmon.un{border-color:#f6e98a;background:#fffdf0}
+  .pmon h3{margin:0;font-size:15.5px;font-weight:900}
+  .pmon h3 small{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:0 8px;font-size:12px;margin-inline-start:4px}
+  .pmon.un h3 small{background:none;color:var(--muted);font-weight:600}
+  .pmon .addm{background:none;border:none;color:var(--pink-dark);font-weight:800;font-size:13.5px;cursor:pointer;padding:6px 0 0}
+  .msel{width:auto!important;padding:5px 8px!important;font-size:13px}
+  .ti-m{width:auto!important;max-width:140px;padding:6px 8px!important;font-size:12.5px;font-weight:700;border-color:var(--pink)!important;color:var(--pink-dark)}
   .miss{color:var(--muted);font-style:italic}
   .tideas{margin-top:10px}
   .ti-h{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:4px}
@@ -299,8 +308,8 @@
   <section id="p0">
     <div class="sec-head"><div class="num">✓</div><div><h2>התוכנית שלי</h2><small>ממשיכה מ-14.10 · אותה תוכנית עד 4.11</small></div></div>
     <div class="callout y" style="font-size:15px">
-      ב-14.10 התחלתם לבנות תוכנית אישית: מטרה, הפרקים שבחרתם ופעולה ראשונה לכל פרק. <b>כאן היא ממשיכה.</b><br>
-      כל רעיון טוב מהשולחן — לוחצים <b>"+ לתוכנית שלי"</b>, והוא נכנס לפרק המתאים. ב-4.11 ממשיכים מאותה תוכנית.
+      התוכנית לשנה, <b>לפי חודשים</b>: מה אני עושה ועם מי. מה שכתבתם ב-14.10 כבר כאן.<br>
+      רעיון טוב מהשולחנות? בוחרים לו חודש — והוא נכנס לשנה שלי.
     </div>
     <div class="two">
       <div><label class="fl">שם</label><input type="text" id="p_who" maxlength="60"></div>
@@ -315,14 +324,13 @@
   </section>
 
   <section id="p2">
-    <div class="sec-head"><div class="num">2</div><div><h2>איפה ההשקעה</h2><small>באחוזים, עד 100%</small></div></div>
-    <div class="sl" id="p_sl"></div>
+    <div class="sec-head"><div class="num">2</div><div><h2>השנה שלי</h2><small>בכל חודש — מה אני עושה ועם מי</small></div></div>
+    <div id="p_year"></div>
   </section>
 
   <section id="p3">
-    <div class="sec-head"><div class="num">3</div><div><h2>הפרקים והפעולות שלי</h2><small>אפשר להוסיף פרק — גם אם לא בחרתם בו ב-14.10</small></div></div>
-    <div class="tsel" id="p_chaps"></div>
-    <div id="p_list"></div>
+    <div class="sec-head"><div class="num">3</div><div><h2>רעיונות מהשולחנות</h2><small>בוחרים רעיון ← בוחרים חודש ← הוא נכנס לשנה שלי</small></div></div>
+    <div id="p_ideas"></div>
   </section>
 
   <section id="p4">
@@ -580,7 +588,7 @@ function addAct(n,a,src,quiet){
   if(!quiet){savePlan();paintPlan();toast('נכנס לתוכנית שלך ✓')}
   return true;
 }
-function visibleActs(){return plan.acts.filter(function(a){return plan.chaps.indexOf(a.ch)>-1&&(a.what||'').trim()})}
+function visibleActs(){return plan.acts.filter(function(a){return (a.what||'').trim()})}   /* כל הפעולות שיש בהן תוכן (20.10.26) */
 function paintBadge(){var n=visibleActs().length,b=$('tabBd');b.hidden=!n;b.textContent=n}
 function savePlan(){
   lsSet(PLAN_KEY,JSON.stringify(plan));paintBadge();
@@ -644,79 +652,50 @@ function paintStatus(){
 $('p_goal').value=plan.goal||'';
 $('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
 
-/* איפה ההשקעה */
-function pctNow(){return plan.pct||BDEF}
-$('p_sl').innerHTML=BUCKETS.map(function(b){
-  return '<div class="row"><span class="nm">'+esc(b.t)+'<small>'+esc(b.d)+'</small></span>'+
-    '<input type="range" min="0" max="100" step="5" data-k="'+b.k+'">'+
-    '<span class="v" id="pv-'+b.k+'"></span></div>';
-}).join('')+'<div class="tot" id="p_tot"></div>';
-function paintPct(){
-  var p=pctNow(),sum=0;
-  BUCKETS.forEach(function(b){sum+=Number(p[b.k])||0;$('pv-'+b.k).textContent=(Number(p[b.k])||0)+'%'});
-  var el=$('p_tot');el.className='tot'+(sum>100?' over':'');
-  el.innerHTML='סה״כ <b>'+sum+'%</b> מתוך 100%'+(sum>100?' — חרגתם ב-'+(sum-100)+'%':(sum<100?' · נשארו '+(100-sum)+'%':' ✓'));
+/* השנה שלי — לפי חודשים (מיטל 20.10.26: במקום אחוזים ופרקים). פעולה = {m: 0–11 מספטמבר, what, who}.
+   פעולה בלי חודש (מ-14.10 או מהמשחק) מחכה ב"עוד לא שובץ". השדה ch נשמר — 4.11 קורא לפיו. */
+var MONTHS=['ספטמבר','אוקטובר','נובמבר','דצמבר','ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט'];
+function monthOf(a){
+  if(a.m!=null&&a.m!==''&&!isNaN(Number(a.m)))return Number(a.m);
+  var w=String(a.when||'');for(var i=0;i<MONTHS.length;i++)if(w.indexOf(MONTHS[i])>-1)return i;
+  return -1;
 }
-[].slice.call($('p_sl').querySelectorAll('input')).forEach(function(inp){
-  inp.value=Number(pctNow()[inp.dataset.k])||0;
-  inp.addEventListener('input',function(){plan.pct=Object.assign({},pctNow());plan.pct[this.dataset.k]=Number(this.value);paintPct();savePlan()});
-});
-paintPct();
-
-/* הפרקים והפעולות */
+function monthOpts(sel){return '<option value="-1">בחרו חודש…</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
+function actRow(a){
+  var tg=SRC_TAG[a.src]||SRC_TAG.me,m=monthOf(a);
+  return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span>'+
+    '<select data-f="m" class="msel">'+monthOpts(m)+'</select><button type="button" class="x">הסרה</button></div>'+
+    '<input type="text" data-f="what" maxlength="140" placeholder="מה אני עושה" value="'+esc(a.what)+'">'+
+    '<input type="text" data-f="who" maxlength="40" placeholder="עם מי" value="'+esc(a.who)+'" style="margin-top:6px"></div>';
+}
 function paintPlan(){
-  [].slice.call($('p_sl').querySelectorAll('input')).forEach(function(inp){inp.value=Number(pctNow()[inp.dataset.k])||0});
-  paintPct();paintStatus();
-  $('p_chaps').innerHTML=CHAPTERS.map(function(c){
-    var on=plan.chaps.indexOf(c.n)>-1;
-    return '<button type="button" data-n="'+c.n+'" class="'+(on?'on':'')+'" style="--accent:'+c.c+'">'+
-      '<span class="n">'+(on?'✓ בתוכנית שלי':'פרק '+c.n)+'</span><span class="t" style="display:block">'+esc(c.t)+'</span>'+
-      '<span class="d">'+esc(c.d)+'</span>'+(c.key===myKey?'<span class="mk">השולחן שלי היום</span>':'')+'</button>';
+  paintStatus();
+  var acts=plan.acts.filter(function(a){return a.what!==undefined});
+  var un=acts.filter(function(a){return monthOf(a)<0&&(a.what||'').trim()});
+  var h=un.length?'<div class="pmon un"><h3>עוד לא שובץ <small>בחרו חודש לכל פעולה</small></h3>'+un.map(actRow).join('')+'</div>':'';
+  h+=MONTHS.map(function(mn,i){
+    var l=acts.filter(function(a){return monthOf(a)===i});
+    return '<div class="pmon'+(l.length?' has':'')+'"><h3>'+mn+(l.length?' <small>'+l.length+'</small>':'')+'</h3>'+l.map(actRow).join('')+
+      '<button type="button" class="addm" data-m="'+i+'">+ פעולה ב'+mn+'</button></div>';
   }).join('');
-  [].slice.call($('p_chaps').children).forEach(function(b){
-    b.onclick=function(){
-      var n=Number(b.dataset.n),i=plan.chaps.indexOf(n);
-      if(i>-1)plan.chaps.splice(i,1);else plan.chaps.push(n);
-      savePlan();paintPlan();
-    };
-  });
-  if(!plan.chaps.length){$('p_list').innerHTML='<p class="livehint" style="margin-top:12px">בחרו למעלה את הפרקים שלכם — ואז מוסיפים פעולות לכל אחד.</p>';return}
-  var order=plan.chaps.slice().sort(function(a,b){return a-b});
-  $('p_list').innerHTML=order.map(function(n){
-    var c=CHAPTERS[n-1],l=plan.acts.filter(function(a){return a.ch===n});
-    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+'</h3>'+
-      (l.length?l.map(function(a){
-        var tg=SRC_TAG[a.src]||SRC_TAG.me;
-        return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span>'+
-          '<button type="button" class="x">הסרה</button></div>'+
-          '<input type="text" data-f="what" maxlength="140" placeholder="הפעולה" value="'+esc(a.what)+'">'+
-          '<div class="three" style="margin-top:6px">'+
-            '<div><input type="text" data-f="when" maxlength="30" placeholder="מתי בשנה" value="'+esc(a.when)+'"></div>'+
-            '<div><input type="text" data-f="hours" maxlength="12" placeholder="שעות" value="'+esc(a.hours)+'"></div>'+
-            '<div><input type="text" data-f="who" maxlength="40" placeholder="מי איתי" value="'+esc(a.who)+'"></div>'+
-          '</div></div>';
-      }).join(''):'<p class="livehint">עוד אין פעולות בפרק הזה.</p>')+
-      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div>'+
-      '<div class="tideas" data-ch="'+n+'"></div></div>';
-  }).join('');
-  [].slice.call($('p_list').querySelectorAll('.pact')).forEach(function(row){
+  $('p_year').innerHTML=h;
+  [].slice.call($('p_year').querySelectorAll('.pact')).forEach(function(row){
     var a=plan.acts.filter(function(x){return x.id===row.dataset.id})[0];if(!a)return;
     [].slice.call(row.querySelectorAll('input')).forEach(function(inp){
       inp.addEventListener('input',function(){a[inp.dataset.f]=inp.value;savePlan()});
     });
-    row.querySelector('.x').onclick=function(){
-      plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר');
+    row.querySelector('.msel').onchange=function(){a.m=Number(this.value);if(a.m<0)delete a.m;savePlan();paintPlan()};
+    row.querySelector('.x').onclick=function(){plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר')};
+  });
+  [].slice.call($('p_year').querySelectorAll('.addm')).forEach(function(b){
+    b.onclick=function(){
+      var id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      plan.acts.push({id:id,ch:0,m:Number(b.dataset.m),what:'',who:'',when:'',hours:'',src:'me'});
+      savePlan();paintPlan();
+      var inp=$('p_year').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
     };
   });
   paintTableIdeas();
-  [].slice.call($('p_list').querySelectorAll('[data-new]')).forEach(function(b){
-    b.onclick=function(){
-      var id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-      plan.acts.push({id:id,ch:Number(b.dataset.new),what:'',who:'',when:'',hours:'',src:'me'});
-      savePlan();paintPlan();
-      var inp=$('p_list').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
-    };
-  });
 }
 
 /* רעיונות מהשולחנות (21.10) — מכל השולחנות, לפי רכיב, בלי שמות. קודם המגזר שלי. */
@@ -748,27 +727,34 @@ function mySector(){
   return T?T.sec:'';
 }
 function paintTableIdeas(){
-  if(!TIDEAS)return;
-  var sec=mySector();
-  [].slice.call(document.querySelectorAll('.tideas')).forEach(function(box){
-    var n=Number(box.dataset.ch),l=(TIDEAS[n]||[]).slice();
-    if(!l.length){box.innerHTML='';return}
+  var box=$('p_ideas');if(!box)return;
+  if(!TIDEAS){box.innerHTML='<p class="livehint">הרעיונות מהשולחנות ייטענו כאן.</p>';return}
+  var sec=mySector(),have={};plan.acts.forEach(function(x){have[nrm(x.what)]=1});
+  var h=CHAPTERS.map(function(c){
+    var l=(TIDEAS[c.n]||[]).slice();if(!l.length)return '';
     l.sort(function(a,b){var sa=(a.sec===sec?0:1),sb=(b.sec===sec?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
-    var have={};plan.acts.forEach(function(x){if(x.ch===n)have[nrm(x.what)]=1});
-    var lim=tiOpen[n]?l.length:5;
-    box.innerHTML='<div class="ti-h">רעיונות מהשולחנות <span>'+l.length+'</span></div>'+
+    var lim=tiOpen[c.n]?l.length:5;
+    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+' <small>'+l.length+'</small></h3>'+
       l.slice(0,lim).map(function(x,i){var on=have[nrm(x.t)];
-        return '<div class="ti-r'+(x.act?' star':'')+'"><div class="ti-t">'+(x.act?'★ ':'')+esc(x.t)+
-          '<small>שולחן '+x.n+(x.act?' · '+esc(x.act.hours)+' שעות · '+esc(x.act.who):'')+'</small></div>'+
-          '<button type="button" data-i="'+i+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+')+'</button></div>';
+        return '<div class="ti-r'+(x.act?' star':'')+'" data-ch="'+c.n+'" data-i="'+i+'"><div class="ti-t">'+(x.act?'★ ':'')+esc(x.t)+'<small>שולחן '+x.n+'</small></div>'+
+          (on?'<button type="button" disabled>בתוכנית ✓</button>':'<select class="ti-m" aria-label="לאיזה חודש">'+monthOpts(-1).replace('בחרו חודש…','+ לתוכנית · חודש')+'</select>')+'</div>';
       }).join('')+
-      (l.length>5?'<button type="button" class="ti-more">'+(tiOpen[n]?'פחות':'עוד '+(l.length-5)+' רעיונות')+'</button>':'');
-    [].slice.call(box.querySelectorAll('.ti-r button')).forEach(function(b){
-      b.onclick=function(){var x=l[Number(b.dataset.i)];
-        addAct(n,{what:x.t,hours:x.act?x.act.hours:'',who:x.act?x.act.who:'',when:x.act?x.act.when:''},'table')};
-    });
-    var m=box.querySelector('.ti-more');if(m)m.onclick=function(){tiOpen[n]=!tiOpen[n];paintTableIdeas()};
+      (l.length>5?'<button type="button" class="ti-more" data-ch="'+c.n+'">'+(tiOpen[c.n]?'פחות':'עוד '+(l.length-5)+' רעיונות')+'</button>':'')+'</div>';
+  }).join('');
+  box.innerHTML=h||'<p class="livehint">עוד אין רעיונות מהשולחנות. הם יופיעו כאן כשהשולחנות יתחילו לכתוב.</p>';
+  [].slice.call(box.querySelectorAll('.ti-m')).forEach(function(sel){
+    sel.onchange=function(){
+      var m=Number(this.value);if(m<0)return;
+      var r=this.closest('.ti-r'),ch=Number(r.dataset.ch),l=(TIDEAS[ch]||[]).slice();
+      l.sort(function(a,b){var s0=mySector(),sa=(a.sec===s0?0:1),sb=(b.sec===s0?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
+      var x=l[Number(r.dataset.i)];if(!x)return;
+      if(plan.acts.some(function(a){return nrm(a.what)===nrm(x.t)})){toast('זה כבר בתוכנית שלך');return}
+      plan.acts.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ch:ch,m:m,what:x.t,who:x.act?x.act.who||'':'',when:'',hours:'',src:'table'});
+      if(plan.chaps.indexOf(ch)<0)plan.chaps.push(ch);
+      savePlan();paintPlan();toast('נכנס ל'+MONTHS[m]+' ✓');
+    };
   });
+  [].slice.call(box.querySelectorAll('.ti-more')).forEach(function(b){b.onclick=function(){var c=Number(b.dataset.ch);tiOpen[c]=!tiOpen[c];paintTableIdeas()}});
 }
 setInterval(function(){if(!document.hidden&&!$('tabP').hidden)loadTableIdeas()},20000);
 
@@ -781,24 +767,22 @@ $('p_save').onclick=async function(){
   if(ok)toast('התוכנית נשמרה ✓');
 };
 function renderPlanPage(){
-  var who=$('p_who').value.trim(),sc=$('p_school').value,p=pctNow(),sum=0;
-  var hrows=BUCKETS.map(function(b){var v=Number(p[b.k])||0;sum+=v;return '<tr><td>'+esc(b.t)+' <span style="color:var(--muted)">· '+esc(b.d)+'</span></td><td style="text-align:center;font-weight:800;width:70px">'+v+'%</td></tr>'}).join('');
-  var order=plan.chaps.slice().sort(function(a,b){return a-b});
-  var chs=order.map(function(n){
-    var l=plan.acts.filter(function(a){return a.ch===n&&(a.what||'').trim()});
-    return '<h3>'+esc(CHAPTERS[n-1].t)+'</h3>'+(l.length?'<table><tr><th>הפעולה</th><th style="width:20%">מתי</th><th style="width:12%">שעות</th><th style="width:20%">מי איתי</th></tr>'+
-      l.map(function(a){return '<tr><td>'+esc(a.what)+'</td><td>'+esc(a.when)+'</td><td>'+esc(a.hours)+'</td><td>'+esc(a.who)+'</td></tr>'}).join('')+'</table>'
-      :'<p class="miss">עוד אין פעולות</p>');
+  var who=$('p_who').value.trim(),sc=$('p_school').value;
+  var acts=plan.acts.filter(function(a){return (a.what||'').trim()});
+  var rows=MONTHS.map(function(mn,i){
+    var l=acts.filter(function(a){return monthOf(a)===i});if(!l.length)return '';
+    return l.map(function(a,k){return '<tr>'+(k===0?'<td rowspan="'+l.length+'" style="font-weight:800;width:18%">'+mn+'</td>':'')+'<td>'+esc(a.what)+'</td><td style="width:28%">'+esc(a.who)+'</td></tr>'}).join('');
   }).join('');
+  var un=acts.filter(function(a){return monthOf(a)<0});
   $('p_page').innerHTML=
     '<div style="display:flex;align-items:center;gap:12px"><img src="hopa-logo.png" alt="הופה" style="height:40px">'+
     '<div><h2>ליווי בוגרים · תשפ״ז · התוכנית שלי</h2><div style="color:var(--muted);font-size:13px">'+
-    esc(who)+(sc?' · '+esc(sc):'')+' · מפגשי רכזים 14.10 · 21.10</div></div></div>'+
+    esc(who)+(sc?' · '+esc(sc):'')+'</div></div></div>'+
     '<h3>המטרה</h3><p>'+(plan.goal.trim()?esc(plan.goal.trim()):'<span class="miss">עוד לא כתבתי</span>')+'</p>'+
-    '<h3>איפה ההשקעה</h3><table>'+hrows+'<tr><td><b>סה״כ</b></td><td style="text-align:center;font-weight:900">'+sum+'%</td></tr></table>'+
-    (chs||'<h3>הפרקים</h3><p class="miss">עוד לא בחרתי פרקים</p>')+
+    '<h3>השנה שלי</h3>'+(rows?'<table><tr><th>חודש</th><th>מה אני עושה</th><th>עם מי</th></tr>'+rows+'</table>':'<p class="miss">עוד אין פעולות</p>')+
+    (un.length?'<h3>עוד לא שובץ</h3><ul>'+un.map(function(a){return '<li>'+esc(a.what)+(a.who?' · '+esc(a.who):'')+'</li>'}).join('')+'</ul>':'')+
     '<div class="btnrow noprint"><button class="btn pink" type="button" id="p_print">הדפסה / שמירה כ-PDF</button></div>'+
-    '<p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">תוכנית הבוגרים · הופה · hopa.org.il</p>';
+    '<p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">תוכנית הבוגרים · הופה</p>';
   $('p_print').onclick=function(){document.body.classList.add('pp');window.print()};
 }
 addEventListener('afterprint',function(){document.body.classList.remove('pp')});
