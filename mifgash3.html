@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>שולחנות הרעיונות · מפגש 21.10 · בני ברק · הופה</title>
+<title>מפגש הופה · ליווי בוגרים · 21.10</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
@@ -184,6 +184,12 @@
   .chips span{background:#faf7fb;border:1.5px solid var(--line);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:600}
   .chips span.me{background:var(--pink-soft);border-color:var(--pink);color:var(--pink-dark);font-weight:800}
   .chg{display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer}
+  .gate{text-align:center;padding:40px 22px 30px}
+  .gate h2.big{font-size:30px}
+  .org{color:var(--muted);font-size:15px;font-weight:700;margin:6px 0 18px}
+  .done-msg{text-align:center;font-size:22px;font-weight:900;color:var(--pink-dark);background:var(--pink-soft);border-radius:14px;padding:14px;margin:12px 0 0}
+  .done-msg[hidden],#eDone[hidden]{display:none}
+  .mine-ideas div{background:#faf7fb;border-radius:11px;padding:8px 12px;margin-top:6px;font-size:14.5px;font-weight:600}
   .stepnav{display:flex;gap:8px;justify-content:center;margin-top:14px}
   .stepnav [hidden]{display:none}
   .minilinks{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
@@ -202,9 +208,8 @@
 <header><div class="in">
   <div class="hrow">
     <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-    <div><h1>שולחנות הרעיונות</h1><div class="sub">בונים את תוכנית העבודה · כנס הרכזים החברתיים</div></div>
+    <div class="meet" style="margin:0">21.10.2026 · בני ברק</div>
   </div>
-  <div class="meet">21.10.2026 · בני ברק <small>שעתיים · מפגש 2 מתוך 3</small></div>
 </div></header>
 
 <nav class="toc">
@@ -216,42 +221,48 @@
 <div id="tabT">
 
   <!-- מסך אחד בכל פעם. מיטל מעבירה שלב מלוח ההפעלה של המשחק, והטלפונים עוברים איתה -->
-  <section class="step" data-step="1">
-    <div class="kicker">שלב 1</div>
-    <h2 class="big">מי בתחביב שלי? · בורסת המטרות</h2>
-    <div class="btnrow" style="margin-top:4px"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">כניסה למשחק</a></div>
-    <p class="hint" style="margin-top:6px;text-align:center">או סורקים את ה-QR שעל המסך</p>
-    <ol class="how">
-      <li><b>נרשמים</b><span>שם, בית ספר ותחביב. מקבלים קוד אישי ו-20 שעות.</span></li>
-      <li><b>מחפשים</b><span>הטלפון מראה את מי לחפש בחדר. שואלים את השאלה ומקלידים את הקוד שלו/ה. <em>+10 שעות לשניכם</em></span></li>
-      <li><b>משקיעים</b><span>את השעות במשפטי המטרה שכתבתם ב-14.10. המסך מראה מי מובילה.</span></li>
-    </ol>
+  <section class="step gate" data-step="1">
+    <h2 class="big">ברוכים הבאים למפגש הופה</h2>
+    <p class="lead"><b>ליווי בוגרים · לרכזים החברתיים</b></p>
+    <p class="org">המנהל להכשרה מקצועית · משרד העבודה</p>
+    <div class="btnrow"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">כניסה למשחק</a></div>
   </section>
 
   <section class="step" data-step="2" hidden>
-    <div class="kicker">שלב 2 · עוברים לשולחנות</div>
-    <div id="myTable"></div>
+    <h2 class="big">בורסת המטרות</h2>
+    <p class="lead">משקיעים את הנקודות שצברתם במשפטי המטרה שכתבתם ב-14.10.</p>
+    <div class="btnrow"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">למשחק</a></div>
   </section>
 
   <section class="step" data-step="3" hidden>
-    <div class="kicker">שלב 3 · <span data-tb></span></div>
-    <h2 class="big">שולחנות הרעיונות</h2>
-    <p class="lead">המנחה בשולחן מוביל/ה. השולחן צובר נקודות, והמסך הגדול מראה מי מוביל.</p>
-    <div class="part"><b>לפני הכול · רכז/ת רעיונות</b><span>מישהו/י מהשולחן רושם/ת את הרעיונות, במשחק בתיבה "אני הרשם/ת של השולחן".</span></div>
-    <div class="part"><b>חלק א' · אליאס מושגים</b><span>סבבים של דקה. מסבירים את המושג שעל הכרטיס הוורוד בלי להגיד אותו. <em>ניחוש נכון = +1</em></span></div>
-    <div class="part"><b>חלק ב' · שולחנות הרעיונות</b><span>מגרילים רכיב ובוחרים עוד 2. לכל רכיב: שאלה מהשקית ו-90 שניות רעיונות <em>(+1 לכל רעיון)</em>, ובוחרים רעיון אחד שמפרקים לפעילות: מה, כמה שעות, מתי ומי <em>(+10)</em>.</span></div>
-    <div class="btnrow"><a class="btn pink wide" href="bursa.html" target="_blank" rel="noopener">השולחן שלי במשחק</a></div>
-    <p class="hint">רעיון שמתאים לבית הספר שלך? "+ לתוכנית שלי", ומקבלים 5 שעות.</p>
+    <div id="myTable"></div>
   </section>
 
   <section class="step" data-step="4" hidden>
-    <div class="kicker">שלב 4 · <span data-tb></span></div>
+    <div class="kicker" data-tb></div>
+    <h2 class="big">אליאס מושגים</h2>
+    <p class="lead">מסבירים את המושג שעל הכרטיס בלי להגיד אותו. סיימתם את כל הכרטיסים? לוחצים:</p>
+    <div class="btnrow"><button type="button" class="btn pink wide" id="eDone">סיימנו!</button></div>
+    <p class="done-msg" id="eMsg" hidden></p>
+  </section>
+
+  <section class="step" data-step="5" hidden>
+    <div class="kicker" data-tb></div>
+    <h2 class="big">אליאס הפוך</h2>
+    <p class="lead">המנחה שולף/ת שאלה. כותבים רעיונות — כל רעיון = נקודה לשולחן.</p>
+    <div class="take"><input type="text" id="iTxt" maxlength="140" placeholder="הרעיון שלי…" enterkeyhint="send"><button type="button" class="btn pink" id="iGo">+ רעיון</button></div>
+    <div class="err" id="iErr"></div>
+    <div class="mine-ideas" id="iList"></div>
+  </section>
+
+  <section class="step" data-step="6" hidden>
+    <div class="kicker" data-tb></div>
     <h2 class="big">סבב ברק</h2>
     <p class="lead">כל שולחן מציג את הפעילות הכי טובה שלו, במשפט אחד.</p>
   </section>
 
-  <section class="step" data-step="5" hidden>
-    <div class="kicker">שלב 5 · לפני שיוצאים</div>
+  <section class="step" data-step="7" hidden>
+    <div class="kicker">לפני שיוצאים</div>
     <h2 class="big">בית הספר שלי</h2>
     <p class="lead">שלושה דברים מבית הספר, כדי לתאם איתכם את השנה.</p>
 
@@ -385,7 +396,8 @@ async function put(key,payload){
 /* ---------- שלבים: מסך אחד בכל פעם ----------
    השלב החי מגיע מהשלב שמיטל בוחרת בלוח ההפעלה של המשחק (action=ph בשרת המשחק).
    אפשר לחזור אחורה לשלב שכבר היה, אבל לא לרוץ קדימה. */
-var STEP_N=5,PH2STEP={lobby:1,meet:1,bursa:1,end:2,tables:3,barak:4,school:5};
+var STEP_N=7,PH2STEP={lobby:1,meet:1,bursa:2,end:3,elias:4,tables:5,barak:6,school:7};
+var EDONE=[];
 var PREVIEW=new URLSearchParams(location.search).get('demo')==='1';   /* ?demo=1 — כל השלבים פתוחים, בלי השרת */
 var liveStep=PREVIEW?STEP_N:Math.min(STEP_N,Math.max(1,Number(lsGet('hopa-m3-live'))||1)),
   viewStep=PREVIEW?Math.min(STEP_N,Math.max(1,Number(new URLSearchParams(location.search).get('step'))||1)):liveStep;
@@ -410,10 +422,51 @@ async function pollPhase(){
   try{
     var r=await gameJsonp({action:'ph'});
     var n=r&&r.ok?PH2STEP[r.phase]:0;
+    if(r&&r.ok&&r.edone){EDONE=r.edone;paintElias()}
     if(n&&n!==liveStep){
       var fwd=n>liveStep;liveStep=n;lsSet('hopa-m3-live',String(n));
       if(fwd||viewStep>liveStep){viewStep=n;if(!$('tabT').hidden)scrollTo(0,0)}
       paintSteps();
+
+/* מספר השולחן שלי (לפי בית הספר) */
+function myTableN(){var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];return T?T.n:0}
+/* אליאס מושגים — "סיימנו!" */
+function paintElias(){
+  var n=myTableN(),i=-1;EDONE.forEach(function(x,k){if(x.n===n)i=k});
+  var b=$('eDone'),m=$('eMsg');if(!b)return;
+  if(i>-1){b.hidden=true;m.hidden=false;m.textContent=i===0?'סיימתם ראשונים!':'סיימתם · מקום '+(i+1)}
+  else{b.hidden=false;m.hidden=true}
+}
+$('eDone').onclick=async function(){
+  var n=myTableN();if(!n){toast('לא מצאנו את השולחן שלך');showStep(3);return}
+  if(PREVIEW){EDONE=EDONE.concat([{n:n}]);paintElias();return}
+  var b=this;b.disabled=true;
+  try{var r=await gameJsonp({action:'eliasDone',n:n});if(r&&r.ok){EDONE=r.edone||EDONE;paintElias()}else toast((r&&r.error)||'לא נשלח — נסו שוב')}
+  catch(e){toast('לא נשלח — נסו שוב')}
+  b.disabled=false;
+};
+/* אליאס הפוך — כל אחד כותב רעיונות מהטלפון; נכנסים לשאלה הפתוחה של השולחן */
+var MY_IDEAS=lsJson('hopa-m3-ideas',[]);
+function paintIdeas(){$('iList').innerHTML=MY_IDEAS.slice().reverse().map(function(t){return '<div>'+esc(t)+'</div>'}).join('')}
+async function sendIdea(){
+  var t=$('iTxt').value.trim(),n=myTableN();
+  if(!t)return;
+  if(!n){$('iErr').textContent='לא מצאנו את השולחן שלך — בחרו בית ספר בשלב 3.';return}
+  $('iErr').textContent='';
+  if(!PREVIEW){
+    $('iGo').disabled=true;
+    try{var r=await gameJsonp({action:'addIdea',n:n,t:t});$('iGo').disabled=false;
+      if(!r||!r.ok){$('iErr').textContent=(r&&r.error)||'לא נשלח — נסו שוב';return}}
+    catch(e){$('iGo').disabled=false;$('iErr').textContent='לא נשלח — נסו שוב';return}
+  }
+  MY_IDEAS.push(t);lsSet('hopa-m3-ideas',JSON.stringify(MY_IDEAS.slice(-40)));
+  $('iTxt').value='';paintIdeas();toast('+1 לשולחן');$('iTxt').focus();
+}
+$('iGo').onclick=sendIdea;
+$('iTxt').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendIdea()}});
+paintIdeas();
+/* בהדגמה — גם המשחק נפתח בהדגמה */
+if(PREVIEW)[].slice.call(document.querySelectorAll('a[href="bursa.html"]')).forEach(function(a){a.href='bursa.html?demo=1'});
     }
   }catch(e){}
 }
@@ -439,11 +492,12 @@ function setSchool(s){
 }
 function paintMyTable(){
   var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];
-  [].slice.call(document.querySelectorAll('[data-tb]')).forEach(function(el){el.textContent=T?'שולחן '+T.n+' · '+T.lead:'השולחן שלי'});
+  [].slice.call(document.querySelectorAll('[data-tb]')).forEach(function(el){el.textContent=T?'שולחן '+T.n+' · '+T.lead:''});
+  if(typeof paintElias==='function')paintElias();
   var box=$('myTable');
   if(T&&!askSchool){
     box.innerHTML='<div class="tbl"><div class="lb">השולחן שלך</div><div class="no">'+T.n+'</div>'+
-      '<div class="ld">'+esc(T.lead)+'</div><div class="sc">'+esc(T.sec)+'</div></div>'+
+      '<div class="ld">'+esc(T.lead)+'</div></div>'+
       '<div class="chips">'+T.s.map(function(s){return '<span'+(s===sc?' class="me"':'')+'>'+esc(s)+'</span>'}).join('')+'</div>'+
       '<button type="button" class="chg" id="chgSc">זה לא בית הספר שלי</button>';
     $('chgSc').onclick=function(){askSchool=true;paintMyTable()};
@@ -760,7 +814,7 @@ function paintTableIdeas(){
     box.innerHTML='<div class="ti-h">רעיונות מהשולחנות <span>'+l.length+'</span></div>'+
       l.slice(0,lim).map(function(x,i){var on=have[nrm(x.t)];
         return '<div class="ti-r'+(x.act?' star':'')+'"><div class="ti-t">'+(x.act?'★ ':'')+esc(x.t)+
-          '<small>שולחן '+x.n+' · '+esc(x.sec)+(x.act?' · '+esc(x.act.hours)+' שעות · '+esc(x.act.who):'')+'</small></div>'+
+          '<small>שולחן '+x.n+(x.act?' · '+esc(x.act.hours)+' שעות · '+esc(x.act.who):'')+'</small></div>'+
           '<button type="button" data-i="'+i+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+')+'</button></div>';
       }).join('')+
       (l.length>5?'<button type="button" class="ti-more">'+(tiOpen[n]?'פחות':'עוד '+(l.length-5)+' רעיונות')+'</button>':'');

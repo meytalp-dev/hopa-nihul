@@ -76,7 +76,7 @@ var TABLES=[
 ];
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var tableUrl=location.href.replace(/shulchanot-print\.html.*$/,'bursa.html?v=table');
-var gameUrl=location.href.replace(/shulchanot-print\.html.*$/,'bursa.html');
+var gameUrl=location.href.replace(/shulchanot-print\.html.*$/,'mifgash3.html');   /* הקוד הקטן מוביל לדף המפגש — שם כותבים רעיונות */
 function comp(k,label){
   return '<div class="comp"><div class="h">רכיב '+k+' <span style="font-weight:600;font-size:12px;color:var(--muted)">'+label+'</span><span class="fill"></span></div>'+
     '<div class="row"><span class="t">שלב 3 · שאלו שאלה <small>— אחת מתוך 4 בשקית. רכז/ת אחד/ת רושם/ת את הרעיונות בטלפון שלו/ה</small></span><span class="ok">סיימתי</span></div>'+
@@ -84,17 +84,16 @@ function comp(k,label){
     '<table><tr><td style="width:44%">הפעילות</td><td style="width:22%">מי אחראי/ת</td><td style="width:12%">שעות</td><td>מתי בשנה</td></tr></table></div>';
 }
 function page(t){
-  return '<section class="page"><div class="top"><div class="num">'+t.n+'</div><div><h1>דף המנחה · שולחן '+t.n+' · '+esc(t.sec)+'</h1>'+
+  return '<section class="page"><div class="top"><div class="num">'+t.n+'</div><div><h1>דף המנחה · שולחן '+t.n+'</h1>'+
     '<div class="s">מנחה: '+esc(t.lead)+' · '+t.s.map(esc).join(' · ')+'</div></div>'+
     '<div class="qr"><div id="qr'+t.n+'"></div>דף המנחה בטלפון</div></div>'+
-    '<div class="scribe"><div class="qr2"><div id="qs'+t.n+'"></div>המשחק</div><div><b>לפני הכול: מנו רכז/ת רעיונות שיכתוב/תכתוב את כל הרעיונות.</b>'+
-      '<span>איפה? בטלפון שלו/ה, <b>במשחק שפתחנו בהתחלה</b> ← בתיבה <b>"אני הרשם/ת של השולחן"</b> ← מקלידים כל רעיון ולוחצים <b>"+ רעיון"</b>. סגר/ה את המשחק? סורקים את הקוד.</span>'+
-      '<span>הרכז/ת: ______________________</span></div><span class="ok">סיימתי</span></div>'+
+    '<div class="scribe"><div class="qr2"><div id="qs'+t.n+'"></div>דף המפגש</div><div><b>רעיונות כותבים כולם, כל אחד מהטלפון שלו.</b>'+
+      '<span>איפה? <b>בדף המפגש</b>, בשלב <b>"אליאס הפוך"</b> שמיטל פותחת. כל רעיון נכנס לשולחן (+1) ומופיע אצלך בדף המנחה בטלפון.</span></div></div>'+
     '<div class="part">חלק א׳ · אליאס מושגים</div>'+
     '<div class="st"><span class="t">בתוך השקית — שקית אורגנזה לבנה עם כרטיסי מושגים (קלף ורוד)'+
-      '<small>3 סבבים של דקה · בכל סבב מסביר/ה מישהו אחר · מסבירים את המושג <b>בלי להגיד את המילה או חלק ממנה</b> · כל ניחוש נכון = נקודה</small>'+
-      '<small style="margin-top:4px;color:var(--ink);font-weight:700">ניחושים — סבב 1: ____ &nbsp; סבב 2: ____ &nbsp; סבב 3: ____</small></span><span class="ok">סיימתי</span></div>'+
-    '<div class="part">חלק ב׳ · שולחנות הרעיונות</div>'+
+      '<small>כל פעם מסביר/ה מישהו אחר · מסבירים את המושג <b>בלי להגיד את המילה או חלק ממנה</b> · כל ניחוש נכון = נקודה</small>'+
+      '<small style="margin-top:4px;color:var(--ink);font-weight:700">סיימתם את כל הכרטיסים? לוחצים "סיימנו" בטלפון — השולחן הראשון מופיע על המסך.</small></span><span class="ok">סיימנו</span></div>'+
+    '<div class="part">אליאס הפוך</div>'+
     '<div class="intro"><b>לפנייך שקית ובה 8 שקיות קטנות — שקית לכל רכיב. בכל שקית 4 שאלות.</b>'+
     '<div class="chips">'+CHAPTERS.map(function(c){return '<span style="--c:'+c.c+'">'+esc(c.t)+'</span>'}).join('')+'</div></div>'+
     '<div class="st"><i>שלב 1</i><span class="t">הגרילו רכיב אחד בהפתעה<small>שולפים שקית בלי להסתכל</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
