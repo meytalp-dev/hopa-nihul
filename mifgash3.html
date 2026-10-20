@@ -723,7 +723,14 @@ function paintPlan(){
 /* רעיונות מהשולחנות (21.10) — מכל השולחנות, לפי רכיב, בלי שמות. קודם המגזר שלי. */
 var GAME_URL='https://script.google.com/macros/s/AKfycbzXVjly2MZPu0KeTNu1AeDfqF5Na1UQc7mnc1rCbn7RnXmcpPGC8kkS--K5vhmV65ZW/exec';
 var TIDEAS=null,tiOpen={};
+/* כמו במשחק: קודם fetch בלי עוגיות (טלפון שמחובר לגוגל נחסם ב-JSONP), ואם נכשל — JSONP */
 function gameJsonp(params){
+  var ac=typeof AbortController!=='undefined'?new AbortController():null,t=ac?setTimeout(function(){ac.abort()},20000):0;
+  return fetch(GAME_URL+'?'+new URLSearchParams(params).toString(),{credentials:'omit',cache:'no-store',signal:ac?ac.signal:undefined})
+    .then(function(r){clearTimeout(t);if(!r.ok)throw new Error('http '+r.status);return r.json()})
+    .catch(function(){clearTimeout(t);return gameJsonpOld(params)});
+}
+function gameJsonpOld(params){
   return new Promise(function(res,rej){
     var cb='gi'+Math.random().toString(36).slice(2),sc=document.createElement('script');
     var t=setTimeout(function(){cl();rej(new Error('timeout'))},20000);

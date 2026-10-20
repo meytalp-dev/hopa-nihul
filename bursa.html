@@ -431,9 +431,20 @@ function jsonp(params,tmo){
     document.head.appendChild(s);
   });
 }
+/* קודם fetch בלי עוגיות: טלפון שמחובר לחשבון גוגל נחסם ב-JSONP ("unable to open the file"), כי גוגל פותח את השרת בחשבון שלו.
+   בלי עוגיות כל טלפון הוא אורח, והשרת פתוח לאורחים. JSONP נשאר גיבוי. (20.10.26) */
+function getNoCookies(params,tmo){
+  var ac=typeof AbortController!=='undefined'?new AbortController():null,t=ac?setTimeout(function(){ac.abort()},tmo||20000):0;
+  return fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(),{credentials:'omit',cache:'no-store',signal:ac?ac.signal:undefined})
+    .then(function(r){clearTimeout(t);if(!r.ok)throw new Error('http '+r.status);return r.json()},function(e){clearTimeout(t);throw e});
+}
 async function call(p,tries){
   if(DEMO)return demoApi(p);
-  var e;for(var i=0;i<(tries||3);i++){try{return await jsonp(p)}catch(x){e=x;await new Promise(function(r){setTimeout(r,800+i*900)})}}
+  var e;for(var i=0;i<(tries||3);i++){
+    try{return await getNoCookies(p)}catch(x){e=x}
+    if(i===(tries||3)-1){try{return await jsonp(p)}catch(x){e=x}}
+    else await new Promise(function(r){setTimeout(r,800+i*900)});
+  }
   throw e;
 }
 
