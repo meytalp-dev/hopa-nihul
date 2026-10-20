@@ -149,6 +149,7 @@
   .pmon h3 small{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:0 8px;font-size:12px;margin-inline-start:4px}
   .pmon.un h3 small{background:none;color:var(--muted);font-weight:600}
   .pmon .addm{background:none;border:none;color:var(--pink-dark);font-weight:800;font-size:13.5px;cursor:pointer;padding:6px 0 0}
+  .idsel{margin-top:6px;font-size:13.5px!important;color:var(--pink-dark);border-color:#f3c2dc!important;background:#fff7fb!important}
   .msel{width:auto!important;padding:5px 8px!important;font-size:13px}
   .ti-m{width:auto!important;max-width:140px;padding:6px 8px!important;font-size:12.5px;font-weight:700;border-color:var(--pink)!important;color:var(--pink-dark)}
   .miss{color:var(--muted);font-style:italic}
@@ -222,7 +223,7 @@
 </div></header>
 
 <nav class="toc">
-  <div class="in tabs" id="tabs"><button type="button" data-tab="t" class="on">המפגש · 21.10</button><button type="button" data-tab="p">התוכנית שלי<span class="bd" id="tabBd" hidden></span></button></div>
+  <div class="in tabs" id="tabs"><button type="button" data-tab="t" class="on">המפגש · 21.10</button><button type="button" data-tab="p">תוכנית העבודה שלי<span class="bd" id="tabBd" hidden></span></button></div>
   <div class="in steps" id="steps"></div>
 </nav>
 
@@ -289,7 +290,7 @@
     <div class="btnrow"><button class="btn pink wide" id="b_send">שליחה</button></div>
     <div class="err" id="b_err"></div>
     <p class="hint">אפשר לעדכן בכל זמן. השליחה האחרונה של בית הספר היא זו שנשמרת.</p>
-    <div class="btnrow"><button type="button" class="btn ghost wide" id="toPlan">התוכנית שלי · הרעיונות שלקחתי מהשולחן</button></div>
+    <div class="btnrow"><button type="button" class="btn ghost wide" id="toPlan">תוכנית העבודה שלי</button></div>
     <div class="minilinks">
       <a href="machberet.html" target="_blank" rel="noopener">המחברת</a>
       <a href="mashov2.html" target="_blank" rel="noopener">משוב</a>
@@ -306,11 +307,7 @@
 <div id="tabP" hidden>
 
   <section id="p0">
-    <div class="sec-head"><div class="num">✓</div><div><h2>התוכנית שלי</h2><small>ממשיכה מ-14.10 · אותה תוכנית עד 4.11</small></div></div>
-    <div class="callout y" style="font-size:15px">
-      התוכנית לשנה, <b>לפי חודשים</b>: מה אני עושה ועם מי. מה שכתבתם ב-14.10 כבר כאן.<br>
-      רעיון טוב מהשולחנות? בוחרים לו חודש — והוא נכנס לשנה שלי.
-    </div>
+    <div class="sec-head"><div class="num">✓</div><div><h2>תוכנית העבודה שלי</h2><small>ממשיכה מ-14.10 · אותה תוכנית עד 4.11</small></div></div>
     <div class="two">
       <div><label class="fl">שם</label><input type="text" id="p_who" maxlength="60"></div>
       <div><label class="fl">בית ספר</label><select id="p_school"></select></div>
@@ -324,17 +321,14 @@
   </section>
 
   <section id="p2">
-    <div class="sec-head"><div class="num">2</div><div><h2>השנה שלי</h2><small>בכל חודש — מה אני עושה ועם מי</small></div></div>
-    <div id="p_year"></div>
-  </section>
-
-  <section id="p3">
-    <div class="sec-head"><div class="num">3</div><div><h2>רעיונות מהשולחנות</h2><small>בוחרים רעיון ← בוחרים חודש ← הוא נכנס לשנה שלי</small></div></div>
-    <div id="p_ideas"></div>
+    <div class="sec-head"><div class="num">2</div><div><h2>הרכיבים והפעולות שלי</h2><small>בוחרים רכיבים, ולכל רכיב — פעולות: מה, מתי ועם מי</small></div></div>
+    <p class="livehint" style="margin:0 0 8px">מצאתם רעיון טוב מהשולחנות? בוחרים אותו מהרשימה שבתוך הפעולה.</p>
+    <div class="tsel" id="p_chaps"></div>
+    <div id="p_list"></div>
   </section>
 
   <section id="p4">
-    <div class="sec-head"><div class="num">4</div><div><h2>שמירה והדף שלי</h2><small>הכול נשמר גם במכשיר</small></div></div>
+    <div class="sec-head"><div class="num">3</div><div><h2>שמירה והדף שלי</h2><small>הכול נשמר גם במכשיר</small></div></div>
     <div class="btnrow">
       <button class="btn pink" type="button" id="p_save">שמירת התוכנית</button>
       <button class="btn ghost" type="button" id="p_show">הדף שלי · להדפסה</button>
@@ -389,8 +383,8 @@ async function put(key,payload){
 /* ---------- שלבים: מסך אחד בכל פעם ----------
    השלב החי מגיע מהשלב שמיטל בוחרת בלוח ההפעלה של המשחק (action=ph בשרת המשחק).
    אפשר לחזור אחורה לשלב שכבר היה, אבל לא לרוץ קדימה. */
-var STEP_N=5,PH2STEP={lobby:1,meet:1,seat:2,bursa:3,end:3,elias:4,tables:4,school:5};   /* אליאס עבר למשחק, סבב ברק ירד (20.10.26) */
-var EDONE=[];
+var STEP_N=5,PH2STEP={lobby:1,meet:1,seat:2,bursa:3,end:3,elias:4,tables:4,share:4,plan:5,school:5};   /* אליאס עבר למשחק, סבב ברק ירד (20.10.26) */
+var EDONE=[],lastPh='';
 var PREVIEW=new URLSearchParams(location.search).get('demo')==='1';   /* ?demo=1 — כל השלבים פתוחים, בלי השרת */
 var liveStep=PREVIEW?STEP_N:Math.min(STEP_N,Math.max(1,Number(lsGet('hopa-m3-live'))||1)),
   viewStep=PREVIEW?Math.min(STEP_N,Math.max(1,Number(new URLSearchParams(location.search).get('step'))||1)):liveStep;
@@ -414,6 +408,8 @@ async function pollPhase(){
   try{
     var r=await gameJsonp({action:'ph'});
     var n=r&&r.ok?PH2STEP[r.phase]:0;
+    if(r&&r.ok&&r.phase==='plan'&&lastPh!=='plan'&&$('tabP').hidden){showTab('p');scrollTo(0,0)}   /* שלב 'תוכנית העבודה שלי' — עוברים ללשונית */
+    if(r&&r.ok)lastPh=r.phase;
     if(n&&n!==liveStep){
       var fwd=n>liveStep;liveStep=n;lsSet('hopa-m3-live',String(n));
       if(fwd||viewStep>liveStep){viewStep=n;if(!$('tabT').hidden)scrollTo(0,0)}
@@ -652,50 +648,79 @@ function paintStatus(){
 $('p_goal').value=plan.goal||'';
 $('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
 
-/* השנה שלי — לפי חודשים (מיטל 20.10.26: במקום אחוזים ופרקים). פעולה = {m: 0–11 מספטמבר, what, who}.
-   פעולה בלי חודש (מ-14.10 או מהמשחק) מחכה ב"עוד לא שובץ". השדה ch נשמר — 4.11 קורא לפיו. */
+/* תוכנית העבודה שלי — לפי הרכיבים שבחרתי (מיטל 20.10.26). בכל פעולה: מה (כותבים לבד או בוחרים מרעיונות השולחנות ברכיב), מתי (חודש), עם מי.
+   פעולה = {ch, what, m: 0–11 מספטמבר, who}. השדה ch — 4.11 קורא לפיו. */
 var MONTHS=['ספטמבר','אוקטובר','נובמבר','דצמבר','ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט'];
 function monthOf(a){
   if(a.m!=null&&a.m!==''&&!isNaN(Number(a.m)))return Number(a.m);
   var w=String(a.when||'');for(var i=0;i<MONTHS.length;i++)if(w.indexOf(MONTHS[i])>-1)return i;
   return -1;
 }
-function monthOpts(sel){return '<option value="-1">בחרו חודש…</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
+function monthOpts(sel){return '<option value="-1">מתי? בחרו חודש</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
+function ideasFor(ch){
+  var l=(TIDEAS&&TIDEAS[ch]||[]).slice(),sec=mySector();
+  l.sort(function(a,b){var sa=(a.sec===sec?0:1),sb=(b.sec===sec?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
+  return l;
+}
+function ideaOpts(ch){
+  var l=ideasFor(ch);
+  if(!l.length)return '<option value="">עוד אין רעיונות מהשולחנות ברכיב הזה</option>';
+  return '<option value="">או בחרו מרעיונות השולחנות ('+l.length+')</option>'+l.map(function(x,i){return '<option value="'+i+'">'+esc(String(x.t).slice(0,90))+'</option>'}).join('');
+}
 function actRow(a){
-  var tg=SRC_TAG[a.src]||SRC_TAG.me,m=monthOf(a);
-  return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span>'+
-    '<select data-f="m" class="msel">'+monthOpts(m)+'</select><button type="button" class="x">הסרה</button></div>'+
-    '<input type="text" data-f="what" maxlength="140" placeholder="מה אני עושה" value="'+esc(a.what)+'">'+
-    '<input type="text" data-f="who" maxlength="40" placeholder="עם מי" value="'+esc(a.who)+'" style="margin-top:6px"></div>';
+  var tg=SRC_TAG[a.src]||SRC_TAG.me;
+  return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span><button type="button" class="x">הסרה</button></div>'+
+    '<label class="fl" style="margin-top:2px">הפעולה</label>'+
+    '<input type="text" data-f="what" maxlength="140" placeholder="כותבים לבד…" value="'+esc(a.what)+'">'+
+    '<select class="idsel" data-ch="'+a.ch+'">'+ideaOpts(a.ch)+'</select>'+
+    '<div class="two" style="margin-top:6px"><div><label class="fl">מתי</label><select data-f="m" class="msel">'+monthOpts(monthOf(a))+'</select></div>'+
+    '<div><label class="fl">עם מי</label><input type="text" data-f="who" maxlength="40" value="'+esc(a.who)+'"></div></div></div>';
 }
 function paintPlan(){
   paintStatus();
-  var acts=plan.acts.filter(function(a){return a.what!==undefined});
-  var un=acts.filter(function(a){return monthOf(a)<0&&(a.what||'').trim()});
-  var h=un.length?'<div class="pmon un"><h3>עוד לא שובץ <small>בחרו חודש לכל פעולה</small></h3>'+un.map(actRow).join('')+'</div>':'';
-  h+=MONTHS.map(function(mn,i){
-    var l=acts.filter(function(a){return monthOf(a)===i});
-    return '<div class="pmon'+(l.length?' has':'')+'"><h3>'+mn+(l.length?' <small>'+l.length+'</small>':'')+'</h3>'+l.map(actRow).join('')+
-      '<button type="button" class="addm" data-m="'+i+'">+ פעולה ב'+mn+'</button></div>';
+  $('p_chaps').innerHTML=CHAPTERS.map(function(c){
+    var on=plan.chaps.indexOf(c.n)>-1;
+    return '<button type="button" data-n="'+c.n+'" class="'+(on?'on':'')+'" style="--accent:'+c.c+'">'+
+      '<span class="n">'+(on?'✓ בתוכנית שלי':'רכיב '+c.n)+'</span><span class="t" style="display:block">'+esc(c.t)+'</span></button>';
   }).join('');
-  $('p_year').innerHTML=h;
-  [].slice.call($('p_year').querySelectorAll('.pact')).forEach(function(row){
+  [].slice.call($('p_chaps').children).forEach(function(b){
+    b.onclick=function(){
+      var n=Number(b.dataset.n),i=plan.chaps.indexOf(n);
+      if(i>-1)plan.chaps.splice(i,1);else plan.chaps.push(n);
+      savePlan();paintPlan();
+    };
+  });
+  var order=plan.chaps.slice().sort(function(a,b){return a-b});
+  var extra=plan.acts.filter(function(a){return !(a.ch>0)&&(a.what||'').trim()});
+  if(!order.length&&!extra.length){$('p_list').innerHTML='<p class="livehint" style="margin-top:12px">בחרו למעלה את הרכיבים שלכם — ואז מוסיפים פעולות לכל אחד.</p>';return}
+  $('p_list').innerHTML=order.map(function(n){
+    var c=CHAPTERS[n-1],l=plan.acts.filter(function(a){return a.ch===n});
+    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+'</h3>'+
+      (l.length?l.map(actRow).join(''):'<p class="livehint">עוד אין פעולות ברכיב הזה.</p>')+
+      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div></div>';
+  }).join('')+
+  (extra.length?'<div class="pch" style="--c:#999"><h3>פעולות נוספות</h3>'+extra.map(actRow).join('')+'</div>':'');
+  [].slice.call($('p_list').querySelectorAll('.pact')).forEach(function(row){
     var a=plan.acts.filter(function(x){return x.id===row.dataset.id})[0];if(!a)return;
     [].slice.call(row.querySelectorAll('input')).forEach(function(inp){
       inp.addEventListener('input',function(){a[inp.dataset.f]=inp.value;savePlan()});
     });
-    row.querySelector('.msel').onchange=function(){a.m=Number(this.value);if(a.m<0)delete a.m;savePlan();paintPlan()};
+    row.querySelector('.msel').onchange=function(){var m=Number(this.value);if(m<0)delete a.m;else a.m=m;savePlan()};
+    row.querySelector('.idsel').onchange=function(){
+      if(this.value==='')return;var x=ideasFor(a.ch)[Number(this.value)];if(!x)return;
+      a.what=x.t;if(!a.who&&x.act&&x.act.who)a.who=x.act.who;a.src='table';
+      savePlan();paintPlan();toast('נבחר מהשולחנות ✓');
+    };
     row.querySelector('.x').onclick=function(){plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר')};
   });
-  [].slice.call($('p_year').querySelectorAll('.addm')).forEach(function(b){
+  [].slice.call($('p_list').querySelectorAll('[data-new]')).forEach(function(b){
     b.onclick=function(){
       var id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-      plan.acts.push({id:id,ch:0,m:Number(b.dataset.m),what:'',who:'',when:'',hours:'',src:'me'});
+      plan.acts.push({id:id,ch:Number(b.dataset.new),what:'',who:'',when:'',hours:'',src:'me'});
       savePlan();paintPlan();
-      var inp=$('p_year').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
+      var inp=$('p_list').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
     };
   });
-  paintTableIdeas();
 }
 
 /* רעיונות מהשולחנות (21.10) — מכל השולחנות, לפי רכיב, בלי שמות. קודם המגזר שלי. */
@@ -726,35 +751,12 @@ function mySector(){
   var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];
   return T?T.sec:'';
 }
+/* הרעיונות מהשולחנות מתעדכנים — מרעננים רק את רשימות הבחירה, לא את מה שמקלידים */
 function paintTableIdeas(){
-  var box=$('p_ideas');if(!box)return;
-  if(!TIDEAS){box.innerHTML='<p class="livehint">הרעיונות מהשולחנות ייטענו כאן.</p>';return}
-  var sec=mySector(),have={};plan.acts.forEach(function(x){have[nrm(x.what)]=1});
-  var h=CHAPTERS.map(function(c){
-    var l=(TIDEAS[c.n]||[]).slice();if(!l.length)return '';
-    l.sort(function(a,b){var sa=(a.sec===sec?0:1),sb=(b.sec===sec?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
-    var lim=tiOpen[c.n]?l.length:5;
-    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+' <small>'+l.length+'</small></h3>'+
-      l.slice(0,lim).map(function(x,i){var on=have[nrm(x.t)];
-        return '<div class="ti-r'+(x.act?' star':'')+'" data-ch="'+c.n+'" data-i="'+i+'"><div class="ti-t">'+(x.act?'★ ':'')+esc(x.t)+'<small>שולחן '+x.n+'</small></div>'+
-          (on?'<button type="button" disabled>בתוכנית ✓</button>':'<select class="ti-m" aria-label="לאיזה חודש">'+monthOpts(-1).replace('בחרו חודש…','+ לתוכנית · חודש')+'</select>')+'</div>';
-      }).join('')+
-      (l.length>5?'<button type="button" class="ti-more" data-ch="'+c.n+'">'+(tiOpen[c.n]?'פחות':'עוד '+(l.length-5)+' רעיונות')+'</button>':'')+'</div>';
-  }).join('');
-  box.innerHTML=h||'<p class="livehint">עוד אין רעיונות מהשולחנות. הם יופיעו כאן כשהשולחנות יתחילו לכתוב.</p>';
-  [].slice.call(box.querySelectorAll('.ti-m')).forEach(function(sel){
-    sel.onchange=function(){
-      var m=Number(this.value);if(m<0)return;
-      var r=this.closest('.ti-r'),ch=Number(r.dataset.ch),l=(TIDEAS[ch]||[]).slice();
-      l.sort(function(a,b){var s0=mySector(),sa=(a.sec===s0?0:1),sb=(b.sec===s0?0:1);return sa-sb||(b.act?1:0)-(a.act?1:0)});
-      var x=l[Number(r.dataset.i)];if(!x)return;
-      if(plan.acts.some(function(a){return nrm(a.what)===nrm(x.t)})){toast('זה כבר בתוכנית שלך');return}
-      plan.acts.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ch:ch,m:m,what:x.t,who:x.act?x.act.who||'':'',when:'',hours:'',src:'table'});
-      if(plan.chaps.indexOf(ch)<0)plan.chaps.push(ch);
-      savePlan();paintPlan();toast('נכנס ל'+MONTHS[m]+' ✓');
-    };
+  [].slice.call(document.querySelectorAll('#p_list .idsel')).forEach(function(sel){
+    if(document.activeElement===sel)return;
+    var h=ideaOpts(Number(sel.dataset.ch));if(sel.dataset.h!==h){sel.innerHTML=h;sel.dataset.h=h}
   });
-  [].slice.call(box.querySelectorAll('.ti-more')).forEach(function(b){b.onclick=function(){var c=Number(b.dataset.ch);tiOpen[c]=!tiOpen[c];paintTableIdeas()}});
 }
 setInterval(function(){if(!document.hidden&&!$('tabP').hidden)loadTableIdeas()},20000);
 
@@ -768,19 +770,20 @@ $('p_save').onclick=async function(){
 };
 function renderPlanPage(){
   var who=$('p_who').value.trim(),sc=$('p_school').value;
-  var acts=plan.acts.filter(function(a){return (a.what||'').trim()});
-  var rows=MONTHS.map(function(mn,i){
-    var l=acts.filter(function(a){return monthOf(a)===i});if(!l.length)return '';
-    return l.map(function(a,k){return '<tr>'+(k===0?'<td rowspan="'+l.length+'" style="font-weight:800;width:18%">'+mn+'</td>':'')+'<td>'+esc(a.what)+'</td><td style="width:28%">'+esc(a.who)+'</td></tr>'}).join('');
+  var order=plan.chaps.slice().sort(function(a,b){return a-b});
+  var byM=function(a,b){var x=monthOf(a),y=monthOf(b);return (x<0?99:x)-(y<0?99:y)};
+  var chs=order.map(function(n){
+    var l=plan.acts.filter(function(a){return a.ch===n&&(a.what||'').trim()}).sort(byM);
+    return '<h3>'+esc(CHAPTERS[n-1].t)+'</h3>'+(l.length?'<table><tr><th>הפעולה</th><th style="width:20%">מתי</th><th style="width:24%">עם מי</th></tr>'+
+      l.map(function(a){var m=monthOf(a);return '<tr><td>'+esc(a.what)+'</td><td>'+(m>-1?MONTHS[m]:'')+'</td><td>'+esc(a.who)+'</td></tr>'}).join('')+'</table>'
+      :'<p class="miss">עוד אין פעולות</p>');
   }).join('');
-  var un=acts.filter(function(a){return monthOf(a)<0});
   $('p_page').innerHTML=
     '<div style="display:flex;align-items:center;gap:12px"><img src="hopa-logo.png" alt="הופה" style="height:40px">'+
-    '<div><h2>ליווי בוגרים · תשפ״ז · התוכנית שלי</h2><div style="color:var(--muted);font-size:13px">'+
+    '<div><h2>ליווי בוגרים · תשפ״ז · תוכנית העבודה שלי</h2><div style="color:var(--muted);font-size:13px">'+
     esc(who)+(sc?' · '+esc(sc):'')+'</div></div></div>'+
     '<h3>המטרה</h3><p>'+(plan.goal.trim()?esc(plan.goal.trim()):'<span class="miss">עוד לא כתבתי</span>')+'</p>'+
-    '<h3>השנה שלי</h3>'+(rows?'<table><tr><th>חודש</th><th>מה אני עושה</th><th>עם מי</th></tr>'+rows+'</table>':'<p class="miss">עוד אין פעולות</p>')+
-    (un.length?'<h3>עוד לא שובץ</h3><ul>'+un.map(function(a){return '<li>'+esc(a.what)+(a.who?' · '+esc(a.who):'')+'</li>'}).join('')+'</ul>':'')+
+    (chs||'<h3>הרכיבים</h3><p class="miss">עוד לא בחרתי רכיבים</p>')+
     '<div class="btnrow noprint"><button class="btn pink" type="button" id="p_print">הדפסה / שמירה כ-PDF</button></div>'+
     '<p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">תוכנית הבוגרים · הופה</p>';
   $('p_print').onclick=function(){document.body.classList.add('pp');window.print()};
