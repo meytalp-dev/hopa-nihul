@@ -485,6 +485,7 @@ function paintDD(){[].slice.call($('b_dd').children).forEach(function(b){b.class
 paintDD();
 
 $('b_send').onclick=async function(){
+  if(PREVIEW){toast('זו הדגמה — לא נשלח');return}
   var who=$('b_who').value.trim(),school=$('b_school').value;
   if(!who||!school){$('b_err').textContent='צריך שם ובית ספר.';return}
   if(isHopa()){
@@ -588,6 +589,7 @@ function savePlan(){
 }
 async function pushPlan(){
   clearTimeout(saveT);
+  if(PREVIEW){$('p_saved').textContent='זו הדגמה — נשמר רק במכשיר';return false}
   var who=(lsGet('hopa-m3-f-b_who')||'').trim(),school=lsGet('hopa-m3-f-b_school')||'';
   if(!plan.goal&&!visibleActs().length)return false;
   var ok=await put('tochnit-'+devId,{who:who,school:school,goal:plan.goal,pct:plan.pct,chaps:plan.chaps,
