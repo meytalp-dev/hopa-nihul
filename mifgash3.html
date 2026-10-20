@@ -428,6 +428,10 @@ async function pollPhase(){
       if(fwd||viewStep>liveStep){viewStep=n;if(!$('tabT').hidden)scrollTo(0,0)}
       paintSteps();
 
+    }
+  }catch(e){}
+}
+paintSteps();
 /* מספר השולחן שלי (לפי בית הספר) */
 function myTableN(){var sc=lsGet('hopa-m3-f-b_school')||'',T=TABLES.filter(function(t){return t.s.indexOf(sc)>-1})[0];return T?T.n:0}
 /* אליאס מושגים — "סיימנו!" */
@@ -467,10 +471,6 @@ $('iTxt').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDe
 paintIdeas();
 /* בהדגמה — גם המשחק נפתח בהדגמה */
 if(PREVIEW)[].slice.call(document.querySelectorAll('a[href="bursa.html"]')).forEach(function(a){a.href='bursa.html?demo=1'});
-    }
-  }catch(e){}
-}
-paintSteps();
 
 /* ---------- השולחן שלי — 7 שולחנות לפי מגזר (20.10.26; זהה לשרת המשחק) ---------- */
 var myKey='';
