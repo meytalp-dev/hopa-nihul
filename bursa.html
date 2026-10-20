@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>בורסת המטרות · מפגש 21.10 · הופה</title>
+<title>מפגש הופה · 21.10</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--pink-dark:#c02673;--pink-soft:#fde7f2;--yellow:#FFF200;
@@ -38,6 +38,9 @@
   .seatno{width:120px;height:120px;margin:0 auto;border-radius:50%;background:var(--pink);color:#fff;font-size:64px;font-weight:900;display:flex;align-items:center;justify-content:center}
   .seatld{font-size:24px;font-weight:900;margin-top:10px}
   .pickn{margin-top:8px;font-weight:900;color:var(--pink)}
+  .btn.gsend{margin-top:12px;font-size:18px;padding:16px}
+  .btn.gsend:disabled{background:#ddd;color:#888;box-shadow:none}
+  .btn.gsend.done{background:#1f9d6b;box-shadow:0 8px 22px rgba(31,157,107,.3)}
   .goal.pick{display:flex;gap:10px;align-items:center;width:100%;text-align:right;font:inherit;cursor:pointer;border:2px solid #ebe6ee;background:#fff}
   .goal.pick.has{border-color:var(--pink);background:#fff0f7}
   .goal.pick[data-full]{opacity:.55}
@@ -45,6 +48,29 @@
   .goal.pick.has .ck{background:var(--pink);color:#fff}
   .goal.pick .tx{flex:1}
   .goal.pick .cnt{font-size:12px;font-weight:800;color:#7d7d8a;flex:none}
+  .ptimer{margin:12px auto 4px;text-align:center;font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--pink);background:#fff0f7;border-radius:16px;padding:6px}
+  .ptimer.low{color:#d9534f;animation:pop .8s infinite}
+  .ecount{display:flex;align-items:center;justify-content:center;gap:22px;margin:12px 0 4px}
+  .ecount button{width:64px;height:64px;border-radius:50%;border:none;background:var(--pink);color:#fff;font-size:34px;font-weight:900;cursor:pointer}
+  .ecount button:active{transform:scale(.92)}
+  .ecount b{font-size:56px;font-weight:900;min-width:80px;text-align:center;font-variant-numeric:tabular-nums}
+  .elead{margin-top:12px;background:#fffbd0;border-radius:12px;padding:10px 12px;text-align:center;font-size:15px}
+  .chips2{display:flex;flex-wrap:wrap;gap:6px}
+  .chips2 button{border:2px solid var(--c);background:#fff;color:#1f1f26;border-radius:999px;padding:7px 12px;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+  .chips2 button.on{background:var(--c);color:#fff}
+  .chips2 button:disabled{opacity:.35}
+  #pTables select,#pTables input[type=text]{width:100%;border:1.5px solid #ebe6ee;border-radius:12px;padding:11px 12px;font:inherit;background:#fff;margin-top:4px}
+  .bigtimer{margin-inline-start:2vw;background:var(--pink);color:#fff;border-radius:999px;padding:.6vh 2vw;font-size:4.2vh;font-weight:900;font-variant-numeric:tabular-nums}
+  .bigtimer.low{background:#d9534f}
+  .comps8{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6vh}
+  .comps8 .ct{background:var(--c);color:#fff;border-radius:2vh;padding:2vh 1.2vw;min-height:17vh;display:flex;flex-direction:column;gap:1vh}
+  .comps8 .ct b{font-size:3vh;line-height:1.2}
+  .comps8 .ct.empty{opacity:.3}
+  .comps8 .ct i{display:inline-block;background:#fff;color:#1f1f26;border-radius:999px;padding:.3vh .9vw;font-style:normal;font-weight:900;font-size:2.1vh;margin:.4vh 0 0 .5vw}
+  #ideaPop{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:.35s;background:var(--c,#E8348A);color:#fff;border-radius:3vh;padding:4vh 4vw;max-width:72vw;text-align:center;z-index:250;box-shadow:0 2vh 6vh rgba(0,0,0,.25);pointer-events:none}
+  #ideaPop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  #ideaPop .k{font-size:3.2vh;font-weight:800;opacity:.95}
+  #ideaPop .m{font-size:6.4vh;font-weight:900;margin-top:1.2vh;line-height:1.2}
   .howpts{margin:0 0 10px;background:#fffbd0;border-radius:12px;padding:9px 12px;font-size:14px;line-height:1.45}
   .matchno{display:inline-block;background:var(--pink);color:#fff;border-radius:999px;padding:2px 11px;font-size:12.5px;font-weight:900;margin-bottom:6px}
   .card h2{margin:0 0 6px;font-size:18px;font-weight:900}
@@ -157,6 +183,14 @@
   body.scr #splash .s{font-size:3.4vh}
   body.scr #splash .k{font-size:3vh;padding:1vh 3vw}
   .sndbtn{position:fixed;bottom:2vh;left:2vw;background:#222;color:#aaa;border:1px solid #333;border-radius:99px;padding:.8vh 1.6vw;font-size:1.8vh;cursor:pointer;z-index:290}
+  /* המסך הגדול על רקע לבן (מיטל 20.10.26) — צהוב על לבן לא נקרא, לכן מספרים בוורוד */
+  body.scr{background:#fff;color:#1f1f26}
+  body.scr .big,body.scr .lb .v,body.scr .hobs span i,body.scr .podium div small,body.scr .meetfeed div b{color:var(--pink)}
+  body.scr .hobs span{background:#f6f2f7;border-color:#ebe6ee}
+  body.scr .lb .bar{background:#eee}
+  body.scr .tickr,body.scr .podium div,body.scr .meetfeed div,body.scr .cov div{background:#f6f2f7}
+  body.scr .cov i{background:#e6e0ea}
+  body.scr .sndbtn{background:#f6f2f7;color:#555;border-color:#ddd}
 
   /* ---------- לוח הפעלה ---------- */
   .phases{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
@@ -279,7 +313,8 @@
     <div id="pBursa" hidden>
       <div class="card"><h2>המטרות שלי</h2>
         <p class="muted" style="margin:0"><b>בחרו עד 3 מטרות</b> שהכי חשובות לכם. לחיצה נוספת מבטלת.</p>
-        <div class="pickn" id="pickN"></div></div>
+        <div class="pickn" id="pickN"></div>
+        <button type="button" class="btn pink gsend" id="gSend">שליחה</button></div>
       <div id="gList"></div>
     </div>
 
@@ -320,8 +355,8 @@
 
 </main>
 
-<div id="screen">
-  <div class="s-top"><span class="logo"><img src="hopa-logo.png" alt="הופה"></span><h1 id="sTitle">פעילות היכרות</h1><span class="ph" id="sPh"></span></div>
+<div id="screen"><div id="ideaPop"></div>
+  <div class="s-top"><span class="logo"><img src="hopa-logo.png" alt="הופה"></span><h1 id="sTitle">פעילות היכרות</h1><span class="bigtimer" data-timer hidden></span><span class="ph" id="sPh"></span></div>
   <div class="s-body" id="sBody"></div>
   <div class="tickr" id="sTick" hidden></div>
 </div>
@@ -338,14 +373,14 @@
 var EXEC_URL='https://script.google.com/macros/s/AKfycbzXVjly2MZPu0KeTNu1AeDfqF5Na1UQc7mnc1rCbn7RnXmcpPGC8kkS--K5vhmV65ZW/exec';
 var qs=new URLSearchParams(location.search),MODE=qs.get('v')||'player',DEMO=qs.get('demo')==='1';
 var LS=DEMO?'hopa-bursa-demo-':'hopa-bursa-';
-var PH_T={lobby:'נרשמים',meet:'פעילות היכרות',seat:'לשולחנות',bursa:'המטרות שלי',end:'המטרות שבחרנו',elias:'אליאס מושגים',tables:'אליאס הפוך',barak:'סבב ברק',school:'בית הספר שלי'};
+var PH_T={lobby:'פעילות היכרות',meet:'פעילות היכרות',seat:'לשולחנות',bursa:'המטרות שלי',end:'המטרות שבחרנו',elias:'אליאס מושגים',tables:'אליאס הפוך',school:'בית הספר שלי'};
 /* סבב ברק ובית הספר שלי — שלבי הדף המלווה; במשחק ובמסך נראים כמו השולחנות */
-function tblLike(ph){return ph==='elias'||ph==='tables'||ph==='barak'||ph==='school'}
+function tblLike(ph){return ph==='elias'||ph==='tables'||ph==='school'}
 var SPLASH={meet:['שלב 1','פעילות היכרות','מצאו את מי שעל המסך שלכם — ושאלו אותו'],
   seat:['סיימנו להכיר','סיימתם!','מוזמנים להצטרף לשולחן שלכם'],
   bursa:['המטרות שלי','בחרו עד 3','מה הכי חשוב לכם שיקרה לבוגרים?'],end:['סיכום','המטרות שבחרנו','שלוש המטרות שנבחרו הכי הרבה'],
   elias:['בשולחנות','אליאס מושגים','מי מסיים ראשון?'],tables:['בשולחנות','אליאס הפוך','כל רעיון = נקודה לשולחן'],
-  barak:['סבב ברק','סבב ברק','כל שולחן — הפעילות הכי טובה שלו'],school:['לפני שיוצאים','בית הספר שלי','ממלאים בדף המפגש']};
+  school:['לפני שיוצאים','בית הספר שלי','ממלאים בדף המפגש']};
 var SEC_CLS={'כללי':'','כללי ודרוזי':'','דרוזי':'','ערבי':'s-arab','חרדי':'s-har','חרדי וכללי':'s-har'};
 function chap(n){return chapterByNum(n)}
 var ICO={
@@ -538,6 +573,18 @@ function demoApi(q){
       if(it.done&&!(o&&o.done))s.ttick.push({n:Number(q.n),ch:it.ch,t:it.act.what,act:1})});
     s.ttick=s.ttick.slice(-20);s.tb[q.n]=nt;r={ok:true,pts:dTablePts(nt)};
   }
+  else if(a==='eliasCount'||a==='tableSet'||a==='addIdeaCh'){
+    var tn=Number(q.n),t=s.tb[tn]||(s.tb[tn]={drawn:0,comps:[],elias:0,items:[],scribe:''});
+    if(a==='eliasCount')t.elias=Math.max(0,Math.min(99,Number(q.v)||0));
+    if(a==='tableSet'){if(q.drawn!=null)t.drawn=Number(q.drawn)||0;
+      if(q.two!=null){var two=String(q.two).split(',').map(Number).filter(function(x){return x>=1&&x<=8&&x!==t.drawn}).slice(0,2);t.comps=(t.drawn?[t.drawn]:[]).concat(two)}
+      else if(t.drawn&&t.comps.indexOf(t.drawn)<0)t.comps=[t.drawn].concat(t.comps).slice(0,3);
+      if(q.scribe!=null)t.scribe=String(q.scribe)}
+    if(a==='addIdeaCh'){var ch=Number(q.ch),it=t.items.filter(function(x){return x.ch===ch})[0];
+      if(!it){it={ch:ch,q:-1,best:-1,ideas:[],act:{what:'',hours:'',who:''},done:false};t.items.push(it)}
+      if(it.ideas.indexOf(q.t)<0){it.ideas.push(q.t);s.ttick.push({n:tn,ch:ch,t:q.t})}}
+    r={ok:true,pts:dTablePts(t)};
+  }
   else if(a==='addIdea'){var t=s.tb[q.n],it=t&&t.items.filter(function(x){return !x.done&&x.q>=0})[0];
     if(!it)r={ok:false,error:'המנחה עוד לא בחר/ה שאלה'};else{if(it.ideas.indexOf(q.t)<0){it.ideas.push(q.t);s.ttick.push({n:Number(q.n),ch:it.ch,t:q.t})}r={ok:true,pts:dTablePts(t)}}}
   else if(a==='plus'){var p=s.p[q.id];p.plus=p.plus||[];if(p.plus.indexOf(q.key)<0){p.plus.push(q.key);p.w+=5}r={ok:true,w:p.w,gained:5}}
@@ -551,7 +598,8 @@ function demoApi(q){
     if((s.cfg.phase==='meet'||s.cfg.phase==='lobby')&&!p.t)dPick(p,s);
     var nf=p.nf||[];p.nf=[];
     var tn=D_TMAP[p.s]||0,tt=tn?s.tb[tn]:null;
-    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv,
+    var et=null;D_TABLES.forEach(function(T){var x=s.tb[T.n],v=x?Number(x.elias)||0:0;if(v>0&&(!et||v>et.v))et={n:T.n,lead:T.lead,v:v}});
+    r={ok:true,phaseAt:s.cfg.at||0,now:Date.now(),etop:s.cfg.phase==='elias'?et:null,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv,
       table:tn,tb:tn?{t:tt||null,pts:dTablePts(tt)}:null,plus:p.plus||[]};
   }else if(a==='meet'){
     var p=s.p[q.id],o=dPlayers(s).filter(function(x){return x.code===String(q.code)})[0];
@@ -570,13 +618,13 @@ function demoApi(q){
     var ps=dPlayers(s),hob={};ps.forEach(function(p){p.h.forEach(function(k){hob[k]=(hob[k]||0)+1})});
     var top=Object.keys(s.inv).map(function(g){return {g:Number(g),v:s.inv[g]}}).sort(function(x,y){return y.v-x.v}),inv=0,w=0;
     top.forEach(function(x){inv+=x.v});ps.forEach(function(p){w+=p.w});
-    var tbl=D_TABLES.map(function(T){var t=s.tb[T.n];return {n:T.n,lead:T.lead,sec:T.sec,pts:dTablePts(t),comps:t?t.comps:[],
+    var tbl=D_TABLES.map(function(T){var t=s.tb[T.n];return {n:T.n,lead:T.lead,sec:T.sec,pts:dTablePts(t),comps:t?t.comps:[],elias:t?Number(t.elias)||0:0,
       ideas:t?t.items.reduce(function(x,it){return x+it.ideas.length},0):0,acts:t?t.items.filter(function(it){return it.done}).map(function(it){return {ch:it.ch,what:it.act.what}}):[]}});
-    r={ok:true,phase:s.cfg.phase,flash:s.cfg.flash,players:ps.length,meets:s.meets,feed:s.feed||[],tables:tbl,ttick:s.ttick.slice(-8),
+    r={ok:true,phaseAt:s.cfg.at||0,now:Date.now(),phase:s.cfg.phase,flash:s.cfg.flash,players:ps.length,meets:s.meets,feed:s.feed||[],tables:tbl,ttick:s.ttick.slice(-8),
       hobbies:Object.keys(hob).map(function(k){return {t:D_HOB[k].t,n:hob[k]}}).sort(function(x,y){return y.n-x.n}),
       top:top.slice(0,10),tick:s.tick.slice(-10),invested:inv,wallet:w,investors:ps.filter(function(p){return Object.keys(p.inv).length}).length};
   }else if(a==='admin'){
-    if(q.op==='phase'){s.cfg.phase=q.phase;if(q.phase==='meet')dPlayers(s).forEach(function(p){if(!p.t)dPick(p,s)});r={ok:true,phase:q.phase}}
+    if(q.op==='phase'){s.cfg.phase=q.phase;s.cfg.at=Date.now();if(q.phase==='meet')dPlayers(s).forEach(function(p){if(!p.t)dPick(p,s)});r={ok:true,phase:q.phase}}
     else if(q.op==='flash'){s.cfg.flash={t:q.t,at:Date.now()};r={ok:true}}
     else if(q.op==='reset'){localStorage.removeItem(LS+'state');Object.keys(localStorage).forEach(function(k){if(k.indexOf(LS)===0&&k!==LS+'mute')localStorage.removeItem(k)});return {ok:true}}
     else{var ps=dPlayers(s);r={ok:true,cfg:s.cfg,meets:s.meets,players:ps.map(function(p){return {n:p.n,s:p.s,met:p.met.length,w:p.w}}).sort(function(x,y){return y.met-x.met})}}
@@ -691,8 +739,14 @@ async function tick(){
     var r=await call({action:'me',id:myId},2);
     if(r&&r.gone){lsDel('id');myId=null;$('vMain').hidden=true;$('vJoin').hidden=false;$('wallet').hidden=true;polling=false;return}
     if(r&&r.ok){
+      if(r.now)SRV_OFF=r.now-Date.now();
       ME=r;paint();
-      (r.nf||[]).forEach(function(x,i){setTimeout(function(){toast(x.n+' מצא/ה אותך! +10 נקודות',true);sFireworks(false);boom(false);buzz([80,50,80])},i*1200)});
+      /* מי שנמצא/ה מקבל/ת את אותה חגיגה: כרטיס ירוק, זיקוקים, צליל ורטט (20.10.26) */
+      (r.nf||[]).forEach(function(x,i){setTimeout(function(){
+        if($('mReveal'))$('mReveal').innerHTML='<div class="reveal"><b>+10 נקודות!</b> '+esc(x.n)+(x.s?' מ'+esc(x.s):'')+' מצא/ה אותך'+
+          '<br><span class="muted">ממשיכים — יש לך עוד מישהו לחפש למעלה</span></div>';
+        toast(x.n+' מצא/ה אותך! +10 נקודות',true);sFireworks(true);boom(true);sFanfare();buzz([100,60,100,60,200]);floater('+10',$('wallet'));
+      },i*1500)});
       showFlash(r.flash);
     }
   }catch(e){}
@@ -703,9 +757,9 @@ function paint(){
   $('myCode').textContent=ME.code;
   /* מיטל 20.10.26: מי שנרשם עובר מיד ל'מי בתחביב שלי' — שלב 'נרשמים' נראה בטלפון כמו שלב ההיכרות */
   var vp=tblLike(ME.phase)?'tables':(ME.phase==='lobby'?'meet':ME.phase);
-  $('hTitle').textContent=PH_T[vp]||'';
+  $('hTitle').textContent=PH_T[tblLike(ME.phase)?ME.phase:vp]||'';
   ['lobby','meet','seat','bursa','end','tables'].forEach(function(p){$('p'+p.charAt(0).toUpperCase()+p.slice(1)).hidden=vp!==p});
-  document.querySelector('.mycode').hidden=vp==='tables';
+  document.querySelector('.mycode').hidden=vp!=='meet';   /* הקוד נחוץ רק בפעילות ההיכרות */
   if(ME.phase!==lastPhase){
     if(lastPhase!==null&&!(lastPhase==='lobby'&&ME.phase==='meet'))splash(ME.phase);
     lastPhase=ME.phase;scrollTo(0,0);
@@ -719,6 +773,23 @@ function paint(){
 
 /* ---------- שלב השולחנות בטלפון של הרכז/ת ---------- */
 var myTableOverride=Number(lsGet('mytable')||0),tbOv=null;
+/* ---------- אליאס בטלפון של כל אחד (מיטל 20.10.26) ----------
+   אליאס מושגים: הסבר + טיימר 7 דק' + "כמה מושגים הצלחנו" (משותף לשולחן) + השולחן המוביל.
+   אליאס הפוך: הסבר + טיימר 40 דק' + מה הגרלנו · מי כותב/ת · 2 רכיבים + רעיונות לפי רכיב (כל אחד). */
+var PH_MIN={elias:7,tables:40},SRV_OFF=0,TB_EDIT=0,timeUpShown='';
+function phaseLeft(at,ph){if(!at||!PH_MIN[ph])return null;return Math.max(0,PH_MIN[ph]*60000-(Date.now()+SRV_OFF-at))}
+function fmtLeft(ms){var s=Math.ceil(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function paintTimers(){
+  var at=ME?ME.phaseAt:(S?S.phaseAt:0),ph=ME?ME.phase:(S?S.phase:'');
+  var L=phaseLeft(at,ph);
+  [].slice.call(document.querySelectorAll('[data-timer]')).forEach(function(el){
+    if(L===null){el.hidden=true;return}
+    el.hidden=false;el.textContent=L>0?fmtLeft(L):'הזמן נגמר!';el.classList.toggle('low',L<60000);
+  });
+  if(L===0&&timeUpShown!==ph+at){timeUpShown=ph+at;try{sGong()}catch(e){}buzz([200,100,200])}
+}
+setInterval(paintTimers,1000);
+function tbSend(p){TB_EDIT=Date.now();return call(Object.assign({n:myTableOverride||ME.table},p),2).then(function(r){if(!r.ok)toast(r.error);else tick();return r}).catch(function(){toast('לא נשלח — נסו שוב')})}
 function paintTables(){
   var n=myTableOverride||ME.table,T=META&&META.tables?META.tables.filter(function(x){return x.n===n})[0]:null;
   var box=$('pTables');
@@ -729,34 +800,82 @@ function paintTables(){
     [].slice.call($('ptg').children).forEach(function(b){b.onclick=function(){myTableOverride=Number(b.dataset.n);lsSet('mytable',myTableOverride);paintTables();tick()}});
     return;
   }
-  if(box.dataset.n!==String(n)){
-    box.dataset.n=n;
-    box.innerHTML='<div class="card" id="ptHead"></div>'+
-      '<div class="card" id="ptAdd" hidden><h2>אני הרשם/ת של השולחן</h2><p class="muted" style="margin:0">כל רעיון שעולה בשולחן — מקלידים כאן. <b>+1 לשולחן</b></p>'+
-      '<div class="addrow"><input type="text" id="ptI" maxlength="140" placeholder="רעיון…" enterkeyhint="send"><button id="ptB">+ רעיון</button></div></div>'+
-      '<div id="ptList"></div>';
-    var send=async function(){
-      var x=$('ptI').value.trim();if(!x)return;$('ptI').value='';$('ptI').focus();
-      sCoin();buzz(20);floater('+1',$('ptB'));
-      try{var r=await call({action:'addIdea',n:n,t:x},2);if(!r.ok)toast(r.error);else tick()}catch(e){toast('לא נשלח — נסו שוב');$('ptI').value=x}
-    };
-    $('ptB').onclick=send;$('ptI').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();send()}};
-  }
+  var ph=ME.phase,key=n+':'+ph;
   var tb=myTableOverride&&myTableOverride!==ME.table?tbOv:ME.tb;
   if(myTableOverride&&myTableOverride!==ME.table&&Date.now()-tbOvAt>5000)loadOv(myTableOverride);
-  var t=tb&&tb.t,pts=tb?tb.pts:0;
-  var cur=null;if(t&&t.items&&t.items.length){cur=t.items.filter(function(it){return !it.done})[0]||null}
-  var head='<span class="stepb">שולחן '+n+'</span> <span class="muted" style="font-weight:700">'+esc(T.lead)+'</span>'+
-    '<div class="bigh">'+pts+' נקודות לשולחן</div>';
-  if(!cur||!cur.ch)head+='<p class="muted" style="margin:0">'+(t&&t.items&&t.items.length?'השולחן סיים את הרכיבים. כל הכבוד!':'המנחה בוחר/ת רכיבים. תכף מתחילים.')+'</p>';
-  else{var c=chap(cur.ch),q=cur.q>=0&&CARDS[c.key]?CARDS[c.key][cur.q]:'';
-    head+='<span class="chname" style="background:'+c.c+';margin:0">'+esc(c.t)+'</span>'+(q?'<div class="bigq">'+esc(q)+'</div>':'<p class="muted" style="margin:8px 0 0">המנחה בוחר/ת שאלה…</p>')}
-  if($('ptHead').innerHTML!==head)$('ptHead').innerHTML=head;
-  $('ptAdd').hidden=!(cur&&cur.q>=0);
-  var all=[];(t&&t.items||[]).forEach(function(it){(it.ideas||[]).forEach(function(x){all.push({ch:it.ch,t:x})})});
-  var list=all.length?'<div class="card" style="padding-bottom:12px"><h2>הרעיונות של השולחן</h2><p class="muted" style="margin:0">מתאים לבית הספר שלך? לוחצים — וזה נכנס לתוכנית שלך. <b>+5 נקודות</b></p>'+
-    all.slice().reverse().map(function(x){var k=n+':'+x.ch+':'+x.t,on=(ME.plus||[]).indexOf(k)>-1;
-      return '<div class="irow"><span class="x">'+esc(x.t)+'</span><button data-k="'+esc(k)+'" data-ch="'+x.ch+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+ לתוכנית שלי')+'</button></div>'}).join('')+'</div>':'';
+  var t=(tb&&tb.t)||{drawn:0,comps:[],elias:0,items:[],scribe:''},pts=tb?tb.pts:0;
+  var head='<span class="stepb">שולחן '+n+'</span> <span class="muted" style="font-weight:700">'+esc(T.lead)+'</span>';
+  if(box.dataset.n!==key){
+    box.dataset.n=key;
+    if(ph==='elias'){
+      box.innerHTML='<div class="card">'+head+'<h2 style="margin-top:8px">אליאס מושגים</h2>'+
+        '<p class="muted" style="margin:0">מוציאים כרטיס מהשקית ומסבירים את המושג — בלי להגיד אותו. כמה מושגים השולחן ניחש?</p>'+
+        '<div class="ptimer" data-timer></div>'+
+        '<div class="ecount"><button type="button" id="eMinus" aria-label="פחות">−</button><b id="eVal">0</b><button type="button" id="ePlus" aria-label="עוד">+</button></div>'+
+        '<div class="muted" style="text-align:center;font-weight:700">מושגים שהצלחנו</div>'+
+        '<div class="elead" id="eLead"></div></div>';
+      var eT=null,eSet=function(v){v=Math.max(0,Math.min(99,v));$('eVal').textContent=v;TB_EDIT=Date.now();sCoin();buzz(15);
+        clearTimeout(eT);eT=setTimeout(function(){tbSend({action:'eliasCount',v:v})},600)};
+      $('ePlus').onclick=function(){eSet(Number($('eVal').textContent)+1);floater('+1',$('ePlus'))};
+      $('eMinus').onclick=function(){eSet(Number($('eVal').textContent)-1)};
+    }else if(ph==='tables'){
+      var opts=function(sel){return '<option value="0">בחרו…</option>'+CHAPTERS.map(function(c){return '<option value="'+c.n+'"'+(c.n===sel?' selected':'')+'>'+esc(c.t)+'</option>'}).join('')};
+      box.innerHTML='<div class="card">'+head+'<h2 style="margin-top:8px">אליאס הפוך</h2>'+
+        '<p class="muted" style="margin:0">בוחרים רכיבים, וכל אחד זורק רעיונות. כל רעיון = נקודה לשולחן.</p>'+
+        '<div class="ptimer" data-timer></div>'+
+        '<label class="fl">מה הגרלתם?</label><select id="tDr">'+opts(t.drawn)+'</select>'+
+        '<label class="fl">2 הרכיבים שבחרתם</label><div class="chips2" id="tTwo"></div>'+
+        '<label class="fl">מי כותב/ת את הרעיונות?</label><input type="text" id="tSc" maxlength="40" placeholder="שם">'+
+        '</div>'+
+        '<div class="card"><h2>+ רעיון</h2><p class="muted" style="margin:0">כל אחד יכול להוסיף רעיון משלו.</p>'+
+        '<select id="tICh"></select><div class="addrow"><input type="text" id="ptI" maxlength="140" placeholder="הרעיון…" enterkeyhint="send"><button id="ptB">+ רעיון</button></div>'+
+        '<div class="muted" id="tPts" style="margin-top:6px;font-weight:800"></div></div>'+
+        '<div id="ptList"></div>';
+      $('tDr').onchange=function(){tbSend({action:'tableSet',drawn:this.value})};
+      var scT=null;$('tSc').oninput=function(){var v=this.value;TB_EDIT=Date.now();clearTimeout(scT);scT=setTimeout(function(){tbSend({action:'tableSet',scribe:v})},800)};
+      var send=async function(){
+        var x=$('ptI').value.trim(),ch=Number($('tICh').value);if(!x)return;
+        if(!ch){toast('בחרו לאיזה רכיב');return}
+        $('ptI').value='';$('ptI').focus();sCoin();buzz(20);floater('+1',$('ptB'));
+        var r=await tbSend({action:'addIdeaCh',ch:ch,t:x});if(!r||!r.ok)$('ptI').value=x;
+      };
+      $('ptB').onclick=send;$('ptI').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();send()}};
+    }else{
+      box.innerHTML='<div class="card" style="text-align:center"><h2>לפני שיוצאים</h2><p class="muted">שני דברים בדף המפגש:</p>'+
+        '<a class="btn pink" href="mifgash3.html" style="text-decoration:none">בית הספר שלי · הטופס</a>'+
+        '<a class="btn dark" href="mifgash3.html#plan" style="text-decoration:none;margin-top:10px">התוכנית שלי · הרעיונות שלקחתי</a></div>';
+      return;
+    }
+  }
+  var fresh=Date.now()-TB_EDIT>4000;   /* לא לדרוס מה שמישהו מקליד/בוחר עכשיו */
+  if(ph==='elias'){
+    if(fresh)$('eVal').textContent=Number(t.elias)||0;
+    var L=ME.etop;
+    $('eLead').innerHTML=L?(L.n===n?'<b>אתם מובילים!</b> '+L.v+' מושגים':'מוביל: <b>שולחן '+L.n+' · '+esc(L.lead)+'</b> — '+L.v+' מושגים'):'עוד אף שולחן לא עדכן';
+    paintTimers();return;
+  }
+  if(ph!=='tables')return;
+  if(fresh&&document.activeElement!==$('tDr'))$('tDr').value=String(t.drawn||0);
+  if(fresh&&document.activeElement!==$('tSc'))$('tSc').value=t.scribe||'';
+  var two=(t.comps||[]).filter(function(c){return c!==t.drawn});
+  var th=CHAPTERS.map(function(c){var on=two.indexOf(c.n)>-1,dis=c.n===t.drawn;
+    return '<button type="button" data-c="'+c.n+'" class="'+(on?'on':'')+'"'+(dis?' disabled':'')+' style="--c:'+c.c+'">'+esc(c.t)+'</button>'}).join('');
+  if($('tTwo').dataset.h!==th){$('tTwo').innerHTML=th;$('tTwo').dataset.h=th;
+    [].slice.call($('tTwo').children).forEach(function(b){b.onclick=function(){
+      var c=Number(b.dataset.c),cur=[].slice.call($('tTwo').querySelectorAll('.on')).map(function(x){return Number(x.dataset.c)});
+      var i=cur.indexOf(c);if(i>-1)cur.splice(i,1);else{if(cur.length>=2){toast('רק 2 — הורידו אחד');return}cur.push(c)}
+      b.classList.toggle('on');tbSend({action:'tableSet',two:cur.join(',')});
+    }})}
+  var comps=(t.comps||[]).filter(Boolean),chO=$('tICh'),prev=Number(chO.value)||0;
+  var oh=comps.length?comps.map(function(c){var x=chap(c);return '<option value="'+c+'">'+esc(x?x.t:'')+'</option>'}).join(''):'<option value="0">קודם בוחרים רכיבים למעלה</option>';
+  if(chO.dataset.h!==oh){chO.innerHTML=oh;chO.dataset.h=oh;if(comps.indexOf(prev)>-1)chO.value=String(prev)}
+  $('tPts').textContent=pts+' נקודות לשולחן';
+  var groups=(t.items||[]).filter(function(it){return (it.ideas||[]).length});
+  var list=groups.length?'<div class="card" style="padding-bottom:12px"><h2>הרעיונות של השולחן</h2><p class="muted" style="margin:0">מתאים לבית הספר שלך? "+ לתוכנית שלי" — <b>+5 נקודות</b></p>'+
+    groups.map(function(it){var c=chap(it.ch);
+      return '<div class="chname" style="background:'+(c?c.c:'#999')+';margin:12px 0 4px">'+esc(c?c.t:'')+'</div>'+
+        it.ideas.slice().reverse().map(function(x){var k=n+':'+it.ch+':'+x,on=(ME.plus||[]).indexOf(k)>-1;
+          return '<div class="irow"><span class="x">'+esc(x)+'</span><button data-k="'+esc(k)+'" data-ch="'+it.ch+'"'+(on?' disabled':'')+'>'+(on?'בתוכנית ✓':'+ לתוכנית שלי')+'</button></div>'}).join('')}).join('')+'</div>':'';
   if($('ptList').dataset.h!==list){$('ptList').innerHTML=list;$('ptList').dataset.h=list;
     [].slice.call($('ptList').querySelectorAll('.irow button')).forEach(function(b){
       b.onclick=async function(){
@@ -767,6 +886,7 @@ function paintTables(){
       };
     });
   }
+  paintTimers();
 }
 var tbOvAt=0;
 async function loadOv(n){tbOvAt=Date.now();try{var r=await call({action:'tableGet',n:n},1);if(r.ok){tbOv={t:r.t,pts:r.pts};paintTables()}}catch(e){}}
@@ -814,12 +934,28 @@ $('mGo').onclick=async function(){
   b.disabled=false;b.textContent='מצאתי!';
 };
 /* המטרות שלי — בוחרים עד 3; לחיצה נוספת מבטלת (20.10.26, במקום הבורסה) */
-var MAX_PICK=3;
+var MAX_PICK=3,pickBusy=0;
 function nPicked(){return Object.keys(ME.inv||{}).filter(function(k){return ME.inv[k]}).length}
+/* שליחה: הבחירות נשמרות בכל לחיצה; הכפתור מוודא מול השרת ומאשר שנקלט (מיטל 20.10.26) */
+function pickSig(){return myId+':'+Object.keys(ME.inv||{}).filter(function(k){return ME.inv[k]}).sort().join(',')}
+function paintSend(){
+  var b=$('gSend');if(!b)return;var n=nPicked(),sent=lsGet('sent')===pickSig()&&n>0;
+  b.disabled=!n;b.classList.toggle('done',sent);
+  b.textContent=sent?'נשלח ✓ הבחירה שלך נקלטה':(n?'שליחה ('+n+' מתוך '+MAX_PICK+')':'בחרו לפחות מטרה אחת');
+}
+$('gSend').onclick=async function(){
+  var b=this;if(!nPicked())return;b.disabled=true;b.textContent='שולח…';
+  for(var i=0;i<20&&pickBusy>0;i++)await new Promise(function(r){setTimeout(r,250)});
+  var mine=pickSig();await tick();
+  if(pickSig()===mine){lsSet('sent',mine);sFanfare();sFireworks(true);boom(true);buzz([100,60,200]);toast('נשלח! הבחירה שלך נקלטה',true)}
+  else toast('משהו לא נשמר — בדקו את הבחירה ושלחו שוב');
+  paintSend();
+};
 function paintBursa(){
   if(!META)return;
   var tot=ME.total||{},mine=ME.inv||{},n=nPicked();
   $('pickN').textContent='בחרת '+n+' מתוך '+MAX_PICK;
+  paintSend();
   var html=META.goals.map(function(g,i){
     var m=!!mine[i],t=tot[i]||0;
     return '<button type="button" class="goal pick'+(m?' has':'')+'" data-g="'+i+'"'+(!m&&n>=MAX_PICK?' data-full="1"':'')+'>'+
@@ -836,8 +972,10 @@ function bindInv(){
       if(had){delete ME.inv[g];ME.total[g]=Math.max(0,(ME.total[g]||0)-1)}
       else{ME.inv[g]=1;ME.total[g]=(ME.total[g]||0)+1;sCoin();buzz(25);if(nPicked()===MAX_PICK){setTimeout(function(){toast('בחרת 3! תסתכלו על המסך',true);boom(false)},250)}}
       paint();
+      pickBusy++;
       try{var r=await call({action:'pick',id:myId,g:g},2);if(!r.ok){toast(r.error);await tick()}}
       catch(e){toast('לא נשלח — נסו שוב');await tick()}
+      pickBusy--;paintSend();
     };
   });
 }
@@ -1047,6 +1185,20 @@ function paintTimer(){var e=$('tt');if(!e)return;e.textContent=Math.floor(Math.m
 
 /* ================= מסך גדול ================= */
 var S=null,scrPhase='',lastMeets=-1,lastLeader=-1,lastTI=-1,lastTA=-1,lastED=-1;
+var popSeen=null,popQ=[],popBusy=false;
+function popNewIdeas(tt){
+  var keys=tt.map(function(x){return x.n+'|'+x.ch+'|'+x.t});
+  if(popSeen===null){popSeen=keys;return}            /* בפתיחת המסך — לא להקפיץ את כל מה שכבר היה */
+  tt.forEach(function(x,i){if(popSeen.indexOf(keys[i])<0&&!x.act)popQ.push(x)});
+  popSeen=keys;showPop();
+}
+function showPop(){
+  if(popBusy||!popQ.length)return;var x=popQ.shift(),c=chap(x.ch),el=$('ideaPop');if(!el)return;
+  popBusy=true;el.style.setProperty('--c',c?c.c:'#E8348A');
+  el.innerHTML='<div class="k">שולחן '+x.n+' · '+esc(c?c.t:'')+'</div><div class="m">'+esc(x.t)+'</div>';
+  el.classList.add('on');sCoin();
+  setTimeout(function(){el.classList.remove('on');setTimeout(function(){popBusy=false;showPop()},400)},popQ.length>3?2200:3800);
+}
 function initScreen(){
   document.body.classList.add('scr');
   $('snd').hidden=false;
@@ -1061,6 +1213,7 @@ async function scrTick(){
 function paintScreen(){
   $('sPh').textContent=S.players+' משתתפים';
   $('sTitle').textContent=PH_T[S.phase]||'';
+  if(S.now)SRV_OFF=S.now-Date.now();
   var b=$('sBody'),joinUrl=location.href.split('?')[0]+(DEMO?'?demo=1':'');
   $('sTick').hidden=S.phase!=='bursa'&&!tblLike(S.phase);
   var changed=scrPhase!==S.phase;
@@ -1069,10 +1222,17 @@ function paintScreen(){
     if(changed){
       b.innerHTML='<div class="s-col" style="align-items:center;justify-content:center;flex:none"><div class="qr" id="qr"></div>'+
         '<div class="bigl" style="text-align:center;direction:ltr;font-size:2.2vh">'+esc(joinUrl.replace(/^https?:\/\//,''))+'</div></div>'+
-        '<div class="s-col" style="justify-content:center"><div class="bigl">סורקים, בוחרים תחביב ונכנסים</div><div><span class="big" id="lN"></span></div><div class="bigl">כבר כאן</div><div class="hobs" id="lH"></div></div>';
+        '<div class="s-col" style="justify-content:center"><div class="bigl">סורקים, נרשמים ומתחילים להכיר</div>'+
+        '<div style="display:flex;gap:4vw;align-items:flex-end"><div><span class="big" id="lN" style="font-size:11vh"></span><div class="bigl">כבר כאן</div></div>'+
+        '<div><span class="big" id="mN" style="font-size:11vh"></span><div class="bigl">היכרויות</div></div></div>'+
+        '<div class="meetfeed" id="mF"></div><div class="hobs" id="lH" style="margin-top:2vh"></div></div>';
       try{new QRCode($('qr'),{text:joinUrl,width:Math.round(innerHeight*.42),height:Math.round(innerHeight*.42),correctLevel:QRCode.CorrectLevel.M})}catch(e){}
     }
     if($('lN').textContent!==String(S.players)){$('lN').textContent=S.players;popEl($('lN'))}
+    if(lastMeets>=0&&S.meets>lastMeets){popEl($('mN'));sCoin();sFireworks(false)}
+    lastMeets=S.meets;$('mN').textContent=S.meets;
+    var lf=(S.feed||[]).slice(-3).reverse().map(function(f){return '<div><b>'+esc(f.a)+'</b> מצא/ה את <b>'+esc(f.b)+'</b></div>'}).join('');
+    if($('mF').dataset.h!==lf){$('mF').innerHTML=lf;$('mF').dataset.h=lf}
     $('lH').innerHTML=S.hobbies.map(function(h){return '<span>'+esc(h.t)+'<i>'+h.n+'</i></span>'}).join('');
   }else if(S.phase==='meet'){
     if(changed)b.innerHTML='<div class="s-col" style="justify-content:center"><div><span class="big" id="mN"></span></div><div class="bigl">היכרויות חדשות בחדר</div><div class="meetfeed" id="mF"></div></div>'+
@@ -1109,8 +1269,12 @@ function paintScreen(){
     }).join(' &nbsp;·&nbsp; ')||'&nbsp;';
   }else if(tblLike(S.phase)){
     if(changed){
+      if(S.phase==='tables')   /* אליאס הפוך: 8 הרכיבים, ומה כל שולחן בחר (מיטל 20.10.26) */
+        b.innerHTML='<div class="s-col" style="flex:2.4"><div class="bigl" style="margin:0 0 1.4vh">8 הרכיבים · מה כל שולחן בחר</div><div class="comps8" id="tC"></div></div>'+
+          '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.4vh">ניקוד השולחנות</div><div class="lb" id="tL"></div></div>';
+      else
       b.innerHTML='<div class="s-col" style="flex:1.6"><div class="lb" id="tL"></div></div>'+
-        '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.2vh">'+(S.phase==='elias'?'מי סיים את המושגים':'איזה רכיב לקחו')+'</div><div class="cov" id="tC"></div></div>';
+        '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.2vh">'+(S.phase==='elias'?'כמה מושגים כל שולחן':'איזה רכיב לקחו')+'</div><div class="cov" id="tC"></div></div>';
       lastTI=-1;lastTA=-1;lastED=-1;
     }
     var tbs=(S.tables||[]).slice().sort(function(a,b){return b.pts-a.pts||a.n-b.n}),mx=Math.max(1,tbs.length?tbs[0].pts:1);
@@ -1121,11 +1285,18 @@ function paintScreen(){
     /* אליאס מושגים: מי סיים ראשון (לחצו 'סיימנו') */
     var ed=S.edone||[];
     if(S.phase==='elias'){
-      $('tC').innerHTML=ed.length?ed.map(function(x,i){var T=(S.tables||[]).filter(function(t){return t.n===x.n})[0];
-        return '<div style="--c:'+(i===0?'#FFF200':'#fff')+'"><span>'+(i+1)+' · שולחן '+x.n+(T?' · '+esc(T.lead):'')+'</span></div>'}).join('')
-        :'<div class="empty"><span>עוד אף שולחן לא סיים</span></div>';
-      if(lastED>=0&&ed.length>lastED){sFireworks(true);boom(true)}
-      lastED=ed.length;
+      /* אליאס מושגים: דירוג השולחנות לפי מספר המושגים */
+      var er=(S.tables||[]).slice().sort(function(a,b){return (b.elias||0)-(a.elias||0)||a.n-b.n});
+      var top=er[0]&&er[0].elias?er[0].n:0;
+      $('tC').innerHTML=er.map(function(x,i){return '<div style="--c:'+(x.n===top?'#FFF200':'#E8348A')+'"><span>שולחן '+x.n+' · '+esc(x.lead)+'</span><i>'+(x.elias||0)+'</i></div>'}).join('');
+      if(lastED>=0&&top&&top!==lastED){sFireworks(true);boom(true)}
+      lastED=top;
+    }else if(S.phase==='tables'){
+      $('tC').innerHTML=CHAPTERS.map(function(c){
+        var who=(S.tables||[]).filter(function(t){return (t.comps||[]).indexOf(c.n)>-1}).map(function(t){return '<i>שולחן '+t.n+'</i>'}).join('');
+        return '<div class="ct'+(who?'':' empty')+'" style="--c:'+c.c+'"><b>'+esc(c.t)+'</b><div class="who">'+who+'</div></div>';
+      }).join('');
+      popNewIdeas(S.ttick||[]);
     }else
     $('tC').innerHTML=CHAPTERS.map(function(c){
       var who=(S.tables||[]).filter(function(t){return (t.comps||[]).indexOf(c.n)>-1}).map(function(t){return '<i>'+t.n+'</i>'}).join('');
@@ -1151,7 +1322,7 @@ function paintScreen(){
 
 /* ================= לוח הפעלה ================= */
 var K=qs.get('k')||'';
-var PHASE_LIST=[['lobby','1 · נרשמים ומחפשים','QR על המסך · מי שנרשם כבר מחפש'],['meet','2 · פעילות היכרות','המסך עובר לספירת ההיכרויות'],['seat','3 · לשולחנות','"סיימתם!" + מספר השולחן · מי הכיר הכי הרבה'],['bursa','4 · המטרות שלי','בוחרים עד 3'],['end','5 · סיכום','3 המטרות שנבחרו הכי הרבה'],['elias','6 · אליאס מושגים','מי מסיים ראשון — על המסך'],['tables','7 · אליאס הפוך','רעיונות מהטלפונים + ניקוד'],['barak','8 · סבב ברק','המסך נשאר על הניקוד'],['school','9 · בית הספר שלי','הטופס בדף המפגש']];
+var PHASE_LIST=[['lobby','1 · נרשמים ומחפשים','QR על המסך · מי שנרשם כבר מחפש'],['meet','2 · פעילות היכרות','המסך עובר לספירת ההיכרויות'],['seat','3 · לשולחנות','"סיימתם!" + מספר השולחן · מי הכיר הכי הרבה'],['bursa','4 · המטרות שלי','בוחרים עד 3'],['end','5 · סיכום','3 המטרות שנבחרו הכי הרבה'],['elias','6 · אליאס מושגים','טיימר 7 דק\' · כמה מושגים כל שולחן'],['tables','7 · אליאס הפוך','רעיונות מהטלפונים + ניקוד'],['school','8 · בית הספר שלי','הטופס בדף המפגש']];
 var PRESETS=['עוד 2 דקות!','הבורסה נפתחה — השקיעו!','מי עוד לא מצא אף אחד? הרימו יד','דקה אחרונה להשקעות','עוצרים — כולם לשולחנות'];
 function initAdmin(){
   $('vAdmin').hidden=false;$('hTitle').textContent='לוח הפעלה';
