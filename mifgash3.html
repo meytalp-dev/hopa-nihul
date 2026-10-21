@@ -259,33 +259,26 @@
   <section class="step" data-step="5" hidden>
     <div class="kicker">לפני שיוצאים</div>
     <h2 class="big">בית הספר שלי</h2>
-    <p class="lead">שלושה דברים מבית הספר, כדי לתאם איתכם את השנה.</p>
+    <p class="lead">שני דברים מבית הספר, כדי לתאם איתכם את השנה. לא חובה — מה שכבר ידוע לכם.</p>
 
     <div class="two">
       <div><label class="fl">שם</label><input type="text" id="b_who" maxlength="60"></div>
       <div><label class="fl">בית ספר</label><select id="b_school"><option value="" disabled selected>בחרו בית ספר</option></select></div>
     </div>
 
-    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">1 · ימי חשיפה לתוכנית הבוגרים</label>
+    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">1 · ימי חשיפה לתוכנית הבוגרים <span style="font-weight:600;color:var(--muted,#777)">(לא חובה)</span></label>
     <p class="livehint" style="margin-top:0">יום אחד לתלמידי י"ב, ויום אחד להורים.</p>
     <div class="two">
       <div><label class="fl">יום חשיפה לתלמידי י"ב</label><input type="date" id="b_d_students"></div>
       <div><label class="fl">יום חשיפה להורים</label><input type="date" id="b_d_parents"></div>
     </div>
 
-    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">2 · תוכניות הכוון שכבר קיימות אצלכם</label>
+    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">2 · תוכניות הכוון שכבר קיימות אצלכם <span style="font-weight:600;color:var(--muted,#777)">(לא חובה)</span></label>
     <p class="livehint" style="margin-top:0">הכוון לשירות, ללימודים ולתעסוקה: מכינות, ימי הכנה לצה"ל, סדנאות, שותפים מבחוץ. כדי שלא נכפיל את מה שכבר עובד.</p>
     <label class="fl">בשכבת י"א</label>
     <textarea id="b_p11" maxlength="400" placeholder="אין עדיין? כתבו &quot;אין&quot;"></textarea>
     <label class="fl">בשכבת י"ב</label>
     <textarea id="b_p12" maxlength="400" placeholder="אין עדיין? כתבו &quot;אין&quot;"></textarea>
-
-    <label class="fl" style="font-size:14.5px;color:var(--ink);margin-top:16px">3 · נערי דוד</label>
-    <p class="livehint" style="margin-top:0">ליווי מהגיוס ועד סוף השירות, בשיתוף הצבא. לפחות 25 בוגרי הופה כבר בפנים. בית הספר נרשם?</p>
-    <div class="tsel" id="b_dd" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
-      <button type="button" data-v="yes"><span class="t" style="display:block">כן, בית הספר נרשם</span></button>
-      <button type="button" data-v="check"><span class="t" style="display:block">צריך לבדוק עם ההנהלה</span></button>
-    </div>
 
     <div class="btnrow"><button class="btn pink wide" id="b_send">שליחה</button></div>
     <div class="err" id="b_err"></div>
@@ -480,27 +473,16 @@ B_FIELDS.forEach(function(k){
   if(v)el.value=v;
   el.addEventListener(k==='b_school'?'change':'input',function(){lsSet('hopa-m3-f-'+k,this.value)});
 });
-var bDD=lsGet('hopa-m3-f-b_dd')||'';
-function paintDD(){[].slice.call($('b_dd').children).forEach(function(b){b.classList.toggle('on',b.dataset.v===bDD)})}
-[].slice.call($('b_dd').children).forEach(function(b){
-  b.onclick=function(){bDD=b.dataset.v;lsSet('hopa-m3-f-b_dd',bDD);paintDD()};
-});
-paintDD();
-
 $('b_send').onclick=async function(){
   if(PREVIEW){toast('זו הדגמה — לא נשלח');return}
   var who=$('b_who').value.trim(),school=$('b_school').value;
   if(!who||!school){$('b_err').textContent='צריך שם ובית ספר.';return}
-  if(isHopa()){
-    if(!$('b_d_students').value||!$('b_d_parents').value){$('b_err').textContent='חסרים התאריכים של ימי החשיפה.';return}
-    if(!$('b_p11').value.trim()||!$('b_p12').value.trim()){$('b_err').textContent='חסרות תוכניות ההכוון בי"א ובי"ב (אין? כתבו "אין").';return}
-  }
   $('b_err').textContent='';
   var btn=this;btn.disabled=true;btn.textContent='שולח…';
   var ok=await put('bs-'+school,{who:who,school:school,
     dayStudents:$('b_d_students').value,dayParents:$('b_d_parents').value,
     prog11:$('b_p11').value.trim(),prog12:$('b_p12').value.trim(),
-    naareiDavid:bDD,hopa:isHopa(),ts:new Date().toISOString()});
+    hopa:isHopa(),ts:new Date().toISOString()});
   btn.disabled=false;btn.textContent='שליחה 💛';
   if(ok)toast('נשלח ✓ תודה!');
   else $('b_err').textContent='לא נשלח — נסו שוב. מה שכתבתם שמור במכשיר.';
