@@ -55,6 +55,8 @@
   .ecount{display:flex;align-items:center;justify-content:center;gap:22px;margin:12px 0 4px}
   .ecount button{width:64px;height:64px;border-radius:50%;border:none;background:var(--pink);color:#fff;font-size:34px;font-weight:900;cursor:pointer}
   .ecount button:active{transform:scale(.92)}
+  .edone{margin-top:12px;padding:14px;border-radius:16px;background:#FFF200;color:#111;text-align:center;font-weight:800;font-size:18px}
+  #eDone{margin-top:12px}
   .ecount b{font-size:56px;font-weight:900;min-width:80px;text-align:center;font-variant-numeric:tabular-nums}
   .elead{margin-top:12px;background:#fffbd0;border-radius:12px;padding:10px 12px;text-align:center;font-size:15px}
   .chips2{display:flex;flex-wrap:wrap;gap:6px}
@@ -68,6 +70,13 @@
   .comps8 .ct{background:var(--c);color:#fff;border-radius:2vh;padding:2vh 1.2vw;min-height:17vh;display:flex;flex-direction:column;gap:1vh}
   .comps8 .ct b{font-size:3vh;line-height:1.2}
   .comps8 .ct.empty{opacity:.3}
+  .picks7{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8vh}
+  .picks7 .pk{background:#fff;border:.4vh solid var(--c);border-radius:2.2vh;padding:2vh 1.2vw;min-height:28vh;display:flex;flex-direction:column;gap:1.2vh;box-shadow:0 .6vh 2vh rgba(0,0,0,.08)}
+  .picks7 .pk .h{font-size:2.6vh;font-weight:900}
+  .picks7 .pk .c{align-self:flex-start;background:var(--c);color:#fff;border-radius:999px;padding:.4vh 1vw;font-weight:900;font-size:2vh}
+  .picks7 .pk .t{font-size:3.1vh;font-weight:800;line-height:1.3}
+  .picks7 .pk.wait{border-style:dashed;border-color:#d8d0dd;box-shadow:none}
+  .picks7 .pk.wait .t{color:#a79fae;font-weight:700}
   .comps8 .ct i{display:inline-block;background:#fff;color:#1f1f26;border-radius:999px;padding:.3vh .9vw;font-style:normal;font-weight:900;font-size:2.1vh;margin:.4vh 0 0 .5vw}
   #ideaPop{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:.35s;background:var(--c,#E8348A);color:#fff;border-radius:3vh;padding:4vh 4vw;max-width:72vw;text-align:center;z-index:250;box-shadow:0 2vh 6vh rgba(0,0,0,.25);pointer-events:none}
   #ideaPop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -230,6 +239,12 @@
   .ideas span{background:var(--pink-soft);color:var(--pink-dark);border-radius:999px;padding:7px 13px;font-weight:700;font-size:14.5px;animation:pop .4s}
   .icount{margin-top:10px;font-weight:900;font-size:15px;color:var(--pink-dark)}
   .back{display:block;background:none;border:none;color:var(--muted);text-decoration:underline;font-size:13.5px;margin:14px auto 0;cursor:pointer}
+  .spick{display:flex;align-items:center;gap:10px;width:100%;text-align:start;background:#fff;border:2px solid #ece6ef;border-radius:14px;padding:12px 13px;margin-top:8px;font:inherit;font-weight:700;font-size:15px;color:inherit;cursor:pointer}
+  .spick .x{flex:1}
+  .spick .dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid #c9bfd0}
+  .spick.on{border-color:var(--pink);background:#fff0f7}
+  .spick.on .dot{border-color:var(--pink);background:radial-gradient(circle,var(--pink) 45%,#fff 50%)}
+  .spick b{background:var(--pink);color:#fff;border-radius:999px;padding:3px 10px;font-size:12px}
   .irow{display:flex;align-items:center;gap:8px;background:#fff;border-radius:14px;padding:11px 13px;margin-top:8px;box-shadow:var(--shadow)}
   .irow .x{flex:1;font-weight:700;font-size:15px}
   .irow button{background:var(--pink);color:#fff;border:none;border-radius:11px;padding:8px 12px;font-weight:900;font-size:13px;cursor:pointer;white-space:nowrap}
@@ -328,7 +343,6 @@
       <div class="card"><h2>המטרות שבחרנו</h2>
         <p class="muted" style="margin:0 0 6px">שלוש המטרות שנבחרו הכי הרבה:</p>
         <div id="eTop"></div>
-        <a class="btn dark" href="mifgash3.html" style="text-decoration:none">חזרה לדף המפגש</a>
       </div>
     </div>
   </div>
@@ -584,7 +598,8 @@ function demoApi(q){
     if(a==='tableSet'){if(q.drawn!=null)t.drawn=Number(q.drawn)||0;
       if(q.two!=null){var two=String(q.two).split(',').map(Number).filter(function(x){return x>=1&&x<=8&&x!==t.drawn}).slice(0,2);t.comps=(t.drawn?[t.drawn]:[]).concat(two)}
       else if(t.drawn&&t.comps.indexOf(t.drawn)<0)t.comps=[t.drawn].concat(t.comps).slice(0,3);
-      if(q.scribe!=null)t.scribe=String(q.scribe)}
+      if(q.scribe!=null)t.scribe=String(q.scribe);
+      if(q.pick!=null)t.pick=q.pick&&Number(q.pch)?{ch:Number(q.pch),t:String(q.pick)}:null}
     if(a==='addIdeaCh'){var ch=Number(q.ch),it=t.items.filter(function(x){return x.ch===ch})[0];
       if(!it){it={ch:ch,q:-1,best:-1,ideas:[],act:{what:'',hours:'',who:''},done:false};t.items.push(it)}
       if(it.ideas.indexOf(q.t)<0){it.ideas.push(q.t);s.ttick.push({n:tn,ch:ch,t:q.t})}}
@@ -605,7 +620,11 @@ function demoApi(q){
     var tn=D_TMAP[p.s]||0,tt=tn?s.tb[tn]:null;
     var et=null;D_TABLES.forEach(function(T){var x=s.tb[T.n],v=x?Number(x.elias)||0:0;if(v>0&&(!et||v>et.v))et={n:T.n,lead:T.lead,v:v}});
     r={ok:true,phaseAt:s.cfg.at||0,now:Date.now(),etop:s.cfg.phase==='elias'?et:null,phase:s.cfg.phase,flash:s.cfg.flash,n:p.n,s:p.s,code:p.code,w:p.w,met:p.met.length,inv:p.inv,target:dTarget(p,s),nf:nf,left:dPlayers(s).length-1-p.met.length,total:s.inv,
-      table:tn,tb:tn?{t:tt||null,pts:dTablePts(tt)}:null,plus:p.plus||[]};
+      table:tn,tb:tn?{t:tt||null,pts:dTablePts(tt)}:null,plus:p.plus||[],edone:s.cfg.phase==='elias'?(s.edone||[]):[]};
+  }else if(a==='eliasDone'){
+    var en=Number(q.n),el=s.edone||(s.edone=[]),ei=-1;el.forEach(function(x,k){if(x.n===en)ei=k});
+    if(ei<0){el.push({n:en,at:Date.now()});ei=el.length-1}
+    r={ok:true,place:ei+1,edone:el};
   }else if(a==='meet'){
     var p=s.p[q.id],o=dPlayers(s).filter(function(x){return x.code===String(q.code)})[0];
     if(s.cfg.phase!=='meet'&&s.cfg.phase!=='lobby')r={ok:false,error:'שלב ההיכרות כבר נגמר'};
@@ -623,7 +642,7 @@ function demoApi(q){
     var ps=dPlayers(s),hob={};ps.forEach(function(p){p.h.forEach(function(k){hob[k]=(hob[k]||0)+1})});
     var top=Object.keys(s.inv).map(function(g){return {g:Number(g),v:s.inv[g]}}).sort(function(x,y){return y.v-x.v}),inv=0,w=0;
     top.forEach(function(x){inv+=x.v});ps.forEach(function(p){w+=p.w});
-    var tbl=D_TABLES.map(function(T){var t=s.tb[T.n];return {n:T.n,lead:T.lead,sec:T.sec,pts:dTablePts(t),comps:t?t.comps:[],elias:t?Number(t.elias)||0:0,
+    var tbl=D_TABLES.map(function(T){var t=s.tb[T.n];return {n:T.n,lead:T.lead,sec:T.sec,pts:dTablePts(t),comps:t?t.comps:[],elias:t?Number(t.elias)||0:0,pick:t?t.pick||null:null,
       ideas:t?t.items.reduce(function(x,it){return x+it.ideas.length},0):0,acts:t?t.items.filter(function(it){return it.done}).map(function(it){return {ch:it.ch,what:it.act.what}}):[]}});
     r={ok:true,phaseAt:s.cfg.at||0,now:Date.now(),phase:s.cfg.phase,flash:s.cfg.flash,players:ps.length,meets:s.meets,feed:s.feed||[],tables:tbl,ttick:s.ttick.slice(-8),
       hobbies:Object.keys(hob).map(function(k){return {t:D_HOB[k].t,n:hob[k]}}).sort(function(x,y){return y.n-x.n}),
@@ -796,6 +815,28 @@ function paintTimers(){
 }
 setInterval(paintTimers,1000);
 function tbSend(p){TB_EDIT=Date.now();return call(Object.assign({n:myTableOverride||ME.table},p),2).then(function(r){if(!r.ok)toast(r.error);else tick();return r}).catch(function(){toast('לא נשלח — נסו שוב')})}
+/* סבב שיתוף: השולחן בוחר רעיון אחד להצגה למליאה — משותף לכל הטלפונים בשולחן */
+var SP_LOCAL=null;
+function paintSharePick(t){
+  var pk=Date.now()-TB_EDIT<4000&&SP_LOCAL!==null?SP_LOCAL:(t.pick||null);
+  var groups=(t.items||[]).filter(function(it){return (it.ideas||[]).length});
+  var h=groups.length?groups.map(function(it){var c=chap(it.ch);
+      return '<div class="chname" style="background:'+(c?c.c:'#999')+';margin:12px 0 4px">'+esc(c?c.t:'')+'</div>'+
+        it.ideas.slice().reverse().map(function(x){var on=pk&&pk.ch===it.ch&&pk.t===x;
+          return '<button type="button" class="spick'+(on?' on':'')+'" data-ch="'+it.ch+'" data-t="'+esc(x)+'"><span class="dot"></span><span class="x">'+esc(x)+'</span>'+(on?'<b>נבחר</b>':'')+'</button>'}).join('')}).join('')
+    :'<p class="muted" style="margin:0">עוד אין רעיונות של השולחן.</p>';
+  h='<div class="card" style="padding-bottom:14px"><h2>הרעיונות של השולחן</h2>'+h+'</div>';
+  if($('ptList').dataset.h!==h){$('ptList').innerHTML=h;$('ptList').dataset.h=h;
+    [].slice.call($('ptList').querySelectorAll('.spick')).forEach(function(b){
+      b.onclick=function(){
+        var ch=Number(b.dataset.ch),x=b.dataset.t,cur=pk&&pk.ch===ch&&pk.t===x;
+        SP_LOCAL=cur?null:{ch:ch,t:x};sCoin();buzz(20);
+        tbSend({action:'tableSet',pick:cur?'':x,pch:cur?0:ch});
+        paintSharePick(t);
+      };
+    });
+  }
+}
 function paintIdeaList(t,n){
   var groups=(t.items||[]).filter(function(it){return (it.ideas||[]).length});
   var list=groups.length?'<div class="card" style="padding-bottom:12px"><h2>הרעיונות של השולחן</h2><p class="muted" style="margin:0">מתאים לבית הספר שלך? "+ לתוכנית העבודה" — <b>+5 נקודות</b></p>'+
@@ -837,7 +878,16 @@ function paintTables(){
         '<div class="ptimer" data-timer></div>'+
         '<div class="ecount"><button type="button" id="eMinus" aria-label="פחות">−</button><b id="eVal">0</b><button type="button" id="ePlus" aria-label="עוד">+</button></div>'+
         '<div class="muted" style="text-align:center;font-weight:700">מושגים שהצלחנו</div>'+
-        '<div class="elead" id="eLead"></div></div>';
+        '<div class="elead" id="eLead"></div>'+
+        '<button type="button" class="btn pink" id="eDone">סיימנו! שליחה</button><div class="edone" id="eDoneOk" hidden></div></div>';
+      $('eDone').onclick=async function(){
+        var b=this;b.disabled=true;
+        var en=myTableOverride||ME.table;
+        await call({action:'eliasCount',n:en,v:Number($('eVal').textContent)||0},2).catch(function(){});   /* הספירה האחרונה לפני הסיום */
+        try{var r=await call({action:'eliasDone',n:en},2);
+          if(r&&r.ok){ME.edone=r.edone;sFireworks(true);boom(true);buzz([30,40,30]);paintTables()}else{toast(r&&r.error||'לא נשלח — נסו שוב');b.disabled=false}
+        }catch(e){toast('לא נשלח — נסו שוב');b.disabled=false}
+      };
       var eT=null,eSet=function(v){v=Math.max(0,Math.min(99,v));$('eVal').textContent=v;TB_EDIT=Date.now();sCoin();buzz(15);
         clearTimeout(eT);eT=setTimeout(function(){tbSend({action:'eliasCount',v:v})},600)};
       $('ePlus').onclick=function(){eSet(Number($('eVal').textContent)+1);floater('+1',$('ePlus'))};
@@ -865,8 +915,8 @@ function paintTables(){
       };
       $('ptB').onclick=send;$('ptI').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();send()}};
     }else if(ph==='share'){
-      box.innerHTML='<div class="card" style="text-align:center">'+head+'<h2 style="margin-top:8px">סבב שיתוף</h2>'+
-        '<p class="muted">כל שולחן משתף את הרעיון הכי טוב שעלה אצלו.</p><div class="ptimer" data-timer></div></div><div id="ptList"></div>';
+      box.innerHTML='<div class="card">'+head+'<h2 style="margin-top:8px">סבב שיתוף</h2>'+
+        '<p style="margin:0;font-weight:800;font-size:17px">בחרו רעיון אחד שאותו תרצו להציג למליאה</p><div class="ptimer sm" data-timer></div></div><div id="ptList"></div>';
     }else if(ph==='plan'){
       box.innerHTML='<div class="card" style="text-align:center"><h2>תוכנית העבודה שלי</h2>'+
         '<p class="muted">בוחרים רעיונות מהשולחנות ומשבצים אותם לחודשים בשנה.</p><div class="ptimer" data-timer></div>'+
@@ -883,10 +933,13 @@ function paintTables(){
   if(ph==='elias'){
     if(fresh)$('eVal').textContent=Number(t.elias)||0;
     var L=ME.etop;
+    var ED=ME.edone||[],ei=-1;ED.forEach(function(x,k){if(x.n===n)ei=k});
+    $('eDone').hidden=ei>-1;$('eDoneOk').hidden=ei<0;
+    if(ei>-1)$('eDoneOk').innerHTML='<b>סיימתם!</b> '+(ei===0?'ראשונים לסיים':'מקום '+(ei+1)+' בסיום')+' · '+(Number($('eVal').textContent)||0)+' מושגים';
     $('eLead').innerHTML=L?(L.n===n?'<b>אתם מובילים!</b> '+L.v+' מושגים':'מוביל: <b>שולחן '+L.n+' · '+esc(L.lead)+'</b> — '+L.v+' מושגים'):'עוד אף שולחן לא עדכן';
     paintTimers();return;
   }
-  if(ph==='share'){paintIdeaList(t,n);paintTimers();return}
+  if(ph==='share'){paintSharePick(t);paintTimers();return}
   if(ph!=='tables')return;
   if(fresh&&document.activeElement!==$('tDr'))$('tDr').value=String(t.drawn||0);
   if(fresh&&document.activeElement!==$('tSc'))$('tSc').value=t.scribe||'';
@@ -1287,13 +1340,22 @@ function paintScreen(){
     }).join(' &nbsp;·&nbsp; ')||'&nbsp;';
   }else if(tblLike(S.phase)){
     if(changed){
-      if(S.phase==='tables'||S.phase==='share')   /* אליאס הפוך + סבב שיתוף: 8 הרכיבים, ומה כל שולחן בחר (מיטל 20.10.26) */
+      if(S.phase==='share')   /* סבב שיתוף: הרעיון שכל שולחן בחר להציג (מיטל 21.10.26) */
+        b.innerHTML='<div class="s-col"><div class="bigl" style="margin:0 0 1.6vh">הרעיון שכל שולחן מציג למליאה</div><div class="picks7" id="tP"></div></div>';
+      else if(S.phase==='tables')   /* אליאס הפוך: 8 הרכיבים, ומה כל שולחן בחר (מיטל 20.10.26) */
         b.innerHTML='<div class="s-col" style="flex:2.4"><div class="bigl" style="margin:0 0 1.4vh">8 הרכיבים · מה כל שולחן בחר</div><div class="comps8" id="tC"></div></div>'+
           '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.4vh">ניקוד השולחנות</div><div class="lb" id="tL"></div></div>';
       else
       b.innerHTML='<div class="s-col" style="flex:1.6"><div class="lb" id="tL"></div></div>'+
         '<div class="s-col" style="flex:1"><div class="bigl" style="margin:0 0 1.2vh">'+(S.phase==='elias'?'כמה מושגים כל שולחן':'איזה רכיב לקחו')+'</div><div class="cov" id="tC"></div></div>';
       lastTI=-1;lastTA=-1;lastED=-1;
+    }
+    if(S.phase==='share'){
+      var ph7=(S.tables||[]).map(function(t){var p=t.pick,c=p?chap(p.ch):null;
+        return '<div class="pk'+(p?'':' wait')+'" style="--c:'+(c?c.c:'#d8d0dd')+'"><div class="h">שולחן '+t.n+' · '+esc(t.lead)+'</div>'+
+          (p?'<span class="c">'+esc(c?c.t:'')+'</span><div class="t">'+esc(p.t)+'</div>':'<div class="t">עוד בוחרים…</div>')+'</div>'}).join('');
+      if($('tP').dataset.h!==ph7){if($('tP').dataset.h!=null)sCoin();$('tP').innerHTML=ph7;$('tP').dataset.h=ph7}
+      $('sTick').hidden=true;scrPhase=S.phase;return;
     }
     var tbs=(S.tables||[]).slice().sort(function(a,b){return b.pts-a.pts||a.n-b.n}),mx=Math.max(1,tbs.length?tbs[0].pts:1);
     $('tL').innerHTML=tbs.map(function(t){
