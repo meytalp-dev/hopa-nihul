@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>דף המנחה · שולחנות הרעיונות · 21.10 · הופה</title>
+<title>דף המנחה לשולחנות · 21.10 · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#E8348A;--yellow:#FFF200;--ink:#1f1f26;--muted:#6d6d7a;--line:#d9d2dd}
@@ -76,40 +76,44 @@ var TABLES=[
 ];
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var tableUrl=location.href.replace(/shulchanot-print\.html.*$/,'bursa.html?v=table');
-var gameUrl=location.href.replace(/shulchanot-print\.html.*$/,'mifgash3.html');   /* הקוד הקטן מוביל לדף המפגש — שם כותבים רעיונות */
+var gameUrl=location.href.replace(/shulchanot-print\.html.*$/,'bursa.html');   /* הכול במשחק (21.10) */
+/* דף המנחה — הזרימה של 21.10 בבוקר: הכול קורה בטלפונים, במשחק. המנחה מוביל/ה את השיחה. */
 function comp(k,label){
   return '<div class="comp"><div class="h">רכיב '+k+' <span style="font-weight:600;font-size:12px;color:var(--muted)">'+label+'</span><span class="fill"></span></div>'+
-    '<div class="row"><span class="t">שלב 3 · שאלו שאלה <small>— אחת מתוך 4 בשקית. רכז/ת אחד/ת רושם/ת את הרעיונות בטלפון שלו/ה</small></span><span class="ok">סיימתי</span></div>'+
-    '<div class="row"><span class="t">שלב 4 · בחרו רעיון אחד ופרקו אותו לפעילות <small>— לפי מה שייכנס לתוכנית השנתית</small></span><span class="ok">סיימתי</span></div>'+
-    '<table><tr><td style="width:44%">הפעילות</td><td style="width:22%">מי אחראי/ת</td><td style="width:12%">שעות</td><td>מתי בשנה</td></tr></table></div>';
+    '<div class="row"><span class="t">שולפים שאלה מהשקית של הרכיב וזורקים רעיונות <small>— כל אחד מוסיף בטלפון, לרכיב הזה. כל רעיון = +1</small></span><span class="ok">סיימנו</span></div>'+
+    '<table><tr><td>רעיונות שעלו (אפשר לרשום גם כאן)</td></tr><tr><td></td></tr></table></div>';
 }
 function page(t){
   return '<section class="page"><div class="top"><div class="num">'+t.n+'</div><div><h1>דף המנחה · שולחן '+t.n+'</h1>'+
     '<div class="s">מנחה: '+esc(t.lead)+' · '+t.s.map(esc).join(' · ')+'</div></div>'+
-    '<div class="qr"><div id="qr'+t.n+'"></div>דף המנחה בטלפון</div></div>'+
-    '<div class="scribe"><div class="qr2"><div id="qs'+t.n+'"></div>דף המפגש</div><div><b>רעיונות כותבים כולם, כל אחד מהטלפון שלו.</b>'+
-      '<span>איפה? <b>בדף המפגש</b>, בשלב <b>"אליאס הפוך"</b> שמיטל פותחת. כל רעיון נכנס לשולחן (+1) ומופיע אצלך בדף המנחה בטלפון.</span></div></div>'+
-    '<div class="part">חלק א׳ · אליאס מושגים</div>'+
-    '<div class="st"><span class="t">בתוך השקית — שקית אורגנזה לבנה עם כרטיסי מושגים (קלף ורוד)'+
-      '<small>כל פעם מסביר/ה מישהו אחר · מסבירים את המושג <b>בלי להגיד את המילה או חלק ממנה</b> · כל ניחוש נכון = נקודה</small>'+
-      '<small style="margin-top:4px;color:var(--ink);font-weight:700">סיימתם את כל הכרטיסים? לוחצים "סיימנו" בטלפון — השולחן הראשון מופיע על המסך.</small></span><span class="ok">סיימנו</span></div>'+
-    '<div class="part">אליאס הפוך</div>'+
+    '<div class="qr"><div id="qs'+t.n+'"></div>המשחק בטלפון</div></div>'+
+    '<div class="scribe"><div><b>הכול קורה בטלפונים, במשחק.</b>'+
+      '<span>מיטל פותחת כל שלב מהמסך הגדול, והטלפונים עוברים לבד, עם טיימר. את/ה מוביל/ה את השיחה בשולחן.</span></div></div>'+
+    '<div class="part">אליאס מושגים · 8 דק׳</div>'+
+    '<div class="st"><span class="t">בשקית האורגנזה הלבנה — כרטיסי מושגים (קלף ורוד)'+
+      '<small>מוציאים כרטיס ומסבירים את המושג <b>בלי להגיד את המילה או חלק ממנה</b> · כל פעם מסביר/ה מישהו אחר</small>'+
+      '<small style="margin-top:4px;color:var(--ink);font-weight:700">כל ניחוש נכון — לוחצים + בטלפון (מספר אחד לכל השולחן). השולחן המוביל מופיע על המסך ובכל הטלפונים.</small></span>'+
+      '<span class="fill" style="max-width:70px"></span><span class="ok">מושגים</span></div>'+
+    '<div class="part">אליאס הפוך · 30 דק׳</div>'+
     '<div class="intro"><b>לפנייך שקית ובה 8 שקיות קטנות — שקית לכל רכיב. בכל שקית 4 שאלות.</b>'+
     '<div class="chips">'+CHAPTERS.map(function(c){return '<span style="--c:'+c.c+'">'+esc(c.t)+'</span>'}).join('')+'</div></div>'+
-    '<div class="st"><i>שלב 1</i><span class="t">הגרילו רכיב אחד בהפתעה<small>שולפים שקית בלי להסתכל</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
-    '<div class="st"><i>שלב 2</i><span class="t">בחרו 2 רכיבים<small>שהשולחן החליט ביחד שמעניינים אתכם</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
+    '<div class="st"><i>1</i><span class="t">הגרילו רכיב אחד בהפתעה<small>שולפים שקית בלי להסתכל · מסמנים בטלפון "מה הגרלתם?"</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
+    '<div class="st"><i>2</i><span class="t">בחרו עוד 2 רכיבים<small>מה שהשולחן החליט ביחד · מסמנים בטלפון</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
+    '<div class="st"><i>3</i><span class="t">מי כותב/ת את הרעיונות?<small>כותבים את השם בטלפון · וכל אחד יכול להוסיף רעיונות משלו</small></span><span class="fill"></span><span class="ok">סיימתי</span></div>'+
     comp(1,'· מההגרלה')+comp(2,'· בחירה')+comp(3,'· בחירה')+
-    '<div class="more">נשאר זמן? מעוניינים בעוד רכיב? <span class="ok">כן — רכיב: ________</span><span class="ok">סיימנו</span></div>'+
     '<div class="rule">בזמן הרעיונות — לא פוסלים כלום</div>'+
-    '<div class="foot">מפגש רכזים חברתיים · 21.10 · בני ברק · תוכנית הבוגרים הופה · נבנה על ידי impactos</div></section>';
+    '<div class="part">סבב שיתוף · 15 דק׳</div>'+
+    '<div class="st"><span class="t">כל שולחן משתף את הרעיון הכי טוב שעלה אצלו<small>הרעיון שנבחר להצגה:</small></span><span class="fill"></span></div>'+
+    '<div class="part">תוכנית העבודה שלי · 15 דק׳</div>'+
+    '<div class="st"><span class="t">כל אחד בונה את התוכנית שלו בדף המפגש<small>בוחר רכיבים · לכל פעולה: כותבים לבד או בוחרים מרעיונות השולחנות · מתי · עם מי</small></span></div>'+
+    '<div class="foot">מפגש רכזים חברתיים · 21.10 · בני ברק · תוכנית הבוגרים הופה</div></section>';
 }
 var sel=document.getElementById('pick');
 TABLES.forEach(function(t){var o=document.createElement('option');o.value=t.n;o.textContent='שולחן '+t.n+' · '+t.lead;sel.appendChild(o)});
 function render(){
   var v=sel.value,l=v==='all'?TABLES:TABLES.filter(function(t){return String(t.n)===v});
   document.getElementById('pages').innerHTML=l.map(page).join('');
-  l.forEach(function(t){try{new QRCode(document.getElementById('qr'+t.n),{text:tableUrl,width:76,height:76,correctLevel:QRCode.CorrectLevel.M})}catch(e){}});
-  l.forEach(function(t){try{new QRCode(document.getElementById('qs'+t.n),{text:gameUrl,width:62,height:62,correctLevel:QRCode.CorrectLevel.M})}catch(e){}});
+  l.forEach(function(t){try{new QRCode(document.getElementById('qs'+t.n),{text:gameUrl,width:76,height:76,correctLevel:QRCode.CorrectLevel.M})}catch(e){}});
 }
 sel.onchange=render;render();
 </script>
