@@ -181,7 +181,8 @@ function render(){
   app.innerHTML=
   '<div class="card"><p style="margin:0 0 10px"><b>המשוב הזה הוא על החלק של הופה בכנס</b>, ליווי הבוגרים: המשחק, אליאס, שולחנות הרעיונות ותוכנית העבודה.</p>'+
     '<p style="margin:0 0 10px"><b>המשוב שלך חשוב לנו מאוד</b>, ולכן נשמח שתקדיש/י לו כמה דקות. כך נלמד ונדייק את המפגשים הבאים לפי הצרכים שלכם.</p>'+
-    '<p style="margin:0"><b>לקראת המפגש הבא, ב-4.11 בזום:</b> חשוב להגיע עם הבסיס לתוכנית העבודה שהתחלתם לבנות בכנס.</p></div>'+
+    '<p style="margin:0 0 10px"><b>לקראת המפגש הבא, ב-4.11 בזום:</b> חשוב להגיע עם הבסיס לתוכנית העבודה שהתחלתם לבנות בכנס.</p>'+
+    '<p style="margin:0"><b>ריכוז הרעיונות מהשולחנות:</b> היו המון רעיונות. איחדנו כפילויות והתאמנו אותם לצרכים שלכם. <a href="raayonot-2110.html" target="_blank" rel="noopener" style="color:#E6007E;font-weight:700">לריכוז הרעיונות</a></p></div>'+
   '<div class="card"><h2><span class="num">1</span>מי ממלא/ת? <span class="req">*</span></h2>'+
     '<div class="two"><div><label class="fl">שם</label><input type="text" id="who" value="'+esc(state.who)+'" maxlength="40"></div>'+
     '<div><label class="fl">בית ספר</label><select id="school"><option value="" disabled'+(state.school?'':' selected')+'>בחרו בית ספר</option>'+
@@ -248,7 +249,8 @@ async function submit(){
 function renderDone(){
   app.innerHTML='<div class="card done"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2>תודה!</h2>'+
     '<p>כל מילה כאן נכנסת לתכנון המפגש הבא.</p>'+
-    '<div class="nextbox">4.11.2026 · זום<small>תבואו עם הבסיס לתוכנית העבודה שהתחלתם לבנות בכנס.</small></div></div>';
+    '<div class="nextbox">4.11.2026 · זום<small>תבואו עם הבסיס לתוכנית העבודה שהתחלתם לבנות בכנס.</small></div>'+
+    '<p style="margin-top:14px"><a href="raayonot-2110.html" target="_blank" rel="noopener" style="color:#E6007E;font-weight:700">לריכוז הרעיונות מהשולחנות</a>: היו המון רעיונות, איחדנו כפילויות והתאמנו אותם לצרכים שלכם.</p></div>';
 }
 
 /* ---------- תצוגת התוצאות (?admin=hopa) ---------- */
