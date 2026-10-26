@@ -405,7 +405,7 @@ fields.forEach(function(id){var el=$(id);if(!el)return;if(st[id])el.value=st[id]
 
 /* ── התשתית המשותפת: שליחה וקריאה מול ה-Apps Script ── */
 var WC_EXEC='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-var WC_SECRET='hopa-nihul-2026';
+var WC_SECRET='';
 function sendStore(id,obj){
   obj.ts=Date.now();
   fetch(WC_EXEC,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},

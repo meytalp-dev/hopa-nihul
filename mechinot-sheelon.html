@@ -127,11 +127,12 @@ footer a{color:var(--pink)}
 
 <script>
 const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-const GS_SECRET = 'hopa-nihul-2026';
 const STORE_KEY = 'mechinot_sheelon';
 
 const LIKERT = ['בכלל לא מסכים/ה','לא מסכים/ה','במידה מסוימת','מסכים/ה','מסכים/ה מאוד'];
-const TYPES = {likert:'סולם הסכמה 1–5', single:'בחירה אחת', multi:'בחירה מרובה', text:'תשובה פתוחה'};
+const TYPES = {likert:'סולם הסכמה 1–5', single:'בחירה אחת', multi:'בחירה מרובה', select:'רשימה נפתחת', text:'תשובה פתוחה'};
+const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','אלאמאני סחנין','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','יוצר עתיד פלמחים','מגשימים בית שאן','מנאראת טורעאן','עמל טכנולוגי אשדוד','עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד מגשימים כרמיאל','עתיד שמיים מוצקין','תיכון חברתי חיפה','תיכון חושן','תיכון נחלים','תיכון שיח','אחר'];
+const MG = 'הצעת מורן וגל';
 let uid = 0; const nid = () => 'q' + Date.now().toString(36) + (uid++);
 const L = (text, extra) => Object.assign({id:nid(), type:'likert', text, options:LIKERT.slice(), required:true, note:''}, extra||{});
 const S = (text, options, extra) => Object.assign({id:nid(), type:'single', text, options, required:true, note:''}, extra||{});
@@ -139,6 +140,7 @@ const M = (text, options, max, extra) => Object.assign({id:nid(), type:'multi', 
 
 const DEFAULT = {sections:[
   {id:'s1', title:'קצת עליך', questions:[
+    S('באיזה בית ספר את/ה עובד/ת?', SCHOOLS, {type:'select', note:MG+': כדי להשוות בין בתי הספר ולבנות תוכנית מותאמת לכל אחד'}),
     S('מה התפקיד שלך בבית הספר?', ['מורה / מחנך/ת','יועץ/ת','רכז/ת בוגרים','רכז/ת שכבה או חברתי/ת','הנהלה','אחר']),
     S('כמה שנים את/ה עובד/ת בחינוך?', ['עד 3','4–10','11–20','יותר מ-20']),
     M('מה ההיכרות האישית שלך עם מכינות?', ['אני בוגר/ת מכינה','בן/בת משפחה או חבר/ה קרוב/ה','תלמידים שלי היו במכינה','ביקרתי במכינה','אין לי היכרות אישית'])
@@ -148,7 +150,9 @@ const DEFAULT = {sections:[
     L('אני מכיר/ה את ההבדל בין מכינה, שנת שירות וגרעין'),
     L('אני יודע/ת איך ומתי נרשמים למכינה (לוח זמנים, ימי מיון)'),
     L('אני יודע/ת שיש מכינות שמתאימות גם לתלמידים עם קשיים לימודיים, רגשיים או כלכליים'),
-    S('כמה מכינות את/ה מכיר/ה בשמן?', ['אף אחת','1–2','3–5','6 ומעלה'])
+    L('אני יודע/ת שיש מכינות ללא עלות למשתתפים', {note:MG}),
+    S('כמה מכינות את/ה מכיר/ה בשמן?', ['אף אחת','1–2','3–5','6 ומעלה']),
+    S('אני מכיר/ה בוגר/ת של בית הספר שיצא/ה למכינה', ['כן','לא'], {note:MG})
   ]},
   {id:'s3', title:'מה אני חושב/ת', questions:[
     L('מכינה היא שנה משמעותית שתורמת לבוגרים לאורך החיים'),
@@ -156,17 +160,21 @@ const DEFAULT = {sections:[
     L('מכינה עלולה לעכב את הבוגרים: שנה שבאה על חשבון לימודים או עבודה', {note:'שאלה הפוכה: הסכמה גבוהה מעידה על חסם'}),
     L('מכינה יכולה לשנות את המסלול של תלמידים שנמצאים בסיכון'),
     L('מכינה מתאימה לתלמידים של בית הספר שלנו'),
-    L('ההורים של התלמידים שלנו יתמכו בבחירה במכינה')
+    L('ההורים של התלמידים שלנו יתמכו בבחירה במכינה'),
+    L('הייתי ממליץ/ה לתלמיד/ה שלי לצאת למכינה', {note:MG+': תמיכה של המבוגר עצמו ("ברק בעיניים")'}),
+    L('חשוב לי שהתלמידים שלנו יגיעו לשירות משמעותי', {note:MG})
   ]},
   {id:'s4', title:'מה קורה היום', questions:[
     S('בשנה האחרונה, יצא לך לשוחח עם תלמיד/ה על מכינה?', ['לא','פעם או פעמיים','כמה פעמים','באופן קבוע']),
     S('מי אחראי/ת על נושא המכינות בבית הספר שלך?', ['יועץ/ת','מחנכים','רכז/ת בוגרים','הנהלה','אף אחד באופן מוגדר','לא יודע/ת']),
+    S('יש היום בבית הספר מסגרת קבועה שעוסקת בשלב שאחרי י"ב?', ['כן, באופן קבוע','יש משהו, לא באופן קבוע','לא','לא יודע/ת'], {note:MG}),
     L('אני מרגיש/ה שזה חלק מהתפקיד שלי לעודד תלמידים לשקול מכינה'),
     S('באיזו שכבה נכון להתחיל לדבר עם תלמידים על מכינות?', ['ט','י','י"א','י"ב'])
   ]},
   {id:'s5', title:'מה מקשה ומה יעזור', questions:[
-    M('מה הכי מקשה לקדם מכינות בבית הספר? (עד 3)', ['אין לי מספיק מידע','אין זמן במערכת','לא בטוח/ה שזה מתאים לתלמידים שלנו','עלות כלכלית למשפחות','מרחק גיאוגרפי','התנגדות של הורים','פער תרבותי או מגזרי','התלמידים לא מתעניינים','זה לא באחריותי'], 3),
-    M('מה היה עוזר לך לקדם את הנושא? (עד 3)', ['מפגש עם בוגרי מכינה מבית הספר','סיור במכינה','הרצאה קצרה לצוות','איש/אשת קשר קבוע/ה מהמכינה','חומרים מוכנים לשיחה או לשיעור','מידע על מלגות וסיוע כלכלי','פעילות של המכינה לתלמידים בבית הספר'], 3),
+    M('מה הכי מקשה לקדם מכינות בבית הספר? (עד 3)', ['אין לי מספיק מידע','אין זמן במערכת','לא בטוח/ה שזה מתאים לתלמידים שלנו','תלמידים צריכים לעבוד ולעזור בפרנסה','מרחק גיאוגרפי','חשש מהתרחקות מהבית','מועדי הרשמה מוקדמים (מרץ)','רקע מורכב וחשש מדחייה','התנגדות של הורים','פער תרבותי או מגזרי','התלמידים לא מתעניינים','זה לא באחריותי'], 3, {note:MG+': "עלות כלכלית" הוחלף בצורך לעבוד (במכינה מלגה מלאה), ונוספו 3 חסמים'}),
+    M('לדעתך, מה החסם העיקרי של תלמידי בית הספר להגיע למכינה? (עד 2)', ['חוסר מודעות','חסם כלכלי (הצורך לעבוד ולעזור בפרנסה)','חוסר תמיכה מהבית ומהמשפחה','התלמידים לא רואים במכינה ערך עבורם','אחר'], 2, {note:MG+': לשאול את אותה שאלה גם הורים ותלמידים, ולהשוות בין המעגלים'}),
+    M('מה היה עוזר לך לקדם את הנושא? (עד 3)', ['מפגש עם בוגרי מכינה מבית הספר','סיור במכינה','יום הכשרה לצוות החינוכי במכינה','הרצאה קצרה לצוות','איש/אשת קשר קבוע/ה מהמכינה','חומרים מוכנים לשיחה או לשיעור','שילוב בסדירויות קיימות (שעת חינוך, הכנה לצו)','מפגש להורים','מידע על מלגות וסיוע כלכלי','פעילות של המכינה לתלמידים בבית הספר'], 3, {note:MG+': נוספו יום הכשרה, סדירויות קיימות ומפגש להורים'}),
     L('אשמח להיות שותף/ה לפעילות מכינות בבית הספר שלנו'),
     {id:nid(), type:'text', text:'משהו נוסף שחשוב שנדע?', options:[], required:false, note:''}
   ]}
@@ -217,6 +225,21 @@ function setStatus(t, ok){ const s=document.getElementById('status'); s.textCont
 function fmt(iso){ if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
 function lastLine(){ return DATA.updatedAt ? `עודכן ${fmt(DATA.updatedAt)}${DATA.updatedBy?' · '+DATA.updatedBy:''}` : 'טיוטה ראשונה — עוד לא נערכה'; }
 
+/* קוד עריכה — מוקלד פעם אחת בכל מכשיר. בלי קוד אפשר לצפות, אבל לא לשמור. */
+let EDIT_CODE = LS.get('mechinot_edit_code') || '', codeOk = false;
+async function ensureCode(){
+  if (codeOk && EDIT_CODE) return true;
+  for (let i=0; i<2; i++){
+    if (!EDIT_CODE) EDIT_CODE = (prompt('קוד עריכה לשאלון (קיבלתם אותו מצוות הופה):')||'').trim();
+    if (!EDIT_CODE) return false;
+    try{
+      const r = await jsonp({action:'checkCode', secret:EDIT_CODE});
+      if (r && r.ok && (r.staff || (r.keys||[]).includes(STORE_KEY))){ codeOk = true; LS.set('mechinot_edit_code', EDIT_CODE); return true; }
+    }catch(e){ setStatus('לא הצלחתי לבדוק את הקוד — נסו שוב'); return false; }
+    alert('קוד העריכה לא נכון.'); EDIT_CODE = ''; LS.set('mechinot_edit_code','');
+  }
+  return false;
+}
 let saveT;
 function save(){
   DATA.updatedAt = new Date().toISOString();
@@ -224,9 +247,10 @@ function save(){
   setStatus('שומר…');
   clearTimeout(saveT);
   saveT = setTimeout(async()=>{
+    if (!(await ensureCode())){ setStatus('לא נשמר — צריך קוד עריכה. השינוי יישמר בעריכה הבאה.'); return; }
     try{
       await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:new URLSearchParams({action:'storeSet',secret:GS_SECRET,key:STORE_KEY,json:JSON.stringify(DATA)}).toString()});
+        body:new URLSearchParams({action:'storeSet',secret:EDIT_CODE,key:STORE_KEY,json:JSON.stringify(DATA)}).toString()});
       setStatus('נשמר ✓ · '+lastLine(), true);
     }catch(e){ setStatus('שגיאה בשמירה — בדקו אינטרנט ונסו שוב'); toast('השמירה נכשלה'); }
   }, 300);
@@ -234,7 +258,7 @@ function save(){
 async function load(){
   setStatus('טוען מהגיליון…');
   try{
-    const r = await jsonp({action:'storeAll',secret:GS_SECRET});
+    const r = await jsonp({action:'storeAll'});
     if(!r.ok) throw new Error(r.error||'err');
     const st = (r.store||{})[STORE_KEY];
     if (st && Array.isArray(st.sections)) DATA = st;
@@ -333,7 +357,8 @@ function render(){
       if(EDITING===q.id){ h += `<div class="card">${editForm(q)}</div>`; return; }
       const opts = q.type==='likert' ? '<span class="tag">'+TYPES.likert+'</span>'
         : `<span class="tag">${TYPES[q.type]}${q.type==='multi'&&q.max?' · עד '+q.max:''}${q.required?'':' · לא חובה'}</span>` +
-          (q.options.length?`<ul class="opts">${q.options.map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:'');
+          (q.type==='select' ? `<div class="hint" style="margin-top:6px">${q.options.length} אפשרויות ברשימה</div>`
+            : q.options.length?`<ul class="opts">${q.options.map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:'');
       h += `<div class="card"><div class="q"><span class="n">${n}</span><div class="body">
         <div class="txt">${esc(q.text)}</div>${opts}${q.note?`<div class="note">${esc(q.note)}</div>`:''}</div>
         <div class="tools">
@@ -362,6 +387,7 @@ function renderPreview(){
       h += `<div class="qcard"><div class="qt">${n}. ${esc(q.text)}${q.required?' <span class="req">*</span>':''}</div>`;
       if(q.type==='likert') h += `<div class="likert">${q.options.map((o,i)=>`<button class="${a===i?'on':''}" onclick="pick('${q.id}',${i})"><b>${i+1}</b>${esc(o)}</button>`).join('')}</div>`;
       else if(q.type==='text') h += `<textarea placeholder="אפשר לדלג">${esc(a||'')}</textarea>`;
+      else if(q.type==='select') h += `<select class="field"><option value="">בחירה מהרשימה…</option>${q.options.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
       else h += `<div class="choices">${q.options.map((o,i)=>`<button class="${(q.type==='multi'?(a||[]).includes(i):a===i)?'on':''}" onclick="pick('${q.id}',${i})">${esc(o)}</button>`).join('')}</div>`;
       h += '</div>';
     });
