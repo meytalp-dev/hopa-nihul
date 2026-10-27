@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<script src="staff-code.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>מעקב שאלון המכינות | הופה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#E8348A;--yellow:#FFF200;--olive:#635F2F;--khaki:#A4A080;--olive-soft:#eeede3;--ink:#2a2915;--muted:#6f6c55;--line:#e4e2d3;--bg:#f7f6f0;--card:#fff;--green:#4f7a2a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.stripe{display:flex;height:5px}.stripe i{flex:1}
+header.top{background:#fff;border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:20px}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding-bottom:0}
+header.top img{height:36px;display:block}
+header.top .x{color:var(--khaki);font-weight:700}
+h1{font-size:clamp(21px,4.5vw,28px);margin:0 0 4px;font-weight:800}
+h2{font-size:18px;margin:26px 0 10px;color:var(--olive)}
+.lead{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:28px;font-weight:800;color:var(--olive);line-height:1.1}
+.kpi span{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.btn{font:inherit;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:500}
+.link{direction:ltr;text-align:left;font-size:13px;background:var(--olive-soft);border-radius:8px;padding:6px 10px;word-break:break-all}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{text-align:start;padding:9px 12px;border-bottom:1px solid #efeee6;font-size:14px;vertical-align:top}
+th{background:var(--olive-soft);color:var(--olive);font-weight:500}
+tr.zero td{color:#9a987f}
+.num{font-weight:700;color:var(--olive)}
+.pill{display:inline-block;font-size:12px;background:#f1f0e6;border-radius:999px;padding:1px 9px;margin:2px 0 2px 4px}
+details.r{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+details.r summary{cursor:pointer;padding:11px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+details.r summary .d{color:var(--muted);font-size:13px;margin-inline-start:auto}
+details.r dl{margin:0;padding:4px 14px 14px}
+details.r dt{font-size:13px;color:var(--muted);margin-top:8px}
+details.r dd{margin:0;font-weight:500}
+.status{font-size:14px;color:var(--muted);margin:10px 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+@media (max-width:560px){
+  .kpis{grid-template-columns:1fr 1fr}
+  th:nth-child(3),td:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+<div class="stripe"><i style="background:#635F2F"></i><i style="background:#A4A080"></i><i style="background:#FFF200"></i><i style="background:#E8348A"></i></div>
+<header class="top"><div class="wrap">
+  <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a>
+  <span class="x">×</span>
+  <img src="one-of-us-logo.png" alt="מכינת אחד משלנו">
+</div></header>
+
+<div class="wrap">
+  <h1>מעקב: שאלון הצוות על מכינות</h1>
+  <p class="lead">מי מילא, מאיזה בית ספר, ומה ענו. הנתונים מתעדכנים מהגיליון.</p>
+
+  <div class="card">
+    <div class="hint" style="font-size:13px;color:var(--muted);margin-bottom:6px">הקישור לשליחה לצוותים:</div>
+    <div class="link" id="formLink" dir="ltr"></div>
+    <div class="btns">
+      <button class="btn primary" onclick="copyMsg()">📋 העתקת הודעה עם הקישור</button>
+      <button class="btn" onclick="copyLink()">העתקת הקישור בלבד</button>
+      <a class="btn" id="openForm" target="_blank" rel="noopener">פתיחת הטופס</a>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="btn" onclick="load()">רענון</button>
+    <button class="btn" onclick="exportCSV()">⬇ ייצוא לאקסל (CSV)</button>
+  </div>
+  <div class="status" id="status">טוען…</div>
+  <div id="app"></div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script src="mechinot-q.js"></script>
+<script>
+const FORM_URL = new URL('mechinot-tofes.html', location.href).href;
+const MSG = `שלום לצוות 👋
+עמותת הופה ומכינת "אחד משלנו" רוצות לשמוע מה דעתכם על מכינות קדם-צבאיות ואיך אפשר לקדם את הנושא בבית הספר.
+זה שאלון קצר, כ-5 דקות, רובו בלחיצה ובלי שם:
+${FORM_URL}
+תודה רבה! 🙏`;
+document.getElementById('formLink').textContent = FORM_URL;
+document.getElementById('openForm').href = FORM_URL;
+const app = document.getElementById('app');
+let RESP = [], QS = null;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+function copy(t, ok){
+  const done=()=>toast(ok);
+  if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(done, ()=>fallback());
+  else fallback();
+  function fallback(){ const a=document.createElement('textarea'); a.value=t; document.body.appendChild(a); a.select(); try{document.execCommand('copy'); done();}catch(e){prompt('העתיקו:', t);} a.remove(); }
+}
+const copyMsg = () => copy(MSG, 'ההודעה הועתקה — אפשר להדביק בוואטסאפ');
+const copyLink = () => copy(FORM_URL, 'הקישור הועתק');
+const setStatus = t => document.getElementById('status').textContent = t;
+const fmt = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'2-digit'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+const show = v => Array.isArray(v) ? v.join(' · ') : String(v==null?'':v);
+
+async function load(){
+  setStatus('טוען מהגיליון…');
+  const secret = GS_SECRET;
+  if(!secret){ setStatus('צריך קוד צוות כדי לראות את התשובות. רעננו את הדף והקלידו אותו.'); return; }
+  try{
+    const r = await jsonp({action:'storeAll', secret}, i=>setStatus(`גוגל מתעכב — מנסה שוב (${i}/4)…`));
+    if(!r.ok){
+      if(r.error==='unauthorized'){ staffCodeReset(); setStatus('קוד הצוות לא נכון. רעננו את הדף ונסו שוב.'); return; }
+      throw new Error(r.error||'err');
+    }
+    const st = r.store||{};
+    QS = (st[STORE_KEY] && Array.isArray(st[STORE_KEY].sections)) ? st[STORE_KEY] : DEFAULT;
+    RESP = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].a)
+      .map(k=>Object.assign({key:k}, st[k])).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    setStatus('עודכן עכשיו');
+    render();
+  }catch(e){ setStatus('לא הצלחתי לטעון מהגיליון. לחצו "רענון".'); }
+}
+
+function render(){
+  // לפי בית ספר: כל בתי הספר ברשימה, גם מי שעוד לא מילא; "אחר" נספר לפי השם שנכתב
+  const by = {};
+  SCHOOLS.filter(s=>!isOther(s)).forEach(s=>by[s]=[]);
+  RESP.forEach(r=>{ const s = String(r.school||'').replace(/^אחר: /,'') || 'לא צוין'; (by[s]=by[s]||[]).push(r); });
+  const schools = Object.keys(by).sort((a,b)=>by[b].length-by[a].length || a.localeCompare(b,'he'));
+  const filled = schools.filter(s=>by[s].length).length;
+
+  let h = `<div class="kpis">
+    <div class="kpi"><b>${RESP.length}</b><span>מילאו את השאלון</span></div>
+    <div class="kpi"><b>${filled}</b><span>בתי ספר שמישהו מהם מילא</span></div>
+    <div class="kpi"><b>${schools.length-filled}</b><span>בתי ספר שעוד לא מילאו</span></div>
+  </div>`;
+
+  h += `<h2>לפי בית ספר</h2><table><thead><tr><th>בית ספר</th><th>מילאו</th><th>תפקידים</th><th>אחרון</th></tr></thead><tbody>`;
+  schools.forEach(s=>{
+    const rs = by[s], roles = {};
+    rs.forEach(r=>{ const k=r.role||'—'; roles[k]=(roles[k]||0)+1; });
+    h += `<tr class="${rs.length?'':'zero'}"><td>${esc(s)}</td><td class="num">${rs.length||'—'}</td>
+      <td>${Object.entries(roles).map(([k,v])=>`<span class="pill">${esc(k)}${v>1?' ×'+v:''}</span>`).join('')}</td>
+      <td>${rs.length?fmt(rs[0].ts):''}</td></tr>`;
+  });
+  h += `</tbody></table>`;
+
+  h += `<h2>כל התשובות (${RESP.length})</h2>`;
+  if(!RESP.length) h += `<p class="lead">עוד אין תשובות. כשמישהו ימלא, הוא יופיע כאן.</p>`;
+  RESP.forEach(r=>{
+    h += `<details class="r"><summary><b>${esc(r.school||'לא צוין')}</b><span class="pill">${esc(r.role||'')}</span><span class="d">${fmt(r.ts)}</span></summary><dl>`;
+    cols().forEach(c=>{ const x=r.a[c.id]; if(x==null) return; const v=show(x);
+      h += `<dt>${esc(c.q)}</dt><dd>${esc(c.type==='likert' ? v+' · '+(LIKERT[x-1]||'') : v)}</dd>`; });
+    h += `</dl></details>`;
+  });
+  app.innerHTML = h;
+}
+
+// השאלות לפי סדר השאלון הנוכחי, ואחריהן מזהים שיש להם תשובות אבל השאלה נמחקה מאז
+function cols(){
+  const out = [], seen = {};
+  (QS||DEFAULT).sections.forEach(s=>s.questions.forEach(q=>{ if(!seen[q.id]){ seen[q.id]=1; out.push({id:q.id, q:q.text, type:q.type}); } }));
+  RESP.forEach(r=>Object.keys(r.a).forEach(id=>{ if(!seen[id]){ seen[id]=1; out.push({id, q:'שאלה שנמחקה ('+id+')', type:''}); } }));
+  return out;
+}
+function exportCSV(){
+  if(!RESP.length){ toast('עוד אין תשובות לייצוא'); return; }
+  const cs = cols();
+  const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows = [['תאריך','בית ספר','תפקיד'].concat(cs.map(c=>c.q)).map(cell).join(',')];
+  RESP.forEach(r=>{
+    rows.push([fmt(r.ts), r.school, r.role].concat(cs.map(c=>{ const v=r.a[c.id]; return Array.isArray(v)?v.join(' | '):v; })).map(cell).join(','));
+  });
+  const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'שאלון-מכינות-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+load();
+</script>
+</body>
+</html>

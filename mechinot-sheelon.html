@@ -125,65 +125,11 @@ footer a{color:var(--pink)}
 </div>
 <div id="toast" class="toast"></div>
 
+<script src="mechinot-q.js"></script>
 <script>
-const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-const STORE_KEY = 'mechinot_sheelon';
-
-const LIKERT = ['בכלל לא מסכים/ה','לא מסכים/ה','במידה מסוימת','מסכים/ה','מסכים/ה מאוד'];
-const TYPES = {likert:'סולם הסכמה 1–5', single:'בחירה אחת', multi:'בחירה מרובה', select:'רשימה נפתחת', text:'תשובה פתוחה'};
-const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','אלאמאני סחנין','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','יוצר עתיד פלמחים','מגשימים בית שאן','מנאראת טורעאן','עמל טכנולוגי אשדוד','עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד מגשימים כרמיאל','עתיד שמיים מוצקין','תיכון חברתי חיפה','תיכון חושן','תיכון נחלים','תיכון שיח','אחר'];
-const MG = 'הצעת מורן וגל';
-let uid = 0; const nid = () => 'q' + Date.now().toString(36) + (uid++);
-const L = (text, extra) => Object.assign({id:nid(), type:'likert', text, options:LIKERT.slice(), required:true, note:''}, extra||{});
-const S = (text, options, extra) => Object.assign({id:nid(), type:'single', text, options, required:true, note:''}, extra||{});
-const M = (text, options, max, extra) => Object.assign({id:nid(), type:'multi', text, options, max:max||0, required:true, note:''}, extra||{});
-
-const DEFAULT = {sections:[
-  {id:'s1', title:'קצת עליך', questions:[
-    S('באיזה בית ספר את/ה עובד/ת?', SCHOOLS, {type:'select', note:MG+': כדי להשוות בין בתי הספר ולבנות תוכנית מותאמת לכל אחד'}),
-    S('מה התפקיד שלך בבית הספר?', ['מורה / מחנך/ת','יועץ/ת','רכז/ת בוגרים','רכז/ת שכבה או חברתי/ת','הנהלה','אחר']),
-    S('כמה שנים את/ה עובד/ת בחינוך?', ['עד 3','4–10','11–20','יותר מ-20']),
-    M('מה ההיכרות האישית שלך עם מכינות?', ['אני בוגר/ת מכינה','בן/בת משפחה או חבר/ה קרוב/ה','תלמידים שלי היו במכינה','ביקרתי במכינה','אין לי היכרות אישית'])
-  ]},
-  {id:'s2', title:'מה אני יודע/ת', questions:[
-    L('אני יודע/ת להסביר לתלמיד/ה מה זו מכינה קדם-צבאית ומה עושים בה'),
-    L('אני מכיר/ה את ההבדל בין מכינה, שנת שירות וגרעין'),
-    L('אני יודע/ת איך ומתי נרשמים למכינה (לוח זמנים, ימי מיון)'),
-    L('אני יודע/ת שיש מכינות שמתאימות גם לתלמידים עם קשיים לימודיים, רגשיים או כלכליים'),
-    L('אני יודע/ת שיש מכינות ללא עלות למשתתפים', {note:MG}),
-    S('כמה מכינות את/ה מכיר/ה בשמן?', ['אף אחת','1–2','3–5','6 ומעלה']),
-    S('אני מכיר/ה בוגר/ת של בית הספר שיצא/ה למכינה', ['כן','לא'], {note:MG})
-  ]},
-  {id:'s3', title:'מה אני חושב/ת', questions:[
-    L('מכינה היא שנה משמעותית שתורמת לבוגרים לאורך החיים'),
-    L('מכינה מתאימה בעיקר לתלמידים חזקים ומצטיינים', {note:'שאלה הפוכה: הסכמה גבוהה מעידה על חסם'}),
-    L('מכינה עלולה לעכב את הבוגרים: שנה שבאה על חשבון לימודים או עבודה', {note:'שאלה הפוכה: הסכמה גבוהה מעידה על חסם'}),
-    L('מכינה יכולה לשנות את המסלול של תלמידים שנמצאים בסיכון'),
-    L('מכינה מתאימה לתלמידים של בית הספר שלנו'),
-    L('ההורים של התלמידים שלנו יתמכו בבחירה במכינה'),
-    L('הייתי ממליץ/ה לתלמיד/ה שלי לצאת למכינה', {note:MG+': תמיכה של המבוגר עצמו ("ברק בעיניים")'}),
-    L('חשוב לי שהתלמידים שלנו יגיעו לשירות משמעותי', {note:MG})
-  ]},
-  {id:'s4', title:'מה קורה היום', questions:[
-    S('בשנה האחרונה, יצא לך לשוחח עם תלמיד/ה על מכינה?', ['לא','פעם או פעמיים','כמה פעמים','באופן קבוע']),
-    S('מי אחראי/ת על נושא המכינות בבית הספר שלך?', ['יועץ/ת','מחנכים','רכז/ת בוגרים','הנהלה','אף אחד באופן מוגדר','לא יודע/ת']),
-    S('יש היום בבית הספר מסגרת קבועה שעוסקת בשלב שאחרי י"ב?', ['כן, באופן קבוע','יש משהו, לא באופן קבוע','לא','לא יודע/ת'], {note:MG}),
-    L('אני מרגיש/ה שזה חלק מהתפקיד שלי לעודד תלמידים לשקול מכינה'),
-    S('באיזו שכבה נכון להתחיל לדבר עם תלמידים על מכינות?', ['ט','י','י"א','י"ב'])
-  ]},
-  {id:'s5', title:'מה מקשה ומה יעזור', questions:[
-    M('מה הכי מקשה לקדם מכינות בבית הספר? (עד 3)', ['אין לי מספיק מידע','אין זמן במערכת','לא בטוח/ה שזה מתאים לתלמידים שלנו','תלמידים צריכים לעבוד ולעזור בפרנסה','מרחק גיאוגרפי','חשש מהתרחקות מהבית','מועדי הרשמה מוקדמים (מרץ)','רקע מורכב וחשש מדחייה','התנגדות של הורים','פער תרבותי או מגזרי','התלמידים לא מתעניינים','זה לא באחריותי'], 3, {note:MG+': "עלות כלכלית" הוחלף בצורך לעבוד (במכינה מלגה מלאה), ונוספו 3 חסמים'}),
-    M('לדעתך, מה החסם העיקרי של תלמידי בית הספר להגיע למכינה? (עד 2)', ['חוסר מודעות','חסם כלכלי (הצורך לעבוד ולעזור בפרנסה)','חוסר תמיכה מהבית ומהמשפחה','התלמידים לא רואים במכינה ערך עבורם','אחר'], 2, {note:MG+': לשאול את אותה שאלה גם הורים ותלמידים, ולהשוות בין המעגלים'}),
-    M('מה היה עוזר לך לקדם את הנושא? (עד 3)', ['מפגש עם בוגרי מכינה מבית הספר','סיור במכינה','יום הכשרה לצוות החינוכי במכינה','הרצאה קצרה לצוות','איש/אשת קשר קבוע/ה מהמכינה','חומרים מוכנים לשיחה או לשיעור','שילוב בסדירויות קיימות (שעת חינוך, הכנה לצו)','מפגש להורים','מידע על מלגות וסיוע כלכלי','פעילות של המכינה לתלמידים בבית הספר'], 3, {note:MG+': נוספו יום הכשרה, סדירויות קיימות ומפגש להורים'}),
-    L('אשמח להיות שותף/ה לפעילות מכינות בבית הספר שלנו'),
-    {id:nid(), type:'text', text:'משהו נוסף שחשוב שנדע?', options:[], required:false, note:''}
-  ]}
-], general:'', updatedAt:'', updatedBy:''};
-
 let DATA = JSON.parse(JSON.stringify(DEFAULT));
 let MODE = 'edit', EDITING = null, ANS = {};
 const app = document.getElementById('app');
-const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
 const ICON = {
@@ -194,33 +140,6 @@ const ICON = {
 };
 
 /* ---------- גיליון ---------- */
-function jsonpOnce(params, tmo){
-  return new Promise((res,rej)=>{
-    const cb='cb'+Math.random().toString(36).slice(2);
-    const s=document.createElement('script');
-    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
-    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
-    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
-    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
-    document.head.appendChild(s);
-  });
-}
-async function fetchOnce(params, tmo){
-  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
-  try{
-    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
-    const txt = await r.text();
-    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
-  } finally { clearTimeout(timer); }
-}
-async function jsonp(params){
-  let err;
-  for (let i=1;i<=4;i++){
-    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
-    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; setStatus(`גוגל מתעכב — מנסה שוב (${i+1}/4)…`); }
-  }
-  throw err;
-}
 function setStatus(t, ok){ const s=document.getElementById('status'); s.textContent=t; s.className='status'+(ok?' ok':''); }
 function fmt(iso){ if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
 function lastLine(){ return DATA.updatedAt ? `עודכן ${fmt(DATA.updatedAt)}${DATA.updatedBy?' · '+DATA.updatedBy:''}` : 'טיוטה ראשונה — עוד לא נערכה'; }
@@ -258,7 +177,7 @@ function save(){
 async function load(){
   setStatus('טוען מהגיליון…');
   try{
-    const r = await jsonp({action:'storeAll'});
+    const r = await jsonp({action:'storeAll'}, i=>setStatus(`גוגל מתעכב — מנסה שוב (${i}/4)…`));
     if(!r.ok) throw new Error(r.error||'err');
     const st = (r.store||{})[STORE_KEY];
     if (st && Array.isArray(st.sections)) DATA = st;
@@ -382,15 +301,7 @@ function renderPreview(){
   DATA.sections.forEach(s=>{
     if(!s.questions.length) return;
     h += `<div class="sec-title">${esc(s.title)}</div>`;
-    s.questions.forEach(q=>{
-      n++; const a=ANS[q.id];
-      h += `<div class="qcard"><div class="qt">${n}. ${esc(q.text)}${q.required?' <span class="req">*</span>':''}</div>`;
-      if(q.type==='likert') h += `<div class="likert">${q.options.map((o,i)=>`<button class="${a===i?'on':''}" onclick="pick('${q.id}',${i})"><b>${i+1}</b>${esc(o)}</button>`).join('')}</div>`;
-      else if(q.type==='text') h += `<textarea placeholder="אפשר לדלג">${esc(a||'')}</textarea>`;
-      else if(q.type==='select') h += `<select class="field"><option value="">בחירה מהרשימה…</option>${q.options.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
-      else h += `<div class="choices">${q.options.map((o,i)=>`<button class="${(q.type==='multi'?(a||[]).includes(i):a===i)?'on':''}" onclick="pick('${q.id}',${i})">${esc(o)}</button>`).join('')}</div>`;
-      h += '</div>';
-    });
+    s.questions.forEach(q=>{ h += qHTML(q, ++n); });
   });
   app.innerHTML = h + '</div>';
 }
