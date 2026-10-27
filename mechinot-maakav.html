@@ -155,7 +155,7 @@ function render(){
   RESP.forEach(r=>{
     h += `<details class="r"><summary><b>${esc(r.school||'לא צוין')}</b><span class="pill">${esc(r.role||'')}</span><span class="d">${fmt(r.ts)}</span></summary><dl>`;
     cols().forEach(c=>{ const x=r.a[c.id]; if(x==null) return; const v=show(x);
-      h += `<dt>${esc(c.q)}</dt><dd>${esc(c.type==='likert' ? v+' · '+(LIKERT[x-1]||'') : v)}</dd>`; });
+      h += `<dt>${esc(c.q)}</dt><dd>${esc(c.type==='likert' && typeof x==='number' ? v+' · '+(LIKERT[x-1]||'') : v)}</dd>`; });
     h += `</dl></details>`;
   });
   app.innerHTML = h;

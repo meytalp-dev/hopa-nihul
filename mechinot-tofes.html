@@ -20,7 +20,7 @@ header.top .wrap{display:flex;align-items:center;gap:12px;padding-bottom:0}
 header.top img{height:40px;display:block}
 header.top .x{color:var(--khaki);font-weight:700}
 h1{font-size:clamp(22px,5vw,30px);margin:0 0 8px;font-weight:800;line-height:1.25}
-.lead{color:var(--muted);margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 8px}
 .meta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
 .meta span{font-size:13px;background:var(--olive-soft);color:var(--olive);border-radius:999px;padding:3px 12px}
 .prog{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;margin:14px 0 4px}
@@ -73,9 +73,10 @@ footer a{color:var(--pink)}
 
 <div class="wrap">
   <div id="intro">
-    <h1>מה דעתך על מכינות קדם-צבאיות?</h1>
-    <p class="lead">עמותת הופה ומכינת "אחד משלנו" רוצות להבין איך הצוות בבית הספר רואה את המכינות, ומה יעזור לקדם את הנושא.
-    אין תשובות נכונות או לא נכונות. לא נשאל את שמך.</p>
+    <h1>מכינות קדם-צבאיות: נקודת המבט של הצוות</h1>
+    <p class="lead">עמותת הופה ומכינת "אחד משלנו" מבקשות ללמוד מהניסיון ומההיכרות שלך עם התלמידים: מה דעתך על מכינות קדם-צבאיות, אילו הזדמנויות וקשיים עולים, ומה נחוץ לצוות כדי ללוות תלמידים בבחירת המשך הדרך.</p>
+    <p class="lead">אין צורך בידע מוקדם, ואין תשובות נכונות או לא נכונות. גם הסתייגויות ושאלות יעזרו לנו לתכנן מענה מתאים.</p>
+    <p class="lead">השאלון לא מבקש שם. נבקש לציין את בית הספר והתפקיד, כדי להבין את הצרכים בכל מסגרת.</p>
     <div class="meta"><span>כ-5 דקות</span><span id="qCount"></span><span>רוב השאלות בלחיצה</span></div>
   </div>
   <div id="app"><div class="loading">טוען את השאלון…</div></div>
@@ -146,8 +147,8 @@ function go(d){
 function pick(qid, i){
   const q = allQ().find(x=>x.id===qid);
   if(q.type==='multi'){
-    const cur=ANS[qid]||[]; const k=cur.indexOf(i);
-    if(k>-1) cur.splice(k,1); else { if(q.max && cur.length>=q.max){ toast('אפשר לבחור עד '+q.max+' — בטלו בחירה אחרת קודם'); return; } cur.push(i); }
+    const cur = togglePick(q, ANS[qid], i);
+    if(!cur){ toast('אפשר לבחור עד '+q.max+' — בטלו בחירה אחרת קודם'); return; }
     ANS[qid]=cur;
   } else ANS[qid]=i;
   const y = window.scrollY; render(); window.scrollTo(0, y);
@@ -158,7 +159,7 @@ function answerValue(q){
   const a=ANS[q.id], o=String(ANS[q.id+'_o']||'').trim();
   const withOther = op => isOther(op) && o ? 'אחר: '+o : op;
   if(q.type==='text') return String(a||'').trim();
-  if(q.type==='likert') return a==null ? '' : a+1;
+  if(q.type==='likert') return a==null ? '' : a===DK ? DK_TEXT : a+1;
   if(q.type==='multi') return (a||[]).map(i=>withOther(q.options[i]));
   return a==null||a==='' ? '' : withOther(q.options[a]);
 }

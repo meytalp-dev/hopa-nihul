@@ -274,7 +274,7 @@ function render(){
     s.questions.forEach((q,qi)=>{
       n++;
       if(EDITING===q.id){ h += `<div class="card">${editForm(q)}</div>`; return; }
-      const opts = q.type==='likert' ? '<span class="tag">'+TYPES.likert+'</span>'
+      const opts = q.type==='likert' ? '<span class="tag">'+TYPES.likert+(q.dk?' + "'+DK_TEXT+'"':'')+'</span>'
         : `<span class="tag">${TYPES[q.type]}${q.type==='multi'&&q.max?' · עד '+q.max:''}${q.required?'':' · לא חובה'}</span>` +
           (q.type==='select' ? `<div class="hint" style="margin-top:6px">${q.options.length} אפשרויות ברשימה</div>`
             : q.options.length?`<ul class="opts">${q.options.map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:'');
@@ -308,8 +308,8 @@ function renderPreview(){
 function pick(qid,i){
   const q=find(qid).q;
   if(q.type==='multi'){
-    const cur=ANS[qid]||[]; const k=cur.indexOf(i);
-    if(k>-1) cur.splice(k,1); else { if(q.max && cur.length>=q.max){ toast('אפשר לבחור עד '+q.max); return; } cur.push(i); }
+    const cur = togglePick(q, ANS[qid], i);
+    if(!cur){ toast('אפשר לבחור עד '+q.max); return; }
     ANS[qid]=cur;
   } else ANS[qid]=i;
   renderPreview();
