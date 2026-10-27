@@ -149,7 +149,7 @@ async function jsonpRetry(p,tries,onA){
   var e;
   for(var i=1;i<=(tries||5);i++){
     if(onA)onA(i);
-    try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאת שרת')}catch(x){e=x}
+    try{var r=await jsonp(p,25000);if(r&&r.ok)return r;if(r&&r.error==='unauthorized')throw new Error('unauthorized');e=new Error((r&&r.error)||'שגיאת שרת')}catch(x){if(x.message==='unauthorized')throw x;e=x}
     await delay(800+i*700);
   }
   throw e||new Error('נכשל');
@@ -281,8 +281,8 @@ async function renderAdmin(){
   var store;
   try{
     var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(a){var el=$('ls');if(el)el.textContent=a===1?'טוען…':'ניסיון '+a+'/6…'});
-    store=r.store||{};
-  }catch(e){app.innerHTML='<div class="card"><p class="hint">לא נטען ('+esc(e.message)+'). <button class="btn ghost" onclick="location.reload()">רענון</button></p></div>';return}
+    if(r.public)throw new Error('unauthorized');store=r.store||{};
+  }catch(e){if(window.staffCodeFail&&staffCodeFail(e,app))return;app.innerHTML='<div class="card"><p class="hint">לא נטען ('+esc(e.message)+'). <button class="btn ghost" onclick="location.reload()">רענון</button></p></div>';return}
 
   var items=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
     .map(function(k){return store[k]||{}}).filter(function(x){return x.who&&!x.del})

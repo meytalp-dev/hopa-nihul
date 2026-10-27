@@ -31,5 +31,25 @@
     return c;
   };
   window.staffCodeReset = function () { mem = ''; asked = false; lsSet(''); };
+
+  /* השרת החזיר unauthorized (קוד חסר/שגוי) — מציג תיבה להקליד את הקוד במקום "לא נטען" */
+  window.staffCodeFail = function (e, el) {
+    if (!e || String(e.message) !== 'unauthorized' || !el) return false;
+    window.staffCodeReset();
+    el.innerHTML = '<div class="card" dir="rtl"><p class="hint" style="margin-bottom:10px">כדי לראות את התשובות צריך את קוד הצוות של הופה (פעם אחת במכשיר הזה).</p>' +
+      '<form id="scForm" style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<input id="scIn" type="password" autocomplete="off" placeholder="קוד הצוות" style="flex:1;min-width:160px;padding:10px 12px;border:1px solid #ccc;border-radius:10px;font:inherit">' +
+      '<button class="btn" type="submit">הצגת התשובות</button></form></div>';
+    var f = document.getElementById('scForm');
+    f.onsubmit = function (ev) {
+      ev.preventDefault();
+      var v = (document.getElementById('scIn').value || '').trim();
+      if (!v) return;
+      lsSet(v);
+      location.reload();
+    };
+    document.getElementById('scIn').focus();
+    return true;
+  };
   Object.defineProperty(window, 'GS_SECRET', { get: window.staffCode, configurable: true });
 })();

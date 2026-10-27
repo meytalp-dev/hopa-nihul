@@ -374,8 +374,9 @@ async function jsonpRetry(params,tries,onAttempt){
     try{
       var r=await jsonp(params,25000);
       if(r&&r.ok)return r;
+      if(r&&r.error==='unauthorized')throw new Error('unauthorized');
       err=new Error((r&&r.error)||'שגיאת שרת');
-    }catch(e){err=e}
+    }catch(e){if(e.message==='unauthorized')throw e;err=e}
     await delay(800+i*700);
   }
   throw err||new Error('נכשל');
@@ -390,9 +391,9 @@ async function renderAdmin(){
     var r=await jsonpRetry({action:'storeAll',secret:GS_SECRET},6,function(att){
       var el=$('loadStat');if(el)el.textContent=att===1?'טוען תשובות…':'השרת של גוגל מתעצל — מנסה שוב ('+att+'/6)…';
     });
-    store=r.store;
+    if(r.public)throw new Error('unauthorized');store=r.store;
   }
-  catch(e){app.innerHTML='<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון גם אחרי 6 ניסיונות ('+esc(e.message)+') — זו תקלה זמנית של גוגל, נסו שוב בעוד דקה. <button class="btn ghost" onclick="location.reload()">🔄 נסו שוב</button></p></div>';return}
+  catch(e){if(window.staffCodeFail&&staffCodeFail(e,app))return;app.innerHTML='<div class="card"><p class="hint">לא הצלחתי לטעון מהגיליון גם אחרי 6 ניסיונות ('+esc(e.message)+') — זו תקלה זמנית של גוגל, נסו שוב בעוד דקה. <button class="btn ghost" onclick="location.reload()">🔄 נסו שוב</button></p></div>';return}
   var items=Object.keys(store).filter(function(k){return k.indexOf('intake_'+KEY_PREFIX)===0})
     .map(function(k){return store[k]||{}}).filter(function(x){return x.who})
     .sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
