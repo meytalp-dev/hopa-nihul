@@ -5,49 +5,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>מעקב שאלון המכינות | הופה</title>
+<title>שאלון המכינות: התשובות | הופה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--pink:#E8348A;--yellow:#FFF200;--olive:#635F2F;--khaki:#A4A080;--olive-soft:#eeede3;--ink:#2a2915;--muted:#6f6c55;--line:#e4e2d3;--bg:#f7f6f0;--card:#fff;--green:#4f7a2a}
+/* סולם ההסכמה: ורוד (לא מסכים) ← אפור (באמצע) ← זית (מסכים). נבדק מול עיוורון צבעים */
+:root{--pink:#E8348A;--olive:#635F2F;--khaki:#A4A080;--olive-soft:#eeede3;--ink:#2a2915;--muted:#6f6c55;--line:#e4e2d3;--bg:#f7f6f0;--card:#fff;
+  --l1:#A83A62;--l2:#D9799B;--l3:#C9C6B8;--l4:#9C9850;--l5:#5A562A;--bar:#7d7940;--track:#efeee6}
 *{box-sizing:border-box}
 body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
 .stripe{display:flex;height:5px}.stripe i{flex:1}
-header.top{background:#fff;border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:20px}
+header.top{background:#fff;border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:22px}
 header.top .wrap{display:flex;align-items:center;gap:12px;padding-bottom:0}
 header.top img{height:36px;display:block}
 header.top .x{color:var(--khaki);font-weight:700}
-h1{font-size:clamp(21px,4.5vw,28px);margin:0 0 4px;font-weight:800}
-h2{font-size:18px;margin:26px 0 10px;color:var(--olive)}
-.lead{color:var(--muted);margin:0 0 14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+h1{font-size:clamp(22px,4.8vw,30px);margin:0 0 4px;font-weight:800;color:var(--olive);line-height:1.25}
+.lead{color:var(--muted);margin:0 0 16px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .kpi b{display:block;font-size:28px;font-weight:800;color:var(--olive);line-height:1.1}
+.kpi b.sm{font-size:17px;padding-top:8px}
 .kpi span{font-size:13px;color:var(--muted)}
-.btns{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-.btn{font:inherit;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.status{font-size:13px;color:var(--muted);margin:6px 0 0}
+/* מקטע */
+.sec{margin-top:30px}
+.sec h2{font-size:19px;margin:0 0 12px;color:var(--olive);border-inline-start:4px solid var(--khaki);padding-inline-start:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.qt{font-weight:500;margin:0 0 4px}
+.qt .n{color:var(--muted);font-weight:400}
+.qm{font-size:13px;color:var(--muted);margin:0 0 10px}
+.tag{display:inline-block;font-size:12px;background:#fbe6ef;color:#8a2c50;border-radius:999px;padding:1px 9px;margin-inline-start:6px;vertical-align:1px}
+/* סולם הסכמה — פס מחולק */
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin:0 0 12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.lk{margin-bottom:16px}
+.lk:last-child{margin-bottom:0}
+.lk .row{display:flex;align-items:center;gap:10px}
+.stack{flex:1;display:flex;gap:2px;height:30px}
+.stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:500;min-width:0;overflow:hidden;white-space:nowrap}
+.stack i:first-child{border-start-start-radius:4px;border-end-start-radius:4px}
+.stack i:last-child{border-start-end-radius:4px;border-end-end-radius:4px}
+.stack i.dk-text{color:#fff}
+.avg{flex:none;width:58px;text-align:center;font-size:13px;color:var(--muted);line-height:1.2}
+.avg b{display:block;font-size:18px;color:var(--ink)}
+.lk .sub{font-size:12px;color:var(--muted);margin-top:4px}
+/* בחירה — פסים אופקיים */
+.bars{display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:6px 12px;align-items:center}
+.bars .lbl{font-size:14px}
+.bars .lbl.zero{color:#a5a38d}
+.bars .bv{display:flex;align-items:center;gap:8px}
+.bars .tr{flex:1;height:18px;background:var(--track);border-radius:4px;overflow:hidden}
+.bars .tr i{display:block;height:100%;background:var(--bar);border-start-end-radius:4px;border-end-end-radius:4px}
+.bars .num{flex:none;width:72px;font-size:13px;color:var(--muted);white-space:nowrap}
+.bars .num b{color:var(--ink)}
+.others{margin-top:10px;font-size:13px;color:var(--muted)}
+.others ul,.quotes{margin:6px 0 0;padding:0;list-style:none}
+.others li{background:var(--olive-soft);border-radius:8px;padding:4px 10px;margin:4px 0;color:var(--ink)}
+.quotes li{background:var(--olive-soft);border-radius:10px;padding:10px 14px;margin:6px 0;border-inline-start:3px solid var(--khaki)}
+.empty{color:var(--muted);font-size:14px}
+/* בתי ספר — מקופל */
+details.box{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:12px}
+details.box summary{cursor:pointer;padding:13px 16px;font-weight:500;color:var(--olive)}
+details.box .in{padding:0 16px 14px}
+.sl{display:flex;flex-wrap:wrap;gap:6px}
+.sl span{font-size:13px;background:var(--olive-soft);border-radius:999px;padding:3px 11px}
+.sl span b{color:var(--olive)}
+.sl.miss span{background:#f4f3ee;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .btn.primary{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:500}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .link{direction:ltr;text-align:left;font-size:13px;background:var(--olive-soft);border-radius:8px;padding:6px 10px;word-break:break-all}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-th,td{text-align:start;padding:9px 12px;border-bottom:1px solid #efeee6;font-size:14px;vertical-align:top}
-th{background:var(--olive-soft);color:var(--olive);font-weight:500}
-tr.zero td{color:#9a987f}
-.num{font-weight:700;color:var(--olive)}
-.pill{display:inline-block;font-size:12px;background:#f1f0e6;border-radius:999px;padding:1px 9px;margin:2px 0 2px 4px}
-details.r{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
-details.r summary{cursor:pointer;padding:11px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-details.r summary .d{color:var(--muted);font-size:13px;margin-inline-start:auto}
-details.r dl{margin:0;padding:4px 14px 14px}
-details.r dt{font-size:13px;color:var(--muted);margin-top:8px}
-details.r dd{margin:0;font-weight:500}
-.status{font-size:14px;color:var(--muted);margin:10px 0}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
 .toast.show{opacity:1}
 @media (max-width:560px){
   .kpis{grid-template-columns:1fr 1fr}
-  th:nth-child(3),td:nth-child(3){display:none}
+  .kpis .kpi:last-child{grid-column:1/-1}
+  .bars{grid-template-columns:1fr;gap:2px}
+  .bars .lbl{margin-top:6px;font-size:13.5px}
+  .bars .tr{height:14px}
+  .avg{width:48px}
 }
 </style>
 </head>
@@ -60,25 +99,29 @@ details.r dd{margin:0;font-weight:500}
 </div></header>
 
 <div class="wrap">
-  <h1>מעקב: שאלון הצוות על מכינות</h1>
-  <p class="lead">מי מילא, מאיזה בית ספר, ומה ענו. הנתונים מתעדכנים מהגיליון.</p>
-
-  <div class="card">
-    <div class="hint" style="font-size:13px;color:var(--muted);margin-bottom:6px">הקישור לשליחה לצוותים:</div>
-    <div class="link" id="formLink" dir="ltr"></div>
-    <div class="btns">
-      <button class="btn primary" onclick="copyMsg()">📋 העתקת הודעה עם הקישור</button>
-      <button class="btn" onclick="copyLink()">העתקת הקישור בלבד</button>
-      <a class="btn" id="openForm" target="_blank" rel="noopener">פתיחת הטופס</a>
-    </div>
-  </div>
-
-  <div class="btns">
-    <button class="btn" onclick="load()">רענון</button>
-    <button class="btn" onclick="exportCSV()">⬇ ייצוא לאקסל (CSV)</button>
-  </div>
+  <h1>מה הצוותים חושבים על מכינות</h1>
+  <p class="lead">התשובות לשאלון הצוות של הופה ומכינת "אחד משלנו", בלי שמות. הנתונים מתעדכנים מהגיליון.</p>
+  <div id="kpis"></div>
   <div class="status" id="status">טוען…</div>
   <div id="app"></div>
+
+  <details class="box" id="schoolsBox">
+    <summary>בתי הספר שמילאו</summary>
+    <div class="in" id="schools"></div>
+  </details>
+
+  <details class="box">
+    <summary>קישור לשאלון לשליחה לצוותים</summary>
+    <div class="in">
+      <div class="link" id="formLink" dir="ltr"></div>
+      <div class="btns">
+        <button class="btn primary" onclick="copyMsg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתקת הודעה עם הקישור</button>
+        <button class="btn" onclick="copyLink()">העתקת הקישור בלבד</button>
+        <a class="btn" id="openForm" target="_blank" rel="noopener">פתיחת השאלון</a>
+        <button class="btn" onclick="exportCSV()"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>ייצוא לאקסל (לצוות הופה, עם קוד)</button>
+      </div>
+    </div>
+  </details>
 </div>
 <div id="toast" class="toast"></div>
 
@@ -93,7 +136,9 @@ ${FORM_URL}
 document.getElementById('formLink').textContent = FORM_URL;
 document.getElementById('openForm').href = FORM_URL;
 const app = document.getElementById('app');
-let RESP = [], QS = null;
+const LCOL = ['var(--l1)','var(--l2)','var(--l3)','var(--l4)','var(--l5)'];
+let DATA = null, QS = null;
+
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
 function copy(t, ok){
   const done=()=>toast(ok);
@@ -104,82 +149,140 @@ function copy(t, ok){
 const copyMsg = () => copy(MSG, 'ההודעה הועתקה — אפשר להדביק בוואטסאפ');
 const copyLink = () => copy(FORM_URL, 'הקישור הועתק');
 const setStatus = t => document.getElementById('status').textContent = t;
-const fmt = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'2-digit'})+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
-const show = v => Array.isArray(v) ? v.join(' · ') : String(v==null?'':v);
+const fmt = iso => { if(!iso) return '—'; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})+' · '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+const pct = (k,n) => n ? Math.round(100*k/n) : 0;
 
+// קריאה ציבורית: השרת מחזיר לכל שאלה רשימת תשובות מעורבבת, בלי לקשר בין תשובות של אותו אדם
 async function load(){
   setStatus('טוען מהגיליון…');
-  const secret = GS_SECRET;
-  if(!secret){ setStatus('צריך קוד צוות כדי לראות את התשובות. רעננו את הדף והקלידו אותו.'); return; }
   try{
-    const r = await jsonp({action:'storeAll', secret}, i=>setStatus(`גוגל מתעכב — מנסה שוב (${i}/4)…`));
-    if(!r.ok){
-      if(r.error==='unauthorized'){ staffCodeReset(); setStatus('קוד הצוות לא נכון. רעננו את הדף ונסו שוב.'); return; }
-      throw new Error(r.error||'err');
-    }
+    const r = await jsonp({action:'storeAll'}, i=>setStatus(`גוגל מתעכב — מנסה שוב (${i}/4)…`));
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
     const st = r.store||{};
     QS = (st[STORE_KEY] && Array.isArray(st[STORE_KEY].sections)) ? st[STORE_KEY] : DEFAULT;
-    RESP = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].a)
-      .map(k=>Object.assign({key:k}, st[k])).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
-    setStatus('עודכן עכשיו');
+    DATA = st.mechinot_public || {n:0, last:'', schools:{}, ans:{}};
+    setStatus('');
     render();
-  }catch(e){ setStatus('לא הצלחתי לטעון מהגיליון. לחצו "רענון".'); }
+  }catch(e){ setStatus('לא הצלחתי לטעון מהגיליון. רעננו את הדף.'); }
 }
 
 function render(){
-  // לפי בית ספר: כל בתי הספר ברשימה, גם מי שעוד לא מילא; "אחר" נספר לפי השם שנכתב
-  const by = {};
-  SCHOOLS.filter(s=>!isOther(s)).forEach(s=>by[s]=[]);
-  RESP.forEach(r=>{ const s = String(r.school||'').replace(/^אחר: /,'') || 'לא צוין'; (by[s]=by[s]||[]).push(r); });
-  const schools = Object.keys(by).sort((a,b)=>by[b].length-by[a].length || a.localeCompare(b,'he'));
-  const filled = schools.filter(s=>by[s].length).length;
-
-  let h = `<div class="kpis">
-    <div class="kpi"><b>${RESP.length}</b><span>מילאו את השאלון</span></div>
-    <div class="kpi"><b>${filled}</b><span>בתי ספר שמישהו מהם מילא</span></div>
-    <div class="kpi"><b>${schools.length-filled}</b><span>בתי ספר שעוד לא מילאו</span></div>
+  const n = DATA.n, sch = DATA.schools||{};
+  const nSch = Object.keys(sch).length;
+  document.getElementById('kpis').innerHTML = `<div class="kpis">
+    <div class="kpi"><b>${n}</b><span>אנשי צוות מילאו</span></div>
+    <div class="kpi"><b>${nSch}</b><span>בתי ספר</span></div>
+    <div class="kpi"><b class="sm">${fmt(DATA.last)}</b><span>תשובה אחרונה</span></div>
   </div>`;
+  if(!n){ app.innerHTML = '<p class="empty" style="margin-top:20px">עוד אין תשובות. כשמישהו ימלא, התשובות יופיעו כאן.</p>'; renderSchools(); return; }
 
-  h += `<h2>לפי בית ספר</h2><table><thead><tr><th>בית ספר</th><th>מילאו</th><th>תפקידים</th><th>אחרון</th></tr></thead><tbody>`;
-  schools.forEach(s=>{
-    const rs = by[s], roles = {};
-    rs.forEach(r=>{ const k=r.role||'—'; roles[k]=(roles[k]||0)+1; });
-    h += `<tr class="${rs.length?'':'zero'}"><td>${esc(s)}</td><td class="num">${rs.length||'—'}</td>
-      <td>${Object.entries(roles).map(([k,v])=>`<span class="pill">${esc(k)}${v>1?' ×'+v:''}</span>`).join('')}</td>
-      <td>${rs.length?fmt(rs[0].ts):''}</td></tr>`;
-  });
-  h += `</tbody></table>`;
-
-  h += `<h2>כל התשובות (${RESP.length})</h2>`;
-  if(!RESP.length) h += `<p class="lead">עוד אין תשובות. כשמישהו ימלא, הוא יופיע כאן.</p>`;
-  RESP.forEach(r=>{
-    h += `<details class="r"><summary><b>${esc(r.school||'לא צוין')}</b><span class="pill">${esc(r.role||'')}</span><span class="d">${fmt(r.ts)}</span></summary><dl>`;
-    cols().forEach(c=>{ const x=r.a[c.id]; if(x==null) return; const v=show(x);
-      h += `<dt>${esc(c.q)}</dt><dd>${esc(c.type==='likert' && typeof x==='number' ? v+' · '+(LIKERT[x-1]||'') : v)}</dd>`; });
-    h += `</dl></details>`;
+  let h = '', num = 0;
+  QS.sections.forEach(s=>{
+    const qs = s.questions.map(q=>({q, no:++num})).filter(x=>x.q.type!=='select');   // בית הספר — למטה, ברשימה המקופלת
+    if(!qs.length) return;
+    h += `<section class="sec"><h2>${esc(s.title)}</h2>`;
+    // לפי סדר השאלון; שאלות סולם רצופות נכנסות לכרטיס אחד עם מקרא
+    qs.forEach((x,i)=>{
+      if(x.q.type==='likert'){
+        if(!i || qs[i-1].q.type!=='likert') h += `<div class="card"><div class="legend">${LIKERT.map((t,j)=>`<span><i style="background:${LCOL[j]}"></i>${j+1} · ${esc(t)}</span>`).join('')}</div>`;
+        h += likertHTML(x.q, x.no);
+        if(i===qs.length-1 || qs[i+1].q.type!=='likert') h += `</div>`;
+      } else h += `<div class="card">${x.q.type==='text' ? textHTML(x.q, x.no) : barsHTML(x.q, x.no)}</div>`;
+    });
+    h += `</section>`;
   });
   app.innerHTML = h;
+  renderSchools();
 }
 
-// השאלות לפי סדר השאלון הנוכחי, ואחריהן מזהים שיש להם תשובות אבל השאלה נמחקה מאז
-function cols(){
-  const out = [], seen = {};
-  (QS||DEFAULT).sections.forEach(s=>s.questions.forEach(q=>{ if(!seen[q.id]){ seen[q.id]=1; out.push({id:q.id, q:q.text, type:q.type}); } }));
-  RESP.forEach(r=>Object.keys(r.a).forEach(id=>{ if(!seen[id]){ seen[id]=1; out.push({id, q:'שאלה שנמחקה ('+id+')', type:''}); } }));
-  return out;
+function title(q){ return String(q.text).replace(/\s*\(([^()]*)\)\s*$/, ''); }
+const reverse = q => /שאלה הפוכה/.test(q.note||'');
+
+function likertHTML(q, no){
+  const vals = DATA.ans[q.id]||[];
+  const c = [0,0,0,0,0]; let dk = 0;
+  vals.forEach(v=>{ const k = Number(v); if(k>=1 && k<=5) c[k-1]++; else dk++; });
+  const m = c.reduce((a,b)=>a+b,0);
+  const avg = m ? (c.reduce((s,k,i)=>s+k*(i+1),0)/m).toFixed(1) : '—';
+  const seg = c.map((k,i)=>{ if(!k) return ''; const p = pct(k,m);
+    return `<i style="flex:${k};background:${LCOL[i]}" class="${i===0||i===4?'dk-text':''}" title="${esc(LIKERT[i])}: ${k} (${p}%)">${p>=12?p+'%':''}</i>`; }).join('');
+  return `<div class="lk">
+    <div class="qt"><span class="n">${no}.</span> ${esc(title(q))}${reverse(q)?'<span class="tag">הסכמה כאן = חסם</span>':''}</div>
+    <div class="row"><div class="stack" role="img" aria-label="${esc(c.map((k,i)=>LIKERT[i]+' '+k).join(', '))}">${seg||'<i style="flex:1;background:var(--track)"></i>'}</div>
+      <div class="avg"><b>${avg}</b>ממוצע</div></div>
+    <div class="sub">${m} ענו${dk?` · ${dk} ${esc(DK_TEXT)}`:''}</div>
+  </div>`;
 }
-function exportCSV(){
-  if(!RESP.length){ toast('עוד אין תשובות לייצוא'); return; }
-  const cs = cols();
-  const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
-  const rows = [['תאריך','בית ספר','תפקיד'].concat(cs.map(c=>c.q)).map(cell).join(',')];
-  RESP.forEach(r=>{
-    rows.push([fmt(r.ts), r.school, r.role].concat(cs.map(c=>{ const v=r.a[c.id]; return Array.isArray(v)?v.join(' | '):v; })).map(cell).join(','));
-  });
-  const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'שאלון-מכינות-'+new Date().toISOString().slice(0,10)+'.csv';
-  document.body.appendChild(a); a.click(); a.remove();
+
+function barsHTML(q, no){
+  const vals = DATA.ans[q.id]||[];
+  const counts = {}, others = [];
+  q.options.forEach(o=>counts[o]=0);
+  vals.forEach(v=>[].concat(v).forEach(x=>{
+    x = String(x);
+    if(/^אחר: /.test(x)){ others.push(x.replace(/^אחר: /,'')); x = q.options.find(isOther) || 'אחר'; }
+    counts[x] = (counts[x]||0) + 1;
+  }));
+  let rows = Object.keys(counts);
+  if(q.type==='multi') rows.sort((a,b)=>counts[b]-counts[a] || q.options.indexOf(a)-q.options.indexOf(b));
+  const max = Math.max(1, ...rows.map(r=>counts[r]));
+  const base = vals.length;
+  const hint = q.type==='multi' ? 'אפשר היה לבחור יותר מתשובה אחת, ולכן האחוזים לא מסתכמים ב-100' : '';
+  return `<div class="qt"><span class="n">${no}.</span> ${esc(title(q))}</div>
+    <div class="qm">${base} ענו${hint?' · '+hint:''}</div>
+    <div class="bars">${rows.map(r=>`<div class="lbl${counts[r]?'':' zero'}">${esc(r)}</div>
+      <div class="bv" title="${esc(r)}: ${counts[r]} (${pct(counts[r],base)}%)"><div class="tr"><i style="width:${100*counts[r]/max}%"></i></div>
+      <div class="num"><b>${counts[r]}</b> · ${pct(counts[r],base)}%</div></div>`).join('')}</div>
+    ${others.length?`<div class="others">מה כתבו ב"אחר":<ul>${others.map(o=>`<li>${esc(o)}</li>`).join('')}</ul></div>`:''}`;
+}
+
+function textHTML(q, no){
+  const vals = (DATA.ans[q.id]||[]).map(v=>String(v).trim()).filter(Boolean);
+  return `<div class="qt"><span class="n">${no}.</span> ${esc(title(q))}</div>
+    <div class="qm">${vals.length} כתבו</div>
+    ${vals.length?`<ul class="quotes">${vals.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:'<p class="empty">עוד אין תשובות לשאלה הזו.</p>'}`;
+}
+
+function renderSchools(){
+  const sch = DATA ? DATA.schools||{} : {};
+  const filled = Object.keys(sch).sort((a,b)=>sch[b]-sch[a] || a.localeCompare(b,'he'));
+  const missing = SCHOOLS.filter(s=>!isOther(s) && !sch[s]);
+  document.querySelector('#schoolsBox summary').textContent = `בתי הספר שמילאו (${filled.length})`;
+  document.getElementById('schools').innerHTML =
+    (filled.length ? `<div class="sl">${filled.map(s=>`<span>${esc(s)} <b>${sch[s]}</b></span>`).join('')}</div>` : '<p class="empty">עוד אף בית ספר.</p>') +
+    `<p class="qm" style="margin:16px 0 6px">עוד לא מילאו (${missing.length}):</p>
+     <div class="sl miss">${missing.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
+     <div class="btns"><button class="btn" onclick="copyMissing()">העתקת רשימת מי שעוד לא מילא</button></div>`;
+}
+function copyMissing(){
+  const sch = DATA ? DATA.schools||{} : {};
+  const missing = SCHOOLS.filter(s=>!isOther(s) && !sch[s]);
+  copy(missing.join('\n'), 'הרשימה הועתקה');
+}
+
+// ייצוא מלא (שורה לכל ממלא/ת) — רק עם קוד צוות הופה
+async function exportCSV(){
+  const secret = GS_SECRET;
+  if(!secret){ toast('צריך קוד צוות לייצוא'); return; }
+  toast('מכין את הקובץ…');
+  try{
+    const r = await jsonp({action:'storeAll', secret});
+    if(!r.ok){ if(r.error==='unauthorized'){ staffCodeReset(); toast('קוד הצוות לא נכון'); return; } throw new Error(r.error); }
+    const st = r.store||{};
+    const resp = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].a).map(k=>st[k])
+      .sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    if(!resp.length){ toast('עוד אין תשובות לייצוא'); return; }
+    const cs = [], seen = {};
+    QS.sections.forEach(s=>s.questions.forEach(q=>{ if(!seen[q.id]){ seen[q.id]=1; cs.push({id:q.id, q:q.text}); } }));
+    resp.forEach(x=>Object.keys(x.a).forEach(id=>{ if(!seen[id]){ seen[id]=1; cs.push({id, q:'שאלה שנמחקה ('+id+')'}); } }));
+    const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+    const rows = [['תאריך','בית ספר','תפקיד'].concat(cs.map(c=>c.q)).map(cell).join(',')];
+    resp.forEach(x=>rows.push([fmt(x.ts), x.school, x.role].concat(cs.map(c=>{ const v=x.a[c.id]; return Array.isArray(v)?v.join(' | '):v; })).map(cell).join(',')));
+    const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'שאלון-מכינות-'+new Date().toISOString().slice(0,10)+'.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  }catch(e){ toast('הייצוא לא הצליח. נסו שוב.'); }
 }
 
 load();
