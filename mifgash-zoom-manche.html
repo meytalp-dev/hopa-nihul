@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<script src="staff-code.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>רץ-שיט למנחות · מפגש רכזי הבוגרים #1 · הופה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -289,7 +290,7 @@ function renderCloud(el,words,base){
 }
 /* ── הענן החי: מילים שנשלחות מדף המפגש (סעיף 1) ── */
 var WC_EXEC='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-var WC_SECRET='';
+var WC_SECRET=GS_SECRET;   /* קוד הצוות, מ-staff-code.js */
 var liveWords=[],liveKeys=[];
 function wcJsonp(params){return new Promise(function(res,rej){
   var cb='wcb'+Math.random().toString(36).slice(2,8);

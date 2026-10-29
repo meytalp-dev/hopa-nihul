@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script src="staff-code.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>באיזה צבע אתם היום · מסך המתנה · הופה</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -85,7 +86,7 @@
 
   // ספירה חיה מדף המפגש (mifgash2.html, סעיף 0) — מכשיר אחד = צבע אחד, ההחלפה האחרונה קובעת
   var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-  var GS_SECRET='';
+  /* GS_SECRET = קוד הצוות, מ-staff-code.js */
   function jsonp(params,tmo){
     return new Promise(function(res,rej){
       var cb='cb'+Math.random().toString(36).slice(2);
