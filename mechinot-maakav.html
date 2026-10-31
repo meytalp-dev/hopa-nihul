@@ -65,6 +65,16 @@ h1{font-size:clamp(22px,4.8vw,30px);margin:0 0 4px;font-weight:800;color:var(--o
 .others li{background:var(--olive-soft);border-radius:8px;padding:4px 10px;margin:4px 0;color:var(--ink)}
 .quotes li{background:var(--olive-soft);border-radius:10px;padding:10px 14px;margin:6px 0;border-inline-start:3px solid var(--khaki)}
 .empty{color:var(--muted);font-size:14px}
+/* תובנות */
+.insbtn{margin-top:14px}
+.ins{background:#fff;border:1px solid var(--line);border-inline-start:4px solid var(--pink);border-radius:16px;padding:16px 18px;margin-top:12px}
+.ins h3{font-size:16px;margin:16px 0 6px;color:var(--olive)}
+.ins h3:first-child{margin-top:0}
+.ins ul{margin:0;padding-inline-start:20px}
+.ins li{margin:5px 0}
+.ins .pc{font-weight:700;color:var(--olive)}
+.ins .warn{font-size:13px;background:#fff8c4;border-radius:8px;padding:6px 10px;margin:0 0 10px}
+.ins .foot{font-size:12px;color:var(--muted);margin:14px 0 0}
 /* בתי ספר — מקופל */
 details.box{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:12px}
 details.box summary{cursor:pointer;padding:13px 16px;font-weight:500;color:var(--olive)}
@@ -103,6 +113,8 @@ details.box .in{padding:0 16px 14px}
   <p class="lead">התשובות לשאלון הצוות של הופה ומכינת "אחד משלנו", בלי שמות. הנתונים מתעדכנים מהגיליון.</p>
   <div id="kpis"></div>
   <div class="status" id="status">טוען…</div>
+  <button class="btn primary insbtn" id="insBtn" onclick="toggleInsights()" hidden><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>תובנות מהתשובות</button>
+  <div id="insights"></div>
   <div id="app"></div>
 
   <details class="box" id="schoolsBox">
@@ -174,6 +186,8 @@ function render(){
     <div class="kpi"><b>${nSch}</b><span>בתי ספר</span></div>
     <div class="kpi"><b class="sm">${fmt(DATA.last)}</b><span>תשובה אחרונה</span></div>
   </div>`;
+  document.getElementById('insBtn').hidden = !n;
+  if(document.getElementById('insights').innerHTML) document.getElementById('insights').innerHTML = insightsHTML();
   if(!n){ app.innerHTML = '<p class="empty" style="margin-top:20px">עוד אין תשובות. כשמישהו ימלא, התשובות יופיעו כאן.</p>'; renderSchools(); return; }
 
   let h = '', num = 0;
@@ -241,6 +255,79 @@ function textHTML(q, no){
   return `<div class="qt"><span class="n">${no}.</span> ${esc(title(q))}</div>
     <div class="qm">${vals.length} כתבו</div>
     ${vals.length?`<ul class="quotes">${vals.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:'<p class="empty">עוד אין תשובות לשאלה הזו.</p>'}`;
+}
+
+/* ---------- תובנות: מחושבות בדפדפן מאותם נתונים אנונימיים שבדף ---------- */
+function toggleInsights(){
+  const box = document.getElementById('insights');
+  box.innerHTML = box.innerHTML ? '' : insightsHTML();
+  document.getElementById('insBtn').lastChild.textContent = box.innerHTML ? 'הסתרת התובנות' : 'תובנות מהתשובות';
+  if(box.innerHTML) box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function insightsHTML(){
+  const n = DATA.n, sch = DATA.schools||{};
+  const qs = [], lk = [];
+  let no = 0;
+  QS.sections.forEach(s=>s.questions.forEach(q=>{ no++; if(q.type!=='select') qs.push({q, no, sec:s.title}); }));
+  // סולם: אחוז מסכימים (4–5), לא מסכימים (1–2), "אין מספיק מידע"
+  qs.filter(x=>x.q.type==='likert').forEach(x=>{
+    const c=[0,0,0,0,0]; let dk=0;
+    (DATA.ans[x.q.id]||[]).forEach(v=>{ const k=Number(v); if(k>=1&&k<=5) c[k-1]++; else dk++; });
+    const m = c.reduce((a,b)=>a+b,0); if(!m) return;
+    lk.push({no:x.no, sec:x.sec, t:title(x.q), rev:reverse(x.q), m, dk, all:m+dk,
+      agree:pct(c[3]+c[4],m), dis:pct(c[0]+c[1],m), avg:(c.reduce((s,k,i)=>s+k*(i+1),0)/m).toFixed(1)});
+  });
+  const li = (x, txt) => `<li>${txt} <span class="qm">(ש' ${x.no})</span></li>`;
+  const q = t => `"${esc(t)}"`;
+  let h = '';
+  if(n < 10) h += `<p class="warn">עד עכשיו ${n} תשובות בלבד, ולכן אלה תובנות ראשוניות. הן יתחדדו ככל שיותר אנשי צוות ימלאו.</p>`;
+
+  // השורה התחתונה: ממוצע אחוז המסכימים בכל חלק של שאלות סולם — פער גדול בין החלקים הוא הממצא המרכזי
+  const bySec = {};
+  lk.filter(x=>!x.rev).forEach(x=>(bySec[x.sec]=bySec[x.sec]||[]).push(x.agree));
+  const secs = Object.keys(bySec).map(s=>({s, a:Math.round(bySec[s].reduce((p,v)=>p+v,0)/bySec[s].length)})).sort((a,b)=>b.a-a.a);
+  if(secs.length>1 && secs[0].a-secs[secs.length-1].a>=30){
+    const hi=secs[0], lo=secs[secs.length-1];
+    h += `<h3>השורה התחתונה</h3><ul><li>פער גדול בין החלקים: ב"${esc(hi.s)}" בממוצע <span class="pc">${hi.a}%</span> מסכימים, וב"${esc(lo.s)}" רק <span class="pc">${lo.a}%</span>. כאן כנראה נמצאת נקודת המינוף.</li></ul>`;
+  }
+
+  const top = Object.keys(sch).sort((a,b)=>sch[b]-sch[a])[0];
+  const missing = SCHOOLS.filter(s=>!isOther(s) && !sch[s]).length;
+  h += `<h3>מי ענה</h3><ul><li><span class="pc">${n}</span> אנשי צוות מ-<span class="pc">${Object.keys(sch).length}</span> בתי ספר${top?`. הכי הרבה מ${esc(top)} (${sch[top]})`:''}.</li>
+    <li>${missing} בתי ספר מהרשימה עוד לא מילאו.</li></ul>`;
+
+  const pos = lk.filter(x=>!x.rev);
+  const agreeTop = pos.filter(x=>x.agree>=50).sort((a,b)=>b.agree-a.agree).slice(0,3);
+  if(agreeTop.length) h += `<h3>על מה יש הסכמה רחבה</h3><ul>${agreeTop.map(x=>li(x, `${q(x.t)}: <span class="pc">${x.agree}%</span> מסכימים (ממוצע ${x.avg})`)).join('')}</ul>`;
+
+  const low = pos.filter(x=>x.agree<50).sort((a,b)=>a.avg-b.avg).slice(0,3);
+  if(low.length) h += `<h3>איפה ההסכמה נמוכה</h3><ul>${low.map(x=>li(x, `${q(x.t)}: רק <span class="pc">${x.agree}%</span> מסכימים${x.dis?`, ${x.dis}% לא מסכימים`:''} (ממוצע ${x.avg})`)).join('')}</ul>`;
+
+  const rev = lk.filter(x=>x.rev && x.agree>=30);
+  if(rev.length) h += `<h3>חסמים שעולים מהסולם</h3><ul>${rev.map(x=>li(x, `${q(x.t)}: <span class="pc">${x.agree}%</span> מסכימים, כלומר רואים בזה קושי`)).join('')}</ul>`;
+
+  const split = lk.filter(x=>x.agree>=30 && x.dis>=30);
+  if(split.length) h += `<h3>איפה הדעות חלוקות</h3><ul>${split.map(x=>li(x, `${q(x.t)}: ${x.agree}% מסכימים מול ${x.dis}% שלא`)).join('')}</ul>`;
+
+  const gaps = lk.filter(x=>x.dk && pct(x.dk,x.all)>=20).sort((a,b)=>b.dk/b.all-a.dk/a.all);
+  if(gaps.length) h += `<h3>איפה חסר מידע</h3><ul>${gaps.map(x=>li(x, `${q(x.t)}: <span class="pc">${pct(x.dk,x.all)}%</span> ענו "${esc(DK_TEXT)}"`)).join('')}</ul>`;
+
+  // בחירה: התשובה המובילה בכל שאלה
+  const ch = [];
+  qs.filter(x=>x.q.type==='single'||x.q.type==='multi').forEach(x=>{
+    const vals = DATA.ans[x.q.id]||[]; if(!vals.length) return;
+    const cnt = {};
+    vals.forEach(v=>[].concat(v).forEach(o=>{ o=String(o); if(/^אחר: /.test(o)) o=x.q.options.find(isOther)||'אחר'; cnt[o]=(cnt[o]||0)+1; }));
+    const ord = Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+    const second = ord[1] && cnt[ord[1]] >= cnt[ord[0]]*0.7 ? `, ואחריה ${q(ord[1])} (${pct(cnt[ord[1]],vals.length)}%)` : '';
+    ch.push(li(x, `${q(title(x.q))}: הכי הרבה בחרו ${q(ord[0])} (<span class="pc">${pct(cnt[ord[0]],vals.length)}%</span>)${second}`));
+  });
+  if(ch.length) h += `<h3>מה בלט בשאלות הבחירה</h3><ul>${ch.join('')}</ul>`;
+
+  const txt = qs.filter(x=>x.q.type==='text').reduce((s,x)=>s+(DATA.ans[x.q.id]||[]).filter(v=>String(v).trim()).length,0);
+  if(txt) h += `<h3>תשובות פתוחות</h3><ul><li>${txt} אנשי צוות כתבו גם בשאלה הפתוחה. מה שכתבו מופיע במלואו למטה בדף.</li></ul>`;
+
+  return `<div class="ins">${h}<p class="foot">התובנות מחושבות אוטומטית מהתשובות שבדף ומתעדכנות עם כל תשובה חדשה. "מסכימים" = 4–5 בסולם, בלי מי שענה "${esc(DK_TEXT)}".</p></div>`;
 }
 
 function renderSchools(){
