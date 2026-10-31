@@ -67,14 +67,50 @@ h1{font-size:clamp(22px,4.8vw,30px);margin:0 0 4px;font-weight:800;color:var(--o
 .empty{color:var(--muted);font-size:14px}
 /* תובנות */
 .insbtn{margin-top:14px}
-.ins{background:#fff;border:1px solid var(--line);border-inline-start:4px solid var(--pink);border-radius:16px;padding:16px 18px;margin-top:12px}
-.ins h3{font-size:16px;margin:16px 0 6px;color:var(--olive)}
-.ins h3:first-child{margin-top:0}
-.ins ul{margin:0;padding-inline-start:20px}
-.ins li{margin:5px 0}
-.ins .pc{font-weight:700;color:var(--olive)}
+.ins{margin-top:12px}
+.ins h3{font-size:16px;margin:22px 0 10px;color:var(--olive);border-inline-start:4px solid var(--khaki);padding-inline-start:10px}
+.ins h3:first-child{margin-top:4px}
 .ins .warn{font-size:13px;background:#fff8c4;border-radius:8px;padding:6px 10px;margin:0 0 10px}
-.ins .foot{font-size:12px;color:var(--muted);margin:14px 0 0}
+.ins .foot{font-size:12px;color:var(--muted);margin:16px 0 0}
+.ins .ibox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+/* השורה התחתונה — שני מספרים גדולים */
+.hero .hl{font-size:clamp(18px,4.4vw,22px);font-weight:800;margin:0 0 14px;line-height:1.3}
+.hero .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hero .big{font-size:clamp(40px,11vw,56px);font-weight:800;line-height:1;color:var(--ink)}
+.hero .cap{font-size:14px;color:var(--muted);margin:4px 0 8px;min-height:2.6em}
+.fat{height:14px;background:var(--track);border-radius:4px;overflow:hidden}
+.fat i{display:block;height:100%;border-radius:4px}
+.hero .gap{margin:14px 0 0;font-size:14px;color:var(--muted)}
+.hero .gap b{color:var(--pink);font-size:16px}
+/* מי ענה */
+.who{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center}
+.who .big{font-size:40px;font-weight:800;line-height:1;color:var(--olive)}
+.who .lbl{font-size:13px;color:var(--muted)}
+.who .sm{font-size:13px;color:var(--muted);margin-top:6px}
+/* שורות עמדה: מספר גדול + פס + המשפט */
+.st{display:grid;grid-template-columns:62px 1fr;gap:2px 12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.st:last-child{border-bottom:0}
+.st .p{font-size:26px;font-weight:800;line-height:1;grid-row:span 2}
+.st .p small{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:3px}
+.st .t{font-size:14px;line-height:1.4}
+.st .t .qn{color:var(--muted);font-size:12px}
+.st .fat{height:8px}
+.sub-h{font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 2px}
+.sub-h:first-child{margin-top:0}
+/* כרטיסי בחירה */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.cc .ct{font-size:13.5px;font-weight:500;line-height:1.35;margin:0 0 10px}
+.cc .ct .qn{color:var(--muted);font-weight:400}
+.cc .o{margin:0 0 8px}
+.cc .o:last-child{margin:0}
+.cc .ol{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:3px}
+.cc .ol b{flex:none}
+.cc .o.first .ol{font-weight:700}
+.cc .fat{height:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--olive-soft);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;border:0;font-family:inherit;color:var(--ink)}
+.chip b{font-size:18px;color:var(--olive)}
+@media (max-width:640px){ .cgrid{grid-template-columns:1fr} }
 /* בתי ספר — מקופל */
 details.box{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:12px}
 details.box summary{cursor:pointer;padding:13px 16px;font-weight:500;color:var(--olive)}
@@ -277,8 +313,11 @@ function insightsHTML(){
     lk.push({no:x.no, sec:x.sec, t:title(x.q), rev:reverse(x.q), m, dk, all:m+dk,
       agree:pct(c[3]+c[4],m), dis:pct(c[0]+c[1],m), avg:(c.reduce((s,k,i)=>s+k*(i+1),0)/m).toFixed(1)});
   });
-  const li = (x, txt) => `<li>${txt} <span class="qm">(ש' ${x.no})</span></li>`;
   const q = t => `"${esc(t)}"`;
+  const bar = (v, col) => `<div class="fat"><i style="width:${Math.max(v,1)}%;background:${col}"></i></div>`;
+  const stRow = (x, val, col, cap) => `<div class="st" title="${esc(x.t)}: ${val}% ${esc(cap)}">
+    <div class="p">${val}%<small>${esc(cap)}</small></div>
+    <div class="t">${esc(x.t)} <span class="qn">· ש' ${x.no}</span></div>${bar(val, col)}</div>`;
   let h = '';
   if(n < 10) h += `<p class="warn">עד עכשיו ${n} תשובות בלבד, ולכן אלה תובנות ראשוניות. הן יתחדדו ככל שיותר אנשי צוות ימלאו.</p>`;
 
@@ -288,44 +327,54 @@ function insightsHTML(){
   const secs = Object.keys(bySec).map(s=>({s, a:Math.round(bySec[s].reduce((p,v)=>p+v,0)/bySec[s].length)})).sort((a,b)=>b.a-a.a);
   if(secs.length>1 && secs[0].a-secs[secs.length-1].a>=30){
     const hi=secs[0], lo=secs[secs.length-1];
-    h += `<h3>השורה התחתונה</h3><ul><li>פער גדול בין החלקים: ב"${esc(hi.s)}" בממוצע <span class="pc">${hi.a}%</span> מסכימים, וב"${esc(lo.s)}" רק <span class="pc">${lo.a}%</span>. כאן כנראה נמצאת נקודת המינוף.</li></ul>`;
+    h += `<h3>השורה התחתונה</h3><div class="ibox hero">
+      <p class="hl">רוב הצוות מסכים עם "${esc(hi.s)}", אבל מעטים מסכימים עם "${esc(lo.s)}"</p>
+      <div class="two">
+        <div><div class="big">${hi.a}%</div><div class="cap">מסכימים, בממוצע, עם המשפטים ב"${esc(hi.s)}"</div>${bar(hi.a,'var(--l5)')}</div>
+        <div><div class="big">${lo.a}%</div><div class="cap">מסכימים, בממוצע, עם המשפטים ב"${esc(lo.s)}"</div>${bar(lo.a,'var(--pink)')}</div>
+      </div>
+      <p class="gap">פער של <b>${hi.a-lo.a} נקודות</b>. כאן כנראה נמצאת נקודת המינוף.</p></div>`;
   }
 
+  const nSch = Object.keys(sch).length;
   const top = Object.keys(sch).sort((a,b)=>sch[b]-sch[a])[0];
   const missing = SCHOOLS.filter(s=>!isOther(s) && !sch[s]).length;
-  h += `<h3>מי ענה</h3><ul><li><span class="pc">${n}</span> אנשי צוות מ-<span class="pc">${Object.keys(sch).length}</span> בתי ספר${top?`. הכי הרבה מ${esc(top)} (${sch[top]})`:''}.</li>
-    <li>${missing} בתי ספר מהרשימה עוד לא מילאו.</li></ul>`;
+  const totSch = nSch + missing;
+  h += `<h3>מי ענה</h3><div class="ibox who">
+    <div><div class="big">${n}</div><div class="lbl">אנשי צוות</div></div>
+    <div><div class="ol" style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span><b>${nSch}</b> בתי ספר מתוך ${totSch}</span><span class="lbl">${missing} עוד לא מילאו</span></div>
+      ${bar(pct(nSch,totSch),'var(--bar)')}
+      ${top?`<div class="sm">הכי הרבה מ${esc(top)} (${sch[top]})</div>`:''}</div></div>`;
 
+  // עמדות: הכי מסכימים / הכי פחות / חסמים / חלוקות / חסר מידע
   const pos = lk.filter(x=>!x.rev);
   const agreeTop = pos.filter(x=>x.agree>=50).sort((a,b)=>b.agree-a.agree).slice(0,3);
-  if(agreeTop.length) h += `<h3>על מה יש הסכמה רחבה</h3><ul>${agreeTop.map(x=>li(x, `${q(x.t)}: <span class="pc">${x.agree}%</span> מסכימים (ממוצע ${x.avg})`)).join('')}</ul>`;
-
   const low = pos.filter(x=>x.agree<50).sort((a,b)=>a.avg-b.avg).slice(0,3);
-  if(low.length) h += `<h3>איפה ההסכמה נמוכה</h3><ul>${low.map(x=>li(x, `${q(x.t)}: רק <span class="pc">${x.agree}%</span> מסכימים${x.dis?`, ${x.dis}% לא מסכימים`:''} (ממוצע ${x.avg})`)).join('')}</ul>`;
-
   const rev = lk.filter(x=>x.rev && x.agree>=30);
-  if(rev.length) h += `<h3>חסמים שעולים מהסולם</h3><ul>${rev.map(x=>li(x, `${q(x.t)}: <span class="pc">${x.agree}%</span> מסכימים, כלומר רואים בזה קושי`)).join('')}</ul>`;
-
   const split = lk.filter(x=>x.agree>=30 && x.dis>=30);
-  if(split.length) h += `<h3>איפה הדעות חלוקות</h3><ul>${split.map(x=>li(x, `${q(x.t)}: ${x.agree}% מסכימים מול ${x.dis}% שלא`)).join('')}</ul>`;
-
   const gaps = lk.filter(x=>x.dk && pct(x.dk,x.all)>=20).sort((a,b)=>b.dk/b.all-a.dk/a.all);
-  if(gaps.length) h += `<h3>איפה חסר מידע</h3><ul>${gaps.map(x=>li(x, `${q(x.t)}: <span class="pc">${pct(x.dk,x.all)}%</span> ענו "${esc(DK_TEXT)}"`)).join('')}</ul>`;
+  let st = '';
+  if(agreeTop.length) st += `<div class="sub-h">✔ על מה יש הסכמה רחבה</div>${agreeTop.map(x=>stRow(x,x.agree,'var(--l5)','מסכימים')).join('')}`;
+  if(low.length) st += `<div class="sub-h">✖ איפה ההסכמה נמוכה</div>${low.map(x=>stRow(x,x.agree,'var(--pink)','מסכימים')).join('')}`;
+  if(rev.length) st += `<div class="sub-h">⚠ חסמים שעולים מהסולם</div>${rev.map(x=>stRow(x,x.agree,'var(--pink)','רואים קושי')).join('')}`;
+  if(split.length) st += `<div class="sub-h">⇄ איפה הדעות חלוקות</div>${split.map(x=>stRow(x,x.dis,'var(--l3)','לא מסכימים')).join('')}`;
+  if(gaps.length) st += `<div class="sub-h">? איפה חסר מידע</div>${gaps.map(x=>stRow(x,pct(x.dk,x.all),'var(--l3)','אין מספיק מידע')).join('')}`;
+  if(st) h += `<h3>מה הצוות חושב ויודע</h3><div class="ibox">${st}</div>`;
 
-  // בחירה: התשובה המובילה בכל שאלה
+  // בחירה: שלוש התשובות המובילות בכל שאלה
   const ch = [];
   qs.filter(x=>x.q.type==='single'||x.q.type==='multi').forEach(x=>{
     const vals = DATA.ans[x.q.id]||[]; if(!vals.length) return;
     const cnt = {};
     vals.forEach(v=>[].concat(v).forEach(o=>{ o=String(o); if(/^אחר: /.test(o)) o=x.q.options.find(isOther)||'אחר'; cnt[o]=(cnt[o]||0)+1; }));
-    const ord = Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
-    const second = ord[1] && cnt[ord[1]] >= cnt[ord[0]]*0.7 ? `, ואחריה ${q(ord[1])} (${pct(cnt[ord[1]],vals.length)}%)` : '';
-    ch.push(li(x, `${q(title(x.q))}: הכי הרבה בחרו ${q(ord[0])} (<span class="pc">${pct(cnt[ord[0]],vals.length)}%</span>)${second}`));
+    const ord = Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).slice(0,3);
+    ch.push(`<div class="cc"><p class="ct">${esc(title(x.q))} <span class="qn">· ש' ${x.no}</span></p>${ord.map((o,i)=>{ const p=pct(cnt[o],vals.length);
+      return `<div class="o${i?'':' first'}" title="${esc(o)}: ${cnt[o]} (${p}%)"><div class="ol"><span>${esc(o)}</span><b>${p}%</b></div>${bar(p, i?'var(--khaki)':'var(--bar)')}</div>`; }).join('')}</div>`);
   });
-  if(ch.length) h += `<h3>מה בלט בשאלות הבחירה</h3><ul>${ch.join('')}</ul>`;
+  if(ch.length) h += `<h3>מה בלט בשאלות הבחירה <span class="qm" style="font-weight:400">· שלוש התשובות המובילות</span></h3><div class="cgrid">${ch.join('')}</div>`;
 
   const txt = qs.filter(x=>x.q.type==='text').reduce((s,x)=>s+(DATA.ans[x.q.id]||[]).filter(v=>String(v).trim()).length,0);
-  if(txt) h += `<h3>תשובות פתוחות</h3><ul><li>${txt} אנשי צוות כתבו גם בשאלה הפתוחה. מה שכתבו מופיע במלואו למטה בדף.</li></ul>`;
+  if(txt) h += `<h3>תשובות פתוחות</h3><button class="chip" onclick="document.querySelector('.quotes').scrollIntoView({behavior:'smooth',block:'center'})"><b>${txt}</b> אנשי צוות כתבו גם בשאלה הפתוחה · לקריאה ↓</button>`;
 
   return `<div class="ins">${h}<p class="foot">התובנות מחושבות אוטומטית מהתשובות שבדף ומתעדכנות עם כל תשובה חדשה. "מסכימים" = 4–5 בסולם, בלי מי שענה "${esc(DK_TEXT)}".</p></div>`;
 }
