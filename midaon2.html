@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>הופה · מידעון שותפים · נובמבר 2026</title>
+<title>הופה · ניוזלטר · חודש אוקטובר</title>
 <meta name="description" content="מידעון שותפים של עמותת הופה: שיתופי פעולה חדשים, סיפורי בוגרים ועבודה בשטח.">
-<meta property="og:title" content="פותחים דרכים לבוגרים שלנו · מידעון הופה, נובמבר 2026">
+<meta property="og:title" content="פותחים דרכים לבוגרים שלנו · ניוזלטר הופה, חודש אוקטובר">
 <meta property="og:description" content="שיתופי פעולה חדשים, סיפורי בוגרים ועבודה בשטח.">
 <meta property="og:image" content="https://meytalp-dev.github.io/hopa-nihul/photos/midaon2-dror-neve-midbar.jpg">
 <meta name="theme-color" content="#FFF200">
@@ -43,7 +43,9 @@ h1,h2,h3,p{margin:0}
   display:flex;flex-direction:column;padding:22px var(--gutter) 0}
 .hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:2}
 .hero-top img{height:46px;width:auto}
-.hero-top .issue{font-weight:700;font-size:14.5px}
+.issue-tag{align-self:flex-start;display:inline-block;background:var(--pink);color:#fff;font-weight:800;
+  font-size:clamp(17px,2.4vw,22px);border-radius:999px;padding:9px 22px;margin-bottom:22px;
+  opacity:0;animation:fade .6s ease forwards .05s}
 .hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;
   max-width:1100px;width:100%;margin:0 auto;padding:40px 0 120px}
 .title{font-weight:900;font-size:clamp(52px,13vw,150px);line-height:.95;letter-spacing:-.045em}
@@ -128,6 +130,8 @@ html,body{overflow-x:hidden}
 .in .path-steps li:nth-child(3) .dot{transition-delay:1.4s}
 .in .path-steps li:nth-child(4) .dot{transition-delay:1.95s}
 
+.item p.goal{margin-top:12px;padding:12px 14px;background:var(--blush);border-radius:14px;color:var(--ink);max-width:none}
+.item.y p.goal{background:var(--sand)}
 .item p.role{margin-top:2px;font-weight:700;color:var(--pink-deep);font-size:16px}
 
 /* ממצאי מיפוי העמדות */
@@ -237,6 +241,8 @@ html,body{overflow-x:hidden}
 .chips li{font-weight:700;font-size:15.5px;line-height:1.3;background:var(--blush);color:var(--ink);border-radius:999px;padding:9px 16px;
   transform:scale(.4);opacity:0;transition:transform .5s cubic-bezier(.3,1.7,.5,1),opacity .3s ease}
 .item.y .chips li{background:var(--yellow)}
+.chips.static li{transform:none;opacity:1}
+.item.why p + p{margin-top:10px}
 .in .chips li{transform:none;opacity:1}
 .in .chips li:nth-child(2){transition-delay:.12s}
 .in .chips li:nth-child(3){transition-delay:.24s}
@@ -295,7 +301,7 @@ footer p + p{margin-top:6px}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .title .w{transform:none}
-  .lede,.scroll-cue,.big-sun{opacity:1}
+  .lede,.scroll-cue,.big-sun,.issue-tag{opacity:1}
   .laptop .lid{transform:none}.laptop .screen{opacity:1}
   .path-steps::after{transform:none}
   .path-steps .dot{border-color:var(--pink);background:var(--yellow)}
@@ -310,7 +316,7 @@ footer p + p{margin-top:6px}
 }
 @media print{
   .hero{min-height:auto}.scroll-cue,.traveler,.road,#confetti{display:none}
-  .title .w,.lede,.big-sun,.laptop .lid,.polaroid,.story2 .badge,.chips li,.bar-track span,.meet,.voices blockquote,.flow li{transform:none!important;opacity:1!important;animation:none!important}
+  .title .w,.lede,.big-sun,.issue-tag,.laptop .lid,.polaroid,.story2 .badge,.chips li,.bar-track span,.meet,.voices blockquote,.flow li{transform:none!important;opacity:1!important;animation:none!important}
   .quote .qw{color:var(--ink)}
 }
 </style>
@@ -336,9 +342,9 @@ footer p + p{margin-top:6px}
 <header class="hero">
   <div class="hero-top">
     <a href="https://hopa.org.il" target="_blank" rel="noopener" aria-label="הופה, לאתר העמותה"><img src="hopa-logo.png" alt="הופה"></a>
-    <div class="issue">מידעון שותפים, נובמבר 2026</div>
   </div>
   <div class="hero-body">
+    <div class="issue-tag">ניוזלטר · חודש אוקטובר</div>
     <h1 class="title" aria-label="פותחים דרכים חדשות לבוגרים שלנו">
       <span class="line" aria-hidden="true"><span class="w" style="--i:0">פותחים</span></span>
       <span class="line" aria-hidden="true"><span class="w pink" style="--i:1">דרכים</span> <span class="w pink" style="--i:2">חדשות</span></span>
@@ -426,14 +432,21 @@ footer p + p{margin-top:6px}
       <h2 id="h-limudim">לימודי המשך</h2>
       <p class="sub">לפתוח לבוגרים שלנו את הדלת ללימודים אחרי התיכון.</p>
       <div class="ch-body">
-        <div class="item">
+        <div class="item watch">
           <h3>אסף מנוחין וצוותו</h3>
           <p class="role">מנהל החינוך הטכנולוגי העל-תיכוני</p>
-          <p>יצרנו קשר עם אסף מנוחין וצוותו לבניית שיתופי פעולה שיעודדו את הבוגרים שלנו להירשם ללימודי המשך.</p>
+          <p>יצירת קשר עם אסף מנוחין וצוותו, לבניית שיתוף פעולה בין הופה לבין החינוך הטכנולוגי העל-תיכוני.</p>
+          <p class="goal"><b>המטרה:</b> לעודד את הבוגרים שלנו להירשם ללימודי המשך טכנולוגיים אחרי התיכון, ולהנגיש להם את הדרך לשם.</p>
+          <p class="chips-title">מה ירוויחו הבוגרים</p>
+          <ul class="chips">
+            <li>🎓 המשך לימודים אחרי התיכון</li>
+            <li>📜 מקצוע ותעודה מוכרת</li>
+            <li>💼 פתח לתעסוקה איכותית</li>
+          </ul>
         </div>
         <div class="item">
           <h3>מרכז מעשה</h3>
-          <p>יצרנו קשר עם מרכז מעשה, שמפעיל תוכנית המשך לחברה הדרוזית והערבית.</p>
+          <p>יצירת קשר עם מרכז מעשה, שמפעיל תוכנית המשך לחברה הדרוזית והערבית.</p>
         </div>
         <div class="item y watch laptop-row">
           <div class="laptop" aria-hidden="true"><div class="lid"><div class="screen">🎓</div></div><div class="base"></div></div>
@@ -461,6 +474,18 @@ footer p + p{margin-top:6px}
             <li><span class="dot" aria-hidden="true">📝</span>צו ראשון</li>
             <li><span class="dot" aria-hidden="true">⭐</span>תפקיד משמעותי</li>
           </ol>
+        </div>
+        <div class="item why">
+          <h3>למה מכינות?</h3>
+          <p>מכינה קדם-צבאית היא שנה שבין התיכון לצבא, שבה הבוגרים מתחזקים, לומדים להכיר את עצמם ומגיעים לשירות בשלים ובטוחים יותר. בשביל רבים מהבוגרים שלנו זו הזדמנות שלא תמיד הם יודעים שקיימת, ולא תמיד מישהו מציע להם אותה.</p>
+          <p>לכן חשוב לנו ליצור קשר ושיתוף פעולה עם המכינות: כדי שהאפשרות הזו תגיע לכל תלמיד שמתאים לה, כבר בתיכון, ולא תישאר רק לתלמידים שמישהו בבית כבר מכיר את הדרך.</p>
+          <p class="chips-title">מה המכינה נותנת לבוגרים</p>
+          <ul class="chips static">
+            <li>🌱 צמיחה אישית וביטחון עצמי</li>
+            <li>🧭 מנהיגות וערכים</li>
+            <li>🎯 הכנה לשירות משמעותי</li>
+            <li>🤝 חברים ורשת תמיכה לדרך</li>
+          </ul>
         </div>
         <div class="survey">
           <h3 class="survey-title">מה אמרו הצוותים בבתי הספר</h3>
@@ -495,7 +520,8 @@ footer p + p{margin-top:6px}
         </div>
         <div class="item watch">
           <h3>המודל שנבנה עם "אחד משלנו"</h3>
-          <p>מתוך ניתוח התשובות נבנה יחד עם מכינת "אחד משלנו" מודל התערבות שמעודד הרשמה למכינות. ההנחה שלנו: תלמידים שהולכים למכינה מתמידים ומצליחים יותר בהמשך הדרך.</p>
+          <p>יצירת קשר ושיתוף פעולה עם מכינת "אחד משלנו". מתוך ניתוח התשובות נבנה יחד מודל התערבות שמעודד הרשמה למכינות.</p>
+          <p class="goal"><b>המטרה:</b> שיותר בוגרים שלנו יבחרו במכינה ויגיעו אליה מוכנים. ההנחה שלנו: תלמידים שהולכים למכינה מתמידים ומצליחים יותר בהמשך הדרך.</p>
           <p class="chips-title">מה המודל כולל</p>
           <ul class="chips">
             <li>הכשרה לצוות</li>
