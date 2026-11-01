@@ -82,6 +82,7 @@ details.box .in{padding:0 16px 14px}
 .sl{display:flex;flex-wrap:wrap;gap:6px}
 .sl span{font-size:13px;background:#f3eff4;border-radius:999px;padding:3px 11px}
 .sl span.ar{background:#fff6b3}
+.sl span.tz{background:var(--soft)}
 @media (max-width:560px){
   .contact{grid-template-columns:1fr}
   .qa{grid-template-columns:1fr;gap:0}
@@ -109,10 +110,14 @@ const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, se
 const PRM = new URLSearchParams(location.search);
 const ADMIN = PRM.has('admin');
 let LANG = PRM.get('lang')==='ar' ? 'ar' : 'he';
+// ?lang=ar&v=tz — ערבית לבתי ספר שהבוגרים בהם מתגייסים (ירכא, ג'וליס, ביר אל-מכסור): השאלות על צה"ל כמו בעברית
+const TZ = PRM.get('v')==='tz';
+const AM = () => LANG==='ar' && TZ;
 
 const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','אלאמאני סחנין','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','יוצר עתיד פלמחים','מגשימים בית שאן','מנאראת טורעאן','עמל טכנולוגי אשדוד','עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד מגשימים כרמיאל','עתיד שמיים מוצקין','תיכון חברתי חיפה','תיכון חושן','תיכון נחלים','תיכון שיח'];
 // בתי ספר שמקבלים את הקישור בערבית (בדף הניהול)
-const AR_SCHOOLS = ['אלאמאני סחנין','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','מנאראת טורעאן','עמל טכנולוגי רהט','עתיד אבדאע ביר אלמכסור'];
+const AR_SCHOOLS = ['אלאמאני סחנין','טכנולוגי לקייה','מנאראת טורעאן','עמל טכנולוגי רהט'];
+const TZ_SCHOOLS = ['ח׳טוואת ירכא','יוצר עתיד ג׳וליס','עתיד אבדאע ביר אלמכסור'];
 
 const T = {
   he:{title:'הכנה לשירות ושיתופי פעולה בקהילה', hello:'שלום לרכזי ולרכזות הבוגרים,',
@@ -135,26 +140,29 @@ const T = {
 const t = k => T[LANG][k];
 
 /* ---------- השאלון (הנוסח שאושר 1.11.2026) ----------
-   v = מה שנשמר בגיליון (תמיד בעברית). אפשרות בלי he או בלי ar לא מוצגת באותה שפה. */
+   v = מה שנשמר בגיליון (תמיד בעברית). אפשרות בלי he או בלי ar לא מוצגת באותה שפה.
+   am = הנוסח בגרסת v=tz (אם חסר — כמו ar; am:null — לא מוצג שם). */
 const O = (he, ar, f) => Object.assign({v:he, he, ar}, f||{});
+const tx = o => AM() && 'am' in o ? o.am : o[LANG];
 const QS = [
   {id:'school', n:1, sec:0, type:'school', req:1, he:'בית הספר', ar:'المدرسة'},
   {id:'rakaz', n:2, sec:0, type:'line', req:1, he:'שם הרכז/ת', ar:'اسم المركّز/ة'},
   {id:'frames', n:3, sec:1, type:'multi', req:1, he:'אילו מסגרות שירות רלוונטיות לבוגרים שלכם?', ar:'ما هي الأطر الملائمة لخريجيكم؟',
     opts:[O('צה"ל','الجيش'), O('שירות לאומי','الخدمة الوطنية'), O('שירות אזרחי','الخدمة المدنية'), O('מכינה קדם-צבאית / שנת שירות','سنة تحضيرية (مكيناه) / سنة خدمة'),
       O('הכנה ללימודים גבוהים','التحضير للتعليم العالي'), O('לא רלוונטי לרוב הבוגרים','غير ملائم لمعظم الخريجين',{excl:1})],
-    arOrder:[2,1,3,4,0,5]},
+    arOrder:[2,1,3,4,0,5], amOrder:[0,1,2,3,4,5]},
   {id:'prog', n:4, sec:1, svc:1, type:'single', req:1, he:'האם פועלת אצלכם תוכנית הכנה לשירות?', ar:'هل يوجد لديكم برنامج تحضير للخدمة؟',
     opts:[O('כן, באופן קבוע','نعم، بشكل ثابت'), O('כן, פעילות חד-פעמית בלבד','نعم، نشاط لمرة واحدة فقط'), O('לא','لا')]},
   {id:'progDetails', n:5, sec:1, svc:1, type:'text', req:0, show:()=>ANS.prog===0||ANS.prog===1,
     he:'פרטו: שם התוכנית, מי מפעיל אותה ובאיזו שכבה', ar:'يرجى التفصيل: اسم البرنامج، الجهة المشغّلة، والصف'},
   {id:'resp', n:6, sec:1, svc:1, type:'line', req:1, he:'מי אחראי/ת על ההכנה לשירות בבית הספר? (שם + תפקיד)', ar:'من المسؤول/ة عن التحضير للخدمة في المدرسة؟ (الاسم + الوظيفة)'},
   {id:'partners', n:7, sec:1, svc:1, type:'multi', req:1, he:'עם אילו גורמים חיצוניים אתם עובדים בנושא?', ar:'مع أي جهات خارجية تعملون في هذا المجال؟',
-    opts:[O('קצין/ת מיטב / לשכת גיוס',null), O('רכז/ת הכנה לצה"ל ברשות',null),
-      O(null,'مركّز/ة الخدمة المدنية',{v:'רכז/ת שירות אזרחי'}), O(null,'مركّز/ة في السلطة المحلية',{v:'רכז/ת ברשות'}),
+    opts:[O('קצין/ת מיטב / לשכת גיוס',null,{am:'ضابط/ة "ميتاف" / مكتب التجنيد'}), O('רכז/ת הכנה לצה"ל ברשות',null,{am:'مركّز/ة التحضير للجيش في السلطة المحلية'}),
+      O(null,'مركّز/ة الخدمة المدنية',{v:'רכז/ת שירות אזרחי'}), O(null,'مركّز/ة في السلطة المحلية',{v:'רכז/ת ברשות', am:null}),
       O('עמותה (פרטו)','جمعية (يرجى التفصيل)',{other:1, v:'עמותה'}), O('אין','لا يوجد',{excl:1}), O('אחר','أخرى',{other:1})]},
   {id:'notServing', n:8, sec:1, svc:1, type:'single', req:1,
     he:'מה קורה עם בוגרים שלא משרתים (פטור, אי-גיוס, נשירה מהשירות)?', ar:'ماذا يحدث مع الخريجين الذين لا ينخرطون في أي إطار (خدمة، تعليم أو عمل)؟',
+    am:'ماذا يحدث مع الخريجين الذين لا يخدمون (إعفاء، عدم التجنيد، التسرّب من الخدمة)؟',
     opts:[O('יש להם ליווי מסודר','توجد لهم مرافقة منتظمة'), O('יש טיפול לפי מקרה','نتابع حسب الحالة'), O('אין טיפול','لا توجد متابعة')]},
   {id:'bodies', n:9, sec:2, type:'multi', req:0, he:'עם אילו גורמים בקהילה אתם עובדים?', ar:'مع أي جهات في المجتمع تعملون؟',
     opts:[O('מחלקת נוער ברשות','قسم الشبيبة في السلطة المحلية'), O('יחידה לקידום נוער','وحدة النهوض بالشبيبة'), O('רווחה','الشؤون الاجتماعية'),
@@ -178,10 +186,10 @@ function save(){ LS.set(DRAFT_KEY, JSON.stringify(ANS)); }
 
 const svcSkip = () => { const f = ANS.frames||[]; return f.length>0 && f.every(i=>Q('frames').opts[i].excl); };
 const visible = q => !(q.svc && svcSkip()) && (!q.show || q.show());
-const order = q => (LANG==='ar' && q.arOrder ? q.arOrder : q.opts.map((_,i)=>i)).filter(i=>q.opts[i][LANG]);
+const order = q => (AM() && q.amOrder ? q.amOrder : LANG==='ar' && q.arOrder ? q.arOrder : q.opts.map((_,i)=>i)).filter(i=>tx(q.opts[i]));
 const oTxt = (qid, i) => String(ANS[qid+'_o'+i]||'').trim();
 // גורמים שסומנו בשאלה 9 — עם הטקסט של "אחר"
-const bodyName = i => { const o = Q('bodies').opts[i]; return o.other && oTxt('bodies',i) ? oTxt('bodies',i) : o[LANG]||o.v; };
+const bodyName = i => { const o = Q('bodies').opts[i]; return o.other && oTxt('bodies',i) ? oTxt('bodies',i) : tx(o)||o.v; };
 
 function answered(q){
   const a = ANS[q.id];
@@ -208,7 +216,7 @@ function switchLang(){
 function qHTML(q){
   const a = ANS[q.id];
   const miss = TRIED && q.req && !answered(q);
-  let h = `<div class="q${miss?' miss':''}" id="q_${q.id}"><div class="qt">${q.n}. ${esc(q[LANG])}${q.req?' <span class="req">*</span>':''}</div>`;
+  let h = `<div class="q${miss?' miss':''}" id="q_${q.id}"><div class="qt">${q.n}. ${esc(tx(q))}${q.req?' <span class="req">*</span>':''}</div>`;
   const hint = q.type==='multi' ? t('multi') : q.type==='perBody' ? t('perBody') : (!q.req ? t('optional') : '');
   if(hint) h += `<div class="qh">${esc(hint)}</div>`;
   if(q.type==='school'){
@@ -219,9 +227,9 @@ function qHTML(q){
   else if(q.type==='text') h += `<textarea oninput="setT('${q.id}',this.value)">${esc(a||'')}</textarea>`;
   else if(q.type==='single' || q.type==='multi'){
     const on = i => q.type==='multi' ? (a||[]).includes(i) : a===i;
-    h += `<div class="choices ${q.type}">${order(q).map(i=>`<button type="button" class="${on(i)?'on':''}" onclick="pick('${q.id}',${i})">${esc(q.opts[i][LANG])}</button>`).join('')}</div>`;
+    h += `<div class="choices ${q.type}">${order(q).map(i=>`<button type="button" class="${on(i)?'on':''}" onclick="pick('${q.id}',${i})">${esc(tx(q.opts[i]))}</button>`).join('')}</div>`;
     order(q).filter(i=>q.opts[i].other && on(i)).forEach(i=>{
-      h += `<input class="field other" placeholder="${esc(q.opts[i][LANG])}: ${esc(t('otherPh'))}" value="${esc(ANS[q.id+'_o'+i]||'')}" oninput="setT('${q.id}_o${i}',this.value)">`;
+      h += `<input class="field other" placeholder="${esc(tx(q.opts[i]))}:${esc(t('otherPh'))}" value="${esc(ANS[q.id+'_o'+i]||'')}" oninput="setT('${q.id}_o${i}',this.value)">`;
     });
   }
   else if(q.type==='perBody'){
@@ -230,7 +238,7 @@ function qHTML(q){
     const hv = ANS.help||{};
     bodies.forEach(b=>{
       const cur = hv[b]||[];
-      h += `<div class="body-help"><div class="bn">${esc(bodyName(b))}</div><div class="choices multi">${order(q).map(i=>`<button type="button" class="${cur.includes(i)?'on':''}" onclick="pickHelp(${b},${i})">${esc(q.opts[i][LANG])}</button>`).join('')}</div>`;
+      h += `<div class="body-help"><div class="bn">${esc(bodyName(b))}</div><div class="choices multi">${order(q).map(i=>`<button type="button" class="${cur.includes(i)?'on':''}" onclick="pickHelp(${b},${i})">${esc(tx(q.opts[i]))}</button>`).join('')}</div>`;
       order(q).filter(i=>q.opts[i].other && cur.includes(i)).forEach(i=>{
         h += `<input class="field other" placeholder="${esc(t('otherPh'))}" value="${esc(ANS['help_o'+b]||'')}" oninput="setT('help_o${b}',this.value)">`;
       });
@@ -344,7 +352,7 @@ async function submit(){
   }
   const err = document.getElementById('err'); err.textContent = '';
   SENDING = true; const btn = document.getElementById('sendBtn'); btn.disabled = true; btn.textContent = t('sending');
-  const payload = {v:1, ts:new Date().toISOString(), lang:LANG, school:value(Q('school')), rakaz:value(Q('rakaz')), a:{}};
+  const payload = {v:1, ts:new Date().toISOString(), lang:AM()?'ar-tz':LANG,school:value(Q('school')), rakaz:value(Q('rakaz')), a:{}};
   QS.filter(q=>visible(q) && q.sec>0).forEach(q=>{ const v = value(q); if(v!=='' && !(Array.isArray(v) && !v.length)) payload.a[q.id] = v; });
   const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
   // "תודה" מוצג רק אחרי שהשרת אישר שהתשובות נשמרו
@@ -371,6 +379,7 @@ function again(){ ANS={}; TRIED=false; SENDING=false; LS.del(SENT_KEY); LS.del(D
 /* ---------- תצוגת ניהול (?admin) — רק עם קוד צוות הופה ---------- */
 const FORM_URL = new URL('sherut-kehila.html', location.href).href;
 const FORM_URL_AR = FORM_URL + '?lang=ar';
+const FORM_URL_TZ = FORM_URL + '?lang=ar&v=tz';
 const MSG_HE = `שלום לרכזי ולרכזות הבוגרים 👋
 אנחנו בהופה ממפים מה כבר קיים בכל בית ספר בתחום ההכנה לשירות ושיתופי הפעולה בקהילה. המטרה היא לחבר את הבוגרים למה שכבר עובד אצלכם.
 שאלון קצר, כ-5 דקות:
@@ -381,6 +390,7 @@ const MSG_AR = `تحية لمركّزي ومركّزات الخريجين 👋
 استبيان قصير، نحو 5 دقائق:
 ${FORM_URL_AR}
 شكرًا جزيلًا! 🙏`;
+const MSG_TZ = MSG_AR.replace(FORM_URL_AR, FORM_URL_TZ);
 let RESP = [];
 function copy(txt, ok){
   const done = () => toast(ok);
@@ -426,17 +436,19 @@ function renderAdmin(){
     <details class="box"><summary>שליחת השאלון לרכזים</summary><div class="in">
       <div class="btns"><button class="btn primary" onclick="copy(MSG_HE,'ההודעה בעברית הועתקה — אפשר להדביק בוואטסאפ')">העתקת הודעה בעברית</button>
         <button class="btn primary" onclick="copy(MSG_AR,'ההודעה בערבית הועתקה — אפשר להדביק בוואטסאפ')">העתקת הודעה בערבית</button>
-        <a class="btn" href="${esc(FORM_URL)}" target="_blank" rel="noopener">פתיחת השאלון</a>
-        <a class="btn" href="${esc(FORM_URL_AR)}" target="_blank" rel="noopener">פתיחה בערבית</a></div></div></details>
+        <button class="btn primary" onclick="copy(MSG_TZ,'ההודעה בערבית (עם צה&quot;ל) הועתקה')">ערבית עם צה"ל: ירכא, ג'וליס, ביר אל-מכסור</button></div>
+      <div class="btns"><a class="btn" href="${esc(FORM_URL)}" target="_blank" rel="noopener">פתיחת השאלון</a>
+        <a class="btn" href="${esc(FORM_URL_AR)}" target="_blank" rel="noopener">פתיחה בערבית</a>
+        <a class="btn" href="${esc(FORM_URL_TZ)}" target="_blank" rel="noopener">פתיחה בערבית עם צה"ל</a></div></div></details>
     <details class="box"${missing.length?' open':''}><summary>עוד לא מילאו (${missing.length})</summary><div class="in">
-      <div class="sl">${missing.map(s=>`<span class="${AR_SCHOOLS.includes(s)?'ar':''}">${esc(s)}</span>`).join('')}</div>
-      <p class="qh" style="margin-top:8px">בצהוב: בתי ספר שמקבלים את הקישור בערבית.</p>
+      <div class="sl">${missing.map(s=>`<span class="${AR_SCHOOLS.includes(s)?'ar':TZ_SCHOOLS.includes(s)?'tz':''}">${esc(s)}</span>`).join('')}</div>
+      <p class="qh" style="margin-top:8px">בצהוב: מקבלים את הקישור בערבית. בוורוד: מקבלים את הקישור בערבית עם צה"ל.</p>
       <div class="btns"><button class="btn" onclick="copy(SCHOOLS.filter(s=>!RESP.some(x=>x.school===s)).join('\\n'),'הרשימה הועתקה')">העתקת הרשימה</button>
         <button class="btn" onclick="exportCSV()">ייצוא לאקסל</button></div></div></details>`;
   if(!RESP.length) h += '<p class="qh" style="margin-top:20px">עוד אין תשובות. כשרכז/ת ימלא/תמלא, התשובות יופיעו כאן.</p>';
   filled.sort((a,b)=>a.localeCompare(b,'he')).forEach(s=>{
     const x = bySchool[s][0], more = bySchool[s].length-1;
-    h += `<div class="card"><h3>${esc(s)}</h3><div class="meta">${esc(x.rakaz)} · ${fmt(x.ts)}${x.lang==='ar'?' · מולא בערבית':''}${more?` · ועוד ${more} מילוי/ים קודמים`:''}</div><div class="qa">`;
+    h += `<div class="card"><h3>${esc(s)}</h3><div class="meta">${esc(x.rakaz)} · ${fmt(x.ts)}${x.lang==='ar'?' · מולא בערבית':x.lang==='ar-tz'?' · מולא בערבית (עם צה"ל)':''}${more?` · ועוד ${more} מילוי/ים קודמים`:''}</div><div class="qa">`;
     QS.filter(q=>q.sec>0).forEach(q=>{
       const v = x.a[q.id];
       if(v==null || v==='') return;
@@ -452,7 +464,7 @@ function exportCSV(){
   const cols = QS.filter(q=>q.sec>0);
   const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const rows = [['תאריך','בית ספר','רכז/ת','שפה'].concat(cols.map(q=>q.n+'. '+q.he)).map(cell).join(',')];
-  RESP.forEach(x=>rows.push([fmt(x.ts), x.school, x.rakaz, x.lang==='ar'?'ערבית':'עברית'].concat(cols.map(q=>show(q.id, x.a[q.id]))).map(cell).join(',')));
+  RESP.forEach(x=>rows.push([fmt(x.ts), x.school, x.rakaz, x.lang==='ar'?'ערבית':x.lang==='ar-tz'?'ערבית (צה"ל)':'עברית'].concat(cols.map(q=>show(q.id, x.a[q.id]))).map(cell).join(',')));
   const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'הכנה-לשירות-וקהילה-'+new Date().toISOString().slice(0,10)+'.csv';
