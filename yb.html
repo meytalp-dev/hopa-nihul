@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אחרי י״ב · הופה!</title>
+<meta name="description" content="מצגת לשכבת י״ב: מה מחכה אחרי התיכון, כל האפשרויות, ומי מלווה אתכם בהופה">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E8348A;--pinkd:#C2185B;--pinks:#FCE7F2;
+    --yel:#FFF200;--yeld:#FFD500;--yels:#FFFCE6;
+    --ink:#141414;--mut:#5d5866;--line:#f0dbe6;
+    --green:#3BA55C;--blue:#3D7DD8;--orange:#F5A623;--purple:#7E57C2;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:'Rubik',system-ui,Arial,sans-serif;color:var(--ink);background:var(--pinks);overflow:hidden}
+  a{color:inherit}
+  .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+  /* ---------- במה 1920×1080 ---------- */
+  #stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  #deck{width:1920px;height:1080px;position:relative;background:#fff;transform-origin:center;flex:none;overflow:hidden;box-shadow:0 30px 80px rgba(194,24,91,.18)}
+  .s{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:120px 130px 110px;background:#fff}
+  .s.on{display:flex}
+  .s::before{content:"";position:absolute;top:0;right:0;left:0;height:14px;background:linear-gradient(90deg,var(--yel),var(--pink))}
+  .s .kick{position:absolute;top:52px;right:130px;font-size:24px;font-weight:800;color:var(--pink);letter-spacing:.5px}
+  .s .num{position:absolute;bottom:44px;left:130px;font-size:22px;font-weight:700;color:#b9a9b3}
+  .s .brand{position:absolute;bottom:38px;right:130px;height:44px}
+  .s.pinkbg{background:var(--pink);color:#fff}
+  .s.yelbg{background:var(--yel)}
+  .s.pinkbg .kick{color:var(--yel)} .s.pinkbg .num{color:rgba(255,255,255,.6)}
+  .s.yelbg .kick{color:var(--pinkd)}
+
+  h1{font-size:120px;font-weight:900;line-height:1.02;margin:0;letter-spacing:-3px}
+  h2{font-size:76px;font-weight:900;line-height:1.08;margin:0 0 18px;letter-spacing:-2px}
+  .lead{font-size:38px;font-weight:500;line-height:1.4;margin:0 0 46px;color:var(--mut);max-width:1560px}
+  .s.pinkbg .lead{color:rgba(255,255,255,.9)}
+  .hl{background:var(--yel);padding:0 .14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .pk{color:var(--pink)}
+
+  /* כרטיסים */
+  .grid{display:grid;gap:30px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:#fff;border:2px solid var(--line);border-radius:28px;padding:34px 34px 32px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;top:0;right:0;left:0;height:10px;background:var(--c,var(--pink))}
+  .card h3{font-size:34px;font-weight:800;margin:14px 0 12px;line-height:1.2}
+  .card p{font-size:26px;line-height:1.45;margin:0;color:var(--mut)}
+  .card ul{margin:0;padding:0;list-style:none}
+  .card li{font-size:25px;line-height:1.4;color:var(--mut);padding:6px 0;border-top:1px dashed var(--line)}
+  .card li:first-child{border-top:0}
+  .card li b{color:var(--ink);font-weight:700}
+  .ic{width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:var(--cs,var(--pinks));color:var(--c,var(--pink))}
+  .ic svg{width:38px;height:38px}
+  .pill{display:inline-block;background:var(--pinks);color:var(--pinkd);font-weight:700;font-size:24px;padding:8px 22px;border-radius:999px;margin:0 0 0 10px}
+  .note-line{margin-top:34px;font-size:30px;font-weight:700;display:flex;align-items:center;gap:16px}
+  .note-line svg{width:40px;height:40px;color:var(--pink);flex:none}
+
+  /* שקף 1 */
+  .cover{justify-content:center}
+  .cover .logo{height:150px;margin-bottom:46px;align-self:flex-start}
+  .cover h1 .big{display:block;font-size:250px;letter-spacing:-8px;line-height:.95;color:var(--pink)}
+  .cover .sub{font-size:40px;font-weight:600;margin-top:34px}
+  .cover .school{margin-top:26px;font-size:34px;font-weight:800;color:var(--pinkd);background:var(--pinks);display:inline-block;padding:12px 30px;border-radius:999px;align-self:flex-start}
+  .picker{margin-top:26px;align-self:flex-start;display:flex;gap:14px;align-items:center;font-size:26px;font-weight:600;color:var(--mut)}
+  .picker select{font:inherit;font-size:26px;padding:10px 18px;border-radius:14px;border:2px solid var(--line);background:#fff;color:var(--ink);max-width:640px}
+  .sun{position:absolute;left:-160px;top:120px;width:860px;height:860px;border-radius:50%;background:radial-gradient(circle,var(--yel) 0 56%,transparent 57%);opacity:.95}
+  .sun::after{content:"";position:absolute;inset:-70px;border-radius:50%;border:3px dashed var(--yeld);animation:spin 40s linear infinite}
+  .cover > *:not(.sun):not(.kick):not(.num){position:relative;z-index:1}
+  .cover .kick{display:none}
+  [hidden]{display:none!important}
+
+  /* שקף 2: לפני/אחרי */
+  .vs{display:grid;grid-template-columns:1fr 120px 1fr;align-items:stretch}
+  .vs .col{border-radius:32px;padding:44px 48px}
+  .vs .a{background:var(--yels);border:3px solid var(--yeld)}
+  .vs .b{background:var(--pinks);border:3px solid var(--pink)}
+  .vs h3{font-size:44px;font-weight:900;margin:0 0 22px}
+  .vs ul{list-style:none;margin:0;padding:0}
+  .vs li{font-size:31px;line-height:1.35;padding:13px 0;display:flex;gap:16px;align-items:flex-start}
+  .vs li svg{width:34px;height:34px;flex:none;margin-top:3px}
+  .vs .a li svg{color:var(--green)} .vs .b li svg{color:var(--pink)}
+  .vs .mid{display:flex;align-items:center;justify-content:center}
+  .vs .mid span{width:92px;height:92px;border-radius:50%;background:var(--ink);color:var(--yel);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px}
+
+  /* שקף 3 */
+  .stats{display:flex;gap:26px;margin-top:40px}
+  .stat{flex:1;background:var(--yel);border-radius:26px;padding:24px 32px;display:flex;align-items:baseline;gap:16px}
+  .stat b{font-size:60px;font-weight:900;line-height:1}
+  .stat span{font-size:27px;font-weight:600}
+
+  /* שקף 4: הרכז/ת */
+  .who{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
+  .badge{background:var(--pink);color:#fff;border-radius:40px;padding:56px 60px;position:relative;overflow:hidden}
+  .badge::after{content:"";position:absolute;left:-90px;bottom:-90px;width:300px;height:300px;border-radius:50%;background:var(--yel);opacity:.95}
+  .badge .role{font-size:28px;font-weight:700;color:var(--yel)}
+  .badge .name{font-size:88px;font-weight:900;line-height:1.05;margin:14px 0 8px;letter-spacing:-2px}
+  .badge .sch{font-size:30px;font-weight:500;opacity:.9}
+  .badge .phone{font-size:62px;font-weight:900;margin-top:34px;position:relative;z-index:1}
+  .badge .mail{font-size:26px;opacity:.9;margin-top:6px;position:relative;z-index:1;word-break:break-all}
+  .badge .acts{display:flex;gap:16px;margin-top:30px;position:relative;z-index:1;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--pinkd);text-decoration:none;font-weight:800;font-size:26px;padding:16px 28px;border-radius:999px;border:0;cursor:pointer;font-family:inherit}
+  .btn svg{width:28px;height:28px}
+  .btn.y{background:var(--yel);color:var(--ink)}
+  .asks{list-style:none;margin:0;padding:0}
+  .asks li{font-size:34px;font-weight:600;padding:20px 0;border-bottom:2px dashed var(--line);display:flex;gap:18px;align-items:center}
+  .asks li .ic{width:58px;height:58px;flex:none}
+  .asks li .ic svg{width:32px;height:32px}
+  .asks-h{font-size:30px;font-weight:800;color:var(--pink);margin-bottom:8px}
+
+  /* שקף 5: מפת דרכים */
+  .road{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:20px;padding-top:30px}
+  .road::before{content:"";position:absolute;top:96px;right:6%;left:6%;height:10px;border-radius:10px;background:repeating-linear-gradient(90deg,var(--pink) 0 34px,transparent 34px 52px)}
+  .stop{text-align:center;position:relative}
+  .stop .dot{width:132px;height:132px;margin:0 auto 26px;border-radius:50%;background:#fff;border:8px solid var(--c);display:flex;align-items:center;justify-content:center;color:var(--c);position:relative;z-index:1}
+  .stop .dot svg{width:58px;height:58px}
+  .stop h3{font-size:36px;font-weight:900;margin:0 0 10px}
+  .stop p{font-size:25px;line-height:1.4;color:var(--mut);margin:0}
+  .stop .n{position:absolute;top:-18px;right:50%;transform:translateX(50%);background:var(--yel);font-weight:900;font-size:22px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;margin-right:-70px}
+
+  /* שקף 12: מאגר */
+  .bignum{direction:ltr;text-align:right;font-size:300px;font-weight:900;line-height:.85;color:var(--pink);letter-spacing:-10px}
+  .bignum small{font-size:120px}
+  .chips{display:flex;flex-wrap:wrap;gap:16px;margin-top:30px}
+  .chip{background:#fff;border:2px solid var(--pink);color:var(--pinkd);font-weight:700;font-size:28px;padding:12px 26px;border-radius:999px}
+  .flow{display:flex;flex-direction:column;gap:22px}
+  .flow .f{display:flex;gap:24px;align-items:center;background:var(--yels);border-radius:24px;padding:24px 30px}
+  .flow .f b{width:62px;height:62px;flex:none;border-radius:50%;background:var(--ink);color:var(--yel);font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .flow .f span{font-size:31px;font-weight:600;line-height:1.3}
+
+  /* שקף 13: צעדים */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .step{background:#fff;border-radius:34px;padding:44px 40px;position:relative}
+  .step .sn{font-size:130px;font-weight:900;line-height:.8;color:var(--pink)}
+  .step h3{font-size:38px;font-weight:900;margin:22px 0 14px;line-height:1.2}
+  .step p{font-size:27px;line-height:1.45;color:var(--mut);margin:0}
+  .step .ph{display:block;margin-top:16px;font-size:34px;font-weight:900;color:var(--ink)}
+
+  /* שקף 14 */
+  .end{align-items:center;text-align:center}
+  .end h1{font-size:170px;letter-spacing:-5px}
+  .end .logo{height:130px;margin-bottom:40px;background:#fff;border-radius:30px;padding:18px 34px}
+  .end .sub{font-size:40px;font-weight:600;margin-top:30px;color:#fff}
+  .end .site{margin-top:44px;display:inline-flex;gap:14px;align-items:center;background:var(--yel);color:var(--ink);font-size:36px;font-weight:900;padding:18px 40px;border-radius:999px;text-decoration:none}
+  .end .contact{margin-top:28px;font-size:30px;font-weight:600;color:#fff}
+
+  /* אנימציות: רק בשקף פעיל */
+  .s.on .a1,.s.on .a2,.s.on .a3,.s.on .a4,.s.on .a5,.s.on .a6{animation:up .6s cubic-bezier(.2,.8,.2,1) both}
+  .s.on .a2{animation-delay:.12s}.s.on .a3{animation-delay:.24s}.s.on .a4{animation-delay:.36s}.s.on .a5{animation-delay:.48s}.s.on .a6{animation-delay:.6s}
+  @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+
+  /* ---------- שליטה ---------- */
+  #bar{position:fixed;bottom:0;right:0;left:0;height:6px;background:rgba(232,52,138,.15);z-index:20}
+  #bar i{display:block;height:100%;background:var(--pink);width:0;transition:width .3s}
+  #ctl{position:fixed;top:22px;left:18px;display:flex;gap:8px;z-index:21;opacity:.25;transition:opacity .2s}
+  #ctl:hover,#ctl:focus-within{opacity:1}
+  #ctl button{font-family:inherit;font-size:15px;font-weight:700;border:0;background:#fff;color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.12);display:flex;align-items:center;gap:6px}
+  #ctl button svg{width:18px;height:18px}
+  #notes{position:fixed;right:20px;left:20px;bottom:24px;max-height:42vh;overflow:auto;background:#fff;border:3px solid var(--pink);border-radius:20px;padding:18px 24px 18px 60px;box-shadow:0 16px 50px rgba(0,0,0,.25);z-index:22;display:none;font-size:19px;line-height:1.55}
+  #notes.on{display:block}
+  #notes h4{margin:0 0 6px;color:var(--pink);font-size:16px;letter-spacing:.5px}
+  #notes .x{position:absolute;left:14px;top:12px;border:0;background:var(--pinks);color:var(--pinkd);font-size:20px;width:34px;height:34px;border-radius:50%;cursor:pointer}
+  .nt{display:none}
+  .ntxt p{margin:0 0 8px} .ntxt b{color:var(--pinkd)} .ntxt .q{background:var(--yels);border-right:5px solid var(--yeld);padding:8px 12px;border-radius:8px;margin-top:8px}
+
+  /* ---------- מצב מעביר/ה (חלון נפרד) ---------- */
+  body.presenter{overflow:auto;background:#fff}
+  body.presenter #stage,body.presenter #ctl,body.presenter #bar{display:none}
+  #pv{display:none;max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  body.presenter #pv{display:block}
+  #pv .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  #pv .cnt{font-size:22px;font-weight:800;color:var(--pink)}
+  #pv .tm{font-size:34px;font-weight:900;direction:ltr}
+  #pv h2{font-size:40px;margin:18px 0 10px;letter-spacing:-1px}
+  #pv .ntxt{font-size:24px;line-height:1.6}
+  #pv .nx{margin-top:26px;color:var(--mut);font-size:20px}
+  #pv .nav{display:flex;gap:12px;margin-top:22px}
+  #pv .nav button{font-family:inherit;font-size:22px;font-weight:800;border:0;border-radius:14px;padding:14px 26px;cursor:pointer;background:var(--pink);color:#fff}
+  #pv .nav button.ghost{background:var(--pinks);color:var(--pinkd)}
+
+  /* ---------- נייד: שקופיות אחת מתחת לשנייה ---------- */
+  @media (max-width:860px), (max-aspect-ratio:1/1){
+    body{overflow:auto;background:#fff}
+    #stage{position:static;display:block}
+    #deck{width:auto;height:auto;transform:none!important;box-shadow:none}
+    #ctl,#bar,#notes{display:none!important}
+    .s{position:relative;display:flex!important;padding:64px 18px 70px;min-height:auto;border-bottom:10px solid var(--pinks)}
+    .s .kick{top:28px;right:18px;font-size:13px}
+    .s .num{bottom:22px;left:18px;font-size:13px}
+    .s .brand{bottom:18px;right:18px;height:26px}
+    h1{font-size:44px;letter-spacing:-1px}
+    h2{font-size:32px;letter-spacing:-.5px;margin-bottom:10px}
+    .lead{font-size:17px;margin-bottom:22px}
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .grid{gap:14px}
+    .card{padding:22px 20px 20px;border-radius:20px}
+    .card h3{font-size:21px;margin:10px 0 8px}
+    .card p,.card li{font-size:15.5px}
+    .ic{width:46px;height:46px;border-radius:14px} .ic svg{width:26px;height:26px}
+    .note-line{font-size:17px;margin-top:20px} .note-line svg{width:26px;height:26px}
+    .pill{font-size:14px;padding:5px 12px}
+    .cover .logo{height:74px;margin-bottom:22px}
+    .cover h1 .big{font-size:96px;letter-spacing:-3px}
+    .cover .sub{font-size:19px;margin-top:16px}
+    .cover .school{font-size:17px;padding:8px 18px}
+    .picker{font-size:15px;flex-wrap:wrap} .picker select{font-size:16px;max-width:100%}
+    .sun{width:300px;height:300px;left:-90px;top:40px}
+    .vs{grid-template-columns:1fr;gap:12px}
+    .vs .col{padding:22px 20px;border-radius:20px}
+    .vs h3{font-size:24px;margin-bottom:8px}
+    .vs li{font-size:16px;padding:7px 0;gap:10px} .vs li svg{width:22px;height:22px}
+    .vs .mid span{width:52px;height:52px;font-size:15px}
+    .stats{flex-direction:column;gap:10px;margin-top:20px}
+    .stat{padding:14px 18px} .stat b{font-size:32px} .stat span{font-size:16px}
+    .who{grid-template-columns:1fr;gap:24px}
+    .badge{padding:30px 24px;border-radius:24px}
+    .badge::after{width:160px;height:160px;left:-50px;bottom:-50px}
+    .badge .role{font-size:15px} .badge .name{font-size:40px;letter-spacing:-1px} .badge .sch{font-size:16px}
+    .badge .phone{font-size:30px;margin-top:18px} .badge .mail{font-size:14px}
+    .btn{font-size:16px;padding:11px 18px} .btn svg{width:20px;height:20px}
+    .asks-h{font-size:17px} .asks li{font-size:17px;padding:11px 0;gap:12px}
+    .asks li .ic{width:40px;height:40px} .asks li .ic svg{width:22px;height:22px}
+    .road{grid-template-columns:1fr;gap:18px;padding-top:6px}
+    .road::before{top:20px;bottom:20px;right:43px;left:auto;width:6px;height:auto;background:repeating-linear-gradient(180deg,var(--pink) 0 18px,transparent 18px 28px)}
+    .stop{text-align:right;display:grid;grid-template-columns:92px 1fr;column-gap:14px;align-items:center}
+    .stop .dot{width:84px;height:84px;border-width:6px;margin:0;grid-row:span 2} .stop .dot svg{width:36px;height:36px}
+    .stop h3{font-size:21px;margin:0 0 2px} .stop p{font-size:15px}
+    .stop .n{display:none}
+    .bignum{font-size:110px;letter-spacing:-4px} .bignum small{font-size:50px}
+    .chips{gap:8px;margin-top:16px} .chip{font-size:15px;padding:7px 14px}
+    .flow{gap:10px;margin-top:22px} .flow .f{padding:14px 16px;gap:14px} .flow .f b{width:40px;height:40px;font-size:18px} .flow .f span{font-size:16px}
+    .steps{grid-template-columns:1fr;gap:14px}
+    .step{padding:24px 22px;border-radius:22px} .step .sn{font-size:64px} .step h3{font-size:22px;margin:12px 0 8px} .step p{font-size:16px} .step .ph{font-size:22px}
+    .end h1{font-size:64px;letter-spacing:-2px} .end .logo{height:70px;padding:10px 18px;border-radius:18px;margin-bottom:22px}
+    .end .sub{font-size:19px} .end .site{font-size:19px;padding:12px 24px;margin-top:24px} .end .contact{font-size:16px}
+    .s .a1,.s .a2,.s .a3,.s .a4,.s .a5,.s .a6{animation:none!important}
+    .nt{display:block;margin-top:24px;border:2px dashed var(--line);border-radius:14px;padding:10px 14px;background:#fff;color:var(--ink)}
+    .nt summary{font-weight:800;color:var(--pinkd);cursor:pointer;font-size:15px}
+    .nt .ntxt{font-size:15px;line-height:1.55;margin-top:8px}
+    .s.pinkbg .nt{border-color:rgba(255,255,255,.5)}
+  }
+</style>
+</head>
+<body>
+
+<div id="stage"><div id="deck">
+
+<!-- 1 · פתיחה -->
+<section class="s cover" data-k="לשכבת י״ב">
+  <div class="sun" aria-hidden="true"></div>
+  <img class="logo a1" src="hopa-logo.png" alt="הופה!">
+  <h1 class="a2">עוד רגע י״ב נגמר.<span class="big">ואז?</span></h1>
+  <div class="sub a3">כל האפשרויות שמחכות לכם אחרי התיכון, ומי <span class="hl">נשאר איתכם</span> בדרך</div>
+  <div class="school a4" data-f="schoolPill" hidden></div>
+  <label class="picker a4" data-f="picker" hidden>בית הספר:
+    <select id="pick"><option value="">בחרו בית ספר</option></select>
+  </label>
+  <template class="notes">
+    <p><b>פתיחה (2 דקות).</b> אם את/ה הרכז/ת, הציגו את עצמכם במשפט: "אני מלווה את הבוגרים של בית הספר, ואני ממשיך/ה ללוות גם אחרי שתסיימו".</p>
+    <div class="q">שאלה לכיתה: "מי כבר יודע מה הוא עושה ביום שאחרי טקס הסיום?" בקשו הרמת ידיים. לא מתקנים ולא שופטים, רק שמים לב כמה תשובות שונות יש בכיתה.</div>
+  </template>
+</section>
+
+<!-- 2 · היום שאחרי -->
+<section class="s" data-k="היום שאחרי">
+  <h2 class="a1">ביום אחד, <span class="pk">הרבה דברים משתנים</span></h2>
+  <p class="lead a2">כל עוד אתם בבית הספר, יש מסביבכם מערכת שלמה. ביום שאחרי הסיום היא נגמרת, בבת אחת.</p>
+  <div class="vs a3">
+    <div class="col a">
+      <h3>עד היום</h3>
+      <ul>
+        <li><i data-i="check"></i>מחנך/ת שבודק/ת מה איתך</li>
+        <li><i data-i="check"></i>מישהו מזכיר מועדים וטפסים</li>
+        <li><i data-i="check"></i>מערכת שעות, חברים כל בוקר</li>
+        <li><i data-i="check"></i>יודעים למי פונים כשמשהו נתקע</li>
+      </ul>
+    </div>
+    <div class="mid"><span>מחר</span></div>
+    <div class="col b">
+      <h3>מהיום שאחרי</h3>
+      <ul>
+        <li><i data-i="alert"></i>אף אחד לא מתקשר אם לא הגעת</li>
+        <li><i data-i="alert"></i>החלטות גדולות, ולפעמים לבד</li>
+        <li><i data-i="alert"></i>טפסים, זכויות ומועדים שאף אחד לא מזכיר</li>
+        <li><i data-i="alert"></i>הרבה אפשרויות, ואין מפה</li>
+      </ul>
+    </div>
+  </div>
+  <template class="notes">
+    <p><b>המטרה:</b> לא להפחיד, אלא לתת שם לתחושה. רוב הבוגרים מספרים שהקושי הוא לא ההחלטה עצמה, אלא שפתאום אין למי לפנות.</p>
+    <div class="q">שאלה לכיתה: "מה הדבר הראשון שתתגעגעו אליו מבית הספר? ומה אתם הכי שמחים לעזוב?" 2 או 3 תשובות מספיקות.</div>
+  </template>
+</section>
+
+<!-- 3 · מה זה הופה -->
+<section class="s" data-k="מה זה הופה">
+  <h2 class="a1">הופה! <span class="hl">מבוגר שלא נעלם</span></h2>
+  <p class="lead a2">הופה מלווה צעירים מגיל 14 עד 26. גם אחרי שתסיימו, יש מישהו מבית הספר שממשיך להיות שם בשבילכם.</p>
+  <div class="grid g3">
+    <div class="card a3"><div class="ic"><i data-i="heart"></i></div><h3>קשר שנשאר</h3><p>הרכז/ת של בית הספר ממשיך/ה ללוות אתכם גם בצבא, בשירות, בעבודה ובלימודים.</p></div>
+    <div class="card a4" style="--c:var(--yeld);--cs:var(--yels)"><div class="ic"><i data-i="map"></i></div><h3>מפה של אפשרויות</h3><p>מאגר של יותר מ-600 תוכניות, מלגות ומענים. לא צריך לחפש לבד.</p></div>
+    <div class="card a5" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="link"></i></div><h3>חיבור בזמן</h3><p>מחברים אתכם לאנשים הנכונים לפני שמשהו נתקע, ולא רק אחרי.</p></div>
+  </div>
+  <div class="stats a6">
+    <div class="stat"><b class="ltr">30+</b><span>בתי ספר בכל הארץ</span></div>
+    <div class="stat"><b class="ltr">5,000~</b><span>בוגרים בליווי</span></div>
+    <div class="stat"><b class="ltr">14–26</b><span>ליווי לאורך כל הדרך</span></div>
+  </div>
+  <template class="notes">
+    <p><b>חשוב להדגיש:</b> זה בחינם, זה לא חובה, וזה לא מחליף את צה״ל, השירות הלאומי או המכללה. הופה מחברת אתכם אליהם, ונשארת בקשר גם כשקשה.</p>
+    <div class="q">שאלה לכיתה: "מי מכיר מישהו, אח או חבר, שסיים תיכון והרגיש קצת אבוד בשנה הראשונה?" אפשר להסתפק בהרמת ידיים.</div>
+  </template>
+</section>
+
+<!-- 4 · הרכז/ת -->
+<section class="s" data-k="מי מלווה אתכם">
+  <div class="who">
+    <div class="badge a1">
+      <div class="role">רכז/ת הבוגרים שלכם</div>
+      <div class="name" data-f="cName">הרכז/ת של בית הספר</div>
+      <div class="sch" data-f="schoolName">בית הספר שלכם</div>
+      <div class="phone" data-f="cPhoneWrap"></div>
+      <div class="mail" data-f="cMail"></div>
+      <div class="acts" data-f="cActs"></div>
+    </div>
+    <div class="a2">
+      <div class="asks-h">על מה אפשר לפנות?</div>
+      <ul class="asks">
+        <li><span class="ic"><i data-i="shield"></i></span>שאלה על גיוס, שירות או שיבוץ</li>
+        <li><span class="ic" style="--c:var(--yeld);--cs:var(--yels)"><i data-i="doc"></i></span>עזרה בטופס, בקורות חיים או בבקשה</li>
+        <li><span class="ic" style="--c:var(--green);--cs:#e6f5eb"><i data-i="coin"></i></span>מלגה, זכויות, כסף שמגיע לכם</li>
+        <li><span class="ic" style="--c:var(--purple);--cs:#efe9f8"><i data-i="chat"></i></span>סתם להתייעץ, גם כשלא ברור מה השאלה</li>
+      </ul>
+    </div>
+  </div>
+  <template class="notes">
+    <p><b>זה השקף הכי חשוב במצגת.</b> המטרה שכל תלמיד/ה יצא/תצא מהשיעור עם המספר של הרכז/ת שמור בטלפון.</p>
+    <p>בקשו מכולם להוציא טלפון ולשמור את המספר עכשיו, בכיתה. זה לוקח דקה וזה מה שבאמת עובד.</p>
+    <div class="q">שאלה לכיתה: "מה הייתם רוצים לשאול כבר עכשיו?" רשמו על הלוח 3 שאלות שעולות, וחזרו אליהן בסוף.</div>
+  </template>
+</section>
+
+<!-- 5 · מפת הדרכים -->
+<section class="s" data-k="מפת הדרכים">
+  <h2 class="a1">מפת הדרכים <span class="pk">אחרי י״ב</span></h2>
+  <p class="lead a2">אין מסלול אחד נכון. אפשר לשלב, להחליף כיוון באמצע, ולחזור. מה שחשוב זה לא ללכת לבד.</p>
+  <div class="road a3">
+    <div class="stop" style="--c:var(--pink)"><span class="n">1</span><div class="dot"><i data-i="shield"></i></div><h3>שירות צבאי</h3><p>הכנה, שיבוץ וזכויות</p></div>
+    <div class="stop" style="--c:var(--orange)"><span class="n">2</span><div class="dot"><i data-i="hands"></i></div><h3>שירות לאומי-אזרחי</h3><p>שנה או שנתיים בקהילה</p></div>
+    <div class="stop" style="--c:var(--purple)"><span class="n">3</span><div class="dot"><i data-i="compass"></i></div><h3>מכינה ושנת שירות</h3><p>שנה לגדול לפני הצעד הבא</p></div>
+    <div class="stop" style="--c:var(--blue)"><span class="n">4</span><div class="dot"><i data-i="brief"></i></div><h3>עבודה</h3><p>משרה ראשונה והכשרה מקצועית</p></div>
+    <div class="stop" style="--c:var(--green)"><span class="n">5</span><div class="dot"><i data-i="cap"></i></div><h3>לימודים</h3><p>בגרויות, מכינה, הנדסאים, תואר</p></div>
+  </div>
+  <div class="note-line a4"><i data-i="coin"></i>ולאורך כל הדרך: מלגות, זכויות וכסף שמגיע לכם</div>
+  <template class="notes">
+    <p><b>שקף מעבר.</b> בשקפים הבאים נעבור על כל תחנה. אפשר לדלג על תחנות פחות רלוונטיות לכיתה, אבל כדאי להראות את כולן לפחות בקצרה.</p>
+    <div class="q">פעילות קצרה: "הצביעו על התחנה שהכי קרובה אליכם כרגע". אפשר לספור ידיים לכל תחנה ולרשום על הלוח.</div>
+  </template>
+</section>
+
+<!-- 6 · שירות צבאי -->
+<section class="s" data-k="תחנה 1 · שירות צבאי">
+  <h2 class="a1">שירות צבאי: <span class="pk">להגיע מוכנים</span></h2>
+  <p class="lead a2">השירות יכול להיות קפיצה גדולה קדימה. ההכנה, השיבוץ והזכויות עושים את כל ההבדל.</p>
+  <div class="grid g4">
+    <div class="card a3"><div class="ic"><i data-i="target"></i></div><h3>הכנה לפני גיוס</h3><ul><li><b>תנועת מעגלים</b> ו<b>אחריי!</b></li><li><b>גשר אל הנוער</b></li><li>רכז/ת הכנה לצה״ל ברשות המקומית</li></ul></div>
+    <div class="card a4" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="clip"></i></div><h3>שיבוץ שמתאים לך</h3><ul><li>מבחנים, ראיונות ופרופיל</li><li>מה לבקש ואיך</li><li>שירות משמעותי גם בפרופיל רפואי</li></ul></div>
+    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="shield"></i></div><h3>זכויות בשירות</h3><ul><li>חייל/ת בודד/ת</li><li>סיוע לחיילים ממשפחות במצוקה כלכלית</li><li>מה מגיע אחרי השחרור</li></ul></div>
+    <div class="card a6" style="--c:var(--purple);--cs:#efe9f8"><div class="ic"><i data-i="star"></i></div><h3>מסלולים מיוחדים</h3><ul><li><b>רואים רחוק</b> ו<b>חיבורים</b>, לצעירים על הרצף האוטיסטי</li><li><b>מדור מתנדבים</b> בצה״ל</li></ul></div>
+  </div>
+  <template class="notes">
+    <p><b>נקודה למסור:</b> הרבה בוגרים מגיעים לשיבוץ בלי לדעת מה מותר לבקש. הרכז/ת יכול/ה לחבר לתוכנית הכנה או לרכז/ת ההכנה לצה״ל של הרשות, שהיא לרוב בחינם.</p>
+    <p>שימו לב: לא כולם מתגייסים. את השירות הלאומי-אזרחי נציג בשקף הבא כמסלול שווה ערך.</p>
+    <div class="q">שאלה לכיתה: "מה הדבר שהכי מלחיץ אתכם בגיוס?" אפשר לבקש שירשמו בפתק אנונימי.</div>
+  </template>
+</section>
+
+<!-- 7 · שירות לאומי-אזרחי -->
+<section class="s" data-k="תחנה 2 · שירות לאומי-אזרחי">
+  <h2 class="a1">שירות לאומי ואזרחי: <span class="pk">עשייה בקהילה</span></h2>
+  <p class="lead a2">שנה או שנתיים של עבודה בבתי ספר, בבתי חולים, בעמותות ובקהילה שלכם. פתוח לכל מי שלא מתגייס/ת, מכל חברה ומכל רקע.</p>
+  <div class="grid g3">
+    <div class="card a3" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="hands"></i></div><h3>איפה משרתים</h3><ul><li>חינוך, בריאות, רווחה וקהילה</li><li>לרוב קרוב לבית</li><li>בחירה לפי תחומי עניין</li></ul></div>
+    <div class="card a4"><div class="ic"><i data-i="users"></i></div><h3>דרך מי נרשמים</h3><ul><li><b>בת עמי</b>, כולל מסלול לחברה הערבית</li><li><b>האגודה להתנדבות</b>, שירות אזרחי ערבי ודרוזי</li><li><b>כל שירות</b>, פורטל לכל המסלולים</li><li><b>צל״ש</b>, הכנה לשירות לצעירות</li></ul></div>
+    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="coin"></i></div><h3>מה מקבלים</h3><ul><li>ניסיון אמיתי וקורות חיים</li><li>זכויות של משרתים משוחררים: מענק ופיקדון</li><li>הטבות בלימודים אחר כך</li></ul></div>
+  </div>
+  <template class="notes">
+    <p><b>להציג כמסלול שווה ערך, לא כ"אלטרנטיבה".</b> בכיתות מעורבות, הדגישו שיש כאן מקום לכולם: צעירים מהחברה הערבית, הבדואית והדרוזית, צעירות שבוחרות בשירות לאומי, ומי שקיבל/ה פטור.</p>
+    <p>ההרשמה לשירות הלאומי נפתחת כבר במהלך י״ב, ולכן כדאי לבדוק עכשיו.</p>
+    <div class="q">שאלה לכיתה: "מי מכיר מישהו שעשה שירות לאומי או אזרחי? מה הוא סיפר?"</div>
+  </template>
+</section>
+
+<!-- 8 · מכינות ושנת שירות -->
+<section class="s" data-k="תחנה 3 · מכינה ושנת שירות">
+  <h2 class="a1">שנה לפני: <span class="pk">לגדול, להכיר את עצמך</span></h2>
+  <p class="lead a2">מכינה קדם-צבאית או שנת שירות נותנות שנה של התבגרות, חברים חדשים וביטחון, לפני הגיוס או הלימודים.</p>
+  <div class="grid g2">
+    <div class="card a3" style="--c:var(--purple);--cs:#efe9f8"><div class="ic"><i data-i="compass"></i></div><h3>מכינות קדם-צבאיות</h3><p style="margin-bottom:14px">שנה של לימוד, התנדבות וגיבוש, עם דחיית שירות.</p><ul><li><b>מכינות ניצוץ</b>, מרכז מעשה</li><li><b>מכינת חוסן פאודל</b></li><li><b>מכינות שחר</b></li><li><b>בחברת אחיי</b>, מניפה</li></ul></div>
+    <div class="card a4" style="--c:var(--yeld);--cs:var(--yels)"><div class="ic"><i data-i="sun"></i></div><h3>שנת שירות</h3><p style="margin-bottom:14px">שנה של התנדבות מלאה בתנועות נוער ובארגונים חברתיים, לרוב לפני הגיוס.</p><ul><li>הדרכה, חינוך ועבודה בקהילה</li><li>מגורים משותפים עם בני גילכם</li><li>מתאים גם למי שעוד לא בטוח/ה</li></ul></div>
+  </div>
+  <div class="note-line a5"><i data-i="clock"></i>ההרשמה למכינות נפתחת כבר בי״ב. זה הזמן לבדוק.</div>
+  <template class="notes">
+    <p><b>מסר:</b> מכינה היא לא רק "לחזקים". יש מכינות שמתאימות במיוחד למי שרוצה שנה של צמיחה לפני הצעד הבא.</p>
+    <p>מי שמתעניין/ת, שיפנה לרכז/ת. הופה עובדת עם כמה מכינות ויכולה לחבר ישירות.</p>
+    <div class="q">שאלה לכיתה: "אם הייתה לכם שנה שלמה רק בשביל עצמכם, מה הייתם רוצים ללמוד או לנסות?"</div>
+  </template>
+</section>
+
+<!-- 9 · עבודה -->
+<section class="s" data-k="תחנה 4 · עבודה">
+  <h2 class="a1">עבודה: <span class="pk">משרה ראשונה, בלי ללכת לאיבוד</span></h2>
+  <p class="lead a2">לפני השירות, אחריו או במקומו. עבודה טובה מתחילה בקורות חיים נכונים ובהכרת הזכויות שלכם.</p>
+  <div class="grid g4">
+    <div class="card a3" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="doc"></i></div><h3>קורות חיים וראיון</h3><p>איך כותבים קורות חיים ראשונים, ואיך מתכוננים לראיון.</p></div>
+    <div class="card a4" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="tool"></i></div><h3>הכשרה מקצועית</h3><ul><li><b>תל״מ</b>, תעסוקה, לימודים ומגורים</li><li><b>היוזמה</b></li><li><b>תופסים כיוון</b></li></ul></div>
+    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="scale"></i></div><h3>זכויות עובד</h3><ul><li>שכר מינימום ותלוש</li><li>פנסיה וימי חופשה</li><li>מה עושים כשלא משלמים</li></ul></div>
+    <div class="card a6"><div class="ic"><i data-i="brief"></i></div><h3>חיבור למעסיקים</h3><p>הרכז/ת יכול/ה לחבר להזדמנויות עבודה ולמעסיקים שעובדים עם הופה.</p></div>
+  </div>
+  <div class="note-line a6"><i data-i="alert"></i>לפני שחותמים על חוזה, שווה להראות אותו לרכז/ת.</div>
+  <template class="notes">
+    <p><b>מסר:</b> הרבה צעירים מקבלים פחות ממה שמגיע להם בעבודה הראשונה, פשוט כי לא ידעו. זה מקום שבו ליווי עושה הבדל מיידי.</p>
+    <div class="q">שאלה לכיתה: "מי מכם כבר עובד? מה הדבר שהכי הפתיע אתכם בתלוש הראשון?"</div>
+  </template>
+</section>
+
+<!-- 10 · לימודים -->
+<section class="s" data-k="תחנה 5 · לימודים">
+  <h2 class="a1">לימודים: <span class="pk">אף פעם לא מאוחר</span></h2>
+  <p class="lead a2">חסרה בגרות? לא בטוחים שתואר מתאים לכם? יש הרבה דרכים להמשיך ללמוד, ולא כולן עוברות באוניברסיטה.</p>
+  <div class="grid g4">
+    <div class="card a3" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="doc"></i></div><h3>השלמת בגרויות</h3><ul><li><b>משל״י</b>, השלמת השכלה תיכונית</li><li>גם אחרי השירות</li></ul></div>
+    <div class="card a4" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="book"></i></div><h3>פסיכומטרי ומכינה</h3><ul><li><b>קורס פסיכומטרי חינמי</b> של המדינה</li><li>מכינה קדם-אקדמית</li></ul></div>
+    <div class="card a5" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="tool"></i></div><h3>הנדסאים ומקצוע</h3><ul><li><b>אלומה</b>, מלגות הנדסאים</li><li><b>אלביט תל חי</b>, הנדסאות אלקטרוניקה</li></ul></div>
+    <div class="card a6"><div class="ic"><i data-i="cap"></i></div><h3>תואר</h3><ul><li>איך בוחרים מוסד ומקצוע</li><li>הרשמה, מועדים ומלגות</li></ul></div>
+  </div>
+  <template class="notes">
+    <p><b>מסר:</b> מי שלא סיים בגרות מלאה עדיין יכול להשלים, ויש מסלולים מסובסדים לחיילים משוחררים ולמשרתי שירות לאומי-אזרחי.</p>
+    <div class="q">שאלה לכיתה: "אם לא היה עניין של כסף או ציונים, מה הייתם הולכים ללמוד?"</div>
+  </template>
+</section>
+
+<!-- 11 · כסף שמגיע לכם -->
+<section class="s yelbg" data-k="לאורך כל הדרך">
+  <h2 class="a1">כסף <span style="background:#fff;padding:0 .14em">שמגיע לכם</span></h2>
+  <p class="lead a2" style="color:var(--ink)">הרבה זכויות ומלגות לא מגיעות לצעירים פשוט כי אף אחד לא ביקש אותן. אנחנו עוזרים לבקש.</p>
+  <div class="grid g4">
+    <div class="card a3"><div class="ic"><i data-i="cap"></i></div><h3>מלגות עם ליווי</h3><ul><li><b>עמיתי מעשה</b></li><li><b>הזנק לעתיד</b></li><li><b>יתד</b></li><li><b>אלומה</b></li></ul></div>
+    <div class="card a4" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="shield"></i></div><h3>מיצוי זכויות</h3><ul><li>מענק שחרור ופיקדון</li><li>הנחות בשכר לימוד</li><li><b>שי״ל</b>, ייעוץ לאזרח</li></ul></div>
+    <div class="card a5" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="coin"></i></div><h3>ניהול כסף</h3><ul><li><b>פעמונים</b>, תכל׳ס לצעירים</li><li><b>מקימי</b></li><li>סיוע עם חובות</li></ul></div>
+    <div class="card a6" style="--c:var(--purple);--cs:#efe9f8"><div class="ic"><i data-i="laptop"></i></div><h3>מחשב נייד</h3><p>עזרה בהשגת מחשב נייד ללימודים ולעבודה, דרך עמותות שותפות.</p></div>
+  </div>
+  <template class="notes">
+    <p><b>מסר:</b> זכויות לא מגיעות לבד, צריך לבקש אותן. הרכז/ת יודע/ת מה מגיע ואיך מגישים.</p>
+    <div class="q">שאלה לכיתה: "מי ידע שמגיע לחיילים משוחררים ולמשרתי שירות לאומי מענק ופיקדון?" בדרך כלל מעטים יודעים. זה בדיוק העניין.</div>
+  </template>
+</section>
+
+<!-- 12 · מאגר המענים -->
+<section class="s" data-k="מאגר המענים">
+  <div class="grid g2" style="align-items:center;gap:70px">
+    <div>
+      <div class="bignum a1">600<small>+</small></div>
+      <h2 class="a2" style="margin-top:20px">תוכניות, מלגות ומענים <span class="pk">במקום אחד</span></h2>
+      <div class="chips a3">
+        <span class="chip">הכנה לשירות</span><span class="chip">מלגות</span><span class="chip">תעסוקה</span><span class="chip">לימודים</span><span class="chip">זכויות</span><span class="chip">בריאות נפשית</span><span class="chip">מגורים</span>
+      </div>
+    </div>
+    <div class="flow a4">
+      <div class="asks-h">איך זה עובד?</div>
+      <div class="f"><b>1</b><span>מספרים לרכז/ת מה צריך, גם אם זה עוד לא ברור</span></div>
+      <div class="f"><b>2</b><span>הרכז/ת מוצא/ת את המענה שמתאים לכם מתוך המאגר</span></div>
+      <div class="f"><b>3</b><span>מחברים אתכם ישירות לאנשים הנכונים, ונשארים בקשר</span></div>
+    </div>
+  </div>
+  <template class="notes">
+    <p><b>מסר:</b> לא צריך לחפש בגוגל ולהתבלבל. מאגר המענים של הופה הוא מהגדולים בישראל, והרכז/ת מכיר/ה אותו.</p>
+    <div class="q">שאלה לכיתה: חזרו ל-3 השאלות שרשמתם על הלוח בשקף 4. לאיזה תחום כל אחת שייכת?</div>
+  </template>
+</section>
+
+<!-- 13 · מה עושים עכשיו -->
+<section class="s" data-k="מה עושים עכשיו" style="background:var(--pinks)">
+  <h2 class="a1">3 צעדים, <span class="pk">כבר השבוע</span></h2>
+  <p class="lead a2">לא צריך להחליט עכשיו מה תעשו בעוד שנה. צריך רק לדאוג שלא תהיו לבד כשתחליטו.</p>
+  <div class="steps">
+    <div class="step a3"><div class="sn">1</div><h3>שומרים את המספר</h3><p>של רכז/ת הבוגרים, עכשיו, בטלפון.</p><span class="ph" data-f="cPhoneStep"></span></div>
+    <div class="step a4"><div class="sn">2</div><h3>מצטרפים לקבוצת הבוגרים</h3><p>הקבוצה של בית הספר, שבה מתפרסמות הזדמנויות, מלגות ומועדים. הקישור יגיע מהרכז/ת.</p></div>
+    <div class="step a5"><div class="sn">3</div><h3>שולחים הודעה אחת</h3><p>מה התוכנית שלי אחרי י״ב, ומה עוד לא סגור. שתי שורות מספיקות.</p></div>
+  </div>
+  <template class="notes">
+    <p><b>סיום מעשי:</b> תנו 2 דקות בכיתה לשמור את המספר ולשלוח את ההודעה הראשונה. מה שנעשה בכיתה קורה, מה שנשאר "לבית" לרוב לא.</p>
+    <div class="q">בדיקה: "הרימו את הטלפון מי שכבר שמר את המספר".</div>
+  </template>
+</section>
+
+<!-- 14 · סיום -->
+<section class="s pinkbg end" data-k="הופה!">
+  <img class="logo a1" src="hopa-logo.png" alt="הופה!">
+  <h1 class="a2">לא לבד.<br><span style="color:var(--yel)">גם אחרי.</span></h1>
+  <div class="sub a3">פתאום הכל נראה אפשרי</div>
+  <div class="contact a4" data-f="endContact"></div>
+  <a class="site a5" href="https://hopa.org.il" target="_blank" rel="noopener"><i data-i="link"></i><span class="ltr">hopa.org.il</span></a>
+  <template class="notes">
+    <p><b>סגירה (2 דקות).</b> בקשו מכל תלמיד/ה לכתוב בפתק שאלה אחת לרכז/ת, עם שם או בלי. אספו את הפתקים ומסרו לרכז/ת.</p>
+    <div class="q">משפט לסיום: "אתם לא חייבים לדעת עכשיו לאן אתם הולכים. רק תדעו שיש לכם למי להתקשר."</div>
+  </template>
+</section>
+
+</div></div>
+
+<div id="bar"><i></i></div>
+<div id="ctl">
+  <button id="bNext" title="הבא (חץ שמאלה)"><i data-i="next"></i></button>
+  <button id="bPrev" title="הקודם (חץ ימינה)"><i data-i="prev"></i></button>
+  <button id="bNotes" title="הערות למעביר/ה (N)"><i data-i="note"></i>הערות</button>
+  <button id="bPres" title="מסך מעביר/ה בחלון נפרד (P)"><i data-i="screen"></i>מסך מעביר/ה</button>
+  <button id="bFull" title="מסך מלא (F)"><i data-i="full"></i></button>
+</div>
+<div id="notes"><button class="x" aria-label="סגירה">×</button><h4 id="nH"></h4><div class="ntxt" id="nT"></div></div>
+
+<div id="pv">
+  <div class="top"><div class="cnt" id="pvC"></div><div class="tm" id="pvT">00:00</div></div>
+  <h2 id="pvH"></h2>
+  <div class="ntxt" id="pvN"></div>
+  <div class="nav"><button id="pvNext">הבא ←</button><button class="ghost" id="pvPrev">→ הקודם</button></div>
+  <div class="nx" id="pvX"></div>
+</div>
+
+<script>
+/* פרטי רכזי הבוגרים לפי בית ספר. מקור: batei-sefer.html (BASE), 1.11.2026.
+   הקישור לכל בית ספר: yb.html?s=<slug> */
+const SCHOOLS = [
+  {s:'bh',   n:'אורט בית הערבה ירושלים',  c:'יעקב גרונספלד', p:'054-699-5254', e:'1002469702@avoda-edu.org.il'},
+  {s:'ako',  n:'אורט מרום עכו',            c:'טוהר מרסדס כהן', p:'050-828-2032', e:'Toharmarom2025@gmail.com'},
+  {s:'ask',  n:'אורט אדיבי אשקלון',        c:'סיגל דדון', p:'053-778-0196', e:'sigadadon8@gmail.com'},
+  {s:'krm',  n:'עתיד מגשימים כרמיאל',      c:'לבנה בן חמו', p:'050-440-0956', e:'lebanabenhamob@gmail.com'},
+  {s:'nhl',  n:'תיכון נחלים',              c:'טל מילוא', p:'058-404-0494', e:''},
+  {s:'mr',   n:'התיכון החברתי מצפה רמון',  c:'', p:'', e:''},
+  {s:'mtz',  n:'עתיד שמיים מוצקין',        c:'אביחי חריר', p:'050-313-9150', e:'avichai0505@gmail.com'},
+  {s:'ta',   n:'התיכון החברתי תל אביב',    c:'לי ארנן', p:'050-345-0755', e:'leear.sk3@gmail.com'},
+  {s:'hos',  n:'תיכון חושן',               c:'ברכי בר לב', p:'052-869-7690', e:'brachi123@gmail.com'},
+  {s:'siah', n:'תיכון שיח',                c:'טליה ברנע', p:'054-806-9898', e:'taliabarnea@gmail.com'},
+  {s:'bsh',  n:'מגשימים בית שאן',          c:'שגית הדר', p:'050-593-9223', e:''},
+  {s:'skh',  n:'אלאמאני סחנין',            c:'סוזן קאסום', p:'054-796-1329', e:'suzankasom77@gmail.com'},
+  {s:'rd',   n:'עמל רמת דוד',              c:'מוניק איפרח ממן', p:'050-988-3385', e:'ma2443@rd.amalnet.k12.il'},
+  {s:'ashd', n:'עמל טכנולוגי אשדוד',       c:'ריקי מסס', p:'054-444-1300', e:''},
+  {s:'krml', n:'אורט כרמל חיפה',           c:'חנין מלשה', p:'052-599-4110', e:'haninmalro@gmail.com'},
+  {s:'tzb',  n:'אורט צור ברק',             c:'טלי יונה', p:'054-808-0808', e:'taliyona1@gmail.com'},
+  {s:'tur',  n:'מנאראת טורעאן',            c:'מוניר זרעיני', p:'054-695-9114', e:'moneer_zireeni@hotmail.com'},
+  {s:'nm',   n:'דרור נווה מדבר',           c:'היאם אזברגה', p:'050-422-2996', e:'ezbrgahiam@gmail.com'},
+  {s:'bam',  n:'עתיד אבדאע ביר אלמכסור',   c:'עלי עותמאן', p:'050-955-1109', e:'aliotman988@gmail.com'},
+  {s:'lak',  n:'טכנולוגי לקייה',           c:'ראניה חגו', p:'050-470-8424', e:'raniahm2010@gmail.com'},
+  {s:'jul',  n:'יוצר עתיד ג׳וליס',         c:'בהייה מולא', p:'054-669-9072', e:'Bmulla1992@gmail.com'},
+  {s:'pal',  n:'יוצר עתיד פלמחים',         c:'שירן עוגן', p:'054-978-9029', e:'shiranush978@gmail.com'},
+  {s:'drg',  n:'דרור גליל',                c:'רינה שריד', p:'054-673-8232', e:'rina@dror-galil.org.il'},
+  {s:'rht',  n:'עמל טכנולוגי רהט',         c:'זהור אלעוברה', p:'054-791-8502', e:'Talobra@gmail.com'},
+  {s:'yrk',  n:'ח׳טוואת ירכא',             c:'רשא סייד אחמד', p:'050-545-5077', e:'rashasayedahmad@gmail.com'},
+  {s:'hhf',  n:'תיכון חברתי חיפה',         c:'', p:'', e:''}
+];
+
+/* אייקונים בקו */
+const ICONS = {
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  alert:'<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>',
+  heart:'<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/>',
+  map:'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/>',
+  link:'<path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>',
+  shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/>',
+  doc:'<path d="M14 3H6v18h12V7l-4-4z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/>',
+  chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+  hands:'<path d="M7 11V6a2 2 0 0 1 4 0v5M11 10V4a2 2 0 0 1 4 0v6M15 10V6a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1a7 7 0 0 1-6-3.5L2.5 14a2 2 0 0 1 3.4-2L7 13.5"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2z"/>',
+  brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',
+  cap:'<path d="m2 9 10-5 10 5-10 5L2 9z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  clip:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/>',
+  star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9L12 3z"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  tool:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5 2.5-2.5z"/>',
+  scale:'<path d="M12 3v18M5 21h14M7 7h10M7 7l-3 7a3 3 0 0 0 6 0L7 7zM17 7l-3 7a3 3 0 0 0 6 0l-3-7z"/>',
+  book:'<path d="M4 4h6a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4V4zM20 4h-6a3 3 0 0 0-1 .2M20 4v15h-7"/>',
+  laptop:'<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
+  phone:'<path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  wa:'<path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3 3l-4.5 1.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2L9 9.5z"/>',
+  next:'<path d="m15 18-6-6 6-6"/>', prev:'<path d="m9 18 6-6-6-6"/>',
+  note:'<path d="M4 4h16v12H8l-4 4V4z"/><path d="M8 9h8M8 12h5"/>',
+  screen:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  full:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'
+};
+function svg(name){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICONS[name]||'')+'</svg>'}
+function paintIcons(root){root.querySelectorAll('i[data-i]').forEach(el=>{el.outerHTML=svg(el.dataset.i)})}
+
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = (q, r=document) => r.querySelector(q);
+const slides = [...document.querySelectorAll('.s')];
+const params = new URLSearchParams(location.search);
+const PRESENTER = params.get('presenter') === '1';
+
+/* --- בית ספר --- */
+function intlPhone(p){const d=p.replace(/\D/g,'');return d.startsWith('0')?'972'+d.slice(1):d}
+function fill(sc){
+  const has = sc && sc.c;
+  const set = (f, html) => document.querySelectorAll('[data-f="'+f+'"]').forEach(el => el.innerHTML = html);
+  const pill = $('[data-f="schoolPill"]'), picker = $('[data-f="picker"]');
+  if (sc){ pill.textContent = sc.n; pill.hidden = false; picker.hidden = true; }
+  else { pill.hidden = true; picker.hidden = false; }
+  set('schoolName', sc ? esc(sc.n) : 'בית הספר שלכם');
+  set('cName', has ? esc(sc.c) : (sc ? 'הרכז/ת יעודכן/תעודכן בקרוב' : 'הרכז/ת של בית הספר'));
+  set('cPhoneWrap', has && sc.p ? '<span class="ltr">'+esc(sc.p)+'</span>' : '');
+  set('cMail', has && sc.e ? '<span class="ltr">'+esc(sc.e)+'</span>' : '');
+  let acts = '';
+  if (has && sc.p){
+    acts += '<a class="btn" href="tel:'+sc.p.replace(/\D/g,'')+'">'+svg('phone')+'התקשרו</a>';
+    acts += '<a class="btn y" href="https://wa.me/'+intlPhone(sc.p)+'" target="_blank" rel="noopener">'+svg('wa')+'וואטסאפ</a>';
+  }
+  if (has && sc.e){
+    const subj = encodeURIComponent('שאלה מתלמיד/ה בשכבת י״ב · '+sc.n);
+    const body = encodeURIComponent('היי '+sc.c+',\n\nראיתי בכיתה את המצגת של הופה.\nקוראים לי: \nהתוכנית שלי אחרי י״ב: \nמה עוד לא סגור: \n\nתודה!');
+    acts += '<a class="btn" href="mailto:'+esc(sc.e)+'?subject='+subj+'&amp;body='+body+'">'+svg('mail')+'מייל</a>';
+  }
+  if (!has) acts = '<a class="btn y" href="https://hopa.org.il" target="_blank" rel="noopener">'+svg('link')+'<span class="ltr">hopa.org.il</span></a>';
+  set('cActs', acts);
+  set('cPhoneStep', has && sc.p ? esc(sc.c)+'<br><span class="ltr">'+esc(sc.p)+'</span>' : '');
+  set('endContact', has ? 'רכז/ת הבוגרים: '+esc(sc.c)+(sc.p?' · <span class="ltr">'+esc(sc.p)+'</span>':'') : '');
+}
+const pick = $('#pick');
+SCHOOLS.slice().sort((a,b)=>a.n.localeCompare(b.n,'he')).forEach(sc=>{
+  const o=document.createElement('option'); o.value=sc.s; o.textContent=sc.n; pick.appendChild(o);
+});
+let school = SCHOOLS.find(x => x.s === params.get('s')) || null;
+pick.addEventListener('change', ()=>{
+  school = SCHOOLS.find(x => x.s === pick.value) || null;
+  const u = new URL(location.href);
+  if (school) u.searchParams.set('s', school.s); else u.searchParams.delete('s');
+  history.replaceState(null, '', u);
+  fill(school);
+});
+fill(school);
+
+/* --- כרום, הערות --- */
+const TOTAL = slides.length;
+slides.forEach((s, i) => {
+  s.insertAdjacentHTML('afterbegin', '<div class="kick">'+esc(s.dataset.k||'')+'</div>');
+  s.insertAdjacentHTML('beforeend', '<div class="num"><span class="ltr">'+(i+1)+' / '+TOTAL+'</span></div>');
+  if (!s.classList.contains('cover') && !s.classList.contains('end'))
+    s.insertAdjacentHTML('beforeend', '<img class="brand" src="hopa-logo.png" alt="">');
+  const t = s.querySelector('template.notes');
+  if (t) s.insertAdjacentHTML('beforeend', '<details class="nt"><summary>הערות למעביר/ה</summary><div class="ntxt">'+t.innerHTML+'</div></details>');
+});
+paintIcons(document);
+const noteOf = i => { const t = slides[i].querySelector('template.notes'); return t ? t.innerHTML : ''; };
+const titleOf = i => { const h = slides[i].querySelector('h1,h2'); return (i+1)+'. '+(h ? h.textContent.replace(/\s+/g,' ').trim() : slides[i].dataset.k); };
+
+/* --- ניווט --- */
+let cur = Math.min(Math.max(parseInt(location.hash.slice(1)) - 1 || 0, 0), TOTAL - 1);
+let bc = null; try { bc = new BroadcastChannel('hopa-yb'); } catch(e) {}
+function go(i, fromRemote){
+  cur = Math.min(Math.max(i, 0), TOTAL - 1);
+  slides.forEach((s, k) => s.classList.toggle('on', k === cur));
+  $('#bar i').style.width = ((cur + 1) / TOTAL * 100) + '%';
+  $('#nH').textContent = 'הערות למעביר/ה · ' + titleOf(cur);
+  $('#nT').innerHTML = noteOf(cur);
+  try { history.replaceState(null, '', '#' + (cur + 1)); } catch(e) {}
+  if (PRESENTER) renderPv();
+  if (bc && !fromRemote) bc.postMessage({i: cur});
+}
+if (bc) bc.onmessage = ev => { if (ev.data && typeof ev.data.i === 'number' && ev.data.i !== cur) go(ev.data.i, true); };
+
+function fit(){
+  const d = $('#deck');
+  const sc = Math.min(innerWidth / 1920, innerHeight / 1080);
+  d.style.transform = 'scale(' + sc + ')';
+}
+addEventListener('resize', fit); fit();
+
+const next = () => go(cur + 1), prev = () => go(cur - 1);
+addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  const k = e.key;
+  if (k === 'ArrowLeft' || k === 'PageDown' || k === ' ') { e.preventDefault(); next(); }
+  else if (k === 'ArrowRight' || k === 'PageUp') { e.preventDefault(); prev(); }
+  else if (k === 'Home') go(0);
+  else if (k === 'End') go(TOTAL - 1);
+  else if (k === 'n' || k === 'N' || k === 'מ') $('#notes').classList.toggle('on');
+  else if (k === 'f' || k === 'F' || k === 'כ') toggleFull();
+  else if (k === 'p' || k === 'P' || k === 'פ') openPresenter();
+});
+$('#stage').addEventListener('click', e => {
+  if (e.target.closest('a,button,select,label,details')) return;
+  if (matchMedia('(max-width:860px), (max-aspect-ratio:1/1)').matches) return;
+  (e.clientX < innerWidth / 2 ? next : prev)();
+});
+$('#bNext').onclick = next; $('#bPrev').onclick = prev;
+$('#bNotes').onclick = () => $('#notes').classList.toggle('on');
+$('#notes .x').onclick = () => $('#notes').classList.remove('on');
+$('#bFull').onclick = toggleFull; $('#bPres').onclick = openPresenter;
+function toggleFull(){ try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch(e) {} }
+function openPresenter(){
+  const u = new URL(location.href); u.searchParams.set('presenter', '1'); u.hash = '#' + (cur + 1);
+  window.open(u.toString(), 'hopa-yb-presenter', 'width=1000,height=760');
+}
+
+/* --- מסך מעביר/ה --- */
+let t0 = Date.now();
+function renderPv(){
+  $('#pvC').textContent = 'שקף ' + (cur + 1) + ' מתוך ' + TOTAL + (school ? ' · ' + school.n : '');
+  $('#pvH').textContent = titleOf(cur);
+  $('#pvN').innerHTML = noteOf(cur) || '<p>אין הערות לשקף הזה.</p>';
+  $('#pvX').textContent = cur < TOTAL - 1 ? 'השקף הבא: ' + titleOf(cur + 1) : 'זה השקף האחרון.';
+}
+if (PRESENTER){
+  document.body.classList.add('presenter');
+  document.title = 'מסך מעביר/ה · אחרי י״ב';
+  $('#pvNext').onclick = next; $('#pvPrev').onclick = prev;
+  setInterval(() => { const s = Math.floor((Date.now() - t0) / 1000); $('#pvT').textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }, 1000);
+}
+go(cur, true);
+</script>
+</body>
+</html>
