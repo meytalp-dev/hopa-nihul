@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בוגרים בעסקים | עמותת הופה</title>
+<meta property="og:title" content="בוגרים בעסקים: ספרו לנו על העסק שלכם">
+<meta property="og:description" content="בוגרי בתי הספר של הופה עם עסק משלהם? נשמח להציג אותו · עמותת הופה">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#FFF200;--y2:#E4D800;--pink:#E8348A;--pink-soft:#FDE7F1;--bg:#FFFBEA;--card:#fff;--ink:#111;--muted:#5d5d5d;--line:#E8E3CF;--red:#c0392b;--green:#1f8a4c}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:620px;margin:0 auto;padding:16px 16px 28px}
+header{text-align:center;padding:10px 0 4px}
+header img{height:54px;display:block;margin:0 auto}
+h1{font-size:clamp(25px,6.5vw,31px);line-height:1.2;margin:14px 0 6px;font-weight:800}
+h1 .hl{background:linear-gradient(transparent 58%,var(--y) 58%);padding:0 4px}
+.lead{font-size:16px;margin:0 0 16px;color:#2b2b2b}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;margin-bottom:12px}
+.card h2{font-size:18px;margin:0 0 12px}
+label.q{display:block;font-weight:700;font-size:15.5px;margin:14px 0 6px}
+label.q:first-of-type{margin-top:0}
+.req{color:var(--pink)}
+.hint{font-size:13.5px;color:var(--muted);margin:-2px 0 8px}
+.field,textarea{width:100%;font:inherit;font-size:16px;border:1px solid #d9d4bf;border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:100px;resize:vertical}
+.field:focus,textarea:focus{outline:2px solid var(--pink);border-color:var(--pink)}
+.ltr{direction:ltr;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:15px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px;color:var(--ink);text-align:right}
+.chips button.on{background:var(--pink-soft);border-color:var(--pink);font-weight:700}
+.miss{border-color:var(--red)!important;box-shadow:0 0 0 2px #f6d5d1}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin-top:16px}
+.consent input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--pink)}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font:inherit;font-size:18px;font-weight:700;background:var(--y);color:var(--ink);border:1.5px solid var(--y2);border-radius:999px;padding:13px 20px;cursor:pointer;min-height:52px;margin-top:10px;text-decoration:none}
+.cta:disabled{opacity:.6;cursor:default}
+.cta.wa{background:#25D366;border-color:#1eb257;color:#fff}
+.err{color:var(--red);font-size:14.5px;text-align:center;min-height:1.2em;margin-top:8px}
+.done{text-align:center;padding:24px 8px}
+.done h2{font-size:28px;margin:6px 0 10px}
+.done p{font-size:16px;margin:0 0 10px}
+footer{text-align:center;font-size:13px;color:var(--muted);padding-top:10px}
+footer a{color:var(--pink)}
+.hidden{display:none}
+/* ניהול */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.btn{font:inherit;font-size:14.5px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center}
+.btn.pri{background:var(--y);border-color:var(--y2);font-weight:700}
+.btn.on{background:var(--pink-soft);border-color:var(--pink);font-weight:700}
+select.field{width:auto;max-width:100%;min-height:40px;padding:6px 10px;font-size:14.5px}
+.biz h3{margin:0 0 2px;font-size:17px}
+.biz .meta{font-size:14px;color:var(--muted);margin-bottom:6px}
+.biz .row{font-size:14.5px;margin:2px 0}
+.biz .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.pill{display:inline-block;font-size:12.5px;border-radius:999px;padding:2px 10px;background:#eee;margin-inline-start:6px;vertical-align:middle}
+.pill.wait{background:var(--y)}.pill.got{background:#d1f2dd}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:14.5px}
+.chk input{width:20px;height:20px;accent-color:var(--pink)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+<header><a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a></header>
+
+<section id="formView">
+  <h1>בוגרים <span class="hl">בעסקים</span></h1>
+  <p class="lead">סיימת את אחד מבתי הספר של הופה ופתחת עסק משלך? אנחנו אוספים את העסקים של הבוגרים שלנו ונציג אותם, כדי שבתי הספר, הקהילה והבוגרים האחרים יכירו אותם ויפנו אליכם.</p>
+
+  <div class="card">
+    <h2>ספרו לנו על העסק</h2>
+
+    <label class="q" for="f_school">באיזה בית ספר למדת? <span class="req">*</span></label>
+    <select class="field" id="f_school" style="width:100%"></select>
+
+    <label class="q" for="f_name">שם מלא <span class="req">*</span></label>
+    <input class="field" id="f_name" autocomplete="name">
+
+    <label class="q" for="f_phone">טלפון <span class="req">*</span></label>
+    <input class="field ltr" id="f_phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr">
+
+    <label class="q" for="f_email">אימייל</label>
+    <input class="field ltr" id="f_email" type="email" inputmode="email" autocomplete="email" dir="ltr">
+
+    <label class="q" for="f_biz">שם העסק <span class="req">*</span></label>
+    <input class="field" id="f_biz" autocomplete="organization">
+
+    <label class="q" for="f_field">תחום השירות <span class="req">*</span></label>
+    <div class="hint">למשל: עיצוב שיער, שיפוצים, צילום אירועים, הנהלת חשבונות</div>
+    <input class="field" id="f_field">
+
+    <label class="q" for="f_about">כמה מילים על העסק <span class="req">*</span></label>
+    <div class="hint">מה אתם עושים, למי זה מתאים, איפה אתם פועלים</div>
+    <textarea id="f_about"></textarea>
+
+    <label class="consent"><input type="checkbox" id="f_ok"> <span>אני מסכים/ה שעמותת הופה תפרסם את פרטי העסק שמילאתי כאן (שם, תחום, טלפון, אימייל ותיאור) ברשימת העסקים של בוגרי הופה. <span class="req">*</span></span></label>
+
+    <button class="cta" id="sendBtn" type="button">שליחה</button>
+    <div class="err" id="err"></div>
+  </div>
+</section>
+
+<section id="doneView" class="hidden">
+  <div class="card done">
+    <h2>תודה! 💛</h2>
+    <p>פרטי העסק הגיעו אלינו.</p>
+    <p>בינתיים אפשר להכיר אותנו ב-<a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></p>
+  </div>
+</section>
+
+<section id="adminView" class="hidden"></section>
+
+<footer>עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
+</div>
+<div id="toast" class="toast"></div>
+
+<script src="staff-code.js"></script>
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const RESP_PREFIX = 'esek-';                  // עסקים נשמרים כ-intake_esek-<id> (לא ציבורי)
+const STATUS_KEY = 'bogrim_asakim_status';    // הערות — רק עם קוד צוות
+const SCHOOLS = ['אורט בית הערבה','אורט מרום עכו','אורט אדיבי אשקלון','עתיד מגשימים כרמיאל','תיכון נחלים','התיכון החברתי מצפה רמון',
+  'עתיד שמיים מוצקין','התיכון החברתי תל אביב','תיכון חושן','תיכון שיח','מגשימים בית שאן','אלאמאני סחנין','עמל רמת דוד','עמל טכנולוגי אשדוד',
+  'אורט כרמל חיפה','אורט צור ברק','מנאראת טורעאן','דרור נווה מדבר','עתיד אבדאע ביר אלמכסור','טכנולוגי לקייה','יוצר עתיד ג׳וליס',
+  'יוצר עתיד פלמחים','דרור גליל','עמל טכנולוגי רהט','ח׳טוואת ירכא','תיכון חברתי חיפה'].sort((a,b)=>a.localeCompare(b,'he'));
+const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);}
+
+/* ---------- גיליון ---------- */
+function jsonpOnce(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
+async function jsonp(params, onRetry){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
+    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; if(onRetry) onRetry(i+1); }
+  }
+  throw err;
+}
+
+/* ---------- טופס ---------- */
+const normPhone = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+let SENDING = false;
+async function submit(){
+  if(SENDING) return;
+  const err = $('err'); err.textContent = '';
+  document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));
+  const school = $('f_school').value, name = $('f_name').value.trim(), phone = normPhone($('f_phone').value), email = $('f_email').value.trim();
+  const biz = $('f_biz').value.trim(), field = $('f_field').value.trim(), about = $('f_about').value.trim();
+  const bad = [];
+  if(!school) bad.push($('f_school'));
+  if(name.length<2) bad.push($('f_name'));
+  if(!/^0\d{8,9}$/.test(phone)) bad.push($('f_phone'));
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad.push($('f_email'));
+  if(!biz) bad.push($('f_biz'));
+  if(!field) bad.push($('f_field'));
+  if(about.length<5) bad.push($('f_about'));
+  if(bad.length){ bad.forEach(x=>x.classList.add('miss')); bad[0].scrollIntoView({block:'center',behavior:'smooth'});
+    err.textContent = 'צריך להשלים את השדות המסומנים'; return; }
+  if(!$('f_ok').checked){ err.textContent = 'צריך לסמן הסכמה לפרסום'; return; }
+  const payload = { v:1, ts:new Date().toISOString(), school, name, phone, email, biz, field, about:about.slice(0,1500), consent:true };
+  const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
+  SENDING = true; const btn = $('sendBtn'); btn.disabled = true; btn.textContent = 'שולח…';
+  const fail = () => { SENDING=false; btn.disabled=false; btn.textContent='שליחה';
+    err.textContent = 'השליחה לא הצליחה. בדקו שיש אינטרנט ולחצו שוב.'; };
+  try{
+    const r = await jsonp(params, ()=>{ btn.textContent='גוגל מתעכב, מנסה שוב…'; });
+    if(!r || !r.ok) return fail();
+  }catch(e){ return fail(); }
+  LS.set('bogrim_asakim_sent', payload.ts);
+  $('formView').classList.add('hidden'); $('doneView').classList.remove('hidden'); window.scrollTo({top:0});
+}
+
+/* ---------- ניהול (?admin=1, קוד צוות) ---------- */
+let BIZ = [], STATUS = {}, FILTER = 'all';
+async function loadAdmin(){
+  const v = $('adminView'); v.classList.remove('hidden'); $('formView').classList.add('hidden');
+  v.innerHTML = '<div class="card">טוען את העסקים…</div>';
+  try{
+    const r = await jsonp({action:'storeAll', secret:GS_SECRET});
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    const st = r.store||{};
+    BIZ = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].name && !st[k]._test)
+      .map(k=>Object.assign({id:k}, st[k])).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    STATUS = st[STATUS_KEY] || {};
+    renderAdmin();
+  }catch(e){
+    if(window.staffCodeFail && staffCodeFail(e, v)) return;
+    v.innerHTML = '<div class="card">לא הצלחתי לטעון מהגיליון. <button class="btn" onclick="loadAdmin()">לנסות שוב</button></div>';
+  }
+}
+function renderAdmin(){
+  const list = BIZ.filter(p=>FILTER==='all' || p.school===FILTER);
+  const schools = SCHOOLS.filter(s=>BIZ.some(p=>p.school===s));
+  const link = location.origin+location.pathname;
+  $('adminView').innerHTML = `
+    <h1>בוגרים בעסקים</h1>
+    <div class="bar">
+      <button class="btn ${FILTER==='all'?'on':''}" data-f="all">הכל (${BIZ.length})</button>
+      <select class="field" id="schoolSel"><option value="">לפי בית ספר…</option>${schools.map(s=>`<option ${FILTER===s?'selected':''}>${esc(s)}</option>`).join('')}</select>
+    </div>
+    <div class="bar">
+      <button class="btn pri" id="copyLink">📋 העתקת קישור הטופס</button>
+      <button class="btn" id="csv">⬇ ייצוא לאקסל</button>
+      <button class="btn" onclick="loadAdmin()">🔄 רענון</button>
+    </div>
+    ${list.map(p=>{ const note=(STATUS[p.id]||{}).n||'', tel=normPhone(p.phone), wa='972'+tel.replace(/^0/,'');
+      return `<div class="card biz">
+        <h3>${esc(p.biz)}</h3>
+        <div class="meta">${esc(p.field)} · ${esc(new Date(p.ts).toLocaleDateString('he-IL'))}</div>
+        <div class="row"><b>בוגר/ת:</b> ${esc(p.name)} · ${esc(p.school)}</div>
+        <div class="row"><b>על העסק:</b> ${esc(p.about)}</div>
+        <div class="row"><b>טלפון:</b> <span dir="ltr">${esc(p.phone)}</span>${p.email?` · <span dir="ltr">${esc(p.email)}</span>`:''}</div>
+        <div class="acts">
+          <a class="btn" href="tel:${esc(tel)}">📞 חיוג</a>
+          <a class="btn" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">💬 פתח צ'אט</a>
+          ${p.email?`<a class="btn" href="mailto:${esc(p.email)}">✉️ מייל</a>`:''}        </div>
+        <textarea class="field" data-note="${esc(p.id)}" placeholder="הערה (נשמרת לגיליון)" style="margin-top:8px;min-height:60px">${esc(note)}</textarea>
+      </div>`; }).join('') || '<div class="card">אין עסקים בסינון הזה.</div>'}`;
+  const v = $('adminView');
+  v.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ FILTER=b.dataset.f; renderAdmin(); });
+  $('schoolSel').onchange = e => { FILTER = e.target.value || 'all'; renderAdmin(); };
+  v.querySelectorAll('[data-note]').forEach(el=>el.onchange=()=>saveStatus(el.dataset.note,{n:el.value.trim()}));
+  $('copyLink').onclick=()=>navigator.clipboard.writeText(link).then(()=>toast('הקישור הועתק'),()=>prompt('הקישור:',link));
+  $('csv').onclick=exportCsv;
+}
+async function saveStatus(id, patch){
+  STATUS[id] = Object.assign({}, STATUS[id], patch);
+  try{
+    const r = await jsonp({action:'storeSet', secret:GS_SECRET, key:STATUS_KEY, json:JSON.stringify(STATUS)});
+    if(!r || !r.ok) throw 0;
+    toast('נשמר');
+  }catch(e){ toast('השמירה לא הצליחה, נסי שוב'); }
+}
+function exportCsv(){
+  const cols = [['תאריך',p=>new Date(p.ts).toLocaleDateString('he-IL')],['בית ספר',p=>p.school],['שם',p=>p.name],['טלפון',p=>p.phone],['אימייל',p=>p.email],
+    ['שם העסק',p=>p.biz],['תחום',p=>p.field],['על העסק',p=>p.about],['הערה',p=>(STATUS[p.id]||{}).n||'']];
+  const q = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const csv = '﻿'+[cols.map(c=>q(c[0])).join(',')].concat(BIZ.map(p=>cols.map(c=>q(c[1](p))).join(','))).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = 'בוגרים-בעסקים-הופה.csv'; a.click();
+}
+
+/* ---------- התחלה ---------- */
+if(new URLSearchParams(location.search).has('admin')) loadAdmin();
+else {
+  $('f_school').innerHTML = '<option value="">בחירה מהרשימה</option>' + SCHOOLS.map(s=>`<option>${esc(s)}</option>`).join('');
+  $('sendBtn').onclick = submit;
+}
+</script>
+</body>
+</html>
