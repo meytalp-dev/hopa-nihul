@@ -146,6 +146,7 @@
 <main class="wrap" id="app"></main>
 <div class="toast" id="toast"></div>
 
+<script src="school-codes.js"></script>
 <script>
 /* ===================== הגדרות ===================== */
 const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
@@ -161,7 +162,9 @@ const NEEDS   = ['ליווי אישי לפני ואחרי הגיוס','הכנה 
 const STATUSES = ['חדש','נשלח למדור דרך דוד','התקבל/ה לתוכנית','לא התקבל/ה','חסר מידע / הוחזר'];
 
 const qs = new URLSearchParams(location.search);
-const PRE = { school: qs.get('school') || '', rakez: qs.get('rakez') || '', tel: qs.get('tel') || '' };
+/* קישור קצר: ?s=<קוד> ממלא בית ספר, רכז/ת וטלפון מ-school-codes.js */
+const SC = (window.SCHOOL_CODES || {})[qs.get('s')] || {};
+const PRE = { school: qs.get('school') || SC.n || '', rakez: qs.get('rakez') || SC.rakez || '', tel: qs.get('tel') || SC.tel || '' };
 
 /* ===================== השאלות ===================== */
 const STEPS = [

@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <script src="staff-code.js"></script>
+<script src="school-codes.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>שליחת בקשות לרכזים · הופה</title>
@@ -189,11 +190,14 @@ function planStatus(n){
   return PLAN_ELSEWHERE[n] || '';
 }
 function links(s){
+  const mipui = 'https://bogrim.hopa.org.il' + (s.ar ? '\nבערבית: https://bogrim.hopa.org.il/ar' : '');
+  /* קישור קצר עם קוד בית הספר (school-codes.js); בלי קוד — הקישור הארוך עם השם בעברית */
+  const SC = window.SCHOOL_CODES || {}, code = Object.keys(SC).find(k=>SC[k].n===s.n);
+  if (code) return { plan: BASE_URL+'taktziv.html?s='+code, dd: BASE_URL+'derech-david.html?s='+code, esek: BASE_URL+'bogrim-asakim.html', mech: BASE_URL+'mechinot-tofes.html', mipui };
   const q = encodeURIComponent(s.n);
   let dd = BASE_URL+'derech-david.html?school='+q;
   if (s.c) dd += '&rakez='+encodeURIComponent(s.c);
   if (s.p) dd += '&tel='+digits(s.p);
-  const mipui = 'https://bogrim.hopa.org.il' + (s.ar ? '\nבערבית: https://bogrim.hopa.org.il/ar' : '');
   return { plan: BASE_URL+'taktziv.html?school='+q, dd, esek: BASE_URL+'bogrim-asakim.html', mech: BASE_URL+'mechinot-tofes.html', mipui };
 }
 function fill(t, s, link){

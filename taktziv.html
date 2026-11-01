@@ -170,6 +170,7 @@
   </div>
 </div>
 
+<script src="school-codes.js"></script>
 <script>
 var CONFIG = {
   /* אותו Apps Script של דף הניהול. נשמר במפתח intake_תקציב · <בית ספר> */
@@ -445,7 +446,8 @@ $('csvBtn').addEventListener('click', toCsv);
     (saved.lines || []).forEach(addRow);
   }
   while ($('rows').children.length < 3) addRow();
-  var qs = qp('school');
+  var sc = (window.SCHOOL_CODES || {})[qp('s')];
+  var qs = qp('school') || (sc && sc.n);
   if (qs && SCHOOLS.indexOf(qs) >= 0) $('school').value = qs;
   refresh();
 })();
