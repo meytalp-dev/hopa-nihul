@@ -43,7 +43,11 @@ textarea{min-height:100px;resize:vertical}
 .done p{font-size:16px;margin:0 0 10px}
 footer{text-align:center;font-size:13px;color:var(--muted);padding-top:10px}
 footer a{color:var(--pink)}
-.hidden{display:none}
+.hidden{display:none!important}
+.logo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.logo-row .btn{min-height:44px;cursor:pointer}
+#logoPrev{width:72px;height:72px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fff}
+.biz .blogo{float:left;width:72px;height:72px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fff;margin-inline-start:10px}
 /* ניהול */
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
 .btn{font:inherit;font-size:14.5px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center}
@@ -92,11 +96,20 @@ select.field{width:auto;max-width:100%;min-height:40px;padding:6px 10px;font-siz
     <div class="hint">למשל: עיצוב שיער, שיפוצים, צילום אירועים, הנהלת חשבונות</div>
     <input class="field" id="f_field">
 
+    <label class="q">תמונה או לוגו של העסק</label>
+    <div class="hint">לא חובה. אפשר לצלם או לבחור מהגלריה</div>
+    <input type="file" id="f_logo" accept="image/*" class="hidden">
+    <div class="logo-row">
+      <label class="btn" for="f_logo" id="logoPick">בחירת תמונה</label>
+      <img id="logoPrev" class="hidden" alt="התמונה שנבחרה">
+      <button type="button" class="btn hidden" id="logoDel">הסרה</button>
+    </div>
+
     <label class="q" for="f_about">כמה מילים על העסק <span class="req">*</span></label>
     <div class="hint">מה אתם עושים, למי זה מתאים, איפה אתם פועלים</div>
     <textarea id="f_about"></textarea>
 
-    <label class="consent"><input type="checkbox" id="f_ok"> <span>אני מסכים/ה שעמותת הופה תפרסם את פרטי העסק שמילאתי כאן (שם, תחום, טלפון, אימייל ותיאור) ברשימת העסקים של בוגרי הופה. <span class="req">*</span></span></label>
+    <label class="consent"><input type="checkbox" id="f_ok"> <span>אני מסכים/ה שעמותת הופה תפרסם את פרטי העסק שמילאתי כאן (שם, תחום, טלפון, אימייל, תיאור ותמונה) ברשימת העסקים של בוגרי הופה. <span class="req">*</span></span></label>
 
     <button class="cta" id="sendBtn" type="button">שליחה</button>
     <div class="err" id="err"></div>
@@ -161,6 +174,56 @@ async function jsonp(params, onRetry){
 }
 
 /* ---------- טופס ---------- */
+const REC_ID = RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let LOGO_DATA = '';
+// מקטינים בטלפון עד שהתמונה נכנסת לתא בגיליון (עד 45 אלף תווים)
+function shrink(file){
+  return new Promise((res,rej)=>{
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let size = 400, q = .85;
+      for(let t=0;t<10;t++){
+        const k = Math.min(1, size/Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(img.naturalWidth*k)); c.height = Math.max(1, Math.round(img.naturalHeight*k));
+        const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+        const d = c.toDataURL('image/jpeg', q);
+        if(d.length <= 45000) return res(d);
+        if(q > .55) q -= .15; else { size = Math.round(size*.8); q = .8; }
+      }
+      rej(new Error('too big'));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('bad image')); };
+    img.src = url;
+  });
+}
+function showLogo(){
+  $('logoPrev').classList.toggle('hidden', !LOGO_DATA); if(LOGO_DATA) $('logoPrev').src = LOGO_DATA;
+  $('logoDel').classList.toggle('hidden', !LOGO_DATA);
+  $('logoPick').textContent = LOGO_DATA ? 'החלפת תמונה' : 'בחירת תמונה';
+}
+async function pickLogo(e){
+  const f = e.target.files && e.target.files[0]; e.target.value = ''; if(!f) return;
+  $('logoPick').textContent = 'מכין את התמונה…';
+  try{ LOGO_DATA = await shrink(f); }
+  catch(x){ LOGO_DATA = ''; toast('לא הצלחתי לקרוא את התמונה, נסו תמונה אחרת'); }
+  showLogo();
+}
+async function postLogo(){
+  let err;
+  for(let i=0;i<3;i++){
+    const ctl = new AbortController(), tm = setTimeout(()=>ctl.abort(), 30000);
+    try{
+      const r = await fetch(EXEC_URL, {method:'POST', body:new URLSearchParams({action:'logoUpload', id:REC_ID, data:LOGO_DATA}), credentials:'omit', redirect:'follow', signal:ctl.signal});
+      const j = JSON.parse(await r.text());
+      if(j && j.ok) return true;
+      err = new Error(j && j.error);
+      if(/bad|large/.test(String(j && j.error))) break;   // אין טעם לנסות שוב
+    }catch(e){ err = e; }
+    finally{ clearTimeout(tm); }
+  }
+  throw err;
+}
 const normPhone = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
 let SENDING = false;
 async function submit(){
@@ -180,9 +243,16 @@ async function submit(){
   if(bad.length){ bad.forEach(x=>x.classList.add('miss')); bad[0].scrollIntoView({block:'center',behavior:'smooth'});
     err.textContent = 'צריך להשלים את השדות המסומנים'; return; }
   if(!$('f_ok').checked){ err.textContent = 'צריך לסמן הסכמה לפרסום'; return; }
-  const payload = { v:1, ts:new Date().toISOString(), school, name, phone, email, biz, field, about:about.slice(0,1500), consent:true };
-  const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
-  SENDING = true; const btn = $('sendBtn'); btn.disabled = true; btn.textContent = 'שולח…';
+  const payload = { v:1, ts:new Date().toISOString(), school, name, phone, email, biz, field, about:about.slice(0,1500), logo:!!LOGO_DATA, consent:true };
+  const params = {action:'intakeSubmit', school:REC_ID, json:JSON.stringify(payload)};
+  SENDING = true; const btn = $('sendBtn'); btn.disabled = true;
+  if(LOGO_DATA){
+    btn.textContent = 'מעלה את התמונה…';
+    try{ await postLogo(); }
+    catch(e){ SENDING=false; btn.disabled=false; btn.textContent='שליחה';
+      err.textContent = 'התמונה לא עלתה. נסו שוב, או לחצו "הסרה" ושלחו בלי תמונה.'; return; }
+  }
+  btn.textContent = 'שולח…';
   const fail = () => { SENDING=false; btn.disabled=false; btn.textContent='שליחה';
     err.textContent = 'השליחה לא הצליחה. בדקו שיש אינטרנט ולחצו שוב.'; };
   try{
@@ -194,7 +264,8 @@ async function submit(){
 }
 
 /* ---------- ניהול (?admin=1, קוד צוות) ---------- */
-let BIZ = [], STATUS = {}, FILTER = 'all';
+let BIZ = [], STATUS = {}, LOGOS = {}, FILTER = 'all';
+const logoOf = p => LOGOS[String(p.id).replace(/^intake_/,'')] || '';
 async function loadAdmin(){
   const v = $('adminView'); v.classList.remove('hidden'); $('formView').classList.add('hidden');
   v.innerHTML = '<div class="card">טוען את העסקים…</div>';
@@ -205,6 +276,7 @@ async function loadAdmin(){
     BIZ = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].name && !st[k]._test)
       .map(k=>Object.assign({id:k}, st[k])).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
     STATUS = st[STATUS_KEY] || {};
+    try{ const L = await jsonp({action:'esekLogos', secret:GS_SECRET}); if(L && L.ok) LOGOS = L.logos || {}; }catch(e){}
     renderAdmin();
   }catch(e){
     if(window.staffCodeFail && staffCodeFail(e, v)) return;
@@ -227,7 +299,9 @@ function renderAdmin(){
       <button class="btn" onclick="loadAdmin()">🔄 רענון</button>
     </div>
     ${list.map(p=>{ const note=(STATUS[p.id]||{}).n||'', tel=normPhone(p.phone), wa='972'+tel.replace(/^0/,'');
+      const lg = logoOf(p);
       return `<div class="card biz">
+        ${lg?`<a href="${esc(lg)}" download="${esc(p.biz)}.jpg" title="הורדת התמונה"><img class="blogo" src="${esc(lg)}" alt=""></a>`:''}
         <h3>${esc(p.biz)}</h3>
         <div class="meta">${esc(p.field)} · ${esc(new Date(p.ts).toLocaleDateString('he-IL'))}</div>
         <div class="row"><b>בוגר/ת:</b> ${esc(p.name)} · ${esc(p.school)}</div>
@@ -256,7 +330,7 @@ async function saveStatus(id, patch){
 }
 function exportCsv(){
   const cols = [['תאריך',p=>new Date(p.ts).toLocaleDateString('he-IL')],['בית ספר',p=>p.school],['שם',p=>p.name],['טלפון',p=>p.phone],['אימייל',p=>p.email],
-    ['שם העסק',p=>p.biz],['תחום',p=>p.field],['על העסק',p=>p.about],['הערה',p=>(STATUS[p.id]||{}).n||'']];
+    ['שם העסק',p=>p.biz],['תחום',p=>p.field],['על העסק',p=>p.about],['תמונה',p=>logoOf(p)?'יש':''],['הערה',p=>(STATUS[p.id]||{}).n||'']];
   const q = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const csv = '﻿'+[cols.map(c=>q(c[0])).join(',')].concat(BIZ.map(p=>cols.map(c=>q(c[1](p))).join(','))).join('\r\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
@@ -267,6 +341,7 @@ function exportCsv(){
 if(new URLSearchParams(location.search).has('admin')) loadAdmin();
 else {
   $('f_school').innerHTML = '<option value="">בחירה מהרשימה</option>' + SCHOOLS.map(s=>`<option>${esc(s)}</option>`).join('');
+  $('f_logo').onchange = pickLogo; $('logoDel').onclick = () => { LOGO_DATA = ''; showLogo(); };
   $('sendBtn').onclick = submit;
 }
 </script>
