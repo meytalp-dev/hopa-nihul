@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הכנה לשירות ושיתופי פעולה בקהילה | הופה</title>
+<meta property="og:title" content="שאלון לרכזי הבוגרים: הכנה לשירות ושיתופי פעולה בקהילה">
+<meta property="og:description" content="עמותת הופה · כ-5 דקות">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="staff-code.js"></script>
+<style>
+:root{--pink:#E8348A;--pink-d:#c4206f;--y:#FFF200;--ink:#1d1b20;--muted:#6b6670;--line:#e8e2ea;--bg:#faf6f8;--card:#fff;--soft:#fde9f2;--red:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,'Noto Sans Arabic',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+html[lang=ar] body{font-family:'Noto Sans Arabic',Rubik,Arial,sans-serif}
+.stripe{display:flex;height:5px}.stripe i{flex:1}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 40px}
+.wrap.wide{max-width:900px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0 6px}
+header.top img{height:40px;display:block}
+.lang{font:inherit;font-size:15px;font-weight:500;background:#fff;border:1.5px solid var(--pink);color:var(--pink-d);border-radius:999px;padding:7px 16px;cursor:pointer;min-height:40px}
+h1{font-size:clamp(23px,6vw,30px);line-height:1.25;margin:10px 0 6px;font-weight:800}
+.uline{display:block;width:90px;height:5px;border-radius:5px;background:var(--y);margin:0 0 14px}
+.intro p{margin:0 0 8px;font-size:16px}
+.intro .time{color:var(--muted);font-size:14.5px}
+.sec{margin-top:26px}
+.sec h2{font-size:19px;margin:0 0 12px;color:var(--pink-d);border-inline-start:4px solid var(--pink);padding-inline-start:10px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.q.miss{border-color:var(--red);box-shadow:0 0 0 2px #f6d5d1}
+.qt{font-size:17.5px;font-weight:700;line-height:1.4;margin-bottom:4px}
+.req{color:var(--pink)}
+.qh{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choices button{display:flex;align-items:center;gap:12px;width:100%;text-align:start;font:inherit;font-size:15.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;line-height:1.35;min-height:48px}
+.choices button::before{content:'';flex:none;width:20px;height:20px;border:2px solid #c3bcc6;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.choices.multi button::before{border-radius:5px}
+.choices button.on{background:var(--soft);border-color:var(--pink)}
+.choices button.on::before{border-color:var(--pink);background:var(--pink);box-shadow:inset 0 0 0 3px #fff}
+.choices.multi button.on::before{content:'✓';box-shadow:none}
+.field,textarea,select{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:96px;resize:vertical}
+.field:focus,textarea:focus,select:focus{outline:2px solid #f5b3d2;border-color:var(--pink)}
+.field.other{margin-top:8px}
+.ltr{direction:ltr;text-align:left}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.contact label{font-size:13px;color:var(--muted);display:block;margin-bottom:2px}
+.body-help{border-top:1px dashed var(--line);padding-top:12px;margin-top:12px}
+.body-help:first-of-type{border-top:0;padding-top:0;margin-top:4px}
+.body-help .bn{font-weight:700;margin-bottom:8px;color:var(--pink-d)}
+.body-help .choices{flex-direction:row;flex-wrap:wrap}
+.body-help .choices button{width:auto;min-height:42px;font-size:14.5px;padding:8px 12px}
+.note{font-size:14px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.cta{display:inline-flex;align-items:center;justify-content:center;font:inherit;font-size:18px;font-weight:700;background:var(--pink);color:#fff;border:0;border-radius:999px;padding:13px 40px;cursor:pointer;min-height:52px;width:100%;margin-top:10px}
+.cta:disabled{opacity:.6;cursor:default}
+.err{color:var(--red);font-size:14.5px;margin-top:10px;text-align:center;min-height:1em}
+.done{text-align:center;padding:40px 6px}
+.done .ok{width:74px;height:74px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:38px}
+.done h2{font-size:28px;margin:0 0 8px}
+.again{font:inherit;font-size:14px;background:none;border:0;color:var(--pink-d);text-decoration:underline;cursor:pointer;margin-top:10px;padding:8px}
+footer{text-align:center;font-size:12.5px;color:var(--muted);padding:6px 16px 22px}
+footer a{color:var(--pink-d)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+/* תצוגת ניהול */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:28px;font-weight:800;color:var(--pink-d);line-height:1.1}
+.kpi span{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:500}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 2px;font-size:18px}
+.card .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+.qa{display:grid;grid-template-columns:minmax(140px,38%) 1fr;gap:6px 14px;font-size:14.5px;border-top:1px solid var(--line);padding-top:10px}
+.qa .k{color:var(--muted)}
+.qa .v{white-space:pre-line}
+details.box{background:#fff;border:1px solid var(--line);border-radius:14px;margin:12px 0}
+details.box summary{cursor:pointer;padding:12px 16px;font-weight:500;color:var(--pink-d)}
+details.box .in{padding:0 16px 14px}
+.sl{display:flex;flex-wrap:wrap;gap:6px}
+.sl span{font-size:13px;background:#f3eff4;border-radius:999px;padding:3px 11px}
+.sl span.ar{background:#fff6b3}
+@media (max-width:560px){
+  .contact{grid-template-columns:1fr}
+  .qa{grid-template-columns:1fr;gap:0}
+  .qa .k{margin-top:8px}
+}
+</style>
+</head>
+<body>
+<div class="stripe"><i style="background:#E8348A"></i><i style="background:#FFF200"></i><i style="background:#E8348A"></i></div>
+<div class="wrap" id="wrap">
+  <header class="top">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a>
+    <button class="lang" id="langBtn" onclick="switchLang()" hidden></button>
+  </header>
+  <div id="app"></div>
+</div>
+<footer>עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener" dir="ltr">hopa.org.il</a></footer>
+<div id="toast" class="toast"></div>
+
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const RESP_PREFIX = 'sherut-';            // תשובות נשמרות כ-intake_sherut-<id> (לא ציבורי — קריאה רק עם קוד צוות)
+const DRAFT_KEY = 'sherut_draft', SENT_KEY = 'sherut_sent';
+const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}, del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const PRM = new URLSearchParams(location.search);
+const ADMIN = PRM.has('admin');
+let LANG = PRM.get('lang')==='ar' ? 'ar' : 'he';
+
+const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','אלאמאני סחנין','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','יוצר עתיד פלמחים','מגשימים בית שאן','מנאראת טורעאן','עמל טכנולוגי אשדוד','עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד מגשימים כרמיאל','עתיד שמיים מוצקין','תיכון חברתי חיפה','תיכון חושן','תיכון נחלים','תיכון שיח'];
+// בתי ספר שמקבלים את הקישור בערבית (בדף הניהול)
+const AR_SCHOOLS = ['אלאמאני סחנין','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','מנאראת טורעאן','עמל טכנולוגי רהט','עתיד אבדאע ביר אלמכסור'];
+
+const T = {
+  he:{title:'הכנה לשירות ושיתופי פעולה בקהילה', hello:'שלום לרכזי ולרכזות הבוגרים,',
+    intro:'אנחנו בהופה ממפים מה כבר קיים בכל בית ספר בתחום ההכנה לשירות ושיתופי הפעולה בקהילה. המטרה היא לחבר את הבוגרים למה שכבר עובד אצלכם, ולא להוסיף עוד מסגרת.',
+    time:'מילוי השאלון לוקח כ-5 דקות. תודה!', s0:'פרטים', s1:'חלק א: הכנה לשירות', s2:'חלק ב: שיתופי פעולה בקהילה',
+    multi:'אפשר לבחור כמה', optional:'רשות', otherPh:'פרטו כאן', schoolPh:'בחרו את בית הספר', schoolOther:'אחר', schoolOtherPh:'שם בית הספר',
+    skip:'סימנתם שמסגרות שירות לא רלוונטיות לרוב הבוגרים, ולכן מדלגים לחלק ב.', perBody:'לכל גורם אפשר לבחור כמה', noBodies:'קודם סמנו גורמים בשאלה 9.',
+    cName:'שם', cRole:'תפקיד', cPhone:'טלפון', cMail:'מייל', send:'שליחת השאלון', sending:'שולח…', retry:'גוגל מתעכב — מנסה שוב…',
+    missing:'יש שאלות חובה בלי תשובה (מסומנות באדום)', fail:'השליחה לא הצליחה. בדקו שיש אינטרנט ולחצו שוב — התשובות שמורות במכשיר.',
+    thanks:'תודה רבה!', thanksP:'התשובות נשמרו. נחזור אליכם אם נצטרך פרטים נוספים.', again:'מילוי חדש מהמכשיר הזה', other:'العربية'},
+  ar:{title:'التحضير للخدمة والشراكات مع المجتمع', hello:'تحية لمركّزي ومركّزات الخريجين،',
+    intro:'نحن في "هوبا" نقوم بمسح ما هو موجود في كل مدرسة في مجال التحضير للخدمة والشراكات مع المجتمع. الهدف هو ربط الخريجين بما ينجح لديكم بالفعل، وليس إضافة إطار آخر.',
+    time:'تعبئة الاستبيان تستغرق نحو 5 دقائق. شكرًا!', s0:'تفاصيل', s1:'القسم أ: التحضير للخدمة', s2:'القسم ب: الشراكات مع المجتمع',
+    multi:'يمكن اختيار أكثر من إجابة', optional:'اختياري', otherPh:'يرجى التفصيل هنا', schoolPh:'اختاروا المدرسة', schoolOther:'أخرى', schoolOtherPh:'اسم المدرسة',
+    skip:'أشرتم إلى أن أطر الخدمة غير ملائمة لمعظم الخريجين، لذلك ننتقل إلى القسم ب.', perBody:'لكل جهة يمكن اختيار أكثر من إجابة', noBodies:'يرجى أولًا اختيار جهات في السؤال 9.',
+    cName:'الاسم', cRole:'الوظيفة', cPhone:'الهاتف', cMail:'البريد الإلكتروني', send:'إرسال الاستبيان', sending:'جارٍ الإرسال…', retry:'جوجل يتأخر — نحاول مرة أخرى…',
+    missing:'هناك أسئلة إلزامية بدون إجابة (مُعلَّمة باللون الأحمر)', fail:'لم ينجح الإرسال. تأكدوا من وجود اتصال بالإنترنت واضغطوا مرة أخرى — الإجابات محفوظة على الجهاز.',
+    thanks:'شكرًا جزيلًا!', thanksP:'تم حفظ الإجابات. سنعود إليكم إذا احتجنا إلى تفاصيل إضافية.', again:'تعبئة جديدة من هذا الجهاز', other:'עברית'}
+};
+const t = k => T[LANG][k];
+
+/* ---------- השאלון (הנוסח שאושר 1.11.2026) ----------
+   v = מה שנשמר בגיליון (תמיד בעברית). אפשרות בלי he או בלי ar לא מוצגת באותה שפה. */
+const O = (he, ar, f) => Object.assign({v:he, he, ar}, f||{});
+const QS = [
+  {id:'school', n:1, sec:0, type:'school', req:1, he:'בית הספר', ar:'المدرسة'},
+  {id:'rakaz', n:2, sec:0, type:'line', req:1, he:'שם הרכז/ת', ar:'اسم المركّز/ة'},
+  {id:'frames', n:3, sec:1, type:'multi', req:1, he:'אילו מסגרות שירות רלוונטיות לבוגרים שלכם?', ar:'ما هي الأطر الملائمة لخريجيكم؟',
+    opts:[O('צה"ל','الجيش'), O('שירות לאומי','الخدمة الوطنية'), O('שירות אזרחי','الخدمة المدنية'), O('מכינה קדם-צבאית / שנת שירות','سنة تحضيرية (مكيناه) / سنة خدمة'),
+      O('הכנה ללימודים גבוהים','التحضير للتعليم العالي'), O('לא רלוונטי לרוב הבוגרים','غير ملائم لمعظم الخريجين',{excl:1})],
+    arOrder:[2,1,3,4,0,5]},
+  {id:'prog', n:4, sec:1, svc:1, type:'single', req:1, he:'האם פועלת אצלכם תוכנית הכנה לשירות?', ar:'هل يوجد لديكم برنامج تحضير للخدمة؟',
+    opts:[O('כן, באופן קבוע','نعم، بشكل ثابت'), O('כן, פעילות חד-פעמית בלבד','نعم، نشاط لمرة واحدة فقط'), O('לא','لا')]},
+  {id:'progDetails', n:5, sec:1, svc:1, type:'text', req:0, show:()=>ANS.prog===0||ANS.prog===1,
+    he:'פרטו: שם התוכנית, מי מפעיל אותה ובאיזו שכבה', ar:'يرجى التفصيل: اسم البرنامج، الجهة المشغّلة، والصف'},
+  {id:'resp', n:6, sec:1, svc:1, type:'line', req:1, he:'מי אחראי/ת על ההכנה לשירות בבית הספר? (שם + תפקיד)', ar:'من المسؤول/ة عن التحضير للخدمة في المدرسة؟ (الاسم + الوظيفة)'},
+  {id:'partners', n:7, sec:1, svc:1, type:'multi', req:1, he:'עם אילו גורמים חיצוניים אתם עובדים בנושא?', ar:'مع أي جهات خارجية تعملون في هذا المجال؟',
+    opts:[O('קצין/ת מיטב / לשכת גיוס',null), O('רכז/ת הכנה לצה"ל ברשות',null),
+      O(null,'مركّز/ة الخدمة المدنية',{v:'רכז/ת שירות אזרחי'}), O(null,'مركّز/ة في السلطة المحلية',{v:'רכז/ת ברשות'}),
+      O('עמותה (פרטו)','جمعية (يرجى التفصيل)',{other:1, v:'עמותה'}), O('אין','لا يوجد',{excl:1}), O('אחר','أخرى',{other:1})]},
+  {id:'notServing', n:8, sec:1, svc:1, type:'single', req:1,
+    he:'מה קורה עם בוגרים שלא משרתים (פטור, אי-גיוס, נשירה מהשירות)?', ar:'ماذا يحدث مع الخريجين الذين لا ينخرطون في أي إطار (خدمة، تعليم أو عمل)؟',
+    opts:[O('יש להם ליווי מסודר','توجد لهم مرافقة منتظمة'), O('יש טיפול לפי מקרה','نتابع حسب الحالة'), O('אין טיפול','لا توجد متابعة')]},
+  {id:'bodies', n:9, sec:2, type:'multi', req:0, he:'עם אילו גורמים בקהילה אתם עובדים?', ar:'مع أي جهات في المجتمع تعملون؟',
+    opts:[O('מחלקת נוער ברשות','قسم الشبيبة في السلطة المحلية'), O('יחידה לקידום נוער','وحدة النهوض بالشبيبة'), O('רווחה','الشؤون الاجتماعية'),
+      O('מתנ"ס','المركز الجماهيري'), O('עמותות','جمعيات'), O('מעסיקים','مشغّلون'), O('אחר','أخرى',{other:1})]},
+  {id:'help', n:10, sec:2, type:'perBody', req:0, he:'במה כל גורם שסימנתם עוזר לתלמידים או לבוגרים?', ar:'بماذا تساعد كل جهة اخترتموها الطلاب أو الخريجين؟',
+    opts:[O('הרצאה או סדנה','محاضرة أو ورشة'), O('ליווי אישי של תלמיד/ה או בוגר/ת','مرافقة شخصية لطالب/ة أو خريج/ة'), O('אנחנו מפנים אליו בוגרים','نحوّل إليها خريجين'),
+      O('עזרה כספית או מלגות','مساعدة مالية أو منح'), O('עבודה או התנדבות','عمل أو تطوع'), O('אחר','أخرى',{other:1})]},
+  {id:'stuck', n:11, sec:2, type:'text', req:1, he:'כשבוגר/ת נתקע/ת, למי אתם פונים?', ar:'عندما يواجه خريج/ة صعوبة، إلى من تتوجهون؟'},
+  {id:'contact', n:12, sec:2, type:'contact', req:0, he:'איש/אשת קשר בקהילה שנוכל לפנות אליו/ה', ar:'شخص اتصال في المجتمع يمكننا التوجه إليه'},
+  {id:'stopped', n:13, sec:2, type:'text', req:0, he:'האם הייתה תוכנית או שיתוף פעולה שנפסקו? אם כן, מה קרה?', ar:'هل كان هناك برنامج أو شراكة وتوقفت؟ إذا نعم، ماذا حدث؟'}
+];
+const Q = id => QS.find(q=>q.id===id);
+
+let ANS = {};
+try{ ANS = JSON.parse(LS.get(DRAFT_KEY)||'{}') || {}; }catch(e){ ANS = {}; }
+let SENDING = false, TRIED = false;
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2400);}
+function save(){ LS.set(DRAFT_KEY, JSON.stringify(ANS)); }
+
+const svcSkip = () => { const f = ANS.frames||[]; return f.length>0 && f.every(i=>Q('frames').opts[i].excl); };
+const visible = q => !(q.svc && svcSkip()) && (!q.show || q.show());
+const order = q => (LANG==='ar' && q.arOrder ? q.arOrder : q.opts.map((_,i)=>i)).filter(i=>q.opts[i][LANG]);
+const oTxt = (qid, i) => String(ANS[qid+'_o'+i]||'').trim();
+// גורמים שסומנו בשאלה 9 — עם הטקסט של "אחר"
+const bodyName = i => { const o = Q('bodies').opts[i]; return o.other && oTxt('bodies',i) ? oTxt('bodies',i) : o[LANG]||o.v; };
+
+function answered(q){
+  const a = ANS[q.id];
+  if(q.type==='school') return !!a && (a!=='other' || !!String(ANS.schoolOther||'').trim());
+  if(q.type==='line' || q.type==='text') return !!String(a||'').trim();
+  if(q.type==='multi') return Array.isArray(a) && a.length>0;
+  if(q.type==='single') return a!=null;
+  return true;
+}
+
+/* ---------- טופס ---------- */
+function setLang(){
+  document.documentElement.lang = LANG; document.documentElement.dir = 'rtl';
+  document.title = t('title') + (LANG==='ar' ? ' | هوبا' : ' | הופה');
+  const b = document.getElementById('langBtn'); b.textContent = t('other'); b.hidden = ADMIN;
+}
+function switchLang(){
+  LANG = LANG==='ar' ? 'he' : 'ar';
+  const u = new URL(location.href); if(LANG==='ar') u.searchParams.set('lang','ar'); else u.searchParams.delete('lang');
+  history.replaceState(null,'',u);
+  setLang(); render();
+}
+
+function qHTML(q){
+  const a = ANS[q.id];
+  const miss = TRIED && q.req && !answered(q);
+  let h = `<div class="q${miss?' miss':''}" id="q_${q.id}"><div class="qt">${q.n}. ${esc(q[LANG])}${q.req?' <span class="req">*</span>':''}</div>`;
+  const hint = q.type==='multi' ? t('multi') : q.type==='perBody' ? t('perBody') : (!q.req ? t('optional') : '');
+  if(hint) h += `<div class="qh">${esc(hint)}</div>`;
+  if(q.type==='school'){
+    h += `<select onchange="setV('school',this.value)"><option value="">${esc(t('schoolPh'))}</option>${SCHOOLS.map(s=>`<option${a===s?' selected':''}>${esc(s)}</option>`).join('')}<option value="other"${a==='other'?' selected':''}>${esc(t('schoolOther'))}</option></select>`;
+    if(a==='other') h += `<input class="field other" placeholder="${esc(t('schoolOtherPh'))}" value="${esc(ANS.schoolOther||'')}" oninput="setT('schoolOther',this.value)">`;
+  }
+  else if(q.type==='line') h += `<input class="field" value="${esc(a||'')}" oninput="setT('${q.id}',this.value)">`;
+  else if(q.type==='text') h += `<textarea oninput="setT('${q.id}',this.value)">${esc(a||'')}</textarea>`;
+  else if(q.type==='single' || q.type==='multi'){
+    const on = i => q.type==='multi' ? (a||[]).includes(i) : a===i;
+    h += `<div class="choices ${q.type}">${order(q).map(i=>`<button type="button" class="${on(i)?'on':''}" onclick="pick('${q.id}',${i})">${esc(q.opts[i][LANG])}</button>`).join('')}</div>`;
+    order(q).filter(i=>q.opts[i].other && on(i)).forEach(i=>{
+      h += `<input class="field other" placeholder="${esc(q.opts[i][LANG])}: ${esc(t('otherPh'))}" value="${esc(ANS[q.id+'_o'+i]||'')}" oninput="setT('${q.id}_o${i}',this.value)">`;
+    });
+  }
+  else if(q.type==='perBody'){
+    const bodies = (ANS.bodies||[]).slice().sort((x,y)=>x-y);
+    if(!bodies.length) h += `<div class="qh">${esc(t('noBodies'))}</div>`;
+    const hv = ANS.help||{};
+    bodies.forEach(b=>{
+      const cur = hv[b]||[];
+      h += `<div class="body-help"><div class="bn">${esc(bodyName(b))}</div><div class="choices multi">${order(q).map(i=>`<button type="button" class="${cur.includes(i)?'on':''}" onclick="pickHelp(${b},${i})">${esc(q.opts[i][LANG])}</button>`).join('')}</div>`;
+      order(q).filter(i=>q.opts[i].other && cur.includes(i)).forEach(i=>{
+        h += `<input class="field other" placeholder="${esc(t('otherPh'))}" value="${esc(ANS['help_o'+b]||'')}" oninput="setT('help_o${b}',this.value)">`;
+      });
+      h += `</div>`;
+    });
+  }
+  else if(q.type==='contact'){
+    const c = a||{};
+    const f = (k, lbl, typ, ltr) => `<div><label>${esc(t(lbl))}</label><input class="field${ltr?' ltr':''}" type="${typ}" value="${esc(c[k]||'')}" oninput="setC('${k}',this.value)"${ltr?' dir="ltr"':''}></div>`;
+    h += `<div class="contact">${f('name','cName','text')}${f('role','cRole','text')}${f('phone','cPhone','tel',1)}${f('email','cMail','email',1)}</div>`;
+  }
+  return h + '</div>';
+}
+
+function render(){
+  if(ADMIN) return;
+  let h = `<div class="intro"><h1>${esc(t('title'))}</h1><span class="uline"></span>
+    <p><b>${esc(t('hello'))}</b></p><p>${esc(t('intro'))}</p><p class="time">${esc(t('time'))}</p></div>`;
+  [0,1,2].forEach(s=>{
+    h += `<section class="sec"><h2>${esc(t('s'+s))}</h2>`;
+    if(s===1 && svcSkip()) h += qHTML(Q('frames')) + `<div class="note">${esc(t('skip'))}</div>`;
+    else QS.filter(q=>q.sec===s && visible(q)).forEach(q=>h += qHTML(q));
+    h += `</section>`;
+  });
+  h += `<button class="cta" id="sendBtn" onclick="submit()">${esc(t('send'))}</button><div class="err" id="err"></div>`;
+  app.innerHTML = h;
+}
+const rerender = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
+
+function setT(k, v){ ANS[k] = v; save(); }
+function setV(k, v){ ANS[k] = v; save(); rerender(); }
+function setC(k, v){ ANS.contact = Object.assign({}, ANS.contact, {[k]:v}); save(); }
+function toggle(q, cur, i){
+  cur = (cur||[]).slice();
+  const k = cur.indexOf(i);
+  if(k>-1){ cur.splice(k,1); return cur; }
+  if(q.opts[i].excl) return [i];                       // "אין" / "לא רלוונטי" מבטל את השאר, ולהפך
+  return cur.filter(j=>!q.opts[j].excl).concat(i);
+}
+function pick(qid, i){
+  const q = Q(qid);
+  if(q.type==='multi') ANS[qid] = toggle(q, ANS[qid], i);
+  else ANS[qid] = ANS[qid]===i ? null : i;
+  save(); rerender();
+}
+function pickHelp(b, i){
+  ANS.help = Object.assign({}, ANS.help);
+  ANS.help[b] = toggle(Q('help'), ANS.help[b], i);
+  save(); rerender();
+}
+
+// התשובה כטקסט בעברית — כך היא נשמרת בגיליון ומוצגת בתצוגת הניהול
+function label(q, i, otherText){ const o = q.opts[i]; return o.other && otherText ? o.v+': '+otherText : o.v; }
+function value(q){
+  const a = ANS[q.id];
+  if(q.type==='school') return a==='other' ? 'אחר: '+String(ANS.schoolOther||'').trim() : (a||'');
+  if(q.type==='line' || q.type==='text') return String(a||'').trim();
+  if(q.type==='single') return a==null ? '' : q.opts[a].v;
+  if(q.type==='multi') return (a||[]).map(i=>label(q, i, oTxt(q.id,i)));
+  if(q.type==='perBody'){
+    const o = {};
+    (ANS.bodies||[]).forEach(b=>{ const cur = (ANS.help||{})[b]||[];
+      if(cur.length) o[label(Q('bodies'), b, oTxt('bodies',b))] = cur.map(i=>label(q, i, String(ANS['help_o'+b]||'').trim())); });
+    return Object.keys(o).length ? o : '';
+  }
+  if(q.type==='contact'){
+    const c = {}; ['name','role','phone','email'].forEach(k=>{ const v = String((a||{})[k]||'').trim(); if(v) c[k]=v; });
+    return Object.keys(c).length ? c : '';
+  }
+  return '';
+}
+
+/* ---------- גיליון ---------- */
+function jsonpOnce(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
+async function jsonp(params, onRetry){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
+    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; if(onRetry) onRetry(i+1); }
+  }
+  throw err;
+}
+
+async function submit(){
+  if(SENDING) return;
+  TRIED = true;
+  const missing = QS.filter(q=>visible(q) && q.req && !answered(q));
+  if(missing.length){
+    render();
+    document.getElementById('err').textContent = t('missing');
+    document.getElementById('q_'+missing[0].id).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const err = document.getElementById('err'); err.textContent = '';
+  SENDING = true; const btn = document.getElementById('sendBtn'); btn.disabled = true; btn.textContent = t('sending');
+  const payload = {v:1, ts:new Date().toISOString(), lang:LANG, school:value(Q('school')), rakaz:value(Q('rakaz')), a:{}};
+  QS.filter(q=>visible(q) && q.sec>0).forEach(q=>{ const v = value(q); if(v!=='' && !(Array.isArray(v) && !v.length)) payload.a[q.id] = v; });
+  const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
+  // "תודה" מוצג רק אחרי שהשרת אישר שהתשובות נשמרו
+  const fail = () => { SENDING=false; btn.disabled=false; btn.textContent=t('send'); err.textContent=t('fail'); };
+  try{
+    if(new URLSearchParams(params).toString().length>6500){
+      // תשובה ארוכה במיוחד לא נכנסת לכתובת — שולחים בפוסט (בלי אישור מהשרת, מקרה נדיר)
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});
+    } else {
+      const r = await jsonp(params, ()=>{ btn.textContent = t('retry'); });
+      if(!r || !r.ok) return fail();
+    }
+  }catch(e){ return fail(); }
+  LS.del(DRAFT_KEY); LS.set(SENT_KEY, payload.ts);
+  showDone();
+}
+function showDone(){
+  app.innerHTML = `<div class="done"><div class="ok">✓</div><h2>${esc(t('thanks'))}</h2><p>${esc(t('thanksP'))}</p>
+    <button class="again" onclick="again()">${esc(t('again'))}</button></div>`;
+  window.scrollTo({top:0});
+}
+function again(){ ANS={}; TRIED=false; SENDING=false; LS.del(SENT_KEY); LS.del(DRAFT_KEY); render(); window.scrollTo({top:0}); }
+
+/* ---------- תצוגת ניהול (?admin) — רק עם קוד צוות הופה ---------- */
+const FORM_URL = new URL('sherut-kehila.html', location.href).href;
+const FORM_URL_AR = FORM_URL + '?lang=ar';
+const MSG_HE = `שלום לרכזי ולרכזות הבוגרים 👋
+אנחנו בהופה ממפים מה כבר קיים בכל בית ספר בתחום ההכנה לשירות ושיתופי הפעולה בקהילה. המטרה היא לחבר את הבוגרים למה שכבר עובד אצלכם.
+שאלון קצר, כ-5 דקות:
+${FORM_URL}
+תודה רבה! 🙏`;
+const MSG_AR = `تحية لمركّزي ومركّزات الخريجين 👋
+نحن في "هوبا" نقوم بمسح ما هو موجود في كل مدرسة في مجال التحضير للخدمة والشراكات مع المجتمع. الهدف هو ربط الخريجين بما ينجح لديكم بالفعل.
+استبيان قصير، نحو 5 دقائق:
+${FORM_URL_AR}
+شكرًا جزيلًا! 🙏`;
+let RESP = [];
+function copy(txt, ok){
+  const done = () => toast(ok);
+  if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+  function fallback(){ const a=document.createElement('textarea'); a.value=txt; document.body.appendChild(a); a.select(); try{document.execCommand('copy'); done();}catch(e){prompt('העתיקו:', txt);} a.remove(); }
+}
+const fmt = iso => { if(!iso) return '—'; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'2-digit'})+' · '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+function show(id, v){
+  if(Array.isArray(v)) return v.join(' · ');
+  if(v && typeof v==='object'){
+    if(id==='contact') return ['name','role','phone','email'].map(k=>v[k]).filter(Boolean).join(' · ');
+    return Object.keys(v).map(b=>b+': '+[].concat(v[b]).join(', ')).join('\n');
+  }
+  return String(v==null?'':v);
+}
+
+async function loadAdmin(){
+  document.getElementById('wrap').classList.add('wide');
+  app.innerHTML = '<p class="qh" style="margin-top:20px">טוען מהגיליון…</p>';
+  try{
+    const secret = GS_SECRET;
+    if(!secret) throw new Error('unauthorized');
+    const r = await jsonp({action:'storeAll', secret}, i=>{ app.innerHTML = `<p class="qh" style="margin-top:20px">גוגל מתעכב — מנסה שוב (${i}/4)…</p>`; });
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    const st = r.store||{};
+    RESP = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].a).map(k=>st[k])
+      .sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    renderAdmin();
+  }catch(e){
+    if(staffCodeFail(e, app)) return;
+    app.innerHTML = '<p class="err">לא הצלחתי לטעון מהגיליון. רעננו את הדף.</p>';
+  }
+}
+function renderAdmin(){
+  const bySchool = {};
+  RESP.forEach(x=>(bySchool[x.school] = bySchool[x.school]||[]).push(x));
+  const filled = Object.keys(bySchool);
+  const missing = SCHOOLS.filter(s=>!bySchool[s]);
+  let h = `<h1>שאלון הכנה לשירות ושיתופי פעולה: התשובות</h1><span class="uline"></span>
+    <div class="kpis"><div class="kpi"><b>${filled.length}</b><span>בתי ספר מילאו</span></div>
+      <div class="kpi"><b>${missing.length}</b><span>עוד לא מילאו</span></div>
+      <div class="kpi"><b style="font-size:16px;padding-top:8px">${fmt(RESP[0]&&RESP[0].ts)}</b><span>תשובה אחרונה</span></div></div>
+    <details class="box"><summary>שליחת השאלון לרכזים</summary><div class="in">
+      <div class="btns"><button class="btn primary" onclick="copy(MSG_HE,'ההודעה בעברית הועתקה — אפשר להדביק בוואטסאפ')">העתקת הודעה בעברית</button>
+        <button class="btn primary" onclick="copy(MSG_AR,'ההודעה בערבית הועתקה — אפשר להדביק בוואטסאפ')">העתקת הודעה בערבית</button>
+        <a class="btn" href="${esc(FORM_URL)}" target="_blank" rel="noopener">פתיחת השאלון</a>
+        <a class="btn" href="${esc(FORM_URL_AR)}" target="_blank" rel="noopener">פתיחה בערבית</a></div></div></details>
+    <details class="box"${missing.length?' open':''}><summary>עוד לא מילאו (${missing.length})</summary><div class="in">
+      <div class="sl">${missing.map(s=>`<span class="${AR_SCHOOLS.includes(s)?'ar':''}">${esc(s)}</span>`).join('')}</div>
+      <p class="qh" style="margin-top:8px">בצהוב: בתי ספר שמקבלים את הקישור בערבית.</p>
+      <div class="btns"><button class="btn" onclick="copy(SCHOOLS.filter(s=>!RESP.some(x=>x.school===s)).join('\\n'),'הרשימה הועתקה')">העתקת הרשימה</button>
+        <button class="btn" onclick="exportCSV()">ייצוא לאקסל</button></div></div></details>`;
+  if(!RESP.length) h += '<p class="qh" style="margin-top:20px">עוד אין תשובות. כשרכז/ת ימלא/תמלא, התשובות יופיעו כאן.</p>';
+  filled.sort((a,b)=>a.localeCompare(b,'he')).forEach(s=>{
+    const x = bySchool[s][0], more = bySchool[s].length-1;
+    h += `<div class="card"><h3>${esc(s)}</h3><div class="meta">${esc(x.rakaz)} · ${fmt(x.ts)}${x.lang==='ar'?' · מולא בערבית':''}${more?` · ועוד ${more} מילוי/ים קודמים`:''}</div><div class="qa">`;
+    QS.filter(q=>q.sec>0).forEach(q=>{
+      const v = x.a[q.id];
+      if(v==null || v==='') return;
+      h += `<div class="k">${q.n}. ${esc(q.he)}</div><div class="v" dir="auto">${esc(show(q.id, v))}</div>`;
+    });
+    if(x.a.frames && !('prog' in x.a)) h +=`<div class="k">חלק א</div><div class="v">דילגו (לא רלוונטי)</div>`;
+    h += `</div></div>`;
+  });
+  app.innerHTML = h;
+}
+function exportCSV(){
+  if(!RESP.length){ toast('עוד אין תשובות לייצוא'); return; }
+  const cols = QS.filter(q=>q.sec>0);
+  const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows = [['תאריך','בית ספר','רכז/ת','שפה'].concat(cols.map(q=>q.n+'. '+q.he)).map(cell).join(',')];
+  RESP.forEach(x=>rows.push([fmt(x.ts), x.school, x.rakaz, x.lang==='ar'?'ערבית':'עברית'].concat(cols.map(q=>show(q.id, x.a[q.id]))).map(cell).join(',')));
+  const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'הכנה-לשירות-וקהילה-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+setLang();
+if(ADMIN) loadAdmin();
+else if(LS.get(SENT_KEY) && !Object.keys(ANS).length) showDone();
+else render();
+</script>
+</body>
+</html>
