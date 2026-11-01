@@ -102,10 +102,12 @@
     <details class="tpl">
       <summary>✏️ עריכת הנוסחים</summary>
       <p class="hint" style="margin-top:6px">אפשר לכתוב <b>{רכז}</b>, <b>{בית ספר}</b> ו-<b>{קישור}</b>, והם יוחלפו לכל בית ספר. השינויים נשמרים בגיליון לכל הצוות.</p>
+      <label for="t_head">שורה ראשונה (רק בהודעה המרכזת)</label><textarea id="t_head"></textarea>
       <label for="t_open">פתיחה</label><textarea id="t_open"></textarea>
       <label for="t_plan">1. תוכנית עבודה (רק למי שלא הגיש)</label><textarea id="t_plan"></textarea>
       <label for="t_dd">2. דרך דוד</label><textarea id="t_dd"></textarea>
       <label for="t_esek">3. בוגרים בעסקים</label><textarea id="t_esek"></textarea>
+      <label for="t_mech">4. שאלון מכינות לצוות</label><textarea id="t_mech"></textarea>
       <label for="t_mipui">הערה על שאלון המיפוי (בסוף ההודעה)</label><textarea id="t_mipui"></textarea>
       <label for="t_close">סיום</label><textarea id="t_close"></textarea>
       <div class="row"><button class="btn b1" id="tplSave">💾 שמירת הנוסחים</button><button class="btn b2" id="tplReset">↩ לנוסח המקורי</button></div>
@@ -158,14 +160,16 @@ const PLAN_ELSEWHERE = {
 };
 
 const DEFAULT_TPL = {
-  open: 'שלום לצוות {בית ספר} 😊\nכמה דברים קטנים מהופה לגבי הבוגרים שלכם:',
+  head: '📌 הודעה מרכזת עם כמה בקשות',
+  open: 'שלום לצוות {בית ספר} 😊',
   plan: 'תוכנית עבודה לבוגרים לשנת תשפ״ז, על התקציב של 10,000 ₪. הטופס קצר: כותבים מה מתכננים לעשות וכמה זה עולה, וזהו.\nהקישור של בית הספר:\n{קישור}',
   dd: 'דרך דוד — יש בוגרים שרוצים להתגייס ונתקלים בקושי, קיבלו פטור או דחייה, או צריכים ליווי בדרך לשירות? אפשר להעביר להם את טופס ההפניה הקצר:\n{קישור}',
   esek: 'בוגרים בעסקים — יש לכם בוגרים שפתחו עסק? אנחנו אוספים את העסקים של הבוגרים כדי לפרסם אותם. אפשר להעביר להם את הטופס:\n{קישור}',
+  mech: 'שאלון עמדות הצוות על מכינות — תודה רבה למי שכבר ענה! אם אפשר לבקש עוד פעם מאנשי הצוות שעוד לא ענו, נשמח. השאלון קצר:\n{קישור}',
   mipui: '📝 לידיעתכם: השבוע אנחנו נשלח לבוגרים את שאלון המיפוי של הופה. אם בוגרים פונים אליכם לגבי השאלון, זה הקישור (בוחרים בו את בית הספר מהרשימה):\n{קישור}',
   close: 'אם יש שאלה, אני כאן.\nתודה רבה! 🙏\nצוות הופה'
 };
-const NUM = ['1️⃣','2️⃣','3️⃣'];
+const NUM = ['1️⃣','2️⃣','3️⃣','4️⃣'];
 
 let DATA = { tpl:null, sent:{} };   // נשמר בגיליון תחת bakashot_send
 let PLAN_FORM = {};                  // בית ספר → תאריך הגשה בטופס התקציב
@@ -190,7 +194,7 @@ function links(s){
   if (s.c) dd += '&rakez='+encodeURIComponent(s.c);
   if (s.p) dd += '&tel='+digits(s.p);
   const mipui = 'https://bogrim.hopa.org.il' + (s.ar ? '\nבערבית: https://bogrim.hopa.org.il/ar' : '');
-  return { plan: BASE_URL+'taktziv.html?school='+q, dd, esek: BASE_URL+'bogrim-asakim.html', mipui };
+  return { plan: BASE_URL+'taktziv.html?school='+q, dd, esek: BASE_URL+'bogrim-asakim.html', mech: BASE_URL+'mechinot-tofes.html', mipui };
 }
 function fill(t, s, link){
   return t.replace(/\{רכז\}/g, firstName(s.c)).replace(/\{בית ספר\}/g, s.n).replace(/\{קישור\}/g, link||'')
@@ -203,15 +207,16 @@ function parts(s){
   if (!planStatus(s.n)) out.push({k:'plan', title:'תוכנית עבודה', text:fill(T.plan,s,L.plan)});
   out.push({k:'dd', title:'דרך דוד', text:fill(T.dd,s,L.dd)});
   out.push({k:'esek', title:'בוגרים בעסקים', text:fill(T.esek,s,L.esek)});
+  out.push({k:'mech', title:'שאלון מכינות לצוות', text:fill(T.mech,s,L.mech)});
   return out;
 }
 function combined(s){
   const T = tpl();
   const body = parts(s).map((p,i)=>NUM[i]+' '+p.text).join('\n\n');
   const note = mipuiNote(s);
-  return fill(T.open,s) + '\n\n' + body + (note ? '\n\n' + note : '') + '\n\n' + fill(T.close,s);
+  return T.head + '\n' + fill(T.open,s) + '\n\n' + body + (note ? '\n\n' + note : '') + '\n\n' + fill(T.close,s);
 }
-function single(s, p){ return fill(tpl().open,s).replace(/כמה דברים קטנים/,'משהו קטן') + '\n\n' + p.text + '\n\n' + fill(tpl().close,s); }
+function single(s, p){ return fill(tpl().open,s) + '\n\n' + p.text + '\n\n' + fill(tpl().close,s); }
 
 /* ── גיליון ── */
 function jsonpOnce(params, tmo){
@@ -273,7 +278,7 @@ async function load(){
 }
 
 /* ── תצוגה ── */
-function fillTpl(){ const T=tpl(); ['open','plan','dd','esek','mipui','close'].forEach(k=>$('t_'+k).value=T[k]); }
+function fillTpl(){ const T=tpl(); ['head','open','plan','dd','esek','mech','mipui','close'].forEach(k=>$('t_'+k).value=T[k]); }
 function render(){
   const noPlan = SCHOOLS.filter(s=>!planStatus(s.n)).length;
   const sent = SCHOOLS.filter(s=>DATA.sent[s.n]).length;
@@ -335,7 +340,7 @@ document.addEventListener('click', async e=>{
   else if (b.dataset.cp){ if (await copyText(msgText(b.dataset.cp))) toast('הועתק ✓ — עכשיו פתחו צ׳אט והדביקו'); }
   else if (b.dataset.sent){ DATA.sent[SCHOOLS[+b.dataset.sent].n]=new Date().toISOString(); render(); save('סומן ✓'); }
   else if (b.dataset.un){ delete DATA.sent[SCHOOLS[+b.dataset.un].n]; render(); save('הסימון בוטל'); }
-  else if (b.id==='tplSave'){ DATA.tpl={}; ['open','plan','dd','esek','mipui','close'].forEach(k=>DATA.tpl[k]=$('t_'+k).value); render(); save('הנוסחים נשמרו ✓'); }
+  else if (b.id==='tplSave'){ DATA.tpl={}; ['head','open','plan','dd','esek','mech','mipui','close'].forEach(k=>DATA.tpl[k]=$('t_'+k).value); render(); save('הנוסחים נשמרו ✓'); }
   else if (b.id==='tplReset'){ DATA.tpl=null; fillTpl(); render(); save('חזרנו לנוסח המקורי'); }
 });
 
