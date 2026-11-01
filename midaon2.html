@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · מידעון שותפים · נובמבר 2026</title>
+<meta name="description" content="מידעון שותפים של עמותת הופה: מה קרה מאז הגיליון הקודם — שיתופי פעולה חדשים, סיפורי בוגרים ועבודה בשטח.">
+<meta property="og:title" content="הופה · מידעון שותפים · נובמבר 2026">
+<meta property="og:description" content="שיתופי פעולה חדשים, סיפורי בוגרים ועבודה בשטח.">
+<meta property="og:image" content="https://meytalp-dev.github.io/hopa-nihul/photos/midaon2-dror-neve-midbar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   הופה · מידעון שותפים · גיליון 2 (נובמבר 2026)
+   אותה מערכת עיצוב כמו midaon.html: ורוד #E8348A · צהוב #FFF200 · Rubik · RTL
+   ============================================================ */
+:root{
+  --pink:#E8348A;
+  --pink-deep:#C2185B;
+  --pink-soft:#FCE7F2;
+  --yellow:#FFF200;
+  --yellow-deep:#FFD500;
+  --yellow-soft:#FFFCE6;
+  --ink:#111111;
+  --ink-2:#3A3A3A;
+  --muted:#6B6B6B;
+  --line:#E9E7E4;
+  --bg:#FFFFFF;
+  --tint:#FAF8F5;
+  --r-lg:24px;
+  --r-md:16px;
+  --shadow:0 1px 2px rgba(17,17,17,.04), 0 8px 28px rgba(17,17,17,.06);
+  --shadow-hi:0 2px 6px rgba(17,17,17,.06), 0 18px 48px rgba(232,52,138,.13);
+  --maxw:1000px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;font-family:Rubik,"Heebo","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--pink-deep);text-decoration-thickness:1.5px;text-underline-offset:3px}
+h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.02em;font-weight:800}
+.topbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:60;
+  background:linear-gradient(90deg,var(--pink) 0%,#F0679E 35%,var(--yellow-deep) 72%,var(--yellow) 100%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:56px 0 48px;overflow:hidden;border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(1100px 420px at 88% -8%, rgba(255,242,0,.42), transparent 62%),
+    radial-gradient(900px 460px at 4% 4%, rgba(232,52,138,.14), transparent 60%),
+    #FFFFFF}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:34px}
+.logo-chip{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+.logo-chip img{height:52px;width:auto}
+.logo-chip .org{border-inline-start:1px solid var(--line);padding-inline-start:14px;line-height:1.25}
+.logo-chip .org b{display:block;font-size:17px;font-weight:800;color:var(--ink)}
+.logo-chip .org span{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.issue{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14px;color:var(--ink-2);
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px}
+.issue b{color:var(--pink-deep);font-weight:800}
+.kicker{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.16em;color:var(--pink-deep);
+  background:var(--pink-soft);border-radius:999px;padding:7px 16px;margin-bottom:20px}
+h1.title{font-size:clamp(36px,7vw,68px);font-weight:900;letter-spacing:-.035em;max-width:15ch}
+h1.title .hl{background:linear-gradient(180deg,transparent 62%,var(--yellow) 62%,var(--yellow) 94%,transparent 94%);padding:0 4px}
+.lede{font-size:clamp(17px,2.3vw,21px);color:var(--ink-2);max-width:52ch;margin-top:22px}
+.toc{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap}
+.toc a{font-size:14px;font-weight:600;color:var(--ink-2);background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:7px 14px;text-decoration:none}
+.toc a:hover{border-color:var(--pink);color:var(--pink-deep)}
+
+/* ---------- סקשנים ---------- */
+section.block{padding:60px 0;border-bottom:1px solid var(--line)}
+section.block.tint{background:var(--tint)}
+.sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px}
+.sec-ico{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;
+  background:var(--pink-soft)}
+.sec-ico.y{background:var(--yellow-soft)}
+.sec-head h2{font-size:clamp(26px,4.4vw,38px);font-weight:900}
+.sec-head p{margin:6px 0 0;color:var(--muted);font-size:16px}
+
+.cards{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:760px){.cards.two{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 24px 22px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:5px;background:var(--pink)}
+.card.y::before{background:var(--yellow-deep)}
+.card .label{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--pink-deep);
+  background:var(--pink-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.card.y .label{color:#7A6A00;background:var(--yellow-soft)}
+.card h3{font-size:21px;font-weight:800;margin-bottom:8px}
+.card p{margin:0;color:var(--ink-2)}
+
+/* ---------- סיפורי בוגרים ---------- */
+.story{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow);
+  display:flex;gap:18px;align-items:flex-start}
+.story .big{flex:none;font-size:clamp(30px,6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--pink);line-height:1;
+  min-width:3.2em;text-align:center}
+.story .big small{display:block;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0;margin-top:6px}
+.story h3{font-size:20px;margin-bottom:6px}
+.story p{margin:0;color:var(--ink-2)}
+@media (max-width:520px){.story{flex-direction:column;gap:10px}.story .big{text-align:start;min-width:0}}
+
+/* ---------- מהשטח ---------- */
+.field{display:grid;gap:26px;grid-template-columns:1fr;align-items:center}
+@media (min-width:820px){.field{grid-template-columns:1.05fr 1fr}}
+.photo{margin:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-hi);border:6px solid #fff;background:#fff}
+.photo img{width:100%;height:auto}
+.photo figcaption{font-size:13.5px;color:var(--muted);padding:10px 12px 6px;font-weight:500}
+blockquote.quote{margin:0;position:relative;font-size:clamp(18px,2.4vw,21px);line-height:1.7;color:var(--ink);
+  padding:8px 22px 0 0;border-inline-start:4px solid var(--yellow-deep)}
+blockquote.quote::before{content:"”";position:absolute;top:-30px;inset-inline-start:14px;font-size:84px;
+  color:var(--pink);opacity:.25;font-weight:900;line-height:1}
+.quote-by{margin-top:16px;font-weight:700;color:var(--pink-deep);font-size:15.5px}
+.quote-by span{display:block;color:var(--muted);font-weight:500;font-size:14px}
+
+/* ---------- סיום ---------- */
+.cta{padding:56px 0;text-align:center;
+  background:radial-gradient(700px 300px at 50% 0%, rgba(255,242,0,.35), transparent 70%),#fff}
+.cta h2{font-size:clamp(26px,4.4vw,38px);font-weight:900}
+.cta p{color:var(--ink-2);max-width:48ch;margin:12px auto 24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:16px;text-decoration:none;
+  border-radius:999px;padding:13px 26px;background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.28)}
+.btn:hover{background:var(--pink-deep)}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;text-align:center;color:var(--muted);font-size:14px}
+footer img{height:40px;width:auto;margin:0 auto 12px}
+footer a{color:var(--ink-2)}
+.prev{margin-top:10px;font-size:13.5px}
+
+@media print{
+  .topbar,.toc,.btn{display:none}
+  section.block{padding:28px 0;break-inside:avoid}
+  .card,.story,.photo{box-shadow:none;break-inside:avoid}
+  body{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="topbar" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandrow">
+      <a class="logo-chip" href="https://hopa.org.il" target="_blank" rel="noopener" aria-label="הופה, לאתר העמותה">
+        <img src="hopa-logo.png" alt="הופה">
+        <div class="org"><b>עמותת הופה</b><span>מניעת נשירה וליווי בוגרים</span></div>
+      </a>
+      <div class="issue">מידעון שותפים <b>·</b> נובמבר 2026</div>
+    </div>
+    <span class="kicker">מה חדש בהופה</span>
+    <h1 class="title">שותפויות חדשות, <span class="hl">בוגרים בדרך</span></h1>
+    <p class="lede">מאז הגיליון הקודם יצרנו קשרים חדשים להמשך לימודים, למכינות ולשירות משמעותי, ליווינו בוגרים צעד אחר צעד, ויצאנו לבתי הספר לחשוב יחד עם הצוותים.</p>
+    <nav class="toc" aria-label="תוכן הגיליון">
+      <a href="#limudim">🎓 לימודי המשך</a>
+      <a href="#mechinot">🧭 מכינות ושירות</a>
+      <a href="#bogrim">⭐ סיפורי בוגרים</a>
+      <a href="#shetach">📍 מהשטח</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- לימודי המשך -->
+  <section class="block" id="limudim">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-ico" aria-hidden="true">🎓</div>
+        <div>
+          <h2>לימודי המשך</h2>
+          <p>לפתוח לבוגרים שלנו את הדלת ללימודים אחרי התיכון</p>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <span class="label">שיתוף פעולה</span>
+          <h3>אסף מנוחין וצוותו</h3>
+          <p>יצרנו קשר עם אסף מנוחין וצוותו לבניית שיתופי פעולה שיעודדו את הבוגרים שלנו להירשם ללימודי המשך.</p>
+        </article>
+        <article class="card">
+          <span class="label">שיתוף פעולה</span>
+          <h3>מרכז מעשה</h3>
+          <p>יצרנו קשר עם מרכז מעשה, שמפעיל תוכנית המשך לחברה הדרוזית והערבית.</p>
+        </article>
+        <article class="card y">
+          <span class="label">מחשבים ניידים</span>
+          <h3>מחשב נייד לבוגרים שלומדים באקדמיה</h3>
+          <p>רכשנו מחשבים ניידים לבוגרים שלומדים באקדמיה, כדי שהציוד לא יעמוד בינם לבין התואר.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- מכינות ושירות -->
+  <section class="block tint" id="mechinot">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-ico y" aria-hidden="true">🧭</div>
+        <div>
+          <h2>מכינות ושירות משמעותי</h2>
+          <p>להתחיל להכין כבר בתיכון</p>
+        </div>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <span class="label">מודל התערבות</span>
+          <h3>מכינת "אחד משלנו"</h3>
+          <p>יחד עם מכינת "אחד משלנו" אנחנו בונים מודל התערבות שמתחיל כבר בשכבת י״א ומעודד הרשמה למכינות. ההנחה שלנו: תלמידים שהולכים למכינה מתמידים ומצליחים יותר בהמשך הדרך.</p>
+        </article>
+        <article class="card y">
+          <span class="label">הכנה לצו ראשון</span>
+          <h3>מבחנים וראיון — הכנה ממוקדת</h3>
+          <p>נוצרו שיתופי פעולה אפשריים עם כמה ארגונים שמכינים את האוכלוסייה שלנו באופן ממוקד לצו ראשון, למבחנים ולראיון. ההכנה הזו פותחת לבוגרים אפשרויות לתפקידים משמעותיים בצבא.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- סיפורי בוגרים -->
+  <section class="block" id="bogrim">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-ico" aria-hidden="true">⭐</div>
+        <div>
+          <h2>סיפורי בוגרים</h2>
+          <p>מאחורי כל פנייה יש בוגר או בוגרת עם תוכנית</p>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="story">
+          <div class="big">10,000 ₪<small>מלגה</small></div>
+          <div>
+            <h3>מלגה פלוס</h3>
+            <p>בוגרת שפנתה אלינו קיבלה, בליווי שירות מלגה פלוס, מלגה בסך 10,000 ₪.</p>
+          </div>
+        </article>
+        <article class="story">
+          <div class="big">💄<small>לימודים</small></div>
+          <div>
+            <h3>לימודי איפור במרכז הצעירים</h3>
+            <p>בוגרת נרשמה ללימודי איפור במרכז הצעירים.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- מהשטח -->
+  <section class="block tint" id="shetach">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-ico y" aria-hidden="true">📍</div>
+        <div>
+          <h2>מהשטח</h2>
+          <p>ביקור בבית ספר דרור, נווה מדבר</p>
+        </div>
+      </div>
+      <div class="field">
+        <figure class="photo">
+          <img src="photos/midaon2-dror-neve-midbar.jpg" alt="פגישת עבודה בבית ספר דרור בנווה מדבר: מנהל בית הספר, רכזת הבוגרים היאם ואסמאא מהופה, סביב שולחן עם ניירות עבודה" width="1600" height="1200" loading="lazy">
+          <figcaption>פגישת עבודה בבית ספר דרור, נווה מדבר</figcaption>
+        </figure>
+        <div>
+          <blockquote class="quote">ביקרתי בבית ספר דרור בנווה מדבר, יחד עם מנהל בית הספר ורכזת הבוגרים היאם. במפגש חשבנו יחד על רעיונות ודרכים לקידום העשייה עם בוגרי בית הספר, על האפשרויות לשילובם ועל הערך המוסף של תוכנית הופה ביצירת מענים והזדמנויות עבורם.</blockquote>
+          <div class="quote-by">אסמאא<span>רכזת הופה לחברה הערבית, הבדואית והדרוזית</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>ממשיכים יחד</h2>
+    <p>תודה לכל השותפים שהולכים איתנו בדרך. רוצים לשמוע עוד או להצטרף? נשמח לדבר.</p>
+    <a class="btn" href="https://hopa.org.il" target="_blank" rel="noopener">לאתר הופה ←</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener" aria-label="הופה"><img src="hopa-logo.png" alt="הופה"></a>
+    <div>עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></div>
+    <div class="prev"><a href="midaon.html">לגיליון הקודם: סיכום תשפ״ו ←</a></div>
+  </div>
+</footer>
+</body>
+</html>
