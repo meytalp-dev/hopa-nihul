@@ -128,6 +128,109 @@ html,body{overflow-x:hidden}
 .in .path-steps li:nth-child(3) .dot{transition-delay:1.4s}
 .in .path-steps li:nth-child(4) .dot{transition-delay:1.95s}
 
+.item p.role{margin-top:2px;font-weight:700;color:var(--pink-deep);font-size:16px}
+
+/* ממצאי מיפוי העמדות */
+.survey{background:var(--sand);border-radius:28px;padding:26px 24px 24px}
+.survey-title{font-weight:900;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.025em;line-height:1.15}
+.survey-intro{margin-top:10px!important;color:var(--ink-2);max-width:44ch}
+.bars{margin-top:22px;display:grid;gap:20px}
+.bar{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center}
+.bar-num{grid-row:span 2;font-weight:900;font-size:clamp(40px,7vw,54px);line-height:1;letter-spacing:-.045em;
+  color:var(--pink);font-variant-numeric:tabular-nums;min-width:2.6em}
+.bar.gap .bar-num{color:var(--ink)}
+.bar-txt{font-weight:600;font-size:15.5px;line-height:1.4}
+.bar-track{height:10px;border-radius:10px;background:rgba(35,31,32,.08);margin-top:8px;overflow:hidden}
+.bar-track span{display:block;height:100%;width:var(--w);border-radius:10px;background:var(--pink);
+  transform:scaleX(0);transform-origin:right;transition:transform 1.6s cubic-bezier(.3,0,.2,1) .2s}
+.bar.gap .bar-track span{background:var(--ink)}
+.in .bar-track span{transform:none}
+.in .bar:nth-child(2) .bar-track span{transition-delay:.4s}
+.in .bar:nth-child(3) .bar-track span{transition-delay:.6s}
+.in .bar:nth-child(4) .bar-track span{transition-delay:.8s}
+.survey-notes{margin-top:24px;display:grid;gap:10px}
+.survey-notes p{color:var(--ink-2);max-width:48ch}
+.survey-notes b{color:var(--ink)}
+.survey-quote{margin:22px 0 0;padding:16px 18px;background:#fff;border-radius:16px;border-inline-start:5px solid var(--pink);
+  font-weight:600;font-size:17px;line-height:1.6}
+.survey-quote span{display:block;margin-top:6px;font-weight:500;font-size:14px;color:var(--ink-2)}
+
+/* הרכזים: מספר ענק */
+.mega{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.mega-num{font-weight:900;font-size:clamp(96px,20vw,170px);line-height:.85;letter-spacing:-.06em;color:var(--pink);
+  font-variant-numeric:tabular-nums;display:flex;align-items:flex-start}
+.mega-num em{font-style:normal;font-size:.45em;color:var(--ink);margin-top:.1em}
+.mega-txt{font-weight:700;font-size:19px;line-height:1.35;max-width:16ch}
+
+/* ציר שלושת המפגשים */
+.meets{list-style:none;margin:0;padding:0;display:grid;gap:14px;position:relative}
+.meet{display:grid;grid-template-columns:74px 1fr;gap:16px;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:18px 18px 18px 20px;
+  transform:translateX(-40px);opacity:0;transition:transform .8s cubic-bezier(.2,1.2,.4,1),opacity .5s ease}
+.in.meet{transform:none;opacity:1}
+.meet.big{background:var(--yellow);border-color:var(--yellow)}
+.meet-date{font-weight:700;font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.2}
+.meet-date b{display:block;font-weight:900;font-size:26px;color:var(--pink);letter-spacing:-.03em;margin-bottom:4px}
+.meet.big .meet-date b{color:var(--ink)}
+.meet h3{font-weight:800;font-size:21px;line-height:1.25}
+.meet p{color:var(--ink-2);margin-top:6px;font-size:16.5px}
+.meet.big p,.meet.big li{color:var(--ink)}
+.meet-steps{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:7px;font-size:16px;line-height:1.55}
+.meet-steps li{position:relative;padding-inline-start:20px}
+.meet-steps li::before{content:"";position:absolute;inset-inline-start:2px;top:.62em;width:9px;height:9px;border-radius:50%;background:var(--pink)}
+.score{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.score b{font-weight:900;font-size:18px;color:var(--ink)}
+.stars{--pct:calc(var(--s) / 5 * 100%);display:inline-block;font-size:18px;letter-spacing:1px;line-height:1;
+  background:linear-gradient(90deg,#E6DFE2 0,#E6DFE2 calc(100% - var(--pct)),var(--pink) calc(100% - var(--pct)));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stars::before{content:"★★★★★"}
+@media (max-width:520px){.meet{grid-template-columns:1fr;gap:6px}.meet-date{text-align:start;display:flex;gap:8px;align-items:baseline}.meet-date b{display:inline;margin:0}}
+
+/* קולות הרכזים */
+.voices{background:var(--pink);color:#fff;border-radius:28px;padding:26px 22px}
+.voices-title{font-weight:900;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.025em}
+.voices-stat{margin-top:8px;font-weight:600;font-size:17px}
+.voices-stat b{font-weight:900;font-size:40px;color:var(--yellow);letter-spacing:-.04em;margin-inline-end:6px}
+.voices blockquote{margin:12px 0 0;background:#fff;color:var(--ink);font-weight:700;font-size:17px;line-height:1.5;
+  padding:13px 16px;border-radius:18px 18px 18px 4px;width:fit-content;max-width:100%;
+  transform:scale(.6) translateY(16px);opacity:0;transform-origin:bottom left;transition:transform .55s cubic-bezier(.3,1.6,.5,1),opacity .3s}
+.voices blockquote:nth-of-type(even){margin-inline-start:auto;border-radius:18px 18px 4px 18px;background:var(--yellow);transform-origin:bottom right}
+.in.voices blockquote{transform:none;opacity:1}
+.in.voices blockquote:nth-of-type(1){transition-delay:.3s}
+.in.voices blockquote:nth-of-type(2){transition-delay:.8s}
+.in.voices blockquote:nth-of-type(3){transition-delay:1.3s}
+.in.voices blockquote:nth-of-type(4){transition-delay:1.8s}
+
+/* פניות חיות */
+.pulse-item{position:relative}
+.live-dot{position:absolute;top:22px;inset-inline-end:0;width:14px;height:14px;border-radius:50%;background:var(--pink);
+  box-shadow:0 0 0 0 rgba(232,52,138,.6);animation:live 1.8s infinite}
+@keyframes live{70%{box-shadow:0 0 0 14px rgba(232,52,138,0)}100%{box-shadow:0 0 0 0 rgba(232,52,138,0)}}
+
+/* רמזור */
+.ramzor{background:var(--sand);border-radius:28px;padding:24px 22px}
+.ramzor-head{display:flex;align-items:center;gap:18px}
+.ramzor-kicker{font-weight:700;font-size:15px;color:var(--pink-deep)}
+.ramzor h3{font-weight:900;font-size:clamp(23px,3.2vw,28px);line-height:1.15;letter-spacing:-.02em}
+.light{flex:none;width:52px;padding:8px;border-radius:26px;background:var(--ink);display:grid;gap:7px}
+.light i{display:block;width:36px;height:36px;border-radius:50%;background:#4a4446;transition:background .3s,box-shadow .3s}
+.in .light .g{animation:lg 3.6s steps(1) infinite}
+.in .light .o{animation:lo 3.6s steps(1) infinite}
+.in .light .r{animation:lr 3.6s steps(1) infinite}
+@keyframes lg{0%{background:#3BA55C;box-shadow:0 0 16px #3BA55C}33%,100%{background:#4a4446;box-shadow:none}}
+@keyframes lo{0%,32%{background:#4a4446;box-shadow:none}33%{background:#F5A623;box-shadow:0 0 16px #F5A623}66%,100%{background:#4a4446;box-shadow:none}}
+@keyframes lr{0%,65%{background:#4a4446;box-shadow:none}66%,100%{background:#E53935;box-shadow:0 0 18px #E53935}}
+.flow{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;counter-reset:f}
+.flow li{counter-increment:f;position:relative;background:#fff;border-radius:16px;padding:14px 16px;padding-inline-start:58px;font-size:16px;color:var(--ink-2);
+  transform:translateY(18px);opacity:0;transition:transform .6s cubic-bezier(.2,1.3,.4,1),opacity .4s}
+.flow li b{display:block;font-weight:800;font-size:17.5px;color:var(--ink);line-height:1.35}
+.flow li::before{content:counter(f);position:absolute;inset-inline-start:14px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;font-weight:900;color:#fff;background:var(--ink)}
+.flow li:nth-child(2)::before{background:#E53935}
+.flow li:nth-child(3)::before{background:var(--pink)}
+.in .flow li{transform:none;opacity:1}
+.in .flow li:nth-child(2){transition-delay:.5s}
+.in .flow li:nth-child(3){transition-delay:1s}
+
 /* תגיות שקופצות אחת אחרי השנייה */
 .chips-title{font-weight:800;font-size:15px;margin-top:16px!important;color:var(--pink-deep)}
 .chips{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:9px}
@@ -144,7 +247,7 @@ html,body{overflow-x:hidden}
 .counter-wrap{position:relative;background:var(--pink);color:#fff;border-radius:28px;padding:30px 26px 26px;overflow:hidden}
 .counter-wrap::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:var(--yellow);
   opacity:.22;left:-60px;top:-80px}
-.counter{font-weight:900;font-size:clamp(64px,13vw,118px);line-height:.95;letter-spacing:-.05em;font-variant-numeric:tabular-nums;
+.counter{font-weight:900;font-size:clamp(60px,12vw,98px);line-height:.95;letter-spacing:-.05em;font-variant-numeric:tabular-nums;
   display:flex;align-items:baseline;gap:10px;position:relative;z-index:1}
 .counter .cur{font-size:.5em;color:var(--yellow)}
 .counter-wrap h3{font-weight:800;font-size:22px;margin-top:14px;position:relative;z-index:1}
@@ -198,13 +301,16 @@ footer p + p{margin-top:6px}
   .path-steps .dot{border-color:var(--pink);background:var(--yellow)}
   .story2 .badge{transform:none}
   .chips li{transform:none;opacity:1}
+  .bar-track span{transform:none}
+  .meet,.voices blockquote,.flow li{transform:none;opacity:1}
+  .light .r{background:#E53935}
   .polaroid{transform:rotate(-2.5deg);opacity:1}
   .quote .qw{color:var(--ink)}
   .traveler{display:none}
 }
 @media print{
   .hero{min-height:auto}.scroll-cue,.traveler,.road,#confetti{display:none}
-  .title .w,.lede,.big-sun,.laptop .lid,.polaroid,.story2 .badge,.chips li{transform:none!important;opacity:1!important;animation:none!important}
+  .title .w,.lede,.big-sun,.laptop .lid,.polaroid,.story2 .badge,.chips li,.bar-track span,.meet,.voices blockquote,.flow li{transform:none!important;opacity:1!important;animation:none!important}
   .quote .qw{color:var(--ink)}
 }
 </style>
@@ -238,7 +344,7 @@ footer p + p{margin-top:6px}
       <span class="line" aria-hidden="true"><span class="w pink" style="--i:1">דרכים</span> <span class="w pink" style="--i:2">חדשות</span></span>
       <span class="line" aria-hidden="true"><span class="w" style="--i:3">לבוגרים</span> <span class="w" style="--i:4">שלנו</span></span>
     </h1>
-    <p class="lede">מאז הגיליון הקודם יצרנו קשרים חדשים להמשך לימודים, למכינות ולשירות משמעותי, ליווינו בוגרים צעד אחר צעד ויצאנו לבתי הספר.</p>
+    <p class="lede">שלושה מפגשים עם יותר מ-70 רכזים, בוגרים שפונים אלינו, שותפויות חדשות להמשך לימודים ולמכינות, ומודל הרמזור שכבר עובד בשטח.</p>
   </div>
   <div class="big-sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#sun"/></svg></div>
   <div class="scroll-cue" aria-hidden="true">גללו לאורך הדרך<span></span></div>
@@ -248,8 +354,72 @@ footer p + p{margin-top:6px}
   <svg class="road" id="road" aria-hidden="true"><path class="ghost" id="roadGhost"/><path class="ink" id="roadInk"/></svg>
   <div class="traveler" id="traveler" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#sun"/></svg></div>
 
+  <!-- תחנה: הרכזים -->
+  <section class="chapter" aria-labelledby="h-rakazim">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🤝</div>
+      <h2 id="h-rakazim">יותר מ-70 רכזים, שלושה מפגשים</h2>
+      <p class="sub">בונים יחד עם הרכזים החברתיים של משרד העבודה ליווי בוגרים בכל בית ספר.</p>
+      <div class="ch-body">
+        <div class="mega watch">
+          <div class="mega-num"><span class="count" data-to="70">70</span><em>+</em></div>
+          <div class="mega-txt">רכזים חברתיים של משרד העבודה לקחו חלק במסלול המפגשים</div>
+        </div>
+
+        <ol class="meets">
+          <li class="meet watch">
+            <div class="meet-date"><b>24.8</b>זום</div>
+            <div class="meet-body">
+              <h3>"בוגר אחד, שנה אחת"</h3>
+              <p>עקבנו יחד אחרי בוגר אחד לאורך השנה שאחרי י״ב, וכל כלי עבודה נלמד בדיוק ברגע שהוא צריך אותו: הרמזור, שיחת ארבע השאלות, מאגר המענים ומדרג הסיוע. את המפגש פתחו לירון גולן, מנכ״לית הופה, ונאוה גינזבורג, מייסדת הופה.</p>
+              <div class="score"><span class="stars" style="--s:4.6"></span><b>4.6</b> מתוך 5 במשוב</div>
+            </div>
+          </li>
+          <li class="meet watch">
+            <div class="meet-date"><b>14.10</b>זום</div>
+            <div class="meet-body">
+              <h3>"שעתיים בשבוע"</h3>
+              <p>משרד העבודה הקצה לכל רכז/ת חברתי/ת שעתיים שבועיות לליווי בוגרים, כ-70 שעות בשנה. במפגש פירקנו את התפקיד לשמונה רכיבים, וכל רכז/ת בחר/ה איפה להשקיע את השעות שלו/ה. החלק שהכי נגע ברכזים: "הבוגר שלא שכחנו".</p>
+              <div class="score"><span class="stars" style="--s:4.4"></span><b>4.4</b> מתוך 5 במשוב</div>
+            </div>
+          </li>
+          <li class="meet big watch">
+            <div class="meet-date"><b>21.10</b>בני ברק</div>
+            <div class="meet-body">
+              <h3>כנס הרכזים בבני ברק</h3>
+              <p>המפגש הפרונטלי הראשון של כל הרכזים יחד:</p>
+              <ul class="meet-steps">
+                <li><b>היכרות</b> במשחק "מי בתחביב שלי", וישיבה לפי מגזר.</li>
+                <li><b>אליאס מושגים</b>: שפה משותפת למושגי התפקיד של ליווי בוגרים.</li>
+                <li><b>"אליאס הפוך" ושולחנות הרעיונות</b>: שמונה שולחנות, וכל אחד מומחה בפרק אחד של תוכנית העבודה, מהשותפים ושכבת י״ב ועד מענים וזכויות, קהילה, מדידה והעבודה מול ההנהלה. כל שולחן קיבל קלפי אתגר, זרק רעיונות, בחר את הטובים ופירט אותם.</li>
+                <li><b>המטרות שלי ותוכנית העבודה שלי</b>: כל רכז/ת התחיל/ה לכתוב את התוכנית לבית הספר שלו/ה.</li>
+                <li><b>סבב שיתוף</b> במליאה.</li>
+              </ul>
+              <div class="score"><span class="stars" style="--s:4.5"></span><b>4.5</b> מתוך 5 במשוב</div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="voices watch">
+          <h3 class="voices-title">מה אמרו הרכזים</h3>
+          <div class="voices-stat"><b><span class="count" data-to="90">90</span>%</b> דירגו את המפגשים 4 או 5 מתוך 5</div>
+          <blockquote>"אני ממש מרגיש קפיצת מדרגה משנה שעברה."</blockquote>
+          <blockquote>"עשה סדר בשלבים של כתיבת התוכנית לליווי בוגרים."</blockquote>
+          <blockquote>"המפגש נתן לי מוטיבציה להמשיך לפעול, ליזום, להתפתח ולעזור לאחרים."</blockquote>
+          <blockquote>"ממש יצירת קהילת רכזי הופה הלכה למעשה!"</blockquote>
+        </div>
+
+        <div class="item y">
+          <h3>תוכנית עבודה בכל בית ספר</h3>
+          <p>במקביל אנחנו נפגשים עם בתי הספר, ובונים איתם תוכניות עבודה וחשיבה משותפת על הליווי של הבוגרים, בכל אחד מבתי הספר.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- תחנה: לימודי המשך -->
-  <section class="chapter" aria-labelledby="h-limudim">
+  <section class="chapter alt" aria-labelledby="h-limudim">
     <span class="stop" aria-hidden="true"></span>
     <div class="ch-content">
       <div class="ch-icon" aria-hidden="true">🎓</div>
@@ -258,7 +428,8 @@ footer p + p{margin-top:6px}
       <div class="ch-body">
         <div class="item">
           <h3>אסף מנוחין וצוותו</h3>
-          <p>יצרנו קשר עם אסף מנוחין, מנהל החינוך הטכנולוגי העל-תיכוני, ועם צוותו, לבניית שיתופי פעולה שיעודדו את הבוגרים שלנו להירשם ללימודי המשך.</p>
+          <p class="role">מנהל החינוך הטכנולוגי העל-תיכוני</p>
+          <p>יצרנו קשר עם אסף מנוחין וצוותו לבניית שיתופי פעולה שיעודדו את הבוגרים שלנו להירשם ללימודי המשך.</p>
         </div>
         <div class="item">
           <h3>מרכז מעשה</h3>
@@ -276,7 +447,7 @@ footer p + p{margin-top:6px}
   </section>
 
   <!-- תחנה: מכינות ושירות -->
-  <section class="chapter alt" aria-labelledby="h-mechinot">
+  <section class="chapter" aria-labelledby="h-mechinot">
     <span class="stop" aria-hidden="true"></span>
     <div class="ch-content">
       <div class="ch-icon" aria-hidden="true">🧭</div>
@@ -291,9 +462,40 @@ footer p + p{margin-top:6px}
             <li><span class="dot" aria-hidden="true">⭐</span>תפקיד משמעותי</li>
           </ol>
         </div>
+        <div class="survey">
+          <h3 class="survey-title">מה אמרו הצוותים בבתי הספר</h3>
+          <p class="survey-intro">יחד עם מכינת "אחד משלנו" שלחנו לצוותי בתי הספר מיפוי עמדות כלפי מכינות. התמונה ברורה: הצוותים מאמינים במכינה, אבל חסר להם מידע.</p>
+          <div class="bars watch">
+            <div class="bar">
+              <div class="bar-num"><span class="count" data-to="90">90</span>%</div>
+              <div class="bar-txt">מסכימים שמכינה יכולה לתרום להתפתחות האישית של הבוגרים</div>
+              <div class="bar-track"><span style="--w:90%"></span></div>
+            </div>
+            <div class="bar">
+              <div class="bar-num"><span class="count" data-to="83">83</span>%</div>
+              <div class="bar-txt">לא מסכימים שמכינות מתאימות רק לתלמידים עם הישגים גבוהים</div>
+              <div class="bar-track"><span style="--w:83%"></span></div>
+            </div>
+            <div class="bar gap">
+              <div class="bar-num"><span class="count" data-to="17">17</span>%</div>
+              <div class="bar-txt">בלבד יודעים איך ומתי נרשמים למכינה</div>
+              <div class="bar-track"><span style="--w:17%"></span></div>
+            </div>
+            <div class="bar gap">
+              <div class="bar-num"><span class="count" data-to="61">61</span>%</div>
+              <div class="bar-txt">לא יודעים מי אחראי על נושא המכינות בבית הספר, או שאין אחראי מוגדר</div>
+              <div class="bar-track"><span style="--w:61%"></span></div>
+            </div>
+          </div>
+          <div class="survey-notes">
+            <p><b>מה מקשה:</b> אצל הצוות, בעיקר מחסור במידע על מכינות ובכלים לשיחה עם תלמידים. אצל התלמידים, חוסר מודעות למכינות והצורך לעבוד ולעזור בפרנסה.</p>
+            <p><b>מה יעזור לצוות:</b> סיור במכינה, מפגש עם בוגרי מכינה מבית הספר, ויום הכשרה לצוות החינוכי במכינה.</p>
+          </div>
+          <blockquote class="survey-quote">"בבית הספר שלנו יש ילדים מדהימים שמגיע להם להיות במכינה אם ירצו. אבל לדעתי הקושי הכלכלי ימנע מהם."<span>מתוך תשובות הצוותים</span></blockquote>
+        </div>
         <div class="item watch">
-          <h3>מכינת "אחד משלנו"</h3>
-          <p>שלחנו לצוותים מיפוי על העמדות כלפי מכינות, והתשובות התקבלו. מתוך ניתוח התשובות נבנה יחד עם מכינת "אחד משלנו" מודל התערבות שמעודד הרשמה למכינות. ההנחה שלנו: תלמידים שהולכים למכינה מתמידים ומצליחים יותר בהמשך הדרך.</p>
+          <h3>המודל שנבנה עם "אחד משלנו"</h3>
+          <p>מתוך ניתוח התשובות נבנה יחד עם מכינת "אחד משלנו" מודל התערבות שמעודד הרשמה למכינות. ההנחה שלנו: תלמידים שהולכים למכינה מתמידים ומצליחים יותר בהמשך הדרך.</p>
           <p class="chips-title">מה המודל כולל</p>
           <ul class="chips">
             <li>הכשרה לצוות</li>
@@ -311,28 +513,26 @@ footer p + p{margin-top:6px}
     </div>
   </section>
 
-  <!-- תחנה: סיפורי בוגרים -->
-  <section class="chapter" aria-labelledby="h-bogrim">
+  <!-- תחנה: הבוגרים -->
+  <section class="chapter alt" aria-labelledby="h-bogrim">
     <span class="stop" aria-hidden="true"></span>
     <div class="ch-content">
       <div class="ch-icon" aria-hidden="true">⭐</div>
-      <h2 id="h-bogrim">סיפורי בוגרים</h2>
-      <p class="sub">מאחורי כל פנייה יש בוגר או בוגרת עם תוכנית.</p>
+      <h2 id="h-bogrim">איך קידמנו החודש את הבוגרים שלנו</h2>
+      <p class="sub">מהמיפוי הראשון ועד המלגה, צעד אחר צעד.</p>
       <div class="ch-body">
+        <div class="item watch pulse-item">
+          <span class="live-dot" aria-hidden="true"></span>
+          <h3>המיפוי לבוגרים יצא לדרך</h3>
+          <p>התחלנו לשלוח לבוגרים את שאלון המיפוי, וכבר התקבלו פניות רבות של בוגרים שמבקשים את הליווי שלנו. כל פנייה היא בוגר או בוגרת שבחרו לא להישאר לבד בדרך.</p>
+        </div>
         <div class="counter-wrap watch" id="counterWrap">
           <div class="counter" aria-label="10,000 שקלים"><span id="counter" aria-hidden="true">10,000</span><span class="cur" aria-hidden="true">₪</span></div>
           <h3>מלגה פלוס</h3>
           <p>בוגרת שפנתה אלינו קיבלה, בליווי שירות מלגה פלוס, מלגה בסך 10,000 ₪.</p>
         </div>
-        <div class="story2 watch">
-          <div class="badge" aria-hidden="true">💄</div>
-          <div class="item" style="border:0;padding:0">
-            <h3>לימודי איפור במרכז הצעירים</h3>
-            <p>בוגרת נרשמה ללימודי איפור במרכז הצעירים.</p>
-          </div>
-        </div>
         <div class="item y watch">
-          <h3>איך אנחנו עוזרים לבוגרים</h3>
+          <h3>מה הבוגרים מקבלים מאיתנו</h3>
           <ul class="chips">
             <li>🛠️ הרשמה לקורסים מקצועיים</li>
             <li>🎓 מלגות</li>
@@ -340,6 +540,40 @@ footer p + p{margin-top:6px}
             <li>🎒 ציוד לצבא</li>
             <li>ועוד</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: מניעת נשירה -->
+  <section class="chapter" aria-labelledby="h-neshira">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🚦</div>
+      <h2 id="h-neshira">מניעת נשירה</h2>
+      <p class="sub">מגיעים לתלמיד לפני שהוא נושר.</p>
+      <div class="ch-body">
+        <div class="item watch">
+          <h3>בתי ספר חדשים מצטרפים</h3>
+          <p>שני בתי ספר חדשים נכנסו לתוכנית למניעת נשירה:</p>
+          <ul class="chips">
+            <li>📍 מבואות חרמון</li>
+            <li>📍 חצור הגלילית</li>
+          </ul>
+        </div>
+        <div class="ramzor watch">
+          <div class="ramzor-head">
+            <div class="light" aria-hidden="true"><i class="r"></i><i class="o"></i><i class="g"></i></div>
+            <div>
+              <span class="ramzor-kicker">אורט מרום עכו</span>
+              <h3>מודל הרמזור כבר עובד</h3>
+            </div>
+          </div>
+          <ol class="flow">
+            <li><b>המחנכים מדווחים נוכחות</b></li>
+            <li><b>המערכת מאתרת את התלמידים באדום</b>כך אף תלמיד שמתחיל להתרחק לא נעלם מהעין.</li>
+            <li><b>לכל תלמיד באדום נבנית תוכנית עבודה</b></li>
+          </ol>
         </div>
       </div>
     </div>
@@ -399,9 +633,23 @@ footer p + p{margin-top:6px}
         e.target.classList.add('in');
         io.unobserve(e.target);
         if (e.target.id === 'counterWrap') runCounter();
+        e.target.querySelectorAll('.count').forEach(countUp);
       });
     }, {threshold: .45});
     watched.forEach(function(el){ io.observe(el); });
+    document.querySelectorAll('.count').forEach(function(el){ el.textContent = '0'; });
+  }
+
+  // אחוזי המיפוי עולים יחד עם הפס
+  function countUp(el){
+    var to = +el.getAttribute('data-to'), t0 = null, dur = 1600;
+    function step(t){
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   }
 
   // ---------- המונה + קונפטי ----------
