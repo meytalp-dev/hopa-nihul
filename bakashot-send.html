@@ -106,6 +106,7 @@
       <label for="t_plan">1. תוכנית עבודה (רק למי שלא הגיש)</label><textarea id="t_plan"></textarea>
       <label for="t_dd">2. דרך דוד</label><textarea id="t_dd"></textarea>
       <label for="t_esek">3. בוגרים בעסקים</label><textarea id="t_esek"></textarea>
+      <label for="t_mipui">הערה על שאלון המיפוי (בסוף ההודעה)</label><textarea id="t_mipui"></textarea>
       <label for="t_close">סיום</label><textarea id="t_close"></textarea>
       <div class="row"><button class="btn b1" id="tplSave">💾 שמירת הנוסחים</button><button class="btn b2" id="tplReset">↩ לנוסח המקורי</button></div>
     </details>
@@ -123,32 +124,32 @@ const BASE_URL = 'https://meytalp-dev.github.io/hopa-nihul/';
 
 /* שמות בתי הספר כמו בטופס התקציב (taktziv.html) · רכז/ת כמו בטבלת בתי הספר (batei-sefer.html) */
 const SCHOOLS = [
-  {n:'אורט אדיבי אשקלון', c:'סיגל דדון', p:'053-778-0196'},
-  {n:'אורט בית הערבה', c:'יעקב גרונספלד', p:'054-699-5254'},
-  {n:'אורט כרמל חיפה', c:'חנין מלשה', p:'052-599-4110'},
-  {n:'אורט מרום עכו', c:'טוהר מרסדס כהן', p:'050-828-2032'},
-  {n:'אורט צור ברק', c:'טלי יונה', p:'054-808-0808'},
-  {n:'דרור גליל', c:'רינה שריד', p:'054-673-8232'},
-  {n:'דרור נווה מדבר', c:'היאם אזברגה', p:'050-422-2996'},
-  {n:'התיכון החברתי מצפה רמון', c:'', p:''},
-  {n:'התיכון החברתי תל אביב יפו', c:'לי ארנן', p:'050-345-0755'},
-  {n:'טכנולוגי אלמסתקבל תל שבע', c:'', p:''},
-  {n:'טכנולוגי לקייה', c:'ראניה חגו', p:'050-470-8424'},
-  {n:'מנאראת טורעאן', c:'מוניר זרעיני', p:'054-695-9114'},
-  {n:'מרכז תורני טכנולוגי נחלים', c:'טל מילוא', p:'058-404-0494'},
-  {n:'עמל טכנולוגי רהט', c:'זהור אלעוברה', p:'054-791-8502'},
-  {n:'עמל רמת דוד', c:'מוניק איפרח ממן', p:'050-988-3385'},
-  {n:'עתיד אבדאע ביר אלמכסור', c:'עלי עותמאן', p:'050-955-1109'},
-  {n:'עתיד יוצר מגשימים', c:'לבנה בן חמו', p:'050-440-0956'},
-  {n:'עתיד יוצר מגשימים בית שאן', c:'שגית הדר', p:'050-593-9223'},
-  {n:'עתיד שמיים מוצקין', c:'אביחי חריר', p:'050-313-9150'},
-  {n:'תיכון ח׳טוואת ירכא אבו סנאן', c:'רשא סייד אחמד', p:'050-545-5077'},
-  {n:'תיכון חושן', c:'ברכי בר לב', p:'052-869-7690'},
-  {n:'תיכון טכנולוגי אלאמאני סחנין', c:'סוזן קאסום', p:'054-796-1329'},
-  {n:'תיכון יוצר עמל טכנולוגי אשדוד', c:'ריקי מסס', p:'054-444-1300'},
-  {n:'תיכון יוצר עתיד בנות ג׳וליס', c:'בהייה מולא', p:'054-669-9072'},
-  {n:'תיכון יוצר עתיד פלמחים', c:'שירן עוגן', p:'054-978-9029'},
-  {n:'תיכון שיח', c:'טליה ברנע', p:'054-806-9898'}
+  {n:'אורט אדיבי אשקלון', c:'סיגל דדון', p:'053-778-0196', m:'רנל אדרי', mp:'053-366-6830'},
+  {n:'אורט בית הערבה', c:'יעקב גרונספלד', p:'054-699-5254', m:'מיטל פלג / רווית גל', mp:'050-399-3021'},
+  {n:'אורט כרמל חיפה', c:'חנין מלשה', p:'052-599-4110', m:'וליד דאו', mp:'054-459-7762', ar:1},
+  {n:'אורט מרום עכו', c:'טוהר מרסדס כהן', p:'050-828-2032', m:'הדר בן סימון', mp:'052-467-7981'},
+  {n:'אורט צור ברק', c:'טלי יונה', p:'054-808-0808', m:'סיגל כהן', mp:'054-530-3604'},
+  {n:'דרור גליל', c:'רינה שריד', p:'054-673-8232', m:'עינת וינברן', mp:'054-673-5214'},
+  {n:'דרור נווה מדבר', c:'היאם אזברגה', p:'050-422-2996', m:'עבד אבו אלקיעאן', mp:'052-587-3735', ar:1},
+  {n:'התיכון החברתי מצפה רמון', c:'', p:'', m:'ענבל לוי', mp:'054-673-8573'},
+  {n:'התיכון החברתי תל אביב יפו', c:'לי ארנן', p:'050-345-0755', m:'יפית שפירא', mp:'054-974-7128'},
+  {n:'טכנולוגי אלמסתקבל תל שבע', c:'', p:'', m:'', mp:'', noq:1},
+  {n:'טכנולוגי לקייה', c:'ראניה חגו', p:'050-470-8424', m:'עלי אלחואגרה', mp:'052-296-7194', ar:1},
+  {n:'מנאראת טורעאן', c:'מוניר זרעיני', p:'054-695-9114', m:'עלי עדאווי', mp:'054-571-4431', ar:1},
+  {n:'מרכז תורני טכנולוגי נחלים', c:'טל מילוא', p:'058-404-0494', m:'אליהו טובול', mp:'052-811-9499'},
+  {n:'עמל טכנולוגי רהט', c:'זהור אלעוברה', p:'054-791-8502', m:'הוזייל ראיד', mp:'054-649-3125', ar:1},
+  {n:'עמל רמת דוד', c:'מוניק איפרח ממן', p:'050-988-3385', m:'שי סודרי', mp:'054-993-3445'},
+  {n:'עתיד אבדאע ביר אלמכסור', c:'עלי עותמאן', p:'050-955-1109', m:'ופיק אגבאריה', mp:'054-993-3462', ar:1},
+  {n:'עתיד יוצר מגשימים', c:'לבנה בן חמו', p:'050-440-0956', m:'שיראל פרץ', mp:'052-657-2714'},
+  {n:'עתיד יוצר מגשימים בית שאן', c:'שגית הדר', p:'050-593-9223', m:'יוחנן כהן', mp:'058-555-1381'},
+  {n:'עתיד שמיים מוצקין', c:'אביחי חריר', p:'050-313-9150', m:'משה בחר', mp:'052-946-3874'},
+  {n:'תיכון ח׳טוואת ירכא אבו סנאן', c:'רשא סייד אחמד', p:'050-545-5077', m:'נסרין נבואני', mp:'050-871-1450', ar:1},
+  {n:'תיכון חושן', c:'ברכי בר לב', p:'052-869-7690', m:'שרי שמבורסקי', mp:'052-393-6126'},
+  {n:'תיכון טכנולוגי אלאמאני סחנין', c:'סוזן קאסום', p:'054-796-1329', m:'מוחמד גזאל', mp:'050-752-7765', ar:1},
+  {n:'תיכון יוצר עמל טכנולוגי אשדוד', c:'ריקי מסס', p:'054-444-1300', m:'מגי רביבו', mp:'052-833-4601'},
+  {n:'תיכון יוצר עתיד בנות ג׳וליס', c:'בהייה מולא', p:'054-669-9072', m:'שאדיה נבואני', mp:'054-245-4243', ar:1},
+  {n:'תיכון יוצר עתיד פלמחים', c:'שירן עוגן', p:'054-978-9029', m:'ד״ר ורד אזולאי יהב', mp:'052-663-1135'},
+  {n:'תיכון שיח', c:'טליה ברנע', p:'054-806-9898', m:'טליה ברנע', mp:'054-806-9898'}
 ];
 /* הגישו תוכנית מחוץ לטופס התקציב: בפורטל של הופה דש (אוג׳–ספט׳) או בקובץ */
 const PLAN_ELSEWHERE = {
@@ -157,10 +158,11 @@ const PLAN_ELSEWHERE = {
 };
 
 const DEFAULT_TPL = {
-  open: 'היי {רכז} 😊\nכמה דברים קטנים מהופה לגבי הבוגרים של {בית ספר}:',
+  open: 'שלום לצוות {בית ספר} 😊\nכמה דברים קטנים מהופה לגבי הבוגרים שלכם:',
   plan: 'תוכנית עבודה לבוגרים לשנת תשפ״ז, על התקציב של 10,000 ₪. הטופס קצר: כותבים מה מתכננים לעשות וכמה זה עולה, וזהו.\nהקישור של בית הספר:\n{קישור}',
   dd: 'דרך דוד — יש בוגרים שרוצים להתגייס ונתקלים בקושי, קיבלו פטור או דחייה, או צריכים ליווי בדרך לשירות? אפשר להעביר להם את טופס ההפניה הקצר:\n{קישור}',
   esek: 'בוגרים בעסקים — יש לכם בוגרים שפתחו עסק? אנחנו אוספים את העסקים של הבוגרים כדי לפרסם אותם. אפשר להעביר להם את הטופס:\n{קישור}',
+  mipui: '📝 לידיעתכם: השבוע אנחנו נשלח לבוגרים את שאלון המיפוי של הופה. אם בוגרים פונים אליכם לגבי השאלון, זה הקישור (בוחרים בו את בית הספר מהרשימה):\n{קישור}',
   close: 'אם יש שאלה, אני כאן.\nתודה רבה! 🙏\nצוות הופה'
 };
 const NUM = ['1️⃣','2️⃣','3️⃣'];
@@ -187,12 +189,15 @@ function links(s){
   let dd = BASE_URL+'derech-david.html?school='+q;
   if (s.c) dd += '&rakez='+encodeURIComponent(s.c);
   if (s.p) dd += '&tel='+digits(s.p);
-  return { plan: BASE_URL+'taktziv.html?school='+q, dd, esek: BASE_URL+'bogrim-asakim.html' };
+  const mipui = 'https://bogrim.hopa.org.il' + (s.ar ? '\nבערבית: https://bogrim.hopa.org.il/ar' : '');
+  return { plan: BASE_URL+'taktziv.html?school='+q, dd, esek: BASE_URL+'bogrim-asakim.html', mipui };
 }
 function fill(t, s, link){
   return t.replace(/\{רכז\}/g, firstName(s.c)).replace(/\{בית ספר\}/g, s.n).replace(/\{קישור\}/g, link||'')
           .replace(/^היי  /,'היי ').replace(/היי \s*😊/,'היי 😊');
 }
+/* שאלון המיפוי — הערה בסוף ההודעה, לא בקשה ממוספרת. תל שבע לא ברשימת בתי הספר של השאלון */
+function mipuiNote(s){ return s.noq ? '' : fill(tpl().mipui, s, links(s).mipui); }
 function parts(s){
   const L = links(s), T = tpl(), out = [];
   if (!planStatus(s.n)) out.push({k:'plan', title:'תוכנית עבודה', text:fill(T.plan,s,L.plan)});
@@ -203,7 +208,8 @@ function parts(s){
 function combined(s){
   const T = tpl();
   const body = parts(s).map((p,i)=>NUM[i]+' '+p.text).join('\n\n');
-  return fill(T.open,s) + '\n\n' + body + '\n\n' + fill(T.close,s);
+  const note = mipuiNote(s);
+  return fill(T.open,s) + '\n\n' + body + (note ? '\n\n' + note : '') + '\n\n' + fill(T.close,s);
 }
 function single(s, p){ return fill(tpl().open,s).replace(/כמה דברים קטנים/,'משהו קטן') + '\n\n' + p.text + '\n\n' + fill(tpl().close,s); }
 
@@ -267,7 +273,7 @@ async function load(){
 }
 
 /* ── תצוגה ── */
-function fillTpl(){ const T=tpl(); ['open','plan','dd','esek','close'].forEach(k=>$('t_'+k).value=T[k]); }
+function fillTpl(){ const T=tpl(); ['open','plan','dd','esek','mipui','close'].forEach(k=>$('t_'+k).value=T[k]); }
 function render(){
   const noPlan = SCHOOLS.filter(s=>!planStatus(s.n)).length;
   const sent = SCHOOLS.filter(s=>DATA.sent[s.n]).length;
@@ -278,17 +284,23 @@ function render(){
   $('list').innerHTML = list.map(s=>{
     const i = SCHOOLS.indexOf(s), ps = planStatus(s.n), sn = DATA.sent[s.n];
     const msgs = [{k:'all', title:'⭐ הודעה אחת עם הכל', text:combined(s)}].concat(parts(s).map(p=>({k:p.k, title:p.title, text:single(s,p)})));
+    if (!s.noq) msgs.push({k:'mipui', title:'שאלון מיפוי', text:single(s,{text:mipuiNote(s)})});
     return `<section class="card school${sn?' sent':''}">
       <div class="shead">
         <div>
           <h3>${esc(s.n)}</h3>
-          <div class="meta">${s.c?esc(s.c)+' · <span class="ltr">'+esc(s.p)+'</span>':'אין פרטי רכז/ת בטבלת בתי הספר'}</div>
+          <div class="meta">רכז/ת: ${s.c?esc(s.c)+' · <span class="ltr">'+esc(s.p)+'</span>':'אין פרטים בטבלת בתי הספר'}</div>
+          <div class="meta">מנהל/ת: ${s.m?esc(s.m)+' · <span class="ltr">'+esc(s.mp)+'</span>':'אין פרטים בטבלת בתי הספר'}</div>
           <div class="tags">
             ${ps?`<span class="tag ok">✓ תוכנית הוגשה (${esc(ps)})</span>`:'<span class="tag no">תוכנית עבודה חסרה</span>'}
+            ${s.noq?'<span class="tag no">לא ברשימת שאלון המיפוי</span>':''}
             ${sn?`<span class="tag sent">נשלח ${esc(fmtD(sn))}</span>`:''}
           </div>
         </div>
-        ${s.p?`<a class="btn bwa small" href="https://wa.me/${waNum(s.p)}" target="_blank" rel="noopener">💬 פתח צ׳אט</a>`:''}
+        <div class="row" style="margin:0">
+          ${s.p?`<a class="btn bwa small" href="https://wa.me/${waNum(s.p)}" target="_blank" rel="noopener">💬 רכז/ת</a>`:''}
+          ${s.mp&&s.mp!==s.p?`<a class="btn bwa small" href="https://wa.me/${waNum(s.mp)}" target="_blank" rel="noopener">💬 מנהל/ת</a>`:''}
+        </div>
       </div>
       <div class="msgs">
         ${msgs.map(m=>{ const id=i+'_'+m.k; return `<div class="msg${OPEN[id]?' open':''}">
@@ -305,6 +317,7 @@ function render(){
 function msgText(id){
   const [i,k] = id.split('_'), s = SCHOOLS[+i];
   if (k==='all') return combined(s);
+  if (k==='mipui') return single(s,{text:mipuiNote(s)});
   const p = parts(s).find(x=>x.k===k); return p ? single(s,p) : '';
 }
 async function copyText(txt){
@@ -322,7 +335,7 @@ document.addEventListener('click', async e=>{
   else if (b.dataset.cp){ if (await copyText(msgText(b.dataset.cp))) toast('הועתק ✓ — עכשיו פתחו צ׳אט והדביקו'); }
   else if (b.dataset.sent){ DATA.sent[SCHOOLS[+b.dataset.sent].n]=new Date().toISOString(); render(); save('סומן ✓'); }
   else if (b.dataset.un){ delete DATA.sent[SCHOOLS[+b.dataset.un].n]; render(); save('הסימון בוטל'); }
-  else if (b.id==='tplSave'){ DATA.tpl={}; ['open','plan','dd','esek','close'].forEach(k=>DATA.tpl[k]=$('t_'+k).value); render(); save('הנוסחים נשמרו ✓'); }
+  else if (b.id==='tplSave'){ DATA.tpl={}; ['open','plan','dd','esek','mipui','close'].forEach(k=>DATA.tpl[k]=$('t_'+k).value); render(); save('הנוסחים נשמרו ✓'); }
   else if (b.id==='tplReset'){ DATA.tpl=null; fillTpl(); render(); save('חזרנו לנוסח המקורי'); }
 });
 
