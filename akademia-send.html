@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פנייה למוסדות אקדמיים | מתנדבי הופה</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#FFF200;--y2:#E4D800;--pink:#E8348A;--pink-soft:#FDE7F1;--bg:#FFFBEA;--ink:#111;--muted:#5d5d5d;--line:#E8E3CF;--green:#1f8a4c;--green-soft:#dff3e6}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+header img{height:40px}
+h1{font-size:clamp(21px,5.5vw,26px);margin:0;font-weight:800}
+.lead{font-size:14.5px;color:#333;margin:6px 0 12px}
+.progress{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.progress .n{font-size:20px;font-weight:800}
+.progress .b{height:10px;background:#eee8cf;border-radius:999px;overflow:hidden;margin-top:6px}
+.progress .b i{display:block;height:100%;background:var(--pink);transition:width .3s}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.btn{font:inherit;font-size:14.5px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.on{background:var(--pink-soft);border-color:var(--pink);font-weight:700}
+.btn.pri{background:var(--y);border-color:var(--y2);font-weight:700}
+.btn.done{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:700}
+.tip{background:var(--pink-soft);border:1px solid #f4b8d4;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.card.sent{opacity:.72;border-color:#b9e2c7}
+.card h3{margin:0 0 2px;font-size:16.5px}
+.card .unit{font-size:13.5px;color:var(--muted)}
+.card .to{font-size:14px;margin-top:6px;word-break:break-all}
+.card .note{font-size:13px;color:#8a5a00;background:#fff6d6;border-radius:8px;padding:4px 8px;margin-top:6px;display:inline-block}
+.card .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.reg{font-size:12px;background:#eee;border-radius:999px;padding:1px 8px;margin-inline-start:6px;vertical-align:middle;font-weight:500}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:700}
+.preview{font-size:14px;white-space:pre-wrap;margin-top:8px;color:#222}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20;max-width:92vw;text-align:center}
+.toast.show{opacity:1}
+#clip{position:fixed;left:-9999px;top:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a><h1>פנייה למוסדות אקדמיים</h1></header>
+<p class="lead">בקשה להכרה בהתנדבות בהופה כמעורבות חברתית לסטודנטים. כל מייל יוצא מ-<span dir="ltr">meytal@hopa.org.il</span>, ולחיצה על שליחה מסמנת את המוסד כ"נשלח" (נשמר בגיליון, רואים מכל מכשיר).</p>
+<div id="app">טוען…</div>
+</div>
+<div id="clip" contenteditable="true"></div>
+<div id="toast" class="toast"></div>
+
+<script src="staff-code.js"></script>
+<script>
+const MOSDOT = [
+{
+"id": "m00",
+"name": "המכללה האקדמית להנדסה בראודה (לשעבר אורט בראודה)",
+"region": "צפון",
+"unit": "היחידה למעורבות חברתית וחונכויות - דקנט הסטודנטים",
+"to": "limord@braude.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m01",
+"name": "המכללה האקדמית עמק יזרעאל",
+"region": "צפון",
+"unit": "היחידה למעורבות חברתית - דיקנט הסטודנטים",
+"to": "meoravut@yvc.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m07",
+"name": "הטכניון - מכון טכנולוגי לישראל",
+"region": "חיפה",
+"unit": "דיקנאט הסטודנטים - פרויקט \"התנדבות = זכאות\"",
+"to": "community@technion.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m08",
+"name": "אוניברסיטת חיפה",
+"region": "חיפה",
+"unit": "היחידה למעורבות חברתית - דיקנאט הסטודנטים",
+"to": "involv@univ.haifa.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m10",
+"name": "המכללה האקדמית שאנן",
+"region": "חיפה",
+"unit": "היחידה למעורבות חברתית",
+"to": "gatagnl@gmail.com",
+"conf": "verified",
+"note": "כתובת ג'ימייל של הרכזת, מופיעה בדף הרשמי"
+},
+{
+"id": "m12",
+"name": "אורנים - המכללה האקדמית לחינוך",
+"region": "חיפה",
+"unit": "דיקנאט הסטודנטים - רכזת מעורבות חברתית",
+"to": "Faten.barakat@oranim.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m14",
+"name": "המרכז האקדמי שערי מדע ומשפט",
+"region": "מרכז",
+"unit": "דקנאט הסטודנטים: פרויקטים של מעורבות חברתית ופרויקט \"לוקחים אחריות\" עם",
+"to": "rachelr@mishpat.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m15",
+"name": "אוניברסיטת אריאל",
+"region": "מרכז",
+"unit": "דקנט הסטודנטים: מעורבות חברתית",
+"to": "Student_dean@ariel.ac.il",
+"conf": "general",
+"note": "המייל מדף הפייסבוק של הדיקנאט"
+},
+{
+"id": "m17",
+"name": "אוניברסיטת בר-אילן",
+"region": "מרכז",
+"unit": "מדור אקדמיה וקהילה, דקן הסטודנטים",
+"to": "shireet.aizen-piyento@biu.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m18",
+"name": "האוניברסיטה הפתוחה",
+"region": "מרכז",
+"unit": "דיקנאט הסטודנטים",
+"to": "deanst@openu.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m20",
+"name": "אוניברסיטת רייכמן",
+"region": "מרכז",
+"unit": "דיקנאט הסטודנטים",
+"to": "gzvi@runi.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m21",
+"name": "המכללה האקדמית תל אביב-יפו",
+"region": "מרכז",
+"unit": "המרכז לקשרי אקדמיה-קהילה",
+"to": "kehila@mta.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m22",
+"name": "שנקר",
+"region": "מרכז",
+"unit": "דקאנט הסטודנטים",
+"to": "dean@shenkar.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m24",
+"name": "HIT מכון טכנולוגי חולון",
+"region": "מרכז",
+"unit": "היחידה למעורבות חברתית, דיקנאט הסטודנטים",
+"to": "meoravut@hit.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m26",
+"name": "המכללה האקדמית בית ברל",
+"region": "מרכז",
+"unit": "דקאנט הסטודנטים",
+"to": "victoriya@beitberl.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m27",
+"name": "המכון האקדמי הערבי לחינוך בבית ברל",
+"region": "מרכז",
+"unit": "המכון האקדמי הערבי לחינוך",
+"to": "machon.akademi@beitberl.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m28",
+"name": "המכללה האקדמית לחינוך ע\"ש אל-קאסמי (באקה אל-גרבייה)",
+"region": "מרכז",
+"unit": "וحدة المشاركة المجتمعية",
+"to": "pro@qsm.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m29",
+"name": "סמינר הקיבוצים - המכללה האקדמית לחינוך, טכנולוגיה ואמנויות",
+"region": "מרכז",
+"unit": "היחידה למעורבות חברתית",
+"to": "info.skb@smkb.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m31",
+"name": "מכללת תלפיות (חולון)",
+"region": "מרכז",
+"unit": "דקנט הסטודנטים – מעורבות חברתית בקהילה",
+"to": "talpiot@talpiot.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m33",
+"name": "המכללה האקדמית נתניה",
+"region": "מרכז",
+"unit": "דיקנאט הסטודנטים – מטפל בנקודות זכות על פעילות חברתית",
+"to": "galittz@netanya.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m34",
+"name": "המסלול האקדמי המכללה למינהל (ראשון לציון)",
+"region": "מרכז",
+"unit": "דיקאנט הסטודנטים – מלגות מעורבות חברתית",
+"to": "dean4u@colman.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m35",
+"name": "הקריה האקדמית אונו",
+"region": "מרכז",
+"unit": "מעורבות חברתית",
+"to": "Meoravut@ono.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m36",
+"name": "המרכז האקדמי פרס (רחובות)",
+"region": "מרכז",
+"unit": "מחלקת רווחה ומעורבות חברתית",
+"to": "revaha@pac.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m37",
+"name": "המרכז האקדמי למשפט ולעסקים (רמת גן)",
+"region": "מרכז",
+"unit": "דיקנט הסטודנטים – רכז מעורבות חברתית ד\"ר אורן דיין",
+"to": "tamars@clb.ac.il",
+"conf": "verified",
+"note": "נשלח לדיקנית (מייל רכז המעורבות בדומיין חיצוני)"
+},
+{
+"id": "m38",
+"name": "המכללה האקדמית ישראל (רמת גן)",
+"region": "מרכז",
+"unit": "דיקן הסטודנטים",
+"to": "d.ac@iac.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m39",
+"name": "האוניברסיטה העברית בירושלים",
+"region": "ירושלים",
+"unit": "היחידה למעורבות חברתית, דיקנט הסטודנטים",
+"to": "yifatch@savion.huji.ac.il,ron.karpel@mail.huji.ac.il",
+"conf": "verified",
+"note": "גם לרון קרפל, רכז שלב\"ים לצעירים ונוער בסיכון"
+},
+{
+"id": "m43",
+"name": "בצלאל אקדמיה לאמנות ועיצוב",
+"region": "ירושלים",
+"unit": "\"בצלאל בקהילה\", דקנאט הסטודנטים",
+"to": "asaf.e@bezalel.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m44",
+"name": "האקדמיה למוזיקה ולמחול בירושלים",
+"region": "ירושלים",
+"unit": "\"האקדמיה בקהילה\": היחידה לקהילה ולנוער ע\"ש יצחק נבון",
+"to": "Community@jamd.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m45",
+"name": "המרכז האקדמי שלם",
+"region": "ירושלים",
+"unit": "מחלקת קהילה וחברה",
+"to": "community@shalem.ac.il",
+"conf": "verified",
+"note": ""
+},
+{
+"id": "m47",
+"name": "מכללת אמונה-אפרתה",
+"region": "ירושלים",
+"unit": "דיקנית הסטודנטיות",
+"to": "gitalem@emef.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m49",
+"name": "המכללה האקדמית לחינוך הרצוג (אלון שבות)",
+"region": "ירושלים",
+"unit": "דקנאט הסטודנטים: מכיר במעורבות חברתית",
+"to": "dean@herzog.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m50",
+"name": "המכללה האקדמית לחינוך ע\"ש קיי",
+"region": "דרום",
+"unit": "דיקן הסטודנטים",
+"to": "noalyb@kaye.ac.il",
+"conf": "general",
+"note": ""
+},
+{
+"id": "m51",
+"name": "אוניברסיטת בן-גוריון בנגב",
+"region": "דרום",
+"unit": "המחלקה למעורבות חברתית",
+"to": "meigal@bgu.ac.il",
+"conf": "verified",
+"note": "רכזת תוכניות המלגה. השיוך שם-מייל בדף הצוות לא ודאי"
+},
+{
+"id": "m52",
+"name": "המכללה האקדמית ספיר",
+"region": "דרום",
+"unit": "היחידה למעורבות חברתית, אגף דיקנאט הסטודנטים",
+"to": "info@sapir.ac.il",
+"conf": "general",
+"note": "מייל כללי, האתר לא נטען לבדיקה"
+},
+{
+"id": "m55",
+"name": "המכללה האקדמית אחוה",
+"region": "דרום",
+"unit": "דיקן הסטודנטים",
+"to": "israela@achva.ac.il",
+"conf": "verified",
+"note": ""
+}
+];
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const STATE_KEY = 'akademia_sent';
+const FROM = 'meytal@hopa.org.il';
+const FORM_URL = 'https://meytalp-dev.github.io/hopa-nihul/mitnadvim.html';
+const SUBJECT = 'עמותת הופה: בקשה להכרה כמקום התנדבות לסטודנטים';
+const IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (matchMedia('(pointer:coarse)').matches && innerWidth < 900);
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m,ms){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms||2600);}
+
+/* ---------- הנוסח ---------- */
+function paras(m){
+  return [
+    'שלום רב,',
+    'שמי מיטל פלג, סמנכ"לית תפעול בעמותת הופה. הופה מלווה צעירים מגיל 14 עד 26 ביותר מ-30 בתי ספר בכל הארץ, בעיקר צעירים במצבי סיכון וללא עורף משפחתי, במעבר מהתיכון לשירות, ללימודים ולעבודה.',
+    'אנחנו מגייסים מתנדבים לליווי הבוגרים שלנו. המתנדבים מקיימים שיחות טלפון עם בוגרים, שואלים מה מצבם ומה הם צריכים, ומכוונים אותם למענים: מלגות, הכשרות, תעסוקה ומיצוי זכויות. העמותה מכשירה את המתנדבים, נותנת להם תסריט שיחה ומלווה אותם לאורך כל התקופה. ההתנדבות נעשית מהבית ובזמן גמיש.',
+    'נשמח לברר אם אפשר לרשום את הופה אצלכם ב' + m.name + ' כמקום התנדבות מוכר לסטודנטים, במסגרת מעורבות חברתית, נקודות זכות או מלגות. אם כן, נשמח לדעת מה התנאים, מה היקף השעות הנדרש ולמי לפנות.',
+    'לסטודנטים יש אצלנו מסלול שנתי של כ-140 שעות, כ-4 שעות בשבוע לאורך שנת הלימודים. המסלול כולל הכשרה בפתיחה, הדרכה קבוצתית חודשית ודיווח שעות חודשי שהעמותה מאשרת. אם הדרישות אצלכם שונות, נשמח להתאים.'
+  ];
+}
+const SIG = ['תודה רבה,','מיטל פלג','סמנכ"לית תפעול | עמותת הופה','053-6256653 · meytal@hopa.org.il · hopa.org.il'];
+function mailText(m){
+  return paras(m).join('\n\n') + '\n\nסטודנטים שרוצים להצטרף יכולים להירשם כאן:\n' + FORM_URL + '\n\n' + SIG.join('\n');
+}
+function mailHtml(m){
+  const p = t => `<p style="margin:0 0 12px">${esc(t)}</p>`;
+  return `<div dir="rtl" style="text-align:right;font-family:Arial,sans-serif;font-size:14px;line-height:1.6;color:#111">`
+    + paras(m).map(p).join('')
+    + `<p style="margin:0 0 12px">סטודנטים שרוצים להצטרף יכולים <a href="${FORM_URL}" style="color:#E8348A;font-weight:bold">להירשם בטופס הקצר שלנו</a>.</p>`
+    + `<p style="margin:0">${esc(SIG[0])}<br><b>${esc(SIG[1])}</b><br>${esc(SIG[2])}<br><span dir="ltr">053-6256653</span> · <a href="mailto:meytal@hopa.org.il">meytal@hopa.org.il</a> · <a href="https://hopa.org.il">hopa.org.il</a></p>`
+    + `<p style="margin:10px 0 0"><img src="https://meytalp-dev.github.io/hopa-nihul/hopa-logo.png" alt="עמותת הופה" width="110"></p></div>`;
+}
+const mailtoHref = m => 'mailto:' + m.to + '?subject=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(mailText(m));
+const gmailHref = m => 'https://mail.google.com/mail/?authuser=' + encodeURIComponent(FROM) + '&view=cm&fs=1&to=' + encodeURIComponent(m.to) + '&su=' + encodeURIComponent(SUBJECT);
+
+/* ---------- גיליון ---------- */
+function jsonpOnce(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
+async function jsonp(params, onRetry){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
+    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; if(onRetry) onRetry(i+1); }
+  }
+  throw err;
+}
+let SENT = {}, FILTER = 'todo';
+async function load(){
+  $('app').textContent = 'טוען…';
+  try{
+    const r = await jsonp({action:'storeAll', secret:GS_SECRET});
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    SENT = (r.store||{})[STATE_KEY] || {};
+    render();
+  }catch(e){
+    if(window.staffCodeFail && staffCodeFail(e, $('app'))) return;
+    $('app').innerHTML = '<div class="card">לא הצלחתי לטעון מהגיליון. <button class="btn" onclick="load()">לנסות שוב</button></div>';
+  }
+}
+async function save(){
+  try{
+    const r = await jsonp({action:'storeSet', secret:GS_SECRET, key:STATE_KEY, json:JSON.stringify(SENT)});
+    if(!r || !r.ok) throw 0;
+  }catch(e){ toast('הסימון לא נשמר בגיליון, נסי שוב'); }
+}
+function mark(id, on){
+  if(on) SENT[id] = new Date().toISOString(); else delete SENT[id];
+  save(); render();
+}
+
+/* ---------- תצוגה ---------- */
+function render(){
+  const total = MOSDOT.length, done = MOSDOT.filter(m=>SENT[m.id]).length;
+  const list = MOSDOT.filter(m=>FILTER==='all' || (FILTER==='todo' ? !SENT[m.id] : !!SENT[m.id]));
+  const ex = MOSDOT[0];
+  $('app').innerHTML = `
+    <div class="progress"><span class="n">${done} מתוך ${total}</span> נשלחו<div class="b"><i style="width:${Math.round(done/total*100)}%"></i></div></div>
+    <div class="tip">${IS_MOBILE
+      ? '📱 בטלפון: לחיצה על "שליחה" פותחת מייל מוכן. <b>לבדוק שבשורת "מאת" מופיע meytal@hopa.org.il</b> ולא חשבון אחר.'
+      : '💻 במחשב: לחיצה על "פתיחה בג\'ימייל" מעתיקה את הנוסח ופותחת טיוטה מחשבון הופה. <b>לחצי בגוף המייל ו-Ctrl+V</b>, ואז שליחה.'}</div>
+    <div class="bar">
+      <button class="btn ${FILTER==='todo'?'on':''}" data-f="todo">לשליחה (${total-done})</button>
+      <button class="btn ${FILTER==='done'?'on':''}" data-f="done">נשלחו (${done})</button>
+      <button class="btn ${FILTER==='all'?'on':''}" data-f="all">הכל (${total})</button>
+    </div>
+    <details><summary>הנוסח שיוצא (דוגמה: ${esc(ex.name)})</summary><div class="preview"><b>נושא:</b> ${esc(SUBJECT)}\n\n${esc(mailText(ex))}</div></details>
+    ${list.map(m=>{ const s = SENT[m.id];
+      return `<div class="card ${s?'sent':''}">
+        <h3>${esc(m.name)}<span class="reg">${esc(m.region)}</span></h3>
+        <div class="unit">${esc(m.unit)}${m.conf==='general'?' · מייל כללי':''}</div>
+        <div class="to" dir="ltr" style="text-align:right">${esc(m.to.split(',').join(', '))}</div>
+        ${m.note?`<div class="note">⚠️ ${esc(m.note)}</div>`:''}
+        <div class="acts">
+          ${IS_MOBILE
+            ? `<a class="btn pri" href="${esc(mailtoHref(m))}" data-send="${m.id}">✉️ שליחה</a>`
+            : `<button class="btn pri" data-gmail="${m.id}">✉️ פתיחה בג'ימייל</button>
+               <a class="btn" href="${esc(mailtoHref(m))}" data-send="${m.id}">mailto</a>`}
+          <button class="btn" data-copy="${m.id}">📋 העתקת הנוסח</button>
+          ${s ? `<button class="btn done" data-unmark="${m.id}">✓ נשלח ${new Date(s).toLocaleDateString('he-IL')} · ביטול</button>`
+              : `<button class="btn" data-mark="${m.id}">סימון כנשלח</button>`}
+        </div></div>`; }).join('') || '<div class="card">אין כאן מוסדות. 🎉</div>'}`;
+}
+function copyHtml(m){
+  const c = $('clip'); c.innerHTML = mailHtml(m);
+  const r = document.createRange(); r.selectNodeContents(c);
+  const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+  sel.removeAllRanges(); c.innerHTML = '';
+  return ok;
+}
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-f],[data-gmail],[data-copy],[data-mark],[data-unmark],[data-send]'); if(!t) return;
+  const find = id => MOSDOT.find(m=>m.id===id);
+  if(t.dataset.f){ FILTER = t.dataset.f; render(); return; }
+  if(t.dataset.gmail){
+    const m = find(t.dataset.gmail);
+    const ok = copyHtml(m);                                // קודם העתקה (סינכרוני), ורק אז חלון חדש
+    window.open(gmailHref(m) + (ok ? '' : '&body=' + encodeURIComponent(mailText(m))), '_blank');
+    toast(ok ? 'הנוסח הועתק. לחצי בגוף המייל ו-Ctrl+V' : 'ההעתקה לא הצליחה, הנוסח נכנס כטקסט רגיל', 4500);
+    mark(m.id, true); return;
+  }
+  if(t.dataset.send){ const id = t.dataset.send; setTimeout(()=>mark(id, true), 400); return; }   // ה-mailto נפתח מה-href עצמו; מציירים מחדש רק אחריו
+  if(t.dataset.copy){ toast(copyHtml(find(t.dataset.copy)) ? 'הנוסח הועתק' : 'ההעתקה לא הצליחה'); return; }
+  if(t.dataset.mark){ mark(t.dataset.mark, true); return; }
+  if(t.dataset.unmark){ mark(t.dataset.unmark, false); return; }
+});
+load();
+</script>
+</body>
+</html>

@@ -21,6 +21,8 @@ h1 .hl{background:linear-gradient(transparent 58%,var(--y) 58%);padding:0 4px}
 .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 18px}
 .facts div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;font-size:13.5px;color:var(--muted)}
 .facts b{display:block;font-size:17px;color:var(--ink)}
+.track{background:var(--pink-soft);border:1px solid #f4b8d4;border-radius:14px;padding:12px 14px;margin:-6px 0 18px;font-size:14.5px;color:#2b2b2b}
+.track b{display:block;font-size:15.5px;margin-bottom:3px;color:var(--ink)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;margin-bottom:12px}
 .card h2{font-size:18px;margin:0 0 12px}
 label.q{display:block;font-weight:700;font-size:15.5px;margin:14px 0 6px}
@@ -74,6 +76,10 @@ select.field{width:auto;min-height:40px;padding:6px 10px;font-size:14.5px}
     <div><b>מהבית</b>בטלפון</div>
     <div><b>3 חודשים</b>ואז מחליטים</div>
   </div>
+  <div class="track">
+    <b>🎓 סטודנטים? יש מסלול שנתי של כ-<span dir="ltr">140</span> שעות</b>
+    כ-4 שעות בשבוע לאורך שנת הלימודים, להכרה במעורבות חברתית, בנקודות זכות או במלגה. כולל הכשרה בפתיחה, הדרכה קבוצתית חודשית ודיווח שעות חודשי שהעמותה מאשרת. אם המוסד שלך דורש היקף אחר, נתאים.
+  </div>
 
   <div class="card">
     <h2>כמה פרטים, ונחזור אליך</h2>
@@ -97,6 +103,8 @@ select.field{width:auto;min-height:40px;padding:6px 10px;font-size:14.5px}
     <div id="studentBox" class="hidden">
       <label class="q" for="f_inst">איפה את/ה לומד/ת?</label>
       <input class="field" id="f_inst" placeholder="שם האוניברסיטה או המכללה">
+      <label class="q">באיזה מסלול?</label>
+      <div class="chips" id="c_track"></div>
       <label class="q">צריך/ה הכרה בשעות ההתנדבות (מעורבות חברתית או מלגה)?</label>
       <div class="chips" id="c_hours"></div>
     </div>
@@ -139,6 +147,7 @@ const RESP_PREFIX = 'mitnadev-';            // נרשמים נשמרים כ-inta
 const STATUS_KEY = 'mitnadvim_status';      // סטטוס והערות של מיטל — רק עם קוד צוות
 const OPTS = {
   who:['סטודנט/ית','איש/אשת מקצוע','פנסיונר/ית','בוגר/ת של בית ספר בהופה','אחר'],
+  track:['מסלול סטודנטים (כ-140 שעות בשנה)','מסלול רגיל (2 עד 3 שעות בחודש)'],
   hours:['כן','לא','עוד לא יודע/ת'],
   lang:['עברית','ערבית','רוסית','אמהרית','אנגלית'],
   when:['בוקר','צהריים','ערב','סופ"ש']
@@ -179,7 +188,7 @@ async function jsonp(params, onRetry){
 }
 
 /* ---------- טופס ---------- */
-const PICK = {who:[], hours:[], lang:[], when:[]};
+const PICK = {who:[], track:[], hours:[], lang:[], when:[]};
 function chips(name){
   const box = $('c_'+name), multi = !!box.dataset.multi;
   box.innerHTML = OPTS[name].map((o,i)=>`<button type="button" data-i="${i}" class="${PICK[name].includes(o)?'on':''}">${esc(o)}</button>`).join('');
@@ -210,7 +219,7 @@ async function submit(){
   if(!$('f_ok').checked){ err.textContent = 'צריך לסמן הסכמה ליצירת קשר'; return; }
   const student = PICK.who.includes('סטודנט/ית');
   const payload = { v:1, ts:new Date().toISOString(), name, phone, email, city:$('f_city').value.trim(),
-    who:PICK.who, inst: student ? $('f_inst').value.trim() : '', hours: student ? (PICK.hours[0]||'') : '',
+    who:PICK.who, inst: student ? $('f_inst').value.trim() : '', track: student ? (PICK.track[0]||'') : '', hours: student ? (PICK.hours[0]||'') : '',
     lang:PICK.lang, when:PICK.when, why:$('f_why').value.trim().slice(0,1500) };
   const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
   SENDING = true; const btn = $('sendBtn'); btn.disabled = true; btn.textContent = 'שולח…';
@@ -245,7 +254,7 @@ async function loadAdmin(){
 const stOf = p => (STATUS[p.id]||{}).s || 'new';
 function renderAdmin(){
   const cnt = s => PEOPLE.filter(p=>stOf(p)===s).length;
-  const list = PEOPLE.filter(p=>FILTER==='all' || stOf(p)===FILTER || (FILTER==='hours' && p.hours==='כן'));
+  const list = PEOPLE.filter(p=>FILTER==='all' || stOf(p)===FILTER || (FILTER==='hours' && p.hours==='כן') || (FILTER==='track' && /^מסלול סטודנטים/.test(p.track||'')));
   const link = location.origin+location.pathname;
   $('adminView').innerHTML = `
     <h1>נרשמים להתנדבות</h1>
@@ -253,6 +262,7 @@ function renderAdmin(){
       <button class="btn ${FILTER==='all'?'on':''}" data-f="all">הכל (${PEOPLE.length})</button>
       ${Object.keys(STATUSES).map(s=>`<button class="btn ${FILTER===s?'on':''}" data-f="${s}">${STATUSES[s]} (${cnt(s)})</button>`).join('')}
       <button class="btn ${FILTER==='hours'?'on':''}" data-f="hours">צריכים הכרה בשעות (${PEOPLE.filter(p=>p.hours==='כן').length})</button>
+      <button class="btn ${FILTER==='track'?'on':''}" data-f="track">מסלול סטודנטים (${PEOPLE.filter(p=>/^מסלול סטודנטים/.test(p.track||'')).length})</button>
     </div>
     <div class="bar">
       <button class="btn pri" id="copyLink">📋 העתקת קישור הטופס</button>
@@ -264,6 +274,7 @@ function renderAdmin(){
         <h3>${esc(p.name)}<span class="pill ${s}">${STATUSES[s]}</span></h3>
         <div class="meta">${esc(new Date(p.ts).toLocaleDateString('he-IL'))}${p.city?' · '+esc(p.city):''}</div>
         <div class="row"><b>מי:</b> ${esc((p.who||[]).join(', '))}${p.inst?' · '+esc(p.inst):''}</div>
+        ${p.track?`<div class="row"><b>מסלול:</b> ${esc(p.track)}</div>`:''}
         ${p.hours?`<div class="row"><b>הכרה בשעות:</b> ${esc(p.hours)}</div>`:''}
         ${(p.lang||[]).length?`<div class="row"><b>שפות:</b> ${esc(p.lang.join(', '))}</div>`:''}
         ${(p.when||[]).length?`<div class="row"><b>זמינות:</b> ${esc(p.when.join(', '))}</div>`:''}
@@ -294,7 +305,7 @@ async function saveStatus(id, patch){
 }
 function exportCsv(){
   const cols = [['תאריך',p=>new Date(p.ts).toLocaleDateString('he-IL')],['שם',p=>p.name],['טלפון',p=>p.phone],['מייל',p=>p.email],['עיר',p=>p.city],
-    ['מי',p=>(p.who||[]).join(', ')],['מוסד',p=>p.inst],['הכרה בשעות',p=>p.hours],['שפות',p=>(p.lang||[]).join(', ')],['זמינות',p=>(p.when||[]).join(', ')],
+    ['מי',p=>(p.who||[]).join(', ')],['מוסד',p=>p.inst],['מסלול',p=>p.track],['הכרה בשעות',p=>p.hours],['שפות',p=>(p.lang||[]).join(', ')],['זמינות',p=>(p.when||[]).join(', ')],
     ['מה מביא',p=>p.why],['סטטוס',p=>STATUSES[stOf(p)]],['הערה',p=>(STATUS[p.id]||{}).n||'']];
   const q = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const csv = '﻿'+[cols.map(c=>q(c[0])).join(',')].concat(PEOPLE.map(p=>cols.map(c=>q(c[1](p))).join(','))).join('\r\n');
