@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצטרפות למתנדבי הופה | ליווי בוגרים</title>
+<meta property="og:title" content="מתנדבים ומתנדבות לליווי בוגרים בהופה">
+<meta property="og:description" content="2–3 שעות בחודש, מהבית, לשלושה חודשים · עמותת הופה">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#FFF200;--y2:#E4D800;--pink:#E8348A;--pink-soft:#FDE7F1;--bg:#FFFBEA;--card:#fff;--ink:#111;--muted:#5d5d5d;--line:#E8E3CF;--red:#c0392b;--green:#1f8a4c}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:620px;margin:0 auto;padding:16px 16px 28px}
+header{text-align:center;padding:10px 0 4px}
+header img{height:54px;display:block;margin:0 auto}
+h1{font-size:clamp(25px,6.5vw,31px);line-height:1.2;margin:14px 0 6px;font-weight:800}
+h1 .hl{background:linear-gradient(transparent 58%,var(--y) 58%);padding:0 4px}
+.lead{font-size:16px;margin:0 0 14px;color:#2b2b2b}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 18px}
+.facts div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;font-size:13.5px;color:var(--muted)}
+.facts b{display:block;font-size:17px;color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;margin-bottom:12px}
+.card h2{font-size:18px;margin:0 0 12px}
+label.q{display:block;font-weight:700;font-size:15.5px;margin:14px 0 6px}
+label.q:first-of-type{margin-top:0}
+.req{color:var(--pink)}
+.hint{font-size:13.5px;color:var(--muted);margin:-2px 0 8px}
+.field,textarea{width:100%;font:inherit;font-size:16px;border:1px solid #d9d4bf;border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+.field:focus,textarea:focus{outline:2px solid var(--pink);border-color:var(--pink)}
+.ltr{direction:ltr;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:15px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px;color:var(--ink)}
+.chips button.on{background:var(--pink-soft);border-color:var(--pink);font-weight:700}
+.miss{border-color:var(--red)!important;box-shadow:0 0 0 2px #f6d5d1}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin-top:4px}
+.consent input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--pink)}
+.cta{display:flex;align-items:center;justify-content:center;width:100%;font:inherit;font-size:18px;font-weight:700;background:var(--y);color:var(--ink);border:1.5px solid var(--y2);border-radius:999px;padding:13px 20px;cursor:pointer;min-height:52px;margin-top:6px}
+.cta:disabled{opacity:.6;cursor:default}
+.err{color:var(--red);font-size:14.5px;text-align:center;min-height:1.2em;margin-top:8px}
+.done{text-align:center;padding:24px 8px}
+.done h2{font-size:28px;margin:6px 0 10px}
+.done p{font-size:16px;margin:0 0 10px}
+footer{text-align:center;font-size:13px;color:var(--muted);padding-top:10px}
+footer a{color:var(--pink)}
+.hidden{display:none}
+/* ניהול */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.btn{font:inherit;font-size:14.5px;background:#fff;border:1px solid #d9d4bf;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center}
+.btn.pri{background:var(--y);border-color:var(--y2);font-weight:700}
+.btn.on{background:var(--pink-soft);border-color:var(--pink);font-weight:700}
+.person h3{margin:0 0 2px;font-size:17px}
+.person .meta{font-size:14px;color:var(--muted);margin-bottom:6px}
+.person .row{font-size:14.5px;margin:2px 0}
+.person .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pill{display:inline-block;font-size:12.5px;border-radius:999px;padding:2px 10px;background:#eee;margin-inline-start:6px;vertical-align:middle}
+.pill.new{background:var(--y)}.pill.talk{background:#dbeafe}.pill.active{background:#d1f2dd}.pill.no{background:#f3d6d6}
+select.field{width:auto;min-height:40px;padding:6px 10px;font-size:14.5px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+<header><a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a></header>
+
+<section id="formView">
+  <h1>מתנדבים ומתנדבות <span class="hl">לליווי בוגרים</span></h1>
+  <p class="lead">הופה מלווה צעירים מגיל 14 עד 26 ביותר מ-30 בתי ספר בכל הארץ. המתנדבים שלנו מתקשרים לבוגרים, שואלים מה המצב ומה הם צריכים, ומכוונים אותם למענה מתאים: מלגה, הכשרה, עבודה או זכות שמגיעה להם. אנחנו מכשירים, נותנים תסריט שיחה ומלווים לאורך כל הדרך.</p>
+  <div class="facts">
+    <div><b><span dir="ltr">2–3</span> שעות</b>בחודש</div>
+    <div><b>מהבית</b>בטלפון</div>
+    <div><b>3 חודשים</b>ואז מחליטים</div>
+  </div>
+
+  <div class="card">
+    <h2>כמה פרטים, ונחזור אליך</h2>
+
+    <label class="q" for="f_name">שם מלא <span class="req">*</span></label>
+    <input class="field" id="f_name" autocomplete="name">
+
+    <label class="q" for="f_phone">טלפון נייד <span class="req">*</span></label>
+    <input class="field ltr" id="f_phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr">
+
+    <label class="q" for="f_email">מייל</label>
+    <input class="field ltr" id="f_email" type="email" inputmode="email" autocomplete="email" dir="ltr">
+
+    <label class="q" for="f_city">עיר מגורים</label>
+    <input class="field" id="f_city" autocomplete="address-level2">
+
+    <label class="q">מה מתאר אותך? <span class="req">*</span></label>
+    <div class="hint">אפשר לבחור יותר מאחד</div>
+    <div class="chips" id="c_who" data-multi="1"></div>
+
+    <div id="studentBox" class="hidden">
+      <label class="q" for="f_inst">איפה את/ה לומד/ת?</label>
+      <input class="field" id="f_inst" placeholder="שם האוניברסיטה או המכללה">
+      <label class="q">צריך/ה הכרה בשעות ההתנדבות (מעורבות חברתית או מלגה)?</label>
+      <div class="chips" id="c_hours"></div>
+    </div>
+
+    <label class="q">באילו שפות נוח לך לדבר?</label>
+    <div class="chips" id="c_lang" data-multi="1"></div>
+
+    <label class="q">מתי נוח לך להתקשר?</label>
+    <div class="chips" id="c_when" data-multi="1"></div>
+
+    <label class="q" for="f_why">מה מביא אותך אלינו?</label>
+    <div class="hint">לא חובה. כמה מילים מספיקות</div>
+    <textarea id="f_why"></textarea>
+
+    <label class="consent"><input type="checkbox" id="f_ok"> <span>אני מסכים/ה שעמותת הופה תיצור איתי קשר בנושא ההתנדבות. <span class="req">*</span></span></label>
+
+    <button class="cta" id="sendBtn" type="button">אני רוצה להצטרף</button>
+    <div class="err" id="err"></div>
+  </div>
+</section>
+
+<section id="doneView" class="hidden">
+  <div class="card done">
+    <h2>תודה! 💛</h2>
+    <p>הפרטים הגיעו אלינו. ניצור איתך קשר בימים הקרובים לשיחת היכרות קצרה.</p>
+    <p>בינתיים אפשר להכיר אותנו ב-<a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></p>
+  </div>
+</section>
+
+<section id="adminView" class="hidden"></section>
+
+<footer>עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
+</div>
+<div id="toast" class="toast"></div>
+
+<script src="staff-code.js"></script>
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const RESP_PREFIX = 'mitnadev-';            // נרשמים נשמרים כ-intake_mitnadev-<id> (לא ציבורי)
+const STATUS_KEY = 'mitnadvim_status';      // סטטוס והערות של מיטל — רק עם קוד צוות
+const OPTS = {
+  who:['סטודנט/ית','איש/אשת מקצוע','פנסיונר/ית','בוגר/ת של בית ספר בהופה','אחר'],
+  hours:['כן','לא','עוד לא יודע/ת'],
+  lang:['עברית','ערבית','רוסית','אמהרית','אנגלית'],
+  when:['בוקר','צהריים','ערב','סופ"ש']
+};
+const STATUSES = {new:'חדש/ה',talk:'דיברנו',active:'פעיל/ה',no:'לא מתאים'};
+const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);}
+
+/* ---------- גיליון ---------- */
+function jsonpOnce(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
+async function jsonp(params, onRetry){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
+    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; if(onRetry) onRetry(i+1); }
+  }
+  throw err;
+}
+
+/* ---------- טופס ---------- */
+const PICK = {who:[], hours:[], lang:[], when:[]};
+function chips(name){
+  const box = $('c_'+name), multi = !!box.dataset.multi;
+  box.innerHTML = OPTS[name].map((o,i)=>`<button type="button" data-i="${i}" class="${PICK[name].includes(o)?'on':''}">${esc(o)}</button>`).join('');
+  box.onclick = e => {
+    const b = e.target.closest('button'); if(!b) return;
+    const o = OPTS[name][+b.dataset.i];
+    if(multi) PICK[name] = PICK[name].includes(o) ? PICK[name].filter(x=>x!==o) : PICK[name].concat(o);
+    else PICK[name] = PICK[name][0]===o ? [] : [o];
+    box.classList.remove('miss');
+    chips(name);
+    if(name==='who') $('studentBox').classList.toggle('hidden', !PICK.who.includes('סטודנט/ית'));
+  };
+}
+const normPhone = p => String(p||'').replace(/\D/g,'').replace(/^972/,'0');
+let SENDING = false;
+async function submit(){
+  if(SENDING) return;
+  const err = $('err'); err.textContent = '';
+  document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));
+  const name = $('f_name').value.trim(), phone = normPhone($('f_phone').value), email = $('f_email').value.trim();
+  const bad = [];
+  if(name.length<2) bad.push($('f_name'));
+  if(!/^0\d{8,9}$/.test(phone)) bad.push($('f_phone'));
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad.push($('f_email'));
+  if(!PICK.who.length) bad.push($('c_who'));
+  if(bad.length){ bad.forEach(x=>x.classList.add('miss')); bad[0].scrollIntoView({block:'center',behavior:'smooth'});
+    err.textContent = 'צריך להשלים את השדות המסומנים'; return; }
+  if(!$('f_ok').checked){ err.textContent = 'צריך לסמן הסכמה ליצירת קשר'; return; }
+  const student = PICK.who.includes('סטודנט/ית');
+  const payload = { v:1, ts:new Date().toISOString(), name, phone, email, city:$('f_city').value.trim(),
+    who:PICK.who, inst: student ? $('f_inst').value.trim() : '', hours: student ? (PICK.hours[0]||'') : '',
+    lang:PICK.lang, when:PICK.when, why:$('f_why').value.trim().slice(0,1500) };
+  const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
+  SENDING = true; const btn = $('sendBtn'); btn.disabled = true; btn.textContent = 'שולח…';
+  const fail = () => { SENDING=false; btn.disabled=false; btn.textContent='אני רוצה להצטרף';
+    err.textContent = 'השליחה לא הצליחה. בדקו שיש אינטרנט ולחצו שוב.'; };
+  try{
+    const r = await jsonp(params, ()=>{ btn.textContent='גוגל מתעכב, מנסה שוב…'; });
+    if(!r || !r.ok) return fail();
+  }catch(e){ return fail(); }
+  LS.set('mitnadvim_sent', payload.ts);
+  $('formView').classList.add('hidden'); $('doneView').classList.remove('hidden'); window.scrollTo({top:0});
+}
+
+/* ---------- ניהול (?admin=1, קוד צוות) ---------- */
+let PEOPLE = [], STATUS = {}, FILTER = 'all';
+async function loadAdmin(){
+  const v = $('adminView'); v.classList.remove('hidden'); $('formView').classList.add('hidden');
+  v.innerHTML = '<div class="card">טוען את הנרשמים…</div>';
+  try{
+    const r = await jsonp({action:'storeAll', secret:GS_SECRET});
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    const st = r.store||{};
+    PEOPLE = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].name && !st[k]._test)
+      .map(k=>Object.assign({id:k}, st[k])).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    STATUS = st[STATUS_KEY] || {};
+    renderAdmin();
+  }catch(e){
+    if(window.staffCodeFail && staffCodeFail(e, v)) return;
+    v.innerHTML = '<div class="card">לא הצלחתי לטעון מהגיליון. <button class="btn" onclick="loadAdmin()">לנסות שוב</button></div>';
+  }
+}
+const stOf = p => (STATUS[p.id]||{}).s || 'new';
+function renderAdmin(){
+  const cnt = s => PEOPLE.filter(p=>stOf(p)===s).length;
+  const list = PEOPLE.filter(p=>FILTER==='all' || stOf(p)===FILTER || (FILTER==='hours' && p.hours==='כן'));
+  const link = location.origin+location.pathname;
+  $('adminView').innerHTML = `
+    <h1>נרשמים להתנדבות</h1>
+    <div class="bar">
+      <button class="btn ${FILTER==='all'?'on':''}" data-f="all">הכל (${PEOPLE.length})</button>
+      ${Object.keys(STATUSES).map(s=>`<button class="btn ${FILTER===s?'on':''}" data-f="${s}">${STATUSES[s]} (${cnt(s)})</button>`).join('')}
+      <button class="btn ${FILTER==='hours'?'on':''}" data-f="hours">צריכים הכרה בשעות (${PEOPLE.filter(p=>p.hours==='כן').length})</button>
+    </div>
+    <div class="bar">
+      <button class="btn pri" id="copyLink">📋 העתקת קישור הטופס</button>
+      <button class="btn" id="csv">⬇ ייצוא לאקסל</button>
+      <button class="btn" onclick="loadAdmin()">🔄 רענון</button>
+    </div>
+    ${list.map(p=>{ const s=stOf(p), note=(STATUS[p.id]||{}).n||'', tel=normPhone(p.phone), wa='972'+tel.replace(/^0/,'');
+      return `<div class="card person">
+        <h3>${esc(p.name)}<span class="pill ${s}">${STATUSES[s]}</span></h3>
+        <div class="meta">${esc(new Date(p.ts).toLocaleDateString('he-IL'))}${p.city?' · '+esc(p.city):''}</div>
+        <div class="row"><b>מי:</b> ${esc((p.who||[]).join(', '))}${p.inst?' · '+esc(p.inst):''}</div>
+        ${p.hours?`<div class="row"><b>הכרה בשעות:</b> ${esc(p.hours)}</div>`:''}
+        ${(p.lang||[]).length?`<div class="row"><b>שפות:</b> ${esc(p.lang.join(', '))}</div>`:''}
+        ${(p.when||[]).length?`<div class="row"><b>זמינות:</b> ${esc(p.when.join(', '))}</div>`:''}
+        ${p.why?`<div class="row"><b>מה מביא:</b> ${esc(p.why)}</div>`:''}
+        <div class="row"><b>טלפון:</b> <span dir="ltr">${esc(p.phone)}</span>${p.email?` · <span dir="ltr">${esc(p.email)}</span>`:''}</div>
+        <div class="acts">
+          <a class="btn" href="tel:${esc(tel)}">📞 חיוג</a>
+          <a class="btn" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">💬 פתח צ'אט</a>
+          ${p.email?`<a class="btn" href="mailto:${esc(p.email)}">✉️ מייל</a>`:''}
+          <select class="field" data-st="${esc(p.id)}">${Object.keys(STATUSES).map(k=>`<option value="${k}" ${k===s?'selected':''}>${STATUSES[k]}</option>`).join('')}</select>
+        </div>
+        <textarea class="field" data-note="${esc(p.id)}" placeholder="הערה (נשמרת לגיליון)" style="margin-top:8px;min-height:60px">${esc(note)}</textarea>
+      </div>`; }).join('') || '<div class="card">אין נרשמים בסינון הזה.</div>'}`;
+  const v = $('adminView');
+  v.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ FILTER=b.dataset.f; renderAdmin(); });
+  v.querySelectorAll('[data-st]').forEach(el=>el.onchange=()=>saveStatus(el.dataset.st,{s:el.value}));
+  v.querySelectorAll('[data-note]').forEach(el=>el.onchange=()=>saveStatus(el.dataset.note,{n:el.value.trim()}));
+  $('copyLink').onclick=()=>navigator.clipboard.writeText(link).then(()=>toast('הקישור הועתק'),()=>prompt('הקישור:',link));
+  $('csv').onclick=exportCsv;
+}
+async function saveStatus(id, patch){
+  STATUS[id] = Object.assign({}, STATUS[id], patch);
+  try{
+    const r = await jsonp({action:'storeSet', secret:GS_SECRET, key:STATUS_KEY, json:JSON.stringify(STATUS)});
+    if(!r || !r.ok) throw 0;
+    toast('נשמר'); if(patch.s) renderAdmin();
+  }catch(e){ toast('השמירה לא הצליחה, נסי שוב'); }
+}
+function exportCsv(){
+  const cols = [['תאריך',p=>new Date(p.ts).toLocaleDateString('he-IL')],['שם',p=>p.name],['טלפון',p=>p.phone],['מייל',p=>p.email],['עיר',p=>p.city],
+    ['מי',p=>(p.who||[]).join(', ')],['מוסד',p=>p.inst],['הכרה בשעות',p=>p.hours],['שפות',p=>(p.lang||[]).join(', ')],['זמינות',p=>(p.when||[]).join(', ')],
+    ['מה מביא',p=>p.why],['סטטוס',p=>STATUSES[stOf(p)]],['הערה',p=>(STATUS[p.id]||{}).n||'']];
+  const q = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const csv = '﻿'+[cols.map(c=>q(c[0])).join(',')].concat(PEOPLE.map(p=>cols.map(c=>q(c[1](p))).join(','))).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = 'מתנדבים-הופה.csv'; a.click();
+}
+
+/* ---------- התחלה ---------- */
+if(new URLSearchParams(location.search).has('admin')) loadAdmin();
+else { Object.keys(OPTS).forEach(chips); $('sendBtn').onclick = submit; }
+</script>
+</body>
+</html>
