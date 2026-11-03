@@ -117,9 +117,9 @@ var KEY_PREFIX='mashov2-';
 var ADMIN_PARAM='hopa';
 var LS_KEY='hopa-mashov2-draft';
 
-var WORKED=['הבוגר שסיפר','תעדוף 70 השעות','החדרים — מי השותפים שלי','בניית הצ׳ק-ליסט לי״ב',
-  'שיחת הטלפון עם בוגר','קיר הציטוטים','אליאס — סבב החימום','אליאס הפוך — קלפי האתגר',
-  'כתיבת הפרק בשולחן','שמונה ההצגות ב-4.11','מסמך תוכנית העבודה','האנשים והאווירה'];
+var WORKED=['הבוגר שסיפר (14.10)','שמונת הרכיבים','מי בתחביב שלי וההיכרות (21.10)','אליאס מושגים',
+  'אליאס הפוך ושולחנות הרעיונות','71 הרעיונות','למידת העמיתים: התוכניות שהוצגו (4.11)','בניית התוכנית שלי',
+  'מסמך תוכנית העבודה','האנשים והאווירה'];
 var TOPICS=['מלגות וזכויות','תעסוקה והכשרות','בניית מאגר בוגרים','תרגול שיחות','עבודה עם קבוצות וואטסאפ',
   'חיבור לגורמים בקהילה','בוגרים בשירות ואחריו','למידת עמיתים והצלחות','כלים דיגיטליים ומעקב'];
 var RATE_L=['ממש לא','פחות','בסדר','טוב','מעולה!'],RATE_E=['😕','😐','🙂','😃','🤩'];
@@ -226,7 +226,7 @@ async function submit(){
   var payload={who:state.who.trim(),school:state.school.trim(),inHopa:state.inHopa,called:state.called,
     rate:state.rate,useful:state.useful,worked:state.worked,improve:state.improve.trim(),
     topics:state.topics,heart:state.heart.trim(),ts:new Date().toISOString(),
-    meeting:'מפגשי רכזים 14.10 · 21.10 · 4.11 · 2026'};
+    meeting:'מפגשי רכזים 14.10 · 21.10 · 4.11 · 2026 (משוב מסכם 4.11)'};
   var params={action:'intakeSubmit',school:KEY_PREFIX+state.id,json:JSON.stringify(payload)};
   try{
     if(new URLSearchParams(params).toString().length>6500)throw new Error('too-long');
@@ -245,7 +245,7 @@ async function submit(){
 function renderDone(){
   app.innerHTML='<div class="card done"><div class="big">💛</div><h2>תודה!</h2>'+
     '<p>כל מילה כאן נכנסת לתכנון המפגש הבא.</p>'+
-    '<div class="nextbox">4.11.2026 · זום<small>נפתח בשאלה אחת: מי עשה לפחות פעולה אחת מהדף</small></div></div>';
+    '<div class="nextbox">לפני חנוכה<small>נחזור לכל מי ששמר תוכנית עם שאלה אחת: איזו פעולה כבר עשית?</small></div></div>';
 }
 
 /* ---------- ניהול ---------- */

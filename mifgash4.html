@@ -15,13 +15,13 @@
   a{color:var(--pink-dark)}
   .in{max-width:720px;margin:0 auto;padding:0 16px}
 
-  header{background:#111;color:#fff;padding:18px 0 24px;position:relative;overflow:hidden}
+  header{background:#fff;color:var(--ink);padding:18px 0 24px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
   header:after{content:"";position:absolute;inset-inline-start:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,0,.22),transparent 65%)}
   .hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .logo{background:#fff;border-radius:14px;padding:6px 10px;display:inline-flex}
+  .logo{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:6px 10px;display:inline-flex}
   .logo img{height:38px;display:block}
   header h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.3px}
-  header .sub{font-size:13.5px;opacity:.85;margin-top:3px}
+  header .sub{font-size:13.5px;color:var(--muted);margin-top:3px}
   .meet{margin-top:14px;display:inline-flex;gap:10px;align-items:center;background:var(--yellow);color:#111;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
   .meet small{font-weight:500;opacity:.75}
 
@@ -31,7 +31,7 @@
   nav.toc a{flex:none;text-decoration:none;color:var(--muted);font-size:12.5px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
   nav.toc a.on{background:var(--pink);border-color:var(--pink);color:#fff}
 
-  main{padding:16px 0 60px}
+  main{padding:16px 0 120px}
   section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-top:14px;scroll-margin-top:64px}
   .sec-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
   .sec-head .num{background:var(--pink);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex:none;margin-top:2px}
@@ -47,60 +47,72 @@
   .quote{border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 12px 12px 0;padding:12px 14px;font-size:15px;font-weight:600;margin:12px 0}
   ul{margin:6px 0 12px;padding-inline-start:22px}li{margin-bottom:5px}
 
-  /* הצגת פרק */
-  .pk{border:2px solid var(--line);border-radius:16px;padding:15px;margin-top:12px;transition:.2s}
-  .pk.on{box-shadow:0 8px 28px rgba(31,31,38,.13)}
-  .pk .hd{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-  .pk .badge{color:#fff;border-radius:999px;padding:4px 13px;font-size:12px;font-weight:800}
-  .pk h3{margin:7px 0 1px;font-size:18px;font-weight:900}
-  .pk .d{color:var(--muted);font-size:13px}
-  .pk .who{margin-inline-start:auto;font-size:12px;color:var(--muted);font-weight:700}
-  .pk .line{margin-top:10px;border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:15px;font-weight:700}
-  .pk .trap{margin-top:8px;background:#fff4f4;border:1.5px solid #f5c9c9;border-radius:11px;padding:9px 12px;font-size:13px}
-  .pk .trap b{color:#c0392b}
+  /* למידת עמיתים */
+  .peer{border:2px solid var(--line);border-radius:16px;padding:15px;margin-top:12px}
+  .peer .hd{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .peer .badge{background:var(--yellow);color:#111;border-radius:999px;padding:4px 13px;font-size:12px;font-weight:800}
+  .peer h3{margin:7px 0 1px;font-size:18px;font-weight:900}
+  .peer .sch{color:var(--muted);font-size:13px;font-weight:700}
+  .peer .goal{margin-top:10px;border-inline-start:4px solid var(--yellow);background:#fffdf0;border-radius:0 11px 11px 0;padding:10px 13px;font-size:14.5px;font-weight:600}
+  .peer .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
   .acts{margin-top:10px}
+  .acts .ch{font-size:12px;font-weight:800;margin-top:8px;padding:3px 10px;border-radius:999px;display:inline-block;color:#fff}
   .acts .a{display:flex;gap:9px;align-items:flex-start;border-top:1px solid var(--line);padding:9px 0}
-  .acts .a:first-child{border-top:none}
-  .acts .a .n{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11.5px;color:#fff;flex:none;margin-top:2px}
   .acts .a .t{flex:1;font-size:14px;font-weight:700;line-height:1.35}
-  .acts .a .m{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px;display:flex;gap:8px;flex-wrap:wrap}
+  .acts .a .m{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap}
   .acts .a .m span{background:#f6f2f7;border-radius:999px;padding:2px 9px}
-  .acts .a .take{flex:none;width:34px;height:34px;border:2px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:16px;line-height:1;margin-top:2px}
+  .acts .a .take{flex:none;min-width:34px;height:34px;border:2px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:15px;line-height:1;margin-top:2px;padding:0 9px;font-weight:800}
   .acts .a .take.on{background:var(--pink);border-color:var(--pink);color:#fff}
-  .pk .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
 
-  .taken{background:#111;color:#fff;border-radius:16px;padding:15px;margin-top:12px;position:sticky;bottom:12px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-  .taken .h{font-size:13px;font-weight:800;color:var(--yellow)}
-  .taken .n{font-size:30px;font-weight:900;line-height:1.1}
-  .taken .s{font-size:12.5px;opacity:.7}
+  /* התוכנית שלי */
+  .tsel{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
+  .tsel button{border:2px solid var(--line);background:#fff;border-radius:13px;padding:11px 12px;cursor:pointer;text-align:right;transition:.15s}
+  .tsel button:hover{border-color:var(--pink)}
+  .tsel button .n{font-size:11px;font-weight:800;color:var(--muted)}
+  .tsel button .t{font-size:14.5px;font-weight:800;line-height:1.2}
+  .tsel button.on{border-color:var(--accent);background:#fff}
+  .tsel button.on .n{color:var(--accent)}
+  .pch{border:2px solid var(--c);border-radius:15px;padding:12px 14px;margin-top:12px}
+  .pch h3{margin:0;font-size:16.5px;font-weight:900;color:var(--c)}
+  .pact{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+  .pact .top{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  .ptag{font-size:11px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--pink-soft);color:var(--pink-dark)}
+  .ptag.t1410{background:#e8f8ef;color:#177a4c}
+  .ptag.ttable{background:#fffbd0;color:#7a6a00}
+  .ptag.tpeer{background:#e9f1ff;color:#1f4f9c}
+  .pact .x{margin-inline-start:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:12.5px;text-decoration:underline}
+  .pact select.idsel{margin-top:6px;width:100%;border:1.5px dashed var(--line);border-radius:10px;padding:8px 10px;background:#fbfafc;color:var(--muted);font-size:13px}
+  .pact select.msel{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 10px;background:#fff}
+  .status{font-size:13.5px}
+  .status b{color:var(--pink-dark)}
 
-  input[type=text],textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
-  input:focus,textarea:focus{border-color:var(--pink)}
+  input[type=text],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--pink)}
   textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
   .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 160px}
-
-  .sl .row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-  .sl .nm{width:135px;font-size:13.5px;font-weight:700;flex:none}
-  .sl input[type=range]{flex:1;accent-color:var(--pink)}
-  .sl .v{width:54px;text-align:center;font-weight:900;font-size:14px;color:var(--pink-dark);flex:none}
-  .sl .tot{text-align:center;font-weight:800;font-size:14px;margin-top:4px}
-  .sl .tot b{font-size:20px}
-  .sl .tot.over{color:#c0392b}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;text-decoration:none}
   .btn:active{transform:scale(.97)}
   .btn.pink{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(232,52,138,.3)}
   .btn.yellow{background:var(--yellow);color:#111}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-size:13.5px;padding:9px 16px;border-radius:11px;font-weight:700}
+  .btn[disabled]{opacity:.6;cursor:default}
   .btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
   .err{color:#d9534f;font-size:13.5px;font-weight:700;margin-top:8px;min-height:16px}
   .livehint{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
+  .taken{background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:13px 15px;position:fixed;bottom:12px;inset-inline:0;margin:0 auto;max-width:688px;z-index:25;box-shadow:0 10px 30px rgba(0,0,0,.14);display:flex;align-items:center;gap:14px}
+  .taken .h{font-size:12px;font-weight:800;color:var(--pink-dark)}
+  .taken .n{font-size:26px;font-weight:900;line-height:1.1}
+  .taken .s{font-size:12px;color:var(--muted)}
+  .taken a{margin-inline-start:auto;color:#111;background:var(--yellow);text-decoration:none;border-radius:10px;padding:8px 13px;font-weight:800;font-size:13px;white-space:nowrap}
+  @media (max-width:740px){.taken{inset-inline:10px}}
+
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
-  #toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:88%;background:#111;color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  #toast{position:fixed;inset-inline:0;bottom:84px;margin:auto;width:max-content;max-width:88%;background:#fff;color:#111;border:2px solid var(--pink);box-shadow:0 8px 24px rgba(0,0,0,.15);padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
   #toast.show{opacity:1}
 </style>
 </head>
@@ -109,102 +121,113 @@
 <header><div class="in">
   <div class="hrow">
     <span class="logo"><img src="hopa-logo.png" alt="הופה"></span>
-    <div><h1>התוכנית המלאה</h1><div class="sub">שמונה פרקים · שמונה שולחנות · תוכנית אחת</div></div>
+    <div><h1>התוכנית שלי לליווי בוגרים</h1><div class="sub">הדף שלכם לאורך המפגש · ממלאים לפי הסדר, 1 עד 4</div></div>
   </div>
-  <div class="meet">4.11.2026 · זום <small>90 דקות · מפגש 3 מתוך 3</small></div>
+  <div class="meet">4.11.2026 · זום <small>בסוף המפגש יוצאים עם תוכנית כתובה לבית הספר</small></div>
 </div></header>
 
 <nav class="toc"><div class="in" id="toc"></div></nav>
 
 <main class="in">
 
-  <section id="s0">
-    <div class="sec-head"><div class="num">0</div><div><h2>איפה אנחנו</h2><small></small></div><div class="time">5 דק'</div></div>
-    <p>ב-14.10 בנינו את השלד. ב-21.10 שמונה שולחנות ייצרו רעיונות והפכו כל אחד למומחה בפרק אחד.</p>
-    <div class="quote">היום כל שולחן מציג, ואתם לוקחים. <b>בסוף המפגש לכל אחד כאן תהיה תוכנית עבודה שלמה — שנבנתה על ידי 64 אנשים ולא על ידי אחד.</b></div>
-    <div class="callout y"><b>איך זה עובד:</b> אחרי כל הצגה יש שתי דקות. סמנו <b>➕</b> ליד כל פעולה שאתם לוקחים לבית הספר שלכם.
-      מה שסימנתם הופך בסוף למסמך תוכנית העבודה שלכם.</div>
-  </section>
-
   <section id="s1">
-    <div class="sec-head"><div class="num">1</div><div><h2>שמונה הצגות</h2><small>5 דקות הצגה · 2 דקות לסמן</small></div><div class="time">56 דק'</div></div>
-    <p class="livehint"><span class="dot"></span> <span id="ready">0</span> מתוך 8 פרקים נשלחו מ-21.10</p>
-    <div id="peraks"></div>
+    <div class="sec-head"><div class="num">1</div><div><h2>מי אני</h2><small>שם ובית ספר. אם התחלתם תוכנית ב-21.10, היא תופיע כאן</small></div></div>
+    <div class="two">
+      <div><label class="fl">שם</label><input type="text" id="p_who" maxlength="60" placeholder="כמו שכתבתם ב-21.10"></div>
+      <div><label class="fl">בית ספר</label><select id="p_school"></select></div>
+    </div>
+    <div class="callout status" id="p_status" style="margin-top:12px"></div>
   </section>
 
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>התוכנית שלי</h2><small>ניסוח סופי</small></div><div class="time">15 דק'</div></div>
-
-    <label class="fl">שם + בית ספר</label>
-    <input type="text" id="me" placeholder="כדי שנוכל לשלוח לך את המסמך" maxlength="70">
-
-    <h3 style="margin:18px 0 2px;font-size:16px">חלוקת 70 השעות</h3>
-    <p class="livehint" style="margin-bottom:0">אחרי ששמעתם הכול — האם התעדוף שלכם השתנה מ-14.10?</p>
-    <div class="sl" id="sliders"></div>
-
-    <label class="fl">השותף/ה שלי בבית הספר — בשם</label>
-    <input type="text" id="partner" placeholder="יועצת? מחנכת י״ב? מזכירה?" maxlength="60">
-
-    <label class="fl">שלוש פעולות עד חנוכה (מעבר למה שסימנתם למעלה)</label>
-    <input type="text" id="q1" placeholder="1 · מה + עד מתי" maxlength="110">
-    <input type="text" id="q2" placeholder="2" maxlength="110" style="margin-top:7px">
-    <input type="text" id="q3" placeholder="3" maxlength="110" style="margin-top:7px">
-
-    <label class="fl">החסם האמיתי שלי — ומה הצעד הקטן שעוקף אותו</label>
-    <textarea id="block"></textarea>
+    <div class="sec-head"><div class="num">2</div><div><h2>לוקחים מהעמיתים</h2><small>שלושה רכזים מציגים את התוכנית שלהם</small></div></div>
+    <div class="callout y"><b>מה עושים:</b> פעולה שמתאימה גם לבית הספר שלכם? לוחצים <b>➕</b> לידה. היא נכנסת לתוכנית שלכם בשלב 3.</div>
+    <div id="peers"></div>
+    <p class="livehint"><span class="dot"></span> <span id="peerStat">טוען את התוכניות…</span></p>
   </section>
 
   <section id="s3">
-    <div class="sec-head"><div class="num">3</div><div><h2>המסמך לבית הספר</h2><small>מה שנשאר ביד</small></div><div class="time">8 דק'</div></div>
-    <div class="callout g"><b>זה לא דף סיכום ממפגש.</b> זו תוכנית עבודה בליווי בוגרים לתשפ״ז — עם שעות, עם אחראים ועם לוח זמנים.
-      אפשר להניח אותה על שולחן המנהל/ת ולהכניס אותה לתוכנית העבודה הבית ספרית.</div>
-    <div class="btnrow">
-      <button class="btn pink" id="saveBtn">💾 שמירה ושליחה</button>
-      <button class="btn yellow" id="printBtn">🖨️ הפקת המסמך</button>
-    </div>
-    <div class="err" id="err"></div>
-    <div class="callout" style="margin-top:12px"><b>השמירה עוזרת לנו:</b> כך נוכל לשלוח לכם תזכורת לפני חנוכה ולבדוק מה יצא לפועל.</div>
+    <div class="sec-head"><div class="num">3</div><div><h2>התוכנית שלי</h2><small>מטרה, רכיבים, ולכל רכיב פעולות</small></div></div>
+
+    <label class="fl">א · המטרה שלי במשפט אחד: איזה שינוי אני רוצה לראות אצל הבוגרים?</label>
+    <textarea id="p_goal" maxlength="400" placeholder="למשל: שכל בוגר יידע שיש לו כתובת בבית הספר גם אחרי הלימודים"></textarea>
+
+    <label class="fl" style="margin-top:16px">ב · הרכיבים שאני עובד/ת עליהם השנה. לוחצים כדי לבחור.</label>
+    <div class="tsel" id="p_chaps"></div>
+
+    <label class="fl" style="margin-top:16px">ג · לכל רכיב שבחרתם: לפחות פעולה אחת. מה, באיזה חודש, עם מי.</label>
+    <div class="callout" style="margin-top:4px"><b>לא יודעים מה לכתוב?</b> בתוך כל פעולה יש רשימה "בחרו מרעיונות השולחנות". אלה הרעיונות שכולנו כתבנו ב-21.10.</div>
+    <div id="p_list"></div>
   </section>
 
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>סגירה</h2><small></small></div><div class="time">6 דק'</div></div>
-    <ul>
-      <li>מסמך תוכנית העבודה — במייל ובוואטסאפ</li>
-      <li>המחברת המלאה של כל שמונת הפרקים</li>
-      <li>כרטיס הכיס · תבנית המאגר · <a href="https://hopa.org.il" target="_blank" rel="noopener">מאגר המענים</a></li>
+    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>שלוש שאלות קצרות, ואז שני כפתורים</small></div></div>
+
+    <label class="fl">מי השותף/ה שלי בבית הספר? בשם.</label>
+    <input type="text" id="p_partner" placeholder="למשל: רונית, היועצת" maxlength="80">
+
+    <label class="fl">מה עלול לעצור אותי, ומה הצעד הקטן שעוקף את זה?</label>
+    <textarea id="p_block" maxlength="400" placeholder="למשל: אין לי רשימת בוגרים. הצעד: לבקש מהמזכירות עד סוף נובמבר"></textarea>
+
+    <label class="fl">מדד אחד שלי לסוף השנה (לא חובה)</label>
+    <input type="text" id="p_measure" placeholder="למשל: 80% מבוגרי המחזור האחרון עם טלפון מעודכן" maxlength="140">
+
+    <div class="btnrow" style="margin-top:18px">
+      <button class="btn pink" id="saveBtn">שמירה ושליחה</button>
+      <button class="btn yellow" id="printBtn">הפקת המסמך</button>
+    </div>
+    <div class="err" id="err"></div>
+    <div class="livehint" id="p_saved"></div>
+    <ul style="margin-top:12px;font-size:14px">
+      <li><b>שמירה ושליחה</b>: התוכנית נשמרת אצלנו בהופה, ונחזור אליכם לפני חנוכה.</li>
+      <li><b>הפקת המסמך</b>: נפתח דף A4 עם התוכנית שלכם, לשמירה כ-PDF ולמייל למנהל/ת.</li>
     </ul>
-    <div class="btnrow">
-      <a class="btn yellow" href="mashov2.html" target="_blank" rel="noopener">💬 משוב</a>
-      <a class="btn ghost" href="kartis.html" target="_blank" rel="noopener">🎴 כרטיס כיס</a>
-      <a class="btn ghost" href="machberet.html" target="_blank" rel="noopener">📓 המחברת</a>
+    <div class="btnrow" style="margin-top:10px">
+      <a class="btn ghost" href="mashov2.html" target="_blank" rel="noopener">משוב על המפגש · 2 דקות</a>
+      <a class="btn ghost" href="raayonot-2110.html" target="_blank" rel="noopener">71 הרעיונות</a>
     </div>
   </section>
 
-  <div class="taken" id="takenBar">
-    <div class="h">בתוכנית שלי</div>
-    <div class="n"><span id="tk">0</span> פעולות</div>
-    <div class="s">מתוך <span id="tot">0</span> שהוצגו · סה״כ <span id="tkh">0</span> שעות משוערות</div>
-  </div>
-
 </main>
+
+<div class="taken" id="takenBar">
+  <div><div class="h">בתוכנית שלי</div><div class="n"><span id="tk">0</span> פעולות</div>
+  <div class="s"><span id="tkm">0</span> עם חודש · <span id="tkw">0</span> עם שותף/ה</div></div>
+  <a href="#s3">לתוכנית</a>
+</div>
 
 <footer class="in">תוכנית הבוגרים · <b>הופה</b> · <a href="https://hopa.org.il" target="_blank" rel="noopener">hopa.org.il</a></footer>
 <div id="toast"></div>
 
 <script src="elias-data.js"></script>
+<script src="ideas-2110.js"></script>
 <script>
 var EXEC_URL='https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
-var GS_SECRET='';
-var M3='m3-',KEY_PREFIX='m4-';
+var KEY_PREFIX='m4-';
+var PLAN_KEY='hopa-m4-plan';
+var SCHOOLS=["אבו סנאן", "אום אל פחם בנות", "אום אל פחם בנים", "אור דניאל", "אור העתיד תורני מקצועי", "אורט אורמת", "אורט בית הערבה", "אורט כרמל", "אורט תל נוף", "אורט תעשייה אווירית", "אכסאל", "אל אמאני סכנין", "אלחכמה כסרא-סמיע", "אנרג'י טק", "בית אל", "בית דוד", "בית חנינה בנות", "בית חנינה בנים", "ג'וליס בנות", "דן גורמה", "דרור גליל", "דרור נווה מדבר", "הדר", "התיכון החברתי חיפה", "חוש\"ן", "טורען", "טל חרמון", "ישיבת חנוך לנער", "ישיבת עתיד אור מנחם", "כפר זיתים", "כפר יסיף", "כפר עקב", "לקייה", "מצפה רמון", "מרחביה/מעיינות", "נחלים", "נצרת", "סור באהר", "סכנין תל שבע", "עמל אשדוד", "עמל טייבה ב'", "עמל טק אין", "עמל רהט", "ערערה", "עתיד באר שבע", "עתיד בת עמי", "עתיד גליל מערבי ירכא בנים", "עתיד טק ביר אל מכסור", "עתיד כפר חב\"ד", "עתיד כרמיאל", "עתיד פלמחים", "צור ברק", "צור ים", "קמ\"ג דימונה", "רימונים", "רמת דוד", "שגב שלום", "שפרעם", "תיכון החממה", "תיכון חברתי ת\"א", "תיכון טכנולוגי אי טק סקול (מסעדה)", "תיכון עוצמ\"ה עתיד זוקו", "תיכון שיח", "תפן ליזמות"];
+
+/* מי מציג/ה בלמידת העמיתים — מי שסימן/ה במשוב 21.10 "אשמח להציג" / "אולי". find = מה שמחפשים בשרת (השם כפי שנכתב ב-21.10) */
+var PRESENTERS=[
+  {who:'ביאן סלאימה',school:'כפר עקב',find:'ביאן'},
+  {who:'ענבל לוי',school:'מצפה רמון',find:'ענבל לוי'},
+  {who:'אמנה שלבי',school:'שגב שלום',find:'שלבי'}
+];
+var MONTHS=['ספטמבר','אוקטובר','נובמבר','דצמבר','ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט'];
+var SRC_TAG={'1410':['t1410','מ-14.10'],'table':['ttable','מהשולחנות'],'peer':['tpeer','מעמית/ה'],'me':['','שלי']};
 
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2100)}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsJson(k,d){try{return JSON.parse(lsGet(k))||d}catch(e){return d}}
+function nrm(s){return String(s||'').replace(/[\s\-–'"`״׳.,·()\/]/g,'').toLowerCase()}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function chap(n){return chapterByNum(n)||{n:0,t:'פעולות נוספות',c:'#999',key:'x'}}
 
 var devId=lsGet('hopa-m4-dev');
-if(!devId){devId=Date.now().toString(36)+Math.random().toString(36).slice(2,7);lsSet('hopa-m4-dev',devId)}
+if(!devId){devId=uid();lsSet('hopa-m4-dev',devId)}
 
 function jsonp(params,tmo){
   return new Promise(function(res,rej){
@@ -219,10 +242,20 @@ function jsonp(params,tmo){
     document.head.appendChild(s);
   });
 }
+/* טלפון שמחובר לגוגל נחסם לפעמים ב-JSONP — קודם fetch בלי עוגיות, JSONP כגיבוי */
+async function call(params,tmo){
+  try{
+    var r=await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(),{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout?AbortSignal.timeout(tmo||20000):undefined});
+    var d=await r.json();if(d&&d.ok)return d;throw new Error((d&&d.error)||'שגיאה');
+  }catch(e){
+    var d2=await jsonp(params,tmo||20000);if(d2&&d2.ok)return d2;throw new Error((d2&&d2.error)||'שגיאה');
+  }
+}
 function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
-async function jsonpRetry(p,tries){var e;for(var i=1;i<=(tries||5);i++){try{var r=await jsonp(p,25000);if(r&&r.ok)return r;e=new Error((r&&r.error)||'שגיאה')}catch(x){e=x}await delay(700+i*600)}throw e}
+async function callRetry(p,tries){var e;for(var i=1;i<=(tries||4);i++){try{return await call(p,20000)}catch(x){e=x}await delay(700+i*600)}throw e}
 
-var SECS=[['s0','איפה אנחנו'],['s1','ההצגות'],['s2','התוכנית שלי'],['s3','המסמך'],['s4','סגירה']];
+/* ---- ניווט ---- */
+var SECS=[['s1','1 · מי אני'],['s2','2 · מהעמיתים'],['s3','3 · התוכנית'],['s4','4 · סיום']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -231,124 +264,274 @@ addEventListener('scroll',function(){
   links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
 },{passive:true});
 
-/* ---- תעדוף שעות ---- */
-var hrs={};
-BUCKETS.forEach(function(b){hrs[b.k]=Number(lsGet('hopa-m2-h-'+b.k))||Number(lsGet('hopa-m4-h-'+b.k))||17});
-$('sliders').innerHTML=BUCKETS.map(function(b){
-  return '<div class="row"><span class="nm">'+esc(b.t)+'<br><span style="font-weight:500;color:var(--muted);font-size:11.5px">'+esc(b.d)+'</span></span>'+
-    '<input type="range" min="0" max="70" step="5" value="'+hrs[b.k]+'" data-k="'+b.k+'">'+
-    '<span class="v" id="v-'+b.k+'">'+hrs[b.k]+' ש׳</span></div>';
-}).join('')+'<div class="tot" id="htot"></div>';
-function paintHours(){
-  var sum=0;BUCKETS.forEach(function(b){sum+=hrs[b.k];$('v-'+b.k).textContent=hrs[b.k]+' ש׳'});
-  var el=$('htot');el.className='tot'+(sum>70?' over':'');
-  el.innerHTML='סה״כ <b>'+sum+'</b> מתוך 70'+(sum>70?' — חרגתם ב-'+(sum-70):(sum<70?' · נשארו '+(70-sum):' ✓'));
+/* ---- התוכנית שלי: המודל ---- */
+var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',imp:'',ts:''};
+['chaps','acts'].forEach(function(k){if(!Array.isArray(plan[k]))plan[k]=[]});
+var saveT=null,lookT=null,lastPushed='';
+
+function visibleActs(){return plan.acts.filter(function(a){return (a.what||'').trim()})}
+function monthOf(a){
+  if(a.m!=null&&a.m!==''&&!isNaN(Number(a.m)))return Number(a.m);
+  var w=String(a.when||'');for(var i=0;i<MONTHS.length;i++)if(w.indexOf(MONTHS[i])>-1)return i;
+  return -1;
 }
-[].slice.call($('sliders').querySelectorAll('input')).forEach(function(inp){
-  inp.addEventListener('input',function(){hrs[this.dataset.k]=Number(this.value);lsSet('hopa-m4-h-'+this.dataset.k,this.value);paintHours()});
+function addAct(n,a,src,quiet){
+  n=Number(n)||0;if(!a.what)return false;
+  if(n&&plan.chaps.indexOf(n)<0)plan.chaps.push(n);
+  var dup=plan.acts.some(function(x){return x.ch===n&&nrm(x.what)===nrm(a.what)});
+  if(dup){if(!quiet)toast('זה כבר בתוכנית שלך');return false}
+  plan.acts.push({id:uid(),ch:n,what:a.what,who:a.who||'',m:(a.m!=null&&a.m!==''?Number(a.m):undefined),when:a.when||'',src:src||'me'});
+  if(!quiet){savePlan();paintPlan();toast('נכנס לתוכנית שלך ✓')}
+  return true;
+}
+function removeActByText(n,what){
+  var before=plan.acts.length;
+  plan.acts=plan.acts.filter(function(x){return !(x.ch===Number(n)&&nrm(x.what)===nrm(what))});
+  return plan.acts.length<before;
+}
+function hasAct(n,what){return plan.acts.some(function(x){return x.ch===Number(n)&&nrm(x.what)===nrm(what)})}
+
+/* ייבוא תוכנית (מהמכשיר מ-21.10 או מהשרת) — ממזג, לא דורס מה שכבר כתבו היום */
+function importPlan(d,src){
+  if(!d)return false;
+  var got=0;
+  if(!plan.goal&&d.goal){plan.goal=String(d.goal);got++}
+  (d.chaps||[]).forEach(function(n){n=Number(n);if(n&&plan.chaps.indexOf(n)<0){plan.chaps.push(n);got++}});
+  (d.acts||[]).forEach(function(a){if(a&&a.what&&addAct(a.ch,{what:a.what,who:a.who,m:a.m,when:a.when},a.src&&a.src!=='me'?a.src:'me',true))got++});
+  if(!plan.partner&&d.partner)plan.partner=d.partner;
+  if(!plan.block&&d.block)plan.block=d.block;
+  if(!plan.measure&&d.measure)plan.measure=d.measure;
+  plan.imp=src;savePlan();
+  return got>0;
+}
+/* אותו טלפון כמו ב-21.10 — התוכנית כבר כאן */
+(function(){
+  var m3=lsJson('hopa-m3-plan',null);
+  if(!plan.who)plan.who=(lsGet('hopa-m3-f-b_who')||lsGet('hopa-bursa-n')||lsGet('hopa-m2-g_me')||'').trim();
+  if(!plan.school){var s=lsGet('hopa-m3-f-b_school')||lsGet('hopa-bursa-s')||'';if(SCHOOLS.indexOf(s)>-1)plan.school=s}
+  if(m3&&!plan.imp&&!visibleActs().length&&!plan.goal){importPlan(m3,'device')}
+})();
+
+/* ---- זהות (גם מהקישור האישי במייל: ?n=&s=) ---- */
+(function(){var q=new URLSearchParams(location.search),n=(q.get('n')||'').trim(),s=(q.get('s')||'').trim();
+  if(n&&!plan.who)plan.who=n; if(s&&!plan.school&&SCHOOLS.indexOf(s)>-1)plan.school=s;})();
+$('p_school').innerHTML='<option value="">בחרו בית ספר</option>'+SCHOOLS.map(function(s){return '<option value="'+esc(s)+'">'+esc(s)+'</option>'}).join('');
+$('p_who').value=plan.who||'';$('p_school').value=plan.school||'';
+$('p_who').addEventListener('input',function(){plan.who=this.value;idChanged()});
+$('p_school').addEventListener('change',function(){plan.school=this.value;idChanged()});
+function idChanged(){savePlan();clearTimeout(lookT);lookT=setTimeout(lookupServer,900)}
+
+var looking=false;
+async function lookupServer(force){
+  var who=(plan.who||'').trim(),school=plan.school||'';
+  if(who.length<2||!school){paintStatus();return}
+  if(!force&&plan.imp&&plan.imp!=='none')return;
+  if(looking)return;looking=true;paintStatus('מחפשים את התוכנית שלך מ-21.10…');
+  try{
+    var r=await callRetry({action:'planGet',name:who,school:school},3);
+    if(r.plan){
+      var added=importPlan(r.plan,'server-'+(r.plan.src||'m3'));
+      syncFields();paintPlan();
+      paintStatus();
+      if(added)toast('התוכנית שלך מ-21.10 נטענה ✓');
+    }else{plan.imp='none';savePlan();paintStatus()}
+  }catch(e){paintStatus('לא הצלחנו לבדוק מול השרת. אפשר להמשיך, הכול נשמר במכשיר.')}
+  looking=false;
+}
+function paintStatus(txt){
+  var el=$('p_status'),n=visibleActs().length;
+  if(txt){el.innerHTML=esc(txt);return}
+  if(!(plan.who||'').trim()||!plan.school){el.innerHTML='<b>כתבו שם ובחרו בית ספר.</b> אם התחלתם תוכנית ב-21.10, היא תופיע כאן אוטומטית.';return}
+  if(plan.imp==='device')el.innerHTML='<b>מצאנו את התוכנית שלך מ-21.10</b> · '+n+' פעולות. ממשיכים ממנה בשלב 3.';
+  else if(plan.imp&&plan.imp.indexOf('server')===0)el.innerHTML='<b>מצאנו את התוכנית שלך מ-21.10</b> · '+n+' פעולות. ממשיכים ממנה בשלב 3.';
+  else if(plan.imp==='none')el.innerHTML='<b>אין תוכנית קודמת על השם הזה.</b> מתחילים בשלב 3, זה לוקח 10 דקות עם הרעיונות של כולם. '+
+    '<button type="button" class="btn ghost" id="relook" style="margin-top:6px">כתבתם אחרת ב-21.10? לחפש שוב</button>';
+  else el.innerHTML=n?'<b>'+n+' פעולות בתוכנית.</b> ממשיכים בשלב 3.':'<b>מתחילים בשלב 3.</b>';
+  var b=$('relook');if(b)b.onclick=function(){plan.imp='';lookupServer(true)};
+}
+
+/* ---- המטרה והשדות של המסמך (גם אחרי ייבוא מהשרת) ---- */
+function syncFields(){$('p_goal').value=plan.goal||'';['partner','block','measure'].forEach(function(k){$('p_'+k).value=plan[k]||''})}
+$('p_goal').value=plan.goal||'';
+$('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
+['partner','block','measure'].forEach(function(k){
+  var el=$('p_'+k);el.value=plan[k]||'';
+  el.addEventListener('input',function(){plan[k]=this.value;savePlan()});
 });
-paintHours();
 
-['me','partner','q1','q2','q3','block'].forEach(function(k){
-  var el=$(k);el.value=lsGet('hopa-m4-'+k)||'';
-  el.addEventListener('input',function(){lsSet('hopa-m4-'+k,this.value)});
-});
-
-/* ---- הפרקים מ-21.10 ---- */
-var STORE={},PERAKS=[],taken={};
-try{taken=JSON.parse(lsGet('hopa-m4-taken'))||{}}catch(e){taken={}}
-
-function draw(){
-  PERAKS=[];
-  CHAPTERS.forEach(function(c){
-    var x=STORE['intake_'+M3+'perek-'+c.key];
-    if(x&&!x.del&&x.acts&&x.acts.length)PERAKS.push({c:c,d:x});
-  });
-  $('ready').textContent=PERAKS.length;
-
-  $('peraks').innerHTML=CHAPTERS.map(function(c){
-    var p=null;PERAKS.forEach(function(q){if(q.c.key===c.key)p=q.d});
-    var h='<div class="pk" style="border-color:'+c.c+'"><div class="hd">'+
-      '<span class="badge" style="background:'+c.c+'">פרק '+c.n+'</span>'+
-      (p&&p.who?'<span class="who">'+esc(p.who)+'</span>':'')+
-      '</div><h3>'+esc(c.t)+'</h3><div class="d">'+esc(c.d)+'</div>';
-    if(!p){h+='<div class="empty">הפרק הזה עדיין לא נשלח מ-21.10.</div></div>';return h}
-    if(p.line)h+='<div class="line">'+esc(p.line)+'</div>';
-    h+='<div class="acts">'+p.acts.map(function(a,i){
-      var id=c.key+'-'+i,on=taken[id];
-      return '<div class="a"><span class="n" style="background:'+c.c+'">'+(i+1)+'</span>'+
-        '<span class="t">'+esc(a.t)+
-          '<span class="m">'+(a.when?'<span>'+esc(a.when)+'</span>':'')+
-            (a.hours?'<span>'+esc(a.hours)+' ש׳</span>':'')+
-            (a.who?'<span>'+esc(a.who)+'</span>':'')+'</span>'+
-        '</span>'+
-        '<button class="take'+(on?' on':'')+'" data-id="'+id+'" data-h="'+esc(a.hours||'')+'" title="לקחת לתוכנית שלי">'+(on?'✓':'➕')+'</button></div>';
-    }).join('')+'</div>';
-    if(p.trap)h+='<div class="trap"><b>מלכודת:</b> '+esc(p.trap)+'</div>';
-    return h+'</div>';
+/* ---- רכיבים ופעולות ---- */
+function monthOpts(sel){return '<option value="-1">מתי? בחרו חודש</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
+function ideaOpts(ch){
+  var l=(window.IDEAS&&IDEAS[ch])||[];
+  if(!l.length)return '<option value="">אין רעיונות מהשולחנות ברכיב הזה</option>';
+  return '<option value="">או בחרו מרעיונות השולחנות ('+l.length+')</option>'+l.map(function(x,i){return '<option value="'+i+'">'+esc(String(x.t).slice(0,95))+'</option>'}).join('');
+}
+function actRow(a){
+  var tg=SRC_TAG[a.src]||SRC_TAG.me;
+  return '<div class="pact" data-id="'+a.id+'"><div class="top"><span class="ptag '+tg[0]+'">'+tg[1]+'</span><button type="button" class="x">הסרה</button></div>'+
+    '<label class="fl" style="margin-top:2px">הפעולה</label>'+
+    '<input type="text" data-f="what" maxlength="160" placeholder="כותבים לבד…" value="'+esc(a.what)+'">'+
+    '<select class="idsel" data-ch="'+a.ch+'">'+ideaOpts(a.ch)+'</select>'+
+    '<div class="two" style="margin-top:6px"><div><label class="fl">מתי</label><select data-f="m" class="msel">'+monthOpts(monthOf(a))+'</select></div>'+
+    '<div><label class="fl">עם מי</label><input type="text" data-f="who" maxlength="60" value="'+esc(a.who)+'"></div></div></div>';
+}
+function paintPlan(){
+  $('p_chaps').innerHTML=CHAPTERS.map(function(c){
+    var on=plan.chaps.indexOf(c.n)>-1;
+    return '<button type="button" data-n="'+c.n+'" class="'+(on?'on':'')+'" style="--accent:'+c.c+'">'+
+      '<span class="n">'+(on?'✓ בתוכנית שלי':'רכיב '+c.n)+'</span><span class="t" style="display:block">'+esc(c.t)+'</span></button>';
   }).join('');
-
-  [].slice.call($('peraks').querySelectorAll('.take')).forEach(function(b){
+  [].slice.call($('p_chaps').children).forEach(function(b){
     b.onclick=function(){
-      var id=b.dataset.id;
-      taken[id]=!taken[id];
-      if(!taken[id])delete taken[id];
-      lsSet('hopa-m4-taken',JSON.stringify(taken));
-      b.classList.toggle('on',!!taken[id]);
-      b.textContent=taken[id]?'✓':'➕';
-      paintTaken();
+      var n=Number(b.dataset.n),i=plan.chaps.indexOf(n);
+      if(i>-1){
+        if(plan.acts.some(function(a){return a.ch===n&&(a.what||'').trim()})&&!confirm('יש פעולות ברכיב הזה. להסיר אותו עם הפעולות?'))return;
+        plan.chaps.splice(i,1);plan.acts=plan.acts.filter(function(a){return a.ch!==n});
+      }else plan.chaps.push(n);
+      savePlan();paintPlan();
     };
   });
-  paintTaken();
-}
-function paintTaken(){
-  var n=0,tot=0,hsum=0;
-  PERAKS.forEach(function(p){
-    p.d.acts.forEach(function(a,i){
-      tot++;
-      if(taken[p.c.key+'-'+i]){n++;hsum+=(parseFloat(a.hours)||0)}
+  var order=plan.chaps.slice().sort(function(a,b){return a-b});
+  var extra=plan.acts.filter(function(a){return !(a.ch>0)});
+  if(!order.length&&!extra.length){$('p_list').innerHTML='<p class="livehint" style="margin-top:12px">קודם בוחרים רכיב בסעיף ב, ואז תופיע כאן תיבה להוסיף לו פעולות.</p>';paintBar();paintPeers();return}
+  $('p_list').innerHTML=order.map(function(n){
+    var c=chap(n),l=plan.acts.filter(function(a){return a.ch===n});
+    return '<div class="pch" style="--c:'+c.c+'"><h3>'+esc(c.t)+'</h3>'+
+      (l.length?l.map(actRow).join(''):'<p class="livehint">עוד אין פעולות ברכיב הזה.</p>')+
+      '<div class="btnrow"><button type="button" class="btn ghost addp" data-new="'+n+'">+ פעולה</button></div></div>';
+  }).join('')+
+  (extra.length?'<div class="pch" style="--c:#999"><h3>פעולות נוספות</h3>'+extra.map(actRow).join('')+'</div>':'');
+  [].slice.call($('p_list').querySelectorAll('.pact')).forEach(function(row){
+    var a=plan.acts.filter(function(x){return x.id===row.dataset.id})[0];if(!a)return;
+    [].slice.call(row.querySelectorAll('input')).forEach(function(inp){
+      inp.addEventListener('input',function(){a[inp.dataset.f]=inp.value;savePlan();paintBar()});
     });
+    row.querySelector('.msel').onchange=function(){var m=Number(this.value);if(m<0)delete a.m;else a.m=m;savePlan();paintBar()};
+    row.querySelector('.idsel').onchange=function(){
+      if(this.value==='')return;var x=((window.IDEAS&&IDEAS[a.ch])||[])[Number(this.value)];if(!x)return;
+      a.what=x.t;a.src='table';savePlan();paintPlan();toast('נבחר מהשולחנות ✓');
+    };
+    row.querySelector('.x').onclick=function(){plan.acts=plan.acts.filter(function(x){return x.id!==a.id});savePlan();paintPlan();toast('הוסר')};
   });
-  $('tk').textContent=n;$('tot').textContent=tot;$('tkh').textContent=hsum||'—';
+  [].slice.call($('p_list').querySelectorAll('[data-new]')).forEach(function(b){
+    b.onclick=function(){
+      var id=uid();plan.acts.push({id:id,ch:Number(b.dataset.new),what:'',who:'',src:'me'});
+      savePlan();paintPlan();
+      var inp=$('p_list').querySelector('.pact[data-id="'+id+'"] input');if(inp)inp.focus();
+    };
+  });
+  paintBar();paintPeers();
 }
-async function poll(){
-  try{var r=await jsonp({action:'storeAll',secret:GS_SECRET},20000);if(r&&r.ok&&r.store){STORE=r.store;draw()}}catch(e){}
+function paintBar(){
+  var l=visibleActs();
+  $('tk').textContent=l.length;
+  $('tkm').textContent=l.filter(function(a){return monthOf(a)>-1}).length;
+  $('tkw').textContent=l.filter(function(a){return (a.who||'').trim()}).length;
 }
-poll();
-setInterval(function(){if(!document.hidden)poll()},10000);
 
 /* ---- שמירה ---- */
-function myPlan(){
-  var acts=[];
-  PERAKS.forEach(function(p){
-    p.d.acts.forEach(function(a,i){
-      if(taken[p.c.key+'-'+i])acts.push({chapter:p.c.t,n:p.c.n,t:a.t,when:a.when,hours:a.hours,who:a.who});
-    });
-  });
-  return {me:$('me').value.trim(),partner:$('partner').value.trim(),
-    hours:hrs,acts:acts,
-    own:[$('q1').value.trim(),$('q2').value.trim(),$('q3').value.trim()].filter(Boolean),
-    block:$('block').value.trim(),ts:new Date().toISOString()};
+function savePlan(){
+  plan.ts=new Date().toISOString();
+  lsSet(PLAN_KEY,JSON.stringify(plan));
+  clearTimeout(saveT);saveT=setTimeout(pushPlan,5000);
 }
-$('saveBtn').onclick=async function(){
-  var p=myPlan();
-  if(!p.me){$('err').textContent='צריך שם ובית ספר.';return}
-  $('err').textContent='';
-  var btn=this;btn.disabled=true;btn.textContent='שומר…';
+function payload(){
+  return {who:(plan.who||'').trim(),school:plan.school||'',goal:plan.goal||'',chaps:plan.chaps,acts:visibleActs(),
+    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
+}
+async function pushPlan(loud){
+  clearTimeout(saveT);
+  var p=payload();
+  if(!p.who||!p.school){if(loud)$('err').textContent='צריך שם ובית ספר (שלב 1).';return false}
+  if(!p.goal&&!p.acts.length){if(loud)$('err').textContent='התוכנית עדיין ריקה.';return false}
+  var sig=JSON.stringify(p).replace(/"ts":"[^"]*"/,'');
+  if(!loud&&sig===lastPushed)return true;
   var params={action:'intakeSubmit',school:KEY_PREFIX+'tochnit-'+devId,json:JSON.stringify(p)};
   var ok=false;
-  try{await jsonpRetry(params,4);ok=true}
+  try{await callRetry(params,loud?4:2);ok=true}
   catch(e){try{await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});ok=true}catch(e2){}}
-  btn.disabled=false;btn.textContent='💾 שמירה ושליחה';
-  if(ok)toast('נשמר ✓ נשלח לכם לפני חנוכה');
-  else $('err').textContent='לא נשמר — נסו שוב. מה שכתבתם שמור במכשיר.';
+  if(ok)lastPushed=sig;
+  $('p_saved').textContent=ok?'נשמר אצלנו ✓ '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):'לא נשמר בשרת, הכול שמור במכשיר. ננסה שוב.';
+  return ok;
+}
+$('saveBtn').onclick=async function(){
+  $('err').textContent='';var btn=this;btn.disabled=true;btn.textContent='שומר…';
+  var ok=await pushPlan(true);
+  btn.disabled=false;btn.textContent='שמירה ושליחה';
+  if(ok)toast('נשמר ✓ נשלח לכם תזכורת לפני חנוכה');
+  else if(!$('err').textContent)$('err').textContent='לא נשמר. נסו שוב, מה שכתבתם שמור במכשיר.';
 };
 $('printBtn').onclick=function(){
-  var p=myPlan();
-  if(!p.me){$('err').textContent='מלאו שם ובית ספר לפני ההפקה.';return}
-  lsSet('hopa-m4-plan',JSON.stringify(p));
+  if(!(plan.who||'').trim()||!plan.school){$('err').textContent='מלאו שם ובית ספר (שלב 1) לפני ההפקה.';location.hash='s1';return}
+  $('err').textContent='';lsSet(PLAN_KEY,JSON.stringify(plan));pushPlan();
   window.open('tochnit.html?src=live','_blank');
 };
+
+/* ---- 1 · למידת עמיתים ---- */
+var PEERS={};
+function paintPeers(){
+  $('peers').innerHTML=PRESENTERS.map(function(p,i){
+    var d=PEERS[i];
+    var h='<div class="peer"><div class="hd"><span class="badge">תוכנית '+(i+1)+'</span></div>'+
+      '<h3>'+esc(p.who)+'</h3><div class="sch">'+esc(p.school)+'</div>';
+    if(d===undefined){return h+'<div class="empty">טוען…</div></div>'}
+    if(!d){return h+'<div class="empty">התוכנית תוצג בעל פה. רעיון שמתאים לכם, כותבים בשלב 3.</div></div>'}
+    if(d.goal)h+='<div class="goal">'+esc(d.goal)+'</div>';
+    var acts=(d.acts||[]).filter(function(a){return (a.what||'').trim()});
+    if(!acts.length)h+='<div class="empty">עוד אין פעולות כתובות, מקשיבים ורושמים למטה.</div>';
+    else{
+      var by={};acts.forEach(function(a){(by[a.ch||0]=by[a.ch||0]||[]).push(a)});
+      h+='<div class="acts">'+Object.keys(by).sort(function(a,b){return a-b}).map(function(n){
+        var c=chap(n);
+        return '<span class="ch" style="background:'+c.c+'">'+esc(c.t)+'</span>'+by[n].map(function(a){
+          var on=hasAct(n,a.what),m=monthOf(a);
+          return '<div class="a"><span class="t">'+esc(a.what)+'<span class="m">'+(m>-1?'<span>'+MONTHS[m]+'</span>':(a.when?'<span>'+esc(a.when)+'</span>':''))+(a.who?'<span>'+esc(a.who)+'</span>':'')+'</span></span>'+
+            '<button class="take'+(on?' on':'')+'" data-n="'+n+'" data-w="'+esc(a.what)+'" data-m="'+(m>-1?m:'')+'">'+(on?'✓ אצלי':'➕')+'</button></div>';
+        }).join('');
+      }).join('')+'</div>';
+    }
+    return h+'</div>';
+  }).join('');
+  [].slice.call($('peers').querySelectorAll('.take')).forEach(function(b){
+    b.onclick=function(){
+      var n=Number(b.dataset.n),w=b.dataset.w;
+      if(hasAct(n,w)){removeActByText(n,w);savePlan();paintPlan();toast('הוסר מהתוכנית שלך')}
+      else addAct(n,{what:w,m:b.dataset.m},'peer');
+    };
+  });
+}
+/* ?demo=1 — הדגמה בלי שרת: התוכניות של ביאן וענבל כפי שנשמרו ב-21.10 */
+var DEMO=new URLSearchParams(location.search).get('demo')==='1';
+var DEMO_PEERS=[
+ {who:'ביאן סחאימה',school:'כפר עקב',goal:'לקדם את התלמידים מבחינה לימודית, חברתית ורגשית, לחזק את הביטחון העצמי שלהם ולפתח אחריות אישית',
+  acts:[{ch:1,what:'שיתוף פעולה עם מחנכי הכיתות והיועצת החינוכית למעקב אחר התקדמות הבוגרים',m:2,who:'מחנכי הכיתות, היועצת והורים'}]},
+ {who:'ענבל לוי',school:'מצפה רמון',goal:'ליצור קשר עם כל הבוגרים שלנו ולהגיד להם: אנחנו איתכם עד גיל 26',
+  acts:[{ch:2,what:'יצירת פורמט מעקב למחנכת י״ב: מה היא צריכה לשאול? מה חשוב לי שהיא תראה?',when:'עד סוף נובמבר',who:'מחנכת י״ב'},
+        {ch:6,what:'סמינר דמוקרטיה וכנס בוגרים',when:'8-9/11',who:'מחנכים, כרמל, דור, תמר'},
+        {ch:7,what:'להפיץ את שאלוני המיפוי',when:'עד סוף אוקטובר',who:'אני'}]},
+ {who:'אמנה שלבי',school:'שגב שלום',goal:'להעניק לבוגרים רשת ביטחון וכתובת ברורה להתייעצות בצמתי החלטה, כדי למנוע ניתוק בשנה הראשונה שאחרי הלימודים',
+  acts:[{ch:1,what:'טבלה מרוכזת עם שמות הבוגרים וקבוצת וואטסאפ ייעודית, מתעדכנת כל הזמן',m:1,who:'הנהלה, צוות מורים, יעוץ ובוגרים'},
+        {ch:8,what:'ישיבה שבועית קבועה על בוגרים עם ההנהלה, 2 ש״ש',m:1,who:'מנהל, רכז פדגוגי ויועצת'},
+        {ch:3,what:'התקשרות הדרגתית לבוגרים עד מאגר שמתעדכן כל הזמן',m:1,who:'צוות המורים, רכז תעסוקה ויעוץ'},
+        {ch:7,what:'כמה שיחות נעשו ביוזמת הרכז/ת מול כמה ביוזמת הבוגר',m:9,who:'מנהל, רכז פדגוגי ויועצת'}]}];
+async function loadPeers(){
+  if(DEMO){DEMO_PEERS.forEach(function(d,i){PEERS[i]=d});paintPeers();$('peerStat').textContent='הדגמה: התוכניות כפי שנשמרו ב-21.10';return}
+  var found=0;
+  for(var i=0;i<PRESENTERS.length;i++){
+    var p=PRESENTERS[i];
+    try{var r=await call({action:'planGet',name:p.find||p.who,school:p.school},15000);PEERS[i]=r.plan||null;if(r.plan)found++}
+    catch(e){if(PEERS[i]===undefined)PEERS[i]=null}
+  }
+  paintPeers();
+  $('peerStat').textContent=found?'מתעדכן תוך כדי ההצגה':'התוכניות יוצגו בעל פה';
+}
+paintPeers();loadPeers();
+setInterval(function(){if(!document.hidden)loadPeers()},45000);
+
+/* ---- הפעלה ---- */
+paintPlan();paintStatus();
+if((plan.who||'').trim()&&plan.school&&!plan.imp)lookupServer();
+addEventListener('pagehide',function(){if(saveT){clearTimeout(saveT);pushPlan()}});
 </script>
 </body>
 </html>
