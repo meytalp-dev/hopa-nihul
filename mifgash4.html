@@ -91,11 +91,26 @@
   textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
   .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 160px}
-  .bingo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 4px}
-  .bingo button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 8px;font:inherit;font-size:13px;font-weight:700;line-height:1.3;cursor:pointer;min-height:64px;color:var(--ink)}
-  .bingo button.on{background:var(--pink);border-color:var(--pink);color:#fff}
-  .bingo-n{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:10px}
-  @media(max-width:480px){.bingo{gap:6px}.bingo button{font-size:12px;padding:8px 5px;min-height:58px}}
+  /* כרטיס בוגר/ת (פעילות פתיחה) */
+  .kb-head{margin:22px 0 2px;font-size:16px;font-weight:900}
+  .kb-sub{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+  .chips button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  .kcard{margin-top:14px;width:100%;aspect-ratio:1/1;background:var(--pink);color:#fff;border-radius:22px;padding:7% 7% 6%;display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(232,52,138,.25)}
+  .kcard .k{font-size:clamp(11px,2.4vw,15px);font-weight:800;color:var(--yellow)}
+  .kcard .st{margin-top:2%;font-size:clamp(20px,5.6vw,36px);font-weight:900;line-height:1.15;min-height:2.3em}
+  .kcard .st .em{color:var(--yellow)}
+  .kcard .row{margin-top:4%;display:flex;gap:3%;align-items:flex-start}
+  .kcard .row .lbl{flex:none;width:21%;font-size:clamp(10px,2.2vw,14px);font-weight:800;color:var(--yellow);padding-top:.25em}
+  .kcard .row .txt{font-size:clamp(12px,2.8vw,18px);font-weight:500;line-height:1.4}
+  .kcard .q{margin-top:auto;padding-top:4%;font-size:clamp(13px,3.1vw,20px);font-weight:700;line-height:1.35}
+  .kcard .q::before,.kcard .q::after{content:'״';color:var(--yellow)}
+  .kcard .ft{margin-top:4%;display:flex;justify-content:space-between;align-items:flex-end;font-size:clamp(10px,2.2vw,14px);font-weight:700}
+  .kcard .ft .sch{background:rgba(255,255,255,.16);border-radius:999px;padding:3px 12px}
+  .kcard .ft .logo{height:clamp(22px,5vw,34px);background:#fff;border-radius:8px;padding:3px 6px}
+  .kcard .ft .logo img{height:100%;display:block}
+  .kcard.empty .st,.kcard.empty .txt{opacity:.55}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;text-decoration:none}
   .btn:active{transform:scale(.97)}
@@ -143,12 +158,32 @@
     </div>
     <div class="callout status" id="p_status" style="margin-top:12px"></div>
 
-    <h3 style="margin:22px 0 2px;font-size:16px">בינגו הצלחות</h3>
-    <div class="bingo-n">מה קרה לכם השנה עם בוגרים? מסמנים כל משבצת שקרתה. <span id="bingoN"></span></div>
-    <div class="bingo" id="bingo"></div>
-    <label class="fl">אחת מהמשבצות שסימנתם, בסיפור של 2–3 משפטים (בלי שם מלא של הבוגר/ת)</label>
-    <textarea id="p_story" maxlength="600" placeholder="למשל: בוגר מהמחזור האחרון התקשר אחרי חצי שנה בלי קשר. ישבנו יחד על הרישום למכינה, והיום הוא שם."></textarea>
-    <div class="bingo-n" style="margin-top:6px">מהסיפורים האלה נכין פוסטים לפייסבוק של הופה, ונאשר איתכם לפני פרסום.</div>
+    <div class="kb-head">בזמן שכולם נכנסים: כרטיס בוגר/ת</div>
+    <div class="kb-sub">בוגר/ת אחד/ת שהצליח/ה השנה, בלי שם. הכרטיס נבנה למטה תוך כדי כתיבה, ואפשר להוריד אותו כתמונה.</div>
+
+    <label class="fl">מי הבוגר/ת? בלי שם</label>
+    <div class="chips" id="kb_who">
+      <button type="button">בוגר מהמחזור האחרון</button><button type="button">בוגרת מהמחזור האחרון</button><button type="button">בוגר מלפני שנתיים</button><button type="button">בוגרת מלפני שנתיים</button><button type="button">בוגר שהיינו מודאגים ממנו</button><button type="button">בוגרת שלא ענתה חודשים</button>
+    </div>
+    <label class="fl">מה הוא/היא עושה היום?</label>
+    <input type="text" id="kb_today" maxlength="60" placeholder="למשל: לומד במכינה קדם-צבאית בצפון">
+    <label class="fl">איך הגיע/ה לשם?</label>
+    <textarea id="kb_how" maxlength="120" placeholder="למשל: התקשר אחרי חצי שנה בלי קשר, ואמר שהוא לא יודע מה לעשות עם עצמו."></textarea>
+    <label class="fl">מה בית הספר עשה בדרך?</label>
+    <textarea id="kb_did" maxlength="120" placeholder="למשל: ישבנו יחד על הרישום, והרכזת ליוותה את הראיון."></textarea>
+    <label class="fl">משפט אחד שהבוגר/ת אמר/ה (לא חובה)</label>
+    <input type="text" id="kb_quote" maxlength="80" placeholder="למשל: לא האמנתי שמישהו מבית הספר עוד זוכר אותי">
+
+    <div class="kcard empty" id="kcard">
+      <div class="k">סיפור הצלחה · תוכנית הבוגרים</div>
+      <div class="st" id="kc_st"></div>
+      <div class="row"><div class="lbl">איך הגיע/ה</div><div class="txt" id="kc_how"></div></div>
+      <div class="row"><div class="lbl">מה בית הספר עשה</div><div class="txt" id="kc_did"></div></div>
+      <div class="q" id="kc_q"></div>
+      <div class="ft"><span class="sch" id="kc_sch"></span><span class="logo"><img src="hopa-logo.png" alt="הופה"></span></div>
+    </div>
+    <div class="btnrow" style="margin-top:10px"><button class="btn yellow" type="button" id="kb_dl">הורדת הכרטיס כתמונה</button></div>
+    <div class="kb-sub" style="margin-top:8px">הכרטיס נשמר עם התוכנית. מהכרטיסים נכין פוסטים לפייסבוק של הופה, ונאשר איתכם לפני פרסום.</div>
   </section>
 
   <section id="s2">
@@ -276,10 +311,7 @@ addEventListener('scroll',function(){
 },{passive:true});
 
 /* ---- התוכנית שלי: המודל ---- */
-var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',story:'',bingo:[],imp:'',ts:''};
-var BINGO=['בוגר/ת התקשר/ה אחרי תקופה ארוכה בלי קשר','בוגר/ת בא/ה לבקר בבית הספר','עזרתי לבוגר/ת להירשם ללימודים או למכינה',
-  'בוגר/ת מצא/ה עבודה בעזרתנו','בוגר/ת עזר/ה לבוגר/ת אחר/ת','קיבלתי הודעת תודה מבוגר/ת',
-  'בוגר/ת חזר/ה לדבר עם תלמידי י״ב','הורה של בוגר/ת פנה אלינו','בוגר/ת שדאגנו לו/לה, היום במקום טוב'];
+var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',card:null,imp:'',ts:''};
 ['chaps','acts'].forEach(function(k){if(!Array.isArray(plan[k]))plan[k]=[]});
 var saveT=null,lookT=null,lastPushed='';
 
@@ -332,7 +364,7 @@ function importPlan(d,src){
 $('p_school').innerHTML='<option value="">בחרו בית ספר</option>'+SCHOOLS.map(function(s){return '<option value="'+esc(s)+'">'+esc(s)+'</option>'}).join('');
 $('p_who').value=plan.who||'';$('p_school').value=plan.school||'';
 $('p_who').addEventListener('input',function(){plan.who=this.value;idChanged()});
-$('p_school').addEventListener('change',function(){plan.school=this.value;idChanged()});
+$('p_school').addEventListener('change',function(){plan.school=this.value;idChanged();paintCard()});
 function idChanged(){savePlan();clearTimeout(lookT);lookT=setTimeout(lookupServer,900)}
 
 var looking=false;
@@ -365,27 +397,54 @@ function paintStatus(txt){
 }
 
 /* ---- המטרה והשדות של המסמך (גם אחרי ייבוא מהשרת) ---- */
-function syncFields(){$('p_goal').value=plan.goal||'';['partner','block','measure','story'].forEach(function(k){$('p_'+k).value=plan[k]||''})}
+function syncFields(){$('p_goal').value=plan.goal||'';['partner','block','measure'].forEach(function(k){$('p_'+k).value=plan[k]||''})}
 $('p_goal').value=plan.goal||'';
 $('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
-['partner','block','measure','story'].forEach(function(k){
+['partner','block','measure'].forEach(function(k){
   var el=$('p_'+k);el.value=plan[k]||'';
   el.addEventListener('input',function(){plan[k]=this.value;savePlan()});
 });
 
-/* ---- בינגו הצלחות (שלב 1) ---- */
-function paintBingo(){
-  var on=plan.bingo||[];
-  $('bingo').innerHTML=BINGO.map(function(t,i){return '<button type="button" data-i="'+i+'"'+(on.indexOf(i)>-1?' class="on"':'')+'>'+esc(t)+'</button>'}).join('');
-  $('bingoN').textContent=on.length?'סימנתם '+on.length+' מתוך 9.':'';
+/* ---- כרטיס בוגר/ת (פעילות פתיחה, שלב 1) ---- */
+function card(){return plan.card||(plan.card={who:'',today:'',how:'',did:'',quote:''})}
+function paintCard(){
+  var c=card(),sch=plan.school||'';
+  [].forEach.call($('kb_who').children,function(b){b.classList.toggle('on',b.textContent===c.who)});
+  $('kc_st').innerHTML=esc(c.who||'בוגר/ת')+(c.today?' <span class="em">'+esc(c.today)+'</span>':'');
+  $('kc_how').textContent=c.how||'…';$('kc_did').textContent=c.did||'…';
+  $('kc_q').textContent=c.quote||'';$('kc_q').style.display=c.quote?'':'none';
+  $('kc_sch').textContent=sch;
+  $('kcard').classList.toggle('empty',!c.today&&!c.how&&!c.did);
 }
-$('bingo').addEventListener('click',function(e){
-  var b=e.target.closest('button');if(!b)return;
-  var i=Number(b.dataset.i),on=plan.bingo||[],at=on.indexOf(i);
-  if(at>-1)on.splice(at,1);else on.push(i);
-  plan.bingo=on;savePlan();paintBingo();
+$('kb_who').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;card().who=(card().who===b.textContent?'':b.textContent);savePlan();paintCard()});
+['today','how','did','quote'].forEach(function(k){var el=$('kb_'+k);el.value=card()[k]||'';el.addEventListener('input',function(){card()[k]=this.value;savePlan();paintCard()})});
+function cardWrap(ctx,text,maxW){var words=text.split(/\s+/),lines=[],cur='';words.forEach(function(w){var t=cur?cur+' '+w:w;if(ctx.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t});if(cur)lines.push(cur);return lines}
+function cardRR(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function renderCard(withLogo){
+  var c=card(),cv=document.createElement('canvas');cv.width=cv.height=1080;
+  var ctx=cv.getContext('2d'),W=1080,P=80,R=W-P;
+  ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='top';
+  ctx.fillStyle='#E8348A';ctx.fillRect(0,0,W,W);
+  ctx.fillStyle='#FFF200';ctx.font='800 26px Rubik';ctx.fillText('סיפור הצלחה · תוכנית הבוגרים',R,P);
+  var y=P+58;ctx.fillStyle='#fff';ctx.font='900 64px Rubik';
+  var st=cardWrap(ctx,(c.who||'בוגר/ת')+(c.today?' '+c.today:''),W-2*P);
+  st.forEach(function(l,i){ctx.fillText(l,R,y+i*76)});y+=st.length*76+30;
+  function row(label,text){ctx.fillStyle='#FFF200';ctx.font='800 26px Rubik';ctx.fillText(label,R,y+6);ctx.fillStyle='#fff';ctx.font='500 34px Rubik';var ls=cardWrap(ctx,text||'…',W-2*P-250);ls.forEach(function(l,i){ctx.fillText(l,R-250,y+i*46)});y+=ls.length*46+34}
+  row('איך הגיע/ה',c.how);row('מה בית הספר עשה',c.did);
+  if(c.quote){ctx.fillStyle='#fff';ctx.font='700 38px Rubik';var ql=cardWrap(ctx,'״'+c.quote+'״',W-2*P);var qy=Math.max(y+20,W-P-70-ql.length*52-40);ql.forEach(function(l,i){ctx.fillText(l,R,qy+i*52)})}
+  var sch=plan.school||'';
+  if(sch){ctx.fillStyle='rgba(255,255,255,.18)';ctx.font='700 26px Rubik';var sw=ctx.measureText(sch).width+44;cardRR(ctx,R-sw,W-P-50,sw,50,25);ctx.fill();ctx.fillStyle='#fff';ctx.fillText(sch,R-22,W-P-39)}
+  var img=document.querySelector('#kcard .logo img'),h=70;
+  ctx.fillStyle='#fff';cardRR(ctx,P,W-P-h-8,150,h+16,14);ctx.fill();
+  if(withLogo&&img&&img.complete&&img.naturalWidth){var w=h*img.naturalWidth/img.naturalHeight;ctx.drawImage(img,P+10,W-P-h,Math.min(w,130),h)}
+  else{ctx.fillStyle='#E8348A';ctx.font='900 44px Rubik';ctx.textAlign='center';ctx.fillText('הופה',P+75,W-P-h+8);ctx.textAlign='right'}
+  return cv;
+}
+$('kb_dl').addEventListener('click',function(){
+  var url;try{url=renderCard(true).toDataURL('image/png')}catch(e){url=renderCard(false).toDataURL('image/png')}
+  var a=document.createElement('a');a.download='kartis-boger.png';a.href=url;a.click();
 });
-paintBingo();
+paintCard();
 
 /* ---- רכיבים ופעולות ---- */
 function monthOpts(sel){return '<option value="-1">מתי? בחרו חודש</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
@@ -465,7 +524,7 @@ function savePlan(){
 }
 function payload(){
   return {who:(plan.who||'').trim(),school:plan.school||'',goal:plan.goal||'',chaps:plan.chaps,acts:visibleActs(),
-    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',story:plan.story||'',bingo:plan.bingo||[],imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
+    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',card:plan.card||null,imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
 }
 async function pushPlan(loud){
   clearTimeout(saveT);
