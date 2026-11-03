@@ -161,7 +161,7 @@
   </section>
 
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>שלוש שאלות קצרות, ואז שני כפתורים</small></div></div>
+    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>ארבע שאלות קצרות, ואז שני כפתורים</small></div></div>
 
     <label class="fl">מי השותף/ה שלי בבית הספר? בשם.</label>
     <input type="text" id="p_partner" placeholder="למשל: רונית, היועצת" maxlength="80">
@@ -171,6 +171,9 @@
 
     <label class="fl">מדד אחד שלי לסוף השנה (לא חובה)</label>
     <input type="text" id="p_measure" placeholder="למשל: 80% מבוגרי המחזור האחרון עם טלפון מעודכן" maxlength="140">
+
+    <label class="fl">סיפור הצלחה עם בוגר/ת, 2–3 משפטים (לפוסט בפייסבוק של הופה, בלי שם מלא)</label>
+    <textarea id="p_story" maxlength="600" placeholder="למשל: בוגר מהמחזור האחרון התקשר אחרי חצי שנה בלי קשר. ישבנו יחד על הרישום למכינה, והיום הוא שם."></textarea>
 
     <div class="btnrow" style="margin-top:18px">
       <button class="btn pink" id="saveBtn">שמירה ושליחה</button>
@@ -264,7 +267,7 @@ addEventListener('scroll',function(){
 },{passive:true});
 
 /* ---- התוכנית שלי: המודל ---- */
-var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',imp:'',ts:''};
+var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',story:'',imp:'',ts:''};
 ['chaps','acts'].forEach(function(k){if(!Array.isArray(plan[k]))plan[k]=[]});
 var saveT=null,lookT=null,lastPushed='';
 
@@ -350,10 +353,10 @@ function paintStatus(txt){
 }
 
 /* ---- המטרה והשדות של המסמך (גם אחרי ייבוא מהשרת) ---- */
-function syncFields(){$('p_goal').value=plan.goal||'';['partner','block','measure'].forEach(function(k){$('p_'+k).value=plan[k]||''})}
+function syncFields(){$('p_goal').value=plan.goal||'';['partner','block','measure','story'].forEach(function(k){$('p_'+k).value=plan[k]||''})}
 $('p_goal').value=plan.goal||'';
 $('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()});
-['partner','block','measure'].forEach(function(k){
+['partner','block','measure','story'].forEach(function(k){
   var el=$('p_'+k);el.value=plan[k]||'';
   el.addEventListener('input',function(){plan[k]=this.value;savePlan()});
 });
@@ -436,7 +439,7 @@ function savePlan(){
 }
 function payload(){
   return {who:(plan.who||'').trim(),school:plan.school||'',goal:plan.goal||'',chaps:plan.chaps,acts:visibleActs(),
-    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
+    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',story:plan.story||'',imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
 }
 async function pushPlan(loud){
   clearTimeout(saveT);
