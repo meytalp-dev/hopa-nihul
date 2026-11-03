@@ -67,6 +67,13 @@
   .tmr{position:absolute;bottom:40px;inset-inline-start:60px;font-size:54px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--pink)}
   .s.dark .tmr{color:var(--pink)}
   #hint{position:fixed;bottom:12px;inset-inline:0;text-align:center;color:#888;font-size:13px;font-family:Rubik,Arial;z-index:5}
+  .bingo9{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+  .bingo9 div{background:#fff;color:#111;border-radius:22px;padding:22px 24px;font-size:28px;font-weight:700;line-height:1.3;min-height:120px;display:flex;align-items:center}
+  .smart{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:24px}
+  .smart div{background:rgba(255,255,255,.14);border-radius:22px;padding:22px 20px;min-height:250px}
+  .smart b{display:block;font-size:72px;line-height:1;color:var(--yellow);font-weight:900}
+  .smart span{display:block;font-size:30px;font-weight:800;margin:10px 0 8px}
+  .smart small{display:block;font-size:22px;line-height:1.35;opacity:.92}
 </style>
 </head>
 <body>
@@ -95,6 +102,14 @@
   <div class="kick" style="margin-top:40px">הרכיבים שנכנסו להכי הרבה תוכניות</div>
   <div class="bars" id="mirBars"></div></div>
 
+<div class="s yellowbg"><div class="kick">בינגו הצלחות · בדף, שלב 1</div><h2>מה קרה לכם השנה עם בוגרים?</h2>
+  <div class="bingo9">
+    <div>בוגר/ת התקשר/ה אחרי תקופה ארוכה בלי קשר</div><div>בוגר/ת בא/ה לבקר בבית הספר</div><div>עזרתי לבוגר/ת להירשם ללימודים או למכינה</div>
+    <div>בוגר/ת מצא/ה עבודה בעזרתנו</div><div>בוגר/ת עזר/ה לבוגר/ת אחר/ת</div><div>קיבלתי הודעת תודה מבוגר/ת</div>
+    <div>בוגר/ת חזר/ה לדבר עם תלמידי י״ב</div><div>הורה של בוגר/ת פנה אלינו</div><div>בוגר/ת שדאגנו לו/לה, היום במקום טוב</div>
+  </div>
+  <p class="big" style="font-size:40px;margin-top:30px">מסמנים מה שקרה. ואז: <b>אחת מהמשבצות, ב-2–3 משפטים, בלי שם מלא.</b></p></div>
+
 <div class="s yellowbg"><div class="kick">איך זה עובד</div><h2>שתי תוכניות מהשטח, ואתם לוקחים</h2>
   <p class="big" style="font-size:48px">כל מציג/ה: 6 דקות. אחר כך שתי דקות.<br><br>
   בדף, ליד כל פעולה, יש <b>➕</b>. מה שלוקחים לבית הספר שלכם, מסמנים עכשיו.</p>
@@ -116,10 +131,20 @@
   <p class="big" style="margin-top:36px">זה לא דף סיכום ממפגש.<br>
   זו <b>תוכנית עבודה בליווי בוגרים לתשפ״ז</b>, עם חודשים, עם שותפים, עם מדדים ועם שורת חתימה למנהל/ת.</p></div>
 
-<div class="s pinkbg"><div class="kick">תיעוד ומדיה</div><h2>איך עושים את זה נכון</h2>
-  <p class="big" style="margin-top:28px"><b>1 · מצגת חשיפה לבוגרים</b> · מה בית הספר מציע להם אחרי י״ב, להצגה בכיתה ובכנס בוגרים</p>
-  <p class="big" style="margin-top:22px"><b>2 · צ׳ק ליסט לליווי הבוגרים</b> · לירון מכינה. מה בודקים בכל שיחה ובכל מפגש</p>
-  <p class="big" style="margin-top:22px"><b>3 · סיפור הצלחה עם בוגר/ת</b> · 2–3 משפטים, בלי שם מלא. עכשיו, בשלב 4 בדף. הופכים אותו לפוסט בפייסבוק</p></div>
+<div class="s pinkbg"><div class="kick">תיעוד ומדידה · איך עושים את זה נכון</div><h2>יעד לפי SMART, ובודקים אם עמדנו בו</h2>
+  <div class="smart">
+    <div><b>S</b><span>ספציפי</span><small>לא ״לשפר קשר״, אלא ״טלפון מעודכן לבוגרי המחזור האחרון״</small></div>
+    <div><b>M</b><span>מדיד</span><small>מספר או אחוז. ״80% מהמחזור״, ״30 שיחות״</small></div>
+    <div><b>A</b><span>בר-השגה</span><small>עם השותף/ה ובשעות שיש. לא 100%</small></div>
+    <div><b>R</b><span>רלוונטי</span><small>קשור למטרה שבחרתם, לא יעד יפה מהצד</small></div>
+    <div><b>T</b><span>תחום בזמן</span><small>״עד סוף יוני״, ״עד חנוכה״</small></div>
+  </div>
+  <p class="big" style="font-size:38px;margin-top:26px">״עד סוף יוני, ל-80% מבוגרי המחזור האחרון יש טלפון מעודכן, ודיברנו עם כל אחד לפחות פעם אחת.״<br>
+  <b>בודקים בסוף כל שליש: עמדנו? אם לא, משנים את הפעולה או את היעד.</b></p></div>
+
+<div class="s dark"><div class="kick">כלים שתקבלו</div><h2>שני דברים בדרך אליכם</h2>
+  <p class="big" style="margin-top:28px"><b>מצגת חשיפה לבוגרים</b> · מה בית הספר מציע אחרי י״ב, להצגה בכיתה י״ב ובכנס בוגרים. משנים שם ופרטים, ומציגים</p>
+  <p class="big" style="margin-top:22px"><b>צ׳ק ליסט לליווי הבוגרים</b> · לירון מכינה. מה בודקים בכל שיחה עם בוגר/ת ובכל מפגש</p></div>
 
 <div class="s yellowbg"><h1 style="font-size:92px">שלושה מפגשים.<br>71 רעיונות של כולנו.<br>תוכנית אחת לכל בית ספר.</h1>
   <p class="big" style="margin-top:44px;font-size:52px"><b>כתבתם אותה בעצמכם. עכשיו תריצו אותה.</b></p></div>

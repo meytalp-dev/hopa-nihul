@@ -91,6 +91,11 @@
   textarea{min-height:70px;resize:vertical}
   label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:10px 0 4px}
   .two{display:flex;gap:10px;flex-wrap:wrap}.two>div{flex:1 1 160px}
+  .bingo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 4px}
+  .bingo button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 8px;font:inherit;font-size:13px;font-weight:700;line-height:1.3;cursor:pointer;min-height:64px;color:var(--ink)}
+  .bingo button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  .bingo-n{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:10px}
+  @media(max-width:480px){.bingo{gap:6px}.bingo button{font-size:12px;padding:8px 5px;min-height:58px}}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:12px 24px;font-weight:800;font-size:15.5px;cursor:pointer;text-decoration:none}
   .btn:active{transform:scale(.97)}
@@ -137,6 +142,13 @@
       <div><label class="fl">בית ספר</label><select id="p_school"></select></div>
     </div>
     <div class="callout status" id="p_status" style="margin-top:12px"></div>
+
+    <h3 style="margin:22px 0 2px;font-size:16px">בינגו הצלחות</h3>
+    <div class="bingo-n">מה קרה לכם השנה עם בוגרים? מסמנים כל משבצת שקרתה. <span id="bingoN"></span></div>
+    <div class="bingo" id="bingo"></div>
+    <label class="fl">אחת מהמשבצות שסימנתם, בסיפור של 2–3 משפטים (בלי שם מלא של הבוגר/ת)</label>
+    <textarea id="p_story" maxlength="600" placeholder="למשל: בוגר מהמחזור האחרון התקשר אחרי חצי שנה בלי קשר. ישבנו יחד על הרישום למכינה, והיום הוא שם."></textarea>
+    <div class="bingo-n" style="margin-top:6px">מהסיפורים האלה נכין פוסטים לפייסבוק של הופה, ונאשר איתכם לפני פרסום.</div>
   </section>
 
   <section id="s2">
@@ -161,7 +173,7 @@
   </section>
 
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>ארבע שאלות קצרות, ואז שני כפתורים</small></div></div>
+    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>שלוש שאלות קצרות, ואז שני כפתורים</small></div></div>
 
     <label class="fl">מי השותף/ה שלי בבית הספר? בשם.</label>
     <input type="text" id="p_partner" placeholder="למשל: רונית, היועצת" maxlength="80">
@@ -169,11 +181,8 @@
     <label class="fl">מה עלול לעצור אותי, ומה הצעד הקטן שעוקף את זה?</label>
     <textarea id="p_block" maxlength="400" placeholder="למשל: אין לי רשימת בוגרים. הצעד: לבקש מהמזכירות עד סוף נובמבר"></textarea>
 
-    <label class="fl">מדד אחד שלי לסוף השנה (לא חובה)</label>
-    <input type="text" id="p_measure" placeholder="למשל: 80% מבוגרי המחזור האחרון עם טלפון מעודכן" maxlength="140">
-
-    <label class="fl">סיפור הצלחה עם בוגר/ת, 2–3 משפטים (לפוסט בפייסבוק של הופה, בלי שם מלא)</label>
-    <textarea id="p_story" maxlength="600" placeholder="למשל: בוגר מהמחזור האחרון התקשר אחרי חצי שנה בלי קשר. ישבנו יחד על הרישום למכינה, והיום הוא שם."></textarea>
+    <label class="fl">יעד אחד שלי לסוף השנה, לפי SMART: מה בדיוק · כמה · עד מתי (לא חובה)</label>
+    <input type="text" id="p_measure" placeholder="למשל: עד סוף יוני, ל-80% מבוגרי המחזור האחרון יש טלפון מעודכן" maxlength="140">
 
     <div class="btnrow" style="margin-top:18px">
       <button class="btn pink" id="saveBtn">שמירה ושליחה</button>
@@ -267,7 +276,10 @@ addEventListener('scroll',function(){
 },{passive:true});
 
 /* ---- התוכנית שלי: המודל ---- */
-var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',story:'',imp:'',ts:''};
+var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',story:'',bingo:[],imp:'',ts:''};
+var BINGO=['בוגר/ת התקשר/ה אחרי תקופה ארוכה בלי קשר','בוגר/ת בא/ה לבקר בבית הספר','עזרתי לבוגר/ת להירשם ללימודים או למכינה',
+  'בוגר/ת מצא/ה עבודה בעזרתנו','בוגר/ת עזר/ה לבוגר/ת אחר/ת','קיבלתי הודעת תודה מבוגר/ת',
+  'בוגר/ת חזר/ה לדבר עם תלמידי י״ב','הורה של בוגר/ת פנה אלינו','בוגר/ת שדאגנו לו/לה, היום במקום טוב'];
 ['chaps','acts'].forEach(function(k){if(!Array.isArray(plan[k]))plan[k]=[]});
 var saveT=null,lookT=null,lastPushed='';
 
@@ -361,6 +373,20 @@ $('p_goal').addEventListener('input',function(){plan.goal=this.value;savePlan()}
   el.addEventListener('input',function(){plan[k]=this.value;savePlan()});
 });
 
+/* ---- בינגו הצלחות (שלב 1) ---- */
+function paintBingo(){
+  var on=plan.bingo||[];
+  $('bingo').innerHTML=BINGO.map(function(t,i){return '<button type="button" data-i="'+i+'"'+(on.indexOf(i)>-1?' class="on"':'')+'>'+esc(t)+'</button>'}).join('');
+  $('bingoN').textContent=on.length?'סימנתם '+on.length+' מתוך 9.':'';
+}
+$('bingo').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  var i=Number(b.dataset.i),on=plan.bingo||[],at=on.indexOf(i);
+  if(at>-1)on.splice(at,1);else on.push(i);
+  plan.bingo=on;savePlan();paintBingo();
+});
+paintBingo();
+
 /* ---- רכיבים ופעולות ---- */
 function monthOpts(sel){return '<option value="-1">מתי? בחרו חודש</option>'+MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+m+'</option>'}).join('')}
 function ideaOpts(ch){
@@ -439,7 +465,7 @@ function savePlan(){
 }
 function payload(){
   return {who:(plan.who||'').trim(),school:plan.school||'',goal:plan.goal||'',chaps:plan.chaps,acts:visibleActs(),
-    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',story:plan.story||'',imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
+    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',story:plan.story||'',bingo:plan.bingo||[],imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
 }
 async function pushPlan(loud){
   clearTimeout(saveT);
