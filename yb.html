@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>אחרי י״ב · הופה!</title>
-<meta name="description" content="מצגת לשכבת י״ב: מה מחכה אחרי התיכון, כל האפשרויות, ומי מלווה אתכם בהופה">
+<title>תוכנית הבוגרים של בית הספר</title>
+<meta name="description" content="מצגת לשכבת י״ב: מה מחכה אחרי התיכון, כל האפשרויות, ומי מבית הספר ממשיך ללוות אתכם">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -47,6 +47,9 @@
   .card::before{content:"";position:absolute;top:0;right:0;left:0;height:10px;background:var(--c,var(--pink))}
   .card h3{font-size:34px;font-weight:800;margin:14px 0 12px;line-height:1.2}
   .card p{font-size:26px;line-height:1.45;margin:0;color:var(--mut)}
+  .card .qr{display:flex;align-items:center;gap:20px;margin-top:22px;text-decoration:none;color:var(--ink)}
+  .card .qr svg{width:150px;height:150px;flex:none;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px}
+  .card .qr span{font-size:30px;font-weight:900;text-decoration:underline;text-decoration-color:var(--pink);text-underline-offset:6px}
   .card ul{margin:0;padding:0;list-style:none}
   .card li{font-size:25px;line-height:1.4;color:var(--mut);padding:6px 0;border-top:1px dashed var(--line)}
   .card li:first-child{border-top:0}
@@ -83,6 +86,12 @@
   .vs .a li svg{color:var(--green)} .vs .b li svg{color:var(--pink)}
   .vs .mid{display:flex;align-items:center;justify-content:center}
   .vs .mid span{width:92px;height:92px;border-radius:50%;background:var(--ink);color:var(--yel);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px}
+  .vs.ty{margin-top:30px}
+  .vs.ty .col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;min-height:540px}
+  .vs.ty h3{font-size:128px;margin:0;line-height:1}
+  .vs.ty .col svg{width:150px;height:150px}
+  .vs.ty .a svg{color:var(--yeld)} .vs.ty .b svg{color:var(--pink)}
+  .vs.ty .mid span{font-size:44px}
 
   /* שקף 3 */
   .stats{display:flex;gap:26px;margin-top:40px}
@@ -111,7 +120,7 @@
   .asks-h{font-size:30px;font-weight:800;color:var(--pink);margin-bottom:8px}
 
   /* שקף 5: מפת דרכים */
-  .road{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:20px;padding-top:30px}
+  .road{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin:20px auto 0;padding-top:30px;max-width:1100px;width:100%}
   .road::before{content:"";position:absolute;top:96px;right:6%;left:6%;height:10px;border-radius:10px;background:repeating-linear-gradient(90deg,var(--pink) 0 34px,transparent 34px 52px)}
   .stop{text-align:center;position:relative}
   .stop .dot{width:132px;height:132px;margin:0 auto 26px;border-radius:50%;background:#fff;border:8px solid var(--c);display:flex;align-items:center;justify-content:center;color:var(--c);position:relative;z-index:1}
@@ -310,6 +319,9 @@
     .vs h3{font-size:24px;margin-bottom:8px}
     .vs li{font-size:16px;padding:7px 0;gap:10px} .vs li svg{width:22px;height:22px}
     .vs .mid span{width:52px;height:52px;font-size:15px}
+    .card .qr{gap:12px;margin-top:12px} .card .qr svg{width:84px;height:84px;padding:4px} .card .qr span{font-size:16px}
+    .vs.ty{margin-top:10px} .vs.ty .col{min-height:0;gap:10px;padding:22px}
+    .vs.ty h3{font-size:40px} .vs.ty .col svg{width:48px;height:48px} .vs.ty .mid span{font-size:22px}
     .stats{flex-direction:column;gap:10px;margin-top:20px}
     .stat{padding:14px 18px} .stat b{font-size:32px} .stat span{font-size:16px}
     .who{grid-template-columns:1fr;gap:24px}
@@ -320,7 +332,7 @@
     .btn{font-size:16px;padding:11px 18px} .btn svg{width:20px;height:20px}
     .asks-h{font-size:17px} .asks li{font-size:17px;padding:11px 0;gap:12px}
     .asks li .ic{width:40px;height:40px} .asks li .ic svg{width:22px;height:22px}
-    .road{grid-template-columns:1fr;gap:18px;padding-top:6px}
+    .road{grid-template-columns:1fr;gap:18px;padding-top:6px;max-width:none}
     .road::before{top:20px;bottom:20px;right:43px;left:auto;width:6px;height:auto;background:repeating-linear-gradient(180deg,var(--pink) 0 18px,transparent 18px 28px)}
     .stop{text-align:right;display:grid;grid-template-columns:92px 1fr;column-gap:14px;align-items:center}
     .stop .dot{width:84px;height:84px;border-width:6px;margin:0;grid-row:span 2} .stop .dot svg{width:36px;height:36px}
@@ -350,72 +362,54 @@
 <!-- 1 · פתיחה -->
 <section class="s cover" data-k="לשכבת י״ב">
   <div class="sun" aria-hidden="true"></div>
-  <img class="logo a1" src="hopa-logo.png" alt="הופה!">
-  <h1 class="a2">עוד רגע י״ב נגמר.<span class="big">ואז?</span></h1>
-  <div class="sub a3">כל האפשרויות שמחכות לכם אחרי התיכון, ומי <span class="hl">נשאר איתכם</span> בדרך</div>
+  <h1 class="a2">תוכנית<span class="big">הבוגרים</span></h1>
+  <div class="sub a3">של בית הספר: מה מחכה לכם אחרי התיכון, ואיך <span class="hl">אני איתכם</span> בדרך</div>
   <div class="school a4" data-f="schoolPill" hidden></div>
   <label class="picker a4" data-f="picker" hidden>בית הספר:
     <select id="pick"><option value="">בחרו בית ספר</option></select>
   </label>
   <template class="notes">
-    <p><b>פתיחה (2 דקות).</b> אם את/ה הרכז/ת, הציגו את עצמכם במשפט: "אני מלווה את הבוגרים של בית הספר, ואני ממשיך/ה ללוות גם אחרי שתסיימו".</p>
+    <p><b>פתיחה (2 דקות).</b> הציגו את עצמכם במשפט: "אני מלווה את הבוגרים של בית הספר, ואני ממשיך/ה ללוות גם אחרי שתסיימו".</p>
     <div class="q">שאלה לכיתה: "מי כבר יודע מה הוא עושה ביום שאחרי טקס הסיום?" בקשו הרמת ידיים. לא מתקנים ולא שופטים, רק שמים לב כמה תשובות שונות יש בכיתה.</div>
   </template>
 </section>
 
 <!-- 2 · היום שאחרי -->
 <section class="s" data-k="היום שאחרי">
-  <h2 class="a1">ביום אחד, <span class="pk">הרבה דברים משתנים</span></h2>
-  <p class="lead a2">כל עוד אתם בבית הספר, יש מסביבכם מערכת שלמה. ביום שאחרי הסיום היא נגמרת, בבת אחת.</p>
-  <div class="vs a3">
-    <div class="col a">
-      <h3>עד היום</h3>
-      <ul>
-        <li><i data-i="check"></i>מחנך/ת שבודק/ת מה איתך</li>
-        <li><i data-i="check"></i>מישהו מזכיר מועדים וטפסים</li>
-        <li><i data-i="check"></i>מערכת שעות, חברים כל בוקר</li>
-        <li><i data-i="check"></i>יודעים למי פונים כשמשהו נתקע</li>
-      </ul>
-    </div>
-    <div class="mid"><span>מחר</span></div>
-    <div class="col b">
-      <h3>מהיום שאחרי</h3>
-      <ul>
-        <li><i data-i="alert"></i>אף אחד לא מתקשר אם לא הגעת</li>
-        <li><i data-i="alert"></i>החלטות גדולות, ולפעמים לבד</li>
-        <li><i data-i="alert"></i>טפסים, זכויות ומועדים שאף אחד לא מזכיר</li>
-        <li><i data-i="alert"></i>הרבה אפשרויות, ואין מפה</li>
-      </ul>
-    </div>
+  <h2 class="a1">היום. <span class="pk">ושנה הבאה.</span></h2>
+  <div class="vs ty a3">
+    <div class="col a"><i data-i="clock"></i><h3>היום</h3></div>
+    <div class="mid"><span aria-hidden="true">←</span></div>
+    <div class="col b"><i data-i="compass"></i><h3>שנה הבאה</h3></div>
   </div>
   <template class="notes">
-    <p><b>המטרה:</b> לא להפחיד, אלא לתת שם לתחושה. רוב הבוגרים מספרים שהקושי הוא לא ההחלטה עצמה, אלא שפתאום אין למי לפנות.</p>
+    <p><b>שקף פתוח.</b> דברו חופשי: מה יש מסביבכם היום, ומה ישתנה שנה הבאה.</p>
     <div class="q">שאלה לכיתה: "מה הדבר הראשון שתתגעגעו אליו מבית הספר? ומה אתם הכי שמחים לעזוב?" 2 או 3 תשובות מספיקות.</div>
   </template>
 </section>
 
-<!-- 3 · מה זה הופה -->
-<section class="s" data-k="מה זה הופה">
-  <h2 class="a1">הופה! <span class="hl">מבוגר שלא נעלם</span></h2>
-  <p class="lead a2">הופה מלווה צעירים מגיל 14 עד 26. גם אחרי שתסיימו, יש מישהו מבית הספר שממשיך להיות שם בשבילכם.</p>
+<!-- 3 · מי נשאר איתכם -->
+<section class="s" data-k="בקשר גם אחרי">
+  <h2 class="a1">חשוב לנו <span class="hl">להיות איתכם בקשר</span></h2>
+  <p class="lead a2">הליווי שלי לא נגמר בסיום י״ב. עד גיל 26, בצבא, בשירות, בעבודה ובלימודים, אני כאן בשבילכם.</p>
   <div class="grid g3">
-    <div class="card a3"><div class="ic"><i data-i="heart"></i></div><h3>קשר שנשאר</h3><p>הרכז/ת של בית הספר ממשיך/ה ללוות אתכם גם בצבא, בשירות, בעבודה ובלימודים.</p></div>
-    <div class="card a4" style="--c:var(--yeld);--cs:var(--yels)"><div class="ic"><i data-i="map"></i></div><h3>מפה של אפשרויות</h3><p>מאגר של יותר מ-600 תוכניות, מלגות ומענים. לא צריך לחפש לבד.</p></div>
-    <div class="card a5" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="link"></i></div><h3>חיבור בזמן</h3><p>מחברים אתכם לאנשים הנכונים לפני שמשהו נתקע, ולא רק אחרי.</p></div>
+    <div class="card a3"><div class="ic"><i data-i="heart"></i></div><h3>קשר שנשאר</h3><p>אני איתכם גם בצבא, בשירות, בעבודה ובלימודים. אותו מספר, אותו אדם.</p></div>
+    <div class="card a4" style="--c:var(--yeld);--cs:var(--yels)"><div class="ic"><i data-i="map"></i></div><h3>מפה של אפשרויות</h3><p>מאגר של יותר מ-600 תוכניות, מלגות ומענים. לא צריך לחפש לבד.</p><a class="qr" href="https://hopa.org.il" target="_blank" rel="noopener"><svg viewBox="0 0 33 33"><path stroke="#1a1a1a" d="M4 4.5h7m2 0h2m1 0h1m1 0h1m3 0h7m-25 1h1m5 0h1m2 0h1m1 0h1m6 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m3 0h1m4 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h5m2 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-17 1h2m2 0h1m2 0h2m-16 1h2m3 0h1m2 0h3m1 0h4m1 0h2m1 0h1m-22 1h1m1 0h1m4 0h1m2 0h3m2 0h2m1 0h2m1 0h1m1 0h2m-23 1h1m3 0h1m3 0h1m1 0h5m2 0h4m1 0h1m-25 1h1m1 0h1m1 0h1m2 0h1m3 0h1m3 0h1m1 0h2m1 0h2m-22 1h2m1 0h1m1 0h3m3 0h1m1 0h3m2 0h2m4 0h1m-24 1h1m3 0h1m5 0h1m1 0h1m1 0h5m3 0h2m-25 1h2m2 0h4m1 0h1m1 0h1m2 0h2m1 0h2m2 0h2m1 0h1m-22 1h1m1 0h1m1 0h1m1 0h4m1 0h3m2 0h3m-22 1h3m3 0h1m1 0h2m3 0h2m1 0h5m2 0h1m-16 1h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1m-25 1h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m2 0h1m5 0h2m3 0h1m2 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h6m2 0h2m-25 1h1m1 0h3m1 0h1m2 0h2m1 0h1m3 0h2m2 0h1m1 0h2m-24 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1m1 0h3m1 0h2m-25 1h1m5 0h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h2m-21 1h7m4 0h3m1 0h2m1 0h1m2 0h1m2 0h1"/></svg><span class="ltr">hopa.org.il</span></a></div>
+    <div class="card a5" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="link"></i></div><h3>חיבור בזמן</h3><p>אצלי תקבלו חיבור לאנשים הנכונים לפני שמשהו נתקע, ולא רק אחרי.</p></div>
   </div>
   <div class="stats a6">
-    <div class="stat"><b class="ltr"><span data-count="30">30</span>+</b><span>בתי ספר בכל הארץ</span></div>
-    <div class="stat"><b class="ltr"><span data-count="5000">5,000</span>~</b><span>בוגרים בליווי</span></div>
+    <div class="stat"><b class="ltr"><span data-count="600">600</span>+</b><span>תוכניות, מלגות ומענים במאגר</span></div>
+    <div class="stat"><b class="ltr">1</b><span>כתובת לכל שאלה</span></div>
     <div class="stat"><b class="ltr">14–26</b><span>ליווי לאורך כל הדרך</span></div>
   </div>
   <template class="notes">
-    <p><b>חשוב להדגיש:</b> זה בחינם, זה לא חובה, וזה לא מחליף את צה״ל, השירות הלאומי או המכללה. הופה מחברת אתכם אליהם, ונשארת בקשר גם כשקשה.</p>
+    <p><b>חשוב להדגיש:</b> זה בחינם, זה לא חובה, וזה לא מחליף את צה״ל, השירות הלאומי או המכללה. אני מחבר/ת אתכם אליהם ונשאר/ת בקשר גם כשקשה.</p>
     <div class="q">שאלה לכיתה: "מי מכיר מישהו, אח או חבר, שסיים תיכון והרגיש קצת אבוד בשנה הראשונה?" אפשר להסתפק בהרמת ידיים.</div>
   </template>
 </section>
 
 <!-- 4 · הרכז/ת -->
-<section class="s" data-k="מי מלווה אתכם">
+<section class="s" data-k="אני איתכם">
   <div class="who">
     <div class="badge a1">
       <div class="role">רכז/ת הבוגרים שלכם</div>
@@ -426,7 +420,7 @@
       <div class="acts" data-f="cActs"></div>
     </div>
     <div class="a2">
-      <div class="asks-h">על מה אפשר לפנות?</div>
+      <div class="asks-h">איך אנחנו יכולים לעזור?</div>
       <ul class="asks">
         <li><span class="ic"><i data-i="shield"></i></span>שאלה על גיוס, שירות או שיבוץ</li>
         <li><span class="ic" style="--c:var(--yeld);--cs:var(--yels)"><i data-i="doc"></i></span>עזרה בטופס, בקורות חיים או בבקשה</li>
@@ -436,7 +430,7 @@
     </div>
   </div>
   <template class="notes">
-    <p><b>זה השקף הכי חשוב במצגת.</b> המטרה שכל תלמיד/ה יצא/תצא מהשיעור עם המספר של הרכז/ת שמור בטלפון.</p>
+    <p><b>זה השקף הכי חשוב במצגת.</b> המטרה שכל תלמיד/ה יצא/תצא מהשיעור עם המספר שלכם שמור בטלפון.</p>
     <p>בקשו מכולם להוציא טלפון ולשמור את המספר עכשיו, בכיתה. זה לוקח דקה וזה מה שבאמת עובד.</p>
     <div class="q">שאלה לכיתה: "מה הייתם רוצים לשאול כבר עכשיו?" רשמו על הלוח 3 שאלות שעולות, וחזרו אליהן בסוף.</div>
   </template>
@@ -445,57 +439,21 @@
 <!-- 5 · מפת הדרכים -->
 <section class="s" data-k="מפת הדרכים">
   <h2 class="a1">מפת הדרכים <span class="pk">אחרי י״ב</span></h2>
-  <p class="lead a2">אין מסלול אחד נכון. אפשר לשלב, להחליף כיוון באמצע, ולחזור. מה שחשוב זה לא ללכת לבד.</p>
+  <p class="lead a2">אפשר לשלב, להחליף כיוון באמצע, ולחזור. מה שחשוב זה לא ללכת לבד.</p>
   <div class="road a3">
     <span class="car" aria-hidden="true"></span>
-    <div class="stop" style="--c:var(--pink)"><span class="n">1</span><div class="dot"><i data-i="shield"></i></div><h3>שירות צבאי</h3><p>הכנה, שיבוץ וזכויות</p></div>
-    <div class="stop" style="--c:var(--orange)"><span class="n">2</span><div class="dot"><i data-i="hands"></i></div><h3>שירות לאומי-אזרחי</h3><p>שנה או שנתיים בקהילה</p></div>
-    <div class="stop" style="--c:var(--purple)"><span class="n">3</span><div class="dot"><i data-i="compass"></i></div><h3>מכינה ושנת שירות</h3><p>שנה לגדול לפני הצעד הבא</p></div>
-    <div class="stop" style="--c:var(--blue)"><span class="n">4</span><div class="dot"><i data-i="brief"></i></div><h3>עבודה</h3><p>משרה ראשונה והכשרה מקצועית</p></div>
-    <div class="stop" style="--c:var(--green)"><span class="n">5</span><div class="dot"><i data-i="cap"></i></div><h3>לימודים</h3><p>בגרויות, מכינה, הנדסאים, תואר</p></div>
+    <div class="stop" style="--c:var(--purple)"><span class="n">1</span><div class="dot"><i data-i="compass"></i></div><h3>מכינה ושנת שירות</h3><p>שנה לגדול לפני הצעד הבא</p></div>
+    <div class="stop" style="--c:var(--green)"><span class="n">2</span><div class="dot"><i data-i="cap"></i></div><h3>לימודים</h3><p>בגרויות, מכינה, הנדסאים, תואר</p></div>
   </div>
-  <div class="note-line a4"><i data-i="coin"></i>ולאורך כל הדרך: מלגות, זכויות וכסף שמגיע לכם</div>
+  <div class="note-line a4"><i data-i="coin"></i>ולאורך כל הדרך: מלגות וזכויות, ואני עוזר/ת לבקש</div>
   <template class="notes">
     <p><b>שקף מעבר.</b> בשקפים הבאים נעבור על כל תחנה. אפשר לדלג על תחנות פחות רלוונטיות לכיתה, אבל כדאי להראות את כולן לפחות בקצרה.</p>
     <div class="q">פעילות קצרה: "הצביעו על התחנה שהכי קרובה אליכם כרגע". אפשר לספור ידיים לכל תחנה ולרשום על הלוח.</div>
   </template>
 </section>
 
-<!-- 6 · שירות צבאי -->
-<section class="s" data-k="תחנה 1 · שירות צבאי">
-  <h2 class="a1">שירות צבאי: <span class="pk">להגיע מוכנים</span></h2>
-  <p class="lead a2">השירות יכול להיות קפיצה גדולה קדימה. ההכנה, השיבוץ והזכויות עושים את כל ההבדל.</p>
-  <div class="grid g4">
-    <div class="card a3"><div class="ic"><i data-i="target"></i></div><h3>הכנה לפני גיוס</h3><ul><li><b>תנועת מעגלים</b> ו<b>אחריי!</b></li><li><b>גשר אל הנוער</b></li><li>רכז/ת הכנה לצה״ל ברשות המקומית</li></ul></div>
-    <div class="card a4" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="clip"></i></div><h3>שיבוץ שמתאים לך</h3><ul><li>מבחנים, ראיונות ופרופיל</li><li>מה לבקש ואיך</li><li>שירות משמעותי גם בפרופיל רפואי</li></ul></div>
-    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="shield"></i></div><h3>זכויות בשירות</h3><ul><li>חייל/ת בודד/ת</li><li>סיוע לחיילים ממשפחות במצוקה כלכלית</li><li>מה מגיע אחרי השחרור</li></ul></div>
-    <div class="card a6" style="--c:var(--purple);--cs:#efe9f8"><div class="ic"><i data-i="star"></i></div><h3>מסלולים מיוחדים</h3><ul><li><b>רואים רחוק</b> ו<b>חיבורים</b>, לצעירים על הרצף האוטיסטי</li><li><b>מדור מתנדבים</b> בצה״ל</li></ul></div>
-  </div>
-  <template class="notes">
-    <p><b>נקודה למסור:</b> הרבה בוגרים מגיעים לשיבוץ בלי לדעת מה מותר לבקש. הרכז/ת יכול/ה לחבר לתוכנית הכנה או לרכז/ת ההכנה לצה״ל של הרשות, שהיא לרוב בחינם.</p>
-    <p>שימו לב: לא כולם מתגייסים. את השירות הלאומי-אזרחי נציג בשקף הבא כמסלול שווה ערך.</p>
-    <div class="q">שאלה לכיתה: "מה הדבר שהכי מלחיץ אתכם בגיוס?" אפשר לבקש שירשמו בפתק אנונימי.</div>
-  </template>
-</section>
-
-<!-- 7 · שירות לאומי-אזרחי -->
-<section class="s" data-k="תחנה 2 · שירות לאומי-אזרחי">
-  <h2 class="a1">שירות לאומי ואזרחי: <span class="pk">עשייה בקהילה</span></h2>
-  <p class="lead a2">שנה או שנתיים של עבודה בבתי ספר, בבתי חולים, בעמותות ובקהילה שלכם. פתוח לכל מי שלא מתגייס/ת, מכל חברה ומכל רקע.</p>
-  <div class="grid g3">
-    <div class="card a3" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="hands"></i></div><h3>איפה משרתים</h3><ul><li>חינוך, בריאות, רווחה וקהילה</li><li>לרוב קרוב לבית</li><li>בחירה לפי תחומי עניין</li></ul></div>
-    <div class="card a4"><div class="ic"><i data-i="users"></i></div><h3>דרך מי נרשמים</h3><ul><li><b>בת עמי</b>, כולל מסלול לחברה הערבית</li><li><b>האגודה להתנדבות</b>, שירות אזרחי ערבי ודרוזי</li><li><b>כל שירות</b>, פורטל לכל המסלולים</li><li><b>צל״ש</b>, הכנה לשירות לצעירות</li></ul></div>
-    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="coin"></i></div><h3>מה מקבלים</h3><ul><li>ניסיון אמיתי וקורות חיים</li><li>זכויות של משרתים משוחררים: מענק ופיקדון</li><li>הטבות בלימודים אחר כך</li></ul></div>
-  </div>
-  <template class="notes">
-    <p><b>להציג כמסלול שווה ערך, לא כ"אלטרנטיבה".</b> בכיתות מעורבות, הדגישו שיש כאן מקום לכולם: צעירים מהחברה הערבית, הבדואית והדרוזית, צעירות שבוחרות בשירות לאומי, ומי שקיבל/ה פטור.</p>
-    <p>ההרשמה לשירות הלאומי נפתחת כבר במהלך י״ב, ולכן כדאי לבדוק עכשיו.</p>
-    <div class="q">שאלה לכיתה: "מי מכיר מישהו שעשה שירות לאומי או אזרחי? מה הוא סיפר?"</div>
-  </template>
-</section>
-
-<!-- 8 · מכינות ושנת שירות -->
-<section class="s" data-k="תחנה 3 · מכינה ושנת שירות">
+<!-- 6 · מכינות ושנת שירות -->
+<section class="s" data-k="תחנה 1 · מכינה ושנת שירות">
   <h2 class="a1">שנה לפני: <span class="pk">לגדול, להכיר את עצמך</span></h2>
   <p class="lead a2">מכינה קדם-צבאית או שנת שירות נותנות שנה של התבגרות, חברים חדשים וביטחון, לפני הגיוס או הלימודים.</p>
   <div class="grid g2">
@@ -505,30 +463,13 @@
   <div class="note-line a5"><i data-i="clock"></i>ההרשמה למכינות נפתחת כבר בי״ב. זה הזמן לבדוק.</div>
   <template class="notes">
     <p><b>מסר:</b> מכינה היא לא רק "לחזקים". יש מכינות שמתאימות במיוחד למי שרוצה שנה של צמיחה לפני הצעד הבא.</p>
-    <p>מי שמתעניין/ת, שיפנה לרכז/ת. הופה עובדת עם כמה מכינות ויכולה לחבר ישירות.</p>
+    <p>מי שמתעניין/ת, שיפנה אליי. אני בקשר עם כמה מכינות ויכול/ה לחבר ישירות.</p>
     <div class="q">שאלה לכיתה: "אם הייתה לכם שנה שלמה רק בשביל עצמכם, מה הייתם רוצים ללמוד או לנסות?"</div>
   </template>
 </section>
 
-<!-- 9 · עבודה -->
-<section class="s" data-k="תחנה 4 · עבודה">
-  <h2 class="a1">עבודה: <span class="pk">משרה ראשונה, בלי ללכת לאיבוד</span></h2>
-  <p class="lead a2">לפני השירות, אחריו או במקומו. עבודה טובה מתחילה בקורות חיים נכונים ובהכרת הזכויות שלכם.</p>
-  <div class="grid g4">
-    <div class="card a3" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="doc"></i></div><h3>קורות חיים וראיון</h3><p>איך כותבים קורות חיים ראשונים, ואיך מתכוננים לראיון.</p></div>
-    <div class="card a4" style="--c:var(--orange);--cs:#fdf1de"><div class="ic"><i data-i="tool"></i></div><h3>הכשרה מקצועית</h3><ul><li><b>תל״מ</b>, תעסוקה, לימודים ומגורים</li><li><b>היוזמה</b></li><li><b>תופסים כיוון</b></li></ul></div>
-    <div class="card a5" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="scale"></i></div><h3>זכויות עובד</h3><ul><li>שכר מינימום ותלוש</li><li>פנסיה וימי חופשה</li><li>מה עושים כשלא משלמים</li></ul></div>
-    <div class="card a6"><div class="ic"><i data-i="brief"></i></div><h3>חיבור למעסיקים</h3><p>הרכז/ת יכול/ה לחבר להזדמנויות עבודה ולמעסיקים שעובדים עם הופה.</p></div>
-  </div>
-  <div class="note-line a6"><i data-i="alert"></i>לפני שחותמים על חוזה, שווה להראות אותו לרכז/ת.</div>
-  <template class="notes">
-    <p><b>מסר:</b> הרבה צעירים מקבלים פחות ממה שמגיע להם בעבודה הראשונה, פשוט כי לא ידעו. זה מקום שבו ליווי עושה הבדל מיידי.</p>
-    <div class="q">שאלה לכיתה: "מי מכם כבר עובד? מה הדבר שהכי הפתיע אתכם בתלוש הראשון?"</div>
-  </template>
-</section>
-
-<!-- 10 · לימודים -->
-<section class="s" data-k="תחנה 5 · לימודים">
+<!-- 7 · לימודים -->
+<section class="s" data-k="תחנה 2 · לימודים">
   <h2 class="a1">לימודים: <span class="pk">אף פעם לא מאוחר</span></h2>
   <p class="lead a2">חסרה בגרות? לא בטוחים שתואר מתאים לכם? יש הרבה דרכים להמשיך ללמוד, ולא כולן עוברות באוניברסיטה.</p>
   <div class="grid g4">
@@ -543,23 +484,7 @@
   </template>
 </section>
 
-<!-- 11 · כסף שמגיע לכם -->
-<section class="s yelbg" data-k="לאורך כל הדרך">
-  <h2 class="a1">כסף <span style="background:#fff;padding:0 .14em">שמגיע לכם</span></h2>
-  <p class="lead a2" style="color:var(--ink)">הרבה זכויות ומלגות לא מגיעות לצעירים פשוט כי אף אחד לא ביקש אותן. אנחנו עוזרים לבקש.</p>
-  <div class="grid g4">
-    <div class="card a3"><div class="ic"><i data-i="cap"></i></div><h3>מלגות עם ליווי</h3><ul><li><b>עמיתי מעשה</b></li><li><b>הזנק לעתיד</b></li><li><b>יתד</b></li><li><b>אלומה</b></li></ul></div>
-    <div class="card a4" style="--c:var(--green);--cs:#e6f5eb"><div class="ic"><i data-i="shield"></i></div><h3>מיצוי זכויות</h3><ul><li>מענק שחרור ופיקדון</li><li>הנחות בשכר לימוד</li><li><b>שי״ל</b>, ייעוץ לאזרח</li></ul></div>
-    <div class="card a5" style="--c:var(--blue);--cs:#e7f0fc"><div class="ic"><i data-i="coin"></i></div><h3>ניהול כסף</h3><ul><li><b>פעמונים</b>, תכל׳ס לצעירים</li><li><b>מקימי</b></li><li>סיוע עם חובות</li></ul></div>
-    <div class="card a6" style="--c:var(--purple);--cs:#efe9f8"><div class="ic"><i data-i="laptop"></i></div><h3>מחשב נייד</h3><p>עזרה בהשגת מחשב נייד ללימודים ולעבודה, דרך עמותות שותפות.</p></div>
-  </div>
-  <template class="notes">
-    <p><b>מסר:</b> זכויות לא מגיעות לבד, צריך לבקש אותן. הרכז/ת יודע/ת מה מגיע ואיך מגישים.</p>
-    <div class="q">שאלה לכיתה: "מי ידע שמגיע לחיילים משוחררים ולמשרתי שירות לאומי מענק ופיקדון?" בדרך כלל מעטים יודעים. זה בדיוק העניין.</div>
-  </template>
-</section>
-
-<!-- 12 · מאגר המענים -->
+<!-- 8 · מאגר המענים -->
 <section class="s" data-k="מאגר המענים">
   <div class="grid g2" style="align-items:center;gap:70px">
     <div>
@@ -571,24 +496,24 @@
     </div>
     <div class="flow a4">
       <div class="asks-h">איך זה עובד?</div>
-      <div class="f"><b>1</b><span>מספרים לרכז/ת מה צריך, גם אם זה עוד לא ברור</span></div>
-      <div class="f"><b>2</b><span>הרכז/ת מוצא/ת את המענה שמתאים לכם מתוך המאגר</span></div>
-      <div class="f"><b>3</b><span>מחברים אתכם ישירות לאנשים הנכונים, ונשארים בקשר</span></div>
+      <div class="f"><b>1</b><span>מספרים לי מה צריך, גם אם זה עוד לא ברור</span></div>
+      <div class="f"><b>2</b><span>אני מוצא/ת את המענה שמתאים לכם מתוך המאגר</span></div>
+      <div class="f"><b>3</b><span>חיבור ישיר לאנשים הנכונים, ואני נשאר/ת בקשר</span></div>
     </div>
   </div>
   <template class="notes">
-    <p><b>מסר:</b> לא צריך לחפש בגוגל ולהתבלבל. מאגר המענים של הופה הוא מהגדולים בישראל, והרכז/ת מכיר/ה אותו.</p>
+    <p><b>מסר:</b> לא צריך לחפש בגוגל ולהתבלבל. המאגר שעומד לרשותכם הוא מהגדולים בישראל, ואתם מכירים אותו.</p>
     <div class="q">שאלה לכיתה: חזרו ל-3 השאלות שרשמתם על הלוח בשקף 4. לאיזה תחום כל אחת שייכת?</div>
   </template>
 </section>
 
-<!-- 13 · מה עושים עכשיו -->
+<!-- 9 · מה עושים עכשיו -->
 <section class="s" data-k="מה עושים עכשיו" style="background:var(--pinks)">
   <h2 class="a1">3 צעדים, <span class="pk">כבר השבוע</span></h2>
   <p class="lead a2">לא צריך להחליט עכשיו מה תעשו בעוד שנה. צריך רק לדאוג שלא תהיו לבד כשתחליטו.</p>
   <div class="steps">
-    <div class="step a3"><div class="sn">1</div><h3>שומרים את המספר</h3><p>של רכז/ת הבוגרים, עכשיו, בטלפון.</p><span class="ph" data-f="cPhoneStep"></span></div>
-    <div class="step a4"><div class="sn">2</div><h3>מצטרפים לקבוצת הבוגרים</h3><p>הקבוצה של בית הספר, שבה מתפרסמות הזדמנויות, מלגות ומועדים. הקישור יגיע מהרכז/ת.</p></div>
+    <div class="step a3"><div class="sn">1</div><h3>שומרים את המספר</h3><p>שלי, עכשיו, בטלפון.</p><span class="ph" data-f="cPhoneStep"></span></div>
+    <div class="step a4"><div class="sn">2</div><h3>מצטרפים לקבוצת הבוגרים</h3><p>הקבוצה של בית הספר, שבה מתפרסמות הזדמנויות, מלגות ומועדים. הקישור יגיע ממני.</p></div>
     <div class="step a5"><div class="sn">3</div><h3>שולחים הודעה אחת</h3><p>מה התוכנית שלי אחרי י״ב, ומה עוד לא סגור. שתי שורות מספיקות.</p></div>
   </div>
   <template class="notes">
@@ -597,21 +522,19 @@
   </template>
 </section>
 
-<!-- 14 · סיום -->
-<section class="s pinkbg end" data-k="הופה!">
+<!-- 10 · סיום -->
+<section class="s pinkbg end" data-k="לא לבד">
   <div class="rays" aria-hidden="true"></div>
-  <img class="logo a1" src="hopa-logo.png" alt="הופה!">
   <h1 class="a2">לא לבד.<br><span style="color:var(--yel)">גם אחרי.</span></h1>
   <div class="sub a3">פתאום הכל נראה אפשרי</div>
   <div class="contact a4" data-f="endContact"></div>
-  <a class="site a5" href="https://hopa.org.il" target="_blank" rel="noopener"><i data-i="link"></i><span class="ltr">hopa.org.il</span></a>
   <template class="notes">
-    <p><b>סגירה (2 דקות).</b> בקשו מכל תלמיד/ה לכתוב בפתק שאלה אחת לרכז/ת, עם שם או בלי. אספו את הפתקים ומסרו לרכז/ת.</p>
+    <p><b>סגירה (2 דקות).</b> בקשו מכל תלמיד/ה לכתוב בפתק שאלה אחת אליכם, עם שם או בלי. אספו את הפתקים.</p>
     <div class="q">משפט לסיום: "אתם לא חייבים לדעת עכשיו לאן אתם הולכים. רק תדעו שיש לכם למי להתקשר."</div>
   </template>
 </section>
 
-<div id="wipe" aria-hidden="true"><i></i><i><img src="hopa-logo.png" alt=""></i></div>
+<div id="wipe" aria-hidden="true"><i></i><i></i></div>
 </div></div>
 
 <div id="bar"><i></i></div>
@@ -725,10 +648,9 @@ function fill(sc){
   }
   if (has && sc.e){
     const subj = encodeURIComponent('שאלה מתלמיד/ה בשכבת י״ב · '+sc.n);
-    const body = encodeURIComponent('היי '+sc.c+',\n\nראיתי בכיתה את המצגת של הופה.\nקוראים לי: \nהתוכנית שלי אחרי י״ב: \nמה עוד לא סגור: \n\nתודה!');
+    const body = encodeURIComponent('היי '+sc.c+',\n\nראיתי בכיתה את המצגת על מה שאחרי י״ב.\nקוראים לי: \nהתוכנית שלי אחרי י״ב: \nמה עוד לא סגור: \n\nתודה!');
     acts += '<a class="btn" href="mailto:'+esc(sc.e)+'?subject='+subj+'&amp;body='+body+'">'+svg('mail')+'מייל</a>';
   }
-  if (!has) acts = '<a class="btn y" href="https://hopa.org.il" target="_blank" rel="noopener">'+svg('link')+'<span class="ltr">hopa.org.il</span></a>';
   set('cActs', acts);
   set('cPhoneStep', has && sc.p ? esc(sc.c)+'<br><span class="ltr">'+esc(sc.p)+'</span>' : '');
   set('endContact', has ? 'רכז/ת הבוגרים: '+esc(sc.c)+(sc.p?' · <span class="ltr">'+esc(sc.p)+'</span>':'') : '');
@@ -752,8 +674,6 @@ const TOTAL = slides.length;
 slides.forEach((s, i) => {
   s.insertAdjacentHTML('afterbegin', '<div class="kick">'+esc(s.dataset.k||'')+'</div>');
   s.insertAdjacentHTML('beforeend', '<div class="num"><span class="ltr">'+(i+1)+' / '+TOTAL+'</span></div>');
-  if (!s.classList.contains('cover') && !s.classList.contains('end'))
-    s.insertAdjacentHTML('beforeend', '<img class="brand" src="hopa-logo.png" alt="">');
   const t = s.querySelector('template.notes');
   if (t) s.insertAdjacentHTML('beforeend', '<details class="nt"><summary>הערות למעביר/ה</summary><div class="ntxt">'+t.innerHTML+'</div></details>');
 });
