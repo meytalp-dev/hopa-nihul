@@ -184,11 +184,29 @@
     </div>
     <div class="btnrow" style="margin-top:10px"><button class="btn yellow" type="button" id="kb_dl">הורדת הכרטיס כתמונה</button></div>
     <div class="kb-sub" style="margin-top:8px">הכרטיס נשמר עם התוכנית. מהכרטיסים נכין פוסטים לפייסבוק של הופה, ונאשר איתכם לפני פרסום.</div>
+
+    <div class="kb-head" style="margin-top:22px">שאלון העמדות על מכינות · 5 דקות</div>
+    <div class="kb-sub">שאלון קצר שאנחנו מעבירים יחד עם מכינת ״אחד משלנו״: איך הצוותים בבתי הספר רואים מכינות קדם-צבאיות. אנונימי, 21 שאלות, רוב הסולם 1–5. ממלאים כאן במפגש.</div>
+    <div class="btnrow" style="margin-top:10px"><a class="btn pink" href="mechinot-tofes.html" target="_blank" rel="noopener">לשאלון העמדות</a></div>
+
+    <div class="kb-head" style="margin-top:22px">נערי דוד</div>
+    <div class="callout">
+      <b>נערי דוד</b> היא תוכנית בשיתוף הצבא שמלווה את הצעירים מרגע הגיוס ועד תום השירות, כדי שיתמידו בשירות.
+      בדיוק ברגע שבו הליווי של בית הספר נגמר, והצעיר/ה עובר/ת למסגרת הכי תובענית שהכיר/ה, יש מי שממשיך איתו.
+      <b>לפחות 25 צעירים מבוגרי הופה כבר הצטרפו.</b>
+    </div>
+    <label class="fl">האם בית הספר שלכם נרשם לנערי דוד?</label>
+    <div class="tsel" id="kb_dd" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+      <button type="button" data-v="yes"><span class="t" style="display:block">כן, בית הספר נרשם</span></button>
+      <button type="button" data-v="check"><span class="t" style="display:block">צריך לבדוק עם ההנהלה</span></button>
+      <button type="button" data-v="no"><span class="t" style="display:block">עוד לא, רוצים להצטרף</span></button>
+    </div>
+    <div class="kb-sub" style="margin-top:8px">הטופס שהבוגר/ת ממלא/ת להפנייה: <a href="derech-david.html" target="_blank" rel="noopener">הפנייה לתוכנית ״דרך דוד״</a>. התשובה נשמרת עם התוכנית, ונחזור למי שרוצה להצטרף.</div>
   </section>
 
   <section id="s2">
-    <div class="sec-head"><div class="num">2</div><div><h2>לוקחים מהעמיתים</h2><small>שתי רכזות מציגות את התוכנית שלהן</small></div></div>
-    <div class="callout y"><b>מה עושים:</b> פעולה שמתאימה גם לבית הספר שלכם? לוחצים <b>➕</b> לידה. היא נכנסת לתוכנית שלכם בשלב 3.</div>
+    <div class="sec-head"><div class="num">2</div><div><h2>למידת עמיתים</h2><small>שתי רכזות מציגות את התוכנית שלהן</small></div></div>
+    <div class="callout y"><b>מה עושים:</b> פעולה שמתאימה גם לבית הספר שלכם? לוחצים <b>➕</b> לידה. הפעולה נכנסת לתוכנית שלכם בשלב 3.</div>
     <div id="peers"></div>
     <p class="livehint"><span class="dot"></span> <span id="peerStat">טוען את התוכניות…</span></p>
   </section>
@@ -208,7 +226,17 @@
   </section>
 
   <section id="s4">
-    <div class="sec-head"><div class="num">4</div><div><h2>סיום: שומרים ומפיקים מסמך</h2><small>שלוש שאלות קצרות, ואז שני כפתורים</small></div></div>
+    <div class="sec-head"><div class="num">4</div><div><h2>בזוגות: מציגים ומתייעצים</h2><small>אחרי העבודה העצמאית · 10 דקות בחדרים</small></div></div>
+    <ol style="margin:0;padding-inline-start:22px;font-size:15px;line-height:1.6">
+      <li><b>מציגים</b> לשותף/ה את תוכנית העבודה: המטרה ושתי פעולות. 2 דקות.</li>
+      <li><b>מתייעצים</b>: אתגר או דילמה אחת שאני מתלבט/ת בה. השותף/ה שואל/ת ומייעץ/ת. 3 דקות.</li>
+      <li><b>מתחלפים.</b></li>
+    </ol>
+    <div class="callout y" style="margin-top:12px"><b>מה יצא מהשיחה?</b> פעולה חדשה, מוסיפים בשלב 3. חסם שעלה, כותבים בשלב 5 ב״מה עלול לעצור אותי״.</div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head"><div class="num">5</div><div><h2>שומרים ומפיקים מסמך</h2><small>שלוש שאלות קצרות, ואז שני כפתורים</small></div></div>
 
     <label class="fl">מי השותף/ה שלי בבית הספר? בשם.</label>
     <input type="text" id="p_partner" placeholder="למשל: רונית, היועצת" maxlength="80">
@@ -233,6 +261,14 @@
       <a class="btn ghost" href="mashov2.html" target="_blank" rel="noopener">משוב על המפגש · 2 דקות</a>
       <a class="btn ghost" href="raayonot-2110.html" target="_blank" rel="noopener">71 הרעיונות</a>
     </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head"><div class="num">6</div><div><h2>כלים בשבילכם</h2><small>שני דברים שלוקחים הביתה מהמפגש</small></div></div>
+    <p style="font-size:15px"><b>צ׳ק ליסט רכז/ת בוגרים</b> · מה בודקים בכל שיחה עם בוגר/ת ובכל מפגש. הכינה לירון.</p>
+    <div class="btnrow"><a class="btn pink" href="https://hopa-rakaz-checklist.vercel.app/" target="_blank" rel="noopener">לצ׳ק ליסט</a></div>
+    <p style="font-size:15px;margin-top:16px"><b>מצגת חשיפה לשכבת י״ב</b> · ״תוכנית הבוגרים של בית הספר״, בגוף ראשון של הרכז/ת, להצגה בכיתות או בכנס שכבה.</p>
+    <div class="btnrow"><a class="btn yellow" href="https://hopa-yb-deck.vercel.app/" target="_blank" rel="noopener">למצגת החשיפה</a></div>
   </section>
 
 </main>
@@ -301,7 +337,7 @@ function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
 async function callRetry(p,tries){var e;for(var i=1;i<=(tries||4);i++){try{return await call(p,20000)}catch(x){e=x}await delay(700+i*600)}throw e}
 
 /* ---- ניווט ---- */
-var SECS=[['s1','1 · מי אני'],['s2','2 · מהעמיתים'],['s3','3 · התוכנית'],['s4','4 · סיום']];
+var SECS=[['s1','1 · מי אני'],['s2','2 · עמיתים'],['s3','3 · התוכנית'],['s4','4 · בזוגות'],['s5','5 · סיום'],['s6','6 · כלים']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
 addEventListener('scroll',function(){
@@ -311,7 +347,10 @@ addEventListener('scroll',function(){
 },{passive:true});
 
 /* ---- התוכנית שלי: המודל ---- */
-var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',card:null,imp:'',ts:''};
+var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',card:null,dd:'',imp:'',ts:''};
+/* טקסטים שנשמרו בשרת ב-21.10 בלי האות הראשונה (תמרה). התיקון בתצוגה בלבד, הרשומה בשרת לא משתנה. */
+var FIX_WHAT={'גש בוגרים – תיעוד':'מפגש בוגרים – תיעוד','יחות אישיות עם בוגרי בית הספר':'שיחות אישיות עם בוגרי בית הספר'};
+function fixWhat(s){s=String(s||'').trim();return FIX_WHAT[s]||s}
 ['chaps','acts'].forEach(function(k){if(!Array.isArray(plan[k]))plan[k]=[]});
 var saveT=null,lookT=null,lastPushed='';
 
@@ -417,6 +456,10 @@ function paintCard(){
   $('kcard').classList.toggle('empty',!c.today&&!c.how&&!c.did);
 }
 $('kb_who').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;card().who=(card().who===b.textContent?'':b.textContent);savePlan();paintCard()});
+/* נערי דוד: האם בית הספר נרשם (נשמר בשדה dd עם התוכנית) */
+function paintDD(){[].forEach.call($('kb_dd').children,function(b){b.classList.toggle('on',b.dataset.v===(plan.dd||''))})}
+$('kb_dd').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;plan.dd=(plan.dd===b.dataset.v?'':b.dataset.v);savePlan();paintDD()});
+paintDD();
 ['today','how','did','quote'].forEach(function(k){var el=$('kb_'+k);el.value=card()[k]||'';el.addEventListener('input',function(){card()[k]=this.value;savePlan();paintCard()})});
 function cardWrap(ctx,text,maxW){var words=text.split(/\s+/),lines=[],cur='';words.forEach(function(w){var t=cur?cur+' '+w:w;if(ctx.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t});if(cur)lines.push(cur);return lines}
 function cardRR(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
@@ -524,7 +567,7 @@ function savePlan(){
 }
 function payload(){
   return {who:(plan.who||'').trim(),school:plan.school||'',goal:plan.goal||'',chaps:plan.chaps,acts:visibleActs(),
-    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',card:plan.card||null,imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
+    partner:plan.partner||'',block:plan.block||'',measure:plan.measure||'',card:plan.card||null,dd:plan.dd||'',imp:plan.imp||'',ts:new Date().toISOString(),meeting:'מפגש רכזים 4.11.2026'};
 }
 async function pushPlan(loud){
   clearTimeout(saveT);
@@ -564,7 +607,7 @@ function paintPeers(){
     if(d===undefined){return h+'<div class="empty">טוען…</div></div>'}
     if(!d){return h+'<div class="empty">התוכנית תוצג בעל פה. רעיון שמתאים לכם, כותבים בשלב 3.</div></div>'}
     if(d.goal)h+='<div class="goal">'+esc(d.goal)+'</div>';
-    var acts=(d.acts||[]).filter(function(a){return (a.what||'').trim()});
+    var acts=(d.acts||[]).filter(function(a){return (a.what||'').trim()}).map(function(a){var b={};for(var k in a)b[k]=a[k];b.what=fixWhat(a.what);return b});
     if(!acts.length)h+='<div class="empty">עוד אין פעולות כתובות, מקשיבים ורושמים למטה.</div>';
     else{
       var by={};acts.forEach(function(a){(by[a.ch||0]=by[a.ch||0]||[]).push(a)});
@@ -595,7 +638,7 @@ var DEMO_PEERS=[
         {ch:6,what:'סמינר דמוקרטיה וכנס בוגרים',when:'8-9/11',who:'מחנכים, כרמל, דור, תמר'},
         {ch:7,what:'להפיץ את שאלוני המיפוי',when:'עד סוף אוקטובר',who:'אני'}]},
  {who:'תמרה גולאני',school:'דרור נווה מדבר',goal:'אני רוצה לראות שהבוגרים שלי מאמינים בעצמם, מכירים את החוזקות שלהם, ומרגישים שיש להם את הכלים והביטחון להמשיך ללימודים, לתעסוקה ולעתיד משמעותי.',
-  acts:[{ch:7,what:'גש בוגרים – תיעוד',m:8,who:'בוגרי בית הספר בשיתוף רכזי מגמות מחנכות'},
+  acts:[{ch:7,what:'מפגש בוגרים – תיעוד',m:8,who:'בוגרי בית הספר בשיתוף רכזי מגמות מחנכות'},
         {ch:7,what:'שיחות אישיות עם בוגרי בית הספר',m:1,who:'בוגרי בית הספר והורים'},
         {ch:6,what:'בוגרים חוזרים ומשפיעים',m:2,who:'בוגרי בית הספר ותלמידי יב'},
         {ch:6,what:'קהילה בתנועה – יום התנדבות של בוגרים',m:3,who:'בוגרי בית הספר / נציגי הקהילה'}]}];
