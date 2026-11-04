@@ -8,6 +8,14 @@
   function lsGet() { try { return localStorage.getItem(K) || ''; } catch (e) { return ''; } }
   function lsSet(v) { try { if (v) localStorage.setItem(K, v); else localStorage.removeItem(K); } catch (e) {} }
 
+  /* קישור אישי: #c=<קוד> נשמר במכשיר ונמחק מיד מהכתובת. אחרי # לא נשלח לשרת, והקוד לא כתוב באתר. */
+  (function () {
+    var m = /^#c=([^&]+)$/.exec(location.hash || '');
+    if (!m) return;
+    try { lsSet(decodeURIComponent(m[1]).trim()); } catch (e) {}
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  })();
+
   function verify(c) {
     fetch(EXEC + '?action=checkCode&secret=' + encodeURIComponent(c), { credentials: 'omit', cache: 'no-store' })
       .then(function (r) { return r.json(); })
