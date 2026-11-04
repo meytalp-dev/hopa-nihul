@@ -130,6 +130,7 @@
   .taken .s{font-size:12px;color:var(--muted)}
   .taken a{margin-inline-start:auto;color:#111;background:var(--yellow);text-decoration:none;border-radius:10px;padding:8px 13px;font-weight:800;font-size:13px;white-space:nowrap}
   @media (max-width:740px){.taken{inset-inline:10px}}
+  .taken.off{display:none}
 
   footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 16px 40px}
   #toast{position:fixed;inset-inline:0;bottom:84px;margin:auto;width:max-content;max-width:88%;background:#fff;color:#111;border:2px solid var(--pink);box-shadow:0 8px 24px rgba(0,0,0,.15);padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
@@ -258,7 +259,6 @@
       <li><b>הפקת המסמך</b>: נפתח דף A4 עם התוכנית שלכם, לשמירה כ-PDF ולמייל למנהל/ת.</li>
     </ul>
     <div class="btnrow" style="margin-top:10px">
-      <a class="btn ghost" href="mashov2.html" target="_blank" rel="noopener">משוב על המפגש · 2 דקות</a>
       <a class="btn ghost" href="raayonot-2110.html" target="_blank" rel="noopener">71 הרעיונות</a>
     </div>
   </section>
@@ -269,6 +269,11 @@
     <div class="btnrow"><a class="btn pink" href="https://hopa-rakaz-checklist.vercel.app/" target="_blank" rel="noopener">לצ׳ק ליסט</a></div>
     <p style="font-size:15px;margin-top:16px"><b>מצגת חשיפה לשכבת י״ב</b> · ״תוכנית הבוגרים של בית הספר״, בגוף ראשון של הרכז/ת, להצגה בכיתות או בכנס שכבה.</p>
     <div class="btnrow"><a class="btn yellow" href="https://hopa-yb-deck.vercel.app/" target="_blank" rel="noopener">למצגת החשיפה</a></div>
+  </section>
+
+  <section id="s7">
+    <div class="sec-head"><div class="num">7</div><div><h2>משוב על המפגש</h2><small>2 דקות, ממש עוזר לנו</small></div></div>
+    <div class="btnrow"><a class="btn pink" href="mashov2.html" target="_blank" rel="noopener">למשוב</a></div>
   </section>
 
 </main>
@@ -337,14 +342,18 @@ function delay(ms){return new Promise(function(r){setTimeout(r,ms)})}
 async function callRetry(p,tries){var e;for(var i=1;i<=(tries||4);i++){try{return await call(p,20000)}catch(x){e=x}await delay(700+i*600)}throw e}
 
 /* ---- ניווט ---- */
-var SECS=[['s1','1 · מי אני'],['s2','2 · עמיתים'],['s3','3 · התוכנית'],['s4','4 · בזוגות'],['s5','5 · סיום'],['s6','6 · כלים']];
+var SECS=[['s1','1 · מי אני'],['s2','2 · עמיתים'],['s3','3 · התוכנית'],['s4','4 · בזוגות'],['s5','5 · סיום'],['s6','6 · כלים'],['s7','7 · משוב']];
 $('toc').innerHTML=SECS.map(function(s){return '<a href="#'+s[0]+'">'+esc(s[1])+'</a>'}).join('');
 var links=[].slice.call($('toc').querySelectorAll('a'));
-addEventListener('scroll',function(){
+function onScrollNav(){
   var y=scrollY+120,cur=0;
   SECS.forEach(function(s,i){var el=$(s[0]);if(el&&el.offsetTop<=y)cur=i});
   links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
-},{passive:true});
+  /* שורת "בתוכנית שלי" רק בשלבים 2-3, שם לוחצים ➕ ובונים. בשאר היא הסתירה תוכן וקישורים */
+  $('takenBar').classList.toggle('off',cur!==1&&cur!==2);
+}
+addEventListener('scroll',onScrollNav,{passive:true});
+onScrollNav();
 
 /* ---- התוכנית שלי: המודל ---- */
 var plan=lsJson(PLAN_KEY,null)||{who:'',school:'',goal:'',chaps:[],acts:[],partner:'',block:'',measure:'',card:null,dd:'',imp:'',ts:''};
