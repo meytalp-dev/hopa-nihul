@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>פרס רפפורט · חומרי ההגשה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#E8348A;--pink-d:#C2185B;--yel:#FFF200;--yel-s:#FFF9B0;--ink:#1d1d24;--mut:#6b6b78;--line:#ececf2;--bg:#faf9fc;--ok:#1f9d55;--ok-s:#e6f6ec}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Rubik',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+  .hero{background:var(--pink);color:#fff;padding:20px 16px 22px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;left:-70px;bottom:-110px;width:170px;height:170px;border-radius:50%;background:var(--yel);opacity:.9}
+  .hero .in{max-width:780px;margin:0 auto;position:relative;z-index:1}
+  .kicker{font-weight:600;opacity:.9;font-size:14px}
+  h1{margin:2px 0 0;font-size:clamp(24px,5.5vw,34px);line-height:1.25;font-weight:800}
+  .dl{display:inline-block;margin-top:10px;background:var(--yel);color:var(--ink);font-weight:700;padding:5px 14px;border-radius:999px;font-size:14px}
+  nav.tabs{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
+  nav.tabs .in{max-width:780px;margin:0 auto;display:flex;gap:6px;padding:8px 16px;flex-wrap:wrap}
+  nav.tabs button{font:inherit;font-size:15px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+  nav.tabs button.on{background:var(--ink);border-color:var(--ink);color:var(--yel)}
+  .wrap{max-width:780px;margin:0 auto;padding:0 16px 60px}
+  .pane{display:none}.pane.on{display:block}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 2px 10px rgba(30,20,60,.04)}
+  h2{margin:22px 0 0;font-size:22px}
+  .sub{color:var(--mut);margin:2px 0 0;font-size:15px}
+  .doc h3{margin:18px 0 4px;font-size:17px;color:var(--pink-d)}
+  .doc h3:first-child{margin-top:0}
+  .doc p{margin:0 0 10px}
+  .doc ol,.doc ul{margin:4px 0 10px;padding-inline-start:22px}
+  .new{background:none}
+  mark{background:var(--yel);padding:0 4px;border-radius:4px}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .b{font:inherit;font-size:15px;font-weight:600;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .b.pri{background:var(--pink);border-color:var(--pink);color:#fff}
+  .b svg{width:18px;height:18px}
+  .chk{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
+  .chk:first-child{border-top:0;padding-top:0}
+  .chk input{width:22px;height:22px;accent-color:var(--pink);flex:none;margin-top:3px}
+  .chk small{display:block;color:var(--mut);font-size:14px}
+  .opt{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt input{width:20px;height:20px;accent-color:var(--pink);flex:none;margin-top:4px}
+  .opt.on{border-color:var(--pink);background:#fff5fa}
+  .opt b{display:block;color:var(--pink-d)}
+  .opt .rec{display:inline-block;font-size:12px;font-weight:700;background:var(--yel);color:var(--ink);border-radius:99px;padding:0 8px;margin-inline-start:6px}
+  textarea{width:100%;font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#fff;color:var(--ink);resize:vertical}
+  textarea:focus{outline:none;border-color:var(--pink)}
+  .letter{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 24px;margin-top:18px;font-size:16.5px}
+  .letter p{margin:0 0 12px}
+  .letter .ex{background:#fff5fa;border-inline-start:3px solid var(--pink);padding:6px 10px;border-radius:6px}
+  .letter .ex.empty{color:var(--mut);font-style:italic;background:var(--bg);border-color:var(--line)}
+  .tip{background:var(--yel-s);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:15px}
+  .tip p{margin:0 0 4px}
+  .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;transition:transform .25s ease;z-index:30;font-size:15px}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  footer{text-align:center;color:#8A97A6;font-size:.72rem;margin-top:40px}
+  footer a{color:#8A97A6}
+  [dir=ltr]{unicode-bidi:isolate}
+  @media (max-width:520px){.card,.letter{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{.hero,nav.tabs,.acts,.pick,footer,.toast{display:none!important}.pane{display:none!important}.pane.on{display:block!important}.letter{border:0;box-shadow:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+  <div class="kicker">פרס רות רפפורט לנשים פורצות דרך 2027 · חדשנות דיגיטלית בחינוך · מסלול הישג בתחילת הדרך</div>
+  <h1>לירון גולן · כל חומרי ההגשה</h1>
+  <p style="margin:8px 0 0;max-width:560px">כל מה שכתבנו עד עכשיו, במקום אחד. ההגשה יוצאת בשם מיטל, כי מועמדת לא יכולה להגיש את עצמה.</p>
+  <span class="dl">מועד אחרון: 20.11.2026 בשעה 12:00</span>
+</div></header>
+
+<nav class="tabs"><div class="in" id="tabs">
+  <button data-p="hagasha" class="on">הגשה</button>
+  <button data-p="michtav">מכתב ההמלצה</button>
+  <button data-p="teur">תיאור העשייה</button>
+  <button data-p="kv">קורות חיים</button>
+  <button data-p="video">סרטון</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ הגשה ============ -->
+<section class="pane on" id="hagasha">
+  <h2>מה צריך להגיש</h2>
+  <p class="sub">ההגשה מקוונת בלבד. הסימונים כאן נשמרים רק במכשיר שלך.</p>
+  <div class="card" id="checklist">
+    <label class="chk"><input type="checkbox" data-c="c1"><div>תיאור העשייה וההישגים (500–1,000 מילים)<small>מוכן בלשונית "תיאור העשייה". נשאר לאמת את המספרים שמסומנים בצהוב.</small></div></label>
+    <label class="chk"><input type="checkbox" data-c="c2"><div>מכתב המלצה ממיטל<small>מוכן בלשונית "מכתב ההמלצה". נשאר לחתום.</small></div></label>
+    <label class="chk"><input type="checkbox" data-c="c3"><div>עוד 1–2 מכתבי המלצה<small>הצעות: נאוה גינזבורג (מייסדת הופה, מנכ"לית קרן ברלוביץ) · מנהל.ת בית ספר שותף או רכז.ת בוגרים · גורם במשרד העבודה או ברשת שותפה</small></div></label>
+    <label class="chk"><input type="checkbox" data-c="c4"><div>קורות חיים מקוצרים + הצהרה על היעדר הרשעות<small>לירון ממלאת. השלד בלשונית "קורות חיים".</small></div></label>
+    <label class="chk"><input type="checkbox" data-c="c5"><div>סרטון הצגה עצמית (60–90 שניות)<small>לירון מצלמת. התסריט בלשונית "סרטון".</small></div></label>
+    <label class="chk"><input type="checkbox" data-c="c6"><div>צילום תעודת זהות של לירון</div></label>
+  </div>
+  <div class="acts">
+    <a class="b pri" href="https://www.rappaport-prize.org.il/apply-women" target="_blank" rel="noopener">לטופס ההגשה</a>
+    <a class="b" href="https://meytalp-dev.github.io/hopa-nihul/rappaport.html?admin=hopa" target="_blank" rel="noopener">התשובות של לירון בדף הבדיקה</a>
+    <a class="b" href="mailto:info2027@rappaport-prize.org.il">שאלה לפרס</a>
+  </div>
+
+  <h2>מה עוד פתוח</h2>
+  <div class="card doc">
+    <ul>
+      <li><b>אימות מספרים:</b> מענים, בוגרים ובתי ספר, מענק מגה אור, גפ"ן, 393 ₪ לצעיר, וניסוח השותפויות. התשובות של לירון מגיעות מדף הבדיקה.</li>
+      <li><b>"ראשונה מסוגה בישראל":</b> להשאיר רק אם בטוחים. אחרת: "פלטפורמה חדשנית".</li>
+      <li><b>תחילת הדרך:</b> לא להשתמש בנתוני הופה מלפני התקופה של לירון (למשל מחקר בית שאן).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ מכתב ההמלצה ============ -->
+<section class="pane" id="michtav">
+  <h2>מכתב ההמלצה ממיטל</h2>
+  <p class="sub">הנוסח הסופי. אפשר להעתיק אותו, או לשמור כקובץ PDF דרך כפתור ההדפסה.</p>
+  <div class="pick" id="pick" hidden>
+    <label class="opt" data-o="d"><input type="checkbox" value="d"><div><b>הסיפור של הבוגרת<span class="rec">מומלץ</span></b>הבוגרת שהשתחררה אחרי פטירת אביה, קורס החלקות השיער, הלוגו והעסק. מקרה אמיתי מראה את לירון יותר מכל מספר.</div></label>
+    <label class="opt" data-o="a"><input type="checkbox" value="a"><div><b>לא מרפה עד שהבוגר מקבל</b>הצד האישי באופן כללי: מלגה, מחשב נייד, כל בקשה. הסיפור של הבוגרת כבר מראה את זה, ולכן אין צורך בשתיהן.</div></label>
+    <label class="opt" data-o="b"><input type="checkbox" value="b"><div><b>יותר מ-1,000 מענים ורשת שותפים<span class="rec">מומלץ</span></b>ההיקף: הקשר עם התוכניות והעמותות, והנגשת המידע עם אפשרות אמיתית להירשם.</div></label>
+    <label class="opt" data-o="c"><input type="checkbox" value="c"><div><b>המערכת שרואה לפני שמבקשים</b>הניטור והניתוח. חלק מזה כבר מופיע בפסקה השנייה של המכתב, ולכן זו בחירה שלישית.</div></label>
+    <label class="opt" data-o="own"><input type="checkbox" value="own"><div><b>מקרה אמיתי במילים שלך</b>בוגר או בוגרת (בלי שם) שאת זוכרת. דוגמה אמיתית אחת חזקה יותר מכל ניסוח.
+      <textarea id="ownTxt" rows="4" placeholder="לדוגמה: בוגרת מ... ביקשה מחשב כדי להתחיל ללמוד. לירון..."></textarea></div></label>
+  </div>
+
+  <div class="letter" id="letter"></div>
+  <div class="acts">
+    <button class="b pri" id="copyLetter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתקת המכתב</button>
+    <button class="b" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>הדפסה / PDF</button>
+  </div>
+</section>
+
+<!-- ============ תיאור העשייה ============ -->
+<section class="pane" id="teur">
+  <h2>תיאור העשייה וההישגים</h2>
+  <p class="sub">כ-950 מילים (מגבלה: 1,000). <mark>בצהוב</mark>: לאמת לפני הגשה.</p>
+  <div class="card doc" id="teurDoc">
+    <h3>לירון גולן: אישה שהמציאה מחדש את הדרך שבה ישראל רואה את צעיריה</h3>
+    <h3>הבעיה שאף אחד לא פתר</h3>
+    <p>בכל שנה אלפי צעירים בישראל נעלמים ברגע אחד: ביום שבו הם יוצאים משערי התיכון. עד אותו יום יש מי שרואה אותם, מחנכת, יועצת, בית ספר. מאותו יום, אף אחד לא יודע איפה הם, מה עובר עליהם, ולאיזו עזרה הם זכאים. והעזרה קיימת: מאות תוכניות, מלגות, זכויות ומסגרות, מפוזרות בין משרדי ממשלה, רשויות ועמותות. אבל היא לא מגיעה אל מי שהכי זקוק לה.</p>
+    <p>עבור צעירים בסיכון, זה ההבדל בין חיים יציבים לבין נפילה. צעיר בסיכון לא יחפש בעצמו את התוכנית שמתאימה לו. לרוב הוא לא יודע שהיא קיימת, ולפעמים כבר אין לו כוח לחפש.</p>
+    <h3>החזון של לירון</h3>
+    <p>לירון גולן, מנכ"לית הופה, הבינה משהו שמערכת החינוך והרווחה בישראל לא הבינו עד כה: זו לא בעיה של מחסור במענים. זו בעיה של חיבור. ואם זו בעיה של חיבור, אפשר לפתור אותה.</p>
+    <p>מתוך התובנה הזו לירון יצרה שלושה דברים ששלובים זה בזה: <b>שיטה</b> (מודל הרדאר 360), <b>דרך עבודה</b> (מודל ההפעלה של הופה), ו<b>תשתית דיגיטלית</b> שמממשת את שתיהן. זו פלטפורמה <mark>ראשונה מסוגה בישראל</mark>, שמנטרת באופן רציף את מצבם של צעירים בגילאי 14 עד 26, מזהה כל צורך שעולה ומתאימה לו את המענה הנכון.</p>
+    <h3>מודל הרדאר 360: שיטה חדשה לראות צעירים</h3>
+    <p>לירון הגתה את מודל הרדאר, שמתרגם את הרעיון של "לראות בזמן" לארבעה שלבים:</p>
+    <ol><li><b>שידור וקליטה:</b> איסוף מידע שוטף מבית הספר, מהצעיר ומהמשפחה.</li><li><b>ניתוח:</b> מודל רמזור ירוק, כתום ואדום, שמראה מי יציב, מי מתחיל להתרחק ומי בסכנה.</li><li><b>חישוב והתאמה:</b> הצלבה של הצורך עם מאגר המענים.</li><li><b>החזרת גלים:</b> פעולה יזומה, לפני שהמצב מחריף.</li></ol>
+    <p>זו תפיסה הפוכה לגישה המקובלת. במקום להגיב למשבר, הרדאר מזהה את האות הראשון. בציר מניעת הנשירה, <mark>הרמזור נדלק בכתום אחרי שלושה ימי היעדרות רצופים, ארבעה ימים לפני</mark> שהנוהל הרשמי מתחיל לפעול. המודל <mark>זכה במענק "רדאר 360" מקרן מגה אור</mark>, והתוכנית של הופה <mark>מאושרת במאגר גפ"ן של משרד החינוך</mark>.</p>
+    <h3>מודל ההפעלה: מרעיון לשיטה שאפשר לשכפל</h3>
+    <p>לירון תכננה את כל מודל ההפעלה של הופה: רצף ליווי אחד מגיל 14 ועד 26, בשני צירים שמשלימים זה את זה, מניעת נשירה בבית הספר וליווי בוגרים אחריו. המודל מגדיר את התפקיד של רכזת או רכז בכל בית ספר, סולם הסלמה ברור, כרטיסי התערבות ומדדי הצלחה. כך הופה אינה תלויה באדם אחד מוכשר. זו שיטה שכל בית ספר יכול לאמץ, <mark>בעלות של כ-393 ₪ לצעיר בשנה</mark>.</p>
+    <h3>פריצת הדרך: ניטור והתאמה במערכת אחת</h3>
+    <p>החדשנות של לירון היא בחיבור בין שני עולמות שעד היום עמדו בנפרד:</p>
+    <p><b>ניטור נתונים חי.</b> במקום רשימות בוגרים באקסל שמתיישנות תוך חודשים, המערכת מחזיקה תמונת מצב חיה של כל בוגר. היא יודעת מי השתחרר, מי עובד, מי לומד ומי הפסיק לענות. היא מזהה בעצמה מי חסר פרטים ומי זקוק לטיפול, ומציפה אותו לרכז לפני שהוא נעלם.</p>
+    <p><b>התאמת מענים לכל צורך.</b> ברגע שבוגר מדווח שהוא מחפש עבודה, זקוק למלגה או לא יודע מה לעשות אחרי השחרור, המערכת מצליבה את הצורך שלו עם מאגר המענים ומציעה את ההתאמה המדויקת, לפי גיל, אזור, שפה ותחום.</p>
+    <p>זה שינוי עמוק בגישה: <b>המערכת לא מחכה שהצעיר יבקש עזרה. היא מאתרת את הצורך ומביאה אליו את העזרה.</b></p>
+    <h3>מה לירון בנתה, במו ידיה</h3>
+    <ul>
+      <li><b>מאגר מענים לאומי לצעירים:</b> <span class="new">יותר מ-1,000 תוכניות, מלגות ומענים לבוגרים ולצעירים. לירון יצרה קשר עם כל אחד מהם, כדי להנגיש לצעירים את המידע ואת האפשרות להירשם.</span> המאגר מתעדכן כל הזמן, גם ממערכת שמנטרת עשרות קבוצות מקצועיות.</li>
+      <li><span class="new"><b>רשת שותפים:</b> קשר עם ארגונים ועמותות רבים, כדי שלכל צורך של בוגר יהיה מי שמטפל בו.</span></li>
+      <li><b>"הופי", בוט וואטסאפ מבוסס בינה מלאכותית:</b> מדבר עם צעירים בערוץ שלהם, קורא מסמכים שהם שולחים ומחזיר מענים מותאמים.</li>
+      <li><b>מערכת מאובטחת למעקב אחר בוגרים:</b> <mark>כ-2,500 בוגרים מלמעלה מ-20 בתי ספר</mark>.</li>
+      <li><b>שאלון מיפוי ופורטל דו-לשוניים</b> בעברית ובערבית, שסביבם צמחה קהילה ארצית של רכזים, כולל בחברה הערבית, הבדואית והדרוזית.</li>
+    </ul>
+    <h3>למה לירון היא פורצת דרך</h3>
+    <p><b>היא הוגה, והיא גם בונה.</b> נדיר שאותה אישה מנסחת מודל, כותבת את מודל ההפעלה שלו ובונה במו ידיה את הטכנולוגיה. לירון עומדת בראש עמותה חברתית בלי מחלקת פיתוח. במקום לחכות למשאבים, היא למדה לעבוד עם כלי פיתוח מבוססי בינה מלאכותית ו<mark>בנתה בעצמה את כל התשתית הדיגיטלית של הארגון</mark>. בכך הוכיחה לכל המגזר החברתי שארגון חברתי יכול להחזיק תשתית ברמה של ארגון גדול.</p>
+    <p><b>היא מחברת טכנולוגיה ולב.</b> "אף צעיר לא נופל בין הכיסאות". הטכנולוגיה שלה מעצימה את הקשר האנושי, ומאפשרת לרכז אחד לראות מאות צעירים ולדעת עם מי לדבר היום. <span class="new">וכשבוגר מבקש מלגה, מחשב נייד או כל עזרה אחרת, לירון לא מרפה עד שהוא מקבל את מה שמגיע לו.</span></p>
+    <p><b>היא מקדמת שוויון הזדמנויות אמיתי.</b> רוב הצעירים שהופה מלווה חיים בפריפריה הגיאוגרפית והחברתית, שם הפער בנגישות למידע הוא עצום. המערכת של לירון מביאה לצעיר בעיירת פיתוח או בכפר בגליל את אותו מידע ואותן הזדמנויות שיש לצעיר במרכז, בשפה שלו ובערוץ שלו.</p>
+    <p><b>היא הובילה קפיצת מדרגה.</b> הופה פועלת כבר שנים רבות בליווי צעירים. לירון לקחה את הניסיון הזה והפכה אותו למודל חדש: שיטה מובנית, דרך עבודה אחידה ותשתית דיגיטלית. בתוך זמן קצר המודל החדש כבר פועל בבתי ספר מהגליל ועד הנגב, בעברית ובערבית, <mark>בשותפות עם [רשתות, משרד העבודה]</mark>. וזו רק תחילת הדרך: התשתית מוכנה לצמוח לכל בית ספר בישראל.</p>
+    <h3>הישגים מרכזיים</h3>
+    <ul>
+      <li>הגתה את מודל הרדאר 360 ואת מודל ההפעלה של הופה, ובנתה בעצמה את הפלטפורמה שמממשת אותם</li>
+      <li><mark>אישור בגפ"ן של משרד החינוך ומענק "רדאר 360" ממגה אור</mark></li>
+      <li><span class="new">יותר מ-1,000 מענים ותוכניות במאגר</span>, ו<mark>כ-2,500 בוגרים במעקב מלמעלה מ-20 בתי ספר</mark></li>
+      <li><mark>[להשלים: פרסים, הכרה, הופעות בכנסים]</mark></li>
+    </ul>
+    <h3>לסיום</h3>
+    <p>לירון גולן לקחה את אחת הבעיות העיקשות בחברה הישראלית, צעירים שנעלמים אחרי התיכון, והפכה אותה לבעיה שאפשר לפתור. לא עוד תוכנית ולא עוד פרויקט, אלא תשתית: מערכת שרואה כל צעיר, יודעת מה קיים עבורו ומחברת ביניהם. היא עשתה זאת במו ידיה, מתוך אמונה עמוקה שכל צעיר ראוי שמישהו ימשיך לחפש אותו.</p>
+    <p>זו חדשנות דיגיטלית בחינוך במובן העמוק ביותר: טכנולוגיה שמחזירה צעירים לתמונה. לירון לא רק פרצה דרך. היא סללה דרך שארגונים, בתי ספר ומדינה שלמה יכולים ללכת בה.</p>
+  </div>
+  <div class="acts"><button class="b pri" data-copy="teurDoc">העתקת התיאור</button></div>
+</section>
+
+<!-- ============ קורות חיים ============ -->
+<section class="pane" id="kv">
+  <h2>שלד לקורות חיים מקוצרים</h2>
+  <p class="sub">לירון ממלאת. מה שבצהוב: רק היא יודעת.</p>
+  <div class="card doc" id="kvDoc">
+    <p><b>לירון גולן</b>, מנכ"לית הופה (עמותת אלומות)</p>
+    <ul>
+      <li><b>תפקיד נוכחי:</b> מנכ"לית הופה, מ-<mark>[שנה]</mark></li>
+      <li><b>ניסיון קודם:</b> <mark>[להשלים]</mark></li>
+      <li><b>השכלה:</b> <mark>[להשלים]</mark></li>
+      <li><b>מודלים שהגתה:</b> מודל הרדאר 360 (זיהוי מוקדם ורמזור), מודל ההפעלה של הופה (רצף ליווי 14–26)</li>
+      <li><b>מערכות שבנתה:</b> פלטפורמת הניטור והתאמת המענים של הופה, מאגר המענים הלאומי, בוט "הופי", מערכת מעקב הבוגרים, פורטל בתי הספר, מערכת גיוס המשאבים</li>
+      <li><b>פרסים והכרה:</b> <mark>[להשלים]</mark></li>
+    </ul>
+    <p><b>הצהרה:</b> "אני מצהירה כי לא הורשעתי בעבירה פלילית." + חתימה ותאריך</p>
+  </div>
+  <div class="acts"><button class="b pri" data-copy="kvDoc">העתקת השלד</button></div>
+</section>
+
+<!-- ============ סרטון ============ -->
+<section class="pane" id="video">
+  <h2>תסריט לסרטון הצגה עצמית</h2>
+  <p class="sub">60–90 שניות. עדיף לדבר חופשי ולא להקריא.</p>
+  <div class="card doc" id="videoDoc">
+    <ol>
+      <li><b>פתיחה (10 שנ'):</b> "אני לירון גולן, מנכ"לית הופה. אנחנו מלווים צעירים מגיל 14 ועד 26, רובם מהפריפריה."</li>
+      <li><b>הבעיה (15 שנ'):</b> "ראיתי צעירים שמסיימים תיכון ונעלמים. לא כי אין להם מענים, אלא כי אף אחד לא מחבר ביניהם."</li>
+      <li><b>מה עשיתי (25 שנ'):</b> "אז בניתי מערכת שמנטרת את מצבו של כל בוגר, מזהה את הצורך שלו ומתאימה לו מענה <span class="new">מתוך יותר מאלף</span> תוכניות, מלגות וזכויות. לצעיר בסיכון זה ההבדל בין לחפש לבד לבין שהעזרה תגיע אליו."</li>
+      <li><b>השפעה (15 שנ'):</b> "היום יותר מ-20 בתי ספר עובדים איתה, בעברית ובערבית, וכל רכזת רואה בזמן אמת מי מהבוגרים שלה צריך אותה עכשיו. וזו רק ההתחלה."</li>
+      <li><b>סגירה (10 שנ'):</b> "טכנולוגיה, בשבילי, היא דרך לוודא שאף צעיר לא נופל בין הכיסאות."</li>
+    </ol>
+  </div>
+  <div class="tip"><p><b>טיפים לצילום:</b> טלפון לרוחב, אור טבעי מהחלון, רקע נקי (אפשר עם הלוגו של הופה), לדבר בגובה העיניים.</p></div>
+  <div class="acts"><button class="b pri" data-copy="videoDoc">העתקת התסריט</button></div>
+</section>
+
+<footer>נבנה על ידי <a href="https://impactos.co.il/" target="_blank" rel="noopener">impactos · impactos.co.il</a></footer>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+var LS='rappaport_hagasha_v1';
+var st={tab:'hagasha',c:{},ex:['d','b'],own:''};
+function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||'null')}catch(e){return null}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(st))}catch(e){}}
+var s=lsGet();if(s)st=Object.assign(st,s,{ex:['d','b'],own:''});
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2000)}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+/* לשוניות */
+function showTab(id){
+  st.tab=id;save();
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id===id)});
+  document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-p')===id)});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('#tabs button').forEach(function(b){b.onclick=function(){showTab(b.getAttribute('data-p'))}});
+
+/* צ'קליסט */
+document.querySelectorAll('[data-c]').forEach(function(el){
+  var k=el.getAttribute('data-c');el.checked=!!st.c[k];
+  el.onchange=function(){st.c[k]=el.checked;save()};
+});
+
+/* המכתב */
+var EX={
+ d:'אספר על בוגרת אחת, כי היא מסבירה את לירון יותר מכל מספר. היא השתחררה מהצבא בעקבות פטירת אביה, במצב נפשי קשה, אבודה ובלי כיוון. בשיחה עם לירון היא אמרה שהיא רוצה ללמוד מקצוע: החלקות שיער. לירון חיפשה ולא הרפתה עד שמצאה לה קורס מתאים. כשהתברר שהבוגרת לא יכולה לשלם עליו, לירון דאגה שהעמותה תממן אותו, וליוותה אותה לאורך כל הקורס. בסיומו היא הכינה לה לוגו מקצועי ועזרה לה להקים את העסק שלה. מאז מצבה השתפר פלאים, והיא מצאה גם את פרנסתה וגם את התשוקה שלה. זו לירון: מערכת מתוחכמת שמזהה את הצורך, ואישה שלא עוזבת את היד עד שהבוגרת עומדת על הרגליים.',
+ a:'אחד הדברים שהכי מרגשים אותי לראות הוא מה שקורה כשבוגר פונה ומבקש עזרה: מלגה ללימודים, מחשב נייד, או כל צורך אחר. לירון לא מסתפקת בהפניה. היא מוודאת שהבקשה מגיעה לגורם הנכון, עוקבת, ולא מרפה עד שהבוגר מקבל את מה שמגיע לו. מאחורי מערכת מתוחכמת עומדת אישה שלא מוותרת על אף צעיר.',
+ b:'לירון בנתה מאגר של יותר מ-1,000 תוכניות ומענים לבוגרים ולצעירים, יצרה קשר עם כל אחד מהם, ורקמה שותפויות עם ארגונים ועמותות רבים, כדי שלכל צורך יהיה מי שמטפל בו. היא לא הסתפקה ברשימה ארוכה: היא בנתה מערך של הנגשת מידע והתאמה אישית, כך שכל בוגר מקבל את המידע שמתאים לו, בשפה שלו, עם אפשרות אמיתית להירשם.',
+ c:'המערכת שלירון פיתחה מנטרת ומנתחת נתונים על כל בוגר, ומתאימה לו מענה לפי הצרכים שלו. בוגר שהפסיק לענות, או שהשתחרר ולא יודע מה הלאה, מופיע אצל הרכזת כמי שזקוק לשיחה, ולצדו כבר ממתינים המענים שמתאימים לו. העזרה מגיעה אליו עוד לפני שביקש.'
+};
+var P=[
+ 'לוועדת פרס רות רפפורט לנשים פורצות דרך,',
+ 'שמי מיטל פלג, ואני סמנכ"לית התפעול של הופה. אני כותבת את המכתב הזה מתוך הערכה עמוקה, ומתוך היכרות יומיומית עם אחת הנשים המרשימות שפגשתי: לירון גולן.',
+ 'אני עובדת בתוך המערכות שלירון בנתה, ורואה מקרוב מה הן מחוללות. כשבית ספר חדש מצטרף להופה, תוך ימים ספורים כל הבוגרים שלו נמצאים במערכת, הרכז או הרכזת יודעים מי מהם זקוק לשיחה, והמענים המתאימים כבר ממתינים. לפני לירון, דבר כזה פשוט לא היה קיים בישראל.',
+ 'מה שמייחד את לירון הוא שילוב נדיר: ראייה חברתית עמוקה, חזון ארוך טווח, ויכולת לבנות בעצמה. היא הגתה את מודל הרדאר 360 ואת כל מודל ההפעלה של הופה, ולא עצרה שם. היא ישבה ובנתה את המערכת בעצמה, שכבה אחר שכבה, ולא ויתרה עד שכל כלי שירת את המטרה האמיתית: שאף צעיר, ובמיוחד צעיר בסיכון, לא ייפול בין הכיסאות.',
+ '@EX',
+ 'לירון מובילה בדרך שקשה לתאר במילים: היא דורשת מעצמה יותר מכולם, מאמינה בצוות שלה, ורואה בכל צעיר עולם ומלואו. היא לקחה ארגון עם שנים של ניסיון בשטח והעניקה לו מודל חדש ותשתית טכנולוגית ברמה של חברת הייטק, בלי לאבד לרגע את הלב.',
+ 'לירון היא הגדרה של אישה פורצת דרך. היא לא רק פרצה דרך, היא סללה אותה לאחרים. אני ממליצה עליה בלב שלם ובלי שום היסוס, ובטוחה שהפרס יאפשר לה להביא את ההשפעה שלה לעוד בתי ספר ולעוד אלפי צעירים.',
+ 'בהערכה רבה,\nמיטל פלג\nסמנכ"לית תפעול, הופה · @MAIL'
+];
+var MAIL='meytal@hopa.org.il';
+function exParas(){
+  var out=[];
+  ['own','d','a','b','c'].forEach(function(k){
+    if(st.ex.indexOf(k)<0)return;
+    if(k==='own'){if(st.own.trim())out.push(st.own.trim())}else out.push(EX[k]);
+  });
+  return out;
+}
+function letterText(){
+  var t=[];P.forEach(function(p){if(p==='@EX'){exParas().forEach(function(x){t.push(x)})}else t.push(p.replace('@MAIL',MAIL))});
+  return t.join('\n\n');
+}
+function renderLetter(){
+  var h='';
+  P.forEach(function(p){
+    if(p==='@EX'){
+      var ex=exParas();
+      if(!ex.length)h+='<p class="ex empty">כאן תיכנס הדוגמה. בחרי למעלה.</p>';
+      ex.forEach(function(x){h+='<p class="ex">'+esc(x)+'</p>'});
+    }else h+='<p>'+esc(p).replace(/\n/g,'<br>').replace('@MAIL','<span dir="ltr">'+MAIL+'</span>')+'</p>';
+  });
+  document.getElementById('letter').innerHTML=h;
+}
+document.querySelectorAll('.opt').forEach(function(o){
+  var cb=o.querySelector('input'),k=cb.value;
+  cb.checked=st.ex.indexOf(k)>=0;o.classList.toggle('on',cb.checked);
+  cb.onchange=function(){
+    st.ex=st.ex.filter(function(x){return x!==k});if(cb.checked)st.ex.push(k);
+    o.classList.toggle('on',cb.checked);save();renderLetter();
+    if(k==='own'&&cb.checked)document.getElementById('ownTxt').focus();
+  };
+});
+var own=document.getElementById('ownTxt');own.value=st.own;
+own.onclick=function(e){e.stopPropagation()};
+own.oninput=function(){
+  st.own=own.value;
+  var cb=document.querySelector('.opt[data-o=own] input');
+  if(own.value.trim()&&!cb.checked){cb.checked=true;cb.onchange()}
+  save();renderLetter();
+};
+
+/* העתקה */
+function copy(text){
+  function ok(){toast('הועתק')}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(ok,fb)}else fb();
+  function fb(){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){toast('לא הצלחתי להעתיק')}ta.remove()}
+}
+function docText(el){
+  var out=[];
+  el.querySelectorAll('h3,p,li').forEach(function(n){
+    if(n.tagName==='P'&&n.closest('li'))return;
+    var t=n.innerText.trim();if(!t)return;
+    if(n.tagName==='LI'){var ol=n.parentElement.tagName==='OL';t=(ol?(Array.prototype.indexOf.call(n.parentElement.children,n)+1)+'. ':'• ')+t}
+    out.push(t);
+  });
+  return out.join('\n\n');
+}
+document.getElementById('copyLetter').onclick=function(){copy(letterText())};
+document.querySelectorAll('[data-copy]').forEach(function(b){b.onclick=function(){copy(docText(document.getElementById(b.getAttribute('data-copy'))))}});
+
+renderLetter();
+showTab(st.tab);
+</script>
+</body>
+</html>
