@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הרשמה: הכנה לצו ראשון | הופה</title>
+<meta property="og:title" content="הרשמת בית הספר לקורס הכנה לצו ראשון">
+<meta property="og:description" content="עמותת הופה · קורס הכנה לצו ראשון עם AI לתלמידי בתי הספר של הופה">
+<meta property="og:image" content="tzav-rishon-flyer.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="staff-code.js"></script>
+<style>
+:root{--pink:#E8348A;--pink-d:#c4206f;--y:#FFF200;--ink:#1d1b20;--muted:#6b6670;--line:#e8e2ea;--bg:#faf6f8;--card:#fff;--soft:#fde9f2;--red:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.stripe{display:flex;height:5px}.stripe i{flex:1}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 40px}
+.wrap.wide{max-width:900px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0 6px}
+header.top img{height:40px;display:block}
+h1{font-size:clamp(23px,6vw,30px);line-height:1.25;margin:10px 0 6px;font-weight:800}
+.uline{display:block;width:90px;height:5px;border-radius:5px;background:var(--y);margin:0 0 14px}
+.intro p{margin:0 0 8px;font-size:16px}
+.feats{list-style:none;padding:0;margin:12px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.feats li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.35}
+.feats b{display:block;font-size:16px;color:var(--pink-d)}
+.flyer{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin:14px 0 4px;text-decoration:none;color:var(--ink)}
+.flyer img{width:96px;height:auto;border-radius:8px;border:1px solid var(--line);flex:none}
+.flyer b{display:block;font-size:16px}
+.flyer span{font-size:14px;color:var(--pink-d);text-decoration:underline}
+.sec{margin-top:24px}
+.sec h2{font-size:19px;margin:0 0 12px;color:var(--pink-d);border-inline-start:4px solid var(--pink);padding-inline-start:10px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.q.miss{border-color:var(--red);box-shadow:0 0 0 2px #f6d5d1}
+.qt{font-size:17.5px;font-weight:700;line-height:1.4;margin-bottom:4px}
+.req{color:var(--pink)}
+.qh{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.field,textarea,select{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+.field:focus,textarea:focus,select:focus{outline:2px solid #f5b3d2;border-color:var(--pink)}
+.field.other{margin-top:8px}
+.field.num{max-width:160px;font-size:20px;font-weight:700}
+.ltr{direction:ltr;text-align:left}
+.cta{display:inline-flex;align-items:center;justify-content:center;font:inherit;font-size:18px;font-weight:700;background:var(--pink);color:#fff;border:0;border-radius:999px;padding:13px 40px;cursor:pointer;min-height:52px;width:100%;margin-top:10px}
+.cta:disabled{opacity:.6;cursor:default}
+.err{color:var(--red);font-size:14.5px;margin-top:10px;text-align:center;min-height:1em}
+.done{text-align:center;padding:40px 6px}
+.done .ok{width:74px;height:74px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:38px}
+.done h2{font-size:28px;margin:0 0 8px}
+.again{font:inherit;font-size:14px;background:none;border:0;color:var(--pink-d);text-decoration:underline;cursor:pointer;margin-top:10px;padding:8px}
+footer{text-align:center;font-size:12.5px;color:var(--muted);padding:6px 16px 22px}
+footer a{color:var(--pink-d)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+/* תצוגת ניהול */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:28px;font-weight:800;color:var(--pink-d);line-height:1.1}
+.kpi span{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:500}
+details.box{background:#fff;border:1px solid var(--line);border-radius:14px;margin:12px 0}
+details.box summary{cursor:pointer;padding:12px 16px;font-weight:500;color:var(--pink-d)}
+details.box .in{padding:0 16px 14px}
+.sl{display:flex;flex-wrap:wrap;gap:6px}
+.sl span{font-size:13px;background:#f3eff4;border-radius:999px;padding:3px 11px}
+.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14.5px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+.tbl th{background:#f3eff4;font-weight:500;font-size:13.5px}
+.tbl td.n{font-weight:700;color:var(--pink-d);font-size:16px}
+.scroll{overflow-x:auto}
+@media (max-width:560px){
+  .feats{grid-template-columns:1fr}
+  .tbl .hide-m{display:none}
+}
+</style>
+</head>
+<body>
+<div class="stripe"><i style="background:#E8348A"></i><i style="background:#FFF200"></i><i style="background:#E8348A"></i></div>
+<div class="wrap" id="wrap">
+  <header class="top">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener"><img src="hopa-logo.png" alt="עמותת הופה"></a>
+  </header>
+  <div id="app"></div>
+</div>
+<footer>עמותת הופה · <a href="https://hopa.org.il" target="_blank" rel="noopener" dir="ltr">hopa.org.il</a></footer>
+<div id="toast" class="toast"></div>
+
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec';
+const RESP_PREFIX = 'tzav-';              // נשמר כ-intake_tzav-<id> (לא ציבורי — קריאה רק עם קוד צוות)
+const DRAFT_KEY = 'tzav_draft', SENT_KEY = 'tzav_sent';
+const LS = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}, del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const ADMIN = new URLSearchParams(location.search).has('admin');
+
+const SCHOOLS = ['אורט אדיבי אשקלון','אורט בית הערבה','אורט כרמל חיפה','אורט מרום עכו','אורט צור ברק','אלאמאני סחנין','דרור גליל','דרור נווה מדבר','התיכון החברתי מצפה רמון','התיכון החברתי תל אביב','ח׳טוואת ירכא','טכנולוגי לקייה','יוצר עתיד ג׳וליס','יוצר עתיד פלמחים','מגשימים בית שאן','מנאראת טורעאן','עמל טכנולוגי אשדוד','עמל טכנולוגי רהט','עמל רמת דוד','עתיד אבדאע ביר אלמכסור','עתיד מגשימים כרמיאל','עתיד שמיים מוצקין','תיכון חברתי חיפה','תיכון חושן','תיכון נחלים','תיכון שיח'];
+
+/* ---------- השאלות ---------- */
+const QS = [
+  {id:'school',   type:'school', req:1, he:'בית הספר'},
+  {id:'name',     type:'line',   req:1, he:'שם איש/אשת הקשר'},
+  {id:'role',     type:'line',   req:1, he:'תפקיד', ph:'למשל: רכז/ת בוגרים, יועץ/ת, מנהל/ת'},
+  {id:'phone',    type:'tel',    req:1, he:'טלפון נייד'},
+  {id:'email',    type:'email',  req:0, he:'מייל'},
+  {id:'students', type:'num',    req:1, he:'כמה תלמידים צפויים להשתתף?', hint:'מספר משוער מספיק'},
+  {id:'notes',    type:'text',   req:0, he:'הערות או שאלות'}
+];
+const Q = id => QS.find(q=>q.id===id);
+
+let ANS = {};
+try{ ANS = JSON.parse(LS.get(DRAFT_KEY)||'{}') || {}; }catch(e){ ANS = {}; }
+let SENDING = false, TRIED = false;
+const app = document.getElementById('app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2400);}
+function save(){ LS.set(DRAFT_KEY, JSON.stringify(ANS)); }
+const str = k => String(ANS[k]||'').trim();
+const phoneOk = v => v.replace(/\D/g,'').length >= 9;
+const numOk = v => /^\d+$/.test(v) && +v > 0;
+
+function answered(q){
+  if(q.type==='school') return !!ANS.school && (ANS.school!=='other' || !!str('schoolOther'));
+  if(q.type==='tel') return phoneOk(str(q.id));
+  if(q.type==='num') return numOk(str(q.id));
+  return !!str(q.id);
+}
+
+/* ---------- טופס ---------- */
+function qHTML(q){
+  const a = ANS[q.id];
+  const miss = TRIED && q.req && !answered(q);
+  let h = `<div class="q${miss?' miss':''}" id="q_${q.id}"><div class="qt">${esc(q.he)}${q.req?' <span class="req">*</span>':''}</div>`;
+  const hint = q.hint || (!q.req ? 'רשות' : '');
+  if(hint) h += `<div class="qh">${esc(hint)}</div>`;
+  if(q.type==='school'){
+    h += `<select onchange="setV('school',this.value)"><option value="">בחרו את בית הספר</option>${SCHOOLS.map(s=>`<option${a===s?' selected':''}>${esc(s)}</option>`).join('')}<option value="other"${a==='other'?' selected':''}>אחר</option></select>`;
+    if(a==='other') h += `<input class="field other" placeholder="שם בית הספר" value="${esc(ANS.schoolOther||'')}" oninput="setT('schoolOther',this.value)">`;
+  }
+  else if(q.type==='text') h += `<textarea oninput="setT('${q.id}',this.value)">${esc(a||'')}</textarea>`;
+  else if(q.type==='num') h += `<input class="field num ltr" dir="ltr" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" value="${esc(a||'')}" oninput="this.value=this.value.replace(/\\D/g,'');setT('${q.id}',this.value)">`;
+  else if(q.type==='tel') h += `<input class="field ltr" dir="ltr" type="tel" inputmode="tel" autocomplete="tel" value="${esc(a||'')}" oninput="setT('${q.id}',this.value)">`;
+  else if(q.type==='email') h += `<input class="field ltr" dir="ltr" type="email" inputmode="email" autocomplete="email" value="${esc(a||'')}" oninput="setT('${q.id}',this.value)">`;
+  else h += `<input class="field" ${q.ph?`placeholder="${esc(q.ph)}"`:''} value="${esc(a||'')}" oninput="setT('${q.id}',this.value)">`;
+  return h + '</div>';
+}
+
+function render(){
+  if(ADMIN) return;
+  let h = `<div class="intro"><h1>מוכנים לצו הראשון?</h1><span class="uline"></span>
+    <p><b>שלום לצוותי בתי הספר של הופה,</b></p>
+    <p>רכשנו במיוחד עבור התלמידים שלכם <b>קורס הכנה לצו ראשון עם AI</b>. הציון בדפ"ר משפיע על התפקידים והקורסים שהתלמידים יוכלו להתאים אליהם בצבא, ותרגול מראש עושה הבדל גדול.</p>
+    <ul class="feats">
+      <li><b>מורה פרטי מבינה מלאכותית</b>זמין 24/7 לכל שאלה על החומר ועל התרגילים</li>
+      <li><b>10 סימולציות</b>אדפטיביות, כמו במבחן האמיתי</li>
+      <li><b>2,000+ תרגילים</b>עם פתרון והסבר מלא לכל אחד</li>
+      <li><b>100+ סרטוני וידאו</b>שמסבירים את החומר</li>
+    </ul>
+    <p>בית ספר שמעוניין שהתלמידים שלו ישתתפו, ממלא את הטופס. נחזור אליכם עם קוד ההרשמה של הופה ועם הפלייר לחלוקה לתלמידים.</p>
+    <a class="flyer" href="tzav-rishon-flyer.pdf" target="_blank" rel="noopener"><img src="tzav-rishon-flyer.jpg" alt="פלייר: מוכנים לצו הראשון?"><div><b>הפלייר לתלמידים</b><span>צפייה והורדה (PDF)</span></div></a></div>
+    <section class="sec"><h2>פרטי ההרשמה</h2>`;
+  QS.forEach(q=>h += qHTML(q));
+  h += `</section><button class="cta" id="sendBtn" onclick="submit()">שליחת ההרשמה</button><div class="err" id="err"></div>`;
+  app.innerHTML = h;
+}
+const rerender = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
+function setT(k, v){ ANS[k] = v; save(); }
+function setV(k, v){ ANS[k] = v; save(); rerender(); }
+
+/* ---------- גיליון ---------- */
+function jsonpOnce(params, tmo){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{ window[cb]=()=>{}; s.remove(); rej(new Error('timeout')); }, tmo);
+    window[cb]=d=>{clearTimeout(timer); delete window[cb]; s.remove(); res(d);};
+    s.src=EXEC_URL+'?'+new URLSearchParams(Object.assign({callback:cb},params)).toString();
+    s.onerror=()=>{clearTimeout(timer); delete window[cb]; s.remove(); rej(new Error('network'));};
+    document.head.appendChild(s);
+  });
+}
+async function fetchOnce(params, tmo){
+  const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), tmo);
+  try{
+    const r = await fetch(EXEC_URL+'?'+new URLSearchParams(params).toString(), {credentials:'omit', cache:'no-store', redirect:'follow', signal:ctl.signal});
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ throw new Error('bad response '+r.status); }
+  } finally { clearTimeout(timer); }
+}
+async function jsonp(params, onRetry){
+  let err;
+  for (let i=1;i<=4;i++){
+    try{ return await fetchOnce(params, 25000); } catch(e){ err=e; }
+    try{ return await jsonpOnce(params, 25000); } catch(e){ err=e; if(onRetry) onRetry(i+1); }
+  }
+  throw err;
+}
+
+async function submit(){
+  if(SENDING) return;
+  TRIED = true;
+  const missing = QS.filter(q=>q.req && !answered(q));
+  if(missing.length){
+    render();
+    document.getElementById('err').textContent = 'יש שדות חובה חסרים או לא תקינים (מסומנים באדום)';
+    document.getElementById('q_'+missing[0].id).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const err = document.getElementById('err'); err.textContent = '';
+  SENDING = true; const btn = document.getElementById('sendBtn'); btn.disabled = true; btn.textContent = 'שולח…';
+  const payload = {v:1, ts:new Date().toISOString(),
+    school: ANS.school==='other' ? 'אחר: '+str('schoolOther') : ANS.school,
+    name:str('name'), role:str('role'), phone:str('phone'), email:str('email'), students:+str('students'), notes:str('notes')};
+  const params = {action:'intakeSubmit', school:RESP_PREFIX+Date.now().toString(36)+Math.random().toString(36).slice(2,6), json:JSON.stringify(payload)};
+  // "תודה" מוצג רק אחרי שהשרת אישר שההרשמה נשמרה
+  const fail = () => { SENDING=false; btn.disabled=false; btn.textContent='שליחת ההרשמה'; err.textContent='השליחה לא הצליחה. בדקו שיש אינטרנט ולחצו שוב, הפרטים שמורים במכשיר.'; };
+  try{
+    if(new URLSearchParams(params).toString().length>6500){
+      await fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()});
+    } else {
+      const r = await jsonp(params, ()=>{ btn.textContent = 'גוגל מתעכב, מנסה שוב…'; });
+      if(!r || !r.ok) return fail();
+    }
+  }catch(e){ return fail(); }
+  LS.del(DRAFT_KEY); LS.set(SENT_KEY, payload.ts);
+  showDone();
+}
+function showDone(){
+  app.innerHTML = `<div class="done"><div class="ok">✓</div><h2>נרשמתם, תודה!</h2><p>ההרשמה נשמרה. נחזור אליכם עם קוד ההרשמה של הופה ועם הפלייר לתלמידים.</p>
+    <a class="flyer" href="tzav-rishon-flyer.pdf" target="_blank" rel="noopener" style="text-align:start"><img src="tzav-rishon-flyer.jpg" alt=""><div><b>הפלייר לתלמידים</b><span>צפייה והורדה (PDF)</span></div></a>
+    <button class="again" onclick="again()">הרשמה נוספת מהמכשיר הזה</button></div>`;
+  window.scrollTo({top:0});
+}
+function again(){ ANS={}; TRIED=false; SENDING=false; LS.del(SENT_KEY); LS.del(DRAFT_KEY); render(); window.scrollTo({top:0}); }
+
+/* ---------- תצוגת ניהול (?admin) — רק עם קוד צוות הופה ---------- */
+const FORM_URL = new URL('tzav-rishon.html', location.href).href;
+const MSG_HE = `שלום לצוותי בתי הספר של הופה 👋
+רכשנו במיוחד עבור התלמידים שלכם קורס הכנה לצו ראשון עם AI: מורה פרטי מבינה מלאכותית 24/7, 10 סימולציות כמו במבחן האמיתי, 2,000+ תרגילים עם פתרונות ו-100+ סרטוני הסבר.
+הציון בדפ"ר משפיע על התפקידים והקורסים בצבא, ותרגול מראש עושה הבדל גדול.
+בית ספר שמעוניין, נרשם כאן (דקה אחת):
+${FORM_URL}`;
+let RESP = [];
+function copy(txt, ok){
+  const done = () => toast(ok);
+  if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+  function fallback(){ const a=document.createElement('textarea'); a.value=txt; document.body.appendChild(a); a.select(); try{document.execCommand('copy'); done();}catch(e){prompt('העתיקו:', txt);} a.remove(); }
+}
+const fmt = iso => { if(!iso) return '—'; const d=new Date(iso); return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'2-digit'})+' · '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); };
+
+async function loadAdmin(){
+  document.getElementById('wrap').classList.add('wide');
+  app.innerHTML = '<p class="qh" style="margin-top:20px">טוען מהגיליון…</p>';
+  try{
+    const secret = GS_SECRET;
+    if(!secret) throw new Error('unauthorized');
+    const r = await jsonp({action:'storeAll', secret}, i=>{ app.innerHTML = `<p class="qh" style="margin-top:20px">גוגל מתעכב, מנסה שוב (${i}/4)…</p>`; });
+    if(!r || !r.ok) throw new Error((r&&r.error)||'err');
+    const st = r.store||{};
+    RESP = Object.keys(st).filter(k=>k.indexOf('intake_'+RESP_PREFIX)===0 && st[k] && st[k].school).map(k=>st[k])
+      .sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+    renderAdmin();
+  }catch(e){
+    if(staffCodeFail(e, app)) return;
+    app.innerHTML = '<p class="err">לא הצלחתי לטעון מהגיליון. רעננו את הדף.</p>';
+  }
+}
+// הרשמה אחרונה מכל בית ספר נחשבת (מילוי חוזר = עדכון)
+function latest(){ const m = {}; RESP.forEach(x=>{ if(!m[x.school]) m[x.school] = x; }); return Object.values(m).sort((a,b)=>a.school.localeCompare(b.school,'he')); }
+function renderAdmin(){
+  const L = latest();
+  const total = L.reduce((s,x)=>s+(+x.students||0),0);
+  const missing = SCHOOLS.filter(s=>!L.some(x=>x.school===s));
+  let h = `<h1>הכנה לצו ראשון: בתי ספר שנרשמו</h1><span class="uline"></span>
+    <div class="kpis"><div class="kpi"><b>${L.length}</b><span>בתי ספר נרשמו</span></div>
+      <div class="kpi"><b>${total.toLocaleString('he-IL')}</b><span>תלמידים בסך הכול</span></div>
+      <div class="kpi"><b style="font-size:16px;padding-top:8px">${fmt(RESP[0]&&RESP[0].ts)}</b><span>הרשמה אחרונה</span></div></div>
+    <details class="box"><summary>שליחת הטופס לבתי הספר</summary><div class="in">
+      <div class="btns"><button class="btn primary" onclick="copy(MSG_HE,'ההודעה הועתקה, אפשר להדביק בוואטסאפ')">העתקת הודעה לוואטסאפ</button>
+        <a class="btn" href="${esc(FORM_URL)}" target="_blank" rel="noopener">פתיחת הטופס</a>
+        <a class="btn" href="tzav-rishon-flyer.pdf" target="_blank" rel="noopener">הפלייר (PDF)</a></div></div></details>
+    <details class="box"><summary>עוד לא נרשמו (${missing.length})</summary><div class="in">
+      <div class="sl">${missing.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
+      <div class="btns"><button class="btn" onclick="copy(SCHOOLS.filter(s=>!latest().some(x=>x.school===s)).join('\\n'),'הרשימה הועתקה')">העתקת הרשימה</button></div></div></details>`;
+  if(!L.length) h += '<p class="qh" style="margin-top:20px">עוד אין הרשמות. כשבית ספר יירשם, הוא יופיע כאן.</p>';
+  else {
+    h += `<div class="btns"><button class="btn" onclick="exportCSV()">ייצוא לאקסל</button></div><div class="scroll"><table class="tbl"><thead><tr><th>בית ספר</th><th>תלמידים</th><th>איש/אשת קשר</th><th>טלפון</th><th class="hide-m">מייל</th><th class="hide-m">הערות</th><th class="hide-m">תאריך</th></tr></thead><tbody>`;
+    L.forEach(x=>{
+      h += `<tr><td>${esc(x.school)}</td><td class="n">${esc(x.students)}</td><td>${esc(x.name)}<br><span class="qh">${esc(x.role)}</span></td>
+        <td><a href="tel:${esc(String(x.phone).replace(/[^\d+]/g,''))}" dir="ltr">${esc(x.phone)}</a></td>
+        <td class="hide-m" dir="ltr">${esc(x.email||'')}</td><td class="hide-m">${esc(x.notes||'')}</td><td class="hide-m">${fmt(x.ts)}</td></tr>`;
+    });
+    h += `</tbody></table></div>`;
+  }
+  app.innerHTML = h;
+}
+function exportCSV(){
+  const L = latest();
+  if(!L.length){ toast('עוד אין הרשמות לייצוא'); return; }
+  const cell = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows = [['תאריך','בית ספר','תלמידים','שם','תפקיד','טלפון','מייל','הערות'].map(cell).join(',')];
+  L.forEach(x=>rows.push([fmt(x.ts), x.school, x.students, x.name, x.role, x.phone, x.email, x.notes].map(cell).join(',')));
+  const blob = new Blob(['﻿'+rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'הרשמה-צו-ראשון-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+if(ADMIN) loadAdmin();
+else if(LS.get(SENT_KEY) && !Object.keys(ANS).length) showDone();
+else render();
+</script>
+</body>
+</html>
