@@ -121,7 +121,7 @@
     </div>
     <h1>שמחים שאתם מצטרפים 💛<br>נשמח להכיר את בית הספר שלכם</h1>
     <p>לפני שניפגש, כמה שאלות קצרות שיעזרו לנו להגיע לפגישה ממוקדים — ולבנות איתכם מסלול שמתאים בדיוק לבוגרים שלכם. אין תשובות נכונות או שגויות, רק מה שנכון אצלכם.</p>
-    <span class="time">⏱️ כ־4 דקות · <span id="schoolTag" style="font-weight:700"></span></span>
+    <span class="time">⏱️ כ־7 דקות · <span id="schoolTag" style="font-weight:700"></span></span>
   </div>
 </div>
 
@@ -148,14 +148,123 @@
         </div>
       </div>
       <div class="q">
-        <label class="lbl">כמה בוגרים מסיימים אצלכם בשנה (בקירוב)? <span class="opt">· לא חובה</span></label>
-        <input type="number" name="alumni_year" min="0" placeholder="מספר משוער">
+        <label class="lbl">מייל המנהל/ת <span class="opt">· אם המנהל/ת ממלא/ת את השאלון, אפשר להשאיר ריק</span></label>
+        <input type="email" name="manager_email" placeholder="name@school.org.il" dir="ltr">
+      </div>
+      <div class="q">
+        <div class="row2">
+          <div><label class="lbl">סמל מוסד <span class="opt">· לא חובה</span></label><input type="text" name="symbol" inputmode="numeric" placeholder="6 ספרות" dir="ltr"></div>
+          <div data-q="network"><label class="lbl">רשת</label>
+            <div class="opts" data-single="network">
+              <div class="opt-chip" data-v="אורט">אורט</div>
+              <div class="opt-chip" data-v="עמל">עמל</div>
+              <div class="opt-chip" data-v="עתיד">עתיד</div>
+              <div class="opt-chip" data-v="אחר">אחר</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="q" data-q="lang">
+        <label class="lbl">באיזו שפה נוח לכם לקבל את החומרים והפורטל?</label>
+        <div class="opts" data-single="lang">
+          <div class="opt-chip" data-v="עברית">עברית</div>
+          <div class="opt-chip" data-v="ערבית">ערבית</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B · רכז/ת -->
+    <section class="sec">
+      <div class="sh"><span class="num">2</span><h2>רכז/ת הבוגרים</h2></div>
+      <div class="sub">מי שילווה את הבוגרים ביום־יום ויעבוד איתנו.</div>
+
+      <div class="q" data-q="coord_chosen">
+        <label class="lbl">הרכז/ת כבר נבחר/ה?</label>
+        <div class="opts" data-single="coord_chosen">
+          <div class="opt-chip" data-v="כן">כן</div>
+          <div class="opt-chip" data-v="עדיין לא">עדיין לא</div>
+        </div>
+      </div>
+      <div class="q">
+        <div class="row2">
+          <div><label class="lbl">שם הרכז/ת</label><input type="text" name="coord_name" placeholder="אם כבר ידוע"></div>
+          <div><label class="lbl">מייל הרכז/ת</label><input type="email" name="coord_email" placeholder="name@school.org.il" dir="ltr"></div>
+        </div>
+      </div>
+      <div class="q" data-q="hours">
+        <label class="lbl">לרכז/ת יהיו 5 ש"ש במערכת השעות לטובת התוכנית. האם זה כבר מאושר?</label>
+        <div class="opts" data-single="hours">
+          <div class="opt-chip" data-v="כן">כן</div>
+          <div class="opt-chip" data-v="בתהליך">בתהליך</div>
+          <div class="opt-chip" data-v="עדיין לא">עדיין לא</div>
+        </div>
+      </div>
+      <div class="q" data-q="commit">
+        <label class="lbl">הרכז/ת ישתתף/תשתתף במפגשי הרכזים ויעדכן/תעדכן את הבוגרים באופן שוטף במערכת HOPA Secure?</label>
+        <div class="opts" data-single="commit">
+          <div class="opt-chip" data-v="כן">כן</div>
+          <div class="opt-chip" data-v="צריך לברר">צריך לברר</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- C · הבוגרים והרשימה -->
+    <section class="sec">
+      <div class="sh"><span class="num">3</span><h2>הבוגרים שלכם במספרים</h2></div>
+      <div class="sub">מספרים בקירוב זה מצוין.</div>
+
+      <div class="q">
+        <div class="row2">
+          <div><label class="lbl">כמה תלמידי י"ב יש במחזור?</label><input type="number" name="yb_count" min="0" placeholder="מספר משוער"></div>
+          <div><label class="lbl">כמה בוגרים יש בסך הכול?</label><input type="number" name="alumni_total" min="0" placeholder="מספר משוער"></div>
+        </div>
+      </div>
+      <div class="q">
+        <label class="lbl">כמה שנים אחורה תרצו ללכת?</label>
+        <input type="number" name="years_back" min="0" placeholder="למשל: 3 מחזורים אחרונים">
+      </div>
+      <div class="q" data-q="list_has">
+        <label class="lbl">יש לכם רשימה מלאה של הבוגרים?</label>
+        <div class="opts" data-single="list_has">
+          <div class="opt-chip" data-v="כן, מלאה">כן, מלאה</div>
+          <div class="opt-chip" data-v="חלקית">חלקית</div>
+          <div class="opt-chip" data-v="אין רשימה">אין רשימה</div>
+        </div>
+      </div>
+      <div class="q" data-q="list_fields">
+        <label class="lbl">מה יש ברשימה? <span class="opt">· סמנו כל מה שקיים</span></label>
+        <div class="opts" data-multi="list_fields">
+          <div class="opt-chip multi" data-v="שם">שם</div>
+          <div class="opt-chip multi" data-v="ת״ז">ת״ז</div>
+          <div class="opt-chip multi" data-v="טלפון">טלפון</div>
+          <div class="opt-chip multi" data-v="תאריך לידה">תאריך לידה</div>
+          <div class="opt-chip multi" data-v="מגמה">מגמה</div>
+          <div class="opt-chip multi" data-v="שנת סיום">שנת סיום</div>
+        </div>
+      </div>
+      <div class="q" data-q="list_where">
+        <label class="lbl">איפה הרשימה שמורה? <span class="opt">· אפשר כמה</span></label>
+        <div class="opts" data-multi="list_where">
+          <div class="opt-chip multi" data-v="אקסל">אקסל</div>
+          <div class="opt-chip multi" data-v="מונדיי">מונדיי</div>
+          <div class="opt-chip multi" data-v="מערכת בית ספרית">מערכת בית ספרית</div>
+          <div class="opt-chip multi" data-v="אין רשימה">אין רשימה</div>
+        </div>
+      </div>
+      <div class="q" data-q="share">
+        <label class="lbl">בית הספר מוכן להעביר אלינו את רשימת הבוגרים ולחתום על הסכם סודיות?</label>
+        <div class="hint">הרשימה נשמרת במערכת מאובטחת ומשמשת רק לליווי הבוגרים.</div>
+        <div class="opts" data-single="share">
+          <div class="opt-chip" data-v="כן">כן</div>
+          <div class="opt-chip" data-v="צריך לבדוק">צריך לבדוק</div>
+          <div class="opt-chip" data-v="לא">לא</div>
+        </div>
       </div>
     </section>
 
     <!-- B · מצב קיים -->
     <section class="sec">
-      <div class="sh"><span class="num">2</span><h2>התמונה אצלכם היום</h2></div>
+      <div class="sh"><span class="num">4</span><h2>התמונה אצלכם היום</h2></div>
       <div class="sub">מה קורה כרגע עם הבוגרים — לפני שהתוכנית נכנסת.</div>
 
       <div class="q" data-q="keepcontact">
@@ -193,24 +302,39 @@
         <label class="lbl">מה האתגר המרכזי שאתם רואים אצל הבוגרים שלכם?</label>
         <textarea name="challenge" placeholder="משפט או שניים — מה הכי מטריד אתכם ביציאה שלהם לחיים"></textarea>
       </div>
+
+      <div class="q" data-q="wa_groups">
+        <label class="lbl">יש קבוצות וואטסאפ של מחזורי בוגרים?</label>
+        <div class="opts" data-single="wa_groups">
+          <div class="opt-chip" data-v="כן, לרוב המחזורים">כן, לרוב המחזורים</div>
+          <div class="opt-chip" data-v="רק לחלק">רק לחלק</div>
+          <div class="opt-chip" data-v="אין">אין</div>
+        </div>
+        <input type="text" name="wa_admin" placeholder="מי מנהל/ת אותן? (מורה, יועצת, בוגר…)" style="margin-top:10px">
+      </div>
+
+      <div class="q">
+        <label class="lbl">פועלות אצלכם כבר תוכניות אחרות לבוגרים? <span class="opt">· לא חובה</span></label>
+        <div class="hint">כדי שנשתלב ולא נכפיל.</div>
+        <textarea name="other_programs" placeholder="שם התוכנית ומי מפעיל אותה"></textarea>
+      </div>
     </section>
 
     <!-- C · אג'נדה -->
     <section class="sec">
-      <div class="sh"><span class="num">3</span><h2>מה חשוב לכם</h2></div>
+      <div class="sh"><span class="num">5</span><h2>מה חשוב לכם</h2></div>
       <div class="sub">כדי שנתאים את הליווי בדיוק למה שאתם מחפשים.</div>
 
       <div class="q" data-q="prio">
-        <label class="lbl">מה הכי חשוב לכם שהתוכנית תיתן לבוגרים שלכם?</label>
-        <div class="hint">לחצו לפי סדר — הראשון שתלחצו מסומן 1, וכן הלאה. עד 3.</div>
-        <div class="rank" data-rank="prio">
-          <div class="rank-item" data-v="שילוב בתעסוקה"><span class="rank-badge">–</span>שילוב בתעסוקה<span class="rx"></span></div>
-          <div class="rank-item" data-v="הכוונה ללימודים ומלגות"><span class="rank-badge">–</span>הכוונה ללימודים ומלגות<span class="rx"></span></div>
-          <div class="rank-item" data-v="ליווי במעבר לצבא/שירות"><span class="rank-badge">–</span>ליווי במעבר לצבא / שירות<span class="rx"></span></div>
-          <div class="rank-item" data-v="מיצוי זכויות"><span class="rank-badge">–</span>מיצוי זכויות<span class="rx"></span></div>
-          <div class="rank-item" data-v="מניעת נשירה מהמסלול"><span class="rank-badge">–</span>שמירה על מסלול נורמטיבי תקין<span class="rx"></span></div>
-          <div class="rank-item" data-v="קשר וליווי אישי מתמשך"><span class="rank-badge">–</span>קשר וליווי אישי מתמשך<span class="rx"></span></div>
-          <div class="rank-item" data-v="אחר"><span class="rank-badge">–</span>אחר<span class="rx"></span></div>
+        <label class="lbl">מה הכי חשוב לכם שהתוכנית תיתן לבוגרים שלכם? <span class="opt">· אפשר לבחור כמה שרוצים</span></label>
+        <div class="opts" data-multi="prio">
+          <div class="opt-chip multi" data-v="שילוב בתעסוקה">שילוב בתעסוקה</div>
+          <div class="opt-chip multi" data-v="הכוונה ללימודים ומלגות">הכוונה ללימודים ומלגות</div>
+          <div class="opt-chip multi" data-v="ליווי במעבר לצבא/שירות">ליווי במעבר לצבא / שירות</div>
+          <div class="opt-chip multi" data-v="מיצוי זכויות">מיצוי זכויות</div>
+          <div class="opt-chip multi" data-v="מניעת נשירה מהמסלול">שמירה על מסלול נורמטיבי תקין</div>
+          <div class="opt-chip multi" data-v="קשר וליווי אישי מתמשך">קשר וליווי אישי מתמשך</div>
+          <div class="opt-chip multi" data-v="אחר">אחר</div>
         </div>
         <input type="text" id="prioOther" placeholder="מה עוד חשוב לכם?" style="display:none;margin-top:10px">
       </div>
@@ -221,8 +345,16 @@
           <div class="opt-chip multi" data-v="יועצת">יועצת</div>
           <div class="opt-chip multi" data-v="רכז/ת">רכז/ת</div>
           <div class="opt-chip multi" data-v="מורה מלווה">מורה מלווה</div>
-          <div class="opt-chip multi" data-v="אני עצמי">אני עצמי</div>
           <div class="opt-chip multi" data-v="עדיין לא ברור">עדיין לא ברור</div>
+        </div>
+      </div>
+
+      <div class="q" data-q="mechinot">
+        <label class="lbl">תרצו שנחבר אתכם למכינות קדם־צבאיות?</label>
+        <div class="opts" data-single="mechinot">
+          <div class="opt-chip" data-v="כן">כן</div>
+          <div class="opt-chip" data-v="אולי, נשמח לשמוע">אולי, נשמח לשמוע</div>
+          <div class="opt-chip" data-v="לא כרגע">לא כרגע</div>
         </div>
       </div>
 
@@ -234,7 +366,7 @@
 
     <!-- D · מוטיבציה -->
     <section class="sec">
-      <div class="sh"><span class="num">4</span><h2>למה בחרתם להצטרף</h2></div>
+      <div class="sh"><span class="num">6</span><h2>למה בחרתם להצטרף</h2></div>
       <div class="q">
         <label class="lbl">מה גרם לכם לבחור להצטרף לתוכנית הבוגרים דווקא עכשיו?</label>
         <textarea name="why" placeholder="מה הביא אתכם לכאן — כמה מילים מהלב"></textarea>
@@ -248,16 +380,36 @@
 
     <!-- E · פגישה -->
     <section class="sec">
-      <div class="sh"><span class="num">5</span><h2>נקבע פגישה</h2></div>
-      <div class="sub">פגישת היכרות קצרה עם לירון גולן, מנכ"לית הופה. בחרו מועד שנוח לכם מתוך הזמנים הפנויים.</div>
+      <div class="sh"><span class="num">7</span><h2>נקבע פגישה</h2></div>
+      <div class="sub">פגישת היכרות קצרה עם צוות הופה. סמנו מה נוח לכם, ונחזור אליכם עם הצעה למועד מדויק.</div>
       <div class="sched">
-        <h3>📅 בחירת מועד ליומן של לירון</h3>
-        <p>לחיצה תפתח את הזמנים הפנויים של לירון. המועד שתבחרו ייכנס אוטומטית ליומן, ותקבלו זימון למייל.</p>
-        <a class="book-btn" id="bookBtn" href="#" target="_blank" rel="noopener">📆 לבחירת מועד לפגישה</a>
-        <!-- אפשר גם להטמיע את לוח הזמנים ישירות: הסירי את התגובה והדביקי את קוד ה-embed מ-Google Calendar
-        <iframe id="bookEmbed" src="" height="600" scrolling="no"></iframe>
-        -->
-        <label class="later"><input type="checkbox" id="bookedLater">אתאם מועד מאוחר יותר / כבר תיאמתי</label>
+        <div class="q" data-q="days" style="border-top:none;padding-top:0">
+          <label class="lbl">אילו ימים נוחים לכם?</label>
+          <div class="opts" data-multi="days">
+            <div class="opt-chip multi" data-v="ראשון">ראשון</div>
+            <div class="opt-chip multi" data-v="שני">שני</div>
+            <div class="opt-chip multi" data-v="שלישי">שלישי</div>
+            <div class="opt-chip multi" data-v="רביעי">רביעי</div>
+            <div class="opt-chip multi" data-v="חמישי">חמישי</div>
+          </div>
+        </div>
+        <div class="q" data-q="times">
+          <label class="lbl">ובאילו שעות?</label>
+          <div class="opts" data-multi="times">
+            <div class="opt-chip multi" data-v="בוקר (8:00–11:00)">בוקר (8:00–11:00)</div>
+            <div class="opt-chip multi" data-v="צהריים (11:00–14:00)">צהריים (11:00–14:00)</div>
+            <div class="opt-chip multi" data-v="אחה״צ (14:00–17:00)">אחה״צ (14:00–17:00)</div>
+          </div>
+        </div>
+        <div class="q" data-q="meet_how">
+          <label class="lbl">איך נוח לכם להיפגש?</label>
+          <div class="opts" data-single="meet_how">
+            <div class="opt-chip" data-v="בזום">בזום</div>
+            <div class="opt-chip" data-v="פרונטלי, אצלנו בבית הספר">פרונטלי, אצלנו בבית הספר</div>
+            <div class="opt-chip" data-v="לא משנה">לא משנה</div>
+          </div>
+        </div>
+        <label class="later"><input type="checkbox" id="bookedLater">כבר תיאמנו מועד עם הופה</label>
       </div>
     </section>
 
@@ -273,8 +425,7 @@
     <div class="ic">🌱</div>
     <h2>קיבלנו, תודה רבה!</h2>
     <p>התשובות שלכם הגיעו לצוות הופה. נגיע לפגישה מוכנים — עם מה שבאמת חשוב לכם.</p>
-    <p id="thanksBook" style="font-weight:600;color:var(--pink-dark)">אם עדיין לא בחרתם מועד לפגישה, אפשר עכשיו:</p>
-    <a class="book-btn" id="bookBtn2" href="#" target="_blank" rel="noopener">📆 לבחירת מועד לפגישה</a>
+    <p id="thanksBook" style="font-weight:600;color:var(--pink-dark)">נחזור אליכם בקרוב עם הצעה למועד הפגישה, לפי הימים והשעות שסימנתם.</p>
   </div>
 </div>
 
@@ -284,9 +435,7 @@
 /* ===================== הגדרות — למלא פעם אחת ===================== */
 const CONFIG = {
   /* כתובת ה-Web App של Apps Script (אותה כתובת EXEC_URL של דף הניהול) */
-  EXEC_URL: 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec',
-  /* קישור לוח הזמנים לפגישות של לירון (Google Calendar Appointment Schedule) */
-  BOOKING_URL: 'https://calendar.google.com/calendar/appointments/PASTE-LIRON-LINK'
+  EXEC_URL: 'https://script.google.com/macros/s/AKfycby7ilGQKB0eypgYMJ0-F4PDgRUlhs12wB5NQVV3_gsm4U1iWec4aNzmeQ8qi7dFFBUoGw/exec'
 };
 /* =============================================================== */
 
@@ -300,20 +449,11 @@ const preCity   = params.get('city') || '';
 if(preSchool){ $('#school').value = preSchool; $('#schoolTag').textContent = preSchool; }
 else { $('#schoolTag').textContent = 'שאלון היכרות'; }
 
-/* קישורי קביעת פגישה — כל עוד לירון לא הדביקה קישור יומן, מסתירים את הכפתור */
-const bookingReady = CONFIG.BOOKING_URL && !/PASTE|LIRON-LINK/i.test(CONFIG.BOOKING_URL);
-if(bookingReady){
-  $('#bookBtn').href = CONFIG.BOOKING_URL;
-  $('#bookBtn2').href = CONFIG.BOOKING_URL;
-}else{
-  document.querySelectorAll('#bookBtn,#bookBtn2').forEach(b=>b.remove());
-  const note='<p style="margin:0;font-size:13.5px;color:#6b6b73">לאחר שליחת השאלון, צוות הופה יצור אתכם קשר לתיאום מועד פגישה נוח.</p>';
-  const sp=document.querySelector('.sched p'); if(sp) sp.outerHTML=note;
-  const tb=$('#thanksBook'); if(tb) tb.textContent='צוות הופה יצור אתכם קשר בקרוב לתיאום מועד הפגישה.';
-}
-
-/* מצב התשובות */
-const state = { keepcontact:'', info:'', how:[], who:[], prio:[] };
+/* מצב התשובות (שאלות לחיצה) */
+const state = { keepcontact:'', info:'', how:[], who:[], prio:[],
+  network:'', lang:'', coord_chosen:'', hours:'', commit:'',
+  list_has:'', list_fields:[], list_where:[], share:'', wa_groups:'', mechinot:'',
+  days:[], times:[], meet_how:'' };
 
 /* בחירה יחידה */
 document.querySelectorAll('[data-single]').forEach(box=>{
@@ -331,44 +471,29 @@ document.querySelectorAll('[data-multi]').forEach(box=>{
     const c = e.target.closest('.opt-chip'); if(!c) return;
     c.classList.toggle('on');
     state[key] = [...box.querySelectorAll('.opt-chip.on')].map(x=>x.dataset.v);
-    updateProgress();
-  });
-});
-/* דירוג — לחיצה מוסיפה מספר, לחיצה חוזרת מסירה, עד 3 */
-document.querySelectorAll('[data-rank]').forEach(box=>{
-  const key = box.dataset.rank;
-  box.addEventListener('click',e=>{
-    const it = e.target.closest('.rank-item'); if(!it) return;
-    const v = it.dataset.v; const i = state[key].indexOf(v);
-    if(i>=0){ state[key].splice(i,1); }
-    else { if(state[key].length>=3){ toast('אפשר לבחור עד 3','bad'); return; } state[key].push(v); }
-    box.querySelectorAll('.rank-item').forEach(x=>{
-      const pos = state[key].indexOf(x.dataset.v);
-      x.classList.toggle('on', pos>=0);
-      x.querySelector('.rank-badge').textContent = pos>=0 ? (pos+1) : '–';
-      x.querySelector('.rx').textContent = pos===0 ? 'הכי חשוב' : '';
-    });
-    if(key==='prio'){ const other=state.prio.includes('אחר'); $('#prioOther').style.display=other?'block':'none'; if(other) $('#prioOther').focus(); }
+    if(key==='prio'){ const other=state.prio.includes('אחר'); $('#prioOther').style.display=other?'block':'none'; if(other && c.classList.contains('on')) $('#prioOther').focus(); }
     clearMiss(box); updateProgress();
   });
 });
 
 /* התקדמות */
-const REQUIRED = ['school','fullname','keepcontact','info','challenge','prio','why','concern'];
+const REQUIRED = ['school','fullname','coord_chosen','hours','list_has','share','keepcontact','info','challenge','prio','why','concern','days'];
+function isRequired(name){ return name!=='days' || !$('#bookedLater').checked; }
 function fieldFilled(name){
-  if(name==='keepcontact'||name==='info') return !!state[name];
-  if(name==='prio') return state.prio.length>0;
+  if(name in state) return Array.isArray(state[name]) ? state[name].length>0 : !!state[name];
   const el = $('#form [name="'+name+'"]'); return el && el.value.trim();
 }
 function updateProgress(){
-  const done = REQUIRED.filter(fieldFilled).length;
-  $('#pbar').style.width = Math.round(done/REQUIRED.length*100)+'%';
+  const req = REQUIRED.filter(isRequired);
+  const done = req.filter(fieldFilled).length;
+  $('#pbar').style.width = Math.round(done/req.length*100)+'%';
 }
 $('#form').addEventListener('input',updateProgress);
-function clearMiss(box){ box.closest('.q')?.style.removeProperty('outline'); $('#miss').classList.remove('show'); }
+$('#bookedLater').addEventListener('change',()=>{ document.querySelector('[data-q="days"]').style.removeProperty('outline'); updateProgress(); });
+function clearMiss(box){ (box.closest('[data-q]')||box.closest('.q'))?.style.removeProperty('outline'); $('#miss').classList.remove('show'); }
 function flagMiss(name){
   let q;
-  if(name==='keepcontact'||name==='info'||name==='prio') q = document.querySelector('[data-q="'+name+'"]');
+  if(name in state) q = document.querySelector('[data-q="'+name+'"]');
   else q = $('#form [name="'+name+'"]')?.closest('.q');
   if(q){ q.style.outline='2px solid var(--bad)'; q.style.outlineOffset='4px'; q.style.borderRadius='12px'; }
 }
@@ -376,8 +501,8 @@ function flagMiss(name){
 /* שליחה */
 $('#form').addEventListener('submit',async e=>{
   e.preventDefault();
-  document.querySelectorAll('.q').forEach(q=>q.style.removeProperty('outline'));
-  const missing = REQUIRED.filter(n=>!fieldFilled(n));
+  document.querySelectorAll('.q,[data-q]').forEach(q=>q.style.removeProperty('outline'));
+  const missing = REQUIRED.filter(isRequired).filter(n=>!fieldFilled(n));
   if(missing.length){ missing.forEach(flagMiss); $('#miss').classList.add('show');
     document.querySelector('[data-q="'+missing[0]+'"], #form [name="'+missing[0]+'"]')?.scrollIntoView({behavior:'smooth',block:'center'});
     return; }
@@ -388,13 +513,20 @@ $('#form').addEventListener('submit',async e=>{
     city: preCity,
     submittedAt: new Date().toISOString(),
     fullname:g('fullname'), role:g('role'), phone:g('phone'), email:g('email'),
-    alumni_year:g('alumni_year'),
+    manager_email:g('manager_email'), symbol:g('symbol'), network:state.network, lang:state.lang,
+    coord_chosen:state.coord_chosen, coord_name:g('coord_name'), coord_email:g('coord_email'),
+    hours:state.hours, commit:state.commit,
+    yb_count:g('yb_count'), alumni_total:g('alumni_total'), years_back:g('years_back'),
+    list_has:state.list_has, list_fields:state.list_fields.join(', '), list_where:state.list_where.join(', '),
+    share:state.share,
     keepcontact:state.keepcontact, how:state.how.join(', '),
     info:state.info, challenge:g('challenge'),
-    prio:state.prio.map(v=> v==='אחר' ? ('אחר: '+($('#prioOther').value.trim()||'—')) : v).join(' › '),
-    who:state.who.join(', '), goal:g('goal'),
+    wa_groups:state.wa_groups, wa_admin:g('wa_admin'), other_programs:g('other_programs'),
+    prio:state.prio.map(v=> v==='אחר' ? ('אחר: '+($('#prioOther').value.trim()||'—')) : v).join(', '),
+    who:state.who.join(', '), mechinot:state.mechinot, goal:g('goal'),
     why:g('why'), concern:g('concern'),
-    meeting: $('#bookedLater').checked ? 'יתואם / תואם בנפרד' : 'נשלח לבחירת מועד ביומן'
+    meeting: $('#bookedLater').checked ? 'כבר תואם מול הופה'
+      : [state.days.join(', '), state.times.join(', '), state.meet_how].filter(Boolean).join(' · ')
   };
 
   const btn = $('#submitBtn'); btn.disabled=true; btn.textContent='שולח…';
@@ -405,7 +537,7 @@ $('#form').addEventListener('submit',async e=>{
       body:new URLSearchParams({ action:'intakeSubmit', school:payload.school, json:JSON.stringify(payload) }).toString()
     });
     /* no-cors לא מחזיר תשובה — מניחים הצלחה ומשקפים תודה */
-    localStorage.setItem('hopa_intake_'+payload.school, JSON.stringify(payload));
+    try{ localStorage.setItem('hopa_intake_'+payload.school, JSON.stringify(payload)); }catch(_){}
     showThanks();
   }catch(err){
     btn.disabled=false; btn.textContent='שליחה להופה 💛';
@@ -416,7 +548,7 @@ $('#form').addEventListener('submit',async e=>{
 function showThanks(){
   $('#form').style.display='none';
   $('#thanks').classList.add('show');
-  if($('#bookedLater').checked) $('#thanksBook').style.display='none';
+  if($('#bookedLater').checked) $('#thanksBook').textContent='נתראה בפגישה שתיאמנו.';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 

@@ -1182,12 +1182,20 @@ function renderJoinPanel(){
     const dt=intake.submittedAt?new Date(intake.submittedAt).toLocaleDateString('he-IL'):'';
     const mi=(k,v)=>v?`<div class="mi"><div class="k">${esc(k)}</div>${esc(String(v))}</div>`:'';
     intakeBlock=`<div class="sc-block" style="border:1.5px solid var(--pink);background:#fffdfe"><h4>📋 שאלון היכרות של המנהל/ת ${dt?`<span style="font-weight:600;color:var(--muted);font-size:12px">· התקבל ${esc(dt)}</span>`:''}<button class="btn grey small" data-copyintake="${esc(intakeUrl)}" style="margin-inline-start:auto">🔗 העתק קישור שאלון</button></h4>
-      <div class="join-meta" style="margin-bottom:6px">${mi('ממלא/ת',(intake.fullname||'')+(intake.role?(' · '+intake.role):''))}${mi('טלפון',intake.phone)}${mi('מייל',intake.email)}${mi('בוגרים בשנה',intake.alumni_year)}</div>
+      <div class="join-meta" style="margin-bottom:6px">${mi('ממלא/ת',(intake.fullname||'')+(intake.role?(' · '+intake.role):''))}${mi('טלפון',intake.phone)}${mi('מייל',intake.email)}${mi('מייל המנהל/ת',intake.manager_email)}${mi('סמל מוסד',intake.symbol)}${mi('רשת',intake.network)}${mi('שפה',intake.lang)}${mi('בוגרים בשנה',intake.alumni_year)}${mi('תלמידי י"ב במחזור',intake.yb_count)}${mi('בוגרים בסך הכול',intake.alumni_total)}${mi('שנים אחורה',intake.years_back)}</div>
+      ${iLine('רכז/ת נבחר/ה',[intake.coord_chosen,intake.coord_name,intake.coord_email].filter(Boolean).join(' · '))}
+      ${iLine('5 ש"ש לרכז/ת מאושרות',intake.hours)}
+      ${iLine('התחייבות הרכז/ת (מפגשים + עדכון ב-Secure)',intake.commit)}
+      ${iLine('רשימת בוגרים',[intake.list_has,intake.list_fields?('כוללת: '+intake.list_fields):'',intake.list_where?('שמורה ב: '+intake.list_where):''].filter(Boolean).join(' · '))}
+      ${iLine('העברת רשימה + הסכם סודיות',intake.share)}
       ${iLine('שומרים קשר עם בוגרים',(intake.keepcontact||'')+(intake.how?(' · '+intake.how):''))}
       ${iLine('מידע על הבוגרים אחרי ביה"ס',intake.info)}
       ${iLine('האתגר המרכזי',intake.challenge)}
+      ${iLine('קבוצות וואטסאפ של מחזורים',[intake.wa_groups,intake.wa_admin?('מנהל/ת: '+intake.wa_admin):''].filter(Boolean).join(' · '))}
+      ${iLine('תוכניות בוגרים אחרות בביה"ס',intake.other_programs)}
       ${iLine('הכי חשוב שהתוכנית תיתן',intake.prio)}
       ${iLine('מי יהיה מעורב בביה"ס',intake.who)}
+      ${iLine('קשר עם מכינות',intake.mechinot)}
       ${iLine('יעד להצלחה בסוף השנה',intake.goal)}
       ${iLine('למה הצטרפו דווקא עכשיו',intake.why)}
       ${iLine('החשש/השאלה הגדולים',intake.concern)}
