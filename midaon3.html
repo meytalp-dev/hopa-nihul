@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הופה · ניוזלטר · חודש נובמבר</title>
+<meta name="description" content="ניוזלטר הופה לחודש נובמבר: כנס המנהלים של משרד העבודה, שותפויות בקהילה, רשת אמית ומחשבים ניידים לבוגרים.">
+<meta property="og:title" content="שותפים לדרך של הבוגרים · ניוזלטר הופה, חודש נובמבר">
+<meta property="og:description" content="כנס המנהלים של משרד העבודה, שותפויות בקהילה, רשת אמית ומחשבים ניידים לבוגרים.">
+<meta property="og:image" content="https://meytalp-dev.github.io/hopa-nihul/photos/midaon3-choshen-panel.jpg">
+<meta name="theme-color" content="#FFF200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   הופה · מידעון שותפים · גיליון חודש נובמבר
+   הרעיון: "הדרך". שביל ורוד מצטייר בגלילה, ושמש הופה נוסעת עליו
+   ועוצרת בכל תחנה. כל התנועה מכובדת ב-prefers-reduced-motion.
+   ============================================================ */
+:root{
+  --yellow:#FFF200;
+  --pink:#E8348A;
+  --pink-deep:#C2185B;
+  --blush:#FDEAF3;
+  --ink:#231F20;
+  --ink-2:#4A4446;
+  --paper:#FFFFFF;
+  --sand:#FFFBE0;
+  --gutter:20px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Rubik,"Segoe UI",system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:6px}
+h1,h2,h3,p{margin:0}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100svh;background:var(--yellow);overflow:hidden;
+  display:flex;flex-direction:column;padding:22px var(--gutter) 0}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:2}
+.hero-top img{height:46px;width:auto}
+.issue-tag{align-self:flex-start;display:inline-block;background:var(--pink);color:#fff;font-weight:800;
+  font-size:clamp(17px,2.4vw,22px);border-radius:999px;padding:9px 22px;margin-bottom:22px;
+  opacity:0;animation:fade .6s ease forwards .05s}
+.hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;
+  max-width:1100px;width:100%;margin:0 auto;padding:40px 0 120px}
+.title{font-weight:900;font-size:clamp(52px,13vw,150px);line-height:.95;letter-spacing:-.045em}
+.title .line{display:block;overflow:hidden;padding-bottom:.06em}
+.title .w{display:inline-block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.9,.2,1.15) forwards;
+  animation-delay:calc(.15s + var(--i) * .11s)}
+.title .w.pink{color:var(--pink)}
+@keyframes rise{to{transform:none}}
+.lede{font-size:clamp(18px,2.4vw,23px);font-weight:500;max-width:34ch;margin-top:28px;
+  opacity:0;animation:fade .8s ease forwards 1s}
+@keyframes fade{to{opacity:1}}
+.scroll-cue{position:absolute;bottom:26px;inset-inline:0;margin:auto;width:max-content;z-index:2;
+  font-weight:700;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  opacity:0;animation:fade .6s ease forwards 1.6s}
+.scroll-cue span{display:block;width:3px;height:34px;border-radius:3px;background:var(--pink);
+  transform-origin:top;animation:cue 1.6s ease-in-out infinite 2s}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* השמש הגדולה של הופה */
+.big-sun{position:absolute;z-index:1;width:min(78vw,620px);aspect-ratio:1;inset-inline-start:auto;
+  left:-18%;bottom:-24%;opacity:0;animation:sunup 1.4s cubic-bezier(.2,.8,.2,1) forwards .35s}
+@keyframes sunup{from{opacity:0;transform:translateY(30%) scale(.7)}to{opacity:1;transform:none}}
+.big-sun svg{width:100%;height:100%}
+.rays{transform-origin:50% 50%;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- הדרך ---------- */
+.journey{position:relative;padding:90px var(--gutter) 40px;max-width:1160px;margin:0 auto;overflow-x:clip}
+html,body{overflow-x:hidden}
+.road{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.road .ghost{fill:none;stroke:#F3D3E3;stroke-width:4;stroke-dasharray:2 12;stroke-linecap:round}
+.road .ink{fill:none;stroke:var(--pink);stroke-width:7;stroke-linecap:round}
+.traveler{position:absolute;top:0;left:0;width:54px;height:54px;margin:-27px 0 0 -27px;z-index:3;pointer-events:none;
+  will-change:transform}
+.traveler svg{width:100%;height:100%;filter:drop-shadow(0 4px 10px rgba(232,52,138,.35))}
+
+.chapter{position:relative;z-index:1;padding:0 0 120px 0;padding-inline-start:52px}
+.stop{position:absolute;top:2px;right:-4px;width:30px;height:30px;border-radius:50%;
+  background:var(--paper);border:4px solid #F3D3E3;transition:border-color .4s,transform .4s cubic-bezier(.3,1.6,.5,1),background .4s}
+.chapter.reached .stop{border-color:var(--pink);background:var(--yellow);transform:scale(1.25)}
+.ch-icon{font-size:30px;line-height:1;margin-bottom:10px}
+.chapter h2{font-weight:900;font-size:clamp(34px,6.4vw,64px);line-height:1;letter-spacing:-.035em}
+.chapter .sub{font-size:clamp(17px,2vw,20px);color:var(--ink-2);margin-top:12px;max-width:40ch}
+.ch-body{margin-top:34px;display:grid;gap:30px}
+
+@media (min-width:900px){
+  .chapter{display:grid;grid-template-columns:1fr 140px 1fr;padding-inline-start:0}
+  .chapter > .ch-content{grid-column:1}
+  .chapter.alt > .ch-content{grid-column:3}
+  .stop{right:auto;left:50%;margin-left:-15px}
+}
+
+/* פריטים בפרק: בלי כרטיסים זהים — שורות עם שם גדול */
+.item h3{font-weight:800;font-size:23px;line-height:1.25;letter-spacing:-.015em}
+.item p{color:var(--ink-2);margin-top:6px;max-width:46ch}
+.item{padding-top:18px;border-top:3px solid var(--ink)}
+.item.y{border-top-color:var(--yellow);border-top-width:6px}
+
+/* מחשב נייד שנפתח */
+.laptop-row{display:flex;align-items:center;gap:20px}
+.laptop{flex:none;width:118px;perspective:500px}
+.laptop .lid{width:100px;height:66px;margin:0 auto;border-radius:9px 9px 2px 2px;background:var(--ink);padding:6px;
+  transform-origin:bottom center;transform:rotateX(-88deg);transition:transform 1.1s cubic-bezier(.3,1.4,.5,1) .2s}
+.laptop .screen{width:100%;height:100%;border-radius:4px;background:var(--yellow);display:grid;place-items:center;font-size:26px;
+  opacity:0;transition:opacity .5s ease 1.1s}
+.laptop .base{width:118px;height:9px;border-radius:2px 2px 9px 9px;background:var(--pink)}
+@media (max-width:520px){.laptop-row{flex-direction:column;align-items:flex-start}}
+.in .laptop .lid{transform:none}
+.in .laptop .screen{opacity:1}
+
+/* מסלול י״א ← שירות */
+.path-steps{list-style:none;margin:0;padding:22px 0 0;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.path-steps::before,.path-steps::after{content:"";position:absolute;top:39px;right:12%;left:12%;height:5px;border-radius:5px;background:#F3D3E3}
+.path-steps::after{background:var(--pink);transform:scaleX(0);transform-origin:right;transition:transform 1.8s cubic-bezier(.6,0,.3,1) .3s}
+.in .path-steps::after{transform:scaleX(1)}
+.path-steps li{position:relative;z-index:1;text-align:center;font-weight:700;font-size:14.5px;line-height:1.3}
+.path-steps .dot{display:grid;place-items:center;width:40px;height:40px;margin:0 auto 10px;border-radius:50%;
+  background:var(--paper);border:4px solid #F3D3E3;font-size:17px;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+.in .path-steps .dot{border-color:var(--pink);background:var(--yellow);transform:scale(1.12)}
+.in .path-steps li:nth-child(1) .dot{transition-delay:.3s}
+.in .path-steps li:nth-child(2) .dot{transition-delay:.85s}
+.in .path-steps li:nth-child(3) .dot{transition-delay:1.4s}
+.in .path-steps li:nth-child(4) .dot{transition-delay:1.95s}
+
+.item p.goal{margin-top:12px;padding:12px 14px;background:var(--blush);border-radius:14px;color:var(--ink);max-width:none}
+.item.y p.goal{background:var(--sand)}
+.item p.role{margin-top:2px;font-weight:700;color:var(--pink-deep);font-size:16px}
+
+/* ממצאי מיפוי העמדות */
+.survey{background:var(--sand);border-radius:28px;padding:26px 24px 24px}
+.survey-title{font-weight:900;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.025em;line-height:1.15}
+.survey-intro{margin-top:10px!important;color:var(--ink-2);max-width:44ch}
+.bars{margin-top:22px;display:grid;gap:20px}
+.bar{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center}
+.bar-num{grid-row:span 2;font-weight:900;font-size:clamp(40px,7vw,54px);line-height:1;letter-spacing:-.045em;
+  color:var(--pink);font-variant-numeric:tabular-nums;min-width:2.6em}
+.bar.gap .bar-num{color:var(--ink)}
+.bar-txt{font-weight:600;font-size:15.5px;line-height:1.4}
+.bar-track{height:10px;border-radius:10px;background:rgba(35,31,32,.08);margin-top:8px;overflow:hidden}
+.bar-track span{display:block;height:100%;width:var(--w);border-radius:10px;background:var(--pink);
+  transform:scaleX(0);transform-origin:right;transition:transform 1.6s cubic-bezier(.3,0,.2,1) .2s}
+.bar.gap .bar-track span{background:var(--ink)}
+.in .bar-track span{transform:none}
+.in .bar:nth-child(2) .bar-track span{transition-delay:.4s}
+.in .bar:nth-child(3) .bar-track span{transition-delay:.6s}
+.in .bar:nth-child(4) .bar-track span{transition-delay:.8s}
+.survey-notes{margin-top:24px;display:grid;gap:10px}
+.survey-notes p{color:var(--ink-2);max-width:48ch}
+.survey-notes b{color:var(--ink)}
+.survey-quote{margin:22px 0 0;padding:16px 18px;background:#fff;border-radius:16px;border-inline-start:5px solid var(--pink);
+  font-weight:600;font-size:17px;line-height:1.6}
+.survey-quote span{display:block;margin-top:6px;font-weight:500;font-size:14px;color:var(--ink-2)}
+
+/* הרכזים: מספר ענק */
+.mega{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.mega-num{font-weight:900;font-size:clamp(96px,20vw,170px);line-height:.85;letter-spacing:-.06em;color:var(--pink);
+  font-variant-numeric:tabular-nums;display:flex;align-items:flex-start}
+.mega-num em{font-style:normal;font-size:.45em;color:var(--ink);margin-top:.1em}
+.mega-txt{font-weight:700;font-size:19px;line-height:1.35;max-width:16ch}
+
+/* ציר שלושת המפגשים */
+.meets{list-style:none;margin:0;padding:0;display:grid;gap:14px;position:relative}
+.meet{display:grid;grid-template-columns:74px 1fr;gap:16px;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:18px 18px 18px 20px;
+  transform:translateX(-40px);opacity:0;transition:transform .8s cubic-bezier(.2,1.2,.4,1),opacity .5s ease}
+.in.meet{transform:none;opacity:1}
+.meet.big{background:var(--yellow);border-color:var(--yellow)}
+.meet-date{font-weight:700;font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.2}
+.meet-date b{display:block;font-weight:900;font-size:26px;color:var(--pink);letter-spacing:-.03em;margin-bottom:4px}
+.meet.big .meet-date b{color:var(--ink)}
+.meet h3{font-weight:800;font-size:21px;line-height:1.25}
+.meet p{color:var(--ink-2);margin-top:6px;font-size:16.5px}
+.meet.big p,.meet.big li{color:var(--ink)}
+.meet-steps{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:7px;font-size:16px;line-height:1.55}
+.meet-steps li{position:relative;padding-inline-start:20px}
+.meet-steps li::before{content:"";position:absolute;inset-inline-start:2px;top:.62em;width:9px;height:9px;border-radius:50%;background:var(--pink)}
+.score{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.score b{font-weight:900;font-size:18px;color:var(--ink)}
+.stars{--pct:calc(var(--s) / 5 * 100%);display:inline-block;font-size:18px;letter-spacing:1px;line-height:1;
+  background:linear-gradient(90deg,#E6DFE2 0,#E6DFE2 calc(100% - var(--pct)),var(--pink) calc(100% - var(--pct)));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stars::before{content:"★★★★★"}
+@media (max-width:520px){.meet{grid-template-columns:1fr;gap:6px}.meet-date{text-align:start;display:flex;gap:8px;align-items:baseline}.meet-date b{display:inline;margin:0}}
+
+/* קולות הרכזים */
+.voices{background:var(--pink);color:#fff;border-radius:28px;padding:26px 22px}
+.voices-title{font-weight:900;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.025em}
+.voices-stat{margin-top:8px;font-weight:600;font-size:17px}
+.voices-stat b{font-weight:900;font-size:40px;color:var(--yellow);letter-spacing:-.04em;margin-inline-end:6px}
+.voices blockquote{margin:12px 0 0;background:#fff;color:var(--ink);font-weight:700;font-size:17px;line-height:1.5;
+  padding:13px 16px;border-radius:18px 18px 18px 4px;width:fit-content;max-width:100%;
+  transform:scale(.6) translateY(16px);opacity:0;transform-origin:bottom left;transition:transform .55s cubic-bezier(.3,1.6,.5,1),opacity .3s}
+.voices blockquote:nth-of-type(even){margin-inline-start:auto;border-radius:18px 18px 4px 18px;background:var(--yellow);transform-origin:bottom right}
+.in.voices blockquote{transform:none;opacity:1}
+.in.voices blockquote:nth-of-type(1){transition-delay:.3s}
+.in.voices blockquote:nth-of-type(2){transition-delay:.8s}
+.in.voices blockquote:nth-of-type(3){transition-delay:1.3s}
+.in.voices blockquote:nth-of-type(4){transition-delay:1.8s}
+
+/* פניות חיות */
+.pulse-item{position:relative}
+.live-dot{position:absolute;top:22px;inset-inline-end:0;width:14px;height:14px;border-radius:50%;background:var(--pink);
+  box-shadow:0 0 0 0 rgba(232,52,138,.6);animation:live 1.8s infinite}
+@keyframes live{70%{box-shadow:0 0 0 14px rgba(232,52,138,0)}100%{box-shadow:0 0 0 0 rgba(232,52,138,0)}}
+
+/* רמזור */
+.ramzor{background:var(--sand);border-radius:28px;padding:24px 22px}
+.ramzor-head{display:flex;align-items:center;gap:18px}
+.ramzor-kicker{font-weight:700;font-size:15px;color:var(--pink-deep)}
+.ramzor h3{font-weight:900;font-size:clamp(23px,3.2vw,28px);line-height:1.15;letter-spacing:-.02em}
+.light{flex:none;width:52px;padding:8px;border-radius:26px;background:var(--ink);display:grid;gap:7px}
+.light i{display:block;width:36px;height:36px;border-radius:50%;background:#4a4446;transition:background .3s,box-shadow .3s}
+.in .light .g{animation:lg 3.6s steps(1) infinite}
+.in .light .o{animation:lo 3.6s steps(1) infinite}
+.in .light .r{animation:lr 3.6s steps(1) infinite}
+@keyframes lg{0%{background:#3BA55C;box-shadow:0 0 16px #3BA55C}33%,100%{background:#4a4446;box-shadow:none}}
+@keyframes lo{0%,32%{background:#4a4446;box-shadow:none}33%{background:#F5A623;box-shadow:0 0 16px #F5A623}66%,100%{background:#4a4446;box-shadow:none}}
+@keyframes lr{0%,65%{background:#4a4446;box-shadow:none}66%,100%{background:#E53935;box-shadow:0 0 18px #E53935}}
+.flow{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;counter-reset:f}
+.flow li{counter-increment:f;position:relative;background:#fff;border-radius:16px;padding:14px 16px;padding-inline-start:58px;font-size:16px;color:var(--ink-2);
+  transform:translateY(18px);opacity:0;transition:transform .6s cubic-bezier(.2,1.3,.4,1),opacity .4s}
+.flow li b{display:block;font-weight:800;font-size:17.5px;color:var(--ink);line-height:1.35}
+.flow li::before{content:counter(f);position:absolute;inset-inline-start:14px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;font-weight:900;color:#fff;background:var(--ink)}
+.flow li:nth-child(2)::before{background:#E53935}
+.flow li:nth-child(3)::before{background:var(--pink)}
+.in .flow li{transform:none;opacity:1}
+.in .flow li:nth-child(2){transition-delay:.5s}
+.in .flow li:nth-child(3){transition-delay:1s}
+
+/* תגיות שקופצות אחת אחרי השנייה */
+.chips-title{font-weight:800;font-size:15px;margin-top:16px!important;color:var(--pink-deep)}
+.chips{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:9px}
+.chips li{font-weight:700;font-size:15.5px;line-height:1.3;background:var(--blush);color:var(--ink);border-radius:999px;padding:9px 16px;
+  transform:scale(.4);opacity:0;transition:transform .5s cubic-bezier(.3,1.7,.5,1),opacity .3s ease}
+.item.y .chips li{background:var(--yellow)}
+.chips.static li{transform:none;opacity:1}
+.item.why p + p{margin-top:10px}
+.in .chips li{transform:none;opacity:1}
+.in .chips li:nth-child(2){transition-delay:.12s}
+.in .chips li:nth-child(3){transition-delay:.24s}
+.in .chips li:nth-child(4){transition-delay:.36s}
+.in .chips li:nth-child(5){transition-delay:.48s}
+
+/* המונה */
+.counter-wrap{position:relative;background:var(--pink);color:#fff;border-radius:28px;padding:30px 26px 26px;overflow:hidden}
+.counter-wrap::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:var(--yellow);
+  opacity:.22;left:-60px;top:-80px}
+.counter{font-weight:900;font-size:clamp(60px,12vw,98px);line-height:.95;letter-spacing:-.05em;font-variant-numeric:tabular-nums;
+  display:flex;align-items:baseline;gap:10px;position:relative;z-index:1}
+.counter .cur{font-size:.5em;color:var(--yellow)}
+.counter-wrap h3{font-weight:800;font-size:22px;margin-top:14px;position:relative;z-index:1}
+.counter-wrap p{opacity:.95;margin-top:4px;position:relative;z-index:1;max-width:40ch}
+.story2{display:flex;gap:16px;align-items:center}
+.story2 .badge{flex:none;width:64px;height:64px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:30px;
+  transform:scale(0) rotate(-40deg);transition:transform .7s cubic-bezier(.3,1.7,.5,1) .2s}
+.in .story2 .badge{transform:none}
+
+/* פולרואיד */
+.polaroid{margin:0;background:#fff;padding:12px 12px 16px;border-radius:6px;box-shadow:0 18px 50px rgba(35,31,32,.18),0 2px 6px rgba(35,31,32,.1);
+  position:relative;transform:translateY(-70px) rotate(-12deg);opacity:0;
+  transition:transform 1.1s cubic-bezier(.25,1.5,.45,1),opacity .4s ease}
+.in .polaroid{transform:rotate(-2.5deg);opacity:1}
+.polaroid img{border-radius:2px;width:100%;height:auto}
+.polaroid figcaption{font-weight:500;font-size:14.5px;color:var(--ink-2);padding-top:10px}
+.tape{position:absolute;top:-14px;width:96px;height:28px;background:rgba(255,242,0,.85);border-radius:2px}
+.tape.a{right:24px;transform:rotate(6deg)}
+.tape.b{left:24px;transform:rotate(-8deg)}
+
+.quote{font-size:clamp(20px,2.6vw,25px);line-height:1.6;font-weight:500;margin:0}
+.quote .qw{color:#CFC7CA;transition:color .25s}
+.quote .qw.lit{color:var(--ink)}
+.quote-by{margin-top:18px;font-weight:800;font-size:17px;color:var(--pink-deep)}
+.quote-by span{display:block;font-weight:500;font-size:15px;color:var(--ink-2)}
+
+/* ---------- סיום ---------- */
+.finale{background:var(--pink);color:#fff;text-align:center;padding:110px var(--gutter) 100px;position:relative;overflow:hidden}
+.finale .fsun{width:120px;height:120px;margin:0 auto 26px;--sun-ray:#FFF200;--sun-core:#E8348A}
+.finale .fsun svg{width:100%;height:100%}
+.finale h2{font-weight:900;font-size:clamp(48px,11vw,120px);line-height:.95;letter-spacing:-.045em}
+.finale p{font-size:clamp(18px,2.2vw,22px);max-width:36ch;margin:22px auto 34px}
+.btn{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:800;font-size:18px;text-decoration:none;
+  border-radius:999px;padding:16px 34px;box-shadow:0 10px 0 var(--pink-deep);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(3px);box-shadow:0 7px 0 var(--pink-deep)}
+.btn:active{transform:translateY(8px);box-shadow:0 2px 0 var(--pink-deep)}
+
+footer{padding:36px var(--gutter) 46px;text-align:center;font-size:15px;color:var(--ink-2)}
+footer img{height:42px;width:auto;margin:0 auto 12px}
+footer p + p{margin-top:6px}
+
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+/* ---------- בלי תנועה ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .title .w{transform:none}
+  .lede,.scroll-cue,.big-sun,.issue-tag{opacity:1}
+  .laptop .lid{transform:none}.laptop .screen{opacity:1}
+  .path-steps::after{transform:none}
+  .path-steps .dot{border-color:var(--pink);background:var(--yellow)}
+  .story2 .badge{transform:none}
+  .chips li{transform:none;opacity:1}
+  .bar-track span{transform:none}
+  .meet,.voices blockquote,.flow li{transform:none;opacity:1}
+  .light .r{background:#E53935}
+  .polaroid{transform:rotate(-2.5deg);opacity:1}
+  .quote .qw{color:var(--ink)}
+  .traveler{display:none}
+}
+@media print{
+  .hero{min-height:auto}.scroll-cue,.traveler,.road,#confetti{display:none}
+  .title .w,.lede,.big-sun,.issue-tag,.laptop .lid,.polaroid,.story2 .badge,.chips li,.bar-track span,.meet,.voices blockquote,.flow li{transform:none!important;opacity:1!important;animation:none!important}
+  .quote .qw{color:var(--ink)}
+}
+</style>
+<style>
+/* ---------- תוספות לגיליון נובמבר ---------- */
+.path-steps.five{grid-template-columns:repeat(5,1fr)}
+.path-steps.five::before,.path-steps.five::after{right:10%;left:10%}
+.in .path-steps li:nth-child(5) .dot{transition-delay:2.5s}
+@media (max-width:520px){.path-steps li{font-size:12.5px}.path-steps .dot{width:34px;height:34px;font-size:15px}.path-steps::before,.path-steps::after{top:36px}}
+.booth{background:var(--sand);border-radius:28px;padding:24px 22px}
+.booth.pinkish{background:var(--blush)}
+.booth-kicker{font-weight:800;font-size:15px;color:var(--pink-deep)}
+.booth h3{font-weight:900;font-size:clamp(23px,3.2vw,28px);line-height:1.15;letter-spacing:-.02em;margin-top:4px}
+.booth > p{color:var(--ink-2);margin-top:10px;max-width:46ch}
+.booth .survey-quote{margin-top:18px}
+.mini-nums{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.mini-nums div{background:#fff;border-radius:16px;padding:12px 14px;font-weight:600;font-size:15px;line-height:1.35}
+.mini-nums b{display:block;font-weight:900;font-size:34px;line-height:1;color:var(--pink);letter-spacing:-.04em;margin-bottom:4px}
+.photo{margin:18px 0 0;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 12px 34px rgba(35,31,32,.14)}
+.photo img{width:100%;height:auto;max-height:520px;object-fit:cover}
+.photo figcaption{font-weight:500;font-size:14.5px;color:var(--ink-2);padding:10px 14px 12px}
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photo-pair .photo{margin:0}
+.photo-pair .photo img{aspect-ratio:3/4;max-height:none}
+.team{display:grid;gap:14px}
+.team-card{display:flex;gap:16px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:16px 18px}
+.team-card.big{background:var(--yellow);border-color:var(--yellow)}
+.team-badge{flex:none;width:58px;height:58px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-size:26px;font-weight:900}
+.team-card h3{font-weight:800;font-size:20px;line-height:1.25}
+.team-card p{color:var(--ink-2);margin-top:4px;font-size:16px}
+.chovret-row{display:flex;align-items:center;gap:18px;margin-top:18px;flex-wrap:wrap}
+.chovret-cover{display:block;width:150px;border-radius:10px;overflow:hidden;box-shadow:0 12px 30px rgba(35,31,32,.2);transform:rotate(-3deg);transition:transform .2s}
+.chovret-cover:hover{transform:rotate(0) scale(1.03)}
+.btn-small{display:inline-block;background:var(--pink);color:#fff;font-weight:800;font-size:17px;text-decoration:none;border-radius:999px;padding:12px 24px;box-shadow:0 6px 0 var(--pink-deep)}
+.btn-small:active{transform:translateY(4px);box-shadow:0 2px 0 var(--pink-deep)}
+.note-tag{display:inline-block;margin-top:14px;font-weight:700;font-size:14px;background:var(--yellow);border-radius:999px;padding:6px 14px}
+</style>
+</head>
+<body>
+
+<!-- סמל השמש, לשימוש חוזר -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="sun">
+      <g class="rays" style="fill:var(--sun-ray,#E8348A)">
+        <rect x="47" y="2" width="6" height="18" rx="3"/><rect x="47" y="80" width="6" height="18" rx="3"/>
+        <rect x="2" y="47" width="18" height="6" rx="3"/><rect x="80" y="47" width="18" height="6" rx="3"/>
+        <rect x="47" y="2" width="6" height="18" rx="3" transform="rotate(45 50 50)"/><rect x="47" y="80" width="6" height="18" rx="3" transform="rotate(45 50 50)"/>
+        <rect x="2" y="47" width="18" height="6" rx="3" transform="rotate(45 50 50)"/><rect x="80" y="47" width="18" height="6" rx="3" transform="rotate(45 50 50)"/>
+      </g>
+      <circle cx="50" cy="50" r="22" style="fill:var(--sun-ray,#E8348A)"/>
+      <circle cx="50" cy="50" r="15" style="fill:var(--sun-core,#FFF200)"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="hero-top">
+    <a href="https://hopa.org.il" target="_blank" rel="noopener" aria-label="הופה, לאתר העמותה"><img src="hopa-logo.png" alt="הופה"></a>
+  </div>
+  <div class="hero-body">
+    <div class="issue-tag">ניוזלטר · חודש נובמבר</div>
+    <h1 class="title" aria-label="הליווי לא נגמר ביום הסיום">
+      <span class="line" aria-hidden="true"><span class="w" style="--i:0">הליווי</span> <span class="w" style="--i:1">לא</span></span>
+      <span class="line" aria-hidden="true"><span class="w pink" style="--i:2">נגמר</span> <span class="w pink" style="--i:3">ביום</span></span>
+      <span class="line" aria-hidden="true"><span class="w" style="--i:4">הסיום</span></span>
+    </h1>
+    <p class="lede">שני דוכנים וחוברת של 101 רעיונות בכנס המנהלים של משרד העבודה, שותפויות בקהילה, מנהלי רשת אמית, מחשבים ניידים לבוגרים, מכינות ושירות משמעותי, וצוות שגדל.</p>
+  </div>
+  <div class="big-sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#sun"/></svg></div>
+  <div class="scroll-cue" aria-hidden="true">גללו לאורך הדרך<span></span></div>
+</header>
+
+<main class="journey" id="journey">
+  <svg class="road" id="road" aria-hidden="true"><path class="ghost" id="roadGhost"/><path class="ink" id="roadInk"/></svg>
+  <div class="traveler" id="traveler" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#sun"/></svg></div>
+
+  <!-- תחנה: כנס המנהלים -->
+  <section class="chapter" aria-labelledby="h-kenes">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🏛️</div>
+      <h2 id="h-kenes">הופה בכנס המנהלים</h2>
+      <p class="sub">בכנס מנהלים ורשתות בתי ספר מקצועיים של המנהל להכשרה מקצועית במשרד העבודה, במוזיאון החדשנות, הוצגו שני דוכנים של ליווי בוגרים עם הופה: מנאראת טורעאן ותיכון חושן.</p>
+      <div class="ch-body">
+        <div class="booth watch">
+          <span class="booth-kicker">דוכן 1 · מנאראת טורעאן</span>
+          <h3>הדרך של בוגר, על שולחן אחד</h3>
+          <p>מי שעבר לאורך השולחן עבר את הדרך של בוגר, תחנה אחר תחנה, מכיתה י״ב ועד הצעד הבא. בית הספר מלווה את הבוגרים יחד עם מרכז ריאן והופה.</p>
+          <p>הכנו לדוכן קאפה גדולה, "גאוות הבוגרים של טורעאן", בעברית ובערבית: מילת המנהל, סיפורי הבוגרים, השותפות עם מרכז ריאן, והקולות של הרכז ושל בוגר.</p>
+          <figure class="photo">
+            <img src="photos/midaon3-turan-siyum.jpg" alt="בוגר מנאראת טורעאן בגלימת סיום מקבל תעודה מהנהלת בית הספר בטקס הסיום" width="1400" height="932" loading="lazy">
+            <figcaption>מקיר הבוגרים של טורעאן: טקס הסיום של סלים, היום הנדסאי ובעל מוסך עצמאי</figcaption>
+          </figure>
+          <ol class="path-steps five" aria-label="חמש התחנות בדוכן של טורעאן">
+            <li><span class="dot" aria-hidden="true">🎓</span>י״ב</li>
+            <li><span class="dot" aria-hidden="true">📱</span>יום הסיום</li>
+            <li><span class="dot" aria-hidden="true">💻</span>תחילת הלימודים</li>
+            <li><span class="dot" aria-hidden="true">⭐</span>היום</li>
+            <li><span class="dot" aria-hidden="true">🤝</span>כנס בוגרים</li>
+          </ol>
+          <blockquote class="survey-quote">"מבחינתי, ההצלחה האמיתית אינה מסתיימת בתעודת הסיום. ההצלחה היא לראות את התלמיד ממשיך ללמוד, רוכש מקצוע, משתלב בעולם העבודה ובונה לעצמו עתיד עצמאי ומכובד."<span>מוניר עבדאלהאדי, רכז הבוגרים, מנאראת טורעאן</span></blockquote>
+        </div>
+
+        <div class="booth pinkish watch">
+          <span class="booth-kicker">דוכן 2 · תיכון חושן</span>
+          <h3>הבית שתמיד אפשר לחזור אליו</h3>
+          <p>רכזת בוגרים שנמצאת בקשר עם שלושת המחזורים האחרונים, ופאנל שבו בוגרים חזרו לבית הספר וסיפרו לתלמידי י״ב ו-י״א על מכינה, שירות צבאי ושירות לאומי.</p>
+          <p>הכנו לדוכן קאפה עם המסלול בשלוש תחנות: רכזת הבוגרים, פאנל הבוגרים והשותפות עם הופה.</p>
+          <div class="photo-pair">
+            <figure class="photo">
+              <img src="photos/midaon3-kenes-choshen.jpg" alt="מנהלים עוברים ליד הדוכן של תיכון חושן בכנס, עם חוברות 8 הרכיבים הצהובות על השולחן" width="1050" height="1400" loading="lazy">
+              <figcaption>מנהלים בדוכן של חושן</figcaption>
+            </figure>
+            <figure class="photo">
+              <img src="photos/midaon3-kenes-chovrot.jpg" alt="השולחן של דרור חוש״ן בכנס: הקאפה במסגרת, השלט הוורוד וחוברות 8 הרכיבים" width="1050" height="1400" loading="lazy">
+              <figcaption>הקאפה, השלט והחוברות על השולחן</figcaption>
+            </figure>
+          </div>
+          <blockquote class="survey-quote">"להראות להם שיש להם תמיד כתובת לחזור אליה, לפנות אליה כשיש צורך, או סתם לבוא ולתת חיבוק!"<span>ברכי, רכזת הבוגרים, תיכון חושן</span></blockquote>
+        </div>
+
+        <div class="mega watch">
+          <div class="mega-num"><span class="count" data-to="101">101</span></div>
+          <div class="mega-txt">רעיונות לליווי בוגרים, בחוברת שחילקנו בכנס</div>
+        </div>
+        <div class="item y watch">
+          <h3>חוברת 8 הרכיבים בליווי בוגרים</h3>
+          <p>הוצאנו לכנס חוברת רעיונות לרכזים: מה עושים בפועל בליווי בוגרים, רכיב אחרי רכיב. הרעיונות נולדו בשולחנות של מפגש הרכזים החברתיים ב-21.10, ולרכיבים שבהם עלו מעט רעיונות הוספנו מהניסיון של הופה.</p>
+          <p class="chips-title">8 הרכיבים</p>
+          <ul class="chips">
+            <li>🤝 השותפים</li>
+            <li>🎓 שכבת י״ב</li>
+            <li>🗂️ המאגר</li>
+            <li>📞 הקשר השוטף</li>
+            <li>🧾 מענים וזכויות</li>
+            <li>🎉 קהילה ואירועים</li>
+            <li>📊 תיעוד ומדידה</li>
+            <li>🏫 מול ההנהלה</li>
+          </ul>
+          <div class="chovret-row">
+            <a href="chovret-8-rechivim.pdf" target="_blank" rel="noopener" class="chovret-cover"><img src="photos/midaon3-chovret-cover.jpg" alt="עטיפת החוברת: 8 רכיבים בליווי בוגרים, 101 רעיונות" width="700" height="993" loading="lazy"></a>
+            <a href="chovret-8-rechivim.pdf" target="_blank" rel="noopener" class="btn-small">לחוברת המלאה ←</a>
+          </div>
+        </div>
+        <div class="item">
+          <h3>18 בתי ספר הציגו במוזיאון החדשנות</h3>
+          <p>לצד הדוכנים של הופה, 18 בתי ספר הציגו בכנס מיצגים של יוזמות חדשניות ומרגשות, ומנהלים הסתובבו ביניהם ולמדו זה מזה.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: שותפים בקהילה -->
+  <section class="chapter alt" aria-labelledby="h-kehila">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🤝</div>
+      <h2 id="h-kehila">שותפים בקהילה</h2>
+      <p class="sub">הבוגר לא צריך לעבור את הדרך לבד. גורמים בקהילה מלווים איתנו את הבוגרים.</p>
+      <div class="ch-body">
+        <div class="mega watch">
+          <div class="mega-num"><span class="count" data-to="62">62</span></div>
+          <div class="mega-txt">צעירים ממנאראת טורעאן הצטרפו לתוכנית שבאב ריאן ב-2025–2026</div>
+        </div>
+
+        <div class="survey">
+          <h3 class="survey-title">מרכז ריאן ומנאראת טורעאן</h3>
+          <p class="survey-intro">מרכז ריאן לתעסוקה בכפר כנא, דרך תוכנית שבאב ריאן, מלווה את התלמידים כבר בשנות הלימודים: מפגש חשיפה, שיחות היכרות אישיות וסדנאות. בית הספר עזר לאתר צעירים גם מקרב התלמידים וגם מהיישוב.</p>
+          <div class="mini-nums">
+            <div><b>35</b>הצטרפו לתוכנית ב-2025</div>
+            <div><b>22</b>השתתפו בסדנאות</div>
+            <div><b>16</b>בהכשרה מקצועית עם תעודה</div>
+            <div><b>6</b>השתלבו בתעסוקה</div>
+          </div>
+          <p class="chips-title">הסדנאות</p>
+          <ul class="chips static">
+            <li>🧭 זיהוי נטיות תעסוקתיות</li>
+            <li>🤝 עבודת צוות (ODT)</li>
+            <li>🔐 חדר בריחה: חיפוש עבודה</li>
+          </ul>
+          <figure class="photo" style="max-width:420px">
+            <img src="photos/midaon3-rayan-sadna.jpg" alt="צעירים מטורעאן יושבים סביב שולחן בסדנה של שבאב ריאן" width="531" height="708" loading="lazy">
+            <figcaption>סדנה של שבאב ריאן עם צעירים מטורעאן</figcaption>
+          </figure>
+          <div class="survey-notes" style="margin-top:18px">
+            <p><b>מלגת לימודים:</b> מרכז ריאן תמך באחד מבוגרי בית הספר והעניק לו מלגת לימודים. היום יש לבוגר עסק מצליח.</p>
+          </div>
+          <blockquote class="survey-quote">"ההצלחה של השותפות אינה נמדדת רק במספרים, אלא גם בהזדמנויות שנפתחו בפני התלמידים."<span>מתוך סיכום השותפות של מרכז ריאן</span></blockquote>
+        </div>
+
+        <div class="item watch pulse-item">
+          <span class="live-dot" aria-hidden="true"></span>
+          <h3>נתיבים של קרן שעשוע ותיכון חושן</h3>
+          <p>שיתוף פעולה חדש: גלית מנתיבים נפגשה יחד עם רכזת הבוגרים עם בוגר של תיכון חושן, ותבנה לו תוכנית ליווי ותכנון.</p>
+        </div>
+        <div>
+          <blockquote class="quote" id="quote">היי. מעדכנת שמקודם סיימתי פגישה עם הבוגר שלנו, יחד עם גלית מנתיבים. הוא ממש שמח על כל מה שהיא הציעה. היא תבנה לו תוכנית ליווי והתכנון שיתחיל ממש בקרוב!</blockquote>
+          <div class="quote-by">ברכי<span>רכזת הבוגרים, תיכון חושן</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: רשת אמית -->
+  <section class="chapter" aria-labelledby="h-amit">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🏫</div>
+      <h2 id="h-amit">נפגשנו עם מנהלי רשת אמית</h2>
+      <p class="sub">הכרנו למנהלים את מודל ליווי הבוגרים של הופה, ונתנו להם לנסות אותו בעצמם.</p>
+      <div class="ch-body">
+        <div class="item watch">
+          <h3>מה הצגנו במפגש</h3>
+          <ul class="chips">
+            <li>🔐 מערכת HOPA Secure</li>
+            <li>🌐 אתר המענים</li>
+            <li>🎓 הכשרת הרכזים</li>
+            <li>🧩 8 הרכיבים לליווי בוגרים</li>
+            <li>📊 תיעוד ומדידה</li>
+          </ul>
+        </div>
+        <div class="item y">
+          <h3>משחק: בונים תוכנית שנתית</h3>
+          <p>המנהלים בנו בעצמם תוכנית ליווי בוגרים לשנה: בכל חודש בוחרים רעיון מתוך 8 הרכיבים ומניחים אותו על לוח השנה, מספטמבר ועד אוגוסט.</p>
+        </div>
+        <div class="item">
+          <h3>להתנסות, לא רק לשמוע</h3>
+          <p>הקמנו לרשת אמית בית ספר להדגמה ב-HOPA Secure ושאלון מיפוי לבוגרים, כדי שהמנהלים יראו בעצמם איך פנייה של בוגר הופכת לכרטיס מעקב.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: מחשבים ניידים -->
+  <section class="chapter alt" aria-labelledby="h-machshevim">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">💻</div>
+      <h2 id="h-machshevim">המחשבים הגיעו לבוגרים</h2>
+      <p class="sub">הבטחנו באוקטובר, ובנובמבר המחשבים כבר אצל הבוגרים.</p>
+      <div class="ch-body">
+        <div class="item y watch laptop-row">
+          <div class="laptop" aria-hidden="true"><div class="lid"><div class="screen">🎓</div></div><div class="base"></div></div>
+          <div>
+            <h3>כלי עבודה מהיום הראשון ללימודים</h3>
+            <p>בוגרים שנרשמו ללימודי המשך קיבלו מהופה מחשבים ניידים, כדי שהציוד לא יעמוד בינם לבין הלימודים.</p>
+          </div>
+        </div>
+        <div class="item">
+          <h3>מנאראת טורעאן</h3>
+          <p>9 תלמידי י״ב נרשמו ללימודי המשך, ובוגרים שהתחילו ללמוד קיבלו מחשבים ניידים.</p>
+        </div>
+        <div class="item">
+          <h3>תיכון חושן</h3>
+          <p>מחשבים ניידים לבוגרים שלומדים לימודים גבוהים, כחלק מהשותפות עם הופה.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: מפגש הרכזים -->
+  <section class="chapter" aria-labelledby="h-rakazim">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">📝</div>
+      <h2 id="h-rakazim">מפגש הרכזים השלישי</h2>
+      <p class="sub">סגרנו את מסלול המפגשים עם הרכזים החברתיים של משרד העבודה.</p>
+      <div class="ch-body">
+        <ol class="meets">
+          <li class="meet big watch">
+            <div class="meet-date"><b>4.11</b>זום</div>
+            <div class="meet-body">
+              <h3>"התוכנית המלאה"</h3>
+              <ul class="meet-steps">
+                <li><b>ההצלחות שלנו:</b> כל רכז/ת בנה/תה כרטיס של בוגר/ת אחד/ת שהצליח/ה השנה, בלי שם.</li>
+                <li><b>למידת עמיתים:</b> כל שולחן מהכנס בבני ברק הציג את הרעיונות שלו, וכל רכז/ת סימן/ה מה לוקחים לבית הספר.</li>
+                <li><b>התוכנית שלי:</b> בסוף המפגש כל רכז/ת יצא/ה עם תוכנית כתובה לליווי בוגרים בבית הספר.</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: שירות משמעותי ומכינות -->
+  <section class="chapter alt" aria-labelledby="h-sherut">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🧭</div>
+      <h2 id="h-sherut">מכינות ושירות משמעותי</h2>
+      <p class="sub">ממשיכים לפתוח לבוגרים דלתות לשירות, כבר מהתיכון.</p>
+      <div class="ch-body">
+        <div class="item watch">
+          <h3>וובינר: חשיפה למכינות</h3>
+          <p>ב-25.11 קיימנו וובינר בזום לצוותי בתי הספר, שבו מכינות קדם-צבאיות מתוך מאגר המענים של הופה הציגו את עצמן. זה ההמשך הישיר של מיפוי העמדות מאוקטובר: הצוותים אמרו שחסר להם מידע, והבאנו את המכינות אליהם.</p>
+        </div>
+        <div class="item y">
+          <h3>הכנה לצו ראשון</h3>
+          <p>הופה רכשה קורס הכנה לצו ראשון ומחלקת אותו לבתי הספר. בתי הספר נרשמים בטופס ומעדכנים כמה תלמידים ישתתפו. הכנה טובה פותחת לבוגרים אפשרויות לתפקידים משמעותיים.</p>
+        </div>
+        <div class="item">
+          <h3>זום חשיפה ל"דרך דוד"</h3>
+          <p>ב-22.11 הכרנו לרכזים החברתיים ולרכזי הופה את "דרך דוד", תוכנית של צה"ל שעוזרת לצעירים להתגייס ולהצליח בשירות, גם כשהדרך לא פשוטה. את התוכנית הציגו נציגי המדור בצה"ל.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: הצוות גדל -->
+  <section class="chapter" aria-labelledby="h-tzevet">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">🌱</div>
+      <h2 id="h-tzevet">הצוות של הופה גדל</h2>
+      <p class="sub">יותר ידיים, כדי שאף בוגר שפונה אלינו לא יחכה.</p>
+      <div class="ch-body">
+        <div class="team watch">
+          <div class="team-card big">
+            <div class="team-badge" aria-hidden="true">🧭</div>
+            <div>
+              <h3>מיטב, רכזת מענים ותוכניות</h3>
+              <p>מצטרפת לצוות ומלווה את הפניות של הבוגרים מהרגע שנפתחו ועד שקיבלו מענה, ובונה קשרים עם הגורמים בקהילה באזורי בתי הספר.</p>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-badge" aria-hidden="true">3</div>
+            <div>
+              <h3>שלושה מלגאים חדשים</h3>
+              <p>יעזרו לנו ליצור קשר עם בוגרים, כדי שכל בוגר ידע שיש לו כתובת.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- תחנה: מהשטח -->
+  <section class="chapter alt" aria-labelledby="h-shetach">
+    <span class="stop" aria-hidden="true"></span>
+    <div class="ch-content">
+      <div class="ch-icon" aria-hidden="true">📍</div>
+      <h2 id="h-shetach">מהשטח</h2>
+      <p class="sub">פאנל הבוגרים בתיכון חושן.</p>
+      <div class="ch-body">
+        <div class="watch">
+          <figure class="polaroid">
+            <span class="tape a" aria-hidden="true"></span><span class="tape b" aria-hidden="true"></span>
+            <img src="photos/midaon3-choshen-panel.jpg" alt="פאנל בוגרים בתיכון חושן: בוגרים יושבים במעגל מול תלמידי י״ב ומספרים על הדרך שלהם אחרי בית הספר" width="1400" height="1050" loading="lazy">
+            <figcaption>בוגרים חוזרים לבית הספר ומספרים לתלמידי י״ב על מכינה, צבא ושירות לאומי</figcaption>
+          </figure>
+        </div>
+        <div class="item">
+          <h3>הבוגרים הם המודל הכי משכנע</h3>
+          <p>התלמידים היו קשובים ושאלו שאלות לעניין. הפאנל פתח להם אופקים ונתן מוטיבציה, והבוגרים סיפרו כמה המקצוע שלמדו נתן להם כלים.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="finale" aria-labelledby="h-finale">
+  <div class="fsun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#sun"/></svg></div>
+  <h2 id="h-finale">ממשיכים יחד</h2>
+  <p>תודה לכל השותפים שהולכים איתנו בדרך. רוצים לשמוע עוד או להצטרף? נשמח לדבר.</p>
+  <a class="btn" href="https://hopa.org.il" target="_blank" rel="noopener">לאתר הופה</a>
+</section>
+
+<footer>
+  <a href="https://hopa.org.il" target="_blank" rel="noopener" aria-label="הופה"><img src="hopa-logo.png" alt="הופה"></a>
+  <p>עמותת הופה, <a href="https://hopa.org.il" target="_blank" rel="noopener" dir="ltr">hopa.org.il</a></p>
+  <p><a href="midaon2.html">לגיליון הקודם: חודש אוקטובר</a></p>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- חשיפה של רגעים מונפשים ----------
+  var watched = document.querySelectorAll('.watch');
+  if (reduced || !('IntersectionObserver' in window)) {
+    watched.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+        e.target.querySelectorAll('.count').forEach(countUp);
+      });
+    }, {threshold: .35});
+    watched.forEach(function(el){ io.observe(el); });
+    document.querySelectorAll('.count').forEach(function(el){ el.textContent = '0'; });
+  }
+
+  function countUp(el){
+    var to = +el.getAttribute('data-to'), t0 = null, dur = 1600;
+    function step(t){
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ---------- הציטוט נדלק מילה אחר מילה בגלילה ----------
+  var quote = document.getElementById('quote'), qwords = [];
+  if (!reduced && quote){
+    var words = quote.textContent.trim().split(/\s+/);
+    quote.setAttribute('aria-label', quote.textContent.trim());
+    quote.innerHTML = words.map(function(w){ return '<span class="qw" aria-hidden="true">' + w + '</span>'; }).join(' ');
+    qwords = quote.querySelectorAll('.qw');
+  }
+
+  // ---------- הדרך ----------
+  var journey = document.getElementById('journey'),
+      ghost = document.getElementById('roadGhost'),
+      ink = document.getElementById('roadInk'),
+      traveler = document.getElementById('traveler'),
+      chapters = [].slice.call(document.querySelectorAll('.chapter')),
+      samples = [], total = 0, stopLens = [];
+
+  function layout(){
+    var jr = journey.getBoundingClientRect(), W = jr.width, H = journey.offsetHeight;
+    var wide = W >= 860;
+    var pts = chapters.map(function(ch){
+      var s = ch.querySelector('.stop').getBoundingClientRect();
+      return {x: s.left + s.width/2 - jr.left, y: s.top + s.height/2 - jr.top};
+    });
+    var startX = pts[0].x, d = 'M ' + startX + ' 0';
+    var all = [{x:startX, y:0}].concat(pts, [{x:startX, y:H}]);
+    for (var i = 1; i < all.length; i++){
+      var a = all[i-1], b = all[i], dy = b.y - a.y;
+      var swing = wide ? (i % 2 ? 1 : -1) * Math.min(260, W * .24) : 0;
+      d += ' C ' + (a.x + swing) + ' ' + (a.y + dy * .4) + ', ' + (b.x + swing) + ' ' + (b.y - dy * .4) + ', ' + b.x + ' ' + b.y;
+    }
+    ghost.setAttribute('d', d); ink.setAttribute('d', d);
+    total = ink.getTotalLength();
+    ink.style.strokeDasharray = total;
+    samples = [];
+    for (var k = 0; k <= 400; k++){ var L = total * k / 400, p = ink.getPointAtLength(L); samples.push({L:L, x:p.x, y:p.y}); }
+    stopLens = pts.map(function(p){ return lenAtY(p.y); });
+    update();
+  }
+  function lenAtY(y){
+    for (var i = 1; i < samples.length; i++){
+      if (samples[i].y >= y){
+        var a = samples[i-1], b = samples[i], t = (y - a.y) / ((b.y - a.y) || 1);
+        return a.L + (b.L - a.L) * Math.max(0, Math.min(1, t));
+      }
+    }
+    return total;
+  }
+  function update(){
+    var jr = journey.getBoundingClientRect();
+    if (reduced){
+      ink.style.strokeDashoffset = 0;
+      chapters.forEach(function(ch){ ch.classList.add('reached'); });
+      return;
+    }
+    var y = innerHeight * .55 - jr.top;
+    var L = y <= 0 ? 0 : lenAtY(y);
+    ink.style.strokeDashoffset = total - L;
+    var p = ink.getPointAtLength(L);
+    traveler.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)';
+    traveler.style.opacity = y <= 0 ? 0 : 1;
+    chapters.forEach(function(ch, i){ ch.classList.toggle('reached', L >= stopLens[i] - 2); });
+
+    if (qwords.length){
+      var qr = quote.getBoundingClientRect();
+      var prog = (innerHeight * .8 - qr.top) / (qr.height + innerHeight * .35);
+      var n = Math.round(Math.max(0, Math.min(1, prog)) * qwords.length);
+      for (var i = 0; i < qwords.length; i++) qwords[i].classList.toggle('lit', i < n);
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){ ticking = false; update(); });
+  }, {passive:true});
+  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
+  window.addEventListener('load', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  layout();
+})();
+</script>
+</body>
+</html>
