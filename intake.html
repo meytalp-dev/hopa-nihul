@@ -159,8 +159,11 @@
               <div class="opt-chip" data-v="אורט">אורט</div>
               <div class="opt-chip" data-v="עמל">עמל</div>
               <div class="opt-chip" data-v="עתיד">עתיד</div>
+              <div class="opt-chip" data-v="אמית">אמית</div>
+              <div class="opt-chip" data-v="דרור">דרור</div>
               <div class="opt-chip" data-v="אחר">אחר</div>
             </div>
+            <input type="text" id="networkOther" placeholder="שם הרשת" style="display:none;margin-top:10px">
           </div>
         </div>
       </div>
@@ -462,6 +465,7 @@ document.querySelectorAll('[data-single]').forEach(box=>{
     const c = e.target.closest('.opt-chip'); if(!c) return;
     box.querySelectorAll('.opt-chip').forEach(x=>x.classList.remove('on'));
     c.classList.add('on'); state[key]=c.dataset.v; clearMiss(box); updateProgress();
+    if(key==='network'){ const o=state.network==='אחר'; $('#networkOther').style.display=o?'block':'none'; if(o) $('#networkOther').focus(); }
   });
 });
 /* בחירה מרובה */
@@ -513,7 +517,7 @@ $('#form').addEventListener('submit',async e=>{
     city: preCity,
     submittedAt: new Date().toISOString(),
     fullname:g('fullname'), role:g('role'), phone:g('phone'), email:g('email'),
-    manager_email:g('manager_email'), symbol:g('symbol'), network:state.network, lang:state.lang,
+    manager_email:g('manager_email'), symbol:g('symbol'), network: state.network==='אחר' ? ('אחר: '+($('#networkOther').value.trim()||'—')) : state.network, lang:state.lang,
     coord_chosen:state.coord_chosen, coord_name:g('coord_name'), coord_email:g('coord_email'),
     hours:state.hours, commit:state.commit,
     yb_count:g('yb_count'), alumni_total:g('alumni_total'), years_back:g('years_back'),
